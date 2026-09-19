@@ -261,6 +261,29 @@ def test_ask_router_failure_still_answers_from_the_index(client, monkeypatch):
     assert body["intent"] == "procedure"
 
 
+def test_ask_out_of_scope_query_returns_no_pages_and_never_pays_for_the_picker(client, monkeypatch):
+    """Router says the sentence names no vehicle system: no index lookup, no picker, no pages.
+    The app must show nothing rather than guess a section."""
+    rec = _install(
+        monkeypatch,
+        _Recorder(
+            ask_mod.Route(intent="unknown", components=[], queries=["what is the capital of france"],
+                          specName=None, specKind=None),
+            pick=None,  # the recorder raises if the picker is reached
+        ),
+    )
+    body = client.post("/ask", json={"manualId": KTM, "query": "what is the capital of france"}).json()
+    assert body["matches"] == []
+    assert body["intent"] == "unknown"
+    assert body["usd"] == 0.0
+    assert rec.routes == 1 and rec.picks == 0
+
+    direct = ask_mod.answer(KTM, "tell me a joke about motorcycles")
+    assert direct.matches == []
+    assert direct.intent == "unknown"
+    assert rec.picks == 0
+
+
 def test_ask_unknown_manual_is_404(client):
     assert client.post("/ask", json={"manualId": "no-such-manual", "query": "oil"}).status_code == 404
 

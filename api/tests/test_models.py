@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TYPES_TS = ROOT / "src" / "types.ts"
 UI_MANUALS = sorted((ROOT / "src" / "data" / "manuals").glob("*.json"))
 API_MANUALS = sorted((ROOT / "api" / "data" / "manuals").glob("*.json"))
+SEEDED = {"ktm-390-duke-2024-om-en", "bmw-r12gs-2025-rm-en"}
 
 HIGHLIGHT = M.Highlight(page=1, x=0.1, y=0.2, w=0.3, h=0.4)
 LINK = M.Link(shop="RevZilla", url="https://example.com/x")
@@ -145,8 +146,23 @@ def test_seeded_manual_json_is_byte_compatible(path: Path):
         assert 1 <= section.pageStart <= section.pageEnd <= manual.pages
         for hl in section.highlights:
             assert section.pageStart <= hl.page <= section.pageEnd
-            assert 0.0 <= hl.x <= 1.0 and 0.0 <= hl.y <= 1.0
+
+
+@pytest.mark.parametrize("path", [p for p in UI_MANUALS + API_MANUALS if p.stem in SEEDED],
+                        ids=lambda p: f"{p.parent.parent.parent.name}/{p.stem}")
+def test_seeded_manual_highlights_are_page_fractions(path: Path):
+    """src/types.ts: x/y/w/h are fractions of page width/height, origin top-left. The viewer
+    draws the marker straight from these, so anything outside 0..1 lands off the sheet."""
+    manual = M.Manual.model_validate(json.loads(path.read_text(encoding="utf-8")))
+    for section in manual.sections:
+        for hl in section.highlights:
+            assert 0.0 <= hl.x <= 1.0 and 0.0 <= hl.y <= 1.0, (section.id, hl)
+            assert 0.0 < hl.w <= 1.0 and 0.0 < hl.h <= 1.0, (section.id, hl)
+            assert hl.x + hl.w <= 1.001 and hl.y + hl.h <= 1.001, (section.id, hl)
 
 
 def test_seeded_manuals_exist():
-    assert len(UI_MANUALS) == 2 and len(API_MANUALS) == 2
+    """Other agents ingest more manuals into api/data/manuals; these two are the fixtures the
+    rest of the suite pins to, so assert they are present rather than counting the directory."""
+    assert SEEDED <= {p.stem for p in UI_MANUALS}
+    assert SEEDED <= {p.stem for p in API_MANUALS}

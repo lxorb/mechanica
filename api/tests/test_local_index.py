@@ -13,6 +13,7 @@ from conftest import BMW, KTM
 # app/search/local.py belongs to the search agent and its tuning constants move; read the
 # confidence floor off the module instead of pinning it, so a retune is not an import error.
 FLOOR = getattr(local_mod, "FLOOR", 0.0)
+TITLE_EVIDENCE = getattr(local_mod, "TITLE_EVIDENCE", 0.5)
 
 
 def _section(section_id, title, page=1, **kwargs):
@@ -254,17 +255,68 @@ def test_requesting_both_sides_does_not_penalize_either(local_index, manual):
 
 
 @pytest.mark.skipif(FLOOR <= 0, reason="no confidence floor in app/search/local.py")
-@pytest.mark.parametrize("score", [0.0, -1.0, FLOOR - 0.001, FLOOR])
-def test_confidence_floor_uses_bm25_before_ranking_bonuses(local_index, manual, monkeypatch, score):
-    """The floor reads the raw BM25 peak, so keyword and title bonuses cannot rescue a query.
-    See test_bare_rider_words_currently_fall_under_the_confidence_floor below for the fallout."""
+@pytest.mark.parametrize(
+    ("peak", "queries", "components", "kept"),
+    [
+        # A weak BM25 peak only means "no match" when the rider's own words match nothing printed.
+        # Here they cover a printed title, so the weak peak survives:
+        (FLOOR - 0.001, ["front brake pads"], None, True),
+        (FLOOR - 0.001, ["front brake"], None, True),
+        # one word out of a three-word title is under TITLE_EVIDENCE, so it does not:
+        (FLOOR - 0.001, ["front"], None, False),
+        (FLOOR - 0.001, ["quasar nebula"], None, False),
+        # components are the router's guess, not something the manual prints: never a rescue.
+        (FLOOR - 0.001, ["quasar nebula"], ["front brake pads"], False),
+        (FLOOR - 0.001, ["front"], ["front brake pads"], False),
+        # a peak at or above the floor needs no printed evidence at all:
+        (FLOOR, ["quasar nebula"], None, True),
+        (FLOOR + 5.0, ["quasar nebula"], None, True),
+    ],
+)
+def test_confidence_floor_rejects_only_a_weak_peak_with_no_printed_evidence(
+    local_index, manual, monkeypatch, peak, queries, components, kept
+):
+    """The gate is `peak < FLOOR and not evidence`; evidence is the rider's own words hitting a
+    printed keyword phrase or covering at least TITLE_EVIDENCE of a printed title."""
     built = local_index.built(manual.id)
-    monkeypatch.setattr(built.bm25, "get_scores", lambda tokens: [score] + [0.0] * 9)
-    hits = local_index.query(manual.id, ["front brake pads"], components=["front brake pads"])
-    if score < FLOOR:
-        assert hits == []
+    monkeypatch.setattr(built.bm25, "get_scores", lambda tokens: [peak] + [0.0] * 9)
+    hits = local_index.query(manual.id, queries, components=components)
+    if kept:
+        assert hits and hits[0].sectionId == "front-pads"
     else:
-        assert hits[0].sectionId == "front-pads"
+        assert hits == []
+
+
+@pytest.mark.skipif(FLOOR <= 0, reason="no confidence floor in app/search/local.py")
+@pytest.mark.parametrize("peak", [0.0, -1.0])
+def test_a_zero_bm25_peak_still_answers_when_the_words_are_printed(local_index, manual, monkeypatch, peak):
+    """The "torque" case: a word every section prints has ~0 IDF, so BM25 contributes nothing and
+    the printed-title evidence is the only vote there is."""
+    monkeypatch.setattr(local_index.built(manual.id).bm25, "get_scores", lambda tokens: [peak] + [0.0] * 9)
+    hits = local_index.query(manual.id, ["front brake pads"])
+    assert hits and hits[0].sectionId == "front-pads"
+    assert local_index.query(manual.id, ["quasar nebula"]) == []
+
+
+@pytest.mark.skipif(FLOOR <= 0, reason="no confidence floor in app/search/local.py")
+def test_a_printed_keyword_is_evidence_on_its_own(manual, monkeypatch):
+    """Title coverage is zero on both sections here, so only the keyword phrase can rescue."""
+
+    def weak(tokens):
+        return [0.0, FLOOR - 0.001]
+
+    manual.sections = [_section("plain", "Procedure"), _section("keyword", "Procedure", keywords=["tyre pressure"])]
+    with_keyword = LocalIndex()
+    with_keyword.index(manual, [], [])
+    monkeypatch.setattr(with_keyword.built(manual.id).bm25, "get_scores", weak)
+    hits = with_keyword.query(manual.id, ["tyre pressure"])
+    assert [h.sectionId for h in hits] == ["keyword"]
+
+    manual.sections = [_section("plain", "Procedure"), _section("other", "Procedure")]
+    without = LocalIndex()
+    without.index(manual, [], [])
+    monkeypatch.setattr(without.built(manual.id).bm25, "get_scores", weak)
+    assert without.query(manual.id, ["tyre pressure"]) == []
 
 
 @pytest.mark.parametrize("scores", [([10.0, 0.0], [0.0, 2.0]), ([2.0, -1.0], [0.0, 2.0])])
@@ -389,36 +441,23 @@ def test_seeded_manual_rejects_unrelated_queries(manual_id):
 # section they need is the first thing the index returns. Seeded KTM 390 Duke manual.
 # --------------------------------------------------------------------------------------
 
-BARE_QUERY_UNDER_FLOOR = (
-    "app/search/local.py drops the whole query when the raw BM25 peak is under FLOOR, before the "
-    "keyword and title bonuses are added. A bare word that the manual prints everywhere ('torque') "
-    "scores ~0 on BM25 by construction (IDF collapses), so the exact keyword hit never gets a vote."
-)
-FUSE_TABLE_OUTRANKS_HEADLIGHT = (
-    "the fuse-assignment table on p.101-103 names every headlight circuit, so it wins the bare word "
-    "'headlight' on term frequency over 'Adjusting the headlight range'."
-)
-
 RIDER_QUERIES = [
-    ("change the oil", "engine-oil-change", None),
-    ("chain slack", "chain-tension-check", None),
-    ("tyre pressure", "tire-pressure", None),
-    ("front brake pads", "front-brake-pads", None),
-    ("fuse", "fuses", None),
-    ("battery charging", "battery-charge", None),
-    ("coolant level", "coolant-level", None),
-    ("rear wheel", "rear-wheel-remove", BARE_QUERY_UNDER_FLOOR),
-    ("headlight", "headlight-range", FUSE_TABLE_OUTRANKS_HEADLIGHT),
-    ("torque", "engine-torques", BARE_QUERY_UNDER_FLOOR),
+    ("change the oil", "engine-oil-change"),
+    ("chain slack", "chain-tension-check"),
+    ("tyre pressure", "tire-pressure"),
+    ("front brake pads", "front-brake-pads"),
+    ("fuse", "fuses"),
+    ("battery charging", "battery-charge"),
+    ("coolant level", "coolant-level"),
+    ("rear wheel", "rear-wheel-remove"),
+    ("headlight", "headlight-range"),
+    ("torque", "engine-torques"),
 ]
 
 
 @pytest.mark.parametrize(
     ("query", "expected"),
-    [
-        pytest.param(q, s, id=q.replace(" ", "-"), marks=[pytest.mark.xfail(reason=why)] if why else [])
-        for q, s, why in RIDER_QUERIES
-    ],
+    [pytest.param(q, s, id=q.replace(" ", "-")) for q, s in RIDER_QUERIES],
 )
 def test_rider_query_ranks_the_printed_section_first(query, expected):
     hits = LocalIndex().query(KTM, [query])
@@ -428,18 +467,18 @@ def test_rider_query_ranks_the_printed_section_first(query, expected):
     assert [h.score for h in hits] == sorted((h.score for h in hits), reverse=True)
 
 
-@pytest.mark.xfail(reason=BARE_QUERY_UNDER_FLOOR)
 def test_torque_ranks_either_printed_torque_table_first():
     """'torque' may legitimately land on the engine or the chassis table, but it must land."""
     hits = LocalIndex().query(KTM, ["torque"])
-    assert hits, BARE_QUERY_UNDER_FLOOR
+    assert hits, "a word every section prints must still reach its printed table"
     assert hits[0].sectionId in {"engine-torques", "chassis-torques"}
 
 
-def test_bare_headlight_still_reaches_the_headlight_section():
-    """Documents today's runner-up placement so a further slip is caught."""
-    hits = LocalIndex().query(KTM, ["headlight"])
-    assert "headlight-range" in [h.sectionId for h in hits[:2]]
+def test_bare_headlight_beats_the_fuse_assignment_table():
+    """The fuse table on p.101-103 names every headlight circuit; the procedure must still win."""
+    ids = [h.sectionId for h in LocalIndex().query(KTM, ["headlight"])]
+    assert ids[0] == "headlight-range"
+    assert "fuses" in ids, "the fuse table stays a candidate, just not the first one"
 
 
 @pytest.mark.parametrize(
