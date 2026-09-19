@@ -20,6 +20,7 @@ declare global {
 
 const APP_KEY: string = import.meta.env.VITE_DROPBOX_APP_KEY ?? ''
 const CHOOSER = 'https://www.dropbox.com/static/api/2/dropins.js'
+const EASE = 150
 
 let loading: Promise<void> | null = null
 
@@ -52,10 +53,31 @@ export default function AddManual({
   onClose: () => void
 }) {
   const [progress, setProgress] = useState<IngestProgress | null>(null)
+  const [shown, setShown] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const alive = useRef(true)
 
-  useEffect(() => () => void (alive.current = false), [])
+  useEffect(() => {
+    alive.current = true
+    const frame = requestAnimationFrame(() => requestAnimationFrame(() => setShown(true)))
+    return () => {
+      alive.current = false
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  const close = () => {
+    setShown(false)
+    setTimeout(onClose, EASE)
+  }
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   const start = (source: File | string) => {
     setProgress({ status: 'queued', done: 0, pages: 0, title: null })
@@ -98,16 +120,22 @@ export default function AddManual({
   const ratio = progress && progress.pages > 0 ? Math.min(1, progress.done / progress.pages) : 0
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end bg-black/60" onClick={onClose}>
+    <div className="fixed inset-0 z-40 flex items-end">
+      <button
+        onClick={close}
+        aria-label="✕"
+        className="absolute inset-0 bg-black/60 transition-opacity ease-out"
+        style={{ opacity: shown ? 1 : 0, transitionDuration: `${EASE}ms` }}
+      />
       <div
-        onClick={(e) => e.stopPropagation()}
-        className="mx-auto w-full max-w-[430px] rounded-t-xl border-t border-[var(--line)] bg-[var(--bg)] px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] text-[var(--fg)]"
+        className="relative mx-auto w-full max-w-[430px] rounded-t-xl border-t border-[var(--line)] bg-[var(--bg)] px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))] transition-transform ease-out"
+        style={{ transform: shown ? 'translateY(0)' : 'translateY(100%)', transitionDuration: `${EASE}ms` }}
       >
         <div className="flex justify-end">
           <button
-            onClick={onClose}
+            onClick={close}
             aria-label="✕"
-            className="flex h-[44px] w-[44px] items-center justify-center text-[17px] text-[var(--muted)]"
+            className="flex h-11 w-11 items-center justify-center text-[17px] leading-none text-[var(--muted)]"
           >
             ✕
           </button>

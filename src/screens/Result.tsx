@@ -4,6 +4,7 @@ import PdfPage from '../components/PdfPage'
 import Parts from '../components/Parts'
 import Voice from '../components/Voice'
 import { cachedRatio, getDocument, pageRatio, preloadPage } from '../lib/pdf'
+import { useZoom } from '../lib/zoom'
 
 type Entry = { title: string; page: number; depth: number }
 
@@ -57,24 +58,22 @@ function spread(sections: Section[], total: number) {
   return pages
 }
 
+const head = (title: string): [string, string] => {
+  const hit = /^([\d.]+)\s+(\S.*)$/.exec(title)
+  return hit ? [hit[1], hit[2]] : ['', title]
+}
+
 export default function Result({
   bike,
   manual,
-  query,
   matches,
-  onAsk,
   onBack,
 }: {
   bike: Bike
   manual: Manual
-  query: string
   matches: Match[]
-  onAsk: (query: string) => void
   onBack: () => void
 }) {
-  void query
-  void onAsk
-
   const sections = useMemo(() => reading(manual, matches), [manual, matches])
   const outline = useMemo(() => flatten(manual.outline, 0, []), [manual.outline])
   const [chapter, setChapter] = useState<number[] | null>(null)
@@ -101,7 +100,7 @@ export default function Result({
     [matches],
   )
 
-  const scrollerRef = useRef<HTMLDivElement>(null)
+  const { scroller, spacer, inner, zoomed, reset } = useZoom()
   const stripRef = useRef<HTMLDivElement>(null)
   const pageEls = useRef(new Map<number, HTMLElement>())
   const chipEls = useRef(new Map<number, HTMLElement>())
@@ -111,18 +110,19 @@ export default function Result({
   const [ratio, setRatio] = useState(() => cachedRatio(manual.file, 1))
   const [picked, setPicked] = useState(0)
   const [parts, setParts] = useState(false)
+  const [visited, setVisited] = useState<number[]>([])
 
   const current = pages.includes(picked) ? picked : (pages[0] ?? 0)
 
   useEffect(() => {
-    const scroller = scrollerRef.current
-    if (!scroller) return
-    const measure = () => setBox({ w: scroller.clientWidth, h: scroller.clientHeight })
+    const view = scroller.current
+    if (!view) return
+    const measure = () => setBox({ w: view.clientWidth, h: view.clientHeight })
     measure()
     const ro = new ResizeObserver(measure)
-    ro.observe(scroller)
+    ro.observe(view)
     return () => ro.disconnect()
-  }, [pages.length])
+  }, [pages.length, scroller])
 
   const first = pages[0] ?? 1
 
@@ -141,12 +141,23 @@ export default function Result({
 
   const width = useMemo(() => {
     if (box.w <= 0 || box.h <= 0) return 0
-    return Math.max(0, Math.min(box.w - 12, Math.floor((box.h - 16) / ratio), 720))
+    return Math.max(0, Math.min(box.w - 24, Math.floor((box.h - 28) / ratio), 720))
   }, [box, ratio])
 
   useEffect(() => {
-    const scroller = scrollerRef.current
-    if (!scroller || pages.length === 0) return
+    seen.current.clear()
+    setVisited([])
+    reset()
+  }, [pages, reset])
+
+  useEffect(() => {
+    if (current <= 0) return
+    setVisited((list) => (list.includes(current) ? list : [...list, current]))
+  }, [current])
+
+  useEffect(() => {
+    const view = scroller.current
+    if (!view || pages.length === 0) return
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -162,11 +173,11 @@ export default function Result({
         }
         if (top > 0) setPicked(top)
       },
-      { root: scroller, threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
+      { root: view, threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
     )
     for (const el of pageEls.current.values()) io.observe(el)
     return () => io.disconnect()
-  }, [pages])
+  }, [pages, scroller])
 
   useEffect(() => {
     if (width <= 0) return
@@ -186,6 +197,7 @@ export default function Result({
 
   const jump = (page: number) => {
     setPicked(page)
+    reset()
     pageEls.current.get(page)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -203,18 +215,21 @@ export default function Result({
   const path = useMemo(() => (current > 0 ? trail(manual.outline, current) : []), [manual.outline, current])
 
   const header = (
-    <header className="shrink-0 border-b border-[var(--line)] pt-[env(safe-area-inset-top)]">
-      <div className="mx-auto flex w-full max-w-[720px] items-center gap-1 px-2">
+    <header className="shrink-0 border-b border-[var(--line)] pt-[max(22px,calc(env(safe-area-inset-top)+12px))]">
+      <div className="mx-auto flex w-full max-w-[720px] items-center gap-2 pr-3 pl-1">
         <button
           onClick={chapter ? () => setChapter(null) : onBack}
-          className="flex h-11 w-11 shrink-0 items-center justify-center text-[17px] leading-none"
+          aria-label="←"
+          className="flex h-11 w-11 shrink-0 items-center justify-center text-[19px] leading-none"
         >
           ←
         </button>
-        <div className="min-w-0 flex-1 truncate text-[15px] font-medium">{manual.title}</div>
+        <div className="cover min-w-0 flex-1 truncate text-[14px]">{manual.title}</div>
         {current > 0 && (
-          <div className="shrink-0 pr-2 text-[13px] tabular-nums text-[var(--muted)]">
-            p. {current}/{manual.pages}
+          <div className="flex shrink-0 items-baseline">
+            <span className="mr-[3px] text-[12px] text-[var(--muted)]">p.</span>
+            <span className="d text-[16px] font-semibold">{current}</span>
+            <span className="text-[12px] text-[var(--muted)]">/{manual.pages}</span>
           </div>
         )}
       </div>
@@ -230,20 +245,32 @@ export default function Result({
     return (
       <div className="flex h-full w-full flex-col overflow-hidden">
         {header}
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        <div style={{ scrollbarWidth: 'none' }} className="hairline min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="mx-auto w-full max-w-[720px] pb-[max(16px,env(safe-area-inset-bottom))]">
-            {outline.map((entry, index) => (
-              <button
-                key={`${entry.page}-${index}`}
-                onClick={() => open(index)}
-                style={{ paddingLeft: 16 + entry.depth * 14 }}
-                className={`flex min-h-11 w-full items-center border-b border-[var(--line)] py-3 pr-4 text-left leading-snug ${
-                  entry.depth > 0 ? 'text-[15px] text-[var(--muted)]' : 'text-[17px] font-medium'
-                }`}
-              >
-                {entry.title}
-              </button>
-            ))}
+            {outline.map((entry, index) => {
+              const [number, words] = head(entry.title)
+              return (
+                <button
+                  key={`${entry.page}-${index}`}
+                  onClick={() => open(index)}
+                  style={{ paddingLeft: 16 + entry.depth * 14 }}
+                  className={`flex min-h-11 w-full items-center gap-2 border-b border-[var(--line)] py-3 pr-4 text-left leading-snug ${
+                    entry.depth > 0 ? 'text-[15px] text-[var(--muted)]' : 'text-[17px] font-medium'
+                  }`}
+                >
+                  {number && (
+                    <span
+                      className={`d shrink-0 font-bold ${
+                        entry.depth > 0 ? 'text-[13px] text-[var(--muted)]' : 'text-[15px] text-[var(--accent)]'
+                      }`}
+                    >
+                      {number}
+                    </span>
+                  )}
+                  <span className="min-w-0 flex-1">{words}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -255,29 +282,35 @@ export default function Result({
       {header}
 
       <div
-        ref={scrollerRef}
+        ref={scroller}
         style={{ scrollbarWidth: 'none' }}
-        className="min-h-0 flex-1 snap-y snap-mandatory overflow-y-auto overscroll-contain"
+        className={`hairline min-h-0 flex-1 overflow-auto overscroll-contain ${zoomed ? '' : 'snap-y snap-proximity'}`}
       >
-        {pages.map((page) => (
-          <div
-            key={page}
-            data-page={page}
-            ref={(el) => {
-              if (el) pageEls.current.set(page, el)
-              else pageEls.current.delete(page)
-            }}
-            className="flex snap-start items-center justify-center py-2"
-          >
-            {width > 0 && <PdfPage file={manual.file} page={page} highlights={marks.get(page) ?? []} width={width} />}
+        <div ref={spacer}>
+          <div ref={inner} className="flex flex-col">
+            {pages.map((page) => (
+              <div
+                key={page}
+                data-page={page}
+                ref={(el) => {
+                  if (el) pageEls.current.set(page, el)
+                  else pageEls.current.delete(page)
+                }}
+                className="flex shrink-0 snap-start justify-center py-[10px]"
+              >
+                {width > 0 && (
+                  <PdfPage file={manual.file} page={page} highlights={marks.get(page) ?? []} width={width} />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
-      <div className="shrink-0 border-t border-[var(--line)] pb-[max(8px,env(safe-area-inset-bottom))]">
-        <div className="mx-auto flex w-full max-w-[720px] items-center gap-2 px-2 pt-2">
+      <div className="shrink-0 border-t border-[var(--line)] pb-[max(12px,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex w-full max-w-[720px] items-center gap-2 px-3 pt-[10px]">
           <Voice bike={bike} manual={manual} onPage={jump} />
-          <div ref={stripRef} style={{ scrollbarWidth: 'none' }} className="flex min-w-0 flex-1 gap-2 overflow-x-auto">
+          <div ref={stripRef} style={{ scrollbarWidth: 'none' }} className="hairline flex min-w-0 flex-1 gap-2 overflow-x-auto">
             {pages.map((page) => (
               <button
                 key={page}
@@ -286,10 +319,12 @@ export default function Result({
                   else chipEls.current.delete(page)
                 }}
                 onClick={() => jump(page)}
-                className={`h-11 min-w-11 shrink-0 rounded-xl border px-3 text-[15px] tabular-nums ${
+                className={`d h-11 min-w-11 shrink-0 rounded-xl border px-3 text-[15px] transition-colors duration-150 ${
                   page === current
-                    ? 'border-[var(--accent)] bg-[var(--accent)] font-medium text-[#0a0a0a]'
-                    : 'border-[var(--line)] text-[var(--muted)]'
+                    ? 'border-[var(--accent)] bg-[var(--accent)] font-bold text-[var(--accent-ink)]'
+                    : visited.includes(page)
+                      ? 'border-[var(--paper)]/28 bg-[var(--ink-1)] font-semibold text-[var(--paper)]'
+                      : 'border-transparent bg-[var(--ink-1)] font-semibold text-[var(--muted)]'
                 }`}
               >
                 {page}
@@ -299,7 +334,7 @@ export default function Result({
           {partSections.length > 0 && (
             <button
               onClick={() => setParts(true)}
-              className="h-11 shrink-0 rounded-xl border border-[var(--line)] px-4 text-[15px] font-medium"
+              className="lab h-11 shrink-0 rounded-xl bg-[var(--ink-1)] px-[14px] active:bg-[var(--ink-2)]"
             >
               Parts
             </button>
@@ -307,16 +342,7 @@ export default function Result({
         </div>
       </div>
 
-      {parts && (
-        <div className="fixed inset-0 z-10 flex flex-col justify-end bg-black/60" onClick={() => setParts(false)}>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="mx-auto max-h-[72%] w-full max-w-[720px] overflow-y-auto rounded-t-xl border-t border-[var(--line)] bg-[var(--bg)] pb-[env(safe-area-inset-bottom)]"
-          >
-            <Parts manual={manual} sectionIds={partSections} onClose={() => setParts(false)} />
-          </div>
-        </div>
-      )}
+      <Parts manual={manual} sectionIds={partSections} open={parts} onClose={() => setParts(false)} />
     </div>
   )
 }

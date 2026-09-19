@@ -1,90 +1,135 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
-import type { Bike, Candidate, Manual } from '../types'
-import { search, years } from '../lib/identify'
-import { identifyPhoto, identifyVin, online } from '../lib/source'
+import type { Bike, Manual } from '../types'
+import type { Model } from '../data'
+import { bikeOf, group, makes as allMakes } from '../data'
+import { LIMIT, cleanVin, matchingMakes, search } from '../lib/identify'
+import type { PhotoHit } from '../lib/source'
+import { identifyPhoto, identifyVin, online, suggest } from '../lib/source'
 import AddManual from '../components/AddManual'
 
-type Row = { key: string; make: string; model: string; models: Bike[]; confidence?: number }
+const VIN_MIN = 6
+const SUGGEST_MS = 150
+const VIN_MS = 120
+const MAKE_CHIPS = 24
+const STEP_MS = 24
 
-const LIMIT = 30
-const VIN_MIN = 8
+const fade = {
+  maskImage: 'linear-gradient(to bottom, #000 calc(100% - 26px), transparent)',
+  WebkitMaskImage: 'linear-gradient(to bottom, #000 calc(100% - 26px), transparent)',
+}
 
-const keyOf = (b: Bike) => `${b.make}|${b.model}`.toLowerCase()
-
-const span = (list: Bike[]) => {
-  if (list.length === 0) return ''
-  const a = list[0].year
-  const z = list[list.length - 1].year
-  return a === z ? `${a}` : `${a}–${z}`
+const fadeRight = {
+  maskImage: 'linear-gradient(to right, #000 calc(100% - 26px), transparent)',
+  WebkitMaskImage: 'linear-gradient(to right, #000 calc(100% - 26px), transparent)',
+  scrollbarWidth: 'none' as const,
 }
 
 export default function Identify({
-  bikes,
+  catalog,
   onSelect,
   onManual,
 }: {
-  bikes: Bike[]
+  catalog: Model[]
   onSelect: (bike: Bike) => void
   onManual?: (bike: Bike, manual: Manual) => void
 }) {
   const [q, setQ] = useState('')
+  const [remote, setRemote] = useState<Model[]>([])
   const [vin, setVin] = useState('')
   const [vinMode, setVinMode] = useState(false)
   const [vinHit, setVinHit] = useState<{ vin: string; bike: Bike | null } | null>(null)
   const [photoUrl, setPhotoUrl] = useState<string | null>(null)
-  const [candidates, setCandidates] = useState<Candidate[]>([])
-  const [open, setOpen] = useState<string | null>(null)
+  const [hits, setHits] = useState<PhotoHit[]>([])
   const [adding, setAdding] = useState<Bike | null>(null)
+  const [focused, setFocused] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
 
   const canAdd = online && Boolean(onManual)
+  const clean = cleanVin(vin)
+  const vinBike = vinMode && vinHit?.vin === clean ? vinHit.bike : null
 
   useEffect(() => {
     if (!photoUrl) return
     return () => URL.revokeObjectURL(photoUrl)
   }, [photoUrl])
 
-  const clean = vin.replace(/[^A-Za-z0-9]/g, '').toUpperCase()
-  const vinBike = vinMode && vinHit?.vin === clean ? vinHit.bike : null
+  useEffect(() => {
+    if (!online || !q.trim()) {
+      setRemote([])
+      return
+    }
+    const control = new AbortController()
+    const timer = setTimeout(() => {
+      suggest(q, control.signal)
+        .then(setRemote)
+        .catch(() => {})
+    }, SUGGEST_MS)
+    return () => {
+      clearTimeout(timer)
+      control.abort()
+    }
+  }, [q])
 
   useEffect(() => {
     if (!vinMode || clean.length < VIN_MIN) return
     let alive = true
     const timer = setTimeout(() => {
-      identifyVin(bikes, clean).then((bike) => {
+      identifyVin(clean).then((bike) => {
         if (alive) setVinHit({ vin: clean, bike })
       })
-    }, 300)
+    }, VIN_MS)
     return () => {
       alive = false
       clearTimeout(timer)
     }
-  }, [bikes, clean, vinMode])
+  }, [clean, vinMode])
 
-  const byId = useMemo(() => new Map(bikes.map((b) => [b.id, b])), [bikes])
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: 0 })
+  }, [q, photoUrl])
 
-  const rows = useMemo<Row[]>(() => {
-    const build = (list: Bike[], confidence?: (b: Bike) => number): Row[] => {
-      const out: Row[] = []
-      const seen = new Set<string>()
-      for (const b of list) {
-        const key = keyOf(b)
-        if (seen.has(key)) continue
-        seen.add(key)
-        out.push({ key, make: b.make, model: b.model, models: years(bikes, b), confidence: confidence?.(b) })
-        if (out.length === LIMIT) break
+  const photoRows = useMemo(() => {
+    if (hits.length === 0) return { rows: [] as Model[], confidence: new Map<string, number>() }
+    const rows = group(hits.map((h) => h.bike))
+    const confidence = new Map<string, number>()
+    for (const hit of hits) {
+      const row = rows.find((r) => r.make === hit.bike.make && r.model === hit.bike.model)
+      if (row) confidence.set(row.key, Math.max(confidence.get(row.key) ?? 0, hit.confidence))
+    }
+    rows.sort((a, z) => (confidence.get(z.key) ?? 0) - (confidence.get(a.key) ?? 0))
+    return { rows: rows.slice(0, LIMIT), confidence }
+  }, [hits])
+
+  const rows = useMemo(() => {
+    if (!q.trim()) return photoUrl ? photoRows.rows : []
+    const base = search(catalog, q)
+    if (remote.length === 0) return base
+    const at = new Map(base.map((row, i) => [row.key, i]))
+    const out = [...base]
+    for (const row of search(remote, q)) {
+      const i = at.get(row.key)
+      if (i === undefined) {
+        if (out.length < LIMIT) out.push(row)
+        continue
       }
-      return out
+      out[i] = {
+        ...out[i],
+        years: [...new Set([...out[i].years, ...row.years])].sort((a, z) => z - a),
+        manuals: { ...out[i].manuals, ...row.manuals },
+      }
     }
-    if (q.trim()) return build(search(bikes, q))
-    if (photoUrl) {
-      const list = candidates.map((c) => byId.get(c.bikeId)).filter((b): b is Bike => !!b)
-      const conf = new Map(candidates.map((c) => [c.bikeId, c.confidence]))
-      return build(list, (b) => conf.get(b.id) ?? 0)
-    }
-    return []
-  }, [bikes, byId, candidates, photoUrl, q])
+    return out
+  }, [catalog, q, remote, photoUrl, photoRows])
+
+  const chips = useMemo(() => {
+    if (vinMode || photoUrl) return []
+    if (!q.trim()) return allMakes.slice(0, MAKE_CHIPS)
+    return matchingMakes(allMakes, q, MAKE_CHIPS)
+  }, [q, vinMode, photoUrl])
+
+  const bare = chips.length > 0 && !q.trim()
 
   const reset = () => {
     setQ('')
@@ -92,24 +137,21 @@ export default function Identify({
     setVinMode(false)
     setVinHit(null)
     setPhotoUrl(null)
-    setCandidates([])
-    setOpen(null)
+    setHits([])
   }
 
   const onFile = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     e.target.value = ''
     if (!file) return
-    const url = URL.createObjectURL(file)
     setQ('')
     setVin('')
     setVinMode(false)
     setVinHit(null)
-    setOpen(null)
-    setCandidates([])
-    setPhotoUrl(url)
-    const found = await identifyPhoto(bikes, file)
-    setCandidates(found)
+    setHits([])
+    setPhotoUrl(URL.createObjectURL(file))
+    const found = await identifyPhoto(file)
+    setHits(found)
   }
 
   const pick = (bike: Bike) => {
@@ -117,41 +159,109 @@ export default function Identify({
     else if (canAdd) setAdding(bike)
   }
 
+  const year = (row: Model, value: number) => {
+    const bike = bikeOf(row, value)
+    const has = Boolean(bike.manualId)
+    const live = has || canAdd
+    return (
+      <button
+        key={value}
+        onClick={() => pick(bike)}
+        disabled={!live}
+        className={`d h-10 shrink-0 rounded-[10px] px-[14px] text-[15px] transition-colors duration-150 ${
+          has
+            ? 'bg-[var(--accent)] font-bold text-[var(--accent-ink)]'
+            : live
+              ? 'bg-[var(--ink-2)] font-semibold text-[var(--fg)] active:bg-[var(--line)]'
+              : 'bg-[var(--ink-2)] font-semibold text-[var(--muted)] opacity-45'
+        }`}
+      >
+        {value}
+      </button>
+    )
+  }
+
   return (
-    <div className="h-full w-full overflow-hidden bg-[var(--bg)] text-[var(--fg)]">
+    <div className="h-full w-full overflow-hidden">
       <div className="mx-auto flex h-full w-full max-w-[430px] flex-col">
-        <div className="px-4 pt-4 pb-2">
-          <input
-            value={q}
-            onChange={(e) => {
-              setQ(e.target.value)
-              setOpen(null)
-              if (e.target.value.trim()) {
-                setVinMode(false)
-                setVinHit(null)
-                setPhotoUrl(null)
-                setCandidates([])
-              }
-            }}
-            placeholder="Make, model"
-            autoCorrect="off"
-            spellCheck={false}
-            className="h-[44px] w-full rounded-xl border border-[var(--line)] bg-transparent px-3 text-[17px] outline-none placeholder:text-[var(--muted)] focus:border-[var(--muted)]"
-          />
+        <div className="shrink-0 px-4 pt-[max(28px,calc(env(safe-area-inset-top)+18px))] pb-1">
+          <div
+            className={`flex h-[52px] items-center gap-1 rounded-[14px] border bg-[var(--ink-1)] pr-[6px] pl-[14px] transition-colors duration-150 ${
+              focused ? 'border-[var(--accent)]' : 'border-[var(--line)]'
+            }`}
+          >
+            <input
+              value={q}
+              onChange={(e) => {
+                setQ(e.target.value)
+                if (e.target.value.trim()) {
+                  setVinMode(false)
+                  setVinHit(null)
+                  setPhotoUrl(null)
+                  setHits([])
+                }
+              }}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              placeholder="Make, model"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck={false}
+              enterKeyHint="search"
+              className="h-full min-w-0 flex-1 bg-transparent text-[17px] outline-none placeholder:text-[var(--muted)]"
+            />
+            {q && (
+              <button
+                onClick={reset}
+                aria-label="✕"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--ink-2)] text-[15px] leading-none text-[var(--muted)]"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-4">
-          {photoUrl && !q.trim() && (
-            <div className="flex items-center gap-3 py-3">
-              <img src={photoUrl} alt="" className="h-[56px] w-[56px] rounded-xl border border-[var(--line)] object-cover" />
+        <div
+          ref={listRef}
+          style={{ ...fade, scrollbarWidth: 'none' }}
+          className={`hairline min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-3 ${
+            bare ? 'flex flex-col justify-end pb-1' : ''
+          }`}
+        >
+          {photoUrl && (
+            <div className="flex items-center gap-3 pb-3">
+              <img
+                src={photoUrl}
+                alt=""
+                className="h-16 w-16 shrink-0 rounded-[14px] border border-[var(--line)] object-cover"
+              />
               <div className="flex-1" />
               <button
                 onClick={reset}
                 aria-label="✕"
-                className="flex h-[44px] w-[44px] items-center justify-center rounded-xl border border-[var(--line)] text-[17px] text-[var(--muted)]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] bg-[var(--ink-1)] text-[17px] leading-none text-[var(--muted)]"
               >
                 ✕
               </button>
+            </div>
+          )}
+
+          {chips.length > 0 && (
+            <div className="flex flex-wrap gap-2 pb-2">
+              {chips.map((make, i) => (
+                <button
+                  key={make}
+                  onClick={() => setQ(`${make} `)}
+                  style={bare ? { animationDelay: `${i * STEP_MS}ms` } : undefined}
+                  className={`flex h-11 items-center rounded-xl bg-[var(--ink-1)] px-4 text-[15px] font-medium active:bg-[var(--ink-2)] ${
+                    bare ? 'deal' : ''
+                  }`}
+                >
+                  {make}
+                </button>
+              ))}
             </div>
           )}
 
@@ -159,78 +269,76 @@ export default function Identify({
             <button
               onClick={() => pick(vinBike)}
               disabled={!vinBike.manualId && !canAdd}
-              className={`flex min-h-[56px] w-full items-center justify-between gap-3 border-b border-[var(--line)] py-3 text-left ${
-                vinBike.manualId ? '' : 'text-[var(--muted)] opacity-50'
-              }`}
+              className="mb-2 flex w-full items-center justify-between gap-3 rounded-[14px] bg-[var(--ink-1)] py-3 pr-3 pl-[14px] text-left"
             >
-              <span className="text-[17px] font-medium">
+              <span className="min-w-0 flex-1 truncate text-[17px] leading-snug font-medium">
                 {vinBike.make} {vinBike.model}
               </span>
-              <span className="text-[13px] text-[var(--muted)]">{vinBike.year}</span>
+              <span
+                className={`d flex h-10 shrink-0 items-center rounded-[10px] px-[14px] text-[15px] ${
+                  vinBike.manualId
+                    ? 'bg-[var(--accent)] font-bold text-[var(--accent-ink)]'
+                    : 'bg-[var(--ink-2)] font-semibold text-[var(--muted)]'
+                }`}
+              >
+                {vinBike.year}
+              </span>
             </button>
           )}
 
-          {rows.map((row) => (
-            <div key={row.key} className="border-b border-[var(--line)]">
-              <button
-                onClick={() => setOpen(open === row.key ? null : row.key)}
-                className="flex min-h-[56px] w-full items-center justify-between gap-3 py-3 text-left"
-              >
-                <span className="flex-1 text-[17px] font-medium">
-                  {row.make} {row.model}
-                </span>
-                <span className="text-[13px] text-[var(--muted)]">{open === row.key ? '' : span(row.models)}</span>
-              </button>
-              {row.confidence !== undefined && (
-                <div className="mb-3 h-[2px] w-[64px] rounded-full bg-[var(--line)]">
-                  <div className="h-full rounded-full bg-[var(--muted)]" style={{ width: `${Math.round(row.confidence * 100)}%` }} />
-                </div>
-              )}
-              {open === row.key && (
-                <div className="flex flex-wrap gap-2 pb-3">
-                  {row.models.map((b) =>
-                    b.manualId || canAdd ? (
-                      <button
-                        key={b.id}
-                        onClick={() => pick(b)}
-                        className={`min-h-[44px] rounded-xl border border-[var(--line)] px-4 text-[15px] font-medium ${
-                          b.manualId ? '' : 'text-[var(--muted)] opacity-60'
-                        }`}
-                      >
-                        {b.year}
-                      </button>
-                    ) : (
-                      <span
-                        key={b.id}
-                        className="flex min-h-[44px] items-center rounded-xl border border-[var(--line)] px-4 text-[15px] text-[var(--muted)] opacity-40"
-                      >
-                        {b.year}
+          {rows.length > 0 && (
+            <div className="flex flex-col gap-2">
+              {rows.map((row) => (
+                <div key={row.key} className="rounded-[14px] bg-[var(--ink-1)] py-3 pl-[14px]">
+                  <div className="flex items-center gap-3 pr-[14px]">
+                    <span className="min-w-0 flex-1 truncate text-[17px] leading-snug font-medium">
+                      {row.make} {row.model}
+                    </span>
+                    {photoRows.confidence.has(row.key) && (
+                      <span className="flex shrink-0 gap-[3px]">
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <i
+                            key={i}
+                            className={`block h-[3px] w-[6px] rounded-full ${
+                              i < Math.round((photoRows.confidence.get(row.key) ?? 0) * 5)
+                                ? 'bg-[var(--accent)]'
+                                : 'bg-[var(--ink-2)]'
+                            }`}
+                          />
+                        ))}
                       </span>
-                    ),
-                  )}
+                    )}
+                  </div>
+                  <div style={fadeRight} className="hairline mt-[10px] flex gap-2 overflow-x-auto pr-[14px]">
+                    {row.years.map((value) => year(row, value))}
+                  </div>
                 </div>
-              )}
+              ))}
             </div>
-          ))}
+          )}
+
+          <div className="h-2 shrink-0" />
         </div>
 
-        <div className="px-4 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="shrink-0 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
           {vinMode ? (
             <div className="flex gap-3">
               <input
                 value={vin}
-                onChange={(e) => setVin(e.target.value)}
+                onChange={(e) => setVin(cleanVin(e.target.value))}
                 maxLength={17}
                 autoCapitalize="characters"
+                autoComplete="off"
                 autoCorrect="off"
                 spellCheck={false}
+                enterKeyHint="done"
                 autoFocus
-                className="h-14 min-w-0 flex-1 rounded-xl border border-[var(--line)] bg-transparent px-3 font-mono text-[17px] tracking-[0.08em] uppercase outline-none focus:border-[var(--muted)]"
+                className="d h-14 min-w-0 flex-1 rounded-[14px] border border-[var(--line)] bg-[var(--ink-1)] px-4 text-[17px] font-semibold tracking-[0.1em] outline-none focus:border-[var(--accent)]"
               />
               <button
                 onClick={reset}
                 aria-label="✕"
-                className="h-14 w-14 shrink-0 rounded-xl border border-[var(--line)] text-[17px] text-[var(--muted)]"
+                className="h-14 w-14 shrink-0 rounded-[14px] bg-[var(--ink-1)] text-[17px] leading-none text-[var(--muted)]"
               >
                 ✕
               </button>
@@ -239,7 +347,7 @@ export default function Identify({
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => fileRef.current?.click()}
-                className="h-14 rounded-xl bg-[var(--accent)] text-[17px] font-medium text-[var(--bg)]"
+                className="lab h-14 rounded-[14px] bg-[var(--accent)] text-[var(--accent-ink)] active:opacity-90"
               >
                 Photo
               </button>
@@ -248,10 +356,9 @@ export default function Identify({
                   setVinMode(true)
                   setQ('')
                   setPhotoUrl(null)
-                  setCandidates([])
-                  setOpen(null)
+                  setHits([])
                 }}
-                className="h-14 rounded-xl border border-[var(--line)] text-[17px] font-medium"
+                className="lab h-14 rounded-[14px] border border-[var(--line)] bg-[var(--ink-1)] text-[var(--fg)] active:bg-[var(--ink-2)]"
               >
                 VIN
               </button>

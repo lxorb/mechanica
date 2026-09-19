@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { CostSummary } from '../lib/api'
 import { cost } from '../lib/api'
+import { track } from '../lib/busy'
 
 const usd = (n: number): string => (n >= 100 ? n.toFixed(2) : n.toFixed(4))
 
@@ -9,7 +10,7 @@ export default function Cost({ onBack }: { onBack: () => void }) {
 
   useEffect(() => {
     const control = new AbortController()
-    cost(control.signal)
+    track(cost(control.signal))
       .then(setSummary)
       .catch(() => {})
     return () => control.abort()
@@ -25,10 +26,14 @@ export default function Cost({ onBack }: { onBack: () => void }) {
     : []
 
   return (
-    <div className="h-full w-full overflow-hidden bg-[var(--bg)] text-[var(--fg)]">
+    <div className="h-full w-full overflow-hidden">
       <div className="mx-auto flex h-full w-full max-w-[430px] flex-col">
-        <div className="shrink-0 pt-[env(safe-area-inset-top)]">
-          <button onClick={onBack} className="flex h-11 w-11 items-center justify-center text-[17px] leading-none">
+        <div className="shrink-0 px-2 pt-[env(safe-area-inset-top)]">
+          <button
+            onClick={onBack}
+            aria-label="←"
+            className="flex h-11 w-11 items-center justify-center text-[17px] leading-none"
+          >
             ←
           </button>
         </div>

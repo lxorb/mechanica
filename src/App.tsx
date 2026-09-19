@@ -1,76 +1,133 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Bike, Manual, Match } from './types'
-import { ask as askSource, loadBikes, loadManual } from './lib/source'
+import type { Model } from './data'
+import { models as localModels } from './data'
+import { ask as askSource, loadCatalog, loadManual } from './lib/source'
 import Identify from './screens/Identify'
 import Ask from './screens/Ask'
 import Result from './screens/Result'
 import Cost from './screens/Cost'
+import Progress from './components/Progress'
 
-type State =
+type Frame =
   | { step: 'identify' }
   | { step: 'ask'; bike: Bike; manual: Manual }
-  | { step: 'result'; bike: Bike; manual: Manual; query: string; matches: Match[] }
+  | { step: 'result'; bike: Bike; manual: Manual; matches: Match[] }
+
+const ROOT: Frame = { step: 'identify' }
+
+const depthOf = (): number => {
+  const state = window.history.state as { d?: unknown } | null
+  return typeof state?.d === 'number' ? state.d : 0
+}
 
 export default function App() {
-  const [bikes, setBikes] = useState<Bike[] | null>(null)
-  const [s, set] = useState<State>({ step: 'identify' })
+  const [catalog, setCatalog] = useState<Model[]>(localModels)
+  const [frame, setFrame] = useState<Frame>(ROOT)
   const [hash, setHash] = useState(() => window.location.hash)
+  const frames = useRef<Frame[]>([ROOT])
+  const depth = useRef(0)
+  const moved = useRef(false)
 
   useEffect(() => {
-    loadBikes().then(setBikes)
+    let alive = true
+    loadCatalog().then((next) => {
+      if (alive) setCatalog(next)
+    })
+    return () => {
+      alive = false
+    }
   }, [])
 
   useEffect(() => {
-    const onHash = () => setHash(window.location.hash)
+    if (typeof (window.history.state as { d?: unknown } | null)?.d !== 'number') {
+      window.history.replaceState({ d: 0 }, '')
+    }
+    const onPop = () => {
+      const d = depthOf()
+      depth.current = d
+      setHash(window.location.hash)
+      setFrame(frames.current[Math.min(d, frames.current.length - 1)] ?? ROOT)
+    }
+    const onHash = () => {
+      if (typeof (window.history.state as { d?: unknown } | null)?.d !== 'number') {
+        moved.current = true
+        window.history.replaceState({ d: depth.current }, '')
+      }
+      setHash(window.location.hash)
+    }
+    window.addEventListener('popstate', onPop)
     window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    return () => {
+      window.removeEventListener('popstate', onPop)
+      window.removeEventListener('hashchange', onHash)
+    }
   }, [])
 
-  if (hash === '#cost') {
-    return (
-      <Cost
-        onBack={() => {
-          window.location.hash = ''
-        }}
-      />
-    )
+  const push = useCallback((next: Frame) => {
+    const d = depth.current + 1
+    frames.current = [...frames.current.slice(0, d), next]
+    depth.current = d
+    moved.current = true
+    window.history.pushState({ d }, '')
+    setFrame(next)
+  }, [])
+
+  const back = useCallback(() => {
+    if (moved.current) {
+      window.history.back()
+      return
+    }
+    window.history.replaceState({ d: 0 }, '', window.location.pathname + window.location.search)
+    depth.current = 0
+    setHash('')
+    setFrame(ROOT)
+  }, [])
+
+  const select = useCallback(
+    async (bike: Bike) => {
+      const manual = await loadManual(bike)
+      if (manual) push({ step: 'ask', bike, manual })
+    },
+    [push],
+  )
+
+  const open = useCallback(
+    (bike: Bike, manual: Manual) => {
+      push({ step: 'ask', bike, manual })
+    },
+    [push],
+  )
+
+  const ask = useCallback(
+    async (bike: Bike, manual: Manual, query: string) => {
+      const matches = await askSource(manual, query)
+      push({ step: 'result', bike, manual, matches })
+    },
+    [push],
+  )
+
+  const screen = () => {
+    if (hash === '#cost') return <Cost onBack={back} />
+    if (frame.step === 'identify') return <Identify catalog={catalog} onSelect={select} onManual={open} />
+    if (frame.step === 'ask')
+      return (
+        <Ask
+          bike={frame.bike}
+          manual={frame.manual}
+          onAsk={(query) => ask(frame.bike, frame.manual, query)}
+          onBack={back}
+        />
+      )
+    return <Result bike={frame.bike} manual={frame.manual} matches={frame.matches} onBack={back} />
   }
 
-  if (!bikes) return null
-
-  if (s.step === 'identify') {
-    return (
-      <Identify
-        bikes={bikes}
-        onSelect={async (bike) => {
-          const manual = await loadManual(bike)
-          if (manual) set({ step: 'ask', bike, manual })
-        }}
-        onManual={(bike, manual) => {
-          set({ step: 'ask', bike, manual })
-          loadBikes().then(setBikes)
-        }}
-      />
-    )
-  }
-
-  const ask = async (query: string) => {
-    const matches = await askSource(s.manual, query)
-    set({ step: 'result', bike: s.bike, manual: s.manual, query, matches })
-  }
-
-  if (s.step === 'ask') {
-    return <Ask bike={s.bike} manual={s.manual} onAsk={ask} onBack={() => set({ step: 'identify' })} />
-  }
+  const step = hash === '#cost' ? 1 : frame.step === 'identify' ? 1 : frame.step === 'ask' ? 2 : 3
 
   return (
-    <Result
-      bike={s.bike}
-      manual={s.manual}
-      query={s.query}
-      matches={s.matches}
-      onAsk={ask}
-      onBack={() => set({ step: 'ask', bike: s.bike, manual: s.manual })}
-    />
+    <>
+      <Progress step={step} />
+      {screen()}
+    </>
   )
 }

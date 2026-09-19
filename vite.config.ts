@@ -6,6 +6,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
+  server: {
+    watch: { ignored: ['**/api/**', '**/dist/**', '**/.wrangler/**', '**/tools/**'] },
+  },
   plugins: [react(), tailwindcss(), VitePWA({
     registerType: 'autoUpdate',
     devOptions: { enabled: false },
