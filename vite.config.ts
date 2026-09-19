@@ -9,6 +9,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      devOptions: { enabled: false },
       includeAssets: ['icons/*.png', 'icons/*.svg'],
       manifest: {
         name: 'Trust the manual',
@@ -18,16 +19,27 @@ export default defineConfig({
         background_color: '#000000',
         display: 'standalone',
         orientation: 'portrait',
+        start_url: '/',
+        scope: '/',
         icons: [
-          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: 'icons/icon-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
         maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
-        globPatterns: ['**/*.{js,css,html,png,svg,json,woff2}'],
+        globPatterns: ['**/*.{js,mjs,css,html,png,svg,json,woff2}'],
         runtimeCaching: [
-          { urlPattern: /\/manuals\/.*\.pdf$/, handler: 'CacheFirst', options: { cacheName: 'manuals' } },
+          {
+            urlPattern: /\/manuals\/.*\.pdf$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'manuals',
+              expiration: { maxEntries: 10 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
         ],
       },
     }),

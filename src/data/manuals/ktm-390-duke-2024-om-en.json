@@ -1,1 +1,2539 @@
-{ "id": "ktm-390-duke-2024-om-en", "bikeIds": ["ktm-390-duke-2024"], "file": "/manuals/ktm-390-duke-2024-om-en.pdf", "pages": 1, "title": "390 Duke 2024 Owner's Manual", "source": "https://azwecdnepstoragewebsiteuploads.azureedge.net/24_3214961_en_OM.pdf", "outline": [], "sections": [], "parts": [] }
+{
+ "id": "ktm-390-duke-2024-om-en",
+ "bikeIds": [
+  "ktm-390-duke-2024"
+ ],
+ "file": "/manuals/ktm-390-duke-2024-om-en.pdf",
+ "pages": 143,
+ "title": "OWNER'S MANUAL 2024 390 DUKE",
+ "source": "https://azwecdnepstoragewebsiteuploads.azureedge.net/24_3214961_en_OM.pdf",
+ "outline": [
+  {
+   "title": "1 MEANS OF REPRESENTATION",
+   "page": 7,
+   "children": [
+    {
+     "title": "1.1 Symbols used",
+     "page": 7
+    },
+    {
+     "title": "1.2 Formats used",
+     "page": 7
+    }
+   ]
+  },
+  {
+   "title": "2 SAFETY ADVICE",
+   "page": 8,
+   "children": [
+    {
+     "title": "2.1 Use definition",
+     "page": 8
+    },
+    {
+     "title": "2.2 Misuse",
+     "page": 8
+    },
+    {
+     "title": "2.3 Safety advice",
+     "page": 8
+    },
+    {
+     "title": "2.4 Degrees of risk and symbols",
+     "page": 8
+    },
+    {
+     "title": "2.5 Overview of labels",
+     "page": 9
+    },
+    {
+     "title": "2.6 Consumer rights",
+     "page": 10
+    },
+    {
+     "title": "2.7 Operating noise warning",
+     "page": 10
+    },
+    {
+     "title": "2.8 Manufacturer warranty for the exhaust monitoring system",
+     "page": 10
+    },
+    {
+     "title": "2.9 Noise emission warranty",
+     "page": 11
+    },
+    {
+     "title": "2.10 Reporting safety defects",
+     "page": 11
+    },
+    {
+     "title": "2.11 Tampering warning",
+     "page": 11
+    },
+    {
+     "title": "2.12 Safe operation",
+     "page": 12
+    },
+    {
+     "title": "2.13 Protective clothing",
+     "page": 12
+    },
+    {
+     "title": "2.14 Work rules",
+     "page": 12
+    },
+    {
+     "title": "2.15 Environment",
+     "page": 13
+    },
+    {
+     "title": "2.16 Owner's Manual",
+     "page": 13
+    }
+   ]
+  },
+  {
+   "title": "3 IMPORTANT NOTES",
+   "page": 14,
+   "children": [
+    {
+     "title": "3.1 Manufacturer warranty, implied warranty",
+     "page": 14
+    },
+    {
+     "title": "3.2 Fuel, auxiliary substances",
+     "page": 14
+    },
+    {
+     "title": "3.3 Spare parts, technical accessories",
+     "page": 14
+    },
+    {
+     "title": "3.4 Service",
+     "page": 14
+    },
+    {
+     "title": "3.5 Figures",
+     "page": 14
+    },
+    {
+     "title": "3.6 Customer service",
+     "page": 14
+    }
+   ]
+  },
+  {
+   "title": "4 VIEW OF VEHICLE",
+   "page": 15,
+   "children": [
+    {
+     "title": "4.1 View of vehicle, front left (example)",
+     "page": 15
+    },
+    {
+     "title": "4.2 View of vehicle, rear right (example)",
+     "page": 16
+    }
+   ]
+  },
+  {
+   "title": "5 SERIAL NUMBERS",
+   "page": 17,
+   "children": [
+    {
+     "title": "5.1 Vehicle identification number",
+     "page": 17
+    },
+    {
+     "title": "5.2 Type label",
+     "page": 17
+    },
+    {
+     "title": "5.3 Engine number",
+     "page": 17
+    },
+    {
+     "title": "5.4 Key number",
+     "page": 18
+    }
+   ]
+  },
+  {
+   "title": "6 CONTROLS",
+   "page": 19,
+   "children": [
+    {
+     "title": "6.1 Clutch lever",
+     "page": 19
+    },
+    {
+     "title": "6.2 Hand brake lever",
+     "page": 19
+    },
+    {
+     "title": "6.3 Foot brake lever",
+     "page": 19
+    },
+    {
+     "title": "6.4 Throttle grip",
+     "page": 19
+    },
+    {
+     "title": "6.5 Switch on the left side of the handlebar",
+     "page": 20,
+     "children": [
+      {
+       "title": "6.5.1 Combination switch",
+       "page": 20
+      },
+      {
+       "title": "6.5.2 Light switch",
+       "page": 20
+      },
+      {
+       "title": "6.5.3 Hazard warning flasher switch",
+       "page": 20
+      },
+      {
+       "title": "6.5.4 Menu buttons",
+       "page": 21
+      },
+      {
+       "title": "6.5.5 Turn signal switch",
+       "page": 21
+      },
+      {
+       "title": "6.5.6 Horn button",
+       "page": 21
+      }
+     ]
+    },
+    {
+     "title": "6.6 Switch on the right side of the handlebar",
+     "page": 22,
+     "children": [
+      {
+       "title": "6.6.1 Emergency OFF switch",
+       "page": 22
+      },
+      {
+       "title": "6.6.2 Start button",
+       "page": 22
+      }
+     ]
+    },
+    {
+     "title": "6.7 USB socket",
+     "page": 22
+    },
+    {
+     "title": "6.8 Ignition and steering lock",
+     "page": 22
+    },
+    {
+     "title": "6.9 Locking the steering",
+     "page": 23
+    },
+    {
+     "title": "6.10 Unlocking the steering",
+     "page": 23
+    },
+    {
+     "title": "6.11 Opening fuel tank filler cap",
+     "page": 23
+    },
+    {
+     "title": "6.12 Closing the fuel tank filler cap",
+     "page": 24
+    },
+    {
+     "title": "6.13 Seat lock",
+     "page": 25
+    },
+    {
+     "title": "6.14 Tool set",
+     "page": 25
+    },
+    {
+     "title": "6.15 Supporting strap",
+     "page": 25
+    },
+    {
+     "title": "6.16 Passenger foot pegs",
+     "page": 25
+    },
+    {
+     "title": "6.17 Shift lever",
+     "page": 26
+    },
+    {
+     "title": "6.18 Foot brake lever",
+     "page": 26
+    },
+    {
+     "title": "6.19 Side stand",
+     "page": 26
+    }
+   ]
+  },
+  {
+   "title": "7 COMBINATION INSTRUMENT",
+   "page": 27,
+   "children": [
+    {
+     "title": "7.1 Combination instrument",
+     "page": 27
+    },
+    {
+     "title": "7.2 Activation and test",
+     "page": 27
+    },
+    {
+     "title": "7.3 Warnings",
+     "page": 28
+    },
+    {
+     "title": "7.4 Indicator lamps",
+     "page": 29
+    },
+    {
+     "title": "7.5 Display",
+     "page": 30
+    },
+    {
+     "title": "7.6 Track display",
+     "page": 31
+    },
+    {
+     "title": "7.7 Engine speed",
+     "page": 32
+    },
+    {
+     "title": "7.8 Shift warning light",
+     "page": 32
+    },
+    {
+     "title": "7.9 Speedometer",
+     "page": 32
+    },
+    {
+     "title": "7.10 Speed limiter display",
+     "page": 33
+    },
+    {
+     "title": "7.11 Time",
+     "page": 33
+    },
+    {
+     "title": "7.12 Ride‑Mode display",
+     "page": 33
+    },
+    {
+     "title": "7.13 ABS display",
+     "page": 33
+    },
+    {
+     "title": "7.14 MTC display (optional)",
+     "page": 34
+    },
+    {
+     "title": "7.15 Coolant temperature indicator",
+     "page": 34
+    },
+    {
+     "title": "7.16 Fuel level display",
+     "page": 34
+    },
+    {
+     "title": "7.17 Heated grip (optional)",
+     "page": 35
+    },
+    {
+     "title": "7.18 Favorites display",
+     "page": 35
+    },
+    {
+     "title": "7.19 Quick Selector 1 display",
+     "page": 35
+    },
+    {
+     "title": "7.20 Quick Selector 2 display",
+     "page": 36
+    },
+    {
+     "title": "7.21 Navigation display (optional)",
+     "page": 36
+    },
+    {
+     "title": "7.22 Call display",
+     "page": 36
+    },
+    {
+     "title": "7.23 Remote Control Mode (optional) (RCM)",
+     "page": 37
+    },
+    {
+     "title": "7.24 menu",
+     "page": 37,
+     "children": [
+      {
+       "title": "7.24.1 Lap Timer",
+       "page": 37
+      },
+      {
+       "title": "7.24.2 Delete all laps",
+       "page": 38
+      },
+      {
+       "title": "7.24.3 Motorcycle",
+       "page": 38
+      },
+      {
+       "title": "7.24.4 Ride Mode",
+       "page": 38
+      },
+      {
+       "title": "7.24.5 ABS",
+       "page": 39
+      },
+      {
+       "title": "7.24.6 MTC",
+       "page": 39
+      },
+      {
+       "title": "7.24.7 Launch Control (optional)",
+       "page": 40
+      }
+     ]
+    },
+    {
+     "title": "7.25 menu",
+     "page": 40,
+     "children": [
+      {
+       "title": "7.25.1 Bike Info",
+       "page": 40
+      },
+      {
+       "title": "7.25.2 Bike Info",
+       "page": 40
+      },
+      {
+       "title": "7.25.3 Warning",
+       "page": 40
+      },
+      {
+       "title": "7.25.4 Trip Info",
+       "page": 41
+      },
+      {
+       "title": "7.25.5 Trip 1",
+       "page": 41
+      },
+      {
+       "title": "7.25.6 Trip 2",
+       "page": 42
+      },
+      {
+       "title": "7.25.7 Speed limiter",
+       "page": 42
+      },
+      {
+       "title": "7.25.8 Speed limiter State",
+       "page": 42
+      },
+      {
+       "title": "7.25.9 Navigation (optional)",
+       "page": 43
+      },
+      {
+       "title": "7.25.10 Volume (optional)",
+       "page": 43
+      },
+      {
+       "title": "7.25.11 State (optional)",
+       "page": 44
+      },
+      {
+       "title": "7.25.12 Heating (optional)",
+       "page": 44
+      },
+      {
+       "title": "7.25.13 Heated Grips (optional)",
+       "page": 44
+      },
+      {
+       "title": "7.25.14 Audio",
+       "page": 45
+      },
+      {
+       "title": "7.25.15 Settings",
+       "page": 45
+      },
+      {
+       "title": "7.25.16 Favorites",
+       "page": 46
+      },
+      {
+       "title": "7.25.17 Favorites‑Anzeige 1‑4",
+       "page": 46
+      },
+      {
+       "title": "7.25.18 Quick Selector 1",
+       "page": 46
+      },
+      {
+       "title": "7.25.19 Quick Selector 2",
+       "page": 47
+      },
+      {
+       "title": "7.25.20 Connectivity",
+       "page": 47
+      },
+      {
+       "title": "7.25.21 Bluetooth",
+       "page": 47
+      },
+      {
+       "title": "7.25.22 Pairing a cellphone",
+       "page": 48
+      },
+      {
+       "title": "7.25.23 Pairing a headset",
+       "page": 49
+      },
+      {
+       "title": "7.25.24 Headset Type",
+       "page": 50
+      },
+      {
+       "title": "7.25.25 QUICKSHIFTER+ (optional)",
+       "page": 50
+      },
+      {
+       "title": "7.25.26 Shift Light",
+       "page": 50
+      },
+      {
+       "title": "7.25.27 Shift Light State",
+       "page": 51
+      },
+      {
+       "title": "7.25.28 RPM1",
+       "page": 51
+      },
+      {
+       "title": "7.25.29 RPM2",
+       "page": 51
+      },
+      {
+       "title": "7.25.30 Setting the time and date",
+       "page": 52
+      },
+      {
+       "title": "7.25.31 Clock Format",
+       "page": 53
+      },
+      {
+       "title": "7.25.32 Date Format",
+       "page": 53
+      },
+      {
+       "title": "7.25.33 Units",
+       "page": 53
+      },
+      {
+       "title": "7.25.34 Distance",
+       "page": 54
+      },
+      {
+       "title": "7.25.35 Temperature",
+       "page": 54
+      },
+      {
+       "title": "7.25.36 Consumption",
+       "page": 54
+      },
+      {
+       "title": "7.25.37 Language",
+       "page": 55
+      },
+      {
+       "title": "7.25.38 Heating (optional)",
+       "page": 55
+      },
+      {
+       "title": "7.25.39 Extra Functions",
+       "page": 55
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "8 PREPARING FOR USE",
+   "page": 56,
+   "children": [
+    {
+     "title": "8.1 Advice on preparing for first use",
+     "page": 56
+    },
+    {
+     "title": "8.2 Running in the engine",
+     "page": 57
+    },
+    {
+     "title": "8.3 Loading the vehicle",
+     "page": 57
+    }
+   ]
+  },
+  {
+   "title": "9 RIDING INSTRUCTIONS",
+   "page": 59,
+   "children": [
+    {
+     "title": "9.1 Checks and maintenance measures when preparing for use",
+     "page": 59
+    },
+    {
+     "title": "9.2 Starting",
+     "page": 59
+    },
+    {
+     "title": "9.3 Starting off",
+     "page": 60
+    },
+    {
+     "title": "9.4 Quickshifter+ (optional)",
+     "page": 61
+    },
+    {
+     "title": "9.5 Shifting, riding",
+     "page": 61
+    },
+    {
+     "title": "9.6 Applying the brakes",
+     "page": 64
+    },
+    {
+     "title": "9.7 Stopping, parking",
+     "page": 65
+    },
+    {
+     "title": "9.8 Transport",
+     "page": 66
+    },
+    {
+     "title": "9.9 Towing in the event of a breakdown",
+     "page": 66
+    },
+    {
+     "title": "9.10 Refueling",
+     "page": 67
+    }
+   ]
+  },
+  {
+   "title": "10 SERVICE SCHEDULE",
+   "page": 68,
+   "children": [
+    {
+     "title": "10.1 Additional information",
+     "page": 68
+    },
+    {
+     "title": "10.2 Service work",
+     "page": 68
+    }
+   ]
+  },
+  {
+   "title": "11 TUNING THE CHASSIS",
+   "page": 70,
+   "children": [
+    {
+     "title": "11.1 Fork/shock absorber",
+     "page": 70
+    },
+    {
+     "title": "11.2 Adjusting the compression damping of the fork",
+     "page": 70
+    },
+    {
+     "title": "11.3 Adjusting the rebound damping of the fork",
+     "page": 70
+    },
+    {
+     "title": "11.4 Adjusting the rebound damping of the shock absorber",
+     "page": 71
+    },
+    {
+     "title": "11.5 Adjusting the spring preload of the shock absorber",
+     "page": 71
+    },
+    {
+     "title": "11.6 Adjusting the shift lever",
+     "page": 72
+    }
+   ]
+  },
+  {
+   "title": "12 SERVICE WORK ON THE CHASSIS",
+   "page": 73,
+   "children": [
+    {
+     "title": "12.1 Raising the motorcycle with rear lifting gear",
+     "page": 73
+    },
+    {
+     "title": "12.2 Removing the rear of the motorcycle from the lifting gear",
+     "page": 73
+    },
+    {
+     "title": "12.3 Lifting the motorcycle with the front lifting gear",
+     "page": 73
+    },
+    {
+     "title": "12.4 Taking the motorcycle off the front lifting gear",
+     "page": 74
+    },
+    {
+     "title": "12.5 Cleaning the dust boots of the fork legs",
+     "page": 74
+    },
+    {
+     "title": "12.6 Removing the passenger seat",
+     "page": 75
+    },
+    {
+     "title": "12.7 Mounting the passenger seat",
+     "page": 75
+    },
+    {
+     "title": "12.8 Removing the front rider's seat",
+     "page": 76
+    },
+    {
+     "title": "12.9 Mounting the front rider's seat",
+     "page": 76
+    },
+    {
+     "title": "12.10 Checking for chain dirt accumulation",
+     "page": 76
+    },
+    {
+     "title": "12.11 Cleaning the chain",
+     "page": 76
+    },
+    {
+     "title": "12.12 Checking the chain tension",
+     "page": 77
+    },
+    {
+     "title": "12.13 Adjusting the chain tension",
+     "page": 78
+    },
+    {
+     "title": "12.14 Checking the chain, rear sprocket, and engine sprocket",
+     "page": 79
+    },
+    {
+     "title": "12.15 Adjusting the basic position of the clutch lever",
+     "page": 80
+    },
+    {
+     "title": "12.16 Checking the clutch lever play",
+     "page": 80
+    },
+    {
+     "title": "12.17 Adjusting play in the clutch lever",
+     "page": 81
+    }
+   ]
+  },
+  {
+   "title": "13 BRAKE SYSTEM",
+   "page": 82,
+   "children": [
+    {
+     "title": "13.1 Anti-lock braking system (ABS)",
+     "page": 82
+    },
+    {
+     "title": "13.2 Checking the brake discs",
+     "page": 83
+    },
+    {
+     "title": "13.3 Adjusting the basic position of the hand brake lever",
+     "page": 84
+    },
+    {
+     "title": "13.4 Checking the front brake fluid level",
+     "page": 84
+    },
+    {
+     "title": "13.5 Adding front brake fluid",
+     "page": 85
+    },
+    {
+     "title": "13.6 Checking that the brake linings of the front brake are secured",
+     "page": 86
+    },
+    {
+     "title": "13.7 Checking the rear brake fluid level",
+     "page": 86
+    },
+    {
+     "title": "13.8 Adding rear brake fluid",
+     "page": 87
+    },
+    {
+     "title": "13.9 Checking that the brake linings of the rear brake are secured",
+     "page": 88
+    }
+   ]
+  },
+  {
+   "title": "14 WHEELS, TIRES",
+   "page": 90,
+   "children": [
+    {
+     "title": "14.1 Removing the front wheel",
+     "page": 90
+    },
+    {
+     "title": "14.2 Installing the front wheel",
+     "page": 90
+    },
+    {
+     "title": "14.3 Removing the rear wheel",
+     "page": 91
+    },
+    {
+     "title": "14.4 Installing the rear wheel",
+     "page": 92
+    },
+    {
+     "title": "14.5 Checking the rear hub damping rubber pieces",
+     "page": 93
+    },
+    {
+     "title": "14.6 Checking the tire condition",
+     "page": 94
+    },
+    {
+     "title": "14.7 Checking tire pressure",
+     "page": 95
+    }
+   ]
+  },
+  {
+   "title": "15 ELECTRICAL SYSTEM",
+   "page": 96,
+   "children": [
+    {
+     "title": "15.1 Removing the 12-V battery",
+     "page": 96
+    },
+    {
+     "title": "15.2 Installing the 12-V battery",
+     "page": 96
+    },
+    {
+     "title": "15.3 Charging the 12-V battery",
+     "page": 97
+    },
+    {
+     "title": "15.4 Changing the main fuse",
+     "page": 98
+    },
+    {
+     "title": "15.5 Changing the ABS fuses",
+     "page": 100
+    },
+    {
+     "title": "15.6 Changing the fuses of individual electrical power consumers",
+     "page": 101
+    },
+    {
+     "title": "15.7 Checking the headlight setting",
+     "page": 103
+    },
+    {
+     "title": "15.8 Adjusting the headlight range",
+     "page": 103
+    },
+    {
+     "title": "15.9 Diagnostics connector",
+     "page": 104
+    },
+    {
+     "title": "15.10 Front ACC1 and ACC2",
+     "page": 104
+    },
+    {
+     "title": "15.11 Rear ACC1 and ACC2",
+     "page": 105
+    }
+   ]
+  },
+  {
+   "title": "16 COOLING SYSTEM",
+   "page": 106,
+   "children": [
+    {
+     "title": "16.1 Cooling system",
+     "page": 106
+    },
+    {
+     "title": "16.2 Checking the antifreeze and coolant level",
+     "page": 106
+    },
+    {
+     "title": "16.3 Checking the coolant level",
+     "page": 107
+    },
+    {
+     "title": "16.4 Draining the coolant",
+     "page": 108
+    },
+    {
+     "title": "16.5 Filling/bleeding the cooling system",
+     "page": 109
+    },
+    {
+     "title": "16.6 Changing the coolant",
+     "page": 111
+    }
+   ]
+  },
+  {
+   "title": "17 TUNING THE ENGINE",
+   "page": 113,
+   "children": [
+    {
+     "title": "17.1 Ride Mode",
+     "page": 113
+    },
+    {
+     "title": "17.2 Motorcycle traction control (optional) (Cornering MTC)",
+     "page": 113
+    }
+   ]
+  },
+  {
+   "title": "18 SERVICE WORK ON THE ENGINE",
+   "page": 114,
+   "children": [
+    {
+     "title": "18.1 Checking the engine oil level",
+     "page": 114
+    },
+    {
+     "title": "18.2 Changing the engine oil and oil filter, cleaning the oil screens",
+     "page": 114
+    },
+    {
+     "title": "18.3 Adding engine oil",
+     "page": 116
+    }
+   ]
+  },
+  {
+   "title": "19 CLEANING, CARE",
+   "page": 117,
+   "children": [
+    {
+     "title": "19.1 Cleaning the motorcycle",
+     "page": 117
+    },
+    {
+     "title": "19.2 Checks and maintenance steps for winter operation",
+     "page": 118
+    }
+   ]
+  },
+  {
+   "title": "20 STORAGE",
+   "page": 119,
+   "children": [
+    {
+     "title": "20.1 Storage",
+     "page": 119
+    },
+    {
+     "title": "20.2 Preparing for use after storage",
+     "page": 120
+    }
+   ]
+  },
+  {
+   "title": "21 TROUBLESHOOTING",
+   "page": 121
+  },
+  {
+   "title": "22 TECHNICAL SPECIFICATIONS",
+   "page": 123,
+   "children": [
+    {
+     "title": "22.1 Engine",
+     "page": 123
+    },
+    {
+     "title": "22.2 Engine tightening torques",
+     "page": 123
+    },
+    {
+     "title": "22.3 Capacities",
+     "page": 125,
+     "children": [
+      {
+       "title": "22.3.1 Engine oil",
+       "page": 125
+      },
+      {
+       "title": "22.3.2 Coolant",
+       "page": 125
+      },
+      {
+       "title": "22.3.3 Fuel",
+       "page": 126
+      }
+     ]
+    },
+    {
+     "title": "22.4 Chassis",
+     "page": 126
+    },
+    {
+     "title": "22.5 Electrical system",
+     "page": 127
+    },
+    {
+     "title": "22.6 Tires",
+     "page": 127
+    },
+    {
+     "title": "22.7 Fork",
+     "page": 127
+    },
+    {
+     "title": "22.8 Shock absorber",
+     "page": 128
+    },
+    {
+     "title": "22.9 Chassis tightening torques",
+     "page": 128
+    }
+   ]
+  },
+  {
+   "title": "23 DECLARATIONS OF CONFORMITY",
+   "page": 131,
+   "children": [
+    {
+     "title": "23.1 Declarations of conformity",
+     "page": 131
+    },
+    {
+     "title": "23.2 Country-specific declarations of conformity",
+     "page": 131
+    }
+   ]
+  },
+  {
+   "title": "24 SUBSTANCES",
+   "page": 132
+  },
+  {
+   "title": "25 AUXILIARY SUBSTANCES",
+   "page": 134
+  },
+  {
+   "title": "26 STANDARDS",
+   "page": 135
+  },
+  {
+   "title": "27 INDEX OF SPECIAL TERMS",
+   "page": 136
+  },
+  {
+   "title": "28 LIST OF ABBREVIATIONS",
+   "page": 137
+  },
+  {
+   "title": "29 LIST OF SYMBOLS",
+   "page": 138,
+   "children": [
+    {
+     "title": "29.1 Red symbols",
+     "page": 138
+    },
+    {
+     "title": "29.2 Yellow and orange symbols",
+     "page": 138
+    },
+    {
+     "title": "29.3 Green and blue symbols",
+     "page": 138
+    }
+   ]
+  },
+  {
+   "title": "INDEX",
+   "page": 139,
+   "children": [
+    {
+     "title": "1",
+     "page": 139
+    },
+    {
+     "title": "A",
+     "page": 139
+    },
+    {
+     "title": "B",
+     "page": 139
+    },
+    {
+     "title": "C",
+     "page": 139
+    },
+    {
+     "title": "D",
+     "page": 140
+    },
+    {
+     "title": "E",
+     "page": 140
+    },
+    {
+     "title": "F",
+     "page": 140
+    },
+    {
+     "title": "H",
+     "page": 140
+    },
+    {
+     "title": "I",
+     "page": 140
+    },
+    {
+     "title": "K",
+     "page": 140
+    },
+    {
+     "title": "L",
+     "page": 140
+    },
+    {
+     "title": "M",
+     "page": 140
+    },
+    {
+     "title": "O",
+     "page": 141
+    },
+    {
+     "title": "P",
+     "page": 141
+    },
+    {
+     "title": "Q",
+     "page": 141
+    },
+    {
+     "title": "R",
+     "page": 141
+    },
+    {
+     "title": "S",
+     "page": 141
+    },
+    {
+     "title": "T",
+     "page": 141
+    },
+    {
+     "title": "U",
+     "page": 141
+    },
+    {
+     "title": "V",
+     "page": 142
+    },
+    {
+     "title": "W",
+     "page": 142
+    }
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "engine-oil-level",
+   "title": "Checking the engine oil level",
+   "chapter": "18 SERVICE WORK ON THE ENGINE",
+   "pageStart": 114,
+   "pageEnd": 114,
+   "keywords": [
+    "engine oil level",
+    "check oil level",
+    "oil level",
+    "how much oil is in it",
+    "oil sight glass",
+    "check the oil",
+    "oil window",
+    "low oil",
+    "engine oil",
+    "oil dipstick"
+   ],
+   "highlights": [
+    {
+     "page": 114,
+     "x": 0.2429,
+     "y": 0.0816,
+     "w": 0.222,
+     "h": 0.0237
+    },
+    {
+     "page": 114,
+     "x": 0.5012,
+     "y": 0.1845,
+     "w": 0.402,
+     "h": 0.1075
+    },
+    {
+     "page": 114,
+     "x": 0.5262,
+     "y": 0.2839,
+     "w": 0.3374,
+     "h": 0.0449
+    }
+   ],
+   "partIds": [
+    "engine-oil"
+   ],
+   "related": [
+    "engine-oil-change",
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "engine-oil-change",
+   "title": "Changing the engine oil and oil filter, cleaning the oil screens",
+   "chapter": "18 SERVICE WORK ON THE ENGINE",
+   "pageStart": 114,
+   "pageEnd": 116,
+   "keywords": [
+    "change the oil",
+    "oil change",
+    "change engine oil",
+    "oil filter",
+    "change oil filter",
+    "how much oil",
+    "oil capacity",
+    "drain oil",
+    "oil drain plug torque",
+    "oil screen",
+    "engine oil",
+    "service the engine oil"
+   ],
+   "highlights": [
+    {
+     "page": 114,
+     "x": 0.2429,
+     "y": 0.3877,
+     "w": 0.4716,
+     "h": 0.0237
+    },
+    {
+     "page": 115,
+     "x": 0.4179,
+     "y": 0.1015,
+     "w": 0.2841,
+     "h": 0.0671
+    },
+    {
+     "page": 115,
+     "x": 0.4257,
+     "y": 0.2454,
+     "w": 0.3487,
+     "h": 0.0334
+    },
+    {
+     "page": 115,
+     "x": 0.4179,
+     "y": 0.5111,
+     "w": 0.4034,
+     "h": 0.0969
+    },
+    {
+     "page": 115,
+     "x": 0.4257,
+     "y": 0.7085,
+     "w": 0.3655,
+     "h": 0.0462
+    },
+    {
+     "page": 116,
+     "x": 0.4762,
+     "y": 0.206,
+     "w": 0.281,
+     "h": 0.0546
+    }
+   ],
+   "partIds": [
+    "engine-oil"
+   ],
+   "related": [
+    "engine-oil-level",
+    "engine-torques",
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "coolant-level",
+   "title": "Checking the coolant level",
+   "chapter": "16 COOLING SYSTEM",
+   "pageStart": 107,
+   "pageEnd": 108,
+   "keywords": [
+    "coolant level",
+    "check coolant",
+    "radiator level",
+    "antifreeze",
+    "coolant",
+    "low coolant",
+    "overheating",
+    "radiator cap",
+    "expansion tank",
+    "how much coolant"
+   ],
+   "highlights": [
+    {
+     "page": 107,
+     "x": 0.1595,
+     "y": 0.6115,
+     "w": 0.2025,
+     "h": 0.0237
+    },
+    {
+     "page": 108,
+     "x": 0.5012,
+     "y": 0.2711,
+     "w": 0.3572,
+     "h": 0.0488
+    },
+    {
+     "page": 108,
+     "x": 0.5012,
+     "y": 0.4005,
+     "w": 0.3885,
+     "h": 0.0613
+    },
+    {
+     "page": 108,
+     "x": 0.5262,
+     "y": 0.508,
+     "w": 0.1377,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "coolant"
+   ],
+   "related": [
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "chain-clean",
+   "title": "Cleaning the chain",
+   "chapter": "12 SERVICE WORK ON THE CHASSIS",
+   "pageStart": 76,
+   "pageEnd": 77,
+   "keywords": [
+    "clean the chain",
+    "chain lube",
+    "lube the chain",
+    "chain spray",
+    "grease the chain",
+    "chain cleaner",
+    "lubricate chain",
+    "dirty chain",
+    "chain maintenance"
+   ],
+   "highlights": [
+    {
+     "page": 76,
+     "x": 0.2429,
+     "y": 0.7017,
+     "w": 0.1422,
+     "h": 0.0237
+    },
+    {
+     "page": 77,
+     "x": 0.4179,
+     "y": 0.255,
+     "w": 0.3217,
+     "h": 0.0743
+    },
+    {
+     "page": 77,
+     "x": 0.4179,
+     "y": 0.3291,
+     "w": 0.207,
+     "h": 0.0411
+    }
+   ],
+   "partIds": [
+    "chain-cleaner",
+    "chain-spray"
+   ],
+   "related": [
+    "chain-tension-check",
+    "chain-tension-adjust"
+   ]
+  },
+  {
+   "id": "chain-tension-check",
+   "title": "Checking the chain tension",
+   "chapter": "12 SERVICE WORK ON THE CHASSIS",
+   "pageStart": 77,
+   "pageEnd": 78,
+   "keywords": [
+    "chain tension",
+    "check chain slack",
+    "chain slack",
+    "how tight should the chain be",
+    "chain too loose",
+    "measure chain tension",
+    "chain play",
+    "drive chain"
+   ],
+   "highlights": [
+    {
+     "page": 77,
+     "x": 0.1595,
+     "y": 0.4584,
+     "w": 0.2066,
+     "h": 0.0237
+    },
+    {
+     "page": 77,
+     "x": 0.4179,
+     "y": 0.7036,
+     "w": 0.3711,
+     "h": 0.0334
+    },
+    {
+     "page": 77,
+     "x": 0.4257,
+     "y": 0.8134,
+     "w": 0.3505,
+     "h": 0.0334
+    },
+    {
+     "page": 78,
+     "x": 0.5012,
+     "y": 0.0769,
+     "w": 0.3656,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "chain"
+   ],
+   "related": [
+    "chain-tension-adjust",
+    "chain-clean",
+    "chassis-torques"
+   ]
+  },
+  {
+   "id": "chain-tension-adjust",
+   "title": "Adjusting the chain tension",
+   "chapter": "12 SERVICE WORK ON THE CHASSIS",
+   "pageStart": 78,
+   "pageEnd": 78,
+   "keywords": [
+    "adjust the chain",
+    "tighten the chain",
+    "chain adjustment",
+    "chain adjusters",
+    "align the rear wheel",
+    "chain too loose",
+    "set chain tension",
+    "axle nut torque"
+   ],
+   "highlights": [
+    {
+     "page": 78,
+     "x": 0.2429,
+     "y": 0.1343,
+     "w": 0.2066,
+     "h": 0.0237
+    },
+    {
+     "page": 78,
+     "x": 0.5012,
+     "y": 0.3735,
+     "w": 0.3973,
+     "h": 0.0671
+    },
+    {
+     "page": 78,
+     "x": 0.509,
+     "y": 0.4641,
+     "w": 0.3505,
+     "h": 0.0334
+    },
+    {
+     "page": 78,
+     "x": 0.509,
+     "y": 0.7203,
+     "w": 0.3487,
+     "h": 0.0334
+    }
+   ],
+   "partIds": [
+    "chain"
+   ],
+   "related": [
+    "chain-tension-check",
+    "rear-wheel-remove",
+    "chassis-torques"
+   ]
+  },
+  {
+   "id": "front-brake-fluid-level",
+   "title": "Checking the front brake fluid level",
+   "chapter": "13 BRAKE SYSTEM",
+   "pageStart": 84,
+   "pageEnd": 84,
+   "keywords": [
+    "front brake fluid",
+    "brake fluid level",
+    "check brake fluid",
+    "brake fluid",
+    "brake lever soft",
+    "min marking brake",
+    "front brake",
+    "brake reservoir"
+   ],
+   "highlights": [
+    {
+     "page": 84,
+     "x": 0.2429,
+     "y": 0.4083,
+     "w": 0.268,
+     "h": 0.0237
+    },
+    {
+     "page": 84,
+     "x": 0.5012,
+     "y": 0.6702,
+     "w": 0.415,
+     "h": 0.0516
+    },
+    {
+     "page": 84,
+     "x": 0.5512,
+     "y": 0.7345,
+     "w": 0.1415,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "brake-fluid"
+   ],
+   "related": [
+    "front-brake-fluid-add",
+    "front-brake-pads"
+   ]
+  },
+  {
+   "id": "front-brake-fluid-add",
+   "title": "Adding front brake fluid",
+   "chapter": "13 BRAKE SYSTEM",
+   "pageStart": 85,
+   "pageEnd": 86,
+   "keywords": [
+    "add brake fluid",
+    "top up brake fluid",
+    "refill brake fluid",
+    "front brake fluid",
+    "dot 4",
+    "dot 5.1",
+    "which brake fluid",
+    "brake fluid type"
+   ],
+   "highlights": [
+    {
+     "page": 85,
+     "x": 0.1595,
+     "y": 0.0816,
+     "w": 0.179,
+     "h": 0.0237
+    },
+    {
+     "page": 85,
+     "x": 0.4179,
+     "y": 0.7221,
+     "w": 0.256,
+     "h": 0.0648
+    },
+    {
+     "page": 85,
+     "x": 0.4257,
+     "y": 0.7943,
+     "w": 0.3011,
+     "h": 0.0527
+    },
+    {
+     "page": 86,
+     "x": 0.5012,
+     "y": 0.0769,
+     "w": 0.405,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "brake-fluid"
+   ],
+   "related": [
+    "front-brake-fluid-level",
+    "front-brake-pads"
+   ]
+  },
+  {
+   "id": "front-brake-pads",
+   "title": "Checking that the brake linings of the front brake are secured",
+   "chapter": "13 BRAKE SYSTEM",
+   "pageStart": 86,
+   "pageEnd": 86,
+   "keywords": [
+    "front brake pads",
+    "brake pads",
+    "brake pad wear",
+    "pad thickness",
+    "worn brake pads",
+    "brake linings",
+    "check brake pads",
+    "when to change pads"
+   ],
+   "highlights": [
+    {
+     "page": 86,
+     "x": 0.2429,
+     "y": 0.1968,
+     "w": 0.4685,
+     "h": 0.0237
+    },
+    {
+     "page": 86,
+     "x": 0.5012,
+     "y": 0.3979,
+     "w": 0.3449,
+     "h": 0.0503
+    },
+    {
+     "page": 86,
+     "x": 0.5012,
+     "y": 0.4637,
+     "w": 0.3362,
+     "h": 0.0384
+    }
+   ],
+   "related": [
+    "front-brake-fluid-level",
+    "rear-brake-pads",
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "rear-brake-fluid-level",
+   "title": "Checking the rear brake fluid level",
+   "chapter": "13 BRAKE SYSTEM",
+   "pageStart": 86,
+   "pageEnd": 87,
+   "keywords": [
+    "rear brake fluid",
+    "back brake fluid",
+    "brake fluid level rear",
+    "foot brake",
+    "rear brake reservoir",
+    "check brake fluid",
+    "brake fluid"
+   ],
+   "highlights": [
+    {
+     "page": 86,
+     "x": 0.2429,
+     "y": 0.6217,
+     "w": 0.2639,
+     "h": 0.0237
+    },
+    {
+     "page": 87,
+     "x": 0.4179,
+     "y": 0.1986,
+     "w": 0.3581,
+     "h": 0.0372
+    },
+    {
+     "page": 87,
+     "x": 0.4429,
+     "y": 0.2258,
+     "w": 0.3035,
+     "h": 0.0449
+    }
+   ],
+   "partIds": [
+    "brake-fluid"
+   ],
+   "related": [
+    "rear-brake-pads",
+    "front-brake-fluid-level"
+   ]
+  },
+  {
+   "id": "rear-brake-pads",
+   "title": "Checking that the brake linings of the rear brake are secured",
+   "chapter": "13 BRAKE SYSTEM",
+   "pageStart": 88,
+   "pageEnd": 89,
+   "keywords": [
+    "rear brake pads",
+    "back brake pads",
+    "brake pad wear",
+    "pad thickness",
+    "worn brake pads",
+    "brake linings",
+    "check rear pads"
+   ],
+   "highlights": [
+    {
+     "page": 88,
+     "x": 0.2429,
+     "y": 0.639,
+     "w": 0.4644,
+     "h": 0.0237
+    },
+    {
+     "page": 89,
+     "x": 0.4179,
+     "y": 0.071,
+     "w": 0.3449,
+     "h": 0.0503
+    },
+    {
+     "page": 89,
+     "x": 0.4179,
+     "y": 0.1368,
+     "w": 0.3255,
+     "h": 0.0384
+    }
+   ],
+   "related": [
+    "rear-brake-fluid-level",
+    "front-brake-pads"
+   ]
+  },
+  {
+   "id": "tire-pressure",
+   "title": "Checking tire pressure",
+   "chapter": "14 WHEELS, TIRES",
+   "pageStart": 95,
+   "pageEnd": 95,
+   "keywords": [
+    "tire pressure",
+    "tyre pressure",
+    "how much air in the tires",
+    "psi",
+    "bar",
+    "inflate tires",
+    "cold tire pressure",
+    "front tire pressure",
+    "rear tire pressure"
+   ],
+   "highlights": [
+    {
+     "page": 95,
+     "x": 0.1595,
+     "y": 0.4977,
+     "w": 0.1718,
+     "h": 0.0237
+    },
+    {
+     "page": 95,
+     "x": 0.4179,
+     "y": 0.5894,
+     "w": 0.3108,
+     "h": 0.0372
+    },
+    {
+     "page": 95,
+     "x": 0.4257,
+     "y": 0.6264,
+     "w": 0.3128,
+     "h": 0.0548
+    },
+    {
+     "page": 95,
+     "x": 0.4257,
+     "y": 0.6849,
+     "w": 0.3128,
+     "h": 0.0548
+    }
+   ],
+   "partIds": [
+    "front-tire",
+    "rear-tire"
+   ],
+   "related": [
+    "tire-condition",
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "tire-condition",
+   "title": "Checking the tire condition",
+   "chapter": "14 WHEELS, TIRES",
+   "pageStart": 94,
+   "pageEnd": 95,
+   "keywords": [
+    "tire condition",
+    "tread depth",
+    "worn tires",
+    "when to change tires",
+    "tire age",
+    "tire damage",
+    "tyre wear",
+    "check the tires",
+    "minimum tread"
+   ],
+   "highlights": [
+    {
+     "page": 94,
+     "x": 0.2429,
+     "y": 0.5149,
+     "w": 0.2056,
+     "h": 0.0237
+    },
+    {
+     "page": 95,
+     "x": 0.4179,
+     "y": 0.0769,
+     "w": 0.3807,
+     "h": 0.0832
+    },
+    {
+     "page": 95,
+     "x": 0.4257,
+     "y": 0.1818,
+     "w": 0.4009,
+     "h": 0.0613
+    },
+    {
+     "page": 95,
+     "x": 0.4429,
+     "y": 0.3869,
+     "w": 0.3598,
+     "h": 0.0702
+    }
+   ],
+   "partIds": [
+    "front-tire",
+    "rear-tire"
+   ],
+   "related": [
+    "tire-pressure",
+    "rear-wheel-remove"
+   ]
+  },
+  {
+   "id": "rear-wheel-remove",
+   "title": "Removing the rear wheel",
+   "chapter": "14 WHEELS, TIRES",
+   "pageStart": 91,
+   "pageEnd": 92,
+   "keywords": [
+    "remove the rear wheel",
+    "take off the back wheel",
+    "rear wheel removal",
+    "flat tire",
+    "puncture",
+    "rear axle",
+    "take the wheel off",
+    "wheel spindle"
+   ],
+   "highlights": [
+    {
+     "page": 91,
+     "x": 0.1595,
+     "y": 0.543,
+     "w": 0.1882,
+     "h": 0.0237
+    },
+    {
+     "page": 92,
+     "x": 0.5012,
+     "y": 0.0849,
+     "w": 0.405,
+     "h": 0.0774
+    },
+    {
+     "page": 92,
+     "x": 0.5012,
+     "y": 0.1911,
+     "w": 0.4008,
+     "h": 0.1825
+    },
+    {
+     "page": 92,
+     "x": 0.5488,
+     "y": 0.3953,
+     "w": 0.364,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "rear-tire",
+    "chain"
+   ],
+   "related": [
+    "chain-tension-adjust",
+    "chassis-torques",
+    "tire-condition"
+   ]
+  },
+  {
+   "id": "battery-charge",
+   "title": "Charging the 12-V battery",
+   "chapter": "15 ELECTRICAL SYSTEM",
+   "pageStart": 97,
+   "pageEnd": 98,
+   "keywords": [
+    "charge the battery",
+    "battery charger",
+    "dead battery",
+    "trickle charger",
+    "battery tender",
+    "12v battery",
+    "won't start",
+    "battery maintenance",
+    "battery"
+   ],
+   "highlights": [
+    {
+     "page": 97,
+     "x": 0.1595,
+     "y": 0.3146,
+     "w": 0.1954,
+     "h": 0.0237
+    },
+    {
+     "page": 98,
+     "x": 0.5012,
+     "y": 0.0908,
+     "w": 0.4062,
+     "h": 0.0922
+    },
+    {
+     "page": 98,
+     "x": 0.509,
+     "y": 0.3977,
+     "w": 0.2697,
+     "h": 0.0207
+    },
+    {
+     "page": 98,
+     "x": 0.5012,
+     "y": 0.3513,
+     "w": 0.395,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "battery",
+    "battery-charger"
+   ],
+   "related": [
+    "fuses",
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "fuses",
+   "title": "Changing the fuses of individual electrical power consumers",
+   "chapter": "15 ELECTRICAL SYSTEM",
+   "pageStart": 101,
+   "pageEnd": 103,
+   "keywords": [
+    "fuse",
+    "change a fuse",
+    "blown fuse",
+    "fuse box",
+    "which fuse",
+    "fuse rating",
+    "amp fuse",
+    "no lights",
+    "horn not working",
+    "spare fuse"
+   ],
+   "highlights": [
+    {
+     "page": 101,
+     "x": 0.1595,
+     "y": 0.614,
+     "w": 0.4592,
+     "h": 0.0237
+    },
+    {
+     "page": 102,
+     "x": 0.5012,
+     "y": 0.217,
+     "w": 0.1638,
+     "h": 0.0449
+    },
+    {
+     "page": 102,
+     "x": 0.509,
+     "y": 0.2747,
+     "w": 0.3858,
+     "h": 0.2129
+    },
+    {
+     "page": 102,
+     "x": 0.5012,
+     "y": 0.676,
+     "w": 0.2895,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "fuse-10a",
+    "main-fuse"
+   ],
+   "related": [
+    "battery-charge"
+   ]
+  },
+  {
+   "id": "headlight-range",
+   "title": "Adjusting the headlight range",
+   "chapter": "15 ELECTRICAL SYSTEM",
+   "pageStart": 103,
+   "pageEnd": 104,
+   "keywords": [
+    "headlight adjustment",
+    "aim the headlight",
+    "headlight too low",
+    "headlight range",
+    "adjust headlight",
+    "light beam",
+    "low beam"
+   ],
+   "highlights": [
+    {
+     "page": 103,
+     "x": 0.1595,
+     "y": 0.6751,
+     "w": 0.223,
+     "h": 0.0237
+    },
+    {
+     "page": 103,
+     "x": 0.4179,
+     "y": 0.5219,
+     "w": 0.185,
+     "h": 0.0207
+    },
+    {
+     "page": 104,
+     "x": 0.5012,
+     "y": 0.0849,
+     "w": 0.3613,
+     "h": 0.0303
+    },
+    {
+     "page": 104,
+     "x": 0.5488,
+     "y": 0.135,
+     "w": 0.3414,
+     "h": 0.0207
+    }
+   ],
+   "related": [
+    "service-schedule"
+   ]
+  },
+  {
+   "id": "service-schedule",
+   "title": "Service work",
+   "chapter": "10 SERVICE SCHEDULE",
+   "pageStart": 68,
+   "pageEnd": 69,
+   "keywords": [
+    "service schedule",
+    "service intervals",
+    "when is the next service",
+    "maintenance schedule",
+    "10000 km service",
+    "what needs servicing",
+    "inspection",
+    "how often"
+   ],
+   "highlights": [
+    {
+     "page": 68,
+     "x": 0.2429,
+     "y": 0.1878,
+     "w": 0.0992,
+     "h": 0.0237
+    },
+    {
+     "page": 68,
+     "x": 0.1745,
+     "y": 0.7376,
+     "w": 0.731,
+     "h": 0.0218
+    },
+    {
+     "page": 68,
+     "x": 0.1745,
+     "y": 0.5028,
+     "w": 0.731,
+     "h": 0.0218
+    },
+    {
+     "page": 68,
+     "x": 0.1745,
+     "y": 0.7035,
+     "w": 0.731,
+     "h": 0.0218
+    },
+    {
+     "page": 69,
+     "x": 0.0912,
+     "y": 0.2947,
+     "w": 0.731,
+     "h": 0.0218
+    },
+    {
+     "page": 69,
+     "x": 0.0912,
+     "y": 0.1795,
+     "w": 0.6412,
+     "h": 0.0218
+    }
+   ],
+   "partIds": [
+    "engine-oil",
+    "coolant",
+    "brake-fluid",
+    "spark-plug"
+   ],
+   "related": [
+    "engine-oil-change",
+    "chain-tension-check",
+    "tire-pressure"
+   ]
+  },
+  {
+   "id": "engine-torques",
+   "title": "Engine tightening torques",
+   "chapter": "22 TECHNICAL SPECIFICATIONS",
+   "pageStart": 123,
+   "pageEnd": 125,
+   "keywords": [
+    "engine torque",
+    "tightening torque",
+    "torque specs",
+    "nm",
+    "oil drain plug torque",
+    "spark plug torque",
+    "how tight",
+    "torque table"
+   ],
+   "highlights": [
+    {
+     "page": 123,
+     "x": 0.1595,
+     "y": 0.7097,
+     "w": 0.1933,
+     "h": 0.0237
+    },
+    {
+     "page": 125,
+     "x": 0.0912,
+     "y": 0.4915,
+     "w": 0.6247,
+     "h": 0.0207
+    },
+    {
+     "page": 125,
+     "x": 0.0912,
+     "y": 0.6238,
+     "w": 0.6385,
+     "h": 0.0207
+    },
+    {
+     "page": 125,
+     "x": 0.0912,
+     "y": 0.5726,
+     "w": 0.308,
+     "h": 0.0207
+    }
+   ],
+   "partIds": [
+    "spark-plug"
+   ],
+   "related": [
+    "engine-oil-change",
+    "chassis-torques"
+   ]
+  },
+  {
+   "id": "chassis-torques",
+   "title": "Chassis tightening torques",
+   "chapter": "22 TECHNICAL SPECIFICATIONS",
+   "pageStart": 128,
+   "pageEnd": 130,
+   "keywords": [
+    "chassis torque",
+    "tightening torque",
+    "torque specs",
+    "axle nut torque",
+    "wheel spindle torque",
+    "sprocket nut torque",
+    "nm",
+    "torque table"
+   ],
+   "highlights": [
+    {
+     "page": 128,
+     "x": 0.2429,
+     "y": 0.4193,
+     "w": 0.2005,
+     "h": 0.0237
+    },
+    {
+     "page": 129,
+     "x": 0.0912,
+     "y": 0.6902,
+     "w": 0.6247,
+     "h": 0.0207
+    },
+    {
+     "page": 130,
+     "x": 0.1745,
+     "y": 0.581,
+     "w": 0.6339,
+     "h": 0.0207
+    },
+    {
+     "page": 130,
+     "x": 0.1745,
+     "y": 0.6323,
+     "w": 0.6247,
+     "h": 0.0207
+    }
+   ],
+   "related": [
+    "chain-tension-adjust",
+    "rear-wheel-remove",
+    "engine-torques"
+   ]
+  }
+ ],
+ "parts": [
+  {
+   "id": "engine-oil",
+   "name": "Engine oil (SAE 15W/50)",
+   "spec": "1.5 l (1.6 qt.), JASO T903 MA2, partially synthetic; MOTOREX® Formula 4T",
+   "page": 125,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Motorex+Formula+4T+15W%2F50"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Motorex+Formula+4T+15W%2F50"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Motorex+Formula+4T+15W%2F50"
+    }
+   ]
+  },
+  {
+   "id": "coolant",
+   "name": "Coolant",
+   "spec": "1 l (1 qt.), silicate-free, antifreeze protection to at least −25 °C (−13 °F); MOTOREX® COOLANT M3.0",
+   "page": 125,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Motorex+Coolant+M3.0"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Motorex+Coolant+M3.0"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Motorex+Coolant+M3.0"
+    }
+   ]
+  },
+  {
+   "id": "brake-fluid",
+   "name": "Brake fluid DOT 4 / DOT 5.1",
+   "spec": "DOT 4 / DOT 5.1; Castrol REACT PERFORMANCE DOT 4, MOTOREX® Brake Fluid DOT 5.1",
+   "page": 132,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Castrol+React+Performance+DOT+4"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Castrol+React+Performance+DOT+4"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Castrol+React+Performance+DOT+4"
+    }
+   ]
+  },
+  {
+   "id": "front-tire",
+   "name": "Front tire",
+   "spec": "110/70 ZR 17 M/C 54W TL Michelin Power 6, 2.0 bar (29 psi)",
+   "page": 127,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=110%2F70+ZR+17+Michelin+Power+6"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=110%2F70+ZR+17+Michelin+Power+6"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=110%2F70+ZR+17+Michelin+Power+6"
+    }
+   ]
+  },
+  {
+   "id": "rear-tire",
+   "name": "Rear tire",
+   "spec": "150/60 ZR 17 M/C 66W TL Michelin Power 6, 2.2 bar (32 psi)",
+   "page": 127,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=150%2F60+ZR+17+Michelin+Power+6"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=150%2F60+ZR+17+Michelin+Power+6"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=150%2F60+ZR+17+Michelin+Power+6"
+    }
+   ]
+  },
+  {
+   "id": "chain",
+   "name": "Chain",
+   "spec": "5/8 x 1/4” (520) X‑ring",
+   "page": 126,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=520+X-ring+chain"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=520+X-ring+chain"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=520+X-ring+chain"
+    }
+   ]
+  },
+  {
+   "id": "battery",
+   "name": "12-V battery",
+   "spec": "ETZ‑9‑BS, battery voltage: 12 V, nominal capacity: 8 Ah, maintenance-free",
+   "page": 127,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=ETZ-9-BS+battery"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=ETZ-9-BS+battery"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=ETZ-9-BS+battery"
+    }
+   ]
+  },
+  {
+   "id": "spark-plug",
+   "name": "Spark plug",
+   "spec": "BOSCHVR6NEU, spark plug electrode gap 1 mm (0.04 in)",
+   "page": 123,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Bosch+VR6NEU+spark+plug"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Bosch+VR6NEU+spark+plug"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Bosch+VR6NEU+spark+plug"
+    }
+   ]
+  },
+  {
+   "id": "main-fuse",
+   "name": "Fuse",
+   "spec": "75011088030, 30 A",
+   "page": 127,
+   "oem": "75011088030",
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=75011088030"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=75011088030"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=75011088030"
+    }
+   ]
+  },
+  {
+   "id": "fuse-10a",
+   "name": "Fuse",
+   "spec": "75011088010, 10 A",
+   "page": 127,
+   "oem": "75011088010",
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=75011088010"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=75011088010"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=75011088010"
+    }
+   ]
+  },
+  {
+   "id": "fork-oil",
+   "name": "Fork oil (SAE 5)",
+   "spec": "440 ± 5 ml (14.88 ± 0.17 fl. oz.) per fork leg; MOTOREX® Racing Fork Oil",
+   "page": 128,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Motorex+Racing+Fork+Oil+SAE+5"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Motorex+Racing+Fork+Oil+SAE+5"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Motorex+Racing+Fork+Oil+SAE+5"
+    }
+   ]
+  },
+  {
+   "id": "chain-cleaner",
+   "name": "Chain cleaner",
+   "spec": "MOTOREX® Chain Clean",
+   "page": 134,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Motorex+Chain+Clean"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Motorex+Chain+Clean"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Motorex+Chain+Clean"
+    }
+   ]
+  },
+  {
+   "id": "chain-spray",
+   "name": "Street chain spray",
+   "spec": "MOTOREX® Chainlube Road Strong",
+   "page": 134,
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=Motorex+Chainlube+Road+Strong"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=Motorex+Chainlube+Road+Strong"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=Motorex+Chainlube+Road+Strong"
+    }
+   ]
+  },
+  {
+   "id": "battery-charger",
+   "name": "USA/CA battery charger TecMATE Optimate PRO",
+   "spec": "A61029974144",
+   "page": 98,
+   "oem": "A61029974144",
+   "links": [
+    {
+     "shop": "RevZilla",
+     "url": "https://www.revzilla.com/search?query=A61029974144"
+    },
+    {
+     "shop": "Partzilla",
+     "url": "https://www.partzilla.com/search?q=A61029974144"
+    },
+    {
+     "shop": "Amazon",
+     "url": "https://www.amazon.com/s?k=A61029974144"
+    }
+   ]
+  }
+ ]
+}
