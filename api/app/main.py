@@ -27,6 +27,9 @@ from .models import (
 )
 from .store import get_store
 
+MAX_UPLOAD = 60 * 1024 * 1024
+MAX_IMAGE = 12 * 1024 * 1024
+
 app = FastAPI(title="Trust the manual", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
@@ -102,7 +105,10 @@ def ask(req: AskRequest):
 
 @app.post("/identify/photo", response_model=IdentifyResponse)
 async def identify_photo(file: UploadFile = File(...)):
-    return identify_mod.photo(await file.read(), file.content_type or "image/jpeg")
+    data = await file.read()
+    if len(data) > MAX_IMAGE:
+        raise HTTPException(413)
+    return identify_mod.photo(data, file.content_type or "image/jpeg")
 
 
 @app.post("/identify/vin", response_model=IdentifyResponse)
@@ -112,7 +118,10 @@ def identify_vin(req: VinRequest):
 
 @app.post("/identify/part", response_model=list[PartClass])
 async def identify_part(file: UploadFile = File(...)):
-    return identify_mod.part(await file.read(), file.content_type or "image/jpeg")
+    data = await file.read()
+    if len(data) > MAX_IMAGE:
+        raise HTTPException(413)
+    return identify_mod.part(data, file.content_type or "image/jpeg")
 
 
 def _start_job(tasks: BackgroundTasks, source: str, make: str, model: str, year: int, market: str) -> IngestJob:
@@ -149,9 +158,14 @@ async def ingest_upload(
 ):
     if not (make and model and year):
         raise HTTPException(422)
+    data = await file.read()
+    if len(data) > MAX_UPLOAD:
+        raise HTTPException(413)
+    if not data.startswith(b"%PDF"):
+        raise HTTPException(415)
     path = settings.data_dir / "uploads" / f"{uuid.uuid4().hex}.pdf"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(await file.read())
+    path.write_bytes(data)
     return _start_job(tasks, str(path), make, model, year, market)
 
 
