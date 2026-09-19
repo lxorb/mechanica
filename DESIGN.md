@@ -27,9 +27,26 @@ Section titles, chapter titles, part names, specs and shop names come from the d
 - Pure functions in src/lib, screens in src/screens, reusable pieces in src/components.
 - No comments explaining what code does. No README prose. `npm run build` must pass with zero TS errors.
 
-## File ownership
+## File ownership (phase 1, done)
 - identify agent: src/screens/Identify.tsx, src/lib/identify.ts
 - ask agent: src/screens/Ask.tsx, src/lib/match.ts, src/lib/speech.ts, src/components/Parts.tsx
 - viewer agent: src/screens/Result.tsx, src/components/PdfPage.tsx, src/lib/pdf.ts
 - data agents: public/manuals/<id>.pdf, src/data/manuals/<id>.json, tools/extract_<id>.py
 - pwa agent: public/icons/*, vite.config.ts (PWA block only), index.html (head only)
+
+## Phase 2: real backend (api/, FastAPI, Python 3.12)
+Contracts owned by the integrator: api/app/models.py (camelCase, byte-compatible with src/types.ts), api/app/store.py (Store protocol + FileStore),
+api/app/search/__init__.py (Index protocol), api/app/llm.py (the only door to OpenAI, logs cost per route), api/app/main.py (routes), src/lib/source.ts signature, src/App.tsx.
+Rules: no backend ever returns prose to the UI. The UI contract stays `Manual` + `Match[]`. Every number shown comes from the PDF text layer.
+Secrets: never in git. OPENAI_API_KEY from env or C:\Users\me\agent-secrets\openai.txt (see config.py). Run the API with `api/.venv/Scripts/python -m uvicorn app.main:app --port <your port>` from api/.
+Deps: requirements.txt is pre-populated; append a line only if you truly need a new package, and install it into api/.venv yourself.
+
+Ownership:
+- ingest agent: api/app/ingest/** , api/tools/ingest.py
+- search agent: api/app/search/local.py, api/app/search/elastic.py, api/app/ask.py
+- identify-backend agent: api/app/identify.py, api/app/parts/** (optional yolo)
+- registry agent: api/app/registry/**, api/tools/registry.py, api/data/seeds/**
+- frontend-api agent: src/lib/source.ts, src/lib/api.ts, src/screens/Identify.tsx, src/screens/Cost.tsx, src/components/AddManual.tsx, .env.example (root)
+- voice agent: api/app/voice.py, api/tools/elevenlabs_agent.py, src/components/Voice.tsx, src/lib/deepgram.ts, package.json (only agent allowed to `npm install`)
+- store/deploy agent: api/app/store_mongo.py, api/Dockerfile, api/.dockerignore, deploy/**, wrangler.jsonc, README.md (root, keep it 10 lines)
+- qa agent (after all): anything, to integrate and fix

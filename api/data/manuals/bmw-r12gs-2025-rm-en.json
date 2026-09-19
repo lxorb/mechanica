@@ -1,0 +1,2096 @@
+{
+  "id": "bmw-r12gs-2025-rm-en",
+  "bikeIds": [
+    "bmw-r12gs-2025"
+  ],
+  "file": "/manuals/bmw-r12gs-2025-rm-en.pdf",
+  "pages": 268,
+  "title": "RIDER'S MANUAL R 12 G/S",
+  "source": "https://manuals.bmw-motorrad.com/manuals/BA-Extern/IN/BA-INTERNET-COM/PDF/R_0N21_RM_0425_01.pdf",
+  "outline": [
+    {
+      "title": "RIDER'S MANUAL R 12 G/S",
+      "page": 1
+    },
+    {
+      "title": "Table of Contents",
+      "page": 4
+    },
+    {
+      "title": "General instructions",
+      "page": 8,
+      "children": [
+        {
+          "title": "Quick & easy reference",
+          "page": 10
+        },
+        {
+          "title": "Abbreviations and symbols",
+          "page": 10
+        },
+        {
+          "title": "Equipment",
+          "page": 11
+        },
+        {
+          "title": "Technical data",
+          "page": 11
+        },
+        {
+          "title": "Currency",
+          "page": 12
+        },
+        {
+          "title": "Additional sources of information",
+          "page": 12
+        },
+        {
+          "title": "Certificates and operating licences",
+          "page": 12
+        },
+        {
+          "title": "Data memory",
+          "page": 12
+        },
+        {
+          "title": "Bluetooth®",
+          "page": 17
+        },
+        {
+          "title": "Connectivity functions",
+          "page": 18
+        },
+        {
+          "title": "Intelligent emergency call",
+          "page": 18
+        }
+      ]
+    },
+    {
+      "title": "General views",
+      "page": 22,
+      "children": [
+        {
+          "title": "General view, left side",
+          "page": 24
+        },
+        {
+          "title": "General view, right side",
+          "page": 25
+        },
+        {
+          "title": "Underneath the seat",
+          "page": 26
+        },
+        {
+          "title": "Multifunction switch, left",
+          "page": 27
+        },
+        {
+          "title": "Multifunction switch, right",
+          "page": 28
+        },
+        {
+          "title": "Multifunction switch, right",
+          "page": 29
+        },
+        {
+          "title": "Instrument cluster",
+          "page": 30
+        },
+        {
+          "title": "Instrument cluster, Digital Display",
+          "page": 31
+        }
+      ]
+    },
+    {
+      "title": "Status indicators",
+      "page": 32,
+      "children": [
+        {
+          "title": "Indicator and warning lights",
+          "page": 34
+        },
+        {
+          "title": "Display, round instrument",
+          "page": 35
+        },
+        {
+          "title": "Indicator and warning lights, digital display",
+          "page": 36
+        },
+        {
+          "title": "Digital display, start screen",
+          "page": 37
+        },
+        {
+          "title": "Digital display, PURE RIDE",
+          "page": 38
+        },
+        {
+          "title": "Warning indicators",
+          "page": 39
+        },
+        {
+          "title": "Service display",
+          "page": 61
+        }
+      ]
+    },
+    {
+      "title": "Instrument cluster",
+      "page": 64,
+      "children": [
+        {
+          "title": "Warnings",
+          "page": 66
+        },
+        {
+          "title": "Controls",
+          "page": 66
+        },
+        {
+          "title": "Operation",
+          "page": 68
+        },
+        {
+          "title": "Setup",
+          "page": 73
+        },
+        {
+          "title": "Display",
+          "page": 74
+        },
+        {
+          "title": "Settings",
+          "page": 75
+        }
+      ]
+    },
+    {
+      "title": "Operation",
+      "page": 76,
+      "children": [
+        {
+          "title": "Steering lock",
+          "page": 78
+        },
+        {
+          "title": "Ignition",
+          "page": 79
+        },
+        {
+          "title": "Emergency-off switch (kill switch)",
+          "page": 83
+        },
+        {
+          "title": "Intelligent emergency call",
+          "page": 84
+        },
+        {
+          "title": "Lighting",
+          "page": 87
+        },
+        {
+          "title": "Anti-theft alarm (DWA)",
+          "page": 90
+        },
+        {
+          "title": "Dynamic Traction Control (DTC)",
+          "page": 94
+        },
+        {
+          "title": "Riding mode",
+          "page": 95
+        },
+        {
+          "title": "Cruise control",
+          "page": 97
+        },
+        {
+          "title": "Hill Start Control Pro (HSC Pro)",
+          "page": 100
+        },
+        {
+          "title": "Tyre pressure monitoring (RDC)",
+          "page": 102
+        },
+        {
+          "title": "Grip heating",
+          "page": 102
+        },
+        {
+          "title": "ConnectedRide Control",
+          "page": 103
+        },
+        {
+          "title": "Seat",
+          "page": 106
+        }
+      ]
+    },
+    {
+      "title": "Adjustment",
+      "page": 110,
+      "children": [
+        {
+          "title": "Mirrors",
+          "page": 112
+        },
+        {
+          "title": "Headlight",
+          "page": 112
+        },
+        {
+          "title": "Clutch",
+          "page": 113
+        },
+        {
+          "title": "Brakes",
+          "page": 114
+        },
+        {
+          "title": "Shift mechanism",
+          "page": 115
+        },
+        {
+          "title": "Handlebars",
+          "page": 115
+        },
+        {
+          "title": "Spring preload",
+          "page": 116
+        },
+        {
+          "title": "Damping",
+          "page": 119
+        }
+      ]
+    },
+    {
+      "title": "Riding",
+      "page": 124,
+      "children": [
+        {
+          "title": "Safety information",
+          "page": 126
+        },
+        {
+          "title": "Regular check",
+          "page": 129
+        },
+        {
+          "title": "Starting",
+          "page": 130
+        },
+        {
+          "title": "Running in",
+          "page": 131
+        },
+        {
+          "title": "Off-road use",
+          "page": 132
+        },
+        {
+          "title": "Gear Shift Assistant Pro",
+          "page": 133
+        },
+        {
+          "title": "Brakes",
+          "page": 134
+        },
+        {
+          "title": "Parking your motorcycle",
+          "page": 137
+        },
+        {
+          "title": "Refuelling",
+          "page": 138
+        },
+        {
+          "title": "Securing motorcycle for transportation",
+          "page": 140
+        }
+      ]
+    },
+    {
+      "title": "Engineering details",
+      "page": 142,
+      "children": [
+        {
+          "title": "General notes",
+          "page": 144
+        },
+        {
+          "title": "Antilock Brake System (ABS)",
+          "page": 144
+        },
+        {
+          "title": "Dynamic Traction Control (DTC)",
+          "page": 148
+        },
+        {
+          "title": "Dynamic engine brake control (MSR)",
+          "page": 149
+        },
+        {
+          "title": "Battery Guard",
+          "page": 150
+        },
+        {
+          "title": "Riding mode",
+          "page": 150
+        },
+        {
+          "title": "Dynamic Brake Control",
+          "page": 153
+        },
+        {
+          "title": "Tyre pressure control (RDC)",
+          "page": 154
+        },
+        {
+          "title": "Gear Shift Assistant",
+          "page": 155
+        },
+        {
+          "title": "Hill Start Control Pro (HSC Pro)",
+          "page": 157
+        },
+        {
+          "title": "Cornering headlight",
+          "page": 158
+        }
+      ]
+    },
+    {
+      "title": "Maintenance",
+      "page": 160,
+      "children": [
+        {
+          "title": "General notes",
+          "page": 162
+        },
+        {
+          "title": "Toolkit",
+          "page": 163
+        },
+        {
+          "title": "Preparing screwdriver from on-board toolkit",
+          "page": 163
+        },
+        {
+          "title": "Front-wheel stand",
+          "page": 164
+        },
+        {
+          "title": "Rear-wheel stand",
+          "page": 164
+        },
+        {
+          "title": "Engine oil",
+          "page": 164
+        },
+        {
+          "title": "Brake system",
+          "page": 166
+        },
+        {
+          "title": "Clutch",
+          "page": 171
+        },
+        {
+          "title": "Tyres",
+          "page": 172
+        },
+        {
+          "title": "Wheel rims",
+          "page": 173
+        },
+        {
+          "title": "Wheels",
+          "page": 173
+        },
+        {
+          "title": "Lighting",
+          "page": 180
+        },
+        {
+          "title": "Jump-starting",
+          "page": 181
+        },
+        {
+          "title": "Battery",
+          "page": 183
+        },
+        {
+          "title": "Fuses",
+          "page": 186
+        },
+        {
+          "title": "Diagnostic connector",
+          "page": 187
+        }
+      ]
+    },
+    {
+      "title": "Accessories",
+      "page": 190,
+      "children": [
+        {
+          "title": "General notes",
+          "page": 192
+        },
+        {
+          "title": "Power sockets",
+          "page": 192
+        },
+        {
+          "title": "USB charging socket",
+          "page": 193
+        },
+        {
+          "title": "Luggage",
+          "page": 194
+        },
+        {
+          "title": "Navigation system",
+          "page": 196
+        },
+        {
+          "title": "Optional accessories",
+          "page": 198
+        }
+      ]
+    },
+    {
+      "title": "Care",
+      "page": 200,
+      "children": [
+        {
+          "title": "Care products",
+          "page": 202
+        },
+        {
+          "title": "Washing the vehicle",
+          "page": 202
+        },
+        {
+          "title": "Cleaning easily damaged components",
+          "page": 203
+        },
+        {
+          "title": "Care of paintwork",
+          "page": 204
+        },
+        {
+          "title": "Paint preservation",
+          "page": 205
+        },
+        {
+          "title": "Laying up motorcycle",
+          "page": 205
+        },
+        {
+          "title": "Restoring motorcycle to use",
+          "page": 206
+        }
+      ]
+    },
+    {
+      "title": "Technical data",
+      "page": 208,
+      "children": [
+        {
+          "title": "Troubleshooting chart",
+          "page": 210
+        },
+        {
+          "title": "Threaded fasteners",
+          "page": 211
+        },
+        {
+          "title": "Fuel",
+          "page": 213
+        },
+        {
+          "title": "Engine oil",
+          "page": 213
+        },
+        {
+          "title": "Engine",
+          "page": 214
+        },
+        {
+          "title": "Clutch",
+          "page": 214
+        },
+        {
+          "title": "Transmission",
+          "page": 214
+        },
+        {
+          "title": "Final drive",
+          "page": 214
+        },
+        {
+          "title": "Frame",
+          "page": 215
+        },
+        {
+          "title": "Chassis and suspension",
+          "page": 215
+        },
+        {
+          "title": "Brakes",
+          "page": 215
+        },
+        {
+          "title": "Wheels and tyres",
+          "page": 216
+        },
+        {
+          "title": "Electrical system",
+          "page": 217
+        },
+        {
+          "title": "Battery",
+          "page": 217
+        },
+        {
+          "title": "Dimensions",
+          "page": 218
+        },
+        {
+          "title": "Weights",
+          "page": 219
+        },
+        {
+          "title": "Performance figures",
+          "page": 219
+        }
+      ]
+    },
+    {
+      "title": "Service",
+      "page": 220,
+      "children": [
+        {
+          "title": "Reporting safety-relevant defects",
+          "page": 222
+        },
+        {
+          "title": "Recycling",
+          "page": 223
+        },
+        {
+          "title": "BMW Motorrad Service",
+          "page": 223
+        },
+        {
+          "title": "BMW Motorrad service history",
+          "page": 224
+        },
+        {
+          "title": "BMW Motorrad mobility services",
+          "page": 225
+        },
+        {
+          "title": "Maintenance work",
+          "page": 225
+        },
+        {
+          "title": "Maintenance schedule",
+          "page": 227
+        },
+        {
+          "title": "BMW Motorrad running-in check",
+          "page": 229
+        },
+        {
+          "title": "Maintenance confirmations",
+          "page": 230
+        }
+      ]
+    },
+    {
+      "title": "Appendix",
+      "page": 242,
+      "children": [
+        {
+          "title": "Declaration of Conformity",
+          "page": 243
+        },
+        {
+          "title": "Battery directive",
+          "page": 246
+        },
+        {
+          "title": "Radio equipment TFT instrument cluster",
+          "page": 248
+        },
+        {
+          "title": "Keyless Ride System Main Unit",
+          "page": 251
+        },
+        {
+          "title": "Keyless Ride System Active Key",
+          "page": 254
+        },
+        {
+          "title": "Radio equipment intelligent emergency call",
+          "page": 257
+        },
+        {
+          "title": "Radio equipment tyre pressure control (RDC)",
+          "page": 258
+        }
+      ]
+    },
+    {
+      "title": "Index",
+      "page": 260,
+      "children": [
+        {
+          "title": "1",
+          "page": 260
+        },
+        {
+          "title": "A",
+          "page": 260
+        },
+        {
+          "title": "B",
+          "page": 260
+        },
+        {
+          "title": "C",
+          "page": 260
+        },
+        {
+          "title": "D",
+          "page": 261
+        },
+        {
+          "title": "E",
+          "page": 261
+        },
+        {
+          "title": "F",
+          "page": 262
+        },
+        {
+          "title": "G",
+          "page": 262
+        },
+        {
+          "title": "H",
+          "page": 262
+        },
+        {
+          "title": "I",
+          "page": 262
+        },
+        {
+          "title": "J",
+          "page": 263
+        },
+        {
+          "title": "K",
+          "page": 263
+        },
+        {
+          "title": "L",
+          "page": 263
+        },
+        {
+          "title": "M",
+          "page": 263
+        },
+        {
+          "title": "O",
+          "page": 263
+        },
+        {
+          "title": "P",
+          "page": 263
+        },
+        {
+          "title": "R",
+          "page": 264
+        },
+        {
+          "title": "S",
+          "page": 264
+        },
+        {
+          "title": "T",
+          "page": 264
+        },
+        {
+          "title": "U",
+          "page": 265
+        },
+        {
+          "title": "V",
+          "page": 265
+        },
+        {
+          "title": "W",
+          "page": 265
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "engine-oil-level",
+      "title": "Checking engine oil level",
+      "chapter": "Maintenance",
+      "pageStart": 164,
+      "pageEnd": 165,
+      "keywords": [
+        "check the oil",
+        "check oil level",
+        "engine oil level",
+        "oil level",
+        "oil sight glass",
+        "how much oil",
+        "min max oil mark",
+        "oil window",
+        "is my oil low",
+        "checking engine oil"
+      ],
+      "highlights": [
+        {
+          "page": 164,
+          "x": 0.4826,
+          "y": 0.0925,
+          "w": 0.3224,
+          "h": 0.0631
+        },
+        {
+          "page": 164,
+          "x": 0.4994,
+          "y": 0.6079,
+          "w": 0.3657,
+          "h": 0.1036
+        },
+        {
+          "page": 165,
+          "x": 0.1404,
+          "y": 0.604,
+          "w": 0.3253,
+          "h": 0.0579
+        },
+        {
+          "page": 165,
+          "x": 0.5556,
+          "y": 0.3045,
+          "w": 0.3106,
+          "h": 0.1123
+        }
+      ],
+      "partIds": [
+        "engine-oil"
+      ],
+      "related": [
+        "engine-oil-topup",
+        "td-engine-oil"
+      ]
+    },
+    {
+      "id": "engine-oil-topup",
+      "title": "Topping up engine oil",
+      "chapter": "Maintenance",
+      "pageStart": 165,
+      "pageEnd": 166,
+      "keywords": [
+        "top up the oil",
+        "add oil",
+        "oil filler cap",
+        "refill engine oil",
+        "topping up engine oil",
+        "how much oil to add",
+        "oil filler plug",
+        "pour oil in",
+        "oil low add"
+      ],
+      "highlights": [
+        {
+          "page": 165,
+          "x": 0.5444,
+          "y": 0.6762,
+          "w": 0.2827,
+          "h": 0.0342
+        },
+        {
+          "page": 166,
+          "x": 0.0786,
+          "y": 0.2943,
+          "w": 0.3546,
+          "h": 0.0579
+        },
+        {
+          "page": 166,
+          "x": 0.0786,
+          "y": 0.4331,
+          "w": 0.3604,
+          "h": 0.1036
+        },
+        {
+          "page": 166,
+          "x": 0.073,
+          "y": 0.7969,
+          "w": 0.3414,
+          "h": 0.0892
+        }
+      ],
+      "partIds": [
+        "engine-oil"
+      ],
+      "related": [
+        "engine-oil-level",
+        "td-engine-oil"
+      ]
+    },
+    {
+      "id": "brake-pads-front",
+      "title": "Checking brake pad thickness, front brakes",
+      "chapter": "Maintenance",
+      "pageStart": 166,
+      "pageEnd": 167,
+      "keywords": [
+        "front brake pads",
+        "brake pad thickness",
+        "brake pads worn",
+        "check brake pads",
+        "pad wear limit",
+        "when to replace brake pads",
+        "front pads",
+        "brake wear indicator"
+      ],
+      "highlights": [
+        {
+          "page": 166,
+          "x": 0.4826,
+          "y": 0.7548,
+          "w": 0.3929,
+          "h": 0.0579
+        },
+        {
+          "page": 167,
+          "x": 0.1404,
+          "y": 0.2943,
+          "w": 0.3644,
+          "h": 0.1529
+        },
+        {
+          "page": 167,
+          "x": 0.1348,
+          "y": 0.6666,
+          "w": 0.3547,
+          "h": 0.1604
+        }
+      ],
+      "related": [
+        "brake-pads-rear",
+        "brake-fluid-front"
+      ]
+    },
+    {
+      "id": "brake-pads-rear",
+      "title": "Checking brake pad thickness, rear brakes",
+      "chapter": "Maintenance",
+      "pageStart": 167,
+      "pageEnd": 169,
+      "keywords": [
+        "rear brake pads",
+        "rear pad thickness",
+        "back brake pads worn",
+        "check rear brake pads",
+        "rear pad wear limit",
+        "brake pad wear indicator rings",
+        "rear brake wear"
+      ],
+      "highlights": [
+        {
+          "page": 167,
+          "x": 0.5444,
+          "y": 0.501,
+          "w": 0.3929,
+          "h": 0.0579
+        },
+        {
+          "page": 168,
+          "x": 0.073,
+          "y": 0.6428,
+          "w": 0.351,
+          "h": 0.1841
+        },
+        {
+          "page": 168,
+          "x": 0.4826,
+          "y": 0.7959,
+          "w": 0.3566,
+          "h": 0.0817
+        },
+        {
+          "page": 169,
+          "x": 0.1404,
+          "y": 0.1099,
+          "w": 0.3397,
+          "h": 0.2187
+        }
+      ],
+      "related": [
+        "brake-pads-front",
+        "brake-fluid-rear"
+      ]
+    },
+    {
+      "id": "brake-fluid-front",
+      "title": "Checking brake-fluid level, front brakes",
+      "chapter": "Maintenance",
+      "pageStart": 169,
+      "pageEnd": 170,
+      "keywords": [
+        "front brake fluid",
+        "brake fluid level",
+        "brake fluid reservoir",
+        "dot 4 brake fluid",
+        "check brake fluid",
+        "brake fluid low",
+        "handbrake fluid",
+        "front master cylinder"
+      ],
+      "highlights": [
+        {
+          "page": 169,
+          "x": 0.1235,
+          "y": 0.3268,
+          "w": 0.3415,
+          "h": 0.0579
+        },
+        {
+          "page": 169,
+          "x": 0.5612,
+          "y": 0.446,
+          "w": 0.3586,
+          "h": 0.0579
+        },
+        {
+          "page": 169,
+          "x": 0.5556,
+          "y": 0.7923,
+          "w": 0.3332,
+          "h": 0.0892
+        },
+        {
+          "page": 170,
+          "x": 0.073,
+          "y": 0.1509,
+          "w": 0.3517,
+          "h": 0.1292
+        }
+      ],
+      "partIds": [
+        "brake-fluid"
+      ],
+      "related": [
+        "brake-fluid-rear",
+        "brake-pads-front"
+      ]
+    },
+    {
+      "id": "brake-fluid-rear",
+      "title": "Checking brake-fluid level, rear brakes",
+      "chapter": "Maintenance",
+      "pageStart": 170,
+      "pageEnd": 171,
+      "keywords": [
+        "rear brake fluid",
+        "rear brake fluid level",
+        "foot brake fluid",
+        "dot 4 brake fluid",
+        "check rear brake fluid",
+        "rear brake reservoir",
+        "brake fluid min mark"
+      ],
+      "highlights": [
+        {
+          "page": 170,
+          "x": 0.4826,
+          "y": 0.0858,
+          "w": 0.3415,
+          "h": 0.0579
+        },
+        {
+          "page": 171,
+          "x": 0.1404,
+          "y": 0.5346,
+          "w": 0.3586,
+          "h": 0.0817
+        },
+        {
+          "page": 171,
+          "x": 0.5556,
+          "y": 0.3045,
+          "w": 0.323,
+          "h": 0.0892
+        },
+        {
+          "page": 171,
+          "x": 0.5556,
+          "y": 0.3856,
+          "w": 0.3517,
+          "h": 0.1054
+        }
+      ],
+      "partIds": [
+        "brake-fluid"
+      ],
+      "related": [
+        "brake-fluid-front",
+        "brake-pads-rear"
+      ]
+    },
+    {
+      "id": "tyre-pressures",
+      "title": "Checking tyre pressures",
+      "chapter": "Maintenance",
+      "pageStart": 172,
+      "pageEnd": 172,
+      "keywords": [
+        "tire pressure",
+        "tyre pressure",
+        "how many psi",
+        "how many bar",
+        "inflate tires",
+        "front tire pressure",
+        "rear tire pressure",
+        "two up pressure",
+        "cold tire pressure",
+        "check tyre pressures"
+      ],
+      "highlights": [
+        {
+          "page": 172,
+          "x": 0.0617,
+          "y": 0.1511,
+          "w": 0.3101,
+          "h": 0.0631
+        },
+        {
+          "page": 172,
+          "x": 0.073,
+          "y": 0.8099,
+          "w": 0.3298,
+          "h": 0.139
+        },
+        {
+          "page": 172,
+          "x": 0.4939,
+          "y": 0.096,
+          "w": 0.3298,
+          "h": 0.139
+        }
+      ],
+      "partIds": [
+        "tyre-front",
+        "tyre-rear"
+      ],
+      "related": [
+        "tyre-tread",
+        "td-wheels-tyres"
+      ]
+    },
+    {
+      "id": "tyre-tread",
+      "title": "Check the tyre tread depth",
+      "chapter": "Maintenance",
+      "pageStart": 172,
+      "pageEnd": 173,
+      "keywords": [
+        "tire tread",
+        "tread depth",
+        "worn tires",
+        "tire wear indicator",
+        "when to replace tires",
+        "tyre wear limit",
+        "check tyre tread",
+        "bald tire"
+      ],
+      "highlights": [
+        {
+          "page": 172,
+          "x": 0.4826,
+          "y": 0.2825,
+          "w": 0.3473,
+          "h": 0.0342
+        },
+        {
+          "page": 172,
+          "x": 0.4994,
+          "y": 0.64,
+          "w": 0.3608,
+          "h": 0.0817
+        },
+        {
+          "page": 173,
+          "x": 0.1235,
+          "y": 0.0858,
+          "w": 0.3691,
+          "h": 0.0579
+        },
+        {
+          "page": 173,
+          "x": 0.1404,
+          "y": 0.185,
+          "w": 0.3444,
+          "h": 0.0579
+        }
+      ],
+      "partIds": [
+        "tyre-front",
+        "tyre-rear"
+      ],
+      "related": [
+        "tyre-pressures",
+        "td-wheels-tyres"
+      ]
+    },
+    {
+      "id": "front-wheel-removal",
+      "title": "Removing front wheel",
+      "chapter": "Maintenance",
+      "pageStart": 174,
+      "pageEnd": 179,
+      "keywords": [
+        "remove front wheel",
+        "front wheel off",
+        "take the front wheel out",
+        "quick release axle",
+        "front axle",
+        "fix a flat front tire",
+        "front wheel torque",
+        "refit front wheel"
+      ],
+      "highlights": [
+        {
+          "page": 174,
+          "x": 0.0617,
+          "y": 0.1411,
+          "w": 0.3772,
+          "h": 0.1971
+        },
+        {
+          "page": 175,
+          "x": 0.5612,
+          "y": 0.2943,
+          "w": 0.3524,
+          "h": 0.0579
+        },
+        {
+          "page": 175,
+          "x": 0.5612,
+          "y": 0.7916,
+          "w": 0.2987,
+          "h": 0.0817
+        },
+        {
+          "page": 177,
+          "x": 0.5556,
+          "y": 0.3739,
+          "w": 0.3455,
+          "h": 0.1153
+        },
+        {
+          "page": 178,
+          "x": 0.073,
+          "y": 0.3045,
+          "w": 0.3691,
+          "h": 0.188
+        },
+        {
+          "page": 178,
+          "x": 0.073,
+          "y": 0.7607,
+          "w": 0.3228,
+          "h": 0.1153
+        },
+        {
+          "page": 179,
+          "x": 0.1348,
+          "y": 0.3502,
+          "w": 0.2952,
+          "h": 0.1153
+        }
+      ],
+      "partIds": [
+        "lubricant"
+      ],
+      "related": [
+        "td-threaded-fasteners",
+        "rear-wheel-removal"
+      ]
+    },
+    {
+      "id": "rear-wheel-removal",
+      "title": "Removing rear wheel",
+      "chapter": "Maintenance",
+      "pageStart": 179,
+      "pageEnd": 180,
+      "keywords": [
+        "remove rear wheel",
+        "rear wheel off",
+        "take the back wheel out",
+        "rear wheel bolts",
+        "fix a flat rear tire",
+        "rear wheel torque",
+        "refit rear wheel"
+      ],
+      "highlights": [
+        {
+          "page": 179,
+          "x": 0.1235,
+          "y": 0.5564,
+          "w": 0.2732,
+          "h": 0.0342
+        },
+        {
+          "page": 179,
+          "x": 0.1404,
+          "y": 0.8932,
+          "w": 0.2178,
+          "h": 0.0342
+        },
+        {
+          "page": 179,
+          "x": 0.5612,
+          "y": 0.0858,
+          "w": 0.3669,
+          "h": 0.0799
+        },
+        {
+          "page": 180,
+          "x": 0.0786,
+          "y": 0.8711,
+          "w": 0.3476,
+          "h": 0.0579
+        },
+        {
+          "page": 180,
+          "x": 0.4939,
+          "y": 0.096,
+          "w": 0.3691,
+          "h": 0.188
+        }
+      ],
+      "related": [
+        "td-threaded-fasteners",
+        "front-wheel-removal"
+      ]
+    },
+    {
+      "id": "battery",
+      "title": "BATTERY",
+      "chapter": "Maintenance",
+      "pageStart": 183,
+      "pageEnd": 185,
+      "keywords": [
+        "battery",
+        "charge the battery",
+        "battery dead",
+        "trickle charger",
+        "float charger",
+        "recharge battery",
+        "battery type",
+        "agm battery",
+        "battery flat",
+        "jump leads charger"
+      ],
+      "highlights": [
+        {
+          "page": 183,
+          "x": 0.1235,
+          "y": 0.0925,
+          "w": 0.3224,
+          "h": 0.0631
+        },
+        {
+          "page": 183,
+          "x": 0.1348,
+          "y": 0.5852,
+          "w": 0.3028,
+          "h": 0.0892
+        },
+        {
+          "page": 184,
+          "x": 0.0617,
+          "y": 0.0858,
+          "w": 0.2455,
+          "h": 0.0342
+        },
+        {
+          "page": 184,
+          "x": 0.0786,
+          "y": 0.8754,
+          "w": 0.3223,
+          "h": 0.0579
+        },
+        {
+          "page": 185,
+          "x": 0.1404,
+          "y": 0.8255,
+          "w": 0.3565,
+          "h": 0.0817
+        }
+      ],
+      "partIds": [
+        "battery"
+      ],
+      "related": [
+        "jump-starting",
+        "td-electrical"
+      ]
+    },
+    {
+      "id": "jump-starting",
+      "title": "JUMP-STARTING",
+      "chapter": "Maintenance",
+      "pageStart": 181,
+      "pageEnd": 182,
+      "keywords": [
+        "jump start",
+        "jump leads",
+        "bike wont start",
+        "boost the battery",
+        "donor battery",
+        "jumper cables",
+        "remote positive terminal",
+        "start with a flat battery"
+      ],
+      "highlights": [
+        {
+          "page": 181,
+          "x": 0.1235,
+          "y": 0.1511,
+          "w": 0.2232,
+          "h": 0.0342
+        },
+        {
+          "page": 181,
+          "x": 0.1505,
+          "y": 0.6257,
+          "w": 0.3475,
+          "h": 0.1767
+        },
+        {
+          "page": 182,
+          "x": 0.0786,
+          "y": 0.62,
+          "w": 0.3633,
+          "h": 0.1292
+        },
+        {
+          "page": 182,
+          "x": 0.0786,
+          "y": 0.7369,
+          "w": 0.3745,
+          "h": 0.1292
+        }
+      ],
+      "partIds": [
+        "battery"
+      ],
+      "related": [
+        "battery",
+        "td-electrical"
+      ]
+    },
+    {
+      "id": "fuses",
+      "title": "Replacing fuses",
+      "chapter": "Maintenance",
+      "pageStart": 186,
+      "pageEnd": 187,
+      "keywords": [
+        "fuse",
+        "blown fuse",
+        "replace a fuse",
+        "fuse box",
+        "fuse assignment",
+        "amp rating",
+        "electrics dead",
+        "which fuse",
+        "fuse location"
+      ],
+      "highlights": [
+        {
+          "page": 186,
+          "x": 0.0617,
+          "y": 0.0925,
+          "w": 0.2014,
+          "h": 0.0631
+        },
+        {
+          "page": 186,
+          "x": 0.0887,
+          "y": 0.3016,
+          "w": 0.3395,
+          "h": 0.0817
+        },
+        {
+          "page": 186,
+          "x": 0.0786,
+          "y": 0.8672,
+          "w": 0.3554,
+          "h": 0.0579
+        },
+        {
+          "page": 187,
+          "x": 0.1235,
+          "y": 0.0858,
+          "w": 0.2764,
+          "h": 0.3911
+        },
+        {
+          "page": 187,
+          "x": 0.1235,
+          "y": 0.4805,
+          "w": 0.3039,
+          "h": 0.3911
+        }
+      ],
+      "partIds": [
+        "fuse-60a",
+        "fuse-7a5",
+        "fuse-15a"
+      ],
+      "related": [
+        "td-electrical",
+        "seat-removal"
+      ]
+    },
+    {
+      "id": "seat-removal",
+      "title": "Removing seat",
+      "chapter": "Operation",
+      "pageStart": 106,
+      "pageEnd": 108,
+      "keywords": [
+        "remove the seat",
+        "take the seat off",
+        "seat off",
+        "get under the seat",
+        "seat bolt",
+        "torx seat",
+        "access the fuses",
+        "install seat",
+        "seat removal"
+      ],
+      "highlights": [
+        {
+          "page": 106,
+          "x": 0.4826,
+          "y": 0.1511,
+          "w": 0.1906,
+          "h": 0.0631
+        },
+        {
+          "page": 106,
+          "x": 0.4994,
+          "y": 0.7508,
+          "w": 0.3516,
+          "h": 0.0579
+        },
+        {
+          "page": 107,
+          "x": 0.1404,
+          "y": 0.5833,
+          "w": 0.3402,
+          "h": 0.0579
+        },
+        {
+          "page": 107,
+          "x": 0.1404,
+          "y": 0.8504,
+          "w": 0.3508,
+          "h": 0.0579
+        },
+        {
+          "page": 107,
+          "x": 0.5556,
+          "y": 0.6413,
+          "w": 0.2958,
+          "h": 0.1153
+        }
+      ],
+      "related": [
+        "fuses",
+        "td-threaded-fasteners"
+      ]
+    },
+    {
+      "id": "spring-preload-front",
+      "title": "Adjusting spring preload for front wheel",
+      "chapter": "Adjustment",
+      "pageStart": 116,
+      "pageEnd": 118,
+      "keywords": [
+        "front preload",
+        "spring preload front",
+        "fork preload",
+        "sag setting",
+        "suspension setup front",
+        "adjust front suspension",
+        "negative spring travel",
+        "rider weight setting"
+      ],
+      "highlights": [
+        {
+          "page": 116,
+          "x": 0.4826,
+          "y": 0.0925,
+          "w": 0.2638,
+          "h": 0.0868
+        },
+        {
+          "page": 116,
+          "x": 0.4994,
+          "y": 0.7068,
+          "w": 0.3601,
+          "h": 0.0579
+        },
+        {
+          "page": 117,
+          "x": 0.1348,
+          "y": 0.2122,
+          "w": 0.3714,
+          "h": 0.4191
+        },
+        {
+          "page": 117,
+          "x": 0.5612,
+          "y": 0.5346,
+          "w": 0.3758,
+          "h": 0.2004
+        }
+      ],
+      "related": [
+        "spring-preload-rear"
+      ]
+    },
+    {
+      "id": "spring-preload-rear",
+      "title": "Adjusting spring preload for rear wheel",
+      "chapter": "Adjustment",
+      "pageStart": 118,
+      "pageEnd": 119,
+      "keywords": [
+        "rear preload",
+        "spring preload rear",
+        "shock preload",
+        "adjuster knob",
+        "suspension setup rear",
+        "adjust rear suspension",
+        "two up preload",
+        "pillion setting"
+      ],
+      "highlights": [
+        {
+          "page": 118,
+          "x": 0.0617,
+          "y": 0.7124,
+          "w": 0.3627,
+          "h": 0.0579
+        },
+        {
+          "page": 118,
+          "x": 0.4994,
+          "y": 0.5109,
+          "w": 0.3674,
+          "h": 0.1511
+        },
+        {
+          "page": 118,
+          "x": 0.4939,
+          "y": 0.6599,
+          "w": 0.3612,
+          "h": 0.1833
+        },
+        {
+          "page": 119,
+          "x": 0.1348,
+          "y": 0.096,
+          "w": 0.3612,
+          "h": 0.1595
+        }
+      ],
+      "related": [
+        "spring-preload-front"
+      ]
+    },
+    {
+      "id": "td-threaded-fasteners",
+      "title": "THREADED FASTENERS",
+      "chapter": "Technical data",
+      "pageStart": 211,
+      "pageEnd": 212,
+      "keywords": [
+        "torque",
+        "tightening torque",
+        "nm",
+        "torque spec",
+        "axle torque",
+        "wheel bolt torque",
+        "threaded fasteners",
+        "how tight"
+      ],
+      "highlights": [
+        {
+          "page": 211,
+          "x": 0.1235,
+          "y": 0.0925,
+          "w": 0.3144,
+          "h": 0.0666
+        },
+        {
+          "page": 211,
+          "x": 0.1336,
+          "y": 0.1588,
+          "w": 0.5838,
+          "h": 0.3511
+        },
+        {
+          "page": 211,
+          "x": 0.1336,
+          "y": 0.5579,
+          "w": 0.5838,
+          "h": 0.1636
+        },
+        {
+          "page": 212,
+          "x": 0.0718,
+          "y": 0.3696,
+          "w": 0.5838,
+          "h": 0.2111
+        }
+      ],
+      "related": [
+        "front-wheel-removal",
+        "rear-wheel-removal"
+      ]
+    },
+    {
+      "id": "td-engine-oil",
+      "title": "ENGINE OIL",
+      "chapter": "Technical data",
+      "pageStart": 213,
+      "pageEnd": 213,
+      "keywords": [
+        "oil grade",
+        "what oil",
+        "oil capacity",
+        "15w-50",
+        "jaso ma2",
+        "engine oil specification",
+        "how much oil does it take",
+        "oil type",
+        "advantec"
+      ],
+      "highlights": [
+        {
+          "page": 213,
+          "x": 0.1235,
+          "y": 0.5929,
+          "w": 0.7506,
+          "h": 0.0716
+        },
+        {
+          "page": 213,
+          "x": 0.1336,
+          "y": 0.6594,
+          "w": 0.7711,
+          "h": 0.2004
+        },
+        {
+          "page": 213,
+          "x": 0.1336,
+          "y": 0.8547,
+          "w": 0.7902,
+          "h": 0.0579
+        }
+      ],
+      "partIds": [
+        "engine-oil"
+      ],
+      "related": [
+        "engine-oil-level",
+        "engine-oil-topup"
+      ]
+    },
+    {
+      "id": "td-wheels-tyres",
+      "title": "WHEELS AND TYRES",
+      "chapter": "Technical data",
+      "pageStart": 216,
+      "pageEnd": 216,
+      "keywords": [
+        "tire size",
+        "tyre size",
+        "rim size",
+        "what tires fit",
+        "load index",
+        "speed rating",
+        "tire specification",
+        "front tire size",
+        "rear tire size",
+        "tyre pressures table"
+      ],
+      "highlights": [
+        {
+          "page": 216,
+          "x": 0.0617,
+          "y": 0.0925,
+          "w": 0.7948,
+          "h": 0.1535
+        },
+        {
+          "page": 216,
+          "x": 0.0718,
+          "y": 0.2409,
+          "w": 0.5553,
+          "h": 0.0923
+        },
+        {
+          "page": 216,
+          "x": 0.0718,
+          "y": 0.4099,
+          "w": 0.5755,
+          "h": 0.1795
+        },
+        {
+          "page": 216,
+          "x": 0.0718,
+          "y": 0.6372,
+          "w": 0.7815,
+          "h": 0.1643
+        }
+      ],
+      "partIds": [
+        "tyre-front",
+        "tyre-rear"
+      ],
+      "related": [
+        "tyre-pressures",
+        "tyre-tread"
+      ]
+    },
+    {
+      "id": "td-electrical",
+      "title": "ELECTRICAL SYSTEM",
+      "chapter": "Technical data",
+      "pageStart": 217,
+      "pageEnd": 217,
+      "keywords": [
+        "fuse ratings",
+        "spark plug",
+        "spark plug type",
+        "bulb type",
+        "led lights",
+        "amps",
+        "electrical specification",
+        "battery capacity",
+        "key battery",
+        "ngk"
+      ],
+      "highlights": [
+        {
+          "page": 217,
+          "x": 0.1235,
+          "y": 0.0925,
+          "w": 0.7889,
+          "h": 0.0954
+        },
+        {
+          "page": 217,
+          "x": 0.1336,
+          "y": 0.1827,
+          "w": 0.7894,
+          "h": 0.2455
+        },
+        {
+          "page": 217,
+          "x": 0.1336,
+          "y": 0.423,
+          "w": 0.6562,
+          "h": 0.1451
+        },
+        {
+          "page": 217,
+          "x": 0.1336,
+          "y": 0.7795,
+          "w": 0.5228,
+          "h": 0.1742
+        }
+      ],
+      "partIds": [
+        "fuse-60a",
+        "fuse-7a5",
+        "fuse-15a",
+        "spark-plugs",
+        "battery",
+        "key-battery"
+      ],
+      "related": [
+        "fuses",
+        "battery"
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "id": "engine-oil",
+      "name": "Engine oil",
+      "spec": "SAE 15W-50, API SJ / JASO MA2, max. 4 l with filter change",
+      "page": 213,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=BMW+Motorrad+ADVANTEC+Pro+15W-50"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=BMW+Motorrad+ADVANTEC+Pro+15W-50"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=BMW+Motorrad+ADVANTEC+Pro+15W-50"
+        }
+      ]
+    },
+    {
+      "id": "brake-fluid",
+      "name": "Brake fluid",
+      "spec": "DOT4",
+      "page": 169,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=DOT+4+brake+fluid"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=DOT+4+brake+fluid"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=DOT+4+brake+fluid"
+        }
+      ]
+    },
+    {
+      "id": "final-drive-oil",
+      "name": "Rear axle differential oil",
+      "spec": "FUCHS Titan EG 4218 SAE 70W-80",
+      "page": 214,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=FUCHS+Titan+EG+4218+SAE+70W-80"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=FUCHS+Titan+EG+4218+SAE+70W-80"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=FUCHS+Titan+EG+4218+SAE+70W-80"
+        }
+      ]
+    },
+    {
+      "id": "spark-plugs",
+      "name": "Spark plugs",
+      "spec": "NGK MAR8AI-10DS",
+      "page": 217,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=NGK+MAR8AI-10DS"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=NGK+MAR8AI-10DS"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=NGK+MAR8AI-10DS"
+        }
+      ]
+    },
+    {
+      "id": "tyre-front",
+      "name": "Tyre designation, front",
+      "spec": "90/90-21, load index min. 54, speed category V",
+      "page": 216,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=90%2F90-21+motorcycle+tire"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=90%2F90-21+motorcycle+tire"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=90%2F90-21+motorcycle+tire"
+        }
+      ]
+    },
+    {
+      "id": "tyre-rear",
+      "name": "Tyre designation, rear",
+      "spec": "150/70 R 17, load index min. 69, speed category V",
+      "page": 216,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=150%2F70+R+17+motorcycle+tire"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=150%2F70+R+17+motorcycle+tire"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=150%2F70+R+17+motorcycle+tire"
+        }
+      ]
+    },
+    {
+      "id": "battery",
+      "name": "Battery type",
+      "spec": "AGM battery (Absorbent Glass Mat), 12 V, 12 Ah",
+      "page": 217,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=AGM+motorcycle+battery+12V+12Ah"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=AGM+motorcycle+battery+12V+12Ah"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=AGM+motorcycle+battery+12V+12Ah"
+        }
+      ]
+    },
+    {
+      "id": "key-battery",
+      "name": "Battery type (For Keyless Ride radio-operated key)",
+      "spec": "CR 2032",
+      "page": 217,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=CR+2032+battery"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=CR+2032+battery"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=CR+2032+battery"
+        }
+      ]
+    },
+    {
+      "id": "fuse-60a",
+      "name": "Fuse 1",
+      "spec": "60 A, Main fuse (alternator, CCP, Wave, fuse boxes)",
+      "page": 217,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=60+A+blade+fuse"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=60+A+blade+fuse"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=60+A+blade+fuse"
+        }
+      ]
+    },
+    {
+      "id": "fuse-7a5",
+      "name": "Fuse 2",
+      "spec": "7.5 A, Anti-theft alarm system, diagnostic socket, instrument cluster",
+      "page": 217,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=7.5+A+blade+fuse"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=7.5+A+blade+fuse"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=7.5+A+blade+fuse"
+        }
+      ]
+    },
+    {
+      "id": "fuse-15a",
+      "name": "Fuse 4",
+      "spec": "15 A, Multifunction switch, rev. counter, CCP",
+      "page": 217,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=15+A+blade+fuse"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=15+A+blade+fuse"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=15+A+blade+fuse"
+        }
+      ]
+    },
+    {
+      "id": "lubricant",
+      "name": "Lubricant",
+      "spec": "Unirex N3",
+      "page": 176,
+      "links": [
+        {
+          "shop": "RevZilla",
+          "url": "https://www.revzilla.com/search?query=Unirex+N3+grease"
+        },
+        {
+          "shop": "Partzilla",
+          "url": "https://www.partzilla.com/search?q=Unirex+N3+grease"
+        },
+        {
+          "shop": "Amazon",
+          "url": "https://www.amazon.com/s?k=Unirex+N3+grease"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+[
+  { "id": "ktm-390-duke-2024", "make": "KTM", "model": "390 Duke", "year": 2024, "market": "US", "manualId": "ktm-390-duke-2024-om-en", "vins": ["VBKJSA40"], "cues": ["split LED headlight", "orange trellis frame", "390 DUKE decal"] },
+  { "id": "ktm-390-duke-2023", "make": "KTM", "model": "390 Duke", "year": 2023, "market": "US", "manualId": null },
+  { "id": "ktm-390-duke-2025", "make": "KTM", "model": "390 Duke", "year": 2025, "market": "US", "manualId": null },
+  { "id": "bmw-r12gs-2025", "make": "BMW", "model": "R 12 G/S", "year": 2025, "market": "EU", "manualId": "bmw-r12gs-2025-rm-en", "vins": ["WB10N21"], "cues": ["boxer cylinders", "spoked 21 inch front wheel", "round headlight"] },
+  { "id": "bmw-r12-2024", "make": "BMW", "model": "R 12", "year": 2024, "market": "EU", "manualId": null },
+  { "id": "honda-cb650r-2023", "make": "Honda", "model": "CB650R", "year": 2023, "market": "EU", "manualId": null }
+]

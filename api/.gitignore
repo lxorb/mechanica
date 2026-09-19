@@ -1,0 +1,9 @@
+.venv
+__pycache__
+.env
+data/pdf
+data/uploads
+data/pages
+data/costs.jsonl
+data/jobs.json
+data/*.tmp
