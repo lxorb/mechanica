@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import type { Bike, Manual } from '../types'
 import type { Model } from '../data'
@@ -47,6 +47,7 @@ export default function Identify({
   const listRef = useRef<HTMLDivElement>(null)
 
   const canAdd = online && Boolean(onManual)
+  const typed = useDeferredValue(q)
   const clean = cleanVin(vin)
   const vinBike = vinMode && vinHit?.vin === clean ? vinHit.bike : null
 
@@ -56,10 +57,7 @@ export default function Identify({
   }, [photoUrl])
 
   useEffect(() => {
-    if (!online || !q.trim()) {
-      setRemote([])
-      return
-    }
+    if (!online || !q.trim()) return
     const control = new AbortController()
     const timer = setTimeout(() => {
       suggest(q, control.signal)
@@ -103,12 +101,12 @@ export default function Identify({
   }, [hits])
 
   const rows = useMemo(() => {
-    if (!q.trim()) return photoUrl ? photoRows.rows : []
-    const base = search(catalog, q)
+    if (!typed.trim()) return photoUrl ? photoRows.rows : []
+    const base = search(catalog, typed)
     if (remote.length === 0) return base
     const at = new Map(base.map((row, i) => [row.key, i]))
     const out = [...base]
-    for (const row of search(remote, q)) {
+    for (const row of search(remote, typed)) {
       const i = at.get(row.key)
       if (i === undefined) {
         if (out.length < LIMIT) out.push(row)
@@ -121,15 +119,15 @@ export default function Identify({
       }
     }
     return out
-  }, [catalog, q, remote, photoUrl, photoRows])
+  }, [catalog, typed, remote, photoUrl, photoRows])
 
   const chips = useMemo(() => {
     if (vinMode || photoUrl) return []
-    if (!q.trim()) return allMakes.slice(0, MAKE_CHIPS)
-    return matchingMakes(allMakes, q, MAKE_CHIPS)
-  }, [q, vinMode, photoUrl])
+    if (!typed.trim()) return allMakes.slice(0, MAKE_CHIPS)
+    return matchingMakes(allMakes, typed, MAKE_CHIPS)
+  }, [typed, vinMode, photoUrl])
 
-  const bare = chips.length > 0 && !q.trim()
+  const bare = chips.length > 0 && !typed.trim()
 
   const reset = () => {
     setQ('')

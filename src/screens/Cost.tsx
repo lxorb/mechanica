@@ -28,20 +28,20 @@ export default function Cost({ onBack }: { onBack: () => void }) {
   return (
     <div className="h-full w-full overflow-hidden">
       <div className="mx-auto flex h-full w-full max-w-[430px] flex-col">
-        <div className="shrink-0 px-2 pt-[env(safe-area-inset-top)]">
+        <div className="shrink-0 px-2 pt-[max(22px,calc(env(safe-area-inset-top)+12px))]">
           <button
             onClick={onBack}
             aria-label="←"
-            className="flex h-11 w-11 items-center justify-center text-[17px] leading-none"
+            className="flex h-11 w-11 items-center justify-center text-[19px] leading-none"
           >
             ←
           </button>
         </div>
-        <div className="grid min-h-0 flex-1 content-start grid-cols-2 gap-x-4 gap-y-8 px-4 pt-6">
+        <div className="grid min-h-0 flex-1 content-start grid-cols-2 gap-3 px-4 pt-4">
           {cells.map(([label, value]) => (
-            <div key={label}>
-              <div className="truncate text-[34px] leading-none font-medium tabular-nums">{value}</div>
-              <div className="pt-2 text-[13px] text-[var(--muted)]">{label}</div>
+            <div key={label} className="rounded-[14px] bg-[var(--ink-1)] px-4 py-4">
+              <div className="d truncate text-[30px] leading-none font-bold [font-stretch:112%]">{value}</div>
+              <div className="lab pt-3 text-[var(--muted)]">{label}</div>
             </div>
           ))}
         </div>

@@ -94,6 +94,11 @@ body { font-family: var(--sys); -webkit-tap-highlight-color: transparent; oversc
   50% { box-shadow: 0 0 0 5px rgba(255, 165, 31, 0); }
 }
 
+@keyframes ttm-progress {
+  from { width: 4%; }
+  to { width: 92%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; scroll-behavior: auto !important; }
 }

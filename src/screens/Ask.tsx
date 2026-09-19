@@ -110,15 +110,15 @@ export default function Ask({
   }, [manual])
 
   const groups = useMemo(() => {
-    const out: { key: string; number: string; words: string; items: Section[] }[] = []
+    const out: { key: string; chapter: string; number: string; words: string; items: Section[] }[] = []
     for (const section of manual.sections.slice(0, CHIPS)) {
       const last = out[out.length - 1]
-      if (last && last.key === section.chapter) {
+      if (last && last.chapter === section.chapter) {
         last.items.push(section)
         continue
       }
       const [number, words] = chapterOf(section.chapter)
-      out.push({ key: section.chapter, number, words, items: [section] })
+      out.push({ key: section.id, chapter: section.chapter, number, words, items: [section] })
     }
     return out
   }, [manual.sections])

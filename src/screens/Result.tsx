@@ -110,7 +110,7 @@ export default function Result({
   const [ratio, setRatio] = useState(() => cachedRatio(manual.file, 1))
   const [picked, setPicked] = useState(0)
   const [parts, setParts] = useState(false)
-  const [visited, setVisited] = useState<number[]>([])
+  const [read, setRead] = useState<{ key: string; list: number[] }>({ key: '', list: [] })
 
   const current = pages.includes(picked) ? picked : (pages[0] ?? 0)
 
@@ -146,14 +146,11 @@ export default function Result({
 
   useEffect(() => {
     seen.current.clear()
-    setVisited([])
     reset()
   }, [pages, reset])
 
-  useEffect(() => {
-    if (current <= 0) return
-    setVisited((list) => (list.includes(current) ? list : [...list, current]))
-  }, [current])
+  const key = useMemo(() => pages.join(','), [pages])
+  const visited = read.key === key ? read.list : []
 
   useEffect(() => {
     const view = scroller.current
@@ -171,13 +168,19 @@ export default function Result({
             top = page
           }
         }
-        if (top > 0) setPicked(top)
+        if (top > 0) {
+          setRead((was) => {
+            const list = was.key === key ? was.list : []
+            return list.includes(top) ? was : { key, list: [...list, top] }
+          })
+          setPicked(top)
+        }
       },
       { root: view, threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
     )
     for (const el of pageEls.current.values()) io.observe(el)
     return () => io.disconnect()
-  }, [pages, scroller])
+  }, [pages, key, scroller])
 
   useEffect(() => {
     if (width <= 0) return
@@ -310,7 +313,15 @@ export default function Result({
       <div className="shrink-0 border-t border-[var(--line)] pb-[max(12px,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex w-full max-w-[720px] items-center gap-2 px-3 pt-[10px]">
           <Voice bike={bike} manual={manual} onPage={jump} />
-          <div ref={stripRef} style={{ scrollbarWidth: 'none' }} className="hairline flex min-w-0 flex-1 gap-2 overflow-x-auto">
+          <div
+            ref={stripRef}
+            style={{
+              scrollbarWidth: 'none',
+              maskImage: 'linear-gradient(to right, #000 calc(100% - 22px), transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, #000 calc(100% - 22px), transparent)',
+            }}
+            className="hairline flex min-w-0 flex-1 gap-2 overflow-x-auto"
+          >
             {pages.map((page) => (
               <button
                 key={page}
