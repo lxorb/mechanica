@@ -12,4 +12,6 @@
 
 html, body, #root { height: 100%; margin: 0; background: var(--bg); color: var(--fg); }
 body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
-button, input { font: inherit; color: inherit; }
+@layer base {
+  button, input { font: inherit; color: inherit; }
+}

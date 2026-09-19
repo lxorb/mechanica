@@ -1,9 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
-import type { Bike, Candidate } from '../types'
-import { fromPhoto, fromVin, search, years } from '../lib/identify'
+import type { Bike, Candidate, Manual } from '../types'
+import { search, years } from '../lib/identify'
+import { identifyPhoto, identifyVin, online } from '../lib/source'
+import AddManual from '../components/AddManual'
 
 type Row = { key: string; make: string; model: string; models: Bike[]; confidence?: number }
+
+const LIMIT = 30
+const VIN_MIN = 8
 
 const keyOf = (b: Bike) => `${b.make}|${b.model}`.toLowerCase()
 
@@ -14,18 +19,48 @@ const span = (list: Bike[]) => {
   return a === z ? `${a}` : `${a}–${z}`
 }
 
-export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect: (bike: Bike) => void }) {
+export default function Identify({
+  bikes,
+  onSelect,
+  onManual,
+}: {
+  bikes: Bike[]
+  onSelect: (bike: Bike) => void
+  onManual?: (bike: Bike, manual: Manual) => void
+}) {
   const [q, setQ] = useState('')
   const [vin, setVin] = useState('')
   const [vinMode, setVinMode] = useState(false)
-  const [photo, setPhoto] = useState<{ url: string; candidates: Candidate[] } | null>(null)
+  const [vinHit, setVinHit] = useState<{ vin: string; bike: Bike | null } | null>(null)
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null)
+  const [candidates, setCandidates] = useState<Candidate[]>([])
   const [open, setOpen] = useState<string | null>(null)
+  const [adding, setAdding] = useState<Bike | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
+  const canAdd = online && Boolean(onManual)
+
   useEffect(() => {
-    if (!photo) return
-    return () => URL.revokeObjectURL(photo.url)
-  }, [photo])
+    if (!photoUrl) return
+    return () => URL.revokeObjectURL(photoUrl)
+  }, [photoUrl])
+
+  const clean = vin.replace(/[^A-Za-z0-9]/g, '').toUpperCase()
+  const vinBike = vinMode && vinHit?.vin === clean ? vinHit.bike : null
+
+  useEffect(() => {
+    if (!vinMode || clean.length < VIN_MIN) return
+    let alive = true
+    const timer = setTimeout(() => {
+      identifyVin(bikes, clean).then((bike) => {
+        if (alive) setVinHit({ vin: clean, bike })
+      })
+    }, 300)
+    return () => {
+      alive = false
+      clearTimeout(timer)
+    }
+  }, [bikes, clean, vinMode])
 
   const byId = useMemo(() => new Map(bikes.map((b) => [b.id, b])), [bikes])
 
@@ -38,25 +73,26 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
         if (seen.has(key)) continue
         seen.add(key)
         out.push({ key, make: b.make, model: b.model, models: years(bikes, b), confidence: confidence?.(b) })
+        if (out.length === LIMIT) break
       }
       return out
     }
     if (q.trim()) return build(search(bikes, q))
-    if (photo) {
-      const list = photo.candidates.map((c) => byId.get(c.bikeId)).filter((b): b is Bike => !!b)
-      const conf = new Map(photo.candidates.map((c) => [c.bikeId, c.confidence]))
+    if (photoUrl) {
+      const list = candidates.map((c) => byId.get(c.bikeId)).filter((b): b is Bike => !!b)
+      const conf = new Map(candidates.map((c) => [c.bikeId, c.confidence]))
       return build(list, (b) => conf.get(b.id) ?? 0)
     }
     return []
-  }, [bikes, byId, photo, q])
-
-  const vinBike = vinMode ? fromVin(bikes, vin) : null
+  }, [bikes, byId, candidates, photoUrl, q])
 
   const reset = () => {
     setQ('')
     setVin('')
     setVinMode(false)
-    setPhoto(null)
+    setVinHit(null)
+    setPhotoUrl(null)
+    setCandidates([])
     setOpen(null)
   }
 
@@ -64,16 +100,21 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
     const file = e.target.files?.[0]
     e.target.value = ''
     if (!file) return
-    const candidates = await fromPhoto(bikes, file)
+    const url = URL.createObjectURL(file)
     setQ('')
     setVin('')
     setVinMode(false)
+    setVinHit(null)
     setOpen(null)
-    setPhoto({ url: URL.createObjectURL(file), candidates })
+    setCandidates([])
+    setPhotoUrl(url)
+    const found = await identifyPhoto(bikes, file)
+    setCandidates(found)
   }
 
-  const pick = (b: Bike) => {
-    if (b.manualId) onSelect(b)
+  const pick = (bike: Bike) => {
+    if (bike.manualId) onSelect(bike)
+    else if (canAdd) setAdding(bike)
   }
 
   return (
@@ -87,7 +128,9 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
               setOpen(null)
               if (e.target.value.trim()) {
                 setVinMode(false)
-                setPhoto(null)
+                setVinHit(null)
+                setPhotoUrl(null)
+                setCandidates([])
               }
             }}
             placeholder="Make, model"
@@ -98,9 +141,9 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4">
-          {photo && !q.trim() && (
+          {photoUrl && !q.trim() && (
             <div className="flex items-center gap-3 py-3">
-              <img src={photo.url} alt="" className="h-[56px] w-[56px] rounded-xl border border-[var(--line)] object-cover" />
+              <img src={photoUrl} alt="" className="h-[56px] w-[56px] rounded-xl border border-[var(--line)] object-cover" />
               <div className="flex-1" />
               <button
                 onClick={reset}
@@ -115,7 +158,7 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
           {vinBike && (
             <button
               onClick={() => pick(vinBike)}
-              disabled={!vinBike.manualId}
+              disabled={!vinBike.manualId && !canAdd}
               className={`flex min-h-[56px] w-full items-center justify-between gap-3 border-b border-[var(--line)] py-3 text-left ${
                 vinBike.manualId ? '' : 'text-[var(--muted)] opacity-50'
               }`}
@@ -146,11 +189,13 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
               {open === row.key && (
                 <div className="flex flex-wrap gap-2 pb-3">
                   {row.models.map((b) =>
-                    b.manualId ? (
+                    b.manualId || canAdd ? (
                       <button
                         key={b.id}
-                        onClick={() => onSelect(b)}
-                        className="min-h-[44px] rounded-xl border border-[var(--line)] px-4 text-[15px] font-medium"
+                        onClick={() => pick(b)}
+                        className={`min-h-[44px] rounded-xl border border-[var(--line)] px-4 text-[15px] font-medium ${
+                          b.manualId ? '' : 'text-[var(--muted)] opacity-60'
+                        }`}
                       >
                         {b.year}
                       </button>
@@ -202,7 +247,8 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
                 onClick={() => {
                   setVinMode(true)
                   setQ('')
-                  setPhoto(null)
+                  setPhotoUrl(null)
+                  setCandidates([])
                   setOpen(null)
                 }}
                 className="h-14 rounded-xl border border-[var(--line)] text-[17px] font-medium"
@@ -214,6 +260,18 @@ export default function Identify({ bikes, onSelect }: { bikes: Bike[]; onSelect:
         </div>
 
         <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={onFile} className="hidden" />
+
+        {adding && onManual && (
+          <AddManual
+            bike={adding}
+            onDone={(manual) => {
+              const bike = adding
+              setAdding(null)
+              onManual(bike, manual)
+            }}
+            onClose={() => setAdding(null)}
+          />
+        )}
       </div>
     </div>
   )

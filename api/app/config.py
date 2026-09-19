@@ -29,7 +29,7 @@ class Settings:
     model_router = os.getenv("MODEL_ROUTER", "gpt-5.6-luna")
     model_picker = os.getenv("MODEL_PICKER", "gpt-5.6-terra")
     model_struct = os.getenv("MODEL_STRUCT", "gpt-5.6-luna")
-    model_vision = os.getenv("MODEL_VISION", "gpt-6-astra")
+    model_vision = os.getenv("MODEL_VISION", "gpt-5.6-luna")
     public_base = os.getenv("PUBLIC_BASE", "http://localhost:8000").rstrip("/")
     cors_origins = [o.strip() for o in os.getenv("CORS_ORIGINS", "*").split(",")]
 

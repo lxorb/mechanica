@@ -4,6 +4,7 @@ import { ask as askSource, loadBikes, loadManual } from './lib/source'
 import Identify from './screens/Identify'
 import Ask from './screens/Ask'
 import Result from './screens/Result'
+import Cost from './screens/Cost'
 
 type State =
   | { step: 'identify' }
@@ -13,10 +14,27 @@ type State =
 export default function App() {
   const [bikes, setBikes] = useState<Bike[] | null>(null)
   const [s, set] = useState<State>({ step: 'identify' })
+  const [hash, setHash] = useState(() => window.location.hash)
 
   useEffect(() => {
     loadBikes().then(setBikes)
   }, [])
+
+  useEffect(() => {
+    const onHash = () => setHash(window.location.hash)
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  if (hash === '#cost') {
+    return (
+      <Cost
+        onBack={() => {
+          window.location.hash = ''
+        }}
+      />
+    )
+  }
 
   if (!bikes) return null
 
@@ -27,6 +45,10 @@ export default function App() {
         onSelect={async (bike) => {
           const manual = await loadManual(bike)
           if (manual) set({ step: 'ask', bike, manual })
+        }}
+        onManual={(bike, manual) => {
+          set({ step: 'ask', bike, manual })
+          loadBikes().then(setBikes)
         }}
       />
     )

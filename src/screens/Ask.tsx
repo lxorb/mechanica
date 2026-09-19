@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Bike, Manual } from '../types'
 import * as speech from '../lib/speech'
+import * as deepgram from '../lib/deepgram'
 
 const MAX_CHIPS = 12
+
+type Stt = {
+  supported: boolean
+  start: (onText: (text: string, final: boolean) => void, onEnd: () => void) => void
+  stop: () => void
+}
 
 function Mic({ on }: { on: boolean }) {
   return (
@@ -35,30 +42,46 @@ export default function Ask({
 }) {
   const [text, setText] = useState('')
   const [listening, setListening] = useState(false)
+  const [stt, setStt] = useState<Stt>(speech)
   const input = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (!window.matchMedia('(pointer: coarse)').matches) input.current?.focus()
-    return () => speech.stop()
+    return () => {
+      speech.stop()
+      deepgram.stop()
+    }
   }, [])
+
+  useEffect(() => {
+    let alive = true
+    deepgram.voiceConfig().then((config) => {
+      if (!alive || !config?.deepgram || !deepgram.supported) return
+      deepgram.prime(manual)
+      setStt(deepgram)
+    })
+    return () => {
+      alive = false
+    }
+  }, [manual])
 
   const send = (q: string) => {
     const trimmed = q.trim()
     if (!trimmed) return
-    speech.stop()
+    stt.stop()
     setListening(false)
     onAsk(trimmed)
   }
 
   const mic = () => {
     if (listening) {
-      speech.stop()
+      stt.stop()
       setListening(false)
       return
     }
     setText('')
     setListening(true)
-    speech.start(
+    stt.start(
       (t) => setText(t),
       () => setListening(false),
     )
@@ -99,7 +122,7 @@ export default function Ask({
           }}
           className="flex items-center gap-1 rounded-xl border border-[var(--line)] pr-1.5 pl-1.5"
         >
-          {speech.supported && (
+          {stt.supported && (
             <button
               type="button"
               onClick={mic}
@@ -117,7 +140,7 @@ export default function Ask({
             autoCorrect="off"
             spellCheck={false}
             className={`min-w-0 flex-1 bg-transparent py-3 text-[17px] outline-none placeholder:text-[var(--muted)] ${
-              speech.supported ? '' : 'pl-2.5'
+              stt.supported ? '' : 'pl-2.5'
             }`}
             placeholder="What do you want to do?"
           />

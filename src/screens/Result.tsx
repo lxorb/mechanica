@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Bike, Highlight, Manual, Match, OutlineNode, Section } from '../types'
 import PdfPage from '../components/PdfPage'
 import Parts from '../components/Parts'
+import Voice from '../components/Voice'
 import { cachedRatio, getDocument, pageRatio, preloadPage } from '../lib/pdf'
 
 type Entry = { title: string; page: number; depth: number }
@@ -71,7 +72,6 @@ export default function Result({
   onAsk: (query: string) => void
   onBack: () => void
 }) {
-  void bike
   void query
   void onAsk
 
@@ -276,6 +276,7 @@ export default function Result({
 
       <div className="shrink-0 border-t border-[var(--line)] pb-[max(8px,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex w-full max-w-[720px] items-center gap-2 px-2 pt-2">
+          <Voice bike={bike} manual={manual} onPage={jump} />
           <div ref={stripRef} style={{ scrollbarWidth: 'none' }} className="flex min-w-0 flex-1 gap-2 overflow-x-auto">
             {pages.map((page) => (
               <button

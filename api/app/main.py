@@ -122,8 +122,14 @@ def _start_job(tasks: BackgroundTasks, source: str, make: str, model: str, year:
     job = IngestJob(id=uuid.uuid4().hex[:12], manualId=manual_id, status="queued")
     store.put_job(job)
     bike = store.bike(bike_id) or Bike(id=bike_id, make=make, model=model, year=year, market=market)
-    store.put_bikes([bike.model_copy(update={"manualId": manual_id})])
-    tasks.add_task(ingest_mod.run, job.id, source, manual_id, [bike_id], make, model, year)
+    store.put_bikes([bike])
+
+    def run_and_link() -> None:
+        ingest_mod.run(job.id, source, manual_id, [bike_id], make, model, year)
+        if (done := store.job(job.id)) and done.status == "done":
+            store.put_bikes([bike.model_copy(update={"manualId": manual_id})])
+
+    tasks.add_task(run_and_link)
     return job
 
 
