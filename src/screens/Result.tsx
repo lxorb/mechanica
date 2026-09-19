@@ -4,6 +4,7 @@ import PdfPage from '../components/PdfPage'
 import Parts from '../components/Parts'
 import Voice from '../components/Voice'
 import { cachedRatio, getDocument, pageRatio, preloadPage } from '../lib/pdf'
+import { useZoom } from '../lib/zoom'
 
 type Entry = { title: string; page: number; depth: number }
 
@@ -60,21 +61,14 @@ function spread(sections: Section[], total: number) {
 export default function Result({
   bike,
   manual,
-  query,
   matches,
-  onAsk,
   onBack,
 }: {
   bike: Bike
   manual: Manual
-  query: string
   matches: Match[]
-  onAsk: (query: string) => void
   onBack: () => void
 }) {
-  void query
-  void onAsk
-
   const sections = useMemo(() => reading(manual, matches), [manual, matches])
   const outline = useMemo(() => flatten(manual.outline, 0, []), [manual.outline])
   const [chapter, setChapter] = useState<number[] | null>(null)
@@ -101,7 +95,7 @@ export default function Result({
     [matches],
   )
 
-  const scrollerRef = useRef<HTMLDivElement>(null)
+  const { scroller, spacer, inner, zoomed, reset } = useZoom()
   const stripRef = useRef<HTMLDivElement>(null)
   const pageEls = useRef(new Map<number, HTMLElement>())
   const chipEls = useRef(new Map<number, HTMLElement>())
@@ -115,14 +109,14 @@ export default function Result({
   const current = pages.includes(picked) ? picked : (pages[0] ?? 0)
 
   useEffect(() => {
-    const scroller = scrollerRef.current
-    if (!scroller) return
-    const measure = () => setBox({ w: scroller.clientWidth, h: scroller.clientHeight })
+    const view = scroller.current
+    if (!view) return
+    const measure = () => setBox({ w: view.clientWidth, h: view.clientHeight })
     measure()
     const ro = new ResizeObserver(measure)
-    ro.observe(scroller)
+    ro.observe(view)
     return () => ro.disconnect()
-  }, [pages.length])
+  }, [pages.length, scroller])
 
   const first = pages[0] ?? 1
 
@@ -145,8 +139,13 @@ export default function Result({
   }, [box, ratio])
 
   useEffect(() => {
-    const scroller = scrollerRef.current
-    if (!scroller || pages.length === 0) return
+    seen.current.clear()
+    reset()
+  }, [pages, reset])
+
+  useEffect(() => {
+    const view = scroller.current
+    if (!view || pages.length === 0) return
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -162,11 +161,11 @@ export default function Result({
         }
         if (top > 0) setPicked(top)
       },
-      { root: scroller, threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
+      { root: view, threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
     )
     for (const el of pageEls.current.values()) io.observe(el)
     return () => io.disconnect()
-  }, [pages])
+  }, [pages, scroller])
 
   useEffect(() => {
     if (width <= 0) return
@@ -186,6 +185,7 @@ export default function Result({
 
   const jump = (page: number) => {
     setPicked(page)
+    reset()
     pageEls.current.get(page)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
@@ -207,6 +207,7 @@ export default function Result({
       <div className="mx-auto flex w-full max-w-[720px] items-center gap-1 px-2">
         <button
           onClick={chapter ? () => setChapter(null) : onBack}
+          aria-label="←"
           className="flex h-11 w-11 shrink-0 items-center justify-center text-[17px] leading-none"
         >
           ←
@@ -255,23 +256,29 @@ export default function Result({
       {header}
 
       <div
-        ref={scrollerRef}
+        ref={scroller}
         style={{ scrollbarWidth: 'none' }}
-        className="min-h-0 flex-1 snap-y snap-mandatory overflow-y-auto overscroll-contain"
+        className={`min-h-0 flex-1 overflow-auto overscroll-contain ${zoomed ? '' : 'snap-y snap-proximity'}`}
       >
-        {pages.map((page) => (
-          <div
-            key={page}
-            data-page={page}
-            ref={(el) => {
-              if (el) pageEls.current.set(page, el)
-              else pageEls.current.delete(page)
-            }}
-            className="flex snap-start items-center justify-center py-2"
-          >
-            {width > 0 && <PdfPage file={manual.file} page={page} highlights={marks.get(page) ?? []} width={width} />}
+        <div ref={spacer}>
+          <div ref={inner} className="flex flex-col">
+            {pages.map((page) => (
+              <div
+                key={page}
+                data-page={page}
+                ref={(el) => {
+                  if (el) pageEls.current.set(page, el)
+                  else pageEls.current.delete(page)
+                }}
+                className="flex shrink-0 snap-start justify-center py-2"
+              >
+                {width > 0 && (
+                  <PdfPage file={manual.file} page={page} highlights={marks.get(page) ?? []} width={width} />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
       <div className="shrink-0 border-t border-[var(--line)] pb-[max(8px,env(safe-area-inset-bottom))]">
@@ -286,9 +293,9 @@ export default function Result({
                   else chipEls.current.delete(page)
                 }}
                 onClick={() => jump(page)}
-                className={`h-11 min-w-11 shrink-0 rounded-xl border px-3 text-[15px] tabular-nums ${
+                className={`h-11 min-w-11 shrink-0 rounded-xl border px-3 text-[15px] tabular-nums transition-colors duration-150 ${
                   page === current
-                    ? 'border-[var(--accent)] bg-[var(--accent)] font-medium text-[#0a0a0a]'
+                    ? 'border-[var(--accent)] bg-[var(--accent)] font-medium text-[var(--bg)]'
                     : 'border-[var(--line)] text-[var(--muted)]'
                 }`}
               >
@@ -307,16 +314,7 @@ export default function Result({
         </div>
       </div>
 
-      {parts && (
-        <div className="fixed inset-0 z-10 flex flex-col justify-end bg-black/60" onClick={() => setParts(false)}>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="mx-auto max-h-[72%] w-full max-w-[720px] overflow-y-auto rounded-t-xl border-t border-[var(--line)] bg-[var(--bg)] pb-[env(safe-area-inset-bottom)]"
-          >
-            <Parts manual={manual} sectionIds={partSections} onClose={() => setParts(false)} />
-          </div>
-        </div>
-      )}
+      <Parts manual={manual} sectionIds={partSections} open={parts} onClose={() => setParts(false)} />
     </div>
   )
 }

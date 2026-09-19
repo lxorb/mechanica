@@ -3,8 +3,6 @@ import type { Bike, Manual } from '../types'
 import * as speech from '../lib/speech'
 import * as deepgram from '../lib/deepgram'
 
-const MAX_CHIPS = 12
-
 type Stt = {
   supported: boolean
   start: (onText: (text: string, final: boolean) => void, onEnd: () => void) => void
@@ -37,40 +35,47 @@ export default function Ask({
 }: {
   bike: Bike
   manual: Manual
-  onAsk: (query: string) => void
+  onAsk: (query: string) => Promise<void>
   onBack: () => void
 }) {
   const [text, setText] = useState('')
   const [listening, setListening] = useState(false)
+  const [busy, setBusy] = useState(false)
   const [stt, setStt] = useState<Stt>(speech)
   const input = useRef<HTMLInputElement>(null)
+  const alive = useRef(true)
 
   useEffect(() => {
+    alive.current = true
     if (!window.matchMedia('(pointer: coarse)').matches) input.current?.focus()
     return () => {
+      alive.current = false
       speech.stop()
       deepgram.stop()
     }
   }, [])
 
   useEffect(() => {
-    let alive = true
+    let live = true
     deepgram.voiceConfig().then((config) => {
-      if (!alive || !config?.deepgram || !deepgram.supported) return
+      if (!live || !config?.deepgram || !deepgram.supported) return
       deepgram.prime(manual)
       setStt(deepgram)
     })
     return () => {
-      alive = false
+      live = false
     }
   }, [manual])
 
   const send = (q: string) => {
     const trimmed = q.trim()
-    if (!trimmed) return
+    if (!trimmed || busy) return
     stt.stop()
     setListening(false)
-    onAsk(trimmed)
+    setBusy(true)
+    onAsk(trimmed).finally(() => {
+      if (alive.current) setBusy(false)
+    })
   }
 
   const mic = () => {
@@ -87,28 +92,38 @@ export default function Ask({
     )
   }
 
+  const ready = text.trim().length > 0 && !busy
+
   return (
     <div className="mx-auto flex h-full w-full max-w-[430px] flex-col">
       <header className="shrink-0 px-4 pt-[max(8px,env(safe-area-inset-top))]">
-        <button onClick={onBack} className="flex h-11 w-11 items-center text-[17px] leading-none">
+        <button
+          onClick={onBack}
+          aria-label="←"
+          className="-ml-2 flex h-11 w-11 items-center justify-center text-[17px] leading-none"
+        >
           ←
         </button>
-        <div className="text-[13px] leading-snug text-[var(--muted)]">
+        <div className="truncate text-[13px] leading-snug text-[var(--muted)]">
           {bike.make} {bike.model} {bike.year}
         </div>
-        <div className="pb-3 text-[17px] font-medium leading-snug">{manual.title}</div>
+        <div className="pb-3 text-[17px] leading-snug font-medium">{manual.title}</div>
       </header>
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-4">
+      <div
+        className={`min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-4 transition-opacity duration-150 ${
+          busy ? 'pointer-events-none opacity-40' : ''
+        }`}
+      >
         <div className="flex flex-col gap-2">
-          {manual.sections.slice(0, MAX_CHIPS).map((s) => (
+          {manual.sections.map((s) => (
             <button
               key={s.id}
-              onClick={() => onAsk(s.title)}
-              className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border border-[var(--line)] px-4 py-3 text-left active:border-[var(--muted)]"
+              onClick={() => send(s.title)}
+              className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border border-[var(--line)] px-4 py-3 text-left transition-colors duration-150 active:border-[var(--muted)]"
             >
               <span className="text-[15px] leading-snug">{s.title}</span>
-              <span className="shrink-0 text-[13px] text-[var(--muted)]">p. {s.pageStart}</span>
+              <span className="shrink-0 text-[13px] tabular-nums text-[var(--muted)]">p. {s.pageStart}</span>
             </button>
           ))}
         </div>
@@ -120,12 +135,13 @@ export default function Ask({
             e.preventDefault()
             send(text)
           }}
-          className="flex items-center gap-1 rounded-xl border border-[var(--line)] pr-1.5 pl-1.5"
+          className="flex items-center gap-1 rounded-xl border border-[var(--line)] pr-1.5 pl-1.5 focus-within:border-[var(--muted)]"
         >
           {stt.supported && (
             <button
               type="button"
               onClick={mic}
+              aria-pressed={listening}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[var(--muted)]"
             >
               <Mic on={listening} />
@@ -146,9 +162,11 @@ export default function Ask({
           />
           <button
             type="submit"
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[17px] leading-none ${
-              text.trim()
-                ? 'bg-[var(--accent)] text-[#0a0a0a]'
+            aria-label="↑"
+            disabled={!ready}
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[17px] leading-none transition-colors duration-150 ${
+              ready
+                ? 'bg-[var(--accent)] text-[var(--bg)]'
                 : 'border border-[var(--line)] text-[var(--muted)]'
             }`}
           >

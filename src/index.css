@@ -12,6 +12,19 @@
 
 html, body, #root { height: 100%; margin: 0; background: var(--bg); color: var(--fg); }
 body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
+
 @layer base {
   button, input { font: inherit; color: inherit; }
+  button { touch-action: manipulation; }
+  button:disabled { cursor: default; }
+  img { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes ttm-progress {
+  from { width: 4%; }
+  to { width: 92%; }
 }
