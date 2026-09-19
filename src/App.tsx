@@ -122,9 +122,11 @@ export default function App() {
     return <Result bike={frame.bike} manual={frame.manual} matches={frame.matches} onBack={back} />
   }
 
+  const step = hash === '#cost' ? 1 : frame.step === 'identify' ? 1 : frame.step === 'ask' ? 2 : 3
+
   return (
     <>
-      <Progress />
+      <Progress step={step} />
       {screen()}
     </>
   )

@@ -7,7 +7,7 @@ type Props = { bike: Bike; manual: Manual; onPage: (page: number) => void }
 
 function Glyph() {
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+    <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
       <rect x="9" y="3" width="6" height="11" rx="3" />
       <path d="M5 11.5a7 7 0 0 0 14 0" />
       <path d="M12 18.5V21" />
@@ -53,10 +53,10 @@ function Talk({ bike, manual, onPage, agentId }: Props & { agentId: string }) {
     <button
       onClick={toggle}
       aria-pressed={live}
-      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border ${
+      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors duration-150 ${
         live
-          ? 'animate-pulse border-[var(--accent)] text-[var(--accent)]'
-          : 'border-[var(--line)] text-[var(--muted)]'
+          ? 'animate-[ring_2s_ease-in-out_infinite] bg-[var(--ink-1)] text-[var(--accent)]'
+          : 'bg-[var(--ink-1)] text-[var(--muted)]'
       }`}
     >
       <Glyph />

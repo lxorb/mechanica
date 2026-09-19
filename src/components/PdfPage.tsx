@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import type { Highlight } from '../types'
 import { cachedRatio, getDocument, pageRatio, releaseCanvas, renderPage } from '../lib/pdf'
 
+const STAGGER = 60
+
 function scrollParent(el: HTMLElement) {
   for (let node = el.parentElement; node; node = node.parentElement) {
     const overflow = getComputedStyle(node).overflowY
@@ -61,7 +63,7 @@ export default function PdfPage({
   return (
     <div
       ref={hostRef}
-      className="relative overflow-hidden rounded-[2px] bg-white"
+      className="relative overflow-hidden rounded-[3px] bg-[var(--paper)] shadow-[0_18px_40px_-14px_rgba(0,0,0,0.72)]"
       style={{ width, aspectRatio: `1 / ${ratio}` }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 block h-full w-full" />
@@ -69,13 +71,14 @@ export default function PdfPage({
         highlights.map((h, i) => (
           <div
             key={i}
-            className="pointer-events-none absolute rounded-[3px] mix-blend-multiply"
+            className="mark pointer-events-none absolute rounded-[3px] mix-blend-multiply"
             style={{
               left: `${h.x * 100}%`,
               top: `${h.y * 100}%`,
               width: `${h.w * 100}%`,
               height: `${h.h * 100}%`,
               background: 'var(--mark)',
+              animationDelay: `${i * STAGGER}ms`,
             }}
           />
         ))}

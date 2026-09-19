@@ -20,7 +20,7 @@ declare global {
 
 const APP_KEY: string = import.meta.env.VITE_DROPBOX_APP_KEY ?? ''
 const CHOOSER = 'https://www.dropbox.com/static/api/2/dropins.js'
-const EASE = 150
+const EASE = 220
 
 let loading: Promise<void> | null = null
 
@@ -124,43 +124,51 @@ export default function AddManual({
       <button
         onClick={close}
         aria-label="✕"
-        className="absolute inset-0 bg-black/60 transition-opacity ease-out"
+        className="absolute inset-0 bg-black/62 transition-opacity ease-out"
         style={{ opacity: shown ? 1 : 0, transitionDuration: `${EASE}ms` }}
       />
       <div
-        className="relative mx-auto w-full max-w-[430px] rounded-t-xl border-t border-[var(--line)] bg-[var(--bg)] px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))] transition-transform ease-out"
-        style={{ transform: shown ? 'translateY(0)' : 'translateY(100%)', transitionDuration: `${EASE}ms` }}
+        className="relative mx-auto w-full max-w-[430px] rounded-t-[20px] border-t border-[var(--line)] bg-[var(--ink-1)] px-4 pb-[max(16px,env(safe-area-inset-bottom))] transition-transform"
+        style={{
+          transform: shown ? 'translateY(0)' : 'translateY(100%)',
+          transitionDuration: `${EASE}ms`,
+          transitionTimingFunction: 'cubic-bezier(0.2,0.8,0.2,1)',
+        }}
       >
-        <div className="flex justify-end">
+        <div className="relative flex h-11 items-center justify-center">
+          <span className="h-1 w-9 rounded-full bg-[var(--line)]" />
           <button
             onClick={close}
             aria-label="✕"
-            className="flex h-11 w-11 items-center justify-center text-[17px] leading-none text-[var(--muted)]"
+            className="absolute top-0 right-1 flex h-11 w-11 items-center justify-center text-[15px] leading-none text-[var(--muted)]"
           >
             ✕
           </button>
         </div>
 
         {progress ? (
-          <div className="pb-3">
-            <div className="h-[2px] w-full rounded-full bg-[var(--line)]">
+          <div className="pt-2 pb-4">
+            <div className="h-[3px] w-full overflow-hidden rounded-full bg-[var(--line)]">
               <div
-                className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300"
+                className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-[220ms]"
                 style={{ width: `${Math.round(ratio * 100)}%` }}
               />
             </div>
-            {progress.title && <div className="truncate pt-3 text-[15px] font-medium">{progress.title}</div>}
+            {progress.title && <div className="cover truncate pt-4 text-[15px]">{progress.title}</div>}
           </div>
         ) : (
-          <div className={`grid gap-3 pb-3 ${APP_KEY ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          <div className={`grid gap-3 pt-1 pb-4 ${APP_KEY ? 'grid-cols-2' : 'grid-cols-1'}`}>
             <button
               onClick={() => fileRef.current?.click()}
-              className="h-14 rounded-xl bg-[var(--accent)] text-[17px] font-medium text-[var(--bg)]"
+              className="lab h-14 rounded-[14px] bg-[var(--accent)] text-[var(--accent-ink)] active:opacity-90"
             >
               PDF
             </button>
             {APP_KEY && (
-              <button onClick={fromDropbox} className="h-14 rounded-xl border border-[var(--line)] text-[17px] font-medium">
+              <button
+                onClick={fromDropbox}
+                className="lab h-14 rounded-[14px] border border-[var(--line)] bg-[var(--ink-2)] active:bg-[var(--line)]"
+              >
                 Dropbox
               </button>
             )}

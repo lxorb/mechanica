@@ -136,3 +136,17 @@ Dots on a line were tried first and read as decoration at 390 px; three bars rea
 
 `docs/ui/mock.html` — six frames at 390×844: the run (Identify → Ask → Result) and three states (Identify empty, Parts sheet, outline).
 Screenshot: `docs/ui/mock.png`.
+
+## Shipped (phase 2)
+
+Deltas from the spec above, all made against real screens:
+
+- **Rail** — capped at `max-w-[720px]`, centred. Full width at 390; on desktop it belongs to the app column instead of the window. It is the only progress indicator: `Progress` takes `step` (1 identify · 2 ask · 3 result) and, while `useBusy()` is true, runs `ttm-progress` inside the live segment.
+- **Ask list** — grouped into consecutive runs of `section.chapter`, capped at the first 16 sections (auto-ingested manuals carry 150–330, already ordered rider-tasks-first by the backend). Group key is the first section id, not the chapter string: chapters recur non-consecutively in ingested manuals.
+- **Section-title chip** — `/^([\d.]+)\s+(\S.*)$/` on the chapter. KTM gives `18` + `SERVICE WORK ON THE ENGINE`; BMW has no numbering, so the chip is the words alone.
+- **Part photo** — a camera glyph next to the mic in the ask bar. Online: `track(identifyPart(file))`, then the top label through the phrase map into `onAsk`. Offline: focus returns to the input and nothing else happens.
+- **Page strip** — `visited` is derived, not stored in an effect: `{ key: pages.join(','), list }` updated inside the IntersectionObserver, so it resets with the reading list and never reads a ref during render. Right edge masked so chips fade under `Parts`.
+- **Marker** — verified mid-stroke (`docs/ui/shots/marker-stroke-mid.png` vs `-done.png`): rects draw left to right, 260 ms, 60 ms apart, once per page render.
+- **Search field** — the value stays in the body font; only numerals, chips, badges and the three labels use Archivo.
+- **Icon** — graphite square, paper page, one amber chisel-tip stroke over a darkened rule. 512 rendered from `icon.svg`, 192 and 180 downscaled from it (headless Chrome will not screenshot windows under ~200 px). Maskable variant keeps the page inside the safe circle.
+- **Cost** — figures in Archivo 30/700/wdth 112 on `--ink-1` cards, labels in `lab`.
