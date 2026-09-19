@@ -38,11 +38,17 @@ def norm(text: str) -> str:
     return fold(text).lower()
 
 
+def displayed(rect, matrix: pymupdf.Matrix) -> pymupdf.Rect:
+    """Text extraction reports the unrotated page. pdf.js renders the rotated one, so highlights live there."""
+    return (pymupdf.Rect(rect) * matrix).normalize()
+
+
 class PageText:
     """Line index of one page, built once and reused for every quote."""
 
     def __init__(self, page: pymupdf.Page):
         self.page = page
+        self.matrix = page.rotation_matrix
         self.width = page.rect.width or 1.0
         self.height = page.rect.height or 1.0
         self.lines: list[tuple[str, pymupdf.Rect]] = []
@@ -52,7 +58,7 @@ class PageText:
             for line in block.get("lines", []):
                 text = "".join(s["text"] for s in line.get("spans", []))
                 if text.strip():
-                    self.lines.append((text, pymupdf.Rect(line["bbox"])))
+                    self.lines.append((text, displayed(line["bbox"], self.matrix)))
         spans: list[tuple[int, int, pymupdf.Rect]] = []
         parts: list[str] = []
         pos = 0
@@ -78,7 +84,7 @@ class PageText:
             except Exception:
                 hits = []
             if hits:
-                return hits
+                return [displayed(h, self.matrix) for h in hits]
         return self._substring(needle)
 
     def _variants(self, needle: str):
@@ -149,12 +155,17 @@ def block_rect(rects: list[pymupdf.Rect], page_height: float, heading: bool = Fa
 
 
 def to_highlight(rect: pymupdf.Rect, page_no: int, width: float, height: float) -> Highlight:
+    """Fractions of the rendered page, always inside 0..1: the viewer draws them straight."""
+    x0 = min(max(rect.x0 / width, 0.0), 1.0)
+    x1 = min(max(rect.x1 / width, 0.0), 1.0)
+    y0 = min(max(rect.y0 / height - PAD, 0.0), 1.0)
+    y1 = min(max(rect.y1 / height + PAD, 0.0), 1.0)
     return Highlight(
         page=page_no,
-        x=round(max(rect.x0 / width, 0.0), 4),
-        y=round(max(rect.y0 / height - PAD, 0.0), 4),
-        w=round(min((rect.x1 - rect.x0) / width, 1.0), 4),
-        h=round(min((rect.y1 - rect.y0) / height + 2 * PAD, MAX_H), 4),
+        x=round(x0, 4),
+        y=round(y0, 4),
+        w=round(min(x1 - x0, 1.0 - x0), 4),
+        h=round(min(y1 - y0, MAX_H, 1.0 - y0), 4),
     )
 
 

@@ -18,16 +18,21 @@ def extract_pages(doc: pymupdf.Document, manual_id: str, progress=None) -> list[
     out: list[Page] = []
     for n, page in enumerate(doc, start=1):
         w, h = page.rect.width or 1.0, page.rect.height or 1.0
-        blocks = [
-            Block(
-                text=b[4].strip(),
-                x=round(b[0] / w, 4),
-                y=round(b[1] / h, 4),
-                w=round((b[2] - b[0]) / w, 4),
-                h=round((b[3] - b[1]) / h, 4),
-            )
+        matrix = page.rotation_matrix
+        boxes = [
+            (b[4].strip(), (pymupdf.Rect(b[0], b[1], b[2], b[3]) * matrix).normalize())
             for b in page.get_text("blocks")
             if len(b) > 6 and b[6] == 0 and b[4].strip()
+        ]
+        blocks = [
+            Block(
+                text=text,
+                x=round(min(max(r.x0 / w, 0.0), 1.0), 4),
+                y=round(min(max(r.y0 / h, 0.0), 1.0), 4),
+                w=round(min(r.width / w, 1.0), 4),
+                h=round(min(r.height / h, 1.0), 4),
+            )
+            for text, r in boxes
         ]
         out.append(Page(manualId=manual_id, page=n, width=round(w, 2), height=round(h, 2), text=page.get_text(), blocks=blocks))
         if progress and n % 10 == 0:
