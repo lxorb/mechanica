@@ -7,6 +7,7 @@ Spec intents answer straight from the parsed Spec rows and never pay for a picke
 import os
 import re
 import threading
+from collections import OrderedDict
 
 import httpx
 from pydantic import BaseModel
@@ -18,10 +19,15 @@ from .search import get_index
 from .store import get_store
 
 KINDS = {"torque", "capacity", "clearance", "pressure", "grade", "size", "electrical", "other"}
+INTENTS = {"procedure", "spec", "part", "unknown"}
 MAX_MAIN = 4
 MAX_RELATED = 2
 SPEC_FLOOR = 0.5
-SNIPPET = 300
+SNIPPET = 220
+CANDIDATES = 6
+PICK_MARGIN = 0.85
+CACHE_MAX = 500
+EFFORT = "low"
 TTC_URL = "https://api.thetokencompany.com/v1/compress"
 
 
@@ -104,6 +110,50 @@ rephrasing, because front and rear are different printed sections. If the rider 
 it as a spec intent. If the rider describes a symptom rather than a task ("it pulls to one side", "clunking from
 the back", "smells of petrol"), pick the component most likely to be inspected and use intent procedure.
 
+Spelling. Riders type fast, one-handed, on a dirty phone. Silently correct obvious misspellings to the printed word
+before you build the queries, and never repeat the misspelling: "tyre presure" -> tyre pressure, "brek pads" ->
+brake pads, "chian" -> chain, "oli" -> oil, "engien" -> engine, "fuze" -> fuse, "headlite" -> headlight, "cooland"
+-> coolant, "batery" -> battery, "flooid" -> fluid, "treed" -> tread, "remve" -> remove, "sparkplug" -> spark plug,
+"pre-load" -> preload, "breaks" -> brakes, "tires"/"tyres" -> both spellings.
+
+Language. Riders type in their own language; every manual in this app is printed in English. Translate the sentence
+into English manual vocabulary first and emit English only, in components, in queries and in specName. Never echo a
+foreign word back. The rule about keeping the rider's own decisive nouns then means the English translation of those
+nouns. Guide:
+- German: Reifendruck -> tyre pressure; Reifen -> tyre; Kettenspannung -> chain tension; Kette -> drive chain;
+  Olwechsel / Olwechsel machen -> changing the engine oil and oil filter; Olstand -> engine oil level; Motorol ->
+  engine oil; Bremsbelage -> brake pads; Bremsflussigkeit -> brake fluid; Batterie laden -> charging the battery;
+  Vorderrad ausbauen -> removing the front wheel; Hinterrad -> rear wheel; Kuhlmittel -> coolant; Sicherung -> fuse;
+  Scheinwerfer -> headlight; Profiltiefe -> tread depth; Federvorspannung -> spring preload; Anzugsdrehmoment ->
+  tightening torque; Sitzbank -> seat; vorne -> front; hinten -> rear; prufen -> checking; einstellen -> adjusting;
+  wechseln / tauschen -> changing; ausbauen -> removing; reinigen -> cleaning; nachfullen -> topping up.
+- Spanish: presion de neumaticos -> tyre pressure; neumatico -> tyre; aceite del motor -> engine oil; cambiar el
+  aceite -> changing the engine oil and oil filter; nivel de aceite -> engine oil level; pastillas de freno ->
+  brake pads; liquido de frenos -> brake fluid; bateria -> battery; cadena -> drive chain; rueda delantera -> front
+  wheel; rueda trasera -> rear wheel; fusible -> fuse; refrigerante -> coolant; faro -> headlight; par de apriete ->
+  tightening torque; comprobar -> checking; ajustar -> adjusting; cambiar -> changing; quitar -> removing.
+- French: pression des pneus -> tyre pressure; pneu -> tyre; huile moteur -> engine oil; niveau d'huile -> engine
+  oil level; vidange -> changing the engine oil and oil filter; plaquettes de frein -> brake pads; liquide de frein
+  -> brake fluid; batterie -> battery; chaine -> drive chain; roue avant -> front wheel; roue arriere -> rear wheel;
+  fusible -> fuse; liquide de refroidissement -> coolant; phare -> headlight; couple de serrage -> tightening
+  torque; verifier -> checking; regler -> adjusting; changer -> changing; demonter -> removing.
+- Italian and Portuguese follow the same pattern: translate, then use the English manual word.
+
+Out of scope. An owner manual covers operating, checking, adjusting, servicing and the printed technical data of
+this one motorcycle. It does not cover riding technique, tuning, aftermarket parts, prices, dealers, insurance,
+routes, weather, opinions, other vehicles, or small talk. Return intent "unknown" with an empty components list and
+an empty queries list when the sentence is:
+- a greeting or a courtesy ("hello", "hi", "thanks", "ok, cool"), or meaningless keyboard noise ("asdfgh")
+- riding skill or technique ("how do I wheelie", "teach me to corner faster", "how do I do a stoppie", "launch it")
+- shopping, tuning or styling ("best exhaust", "can I fit a turbo", "should I buy a Ducati instead", "what colour
+  should I paint it", "where can I buy a helmet", "loudest slip-on")
+- money, resale value, insurance, finance, dealers, travel, bookings, music, news, sport, the weather or jokes
+- an opinion or a recommendation the manual does not print, or a task this app cannot do ("book me a hotel")
+Never stretch such a sentence into a bike system: "best exhaust" is not the exhaust, "how much is it worth" is not
+the technical data, "who won MotoGP" is not a component. For these, queries must be empty, not a best guess. Do not
+use "unknown" for anything the manual does print, however casually or badly the rider types it, and never for a
+sentence in another language that names a real bike system.
+
 Examples.
 "change the oil" -> intent procedure; components ["engine oil", "oil filter"]; queries ["changing the engine oil and
 oil filter", "engine oil change oil drain plug", "replace oil filter"]; specName null; specKind null.
@@ -125,25 +175,90 @@ SAE grade", "recommended engine oil"]; specName "engine oil specification"; spec
 "battery dead" -> intent procedure; components ["battery"]; queries ["charging the 12-V battery", "battery charger
 connection", "jump-starting"]; specName null; specKind null.
 "front wheel out" -> intent procedure; components ["front wheel", "wheel spindle"]; queries ["removing the front
-wheel", "front wheel removal quick-release axle", "take off front wheel"]; specName null; specKind null."""
+wheel", "front wheel removal quick-release axle", "take off front wheel"]; specName null; specKind null.
+"brek pads worn on the back" -> intent procedure; components ["brake pad", "rear brake"]; queries ["checking rear
+brake pad thickness", "rear brake lining thickness wear limit", "rear brake pad wear"]; specName null; specKind null.
+"Reifendruck pruefen" -> intent spec; components ["tyre", "tyre pressure"]; queries ["checking tyre pressure", "tire
+pressure front rear", "tyre pressure cold"]; specName "tyre pressure front"; specKind pressure.
+"Vorderrad ausbauen" -> intent procedure; components ["front wheel", "wheel spindle"]; queries ["removing the front
+wheel", "front wheel removal", "front wheel spindle"]; specName null; specKind null.
+"cambiar el aceite del motor" -> intent procedure; components ["engine oil", "oil filter"]; queries ["changing the
+engine oil and oil filter", "engine oil change oil drain plug", "replace oil filter"]; specName null; specKind null.
+"tire pressure with passenger" -> intent spec; components ["tyre", "tyre pressure"]; queries ["tyre pressure with
+passenger full payload", "tire pressure two-up rear", "checking tyre pressure"]; specName "tyre pressure with
+passenger rear"; specKind pressure.
+"how do I wheelie" -> intent unknown; components []; queries []; specName null; specKind null.
+"best exhaust" -> intent unknown; components []; queries []; specName null; specKind null.
+"hello" -> intent unknown; components []; queries []; specName null; specKind null.
+"should I buy a Ducati instead" -> intent unknown; components []; queries []; specName null; specKind null."""
 
-PICKER_SYSTEM = """You order candidate sections of a motorcycle manual for a rider who asked one question. You do not
-write prose and you do not answer the question. You return ids only.
+PICKER_SYSTEM = """You order candidate sections of a motorcycle owner manual for a rider who asked one question
+while standing next to the bike. You never answer the question, never write prose, never explain, never warn. You
+return ids only. The app renders the printed page you name; a wrong id sends the rider to the wrong page, and an
+invented id shows the rider nothing at all.
 
-Rules:
-- Use only ids that appear in the candidate list. Never invent an id, never reword an id.
-- sectionIds: at most 4 ids, ordered by what a mechanic reads first for this exact question. The first id must be
-  the one printed page a rider would open. Checking comes before adjusting when the rider reports a symptom;
-  the procedure comes before the technical-data table when the rider wants to do the job; the technical-data table
-  comes first when the rider only wants a printed number.
-- Front and rear are different sections: if the rider said front, do not lead with the rear section, and the other
-  way round.
-- relatedIds: at most 2 ids a rider would plausibly need next (the torque table for a removal job, the topping-up
-  procedure after a level check, the seat removal before battery work). Never repeat an id from sectionIds.
-- Drop candidates that only share a generic word (oil in "fork oil" for an engine-oil question). Fewer, correct ids
-  beat a long list. If only one candidate fits, return one id."""
+The user message gives the rider's question, the components the router recognised, and a numbered candidate list.
+Each candidate line is: id | printed section title | chapter | page range, followed by the first words of the
+printed text of that section. Judge a candidate on its title and its printed text, not on its id.
 
-_cache: dict[tuple[str, str], AskResponse] = {}
+Hard rules.
+- Use only ids copied character for character from the candidate list. Never invent an id, never reword an id,
+  never merge two ids, never return a title instead of an id.
+- sectionIds: at most 4 ids, best first. The first id must be the one printed page the rider would open to deal
+  with the sentence they typed. If exactly one candidate fits, return exactly one id.
+- relatedIds: at most 2 ids the same rider would plausibly need next, and never an id already in sectionIds.
+- Return an empty sectionIds list and an empty relatedIds list only when the rider's sentence is not about this
+  motorcycle at all, or when every candidate is about a different system than the one the rider named. An empty
+  list is then a correct answer, better than the least-bad candidate. It is the wrong answer whenever any
+  candidate covers the system the rider asked about: a rider who names a real part of the bike always gets at
+  least one id back.
+
+Ordering rules.
+- The rider wants to DO something: the procedure section leads, and the technical-data table is at most a related
+  id. "Change the oil" leads with the oil-change procedure, not with the oil specification table.
+- The rider wants a printed NUMBER or a rated value and one candidate is the technical-data table that prints it:
+  the table leads, unless a procedure section prints the same value right where the rider is working, in which
+  case the procedure leads and the table follows as a related id.
+- The rider reports a SYMPTOM ("chain is loose", "pads are thin", "lever goes to the bar"): the checking or
+  inspection section leads, and the adjusting, topping-up or replacing section follows.
+- The rider asks WHICH consumable fits (which oil, which brake fluid, which plug, which battery, which fuse): the
+  section that prints the designation or the specification leads. Owner manuals usually print the grade inside the
+  procedure that uses it, so a checking or topping-up section that names the consumable in its printed text is a
+  correct answer to a "which" question. Never answer a "which" question with an empty list because no candidate
+  looks like a data table.
+- Front and rear are different printed sections. If the rider said front, never lead with the rear section; if the
+  rider said rear or back, never lead with the front section. If the rider named neither side, lead with the front
+  section and offer the rear one as a related id.
+- Checking a level and topping that level up are different printed sections. "Is my oil low" leads with the level
+  check; "put some oil in" leads with the topping-up procedure.
+- Cleaning, tensioning and adjusting a chain are three different printed sections. Take the one the rider's own
+  verb names; if the rider only reports a noise or slack, lead with the tension check.
+- Removing a wheel, adjusting a suspension and the torque table are different jobs. A removal job may carry the
+  torque table as a related id, never the other way round.
+
+Rejection rules.
+- Drop a candidate that shares only a generic word with the question: fork oil for an engine-oil question, brake
+  fluid for a brake-pad question, the service schedule for a job the rider is doing right now, a torque table for
+  a question that names no fastener.
+- Drop a candidate whose printed text is about a different system than the one the rider named, however similar
+  the wording looks.
+- Fewer, correct ids always beat a longer list. Two right ids are a better answer than four ids of which two are
+  padding.
+
+Worked examples, given a candidate list that contains the ids named.
+- Question "chain is baggy" -> sectionIds ["chain-tension-check", "chain-tension-adjust"], relatedIds
+  ["chassis-torques"]: the rider reports slack, so the check leads and the adjustment follows.
+- Question "how many litres of oil does it take" with candidates for the oil-change procedure and the engine-oil
+  data table -> sectionIds ["td-engine-oil", "engine-oil-topup"]: the rider wants the printed capacity.
+- Question "pads look thin on the front" -> sectionIds ["brake-pads-front"], relatedIds ["brake-pads-rear"]: the
+  rider said front, so the rear section can only be a related id.
+- Question "which brake fluid does it take" with candidates for the front brake-fluid level check and for adding
+  front brake fluid -> sectionIds ["front-brake-fluid-add", "front-brake-fluid-level"]: the adding procedure is
+  where the manual prints DOT 4 / DOT 5.1, so it leads. An empty list here would be wrong.
+- Question "best exhaust" against a candidate list of maintenance sections -> sectionIds [], relatedIds []: no
+  candidate answers it, so both lists stay empty."""
+
+_cache: "OrderedDict[tuple[str, str], AskResponse]" = OrderedDict()
 _pages: dict[str, dict[int, str]] = {}
 _lock = threading.RLock()
 _WS = re.compile(r"[^a-z0-9]+")
@@ -151,6 +266,27 @@ _WS = re.compile(r"[^a-z0-9]+")
 
 def _norm(query: str) -> str:
     return _WS.sub(" ", query.lower()).strip()
+
+
+def clear_cache() -> None:
+    with _lock:
+        _cache.clear()
+
+
+def _cached(key: tuple[str, str]) -> AskResponse | None:
+    with _lock:
+        hit = _cache.get(key)
+        if hit is not None:
+            _cache.move_to_end(key)
+        return hit
+
+
+def _remember(key: tuple[str, str], response: AskResponse) -> None:
+    with _lock:
+        _cache[key] = response
+        _cache.move_to_end(key)
+        while len(_cache) > CACHE_MAX:
+            _cache.popitem(last=False)
 
 
 def _page_text(manual_id: str) -> dict[int, str]:
@@ -171,8 +307,9 @@ def _snippet(manual_id: str, section: Section, chars: int = SNIPPET) -> str:
 
 
 def _spend(store, before: int) -> float:
+    """This ask only. The cost log is shared with ingest and identify, which may write while we run."""
     events = store.costs()
-    return round(sum(e.usd for e in events[before:]), 6)
+    return round(sum(e.usd for e in events[before:] if e.route.startswith("ask.")), 6)
 
 
 def _route(query: str) -> Route:
@@ -183,14 +320,17 @@ def _route(query: str) -> Route:
             schema=Route,
             system=ROUTER_SYSTEM,
             user=query,
+            reasoning=EFFORT,
         )
     except Exception:
         return Route(intent="procedure", components=[], queries=[query], specName=None, specKind=None)
+    intent = route.intent if route.intent in INTENTS else "procedure"
+    if intent == "unknown":
+        return Route(intent="unknown", components=[], queries=[], specName=None, specKind=None)
     queries = [q.strip() for q in route.queries if q and q.strip()][:3]
     if query.strip() not in queries:
         queries.append(query.strip())
     kind = route.specKind if route.specKind in KINDS else None
-    intent = route.intent if route.intent in {"procedure", "spec", "part", "unknown"} else "procedure"
     return Route(
         intent=intent,
         components=[c.strip() for c in route.components if c and c.strip()][:6],
@@ -238,6 +378,7 @@ def _pick(manual_id: str, query: str, route: Route, order: list[str], sections: 
             schema=Pick,
             system=PICKER_SYSTEM,
             user=user,
+            reasoning=EFFORT,
         )
     except Exception:
         return order[:MAX_MAIN]
@@ -250,7 +391,13 @@ def _pick(manual_id: str, query: str, route: Route, order: list[str], sections: 
     for section_id in list(pick.relatedIds)[: MAX_RELATED * 2]:
         if section_id in allowed and section_id not in out and len(out) < MAX_MAIN + MAX_RELATED:
             out.append(section_id)
-    return out or order[:MAX_MAIN]
+    return out
+
+
+def _grounded(manual_id: str, spec) -> bool:
+    """A spec row may only steer the answer if its quote is printed verbatim on the page it claims."""
+    quote = " ".join(spec.quote.split())
+    return bool(quote) and quote in _page_text(manual_id).get(spec.page, "")
 
 
 def _by_spec(manual_id: str, route: Route, sections: dict[str, Section]) -> list[str]:
@@ -260,7 +407,9 @@ def _by_spec(manual_id: str, route: Route, sections: dict[str, Section]) -> list
     best: dict[str, float] = {}
     for hit in index.spec(manual_id, route.specName, route.specKind, k=8):
         section_id = hit.spec.sectionId
-        if hit.score >= SPEC_FLOOR and section_id in sections and hit.score > best.get(section_id, 0.0):
+        if hit.score < SPEC_FLOOR or section_id not in sections or not _grounded(manual_id, hit.spec):
+            continue
+        if hit.score > best.get(section_id, 0.0):
             best[section_id] = hit.score
     if not best:
         return []
@@ -276,8 +425,7 @@ def answer(manual_id: str, query: str) -> AskResponse:
         return AskResponse(matches=[], intent="unknown")
 
     key = (manual_id, _norm(query))
-    with _lock:
-        cached = _cache.get(key)
+    cached = _cached(key)
     if cached is not None:
         return cached.model_copy(update={"usd": 0.0})
 
@@ -288,18 +436,21 @@ def answer(manual_id: str, query: str) -> AskResponse:
     ordered: list[str] = []
     if route.intent == "spec":
         ordered = _by_spec(manual_id, route, sections)
-    if not ordered:
-        hits = get_index().query(manual_id, route.queries, route.components, k=8)
-        order = [h.sectionId for h in hits if h.sectionId in sections]
-        if not order:
-            return AskResponse(matches=[], intent=route.intent, usd=_spend(store, before))
-        ordered = _pick(manual_id, query, route, order, sections) if len(order) > 1 else order
+    if route.intent != "unknown" and not ordered:
+        hits = [h for h in get_index().query(manual_id, route.queries, route.components, k=CANDIDATES) if h.sectionId in sections]
+        order = [h.sectionId for h in hits]
+        decisive = len(order) <= 1 or hits[1].score <= PICK_MARGIN
+        if decisive:
+            ordered = order[:MAX_MAIN]
+        else:
+            # An empty pick means the candidate list was junk, not that the rider gets a blank screen:
+            # the router already answers "is this about the bike at all", so fall back to the one best page.
+            ordered = _pick(manual_id, query, route, order, sections) or order[:1]
 
     matches = [
         Match(section=sections[section_id], score=round(max(0.1, 1.0 - 0.1 * i), 2))
         for i, section_id in enumerate(ordered[: MAX_MAIN + MAX_RELATED])
     ]
     response = AskResponse(matches=matches, intent=route.intent, usd=_spend(store, before))
-    with _lock:
-        _cache[key] = response
+    _remember(key, response)
     return response

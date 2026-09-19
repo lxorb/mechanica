@@ -1,7 +1,9 @@
 """BM25 over section text + keywords, in memory, rebuilt from the store on first use.
 
-Tokenisation mirrors src/lib/match.ts (same phrases, stopwords, synonym groups, stemmer) so the backend
-understands exactly the rider vocabulary the client matcher understood, plus the page text it never had.
+Tokenisation starts from src/lib/match.ts (same phrases, stopwords, synonym groups, stemmer) so the backend
+understands the rider vocabulary the client matcher understood, plus the page text it never had. On top of BM25:
+a keyword bonus, a title-coverage bonus, a component bonus, a front/rear penalty because those are different
+printed sections, and an absolute floor below which nothing in the manual is a real match.
 """
 
 import re
@@ -22,6 +24,13 @@ PHRASES: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"\bhead[\s-]*light(?:s)?\b"), "headlight"),
     (re.compile(r"\bspark[\s-]*plug(?:s)?\b"), "sparkplug"),
     (re.compile(r"\bair[\s-]*filter(?:s)?\b"), "airfilter"),
+    (re.compile(r"\bjump[\s-]*start(?:ing|ed|s)?\b"), "jumpstart"),
+    (re.compile(r"\bquick[\s-]*release\b"), "quickrelease"),
+    (re.compile(r"\bpre[\s-]*load\b"), "preload"),
+    (re.compile(r"\btwo[\s-]*up\b"), "twoup"),
+    (re.compile(r"\bone[\s-]*up\b"), "oneup"),
+    (re.compile(r"\bhead[\s-]*lamp(?:s)?\b"), "headlight"),
+    (re.compile(r"\bwheel[\s-]*spindle\b"), "spindle"),
 ]
 
 STOP = set(
@@ -39,7 +48,8 @@ STOP = set(
 )
 
 GROUPS: list[list[str]] = [
-    ["oil", "lube", "lubricant", "lubrication", "lubricate", "grease"],
+    ["oil"],
+    ["lube", "lubricant", "lubrication", "lubricate", "grease", "spray"],
     ["tyre", "tire"],
     ["pad", "pads", "lining", "linings", "shoe"],
     ["slack", "tension", "tensioning", "play", "sag", "loose", "loosen"],
@@ -50,13 +60,13 @@ GROUPS: list[list[str]] = [
     ["coolant", "antifreeze"],
     ["battery", "charge", "charging", "charger"],
     ["fuse", "blown", "blow"],
-    ["headlight", "headlamp", "beam", "light", "bulb"],
+    ["headlight", "headlamp", "bulb"],
     ["pressure", "psi", "bar", "inflate", "inflation"],
     ["wheel", "rim"],
     ["clutch"],
     ["front"],
     ["rear", "back"],
-    ["chain"],
+    ["chain", "drive", "sprocket"],
     ["brake", "braking"],
     ["engine", "motor"],
     ["adjust", "adjustment", "set", "setting"],
@@ -65,6 +75,17 @@ GROUPS: list[list[str]] = [
     ["clean", "cleaning", "wash"],
     ["level", "amount", "quantity"],
     ["wear", "worn", "thickness"],
+    ["spindle", "axle"],
+    ["bolt", "nut", "screw", "fastener"],
+    ["preload", "spring", "suspension"],
+    ["tread", "profile", "depth"],
+    ["seat", "saddle"],
+    ["jumpstart", "boost", "donor", "jumper"],
+    ["capacity", "litre", "liter", "quart"],
+    ["schedule", "interval"],
+    ["overheat", "overheating", "radiator"],
+    ["twoup", "pillion", "passenger", "luggage", "payload"],
+    ["oneup", "solo"],
 ]
 
 
@@ -122,8 +143,19 @@ def contiguous(hay: list[str], needle: list[str]) -> bool:
 
 KEYWORD_BONUS = 0.3
 COMPONENT_BONUS = 0.2
+TITLE_COVER = 0.4
+TITLE_EVIDENCE = 0.5
+SIDE_PENALTY = 0.4
+FLOOR = 1.2
 TITLE_WEIGHT = 3
 KEYWORD_WEIGHT = 2
+SIDES = ("front", "rear")
+
+
+def side_of(tokens) -> str | None:
+    """front and rear are different printed sections; a token set naming both sides names neither."""
+    found = [s for s in SIDES if s in tokens]
+    return found[0] if len(found) == 1 else None
 
 
 class _Manual:
@@ -132,6 +164,7 @@ class _Manual:
         self.ids: list[str] = []
         self.keywords: list[list[tuple[str, list[str]]]] = []
         self.titles: list[set[str]] = []
+        self.sides: list[str | None] = []
         self.snippets: dict[str, str] = {}
         docs: list[list[str]] = []
         for section in manual.sections:
@@ -145,7 +178,9 @@ class _Manual:
             docs.append(canon(blob))
             self.ids.append(section.id)
             self.keywords.append([(normalize(k), canon(k)) for k in section.keywords])
-            self.titles.append(set(canon(section.title)))
+            title = set(canon(section.title))
+            self.titles.append(title)
+            self.sides.append(side_of(title))
             self.snippets[section.id] = " ".join(body.split())
         self.bm25 = BM25Okapi(docs) if docs else None
         self.specs = specs
@@ -191,6 +226,7 @@ class LocalIndex:
             return []
 
         totals = [0.0] * len(built.ids)
+        peak = 0.0
         for query in clean:
             tokens = canon(query)
             if not tokens:
@@ -199,25 +235,45 @@ class LocalIndex:
             top = max(scores) if len(scores) else 0.0
             if top <= 0:
                 continue
+            peak = max(peak, float(top))
             for i, s in enumerate(scores):
                 totals[i] += max(0.0, float(s)) / top
 
         normalized = [normalize(q) for q in clean]
         sequences = [canon(q) for q in clean]
+        asked: set[str] = set()
+        for seq in sequences:
+            asked.update(seq)
         component_tokens: set[str] = set()
         for component in components or []:
             component_tokens.update(canon(component))
+        side = side_of(asked | component_tokens)
 
+        evidence = False
         for i in range(len(built.ids)):
             for raw, seq in built.keywords[i]:
                 if not seq:
                     continue
                 if any(f" {raw} " in f" {n} " for n in normalized) or any(contiguous(s, seq) for s in sequences):
                     totals[i] += KEYWORD_BONUS
+                    evidence = True
                     break
+            title = built.titles[i]
+            if title:
+                cover = len(asked & title) / len(title)
+                totals[i] += TITLE_COVER * cover
+                evidence = evidence or cover >= TITLE_EVIDENCE
             if component_tokens:
-                totals[i] += COMPONENT_BONUS * len(component_tokens & built.titles[i])
+                totals[i] += COMPONENT_BONUS * len(component_tokens & title)
+            if side and built.sides[i] and built.sides[i] != side:
+                totals[i] *= SIDE_PENALTY
 
+        # A weak BM25 peak only means "no match" when the rider's own words match no printed title or
+        # keyword either: one bare word ("torque") collapses the IDF of a word every section uses, and its
+        # exact keyword hit must still get to vote. Components never rescue on their own: they are a router
+        # guess, not something the manual prints.
+        if peak < FLOOR and not evidence:
+            return []
         best = max(totals) if totals else 0.0
         if best <= 0:
             return []
