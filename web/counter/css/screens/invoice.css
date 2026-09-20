@@ -1,133 +1,555 @@
-/* Parts: the optional sheet over Book. The overlay shell itself is .ov in counter.css. */
+/**
+ * Parts — the full-screen view over Book. Owner: parts-UI agent.
+ * Pairs with ../../js/screens/invoice.js. The .ov shell lives in ../counter.css; .pv
+ * takes it from "sheet on the bottom" to "the whole viewport".
+ */
 
-[data-overlay="invoice"] .inv {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.pv {
+  justify-content: stretch;
 }
 
-[data-overlay="invoice"] .inv-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px 12px;
+/* The whole viewport, scrolling inside its panes — never the sheet itself, or the header
+   and the search field would scroll away with it (min-height:0 is what lets it shrink). */
+.pv-sheet {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: hidden;
+  border-top: 0;
+  background: var(--paper);
+}
+
+/* ---------- header ---------- */
+
+.pv-head {
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 6px 10px 14px;
+  padding-top: calc(10px + env(safe-area-inset-top));
+}
+
+.pv-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.pv-title b {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.pv-bike {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+
+.pv-manual {
+  font-family: ui-monospace, monospace;
+  font-weight: 400;
+  font-size: 0.66rem;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.3;
+  opacity: 0.85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pv-x {
+  flex: 0 0 auto;
+}
+
+/* ---------- search ---------- */
+
+.pv-search {
+  flex: 0 0 auto;
+  display: flex;
   align-items: center;
-  padding: 0 2px 8px;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--paper);
   border-bottom: 3px solid var(--ink);
 }
 
-[data-overlay="invoice"] .inv-meta {
+.pv-q {
+  flex: 1 1 auto;
   min-width: 0;
-}
-
-[data-overlay="invoice"] .inv-name {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1rem;
-  line-height: 1.2;
+  appearance: none;
 }
 
-[data-overlay="invoice"] .inv-bike {
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.2;
-  margin-top: 2px;
-  opacity: 0.7;
+.pv-q:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
 }
 
-[data-overlay="invoice"] .inv-head .stamp {
-  justify-self: end;
-  white-space: nowrap;
-}
-
-[data-overlay="invoice"] .inv-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-[data-overlay="invoice"] .inv-part {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 10px 12px;
-}
-
-[data-overlay="invoice"] .inv-top {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 10px;
-  align-items: center;
-}
-
-[data-overlay="invoice"] .inv-listing {
-  min-width: 0;
-}
-
-[data-overlay="invoice"] .inv-pname {
-  display: block;
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  line-height: 1.2;
-}
-
-[data-overlay="invoice"] .inv-oem {
-  display: block;
+.pv-count {
+  flex: 0 0 auto;
   font-family: ui-monospace, monospace;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
-  word-break: break-word;
+  padding: 0 4px;
   opacity: 0.75;
 }
 
-[data-overlay="invoice"] .inv-top .stamp {
-  white-space: nowrap;
-}
+/* ---------- panes ---------- */
 
-[data-overlay="invoice"] .inv-prov {
-  font-family: ui-monospace, monospace;
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1.35;
-  font-variant-numeric: tabular-nums;
-}
-
-[data-overlay="invoice"] .inv-shops {
+.pv-panes {
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: stretch;
+}
+
+.pv-grid,
+.pv-detail {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 12px calc(20px + env(safe-area-inset-bottom));
+}
+
+.pv-sheet[data-view="grid"] .pv-detail {
+  display: none;
+}
+
+.pv-sheet[data-view="detail"] .pv-grid {
+  display: none;
+}
+
+/* ---------- grid ---------- */
+
+.pv-group {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 16px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 3px solid var(--ink);
+}
+
+.pv-group:first-child {
   margin-top: 2px;
 }
 
-[data-overlay="invoice"] .inv-shop {
+.pv-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.pv-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: stretch;
+  text-align: left;
+  min-height: 44px;
+  padding: 8px;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--card);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+.pv-tile:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.pv-tile[aria-pressed="true"] {
+  background: var(--yellow);
+  box-shadow: inset 0 0 0 3px var(--orange);
+}
+
+.pv-tile.is-now {
+  box-shadow: inset 4px 0 0 var(--orange);
+}
+
+.pv-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f6f2e9;
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+
+/* Absolute, because the frame's height comes from its aspect-ratio: a percentage height
+   on a flow child would resolve against `auto` and spill out of the crop. */
+.pv-pic,
+.pv-art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pv-art.is-line {
+  padding: 9%;
+}
+
+.pv-name {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.92rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pv-spec {
+  font-family: ui-monospace, monospace;
+  font-size: 0.68rem;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pv-foot {
+  display: flex;
+  align-items: center;
   gap: 6px;
-  min-height: 40px;
-  padding: 6px 10px;
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 2px;
+}
+
+.pv-oem {
+  font-family: ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+  padding: 3px 5px;
+  background: var(--yellow);
+  box-shadow: inset 0 0 0 2px var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* ---------- detail ---------- */
+
+.pv-det {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pv-hero {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  max-height: 42dvh;
+  overflow: hidden;
+  background: #f6f2e9;
+  border: 3px solid var(--ink);
+}
+
+.pv-det-name {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  line-height: 1.15;
+}
+
+.pv-det-spec {
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.pv-det-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pv-page {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 0;
+  font-size: 0.8rem;
+  cursor: pointer;
+  appearance: none;
+}
+
+.pv-det-oem {
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  padding: 10px 10px;
+  background: var(--yellow);
+  box-shadow: inset 0 0 0 3px var(--ink);
+  word-break: break-all;
+}
+
+/* ---------- offers ---------- */
+
+.pv-offers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.pv-sorts,
+.pv-chips,
+.pv-shops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pv-pill {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  appearance: none;
+}
+
+.pv-sorts .pv-pill[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+
+.pv-chips .pv-pill[aria-pressed="true"] {
+  background: var(--orange);
+  color: #fff;
+}
+
+.pv-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pv-offer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 10px;
+  border: 3px solid var(--ink);
+  background: var(--card);
+  color: inherit;
   text-decoration: none;
 }
 
-[data-overlay="invoice"] .inv-shop svg {
-  width: 14px;
-  height: 14px;
-  display: block;
+.pv-offer:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
 }
 
-[data-overlay="invoice"] .inv-empty {
+.pv-o-shop {
+  grid-column: 1;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  line-height: 1.1;
+}
+
+.pv-o-mid {
+  grid-column: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pv-o-title {
   font-family: Barlow, system-ui, sans-serif;
-  font-size: 0.9rem;
-  opacity: 0.7;
-  padding: 12px 2px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-@media (min-width: 720px) {
-  [data-overlay="invoice"] .inv-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
+.pv-o-var {
+  font-family: ui-monospace, monospace;
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.pv-o-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 1px;
+}
+
+.pv-tag {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.pv-tag.is-in {
+  background: var(--yellow);
+}
+
+.pv-tag.is-out {
+  background: var(--ink);
+  color: #fff;
+}
+
+.pv-o-price {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  justify-self: end;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pv-shop {
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+/* ---------- skeleton ---------- */
+
+.pv-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pv-skel-row {
+  height: 66px;
+  border: 3px solid var(--ink);
+  background-color: #f1ece1;
+  background-image: linear-gradient(90deg, #f1ece1 25%, #e2dccd 38%, #f1ece1 62%);
+  background-size: 400% 100%;
+  animation: pv-shim 1.15s linear infinite;
+}
+
+@keyframes pv-shim {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* ---------- wider screens ---------- */
+
+@media (min-width: 560px) {
+  .pv-tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 880px) {
+  .pv-tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .pv-head {
+    padding-left: 20px;
+  }
+
+  .pv-grid,
+  .pv-detail {
+    padding: 14px 20px calc(24px + env(safe-area-inset-bottom));
+  }
+
+  /* Two panes: the grid keeps its place, the part opens beside it. */
+  .pv-sheet[data-view="detail"] .pv-grid {
+    display: block;
+  }
+
+  .pv-detail {
+    flex: 0 0 clamp(360px, 36vw, 520px);
+    border-left: 3px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .pv-sheet[data-view="detail"] .pv-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1180px) {
+  .pv-tiles {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .pv-sheet[data-view="detail"] .pv-tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (hover: hover) {
+  .pv-tile:hover,
+  .pv-offer:hover,
+  .pv-pill:hover {
+    background: var(--yellow);
   }
 }

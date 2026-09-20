@@ -5,3 +5,5 @@ tools/
 # the deploy — the Pick screen's 3D viewer loads them at runtime. Owner: 3d agent.
 store/models/*/scene.*
 store/models/*/textures/
+store/icons-parts-3d/*.png
+store/icons-parts-3d/sheet.png
