@@ -115,6 +115,9 @@ TAG = re.compile(r"<[^>]+>")
 WS = re.compile(r"\s+")
 EXT = re.compile(r"\.[a-z0-9]{2,5}$", re.I)
 OK_MIME = ("image/jpeg", "image/png", "image/webp")
+# WebP effort. 6 buys ~8% off the file for ~4x the CPU, and fit() encodes a tile
+# up to four times looking for its byte ceiling; at 3,900 models that is the run.
+WEBP_METHOD = 4
 
 
 # --------------------------------------------------------------------------- keys
@@ -287,6 +290,7 @@ class Model:
     years: list = field(default_factory=list)
     manual_id: bool = False
     manual_url: bool = False
+    kind: str = "bike"
 
     @property
     def key(self) -> str:
@@ -295,6 +299,17 @@ class Model:
     @property
     def tier(self) -> int:
         return 0 if self.manual_id else (1 if self.manual_url else 2)
+
+    @property
+    def noun(self) -> str:
+        return "car" if self.kind == "car" else "motorcycle"
+
+    @property
+    def lane(self) -> int:
+        """Queue order: manual-bearing bikes, then every car, then the bike tail."""
+        if self.kind == "car":
+            return 1
+        return 0 if self.tier <= 1 else 2
 
     @property
     def label(self) -> str:
@@ -323,7 +338,13 @@ def build_models() -> list:
     bikes = json.loads(BIKES.read_text(encoding="utf-8"))
     registry = registry_models()
     groups: dict = defaultdict(
-        lambda: {"years": set(), "manual_id": False, "manual_url": False, "names": None}
+        lambda: {
+            "years": set(),
+            "manual_id": False,
+            "manual_url": False,
+            "names": None,
+            "kind": "bike",
+        }
     )
     for b in bikes:
         make, model = (b.get("make") or "").strip(), (b.get("model") or "").strip()
@@ -333,6 +354,8 @@ def build_models() -> list:
         g = groups[pair]
         if g["names"] is None:
             g["names"] = (make, model)
+        if b.get("kind") == "car":
+            g["kind"] = "car"
         if isinstance(b.get("year"), int):
             g["years"].add(b["year"])
         if b.get("manualId"):
@@ -341,11 +364,19 @@ def build_models() -> list:
             g["manual_url"] = True
 
     models = [
-        Model(g["names"][0], g["names"][1], sorted(g["years"]), g["manual_id"], g["manual_url"])
+        Model(
+            g["names"][0],
+            g["names"][1],
+            sorted(g["years"]),
+            g["manual_id"],
+            g["manual_url"],
+            g["kind"],
+        )
         for g in groups.values()
     ]
     models.sort(
         key=lambda m: (
+            m.lane,
             m.tier,
             -len(m.years),
             -(max(m.years) if m.years else 0),
@@ -440,10 +471,19 @@ def usable(info: dict, meta: dict) -> bool:
     return licence_ok((meta.get("LicenseShortName") or {}).get("value", ""))
 
 
+# A car is photographed inside and under the bonnet far more often than a bike is.
+REJECT_CAR_WORDS = (
+    "interior inside cabin dash dashboard console boot trunk bonnet hood "
+    "engine bay compartment steering upholstery rear-seat backseat glovebox "
+    "badge grille taillamp wiper"
+).split()
+
+
 def bad_title(stem: str, m: Model) -> bool:
     model_words = set(norm(m.model).split())
     words = set(norm(stem).split())
-    return any(w in words and w not in model_words for w in REJECT_WORDS)
+    reject = REJECT_WORDS + (REJECT_CAR_WORDS if m.kind == "car" else [])
+    return any(w in words and w not in model_words for w in reject)
 
 
 def prescore(stem: str, info: dict, m: Model, *, base: float) -> float:
@@ -630,7 +670,7 @@ def from_category(client: httpx.Client, bucket: Bucket, m: Model, used: set, wan
     cats.sort(key=lambda t: t[1] != "exact")  # exact categories first
 
     out = []
-    for cat, kind in cats[:2]:
+    for cat, kind in cats[:2] if want > 5 else cats[:1]:
         members = api_json(
             client,
             COMMONS,
@@ -668,10 +708,10 @@ def from_category(client: httpx.Client, bucket: Bucket, m: Model, used: set, wan
 
 def from_search(client: httpx.Client, bucket: Bucket, m: Model, used: set, want: int) -> list:
     """Relaxed file search, for models with neither an article nor a category."""
-    queries = [f"{m.make} {m.model} motorcycle"]
+    queries = [f"{m.make} {m.model} {m.noun}"]
     nodash = m.model.replace("-", " ")
     if nodash != m.model:
-        queries.append(f"{m.make} {nodash} motorcycle")
+        queries.append(f"{m.make} {nodash} {m.noun}")
     out = []
     for q in queries:
         data = api_json(
@@ -699,7 +739,15 @@ def from_search(client: httpx.Client, bucket: Bucket, m: Model, used: set, want:
     return out
 
 
-def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: list, want: int) -> list:
+def gather(
+    client: httpx.Client,
+    bucket: Bucket,
+    m: Model,
+    used: set,
+    wikis: list,
+    want: int,
+    depths: int = 2,
+) -> list:
     """Up to `want` licence-clean candidates, best-looking first.
 
     Tries the exact model name, then shorter family names, and stops at the first
@@ -707,8 +755,8 @@ def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: lis
     but an "RSV4" photo beats the placeholder tile.
     """
     found: dict = {}
-    for depth, name in enumerate(name_variants(m.model)):
-        probe = Model(m.make, name, m.years, m.manual_id, m.manual_url)
+    for depth, name in enumerate(name_variants(m.model, cap=depths)):
+        probe = Model(m.make, name, m.years, m.manual_id, m.manual_url, m.kind)
         # Commons first: one category search and one file search answer most
         # models in three or four requests. The wiki sweep is six requests per
         # name variant and is worth spending only when Commons came up short --
@@ -719,7 +767,7 @@ def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: lis
             lambda: from_category(client, bucket, probe, used, want),
             lambda: from_search(client, bucket, probe, used, want),
         ]
-        if depth == 0:
+        if depth == 0 and wikis:
             sources.append(lambda: from_wikis(client, bucket, probe, used, wikis))
         for source in sources:
             if len(found) >= 3:
@@ -742,13 +790,18 @@ def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: lis
 class Shot(BaseModel):
     index: int = Field(description="the image number given in the prompt")
     is_photo: bool = Field(description="a real photograph, not a drawing, render, poster or scan")
-    is_the_model: bool = Field(description="the bike shown is plausibly the named make and model")
-    single_bike: bool = Field(description="exactly one motorcycle is the subject")
-    whole_bike_visible: bool = Field(description="the entire motorcycle is inside the frame, not cropped")
-    people_or_other_bikes: bool = Field(description="people, or other motorcycles, take up a noticeable part of the frame")
+    is_the_model: bool = Field(description="the vehicle shown is plausibly the named make and model")
+    subject: Literal["whole_vehicle", "interior", "engine", "detail", "other"] = Field(
+        description="what the photo is of: the vehicle from outside, its cabin, its engine, one part, or something else"
+    )
+    single_bike: bool = Field(description="exactly one vehicle is the subject")
+    whole_bike_visible: bool = Field(description="the entire vehicle is inside the frame, not cropped")
+    people_or_other_bikes: bool = Field(description="people, or other vehicles, take up a noticeable part of the frame")
     clean_background: Literal[0, 1, 2, 3] = Field(description="0 cluttered showroom or crowd, 3 plain road, wall or studio")
     sharpness: Literal[0, 1, 2, 3] = Field(description="0 blurry or tiny, 3 crisp and well exposed")
-    view: Literal["side", "three_quarter", "front", "rear", "top", "other"]
+    view: Literal["side", "three_quarter", "front", "rear", "top", "other"] = Field(
+        description="which side of the vehicle faces the camera; three_quarter means a front corner"
+    )
 
 
 class Shots(BaseModel):
@@ -756,21 +809,28 @@ class Shots(BaseModel):
 
 
 RATER_SYSTEM = (
-    "You grade candidate photographs for a motorcycle catalogue. Each tile has to show "
-    "one whole motorcycle that a rider can recognise at a glance: side or three-quarter "
-    "view, the bike filling the frame, nothing cluttering it. Judge only what you can see. "
-    "Be strict about people_or_other_bikes: a crowded show stand, a parked row, or a rider "
-    "sitting on the bike all count as true. Return exactly one entry per image, in order, "
-    "using the index given in the prompt."
+    "You grade candidate photographs for a vehicle catalogue. Each tile has to show one "
+    "whole vehicle that an owner can recognise at a glance: the vehicle filling the frame, "
+    "shot from outside, nothing cluttering it. Judge only what you can see. A cabin, a "
+    "dashboard, an engine bay or a close-up of one part is subject=interior/engine/detail, "
+    "never whole_vehicle. Be strict about people_or_other_bikes: a crowded show stand, a "
+    "parked row, or someone sitting in or on the vehicle all count as true. Return exactly "
+    "one entry per image, in order, using the index given in the prompt."
 )
 
-VIEW_BONUS = {"side": 3.0, "three_quarter": 3.0, "front": 0.5, "rear": 0.5, "top": -2.0, "other": 0.0}
+# A motorcycle reads best in profile; a car reads best from a front corner, which is how
+# every manufacturer and every buyer photographs one.
+VIEW_BONUS = {
+    "bike": {"side": 3.0, "three_quarter": 3.0, "front": 0.5, "rear": 0.5, "top": -2.0, "other": 0.0},
+    "car": {"side": 2.0, "three_quarter": 3.5, "front": 1.5, "rear": 0.0, "top": -2.0, "other": 0.0},
+}
 
 
 def passes(s: Shot) -> bool:
     return (
         s.is_photo
         and s.is_the_model
+        and s.subject == "whole_vehicle"
         and s.single_bike
         and s.whole_bike_visible
         and not s.people_or_other_bikes
@@ -779,8 +839,9 @@ def passes(s: Shot) -> bool:
     )
 
 
-def shot_score(s: Shot) -> float:
-    return VIEW_BONUS.get(s.view, 0.0) + s.clean_background + 1.5 * s.sharpness
+def shot_score(s: Shot, kind: str = "bike") -> float:
+    bonus = VIEW_BONUS.get(kind, VIEW_BONUS["bike"])
+    return bonus.get(s.view, 0.0) + s.clean_background + 1.5 * s.sharpness
 
 
 def rate(m: Model, previews: list) -> list:
@@ -880,7 +941,7 @@ def fit(im: Image.Image, box: int, path: Path, quality: int, ceiling: int) -> in
     out = im.copy()
     out.thumbnail((box, box), Image.LANCZOS)
     for q in (quality, quality - 12, quality - 22, quality - 30):
-        out.save(path, "WEBP", quality=max(30, q), method=6)
+        out.save(path, "WEBP", quality=max(30, q), method=WEBP_METHOD)
         size = path.stat().st_size
         if size <= ceiling:
             break
@@ -1035,6 +1096,8 @@ def main() -> int:
     ap.add_argument("--quality", default="70,76,72", help="hero,full,thumb webp quality")
     ap.add_argument("--tier", type=int, default=2, help="highest tier to attempt (0/1/2)")
     ap.add_argument("--wikis", default=",".join(WIKIS))
+    ap.add_argument("--wiki-tier", type=int, default=1, help="sweep wikis up to this tier")
+    ap.add_argument("--depths", type=int, default=2, help="how many model-name variants to try")
     ap.add_argument("--no-alias", action="store_true", help="skip the variant-key alias pass")
     ap.add_argument(
         "--verify",
@@ -1132,7 +1195,19 @@ def main() -> int:
             over_llm = spend["usd"] >= args.llm_budget
             stats["attempted"] += 1
 
-        cands = gather(client, api_bucket, m, used, wikis, args.candidates)
+        # The wiki sweep is six requests a model and pays off on bikes someone
+        # wrote an article about. Spend it on the models the app can actually
+        # answer from -- the ones with a manual -- and leave the long tail to
+        # Commons, which is three requests and where the tail actually lives.
+        cands = gather(
+            client,
+            api_bucket,
+            m,
+            used,
+            wikis if m.tier <= args.wiki_tier else [],
+            args.candidates,
+            args.depths,
+        )
         with lock:
             stats["cands"] += len(cands)
             for c in cands:
@@ -1173,7 +1248,7 @@ def main() -> int:
                     with lock:
                         stats[f"failed:{c.via}"] += 1
                     continue
-                score = shot_score(s)
+                score = shot_score(s, m.kind)
                 with lock:
                     stats[f"passed:{c.via}"] += 1
                 if score >= args.min_score:

@@ -56,6 +56,14 @@ PDF_HOSTS: tuple[str, ...] = (
 )
 
 UA_HEADER = {"googlebot": GOOGLEBOT_UA, "browser": BROWSER_UA}
+
+# Hosts that answer 403 to the default UA but serve the PDF to a browser one. Checked by magic-byte
+# sample; merge_ua() stamps the hint on rows that arrive without one so the fetcher gets it right.
+UA_BY_HOST = {"contentdelivery.ext.gm.com": "browser", "cdn.powersports.honda.com": "googlebot"}
+
+# Hosts whose urls look like PDFs but do not serve one. kiatechinfo.com answers 200 with an empty
+# body and no content-type to every request shape tried (2026-09-20); drop the host once it works.
+BROKEN_HOSTS = ("kiatechinfo.com",)
 MARKET_FALLBACK = ("EU", "US", "GB", "WW", "IN")
 
 
@@ -117,7 +125,21 @@ def _is_pdf(url: str) -> bool:
 
 
 def _ingestable(e: RegistryEntry) -> bool:
+    if any(h in e.url for h in BROKEN_HOSTS):
+        return False
     return e.type == "owner" and e.access == "free" and e.lang.lower().startswith("en") and _is_pdf(e.url)
+
+
+def merge_ua(entries: Iterable[RegistryEntry]) -> list[RegistryEntry]:
+    """Stamp the known User-Agent hint on rows that arrive without one (adapters written elsewhere)."""
+    rows = list(entries)
+    for e in rows:
+        if not e.needsUa:
+            host = e.url.split("/")[2].lower() if "//" in e.url else ""
+            hint = UA_BY_HOST.get(host)
+            if hint:
+                e.needsUa = hint
+    return rows
 
 
 def pdf_index() -> dict[str, list[RegistryEntry]]:
@@ -138,9 +160,16 @@ def _supplement(e: RegistryEntry) -> int:
     return int(bool(re.search(r"addendum|supplement|specification|connectivity", e.title or "", re.I)))
 
 
-def _pick(rows: list[RegistryEntry], market: str) -> RegistryEntry:
-    """The bike's own market wins; otherwise the first of the fallback order (EU, US, GB, WW, IN)."""
-    return next((e for e in rows if e.market.upper() == market.upper()), rows[0])
+def kind_of(item: Bike | RegistryEntry) -> str:
+    """Vehicle kind, with the historical default: a row that predates the field is a motorcycle."""
+    return (item.kind or "motorcycle").lower()
+
+
+def _pick(rows: list[RegistryEntry], market: str, kind: str = "motorcycle") -> RegistryEntry:
+    """Never hand a car's manual to a motorcycle: same kind first, then the bike's own market, then
+    the fallback order (EU, US, GB, WW, IN)."""
+    same = [e for e in rows if kind_of(e) == kind] or rows
+    return next((e for e in same if e.market.upper() == market.upper()), same[0])
 
 
 def _market_rank(market: str) -> int:
@@ -151,8 +180,10 @@ def _market_rank(market: str) -> int:
 
 
 def bikes_from_registry() -> list[Bike]:
-    """One Bike per make/model/year seen in the registry, plus a manualUrl on every catalog bike a free
-    PDF covers. Merged into the store: manualId, vins and cues set by other passes are kept."""
+    """One Bike per make/model/year seen in the registry, plus a manualUrl on every catalog vehicle a
+    free PDF covers. The registry row's `kind` carries over, so a car row derives a car; a vehicle
+    already in the catalog keeps its kind when the row has none. Merged into the store: manualId,
+    vins and cues set by other passes are kept."""
     store = get_store()
     manuals = pdf_index()
     known = {b.id: b for b in store.bikes()}  # re-read late: other passes write manualId concurrently
@@ -173,6 +204,7 @@ def bikes_from_registry() -> list[Bike]:
                 market=old.market if old else e.market,
                 manualId=old.manualId if old else None,
                 manualUrl=None,
+                kind=e.kind or (old.kind if old else None),  # a car's registry row must derive a car
                 vins=old.vins if old else None,
                 cues=old.cues if old else None,
             )
@@ -181,7 +213,7 @@ def bikes_from_registry() -> list[Bike]:
             out[bid] = bike.model_copy()
     for bid, bike in out.items():
         rows = manuals.get(bid)
-        bike.manualUrl = _pick(rows, bike.market).url if rows else (known[bid].manualUrl if bid in known else None)
+        bike.manualUrl = _pick(rows, bike.market, kind_of(bike)).url if rows else (known[bid].manualUrl if bid in known else None)
     bikes = list(out.values())
     if bikes:
         store.put_bikes(bikes)

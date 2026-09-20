@@ -288,9 +288,14 @@ function paintMaterialsFor(modelKey) {
  * The three Sketchfab vehicles the app started with are all Y-up facing -x, hence the -90°.
  */
 function orientMatrix(THREE, modelKey) {
-  const generic = GENERIC_PARTS.get(modelKey);
-  if (!generic) return new THREE.Matrix4().makeRotationY(-Math.PI / 2);
   const rad = (deg) => (deg * Math.PI) / 180;
+  const generic = GENERIC_PARTS.get(modelKey);
+  if (!generic) {
+    // the -90 belongs to the three exact models and to them only. A generic that gets here has
+    // simply not had parts.json registered yet — applying the exact models' convention to it
+    // would lay it on its side, and that raced visibly whenever the fetch was slow.
+    return new THREE.Matrix4().makeRotationY(isGeneric(modelKey) ? 0 : rad(-90));
+  }
   const matrix = new THREE.Matrix4().makeRotationY(rad(generic.orient || 0));
   if (generic.rotate) {
     const [rx, ry, rz] = generic.rotate;

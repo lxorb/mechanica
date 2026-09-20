@@ -48,51 +48,56 @@ const browser = await puppeteer.launch({
   ],
 });
 
-const page = await browser.newPage();
 const errors = [];
-page.on("console", (m) => {
-  if (m.type() === "error") errors.push(m.text().slice(0, 200));
-});
-page.on("pageerror", (e) => errors.push(String(e).slice(0, 200)));
+let page = null;
 
-await page.setRequestInterception(true);
-page.on("request", async (req) => {
-  if (req.method() === "POST" && req.url().endsWith("/voice/deepgram-token")) {
-    await req.respond({
-      status: 200,
-      contentType: "application/json",
-      headers: { "access-control-allow-origin": "*" },
-      body: JSON.stringify({ key: KEY, expiresIn: 600, scheme: "token" }),
-    });
-    return;
-  }
-  // Deepgram calls the tool endpoints from its own servers, so they have to be the DEPLOYED
-  // ones (run this API with PUBLIC_BASE=https://mechanica.emilvinu.ch/api). That build predates
-  // the query-string manual id, so for this run only it goes back into the parameters where the
-  // old handlers expect it. Everything else in the Settings message is untouched.
-  if (req.url().includes("/voice/agent-settings")) {
-    const res = await fetch(req.url());
-    const body = await res.json();
-    for (const fn of body?.settings?.agent?.think?.functions || []) {
-      if (!fn.endpoint) continue;
-      const id = new URL(fn.endpoint.url).searchParams.get("manualId");
-      fn.parameters.properties.manualId = { type: "string", description: `Always exactly "${id}".` };
-      fn.parameters.required = [...new Set([...(fn.parameters.required || []), "manualId"])];
+async function newPage() {
+  const tab = await browser.newPage();
+  tab.on("console", (m) => {
+    if (m.type() === "error") errors.push(m.text().slice(0, 200));
+  });
+  tab.on("pageerror", (e) => errors.push(String(e).slice(0, 200)));
+
+  await tab.setRequestInterception(true);
+  tab.on("request", async (req) => {
+    if (req.method() === "POST" && req.url().endsWith("/voice/deepgram-token")) {
+      await req.respond({
+        status: 200,
+        contentType: "application/json",
+        headers: { "access-control-allow-origin": "*" },
+        body: JSON.stringify({ key: KEY, expiresIn: 600, scheme: "token" }),
+      });
+      return;
     }
-    await req.respond({
-      status: res.status,
-      contentType: "application/json",
-      headers: { "access-control-allow-origin": "*" },
-      body: JSON.stringify(body),
-    });
-    return;
-  }
-  req.continue();
-});
+    // Deepgram calls the tool endpoints from its own servers, so they have to be the DEPLOYED
+    // ones (run this API with PUBLIC_BASE=https://mechanica.emilvinu.ch/api). That build predates
+    // the query-string manual id, so for this run only it goes back into the parameters where
+    // the old handlers expect it. Everything else in the Settings message is untouched.
+    if (req.url().includes("/voice/agent-settings")) {
+      const res = await fetch(req.url());
+      const body = await res.json();
+      for (const fn of body?.settings?.agent?.think?.functions || []) {
+        if (!fn.endpoint) continue;
+        const id = new URL(fn.endpoint.url).searchParams.get("manualId");
+        fn.parameters.properties.manualId = { type: "string", description: `Always exactly "${id}".` };
+        fn.parameters.required = [...new Set([...(fn.parameters.required || []), "manualId"])];
+      }
+      await req.respond({
+        status: res.status,
+        contentType: "application/json",
+        headers: { "access-control-allow-origin": "*" },
+        body: JSON.stringify(body),
+      });
+      return;
+    }
+    req.continue();
+  });
 
-await page.evaluateOnNewDocument((api) => {
-  window.TTM_API = api;
-}, API);
+  await tab.evaluateOnNewDocument((api) => {
+    window.TTM_API = api;
+  }, API);
+  return tab;
+}
 
 async function openChat() {
   await page.goto(`${WEB}/counter/`, { waitUntil: "networkidle2" });
@@ -115,64 +120,65 @@ async function shoot(name) {
   console.log("shot  ", `${name}.png`);
 }
 
+const bubbles = () =>
+  page.evaluate(() => {
+    const host = document.querySelector(".cv-body deep-chat");
+    const root = host && host.shadowRoot;
+    if (!root) return [];
+    return [...root.querySelectorAll(".message-bubble")].map((n) => n.textContent.trim()).filter(Boolean);
+  });
+
 async function runVoice() {
   await page.waitForFunction(() => {
     const b = document.querySelector(".cv-voice");
     return b && !b.hidden;
-  }, { timeout: 20000 });
+  }, { timeout: 30000 });
   await page.evaluate(() => document.querySelector(".cv-voice").click());
   await page.waitForFunction(() => {
     const s = document.querySelector(".cv-said");
-    return s && /Listening|Speaking|Thinking/.test(s.textContent || "");
-  }, { timeout: 30000 });
-  console.log("voice  listening");
+    return s && (s.textContent || "").trim() && !/Connecting/.test(s.textContent);
+  }, { timeout: 40000 });
+  console.log("voice ", await page.evaluate(() => document.querySelector(".cv-said").textContent));
   await wait(1200);
 }
 
+/** The session is live; type the turn into it and wait for a spoken answer to land as a bubble. */
 async function injectTurn() {
+  const before = (await bubbles()).length;
   const sent = await page.evaluate(async (text) => {
     const mod = await import("/counter/js/voice-deepgram.js");
     return mod.inject(text);
   }, ASK);
   console.log("inject", sent);
-  await page.waitForFunction(
-    () => {
-      const host = document.querySelector(".cv-body deep-chat");
-      const root = host && host.shadowRoot;
-      if (!root) return false;
-      return root.querySelectorAll(".ai-message .message-bubble").length > 0;
-    },
-    { timeout: 45000 }
-  );
-  await wait(1500);
-  return page.evaluate(() => {
-    const root = document.querySelector(".cv-body deep-chat").shadowRoot;
-    return [...root.querySelectorAll(".message-bubble")].map((n) => n.textContent.trim()).filter(Boolean);
-  });
+  // greeting + the question + at least one answer sentence
+  await page.waitForFunction((n) => {
+    const host = document.querySelector(".cv-body deep-chat");
+    const root = host && host.shadowRoot;
+    return Boolean(root) && root.querySelectorAll(".message-bubble").length >= n;
+  }, { timeout: 90000 }, before + 2);
+  await wait(2500);
+  return bubbles();
 }
 
-// ---------------------------------------------------------------- phone
+// ---------------------------------------------------------------- the two passes
 
-await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-await openChat();
-await shoot("voice-chat-390");
-await runVoice();
-await shoot("voice-listening-390");
-const phoneTurns = await injectTurn();
-await shoot("voice-answer-390");
-console.log("turns  ", JSON.stringify(phoneTurns, null, 1));
-await page.evaluate(() => document.querySelector(".cv-voice").click());
-await wait(400);
+/** Each viewport gets a fresh page: a reload leaves an AudioContext and a WebGL stage behind,
+ *  and headless Chrome will not hand back a screenshot while it is still draining them. */
+async function pass(tag, viewport) {
+  page = await newPage();
+  await page.setViewport(viewport);
+  await openChat();
+  await shoot(`voice-chat-${tag}`);
+  await runVoice();
+  await shoot(`voice-listening-${tag}`);
+  const turns = await injectTurn();
+  await shoot(`voice-answer-${tag}`);
+  console.log("turns  ", JSON.stringify(turns, null, 1));
+  await page.close();
+}
 
-// ---------------------------------------------------------------- desktop
-
-await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 });
-await openChat();
-await shoot("voice-chat-1280");
-await runVoice();
-const deskTurns = await injectTurn();
-await shoot("voice-answer-1280");
-console.log("turns  ", JSON.stringify(deskTurns, null, 1));
+await pass("390", { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+await pass("1280", { width: 1280, height: 800, deviceScaleFactor: 1 });
 
 console.log("errors ", errors.length ? errors : "none");
 await browser.close();

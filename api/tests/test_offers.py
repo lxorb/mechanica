@@ -408,6 +408,59 @@ def test_an_id_no_one_knows_is_still_a_404(wired):
     assert getattr(caught.value, "status_code", None) == 404
 
 
+# --- entries cached before priceUsd existed -------------------------------
+
+
+def _old_schema_doc():
+    """What the store held before Offer carried priceUsd: no such key at all."""
+    doc = mod.OffersResult(
+        manualId="m1", partId="spark-plug", query="q", offers=[], fetchedAt=time.time()
+    ).model_dump()
+    doc["offers"] = [
+        {"retailer": "FC-Moto", "title": "plug", "price": 14.5, "currency": "EUR",
+         "url": "https://www.fc-moto.de/en/plug"},
+        {"retailer": "Partzilla", "title": "plug", "price": 12.45, "currency": "USD",
+         "url": "https://www.partzilla.com/product/ngk/94319"},
+        {"retailer": "Webike", "title": "plug", "price": 3800.0, "currency": "JPY",
+         "url": "https://www.webike.net/sd/1"},
+    ]
+    return doc
+
+
+def test_a_cache_written_before_priceusd_is_repaired_on_read(wired):
+    wired.put_manual(_manual())
+    wired.put_offers("m1", "spark-plug", _old_schema_doc())
+
+    out = mod.offers("m1", "spark-plug", BIKE)
+
+    assert [o.priceUsd for o in out.offers] == [12.45, 15.66, 25.46]
+    assert [o.retailer for o in out.offers] == ["Partzilla", "FC-Moto", "Webike"]
+    assert [o.price for o in out.offers] == [12.45, 14.5, 3800.0]  # the shop's own price is untouched
+    assert out.usd == 0.0  # mending a row never costs a search
+
+
+def test_the_repair_is_written_back_and_does_not_repeat(wired, monkeypatch):
+    wired.put_manual(_manual())
+    wired.put_offers("m1", "spark-plug", _old_schema_doc())
+    mod.offers("m1", "spark-plug", BIKE)
+
+    assert all(o["priceUsd"] > 0 for o in wired.offers("m1", "spark-plug")["offers"])
+
+    writes = []
+    monkeypatch.setattr(wired, "put_offers", lambda *a: writes.append(a))
+    assert len(mod.offers("m1", "spark-plug", BIKE).offers) == 3
+    assert writes == []
+
+
+def test_a_zero_price_row_is_not_invented_into_a_usd_price(wired):
+    doc = _old_schema_doc()
+    doc["offers"] = [{"retailer": "X", "title": "t", "price": 0.0, "currency": "USD",
+                      "url": "https://x.example/p", "priceUsd": 0.0}]
+    wired.put_manual(_manual())
+    wired.put_offers("m1", "spark-plug", doc)
+    assert mod.offers("m1", "spark-plug", BIKE).offers[0].priceUsd == 0.0
+
+
 # --- the store pair -------------------------------------------------------
 
 

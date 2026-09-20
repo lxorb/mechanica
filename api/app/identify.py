@@ -8,6 +8,7 @@ part():  app/parts, zero-shot on the vision model (PART_MODEL=yolo for the check
 import io
 import re
 from difflib import SequenceMatcher
+from typing import Literal
 
 import httpx
 from fastapi import HTTPException
@@ -46,6 +47,7 @@ class PhotoGuess(BaseModel):
     confidence: float
     cues: list[str]
     alternatives: list[Alternative]
+    kind: Literal["motorcycle", "car"] = "motorcycle"
 
 
 def _norm(s: str) -> str:
@@ -134,27 +136,42 @@ def _add(out: dict[str, float], bikes: list[Bike], base: float, gen: Generation 
             out[b.id] = c
 
 
+def _kind(b: Bike) -> str:
+    return (b.kind or "motorcycle").lower()
+
+
 def _catalog_prompt(bikes: list[Bike]) -> str:
-    seen: list[str] = []
+    """Half the budget to each kind, so a catalog of 20k cars cannot push every motorcycle out of the
+    prompt (or the other way round) just because of the order the store happens to return rows in."""
+    buckets: dict[str, list[str]] = {"motorcycle": [], "car": []}
+    seen: set[str] = set()
     for b in bikes:
         name = f"{b.make} {b.model}"
-        if name not in seen:
-            seen.append(name)
-    return "\n".join(f"- {n}" for n in seen[:CATALOG_LIMIT]) or "- (empty)"
+        if name in seen:
+            continue
+        seen.add(name)
+        buckets.setdefault(_kind(b), buckets["motorcycle"]).append(name)
+    half = CATALOG_LIMIT // 2
+    picked = buckets["motorcycle"][:half] + buckets["car"][:half]
+    spare = CATALOG_LIMIT - len(picked)
+    if spare > 0:  # one kind under-fills: give the rest to the other
+        picked += buckets["motorcycle"][half : half + spare] + buckets["car"][half : half + spare]
+    return "\n".join(f"- {n}" for n in picked[:CATALOG_LIMIT]) or "- (empty)"
 
 
 def photo(image: bytes, mime: str) -> IdentifyResponse:
     data, m = downscale(image, mime)
     bikes = get_store().bikes()
     system = (
-        "You identify motorcycles from a photo. Name the make, the model and the model generation "
-        "(the year range that body shape was sold, not the year of the photo).\n"
+        "You identify vehicles (motorcycles and cars) from a photo. Name the make, the model and the "
+        "model generation (the year range that body shape was sold, not the year of the photo).\n"
         "These models are in our manual catalog:\n"
         f"{_catalog_prompt(bikes)}\n"
-        "Prefer one of these, spelled exactly as listed, when it plausibly matches the bike in the photo. "
-        "Otherwise name the real bike, whatever it is.\n"
+        "Prefer one of these, spelled exactly as listed, when it plausibly matches the vehicle in the photo. "
+        "Otherwise name the real vehicle, whatever it is.\n"
+        "kind: 'car' for any car, SUV, pickup or van; 'motorcycle' for any motorcycle, scooter or ATV. "
         "cues: 2-6 short visual details you used, lowercase, no sentences. "
-        "alternatives: up to 3 other plausible bikes, most likely first, empty if you are sure. "
+        "alternatives: up to 3 other plausible vehicles, most likely first, empty if you are sure. "
         "confidence: 0..1 for the main answer."
     )
     guess = llm.structured(
@@ -162,14 +179,17 @@ def photo(image: bytes, mime: str) -> IdentifyResponse:
         settings.model_vision,
         PhotoGuess,
         system,
-        [llm.text_part("Which motorcycle is this?"), llm.image_part(data, m, "auto")],
+        [llm.text_part("Which vehicle is this?"), llm.image_part(data, m, "auto")],
     )
+    # A car photo must not come back as a motorcycle: match inside the kind the model named, and only
+    # fall back to the whole catalog when that kind is not represented at all.
+    pool = [b for b in bikes if _kind(b) == guess.kind] or bikes
     scores: dict[str, float] = {}
-    group, score = _find(guess.make, guess.model, bikes)
+    group, score = _find(guess.make, guess.model, pool)
     if group:
         _add(scores, group, _clamp(guess.confidence) * score, guess.generation)
     for alt in guess.alternatives[:3]:
-        alt_group, alt_score = _find(alt.make, alt.model, bikes)
+        alt_group, alt_score = _find(alt.make, alt.model, pool)
         if alt_group:
             _add(scores, alt_group, _clamp(alt.confidence) * alt_score * 0.8, None)
     candidates = [Candidate(bikeId=i, confidence=c) for i, c in sorted(scores.items(), key=lambda kv: -kv[1])]

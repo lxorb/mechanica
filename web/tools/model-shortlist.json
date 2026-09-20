@@ -17,7 +17,8 @@
       "mv-agusta"
     ],
     "note": "336k faces, full fairing, Kawasaki lime — the clearest sportbike silhouette in the CC pool",
-    "orient": 180
+    "orient": 180,
+    "rotate": null
   },
   {
     "name": "naked",
@@ -40,7 +41,8 @@
       "honda"
     ],
     "note": "102k faces, exposed engine and trellis frame — the naked shape, and the app's biggest bucket",
-    "orient": 180
+    "orient": 180,
+    "rotate": null
   },
   {
     "name": "cruiser",
@@ -62,7 +64,12 @@
       "honda"
     ],
     "note": "43k faces, V-twin, raked forks, fat rear — reads as a cruiser at a glance",
-    "orient": 180
+    "orient": 180,
+    "rotate": [
+      0,
+      90,
+      0
+    ]
   },
   {
     "name": "scooter",
@@ -86,17 +93,18 @@
       "aprilia"
     ],
     "note": "131k faces, step-through monocoque — the scooter everyone pictures; 8.3% of the roster",
-    "orient": 180
+    "orient": 180,
+    "rotate": null
   },
   {
     "name": "classic",
     "type": "classic",
     "kind": "bike",
-    "uid": "5a530a5b91fc49df9f879544b88c5401",
-    "title": "Triumph Bonneville",
-    "author": "zizian",
-    "authorUrl": "https://sketchfab.com/zizian",
-    "url": "https://sketchfab.com/3d-models/3d-model-triumph-bonneville-5a530a5b91fc49df9f879544b88c5401",
+    "uid": "c02dec85ac0541b8ab6dd56098706b50",
+    "title": "Cafe Racer",
+    "author": "Andrei Milin",
+    "authorUrl": "https://sketchfab.com/andreimilin",
+    "url": "https://sketchfab.com/3d-models/cafe-racer-c02dec85ac0541b8ab6dd56098706b50",
     "license": "by",
     "makes": [
       "triumph",
@@ -107,8 +115,9 @@
       "yamaha",
       "kawasaki"
     ],
-    "note": "435k faces, round tank, spoked wheels, twin shocks — the retro roadster",
-    "orient": 180
+    "note": "95k faces — the Triumph Bonneville it replaced needed join+simplify to fit the budget and came out as a black slab",
+    "orient": 180,
+    "rotate": null
   },
   {
     "name": "motocross",
@@ -181,11 +190,11 @@
     "type": "touring",
     "kind": "bike",
     "orient": 180,
-    "uid": "873fb02f1b2c40468882b41c5a2b2af4",
-    "title": "Polizei Motorbike High-poly 3D model",
-    "author": "solid3DDD",
-    "authorUrl": "https://sketchfab.com/solid3DDD",
-    "url": "https://sketchfab.com/3d-models/polizei-motorbike-high-poly-3d-model-873fb02f1b2c40468882b41c5a2b2af4",
+    "uid": "5611ae9df1ef471da647a0d8b1e9c235",
+    "title": "Yamaha Tracer 9 Moto",
+    "author": "alban",
+    "authorUrl": "https://sketchfab.com/alban3d",
+    "url": "https://sketchfab.com/3d-models/yamaha-tracer-9-moto-5611ae9df1ef471da647a0d8b1e9c235",
     "license": "by",
     "makes": [
       "bmw",
@@ -195,7 +204,8 @@
       "harley-davidson",
       "indian"
     ],
-    "note": "a BMW RT-shaped police tourer: full fairing, screen, panniers — the touring silhouette"
+    "note": "sport-tourer: fairing, screen, upright bars — the Polizei model it replaced converted to flat panels",
+    "rotate": null
   },
   {
     "name": "adventure",

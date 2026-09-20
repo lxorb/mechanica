@@ -562,8 +562,26 @@ def cached(manual_id: str, part_id: str, part: Part) -> OffersResult | None:
     age = time.time() - result.fetchedAt
     if age >= (FRESH if result.offers else FRESH_EMPTY):
         return None
+    result = repair(manual_id, part_id, result)
     # the search links come from the manual, which may have been re-ingested since
     return result.model_copy(update={"usd": 0.0, "links": part.links})
+
+
+def repair(manual_id: str, part_id: str, result: OffersResult) -> OffersResult:
+    """Offers cached before priceUsd existed come back as 0.0 on every row, which sorts the whole
+    sheet wrong and shows the rider nothing to compare. Recompute the conversion from the price and
+    currency that were always there, re-sort, and write the mended answer back - the offers
+    themselves are still good, so there is nothing here worth paying for a second search."""
+    broken = [o for o in result.offers if o.priceUsd <= 0 < o.price]
+    if not broken:
+        return result
+    for offer in broken:
+        offer.priceUsd = in_usd(offer.price, offer.currency)
+    mended = result.model_copy(update={"offers": sorted(result.offers, key=lambda o: o.priceUsd)})
+    write = getattr(get_store(), "put_offers", None)
+    if write:
+        write(manual_id, part_id, mended.model_dump())  # fetchedAt is untouched: the TTL keeps running
+    return mended
 
 
 # --- the two calls --------------------------------------------------------

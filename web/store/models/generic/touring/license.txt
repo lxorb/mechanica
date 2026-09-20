@@ -1,11 +1,11 @@
 Model Information:
-* title:	Polizei Motorbike High-poly 3D model
-* source:	https://sketchfab.com/3d-models/polizei-motorbike-high-poly-3d-model-873fb02f1b2c40468882b41c5a2b2af4
-* author:	solid3DDD (https://sketchfab.com/solid3ddd)
+* title:	Yamaha Tracer 9 Moto
+* source:	https://sketchfab.com/3d-models/yamaha-tracer-9-moto-5611ae9df1ef471da647a0d8b1e9c235
+* author:	alban (https://sketchfab.com/alban)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Polizei Motorbike High-poly 3D model" (https://sketchfab.com/3d-models/polizei-motorbike-high-poly-3d-model-873fb02f1b2c40468882b41c5a2b2af4) by solid3DDD (https://sketchfab.com/solid3ddd) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Yamaha Tracer 9 Moto" (https://sketchfab.com/3d-models/yamaha-tracer-9-moto-5611ae9df1ef471da647a0d8b1e9c235) by alban (https://sketchfab.com/alban) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

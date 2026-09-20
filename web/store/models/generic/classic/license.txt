@@ -1,11 +1,11 @@
 Model Information:
-* title:	3d model Triumph Bonneville
-* source:	https://sketchfab.com/3d-models/3d-model-triumph-bonneville-5a530a5b91fc49df9f879544b88c5401
-* author:	zizian (https://sketchfab.com/zizian)
+* title:	Cafe Racer
+* source:	https://sketchfab.com/3d-models/cafe-racer-c02dec85ac0541b8ab6dd56098706b50
+* author:	Milin Andrei (https://sketchfab.com/milinam2002)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "3d model Triumph Bonneville" (https://sketchfab.com/3d-models/3d-model-triumph-bonneville-5a530a5b91fc49df9f879544b88c5401) by zizian (https://sketchfab.com/zizian) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Cafe Racer" (https://sketchfab.com/3d-models/cafe-racer-c02dec85ac0541b8ab6dd56098706b50) by Milin Andrei (https://sketchfab.com/milinam2002) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,4848 @@
+{
+ "version": 1,
+ "note": "Curated standard catalogue of wear/service/replacement parts. `applies` narrows an entry to the vehicles it exists on: kind (motorcycle|car), types/notTypes (web/counter/js/vehicle-type.js TYPES), drive (chain|belt|shaft), cooling (liquid|air), fuel (efi|carb|petrol|diesel). A key that is absent means the entry applies to every vehicle of that kind. `searchHint` is appended to make/model/year to build the fitment-exact shop query; `synonyms` are what a manual calls it, used by the mentions pass in api/app/parts_catalog.py.",
+ "groups": [
+  {
+   "id": "engine",
+   "label": "Engine"
+  },
+  {
+   "id": "cooling",
+   "label": "Cooling"
+  },
+  {
+   "id": "fuel",
+   "label": "Fuel & intake"
+  },
+  {
+   "id": "drivetrain",
+   "label": "Drivetrain"
+  },
+  {
+   "id": "brakes",
+   "label": "Brakes"
+  },
+  {
+   "id": "suspension",
+   "label": "Suspension & steering"
+  },
+  {
+   "id": "wheels",
+   "label": "Wheels & tyres"
+  },
+  {
+   "id": "electrics",
+   "label": "Electrics"
+  },
+  {
+   "id": "controls",
+   "label": "Controls"
+  },
+  {
+   "id": "interior",
+   "label": "Interior & climate"
+  },
+  {
+   "id": "body",
+   "label": "Body"
+  },
+  {
+   "id": "consumables",
+   "label": "Consumables"
+  }
+ ],
+ "parts": [
+  {
+   "id": "m-engine-oil",
+   "name": "Engine oil",
+   "group": "engine",
+   "icon": "engine-oil",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "engine oil",
+   "synonyms": [
+    "engine oil",
+    "motor oil",
+    "oil level",
+    "oil change",
+    "oil grade",
+    "oil capacity",
+    "oil quantity"
+   ]
+  },
+  {
+   "id": "m-oil-filter",
+   "name": "Oil filter",
+   "group": "engine",
+   "icon": "oil-filter",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "oil filter",
+   "synonyms": [
+    "oil filter",
+    "filter cartridge",
+    "oil filter cover"
+   ]
+  },
+  {
+   "id": "m-oil-screen",
+   "name": "Oil screen",
+   "group": "engine",
+   "icon": "oil-filter",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "oil screen strainer",
+   "synonyms": [
+    "oil screen",
+    "oil strainer",
+    "oil sieve"
+   ]
+  },
+  {
+   "id": "m-oil-drain-plug",
+   "name": "Oil drain plug & seal",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "oil drain plug sealing ring",
+   "synonyms": [
+    "oil drain plug & seal",
+    "oil drain plug",
+    "drain plug",
+    "drain screw",
+    "sealing ring"
+   ]
+  },
+  {
+   "id": "m-air-filter",
+   "name": "Air filter",
+   "group": "engine",
+   "icon": "air-filter",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "air filter",
+   "synonyms": [
+    "air filter",
+    "air cleaner",
+    "filter element",
+    "air box",
+    "airbox"
+   ]
+  },
+  {
+   "id": "m-spark-plug",
+   "name": "Spark plug",
+   "group": "engine",
+   "icon": "spark-plug",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "spark plug",
+   "synonyms": [
+    "spark plug",
+    "ignition plug",
+    "electrode gap"
+   ]
+  },
+  {
+   "id": "m-plug-cap",
+   "name": "Spark plug cap",
+   "group": "engine",
+   "icon": "plug-cap",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "spark plug cap",
+   "synonyms": [
+    "spark plug cap",
+    "plug connector",
+    "ignition cap",
+    "plug boot",
+    "plug cap"
+   ]
+  },
+  {
+   "id": "m-ignition-coil",
+   "name": "Ignition coil",
+   "group": "engine",
+   "icon": "ignition-coil",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "ignition coil",
+   "synonyms": [
+    "ignition coil",
+    "stick coil"
+   ]
+  },
+  {
+   "id": "m-valve-shim",
+   "name": "Valve shims",
+   "group": "engine",
+   "icon": "valve-shim",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "valve shim kit",
+   "synonyms": [
+    "valve shims",
+    "valve shim",
+    "valve clearance",
+    "valve play",
+    "valve adjustment",
+    "shim"
+   ]
+  },
+  {
+   "id": "m-valve-cover-gasket",
+   "name": "Valve cover gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "valve cover gasket",
+   "synonyms": [
+    "valve cover gasket",
+    "valve cover",
+    "cylinder head cover",
+    "rocker cover"
+   ]
+  },
+  {
+   "id": "m-head-gasket",
+   "name": "Cylinder head gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "cylinder head gasket",
+   "synonyms": [
+    "cylinder head gasket",
+    "head gasket"
+   ]
+  },
+  {
+   "id": "m-clutch-cover-gasket",
+   "name": "Clutch cover gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "clutch cover gasket",
+   "synonyms": [
+    "clutch cover gasket",
+    "clutch cover"
+   ]
+  },
+  {
+   "id": "m-exhaust-gasket",
+   "name": "Exhaust gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "exhaust manifold gasket",
+   "synonyms": [
+    "exhaust gasket",
+    "exhaust flange",
+    "manifold gasket"
+   ]
+  },
+  {
+   "id": "m-timing-chain",
+   "name": "Timing chain",
+   "group": "engine",
+   "icon": "chain",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "cam chain timing chain",
+   "synonyms": [
+    "timing chain",
+    "cam chain",
+    "camshaft chain"
+   ]
+  },
+  {
+   "id": "m-timing-chain-tensioner",
+   "name": "Timing chain tensioner",
+   "group": "engine",
+   "icon": "chain",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "cam chain tensioner",
+   "synonyms": [
+    "timing chain tensioner",
+    "chain tensioner",
+    "tensioning rail"
+   ]
+  },
+  {
+   "id": "m-piston-rings",
+   "name": "Piston rings",
+   "group": "engine",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "piston ring set",
+   "synonyms": [
+    "piston rings",
+    "piston ring",
+    "piston ring set"
+   ]
+  },
+  {
+   "id": "m-engine-mount",
+   "name": "Engine mounting bolts",
+   "group": "engine",
+   "icon": "bolt-torque",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "engine mounting bolt",
+   "synonyms": [
+    "engine mounting bolts",
+    "engine mount",
+    "engine bracket",
+    "engine carrier"
+   ]
+  },
+  {
+   "id": "m-exhaust-silencer",
+   "name": "Exhaust silencer",
+   "group": "engine",
+   "icon": "exhaust",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "exhaust silencer slip-on",
+   "synonyms": [
+    "exhaust silencer",
+    "silencer",
+    "muffler",
+    "end can",
+    "exhaust"
+   ]
+  },
+  {
+   "id": "m-exhaust-header",
+   "name": "Exhaust header",
+   "group": "engine",
+   "icon": "exhaust",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "exhaust header manifold",
+   "synonyms": [
+    "exhaust header",
+    "manifold",
+    "header",
+    "exhaust pipe",
+    "down pipe"
+   ]
+  },
+  {
+   "id": "m-oxygen-sensor",
+   "name": "Lambda sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "motorcycle",
+    "fuel": [
+     "efi"
+    ]
+   },
+   "searchHint": "lambda oxygen sensor",
+   "synonyms": [
+    "lambda sensor",
+    "oxygen sensor",
+    "lambda probe"
+   ]
+  },
+  {
+   "id": "m-coolant",
+   "name": "Coolant",
+   "group": "cooling",
+   "icon": "coolant",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "coolant antifreeze",
+   "synonyms": [
+    "coolant",
+    "antifreeze",
+    "cooling liquid",
+    "radiator fluid"
+   ]
+  },
+  {
+   "id": "m-radiator",
+   "name": "Radiator",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "radiator",
+   "synonyms": [
+    "radiator",
+    "cooler",
+    "cooling fin"
+   ]
+  },
+  {
+   "id": "m-radiator-cap",
+   "name": "Radiator cap",
+   "group": "cooling",
+   "icon": "radiator-cap",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "radiator cap",
+   "synonyms": [
+    "radiator cap",
+    "filler cap of the radiator",
+    "pressure cap"
+   ]
+  },
+  {
+   "id": "m-radiator-hose",
+   "name": "Radiator hoses",
+   "group": "cooling",
+   "icon": "hose",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "radiator hose",
+   "synonyms": [
+    "radiator hoses",
+    "radiator hose",
+    "coolant hose",
+    "water hose"
+   ]
+  },
+  {
+   "id": "m-thermostat",
+   "name": "Thermostat",
+   "group": "cooling",
+   "icon": "thermostat",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "cooling thermostat",
+   "synonyms": [
+    "thermostat"
+   ]
+  },
+  {
+   "id": "m-water-pump",
+   "name": "Water pump",
+   "group": "cooling",
+   "icon": "water-pump",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "water pump",
+   "synonyms": [
+    "water pump",
+    "coolant pump"
+   ]
+  },
+  {
+   "id": "m-water-pump-seal",
+   "name": "Water pump seal kit",
+   "group": "cooling",
+   "icon": "seal-kit",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "water pump seal kit",
+   "synonyms": [
+    "water pump seal kit",
+    "water pump seal",
+    "water pump cover",
+    "mechanical seal"
+   ]
+  },
+  {
+   "id": "m-cooling-fan",
+   "name": "Cooling fan",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "radiator cooling fan",
+   "synonyms": [
+    "cooling fan",
+    "radiator fan",
+    "fan motor"
+   ]
+  },
+  {
+   "id": "m-expansion-tank",
+   "name": "Coolant reservoir",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "coolant expansion tank",
+   "synonyms": [
+    "coolant reservoir",
+    "expansion tank",
+    "compensating tank",
+    "overflow tank"
+   ]
+  },
+  {
+   "id": "m-coolant-temp-sensor",
+   "name": "Coolant temperature sensor",
+   "group": "cooling",
+   "icon": "sensor",
+   "applies": {
+    "kind": "motorcycle",
+    "cooling": [
+     "liquid"
+    ]
+   },
+   "searchHint": "coolant temperature sensor",
+   "synonyms": [
+    "coolant temperature sensor",
+    "temperature sensor",
+    "engine temperature",
+    "coolant temp sensor"
+   ]
+  },
+  {
+   "id": "m-fuel-filter",
+   "name": "Fuel filter",
+   "group": "fuel",
+   "icon": "fuel-filter",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fuel filter",
+   "synonyms": [
+    "fuel filter",
+    "petrol filter",
+    "gasoline filter"
+   ]
+  },
+  {
+   "id": "m-fuel-pump",
+   "name": "Fuel pump",
+   "group": "fuel",
+   "icon": "fuel-pump",
+   "applies": {
+    "kind": "motorcycle",
+    "fuel": [
+     "efi"
+    ]
+   },
+   "searchHint": "fuel pump",
+   "synonyms": [
+    "fuel pump",
+    "fuel delivery unit"
+   ]
+  },
+  {
+   "id": "m-fuel-injector",
+   "name": "Fuel injector",
+   "group": "fuel",
+   "icon": "injector",
+   "applies": {
+    "kind": "motorcycle",
+    "fuel": [
+     "efi"
+    ]
+   },
+   "searchHint": "fuel injector",
+   "synonyms": [
+    "fuel injector",
+    "injector",
+    "injection valve",
+    "fuel rail"
+   ]
+  },
+  {
+   "id": "m-throttle-body",
+   "name": "Throttle body",
+   "group": "fuel",
+   "icon": "injector",
+   "applies": {
+    "kind": "motorcycle",
+    "fuel": [
+     "efi"
+    ]
+   },
+   "searchHint": "throttle body",
+   "synonyms": [
+    "throttle body",
+    "throttle valve",
+    "injection body"
+   ]
+  },
+  {
+   "id": "m-carburettor",
+   "name": "Carburettor",
+   "group": "fuel",
+   "icon": "carburettor",
+   "applies": {
+    "kind": "motorcycle",
+    "fuel": [
+     "carb"
+    ]
+   },
+   "searchHint": "carburettor",
+   "synonyms": [
+    "carburettor",
+    "carburetor",
+    "float chamber",
+    "main jet"
+   ]
+  },
+  {
+   "id": "m-carb-rebuild-kit",
+   "name": "Carburettor rebuild kit",
+   "group": "fuel",
+   "icon": "carburettor",
+   "applies": {
+    "kind": "motorcycle",
+    "fuel": [
+     "carb"
+    ]
+   },
+   "searchHint": "carburettor repair kit",
+   "synonyms": [
+    "carburettor rebuild kit",
+    "carburetor",
+    "carburettor",
+    "jet needle",
+    "float valve",
+    "carb rebuild kit"
+   ]
+  },
+  {
+   "id": "m-fuel-hose",
+   "name": "Fuel hose",
+   "group": "fuel",
+   "icon": "hose",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fuel line hose",
+   "synonyms": [
+    "fuel hose",
+    "fuel line",
+    "fuel pipe"
+   ]
+  },
+  {
+   "id": "m-fuel-cap",
+   "name": "Tank filler cap",
+   "group": "fuel",
+   "icon": "fuel-cap",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fuel tank filler cap",
+   "synonyms": [
+    "tank filler cap",
+    "filler cap",
+    "tank cap",
+    "fuel cap",
+    "filler neck"
+   ]
+  },
+  {
+   "id": "m-fuel-tank",
+   "name": "Fuel tank",
+   "group": "fuel",
+   "icon": "fuel-tank",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fuel tank",
+   "synonyms": [
+    "fuel tank",
+    "petrol tank",
+    "tank capacity",
+    "reserve"
+   ]
+  },
+  {
+   "id": "m-fuel-additive",
+   "name": "Fuel additive",
+   "group": "fuel",
+   "icon": "fuel-additive",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fuel system additive",
+   "synonyms": [
+    "fuel additive",
+    "fuel stabiliser",
+    "fuel stabilizer",
+    "octane"
+   ]
+  },
+  {
+   "id": "m-intake-boot",
+   "name": "Intake rubber",
+   "group": "fuel",
+   "icon": "hose",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "intake manifold rubber boot",
+   "synonyms": [
+    "intake rubber",
+    "intake",
+    "intake manifold",
+    "intake flange",
+    "air intake",
+    "intake boot"
+   ]
+  },
+  {
+   "id": "m-chain",
+   "name": "Drive chain",
+   "group": "drivetrain",
+   "icon": "chain",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "drive chain",
+   "synonyms": [
+    "drive chain",
+    "chain",
+    "chain tension",
+    "chain wear"
+   ]
+  },
+  {
+   "id": "m-chain-master-link",
+   "name": "Chain master link",
+   "group": "drivetrain",
+   "icon": "chain",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "chain rivet master link",
+   "synonyms": [
+    "chain master link",
+    "master link",
+    "chain link",
+    "chain lock",
+    "rivet link"
+   ]
+  },
+  {
+   "id": "m-front-sprocket",
+   "name": "Front sprocket",
+   "group": "drivetrain",
+   "icon": "sprocket",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "front sprocket countershaft",
+   "synonyms": [
+    "front sprocket",
+    "engine sprocket",
+    "countershaft sprocket",
+    "chain sprocket",
+    "pinion"
+   ]
+  },
+  {
+   "id": "m-rear-sprocket",
+   "name": "Rear sprocket",
+   "group": "drivetrain",
+   "icon": "sprocket",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "rear sprocket",
+   "synonyms": [
+    "rear sprocket",
+    "chain wheel",
+    "sprocket"
+   ]
+  },
+  {
+   "id": "m-sprocket-carrier",
+   "name": "Sprocket carrier",
+   "group": "drivetrain",
+   "icon": "sprocket",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "rear sprocket carrier hub",
+   "synonyms": [
+    "sprocket carrier",
+    "sprocket hub",
+    "rear hub"
+   ]
+  },
+  {
+   "id": "m-sprocket-carrier-bearing",
+   "name": "Sprocket carrier bearing",
+   "group": "drivetrain",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "sprocket carrier bearing",
+   "synonyms": [
+    "sprocket carrier bearing",
+    "carrier bearing",
+    "hub bearing",
+    "needle bearing"
+   ]
+  },
+  {
+   "id": "m-cush-drive-rubbers",
+   "name": "Cush drive rubbers",
+   "group": "drivetrain",
+   "icon": "cush-drive",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain",
+     "belt"
+    ]
+   },
+   "searchHint": "cush drive rubber damper",
+   "synonyms": [
+    "cush drive rubbers",
+    "cush drive",
+    "rubber damper",
+    "shock absorber rubber",
+    "hub damper"
+   ]
+  },
+  {
+   "id": "m-chain-lube",
+   "name": "Chain lube",
+   "group": "drivetrain",
+   "icon": "chain-lube",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "chain lubricant spray",
+   "synonyms": [
+    "chain lube",
+    "chain spray",
+    "chain lubricant",
+    "chainlube"
+   ]
+  },
+  {
+   "id": "m-chain-cleaner",
+   "name": "Chain cleaner",
+   "group": "drivetrain",
+   "icon": "cleaner-spray",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "chain cleaner",
+   "synonyms": [
+    "chain cleaner",
+    "chain clean"
+   ]
+  },
+  {
+   "id": "m-drive-belt",
+   "name": "Drive belt",
+   "group": "drivetrain",
+   "icon": "drive-belt",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "belt"
+    ]
+   },
+   "searchHint": "final drive belt",
+   "synonyms": [
+    "drive belt",
+    "toothed belt",
+    "belt drive",
+    "v belt"
+   ]
+  },
+  {
+   "id": "m-belt-tensioner",
+   "name": "Belt tensioner",
+   "group": "drivetrain",
+   "icon": "drive-belt",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "belt"
+    ]
+   },
+   "searchHint": "drive belt tensioner",
+   "synonyms": [
+    "belt tensioner",
+    "belt tension",
+    "tensioner pulley"
+   ]
+  },
+  {
+   "id": "m-final-drive-unit",
+   "name": "Final drive",
+   "group": "drivetrain",
+   "icon": "final-drive",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "shaft"
+    ]
+   },
+   "searchHint": "final drive bevel gear",
+   "synonyms": [
+    "final drive",
+    "bevel gear",
+    "rear drive",
+    "cardan",
+    "final drive unit"
+   ]
+  },
+  {
+   "id": "m-final-drive-oil",
+   "name": "Final drive oil",
+   "group": "drivetrain",
+   "icon": "gear-oil",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "shaft"
+    ]
+   },
+   "searchHint": "final drive hypoid gear oil",
+   "synonyms": [
+    "final drive oil",
+    "gear oil",
+    "hypoid",
+    "bevel gear oil"
+   ]
+  },
+  {
+   "id": "m-driveshaft-joint",
+   "name": "Drive shaft universal joint",
+   "group": "drivetrain",
+   "icon": "final-drive",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "shaft"
+    ]
+   },
+   "searchHint": "drive shaft universal joint",
+   "synonyms": [
+    "drive shaft universal joint",
+    "drive shaft",
+    "universal joint",
+    "propeller shaft",
+    "cardan shaft",
+    "driveshaft joint"
+   ]
+  },
+  {
+   "id": "m-clutch-plates",
+   "name": "Clutch plates",
+   "group": "drivetrain",
+   "icon": "clutch-plates",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "clutch friction plate kit",
+   "synonyms": [
+    "clutch plates",
+    "clutch plate",
+    "friction plate",
+    "clutch disc",
+    "clutch lining"
+   ]
+  },
+  {
+   "id": "m-clutch-springs",
+   "name": "Clutch springs",
+   "group": "drivetrain",
+   "icon": "clutch-spring",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "clutch spring set",
+   "synonyms": [
+    "clutch springs",
+    "clutch spring",
+    "pressure spring",
+    "diaphragm spring"
+   ]
+  },
+  {
+   "id": "m-clutch-cable",
+   "name": "Clutch cable",
+   "group": "drivetrain",
+   "icon": "clutch-cable",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "clutch cable",
+   "synonyms": [
+    "clutch cable",
+    "clutch play",
+    "clutch free travel",
+    "clutch actuation"
+   ]
+  },
+  {
+   "id": "m-clutch-slave-cylinder",
+   "name": "Clutch slave cylinder",
+   "group": "drivetrain",
+   "icon": "master-cylinder",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "clutch slave cylinder",
+   "synonyms": [
+    "clutch slave cylinder",
+    "clutch slave",
+    "slave cylinder",
+    "clutch master cylinder",
+    "clutch fluid"
+   ]
+  },
+  {
+   "id": "m-clutch-lever",
+   "name": "Clutch lever",
+   "group": "drivetrain",
+   "icon": "clutch-lever",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "clutch hand lever",
+   "synonyms": [
+    "clutch lever",
+    "hand lever"
+   ]
+  },
+  {
+   "id": "m-gearbox-oil",
+   "name": "Gearbox oil",
+   "group": "drivetrain",
+   "icon": "gear-oil",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "transmission gear oil",
+   "synonyms": [
+    "gearbox oil",
+    "transmission oil",
+    "gear oil",
+    "primary oil"
+   ]
+  },
+  {
+   "id": "m-gear-lever",
+   "name": "Gear shift lever",
+   "group": "drivetrain",
+   "icon": "gear-lever",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "gear shift lever",
+   "synonyms": [
+    "gear shift lever",
+    "shift lever",
+    "gear lever",
+    "gearshift",
+    "foot shift"
+   ]
+  },
+  {
+   "id": "m-shift-linkage",
+   "name": "Shift linkage rod",
+   "group": "drivetrain",
+   "icon": "gear-lever",
+   "applies": {
+    "kind": "motorcycle",
+    "notTypes": [
+     "scooter"
+    ]
+   },
+   "searchHint": "shift linkage rod",
+   "synonyms": [
+    "shift linkage rod",
+    "shift linkage",
+    "shift rod",
+    "shift shaft"
+   ]
+  },
+  {
+   "id": "m-variator-rollers",
+   "name": "Variator rollers",
+   "group": "drivetrain",
+   "icon": "cush-drive",
+   "applies": {
+    "kind": "motorcycle",
+    "types": [
+     "scooter"
+    ]
+   },
+   "searchHint": "variator roller weight set",
+   "synonyms": [
+    "variator rollers",
+    "variator",
+    "roller weight",
+    "cvt"
+   ]
+  },
+  {
+   "id": "m-front-brake-pads",
+   "name": "Front brake pads",
+   "group": "brakes",
+   "icon": "brake-pads",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "front brake pads",
+   "synonyms": [
+    "front brake pads",
+    "front brake pad",
+    "brake pads of the front",
+    "brake linings of the front brake",
+    "front brake lining",
+    "brake pad"
+   ]
+  },
+  {
+   "id": "m-rear-brake-pads",
+   "name": "Rear brake pads",
+   "group": "brakes",
+   "icon": "brake-pads",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear brake pads",
+   "synonyms": [
+    "rear brake pads",
+    "rear brake pad",
+    "brake pads of the rear",
+    "brake linings of the rear brake",
+    "rear brake lining"
+   ]
+  },
+  {
+   "id": "m-brake-shoes",
+   "name": "Brake shoes",
+   "group": "brakes",
+   "icon": "brake-shoes",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear drum brake shoes",
+   "synonyms": [
+    "brake shoes",
+    "brake shoe",
+    "drum brake",
+    "brake drum"
+   ]
+  },
+  {
+   "id": "m-front-brake-disc",
+   "name": "Front brake disc",
+   "group": "brakes",
+   "icon": "brake-disc",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "front brake disc rotor",
+   "synonyms": [
+    "front brake disc",
+    "brake disc",
+    "brake rotor",
+    "disc thickness"
+   ]
+  },
+  {
+   "id": "m-rear-brake-disc",
+   "name": "Rear brake disc",
+   "group": "brakes",
+   "icon": "brake-disc",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear brake disc rotor",
+   "synonyms": [
+    "rear brake disc",
+    "rear brake rotor"
+   ]
+  },
+  {
+   "id": "m-brake-caliper",
+   "name": "Brake caliper",
+   "group": "brakes",
+   "icon": "brake-caliper",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake caliper",
+   "synonyms": [
+    "brake caliper",
+    "caliper",
+    "calliper"
+   ]
+  },
+  {
+   "id": "m-caliper-seal-kit",
+   "name": "Caliper seal kit",
+   "group": "brakes",
+   "icon": "seal-kit",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake caliper seal repair kit",
+   "synonyms": [
+    "caliper seal kit",
+    "caliper seal",
+    "piston seal",
+    "dust seal",
+    "repair kit"
+   ]
+  },
+  {
+   "id": "m-caliper-piston",
+   "name": "Caliper piston",
+   "group": "brakes",
+   "icon": "brake-caliper",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake caliper piston",
+   "synonyms": [
+    "caliper piston",
+    "brake piston"
+   ]
+  },
+  {
+   "id": "m-brake-master-cylinder",
+   "name": "Brake master cylinder",
+   "group": "brakes",
+   "icon": "master-cylinder",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake master cylinder",
+   "synonyms": [
+    "brake master cylinder",
+    "master cylinder",
+    "brake cylinder",
+    "reservoir"
+   ]
+  },
+  {
+   "id": "m-master-cylinder-kit",
+   "name": "Master cylinder rebuild kit",
+   "group": "brakes",
+   "icon": "seal-kit",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake master cylinder repair kit",
+   "synonyms": [
+    "master cylinder rebuild kit",
+    "master cylinder",
+    "repair kit",
+    "piston seal",
+    "master cylinder kit"
+   ]
+  },
+  {
+   "id": "m-brake-line",
+   "name": "Brake line",
+   "group": "brakes",
+   "icon": "brake-line",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "braided brake line hose",
+   "synonyms": [
+    "brake line",
+    "brake hose",
+    "brake pipe"
+   ]
+  },
+  {
+   "id": "m-brake-fluid",
+   "name": "Brake fluid",
+   "group": "brakes",
+   "icon": "brake-fluid",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "dot 4 brake fluid",
+   "synonyms": [
+    "brake fluid",
+    "dot 4",
+    "dot 5",
+    "fluid level"
+   ]
+  },
+  {
+   "id": "m-brake-lever",
+   "name": "Brake hand lever",
+   "group": "brakes",
+   "icon": "brake-lever",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake hand lever",
+   "synonyms": [
+    "brake hand lever",
+    "brake lever",
+    "hand brake lever"
+   ]
+  },
+  {
+   "id": "m-brake-pedal",
+   "name": "Brake pedal",
+   "group": "brakes",
+   "icon": "brake-pedal",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear brake pedal",
+   "synonyms": [
+    "brake pedal",
+    "foot brake",
+    "brake lever of the rear"
+   ]
+  },
+  {
+   "id": "m-brake-light-switch",
+   "name": "Brake light switch",
+   "group": "brakes",
+   "icon": "sensor",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "brake light switch",
+   "synonyms": [
+    "brake light switch",
+    "stop light switch"
+   ]
+  },
+  {
+   "id": "m-abs-sensor",
+   "name": "ABS wheel speed sensor",
+   "group": "brakes",
+   "icon": "sensor",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "abs wheel speed sensor",
+   "synonyms": [
+    "abs wheel speed sensor",
+    "abs sensor",
+    "wheel speed sensor",
+    "pulse ring",
+    "abs"
+   ]
+  },
+  {
+   "id": "m-fork-oil",
+   "name": "Fork oil",
+   "group": "suspension",
+   "icon": "fork-oil",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fork oil",
+   "synonyms": [
+    "fork oil",
+    "fork fluid",
+    "suspension oil"
+   ]
+  },
+  {
+   "id": "m-fork-seals",
+   "name": "Fork oil seals",
+   "group": "suspension",
+   "icon": "fork-seal",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fork oil seal set",
+   "synonyms": [
+    "fork oil seals",
+    "fork seal",
+    "oil seal",
+    "shaft seal ring",
+    "fork seals"
+   ]
+  },
+  {
+   "id": "m-fork-dust-seals",
+   "name": "Fork dust seals",
+   "group": "suspension",
+   "icon": "fork-seal",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fork dust seal set",
+   "synonyms": [
+    "fork dust seals",
+    "dust seal",
+    "dust boot",
+    "wiper seal",
+    "dust cover"
+   ]
+  },
+  {
+   "id": "m-fork-springs",
+   "name": "Fork springs",
+   "group": "suspension",
+   "icon": "fork-spring",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fork spring set",
+   "synonyms": [
+    "fork springs",
+    "fork spring",
+    "spring preload",
+    "spring rate"
+   ]
+  },
+  {
+   "id": "m-fork-bushings",
+   "name": "Fork bushings",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fork slide bushing set",
+   "synonyms": [
+    "fork bushings",
+    "fork bushing",
+    "slide bush",
+    "guide bush"
+   ]
+  },
+  {
+   "id": "m-steering-head-bearings",
+   "name": "Steering head bearings",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "steering head bearing set",
+   "synonyms": [
+    "steering head bearings",
+    "steering head bearing",
+    "steering head",
+    "head bearing",
+    "steering play"
+   ]
+  },
+  {
+   "id": "m-rear-shock",
+   "name": "Rear shock absorber",
+   "group": "suspension",
+   "icon": "rear-shock",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear shock absorber",
+   "synonyms": [
+    "rear shock absorber",
+    "shock absorber",
+    "rear shock",
+    "monoshock",
+    "spring strut",
+    "damping"
+   ]
+  },
+  {
+   "id": "m-shock-spring",
+   "name": "Shock spring",
+   "group": "suspension",
+   "icon": "rear-shock",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear shock spring",
+   "synonyms": [
+    "shock spring",
+    "spring preload",
+    "spring pre-load",
+    "ride height"
+   ]
+  },
+  {
+   "id": "m-linkage-bearings",
+   "name": "Linkage bearings",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "suspension linkage bearing kit",
+   "synonyms": [
+    "linkage bearings",
+    "linkage",
+    "deflection lever",
+    "needle bearing",
+    "link arm"
+   ]
+  },
+  {
+   "id": "m-swingarm-bearings",
+   "name": "Swingarm bearings",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "swingarm pivot bearing kit",
+   "synonyms": [
+    "swingarm bearings",
+    "swingarm bearing",
+    "swing arm",
+    "pivot bearing",
+    "swingarm pivot"
+   ]
+  },
+  {
+   "id": "m-swingarm",
+   "name": "Swingarm",
+   "group": "suspension",
+   "icon": "swingarm",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "swingarm",
+   "synonyms": [
+    "swingarm",
+    "swing arm"
+   ]
+  },
+  {
+   "id": "m-steering-damper",
+   "name": "Steering damper",
+   "group": "suspension",
+   "icon": "rear-shock",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "steering damper",
+   "synonyms": [
+    "steering damper",
+    "steering stabiliser"
+   ]
+  },
+  {
+   "id": "m-front-tire",
+   "name": "Front tyre",
+   "group": "wheels",
+   "icon": "tire",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "front tyre",
+   "synonyms": [
+    "front tyre",
+    "front tire",
+    "tire pressure",
+    "tyre pressure",
+    "tread depth"
+   ]
+  },
+  {
+   "id": "m-rear-tire",
+   "name": "Rear tyre",
+   "group": "wheels",
+   "icon": "tire",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear tyre",
+   "synonyms": [
+    "rear tyre",
+    "rear tire"
+   ]
+  },
+  {
+   "id": "m-inner-tube",
+   "name": "Inner tube",
+   "group": "wheels",
+   "icon": "inner-tube",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "inner tube",
+   "synonyms": [
+    "inner tube",
+    "tube type",
+    "tubeless"
+   ]
+  },
+  {
+   "id": "m-front-wheel-bearing",
+   "name": "Front wheel bearings",
+   "group": "wheels",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "front wheel bearing set",
+   "synonyms": [
+    "front wheel bearings",
+    "front wheel bearing",
+    "wheel bearing",
+    "hub bearing"
+   ]
+  },
+  {
+   "id": "m-rear-wheel-bearing",
+   "name": "Rear wheel bearings",
+   "group": "wheels",
+   "icon": "bearing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear wheel bearing set",
+   "synonyms": [
+    "rear wheel bearings",
+    "rear wheel bearing",
+    "wheel bearing"
+   ]
+  },
+  {
+   "id": "m-wheel-seal",
+   "name": "Wheel hub seals",
+   "group": "wheels",
+   "icon": "seal-kit",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "wheel hub seal",
+   "synonyms": [
+    "wheel hub seals",
+    "wheel seal",
+    "hub seal",
+    "shaft seal"
+   ]
+  },
+  {
+   "id": "m-valve-stem",
+   "name": "Tyre valve stem",
+   "group": "wheels",
+   "icon": "valve-stem",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "tyre valve stem",
+   "synonyms": [
+    "tyre valve stem",
+    "valve stem",
+    "tire valve",
+    "tyre valve",
+    "valve cap"
+   ]
+  },
+  {
+   "id": "m-front-wheel",
+   "name": "Front wheel",
+   "group": "wheels",
+   "icon": "wheel",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "front wheel rim",
+   "synonyms": [
+    "front wheel",
+    "front rim",
+    "wheel rim"
+   ]
+  },
+  {
+   "id": "m-rear-wheel",
+   "name": "Rear wheel",
+   "group": "wheels",
+   "icon": "wheel",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear wheel rim",
+   "synonyms": [
+    "rear wheel",
+    "rear rim"
+   ]
+  },
+  {
+   "id": "m-spokes",
+   "name": "Spokes & nipples",
+   "group": "wheels",
+   "icon": "wheel",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "wheel spoke nipple",
+   "synonyms": [
+    "spokes & nipples",
+    "spoke",
+    "spoke nipple",
+    "spoke tension",
+    "spokes"
+   ]
+  },
+  {
+   "id": "m-battery",
+   "name": "Battery",
+   "group": "electrics",
+   "icon": "battery",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "12v battery",
+   "synonyms": [
+    "battery",
+    "agm",
+    "battery voltage",
+    "nominal capacity"
+   ]
+  },
+  {
+   "id": "m-battery-charger",
+   "name": "Battery charger",
+   "group": "electrics",
+   "icon": "battery",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "motorcycle battery charger",
+   "synonyms": [
+    "battery charger",
+    "charging",
+    "trickle charger",
+    "jump start"
+   ]
+  },
+  {
+   "id": "m-fuse",
+   "name": "Fuses",
+   "group": "electrics",
+   "icon": "fuse",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "blade fuse set",
+   "synonyms": [
+    "fuses",
+    "fuse",
+    "main fuse",
+    "fuse box"
+   ]
+  },
+  {
+   "id": "m-fuse-box",
+   "name": "Fuse box",
+   "group": "electrics",
+   "icon": "fuse",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fuse box holder",
+   "synonyms": [
+    "fuse box",
+    "fuse holder",
+    "fusebox"
+   ]
+  },
+  {
+   "id": "m-headlight-bulb",
+   "name": "Headlight bulb",
+   "group": "electrics",
+   "icon": "bulb-headlight",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "headlight bulb",
+   "synonyms": [
+    "headlight bulb",
+    "head light",
+    "low beam",
+    "high beam",
+    "bulb"
+   ]
+  },
+  {
+   "id": "m-headlight-unit",
+   "name": "Headlight unit",
+   "group": "electrics",
+   "icon": "bulb-headlight",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "headlight assembly",
+   "synonyms": [
+    "headlight unit",
+    "headlight",
+    "head lamp",
+    "headlight range"
+   ]
+  },
+  {
+   "id": "m-taillight",
+   "name": "Tail light",
+   "group": "electrics",
+   "icon": "taillight",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "tail light unit",
+   "synonyms": [
+    "tail light",
+    "rear light",
+    "brake light",
+    "taillight"
+   ]
+  },
+  {
+   "id": "m-indicator",
+   "name": "Indicators",
+   "group": "electrics",
+   "icon": "indicator",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "turn signal indicator",
+   "synonyms": [
+    "indicators",
+    "turn indicator",
+    "turn signal",
+    "indicator",
+    "flasher",
+    "blinker"
+   ]
+  },
+  {
+   "id": "m-plate-light",
+   "name": "Licence plate light",
+   "group": "electrics",
+   "icon": "taillight",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "number plate light bulb",
+   "synonyms": [
+    "licence plate light",
+    "number plate light",
+    "license plate light",
+    "plate light"
+   ]
+  },
+  {
+   "id": "m-regulator-rectifier",
+   "name": "Regulator / rectifier",
+   "group": "electrics",
+   "icon": "regulator",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "regulator rectifier",
+   "synonyms": [
+    "regulator / rectifier",
+    "voltage regulator",
+    "rectifier",
+    "regulator",
+    "regulator rectifier"
+   ]
+  },
+  {
+   "id": "m-stator",
+   "name": "Stator / alternator",
+   "group": "electrics",
+   "icon": "stator",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "stator alternator coil",
+   "synonyms": [
+    "stator / alternator",
+    "stator",
+    "alternator",
+    "generator",
+    "charging coil"
+   ]
+  },
+  {
+   "id": "m-starter-motor",
+   "name": "Starter motor",
+   "group": "electrics",
+   "icon": "starter-motor",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "starter motor",
+   "synonyms": [
+    "starter motor",
+    "electric starter",
+    "starter"
+   ]
+  },
+  {
+   "id": "m-starter-relay",
+   "name": "Starter relay",
+   "group": "electrics",
+   "icon": "relay",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "starter solenoid relay",
+   "synonyms": [
+    "starter relay",
+    "solenoid",
+    "relay"
+   ]
+  },
+  {
+   "id": "m-ignition-switch",
+   "name": "Ignition switch",
+   "group": "electrics",
+   "icon": "relay",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "ignition lock switch",
+   "synonyms": [
+    "ignition switch",
+    "ignition lock",
+    "steering lock"
+   ]
+  },
+  {
+   "id": "m-horn",
+   "name": "Horn",
+   "group": "electrics",
+   "icon": "horn",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "horn",
+   "synonyms": [
+    "horn",
+    "warning signal"
+   ]
+  },
+  {
+   "id": "m-side-stand-switch",
+   "name": "Side stand switch",
+   "group": "electrics",
+   "icon": "sensor",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "side stand switch",
+   "synonyms": [
+    "side stand switch",
+    "kickstand switch",
+    "safety switch"
+   ]
+  },
+  {
+   "id": "m-key-fob-battery",
+   "name": "Key fob battery",
+   "group": "electrics",
+   "icon": "button-cell",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "key fob button cell battery",
+   "synonyms": [
+    "key fob battery",
+    "button cell",
+    "cr2032",
+    "remote key",
+    "key battery",
+    "transmitter"
+   ]
+  },
+  {
+   "id": "m-throttle-cable",
+   "name": "Throttle cable",
+   "group": "controls",
+   "icon": "throttle-cable",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "throttle cable",
+   "synonyms": [
+    "throttle cable",
+    "twist grip",
+    "accelerator",
+    "bowden cable",
+    "cable play"
+   ]
+  },
+  {
+   "id": "m-grips",
+   "name": "Handlebar grips",
+   "group": "controls",
+   "icon": "grips",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "handlebar grip set",
+   "synonyms": [
+    "handlebar grips",
+    "grip",
+    "handlebar grip",
+    "hand grip",
+    "heated grip",
+    "grips"
+   ]
+  },
+  {
+   "id": "m-bar-ends",
+   "name": "Bar ends",
+   "group": "controls",
+   "icon": "bar-end",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "handlebar bar end weight",
+   "synonyms": [
+    "bar ends",
+    "bar end",
+    "handlebar end",
+    "bar weight"
+   ]
+  },
+  {
+   "id": "m-handlebar",
+   "name": "Handlebar",
+   "group": "controls",
+   "icon": "handlebar",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "handlebar",
+   "synonyms": [
+    "handlebar",
+    "handle bar",
+    "riser",
+    "triple clamp"
+   ]
+  },
+  {
+   "id": "m-mirrors",
+   "name": "Mirrors",
+   "group": "controls",
+   "icon": "mirror",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear view mirror",
+   "synonyms": [
+    "mirrors",
+    "mirror",
+    "rear view mirror"
+   ]
+  },
+  {
+   "id": "m-footpegs",
+   "name": "Footpegs",
+   "group": "controls",
+   "icon": "footpeg",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rider footpeg set",
+   "synonyms": [
+    "footpegs",
+    "footpeg",
+    "footrest",
+    "foot rest",
+    "foot peg"
+   ]
+  },
+  {
+   "id": "m-pillion-footpegs",
+   "name": "Pillion footpegs",
+   "group": "controls",
+   "icon": "footpeg",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "pillion footrest set",
+   "synonyms": [
+    "pillion footpegs",
+    "pillion footrest",
+    "passenger footpeg",
+    "pillion footpeg"
+   ]
+  },
+  {
+   "id": "m-side-stand",
+   "name": "Side stand",
+   "group": "controls",
+   "icon": "side-stand",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "side stand kickstand",
+   "synonyms": [
+    "side stand",
+    "kickstand",
+    "stand spring"
+   ]
+  },
+  {
+   "id": "m-centre-stand",
+   "name": "Centre stand",
+   "group": "controls",
+   "icon": "side-stand",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "centre stand",
+   "synonyms": [
+    "centre stand",
+    "center stand",
+    "main stand"
+   ]
+  },
+  {
+   "id": "m-seat",
+   "name": "Rider seat",
+   "group": "body",
+   "icon": "seat",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rider seat",
+   "synonyms": [
+    "rider seat",
+    "seat",
+    "saddle",
+    "seat lock"
+   ]
+  },
+  {
+   "id": "m-pillion-seat",
+   "name": "Pillion seat",
+   "group": "body",
+   "icon": "seat",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "pillion passenger seat",
+   "synonyms": [
+    "pillion seat",
+    "passenger seat",
+    "rear seat"
+   ]
+  },
+  {
+   "id": "m-windscreen",
+   "name": "Windscreen",
+   "group": "body",
+   "icon": "windscreen",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "windscreen windshield",
+   "synonyms": [
+    "windscreen",
+    "windshield",
+    "wind deflector",
+    "screen"
+   ]
+  },
+  {
+   "id": "m-fairing-panel",
+   "name": "Fairing panel",
+   "group": "body",
+   "icon": "fairing",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fairing side panel",
+   "synonyms": [
+    "fairing panel",
+    "fairing",
+    "side panel",
+    "spoiler",
+    "cowl",
+    "trim"
+   ]
+  },
+  {
+   "id": "m-fairing-fasteners",
+   "name": "Fairing fasteners",
+   "group": "body",
+   "icon": "bolt-torque",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "fairing clip fastener kit",
+   "synonyms": [
+    "fairing fasteners",
+    "quick release",
+    "clip",
+    "fastener",
+    "screw",
+    "rivet"
+   ]
+  },
+  {
+   "id": "m-front-mudguard",
+   "name": "Front mudguard",
+   "group": "body",
+   "icon": "mudguard",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "front mudguard fender",
+   "synonyms": [
+    "front mudguard",
+    "front fender",
+    "front wheel cover"
+   ]
+  },
+  {
+   "id": "m-rear-mudguard",
+   "name": "Rear mudguard",
+   "group": "body",
+   "icon": "mudguard",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "rear mudguard fender",
+   "synonyms": [
+    "rear mudguard",
+    "rear fender",
+    "splash guard"
+   ]
+  },
+  {
+   "id": "m-chain-guard",
+   "name": "Chain guard",
+   "group": "body",
+   "icon": "mudguard",
+   "applies": {
+    "kind": "motorcycle",
+    "drive": [
+     "chain"
+    ]
+   },
+   "searchHint": "chain guard",
+   "synonyms": [
+    "chain guard",
+    "chain guide",
+    "chain sliding"
+   ]
+  },
+  {
+   "id": "m-grease",
+   "name": "Grease",
+   "group": "consumables",
+   "icon": "grease",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "lithium grease",
+   "synonyms": [
+    "grease",
+    "lubricating grease",
+    "long-life grease",
+    "lubricant"
+   ]
+  },
+  {
+   "id": "m-threadlock",
+   "name": "Threadlock",
+   "group": "consumables",
+   "icon": "threadlock",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "threadlocker",
+   "synonyms": [
+    "threadlock",
+    "loctite",
+    "thread lock",
+    "locking compound",
+    "microencapsulated"
+   ]
+  },
+  {
+   "id": "m-cleaner-spray",
+   "name": "Cleaner spray",
+   "group": "consumables",
+   "icon": "cleaner-spray",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "motorcycle cleaner",
+   "synonyms": [
+    "cleaner spray",
+    "cleaner",
+    "cleaning agent",
+    "degreaser",
+    "brake cleaner"
+   ]
+  },
+  {
+   "id": "m-cable-lube",
+   "name": "Cable lubricant",
+   "group": "consumables",
+   "icon": "chain-lube",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "cable lubricant spray",
+   "synonyms": [
+    "cable lubricant",
+    "cable oil",
+    "spray oil",
+    "universal oil",
+    "cable lube"
+   ]
+  },
+  {
+   "id": "m-tool-kit",
+   "name": "On-board tool kit",
+   "group": "consumables",
+   "icon": "tool-kit",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "on board tool kit",
+   "synonyms": [
+    "on-board tool kit",
+    "tool kit",
+    "on-board tool",
+    "toolkit",
+    "tool bag"
+   ]
+  },
+  {
+   "id": "m-fasteners",
+   "name": "Bolts & nuts",
+   "group": "consumables",
+   "icon": "bolt-torque",
+   "applies": {
+    "kind": "motorcycle"
+   },
+   "searchHint": "bolt nut washer set",
+   "synonyms": [
+    "bolts & nuts",
+    "screw",
+    "bolt",
+    "nut",
+    "washer",
+    "tightening torque",
+    "fasteners"
+   ]
+  },
+  {
+   "id": "c-engine-oil",
+   "name": "Engine oil",
+   "group": "engine",
+   "icon": "engine-oil",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "engine oil",
+   "synonyms": [
+    "engine oil",
+    "motor oil",
+    "oil level",
+    "oil change",
+    "oil grade",
+    "oil capacity"
+   ]
+  },
+  {
+   "id": "c-oil-filter",
+   "name": "Oil filter",
+   "group": "engine",
+   "icon": "oil-filter",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "oil filter",
+   "synonyms": [
+    "oil filter",
+    "filter cartridge"
+   ]
+  },
+  {
+   "id": "c-oil-drain-plug",
+   "name": "Oil drain plug & washer",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "oil drain plug washer",
+   "synonyms": [
+    "oil drain plug & washer",
+    "drain plug",
+    "oil drain",
+    "sealing washer",
+    "oil drain plug"
+   ]
+  },
+  {
+   "id": "c-air-filter",
+   "name": "Engine air filter",
+   "group": "engine",
+   "icon": "air-filter",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "engine air filter",
+   "synonyms": [
+    "engine air filter",
+    "air filter",
+    "air cleaner",
+    "filter element"
+   ]
+  },
+  {
+   "id": "c-spark-plug",
+   "name": "Spark plugs",
+   "group": "engine",
+   "icon": "spark-plug",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "petrol"
+    ]
+   },
+   "searchHint": "spark plugs",
+   "synonyms": [
+    "spark plugs",
+    "spark plug",
+    "electrode gap"
+   ]
+  },
+  {
+   "id": "c-glow-plug",
+   "name": "Glow plugs",
+   "group": "engine",
+   "icon": "spark-plug",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "diesel"
+    ]
+   },
+   "searchHint": "glow plugs",
+   "synonyms": [
+    "glow plugs",
+    "glow plug",
+    "preheating"
+   ]
+  },
+  {
+   "id": "c-ignition-coil",
+   "name": "Ignition coils",
+   "group": "engine",
+   "icon": "ignition-coil",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "petrol"
+    ]
+   },
+   "searchHint": "ignition coil pack",
+   "synonyms": [
+    "ignition coils",
+    "ignition coil",
+    "coil pack"
+   ]
+  },
+  {
+   "id": "c-ignition-lead",
+   "name": "Ignition leads",
+   "group": "engine",
+   "icon": "ignition-lead",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "petrol"
+    ]
+   },
+   "searchHint": "spark plug ignition leads",
+   "synonyms": [
+    "ignition leads",
+    "ignition lead",
+    "plug wire",
+    "ht lead"
+   ]
+  },
+  {
+   "id": "c-timing-belt",
+   "name": "Timing belt",
+   "group": "engine",
+   "icon": "timing-belt",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "timing belt cambelt",
+   "synonyms": [
+    "timing belt",
+    "cambelt",
+    "cam belt"
+   ]
+  },
+  {
+   "id": "c-timing-belt-kit",
+   "name": "Timing belt kit",
+   "group": "engine",
+   "icon": "timing-belt",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "timing belt kit with water pump",
+   "synonyms": [
+    "timing belt kit",
+    "timing belt",
+    "tensioner"
+   ]
+  },
+  {
+   "id": "c-timing-chain",
+   "name": "Timing chain",
+   "group": "engine",
+   "icon": "chain",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "timing chain kit",
+   "synonyms": [
+    "timing chain",
+    "cam chain"
+   ]
+  },
+  {
+   "id": "c-serpentine-belt",
+   "name": "Auxiliary drive belt",
+   "group": "engine",
+   "icon": "serpentine-belt",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "serpentine auxiliary drive belt",
+   "synonyms": [
+    "auxiliary drive belt",
+    "serpentine belt",
+    "drive belt",
+    "v-ribbed belt",
+    "auxiliary belt",
+    "fan belt"
+   ]
+  },
+  {
+   "id": "c-belt-tensioner",
+   "name": "Belt tensioner",
+   "group": "engine",
+   "icon": "serpentine-belt",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "drive belt tensioner",
+   "synonyms": [
+    "belt tensioner",
+    "tensioner pulley"
+   ]
+  },
+  {
+   "id": "c-idler-pulley",
+   "name": "Idler pulley",
+   "group": "engine",
+   "icon": "serpentine-belt",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "idler pulley",
+   "synonyms": [
+    "idler pulley",
+    "deflection pulley"
+   ]
+  },
+  {
+   "id": "c-valve-cover-gasket",
+   "name": "Valve cover gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "valve cover gasket",
+   "synonyms": [
+    "valve cover gasket",
+    "valve cover",
+    "rocker cover",
+    "camshaft cover"
+   ]
+  },
+  {
+   "id": "c-head-gasket",
+   "name": "Cylinder head gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "cylinder head gasket",
+   "synonyms": [
+    "cylinder head gasket",
+    "head gasket"
+   ]
+  },
+  {
+   "id": "c-intake-gasket",
+   "name": "Intake manifold gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "intake manifold gasket",
+   "synonyms": [
+    "intake manifold gasket",
+    "intake manifold",
+    "inlet manifold",
+    "intake gasket"
+   ]
+  },
+  {
+   "id": "c-exhaust-gasket",
+   "name": "Exhaust manifold gasket",
+   "group": "engine",
+   "icon": "gasket",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "exhaust manifold gasket",
+   "synonyms": [
+    "exhaust manifold gasket",
+    "exhaust manifold",
+    "exhaust gasket"
+   ]
+  },
+  {
+   "id": "c-pcv-valve",
+   "name": "PCV valve",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "pcv crankcase ventilation valve",
+   "synonyms": [
+    "pcv valve",
+    "crankcase ventilation",
+    "breather valve"
+   ]
+  },
+  {
+   "id": "c-engine-mount",
+   "name": "Engine mount",
+   "group": "engine",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "engine mount",
+   "synonyms": [
+    "engine mount",
+    "engine mounting",
+    "gearbox mount"
+   ]
+  },
+  {
+   "id": "c-oil-pressure-switch",
+   "name": "Oil pressure switch",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "oil pressure switch sensor",
+   "synonyms": [
+    "oil pressure switch",
+    "oil pressure sensor",
+    "oil pressure"
+   ]
+  },
+  {
+   "id": "c-oxygen-sensor",
+   "name": "Lambda sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "lambda oxygen sensor",
+   "synonyms": [
+    "lambda sensor",
+    "oxygen sensor",
+    "o2 sensor"
+   ]
+  },
+  {
+   "id": "c-maf-sensor",
+   "name": "Mass air flow sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "mass air flow sensor",
+   "synonyms": [
+    "mass air flow sensor",
+    "mass air flow",
+    "maf sensor",
+    "air mass meter"
+   ]
+  },
+  {
+   "id": "c-map-sensor",
+   "name": "Manifold pressure sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "manifold absolute pressure sensor",
+   "synonyms": [
+    "manifold pressure sensor",
+    "map sensor",
+    "manifold pressure",
+    "boost sensor"
+   ]
+  },
+  {
+   "id": "c-knock-sensor",
+   "name": "Knock sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "petrol"
+    ]
+   },
+   "searchHint": "knock sensor",
+   "synonyms": [
+    "knock sensor",
+    "detonation sensor"
+   ]
+  },
+  {
+   "id": "c-crank-sensor",
+   "name": "Crankshaft position sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "crankshaft position sensor",
+   "synonyms": [
+    "crankshaft position sensor",
+    "crankshaft sensor",
+    "crank position",
+    "engine speed sensor",
+    "crank sensor"
+   ]
+  },
+  {
+   "id": "c-cam-sensor",
+   "name": "Camshaft position sensor",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "camshaft position sensor",
+   "synonyms": [
+    "camshaft position sensor",
+    "camshaft sensor",
+    "cam position",
+    "phase sensor",
+    "cam sensor"
+   ]
+  },
+  {
+   "id": "c-throttle-body",
+   "name": "Throttle body",
+   "group": "engine",
+   "icon": "injector",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "throttle body",
+   "synonyms": [
+    "throttle body",
+    "throttle valve"
+   ]
+  },
+  {
+   "id": "c-turbocharger",
+   "name": "Turbocharger",
+   "group": "engine",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "turbocharger",
+   "synonyms": [
+    "turbocharger",
+    "turbo",
+    "charge pressure"
+   ]
+  },
+  {
+   "id": "c-intercooler",
+   "name": "Intercooler",
+   "group": "engine",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "intercooler charge air cooler",
+   "synonyms": [
+    "intercooler",
+    "charge air cooler"
+   ]
+  },
+  {
+   "id": "c-intercooler-hose",
+   "name": "Charge air hose",
+   "group": "engine",
+   "icon": "hose",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "charge air intercooler hose",
+   "synonyms": [
+    "charge air hose",
+    "boost hose",
+    "intercooler hose"
+   ]
+  },
+  {
+   "id": "c-egr-valve",
+   "name": "EGR valve",
+   "group": "engine",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "egr valve",
+   "synonyms": [
+    "egr valve",
+    "exhaust gas recirculation"
+   ]
+  },
+  {
+   "id": "c-catalytic-converter",
+   "name": "Catalytic converter",
+   "group": "engine",
+   "icon": "exhaust",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "catalytic converter",
+   "synonyms": [
+    "catalytic converter",
+    "catalyst",
+    "cat"
+   ]
+  },
+  {
+   "id": "c-dpf",
+   "name": "Diesel particulate filter",
+   "group": "engine",
+   "icon": "exhaust",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "diesel"
+    ]
+   },
+   "searchHint": "diesel particulate filter",
+   "synonyms": [
+    "diesel particulate filter",
+    "particulate filter",
+    "dpf",
+    "soot filter"
+   ]
+  },
+  {
+   "id": "c-muffler",
+   "name": "Muffler / silencer",
+   "group": "engine",
+   "icon": "exhaust",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear muffler silencer",
+   "synonyms": [
+    "muffler / silencer",
+    "muffler",
+    "silencer",
+    "rear box",
+    "tail pipe"
+   ]
+  },
+  {
+   "id": "c-exhaust-pipe",
+   "name": "Exhaust pipe",
+   "group": "engine",
+   "icon": "exhaust",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "exhaust pipe section",
+   "synonyms": [
+    "exhaust pipe",
+    "down pipe",
+    "front pipe",
+    "exhaust system"
+   ]
+  },
+  {
+   "id": "c-coolant",
+   "name": "Coolant",
+   "group": "cooling",
+   "icon": "coolant",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "engine coolant antifreeze",
+   "synonyms": [
+    "coolant",
+    "antifreeze",
+    "cooling liquid"
+   ]
+  },
+  {
+   "id": "c-radiator",
+   "name": "Radiator",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "radiator",
+   "synonyms": [
+    "radiator",
+    "cooler"
+   ]
+  },
+  {
+   "id": "c-radiator-cap",
+   "name": "Radiator cap",
+   "group": "cooling",
+   "icon": "radiator-cap",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "radiator expansion tank cap",
+   "synonyms": [
+    "radiator cap",
+    "pressure cap",
+    "filler cap"
+   ]
+  },
+  {
+   "id": "c-radiator-hose-upper",
+   "name": "Upper radiator hose",
+   "group": "cooling",
+   "icon": "hose",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "upper radiator hose",
+   "synonyms": [
+    "upper radiator hose",
+    "radiator hose",
+    "coolant hose",
+    "radiator hose upper"
+   ]
+  },
+  {
+   "id": "c-radiator-hose-lower",
+   "name": "Lower radiator hose",
+   "group": "cooling",
+   "icon": "hose",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "lower radiator hose",
+   "synonyms": [
+    "lower radiator hose",
+    "coolant hose",
+    "radiator hose lower"
+   ]
+  },
+  {
+   "id": "c-thermostat",
+   "name": "Thermostat",
+   "group": "cooling",
+   "icon": "thermostat",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "coolant thermostat housing",
+   "synonyms": [
+    "thermostat",
+    "thermostat housing"
+   ]
+  },
+  {
+   "id": "c-water-pump",
+   "name": "Water pump",
+   "group": "cooling",
+   "icon": "water-pump",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "water pump",
+   "synonyms": [
+    "water pump",
+    "coolant pump"
+   ]
+  },
+  {
+   "id": "c-coolant-reservoir",
+   "name": "Coolant reservoir",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "coolant expansion tank",
+   "synonyms": [
+    "coolant reservoir",
+    "expansion tank",
+    "overflow tank"
+   ]
+  },
+  {
+   "id": "c-cooling-fan",
+   "name": "Radiator fan",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "radiator cooling fan",
+   "synonyms": [
+    "radiator fan",
+    "cooling fan",
+    "fan motor"
+   ]
+  },
+  {
+   "id": "c-fan-clutch",
+   "name": "Fan clutch",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "viscous fan clutch",
+   "synonyms": [
+    "fan clutch",
+    "viscous coupling"
+   ]
+  },
+  {
+   "id": "c-heater-core",
+   "name": "Heater matrix",
+   "group": "cooling",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "heater core matrix",
+   "synonyms": [
+    "heater matrix",
+    "heater core",
+    "heat exchanger"
+   ]
+  },
+  {
+   "id": "c-coolant-temp-sensor",
+   "name": "Coolant temperature sensor",
+   "group": "cooling",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "coolant temperature sensor",
+   "synonyms": [
+    "coolant temperature sensor",
+    "temperature sensor",
+    "engine temperature",
+    "coolant temp sensor"
+   ]
+  },
+  {
+   "id": "c-fuel-filter",
+   "name": "Fuel filter",
+   "group": "fuel",
+   "icon": "fuel-filter",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel filter",
+   "synonyms": [
+    "fuel filter",
+    "diesel filter",
+    "petrol filter"
+   ]
+  },
+  {
+   "id": "c-fuel-pump",
+   "name": "Fuel pump",
+   "group": "fuel",
+   "icon": "fuel-pump",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel pump",
+   "synonyms": [
+    "fuel pump",
+    "in-tank pump",
+    "high pressure pump"
+   ]
+  },
+  {
+   "id": "c-fuel-injector",
+   "name": "Fuel injectors",
+   "group": "fuel",
+   "icon": "injector",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel injectors",
+   "synonyms": [
+    "fuel injectors",
+    "injector",
+    "injection valve",
+    "fuel rail",
+    "fuel injector"
+   ]
+  },
+  {
+   "id": "c-fuel-cap",
+   "name": "Fuel filler cap",
+   "group": "fuel",
+   "icon": "fuel-cap",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel filler cap",
+   "synonyms": [
+    "fuel filler cap",
+    "filler cap",
+    "fuel cap",
+    "tank cap",
+    "filler flap"
+   ]
+  },
+  {
+   "id": "c-fuel-hose",
+   "name": "Fuel line",
+   "group": "fuel",
+   "icon": "hose",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel line hose",
+   "synonyms": [
+    "fuel line",
+    "fuel hose",
+    "fuel pipe"
+   ]
+  },
+  {
+   "id": "c-fuel-tank",
+   "name": "Fuel tank",
+   "group": "fuel",
+   "icon": "fuel-tank",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel tank",
+   "synonyms": [
+    "fuel tank",
+    "tank capacity",
+    "reserve"
+   ]
+  },
+  {
+   "id": "c-fuel-additive",
+   "name": "Fuel additive",
+   "group": "fuel",
+   "icon": "fuel-additive",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuel system cleaner additive",
+   "synonyms": [
+    "fuel additive",
+    "fuel system cleaner",
+    "octane"
+   ]
+  },
+  {
+   "id": "c-adblue",
+   "name": "AdBlue",
+   "group": "fuel",
+   "icon": "washer-fluid",
+   "applies": {
+    "kind": "car",
+    "fuel": [
+     "diesel"
+    ]
+   },
+   "searchHint": "adblue def fluid",
+   "synonyms": [
+    "adblue",
+    "def",
+    "urea",
+    "exhaust fluid"
+   ]
+  },
+  {
+   "id": "c-transmission-fluid",
+   "name": "Transmission fluid",
+   "group": "drivetrain",
+   "icon": "gear-oil",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "automatic transmission fluid atf",
+   "synonyms": [
+    "transmission fluid",
+    "atf",
+    "gearbox oil",
+    "gear oil"
+   ]
+  },
+  {
+   "id": "c-transmission-filter",
+   "name": "Transmission filter",
+   "group": "drivetrain",
+   "icon": "oil-filter",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "automatic transmission filter kit",
+   "synonyms": [
+    "transmission filter",
+    "atf filter",
+    "gearbox filter"
+   ]
+  },
+  {
+   "id": "c-clutch-kit",
+   "name": "Clutch kit",
+   "group": "drivetrain",
+   "icon": "clutch-plates",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "clutch kit disc pressure plate",
+   "synonyms": [
+    "clutch kit",
+    "clutch disc",
+    "pressure plate",
+    "clutch plate"
+   ]
+  },
+  {
+   "id": "c-clutch-slave-cylinder",
+   "name": "Clutch slave cylinder",
+   "group": "drivetrain",
+   "icon": "master-cylinder",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "clutch slave cylinder",
+   "synonyms": [
+    "clutch slave cylinder",
+    "release cylinder"
+   ]
+  },
+  {
+   "id": "c-clutch-master-cylinder",
+   "name": "Clutch master cylinder",
+   "group": "drivetrain",
+   "icon": "master-cylinder",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "clutch master cylinder",
+   "synonyms": [
+    "clutch master cylinder",
+    "clutch fluid"
+   ]
+  },
+  {
+   "id": "c-release-bearing",
+   "name": "Clutch release bearing",
+   "group": "drivetrain",
+   "icon": "bearing",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "clutch release bearing",
+   "synonyms": [
+    "clutch release bearing",
+    "release bearing",
+    "throw out bearing",
+    "thrust bearing"
+   ]
+  },
+  {
+   "id": "c-flywheel",
+   "name": "Flywheel",
+   "group": "drivetrain",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "dual mass flywheel",
+   "synonyms": [
+    "flywheel",
+    "dual mass",
+    "dmf"
+   ]
+  },
+  {
+   "id": "c-cv-joint",
+   "name": "CV joint",
+   "group": "drivetrain",
+   "icon": "cv-boot",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "cv joint",
+   "synonyms": [
+    "cv joint",
+    "constant velocity",
+    "drive joint"
+   ]
+  },
+  {
+   "id": "c-cv-boot",
+   "name": "CV boot",
+   "group": "drivetrain",
+   "icon": "cv-boot",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "cv joint boot kit",
+   "synonyms": [
+    "cv boot",
+    "drive shaft boot",
+    "gaiter",
+    "bellows"
+   ]
+  },
+  {
+   "id": "c-driveshaft",
+   "name": "Drive shaft",
+   "group": "drivetrain",
+   "icon": "final-drive",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "drive shaft half shaft",
+   "synonyms": [
+    "drive shaft",
+    "half shaft",
+    "propshaft",
+    "propeller shaft",
+    "driveshaft"
+   ]
+  },
+  {
+   "id": "c-differential-oil",
+   "name": "Differential oil",
+   "group": "drivetrain",
+   "icon": "gear-oil",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "differential hypoid gear oil",
+   "synonyms": [
+    "differential oil",
+    "axle oil",
+    "hypoid",
+    "final drive oil"
+   ]
+  },
+  {
+   "id": "c-transfer-case-oil",
+   "name": "Transfer case oil",
+   "group": "drivetrain",
+   "icon": "gear-oil",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "transfer case fluid",
+   "synonyms": [
+    "transfer case oil",
+    "transfer case",
+    "transfer box",
+    "four wheel drive"
+   ]
+  },
+  {
+   "id": "c-gearbox-mount",
+   "name": "Gearbox mount",
+   "group": "drivetrain",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "gearbox transmission mount",
+   "synonyms": [
+    "gearbox mount",
+    "transmission mount"
+   ]
+  },
+  {
+   "id": "c-front-brake-pads",
+   "name": "Front brake pads",
+   "group": "brakes",
+   "icon": "brake-pads",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "front brake pads",
+   "synonyms": [
+    "front brake pads",
+    "front brake pad",
+    "brake pad",
+    "pad thickness",
+    "brake lining"
+   ]
+  },
+  {
+   "id": "c-rear-brake-pads",
+   "name": "Rear brake pads",
+   "group": "brakes",
+   "icon": "brake-pads",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear brake pads",
+   "synonyms": [
+    "rear brake pads",
+    "rear brake pad",
+    "brake pad"
+   ]
+  },
+  {
+   "id": "c-front-brake-disc",
+   "name": "Front brake discs",
+   "group": "brakes",
+   "icon": "brake-disc",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "front brake discs rotors",
+   "synonyms": [
+    "front brake discs",
+    "front brake disc",
+    "brake disc",
+    "brake rotor",
+    "disc thickness"
+   ]
+  },
+  {
+   "id": "c-rear-brake-disc",
+   "name": "Rear brake discs",
+   "group": "brakes",
+   "icon": "brake-disc",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear brake discs rotors",
+   "synonyms": [
+    "rear brake discs",
+    "rear brake disc",
+    "rear rotor"
+   ]
+  },
+  {
+   "id": "c-brake-shoes",
+   "name": "Brake shoes",
+   "group": "brakes",
+   "icon": "brake-shoes",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear brake shoes",
+   "synonyms": [
+    "brake shoes",
+    "brake shoe",
+    "drum brake"
+   ]
+  },
+  {
+   "id": "c-brake-drum",
+   "name": "Brake drum",
+   "group": "brakes",
+   "icon": "brake-shoes",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear brake drum",
+   "synonyms": [
+    "brake drum",
+    "drum"
+   ]
+  },
+  {
+   "id": "c-brake-caliper",
+   "name": "Brake caliper",
+   "group": "brakes",
+   "icon": "brake-caliper",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake caliper",
+   "synonyms": [
+    "brake caliper",
+    "caliper"
+   ]
+  },
+  {
+   "id": "c-caliper-slide-pins",
+   "name": "Caliper slide pins",
+   "group": "brakes",
+   "icon": "seal-kit",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake caliper guide pin kit",
+   "synonyms": [
+    "caliper slide pins",
+    "guide pin",
+    "slide pin",
+    "caliper bracket"
+   ]
+  },
+  {
+   "id": "c-caliper-seal-kit",
+   "name": "Caliper seal kit",
+   "group": "brakes",
+   "icon": "seal-kit",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake caliper repair kit",
+   "synonyms": [
+    "caliper seal kit",
+    "caliper seal",
+    "piston seal",
+    "repair kit"
+   ]
+  },
+  {
+   "id": "c-brake-master-cylinder",
+   "name": "Brake master cylinder",
+   "group": "brakes",
+   "icon": "master-cylinder",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake master cylinder",
+   "synonyms": [
+    "brake master cylinder",
+    "master cylinder",
+    "brake cylinder"
+   ]
+  },
+  {
+   "id": "c-brake-line",
+   "name": "Brake hose",
+   "group": "brakes",
+   "icon": "brake-line",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake hose line",
+   "synonyms": [
+    "brake hose",
+    "brake line",
+    "brake pipe"
+   ]
+  },
+  {
+   "id": "c-brake-fluid",
+   "name": "Brake fluid",
+   "group": "brakes",
+   "icon": "brake-fluid",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "dot 4 brake fluid",
+   "synonyms": [
+    "brake fluid",
+    "dot 4",
+    "dot 5",
+    "fluid level"
+   ]
+  },
+  {
+   "id": "c-handbrake-cable",
+   "name": "Handbrake cable",
+   "group": "brakes",
+   "icon": "clutch-cable",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "handbrake parking brake cable",
+   "synonyms": [
+    "handbrake cable",
+    "parking brake",
+    "hand brake"
+   ]
+  },
+  {
+   "id": "c-brake-booster",
+   "name": "Brake servo",
+   "group": "brakes",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake booster servo",
+   "synonyms": [
+    "brake servo",
+    "brake booster",
+    "vacuum servo"
+   ]
+  },
+  {
+   "id": "c-vacuum-hose",
+   "name": "Vacuum hose",
+   "group": "brakes",
+   "icon": "hose",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "vacuum hose line",
+   "synonyms": [
+    "vacuum hose",
+    "vacuum line",
+    "vacuum pipe"
+   ]
+  },
+  {
+   "id": "c-abs-sensor",
+   "name": "ABS wheel speed sensor",
+   "group": "brakes",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "abs wheel speed sensor",
+   "synonyms": [
+    "abs wheel speed sensor",
+    "abs sensor",
+    "wheel speed sensor",
+    "abs"
+   ]
+  },
+  {
+   "id": "c-brake-light-switch",
+   "name": "Brake light switch",
+   "group": "brakes",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake light switch",
+   "synonyms": [
+    "brake light switch",
+    "stop light switch"
+   ]
+  },
+  {
+   "id": "c-front-strut",
+   "name": "Front struts",
+   "group": "suspension",
+   "icon": "strut",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "front strut shock absorber",
+   "synonyms": [
+    "front struts",
+    "front strut",
+    "shock absorber",
+    "suspension strut",
+    "macpherson"
+   ]
+  },
+  {
+   "id": "c-rear-shock",
+   "name": "Rear shock absorbers",
+   "group": "suspension",
+   "icon": "rear-shock",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear shock absorber",
+   "synonyms": [
+    "rear shock absorbers",
+    "rear shock",
+    "shock absorber",
+    "damper"
+   ]
+  },
+  {
+   "id": "c-coil-spring",
+   "name": "Coil springs",
+   "group": "suspension",
+   "icon": "fork-spring",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "suspension coil spring",
+   "synonyms": [
+    "coil springs",
+    "coil spring",
+    "suspension spring",
+    "road spring"
+   ]
+  },
+  {
+   "id": "c-strut-mount",
+   "name": "Strut top mount",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "strut top mount bearing",
+   "synonyms": [
+    "strut top mount",
+    "strut mount",
+    "top mount",
+    "strut bearing"
+   ]
+  },
+  {
+   "id": "c-control-arm",
+   "name": "Control arm",
+   "group": "suspension",
+   "icon": "control-arm",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "lower control arm wishbone",
+   "synonyms": [
+    "control arm",
+    "wishbone",
+    "track control arm",
+    "suspension arm"
+   ]
+  },
+  {
+   "id": "c-control-arm-bushing",
+   "name": "Control arm bushings",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "control arm bush kit",
+   "synonyms": [
+    "control arm bushings",
+    "control arm bush",
+    "suspension bush",
+    "rubber mount",
+    "control arm bushing"
+   ]
+  },
+  {
+   "id": "c-ball-joint",
+   "name": "Ball joint",
+   "group": "suspension",
+   "icon": "ball-joint",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "suspension ball joint",
+   "synonyms": [
+    "ball joint",
+    "track rod joint"
+   ]
+  },
+  {
+   "id": "c-tie-rod-end",
+   "name": "Track rod end",
+   "group": "suspension",
+   "icon": "tie-rod",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "outer track rod end",
+   "synonyms": [
+    "track rod end",
+    "tie rod end",
+    "steering joint"
+   ]
+  },
+  {
+   "id": "c-tie-rod-inner",
+   "name": "Inner tie rod",
+   "group": "suspension",
+   "icon": "tie-rod",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "inner tie rod steering rack",
+   "synonyms": [
+    "inner tie rod",
+    "steering rod",
+    "axial joint",
+    "tie rod inner"
+   ]
+  },
+  {
+   "id": "c-sway-bar-link",
+   "name": "Anti-roll bar links",
+   "group": "suspension",
+   "icon": "tie-rod",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "anti roll bar drop link",
+   "synonyms": [
+    "anti-roll bar links",
+    "anti-roll bar link",
+    "drop link",
+    "stabiliser link",
+    "sway bar link"
+   ]
+  },
+  {
+   "id": "c-sway-bar-bushing",
+   "name": "Anti-roll bar bushes",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "anti roll bar bush kit",
+   "synonyms": [
+    "anti-roll bar bushes",
+    "anti-roll bar bush",
+    "stabiliser bush",
+    "sway bar bush",
+    "sway bar bushing"
+   ]
+  },
+  {
+   "id": "c-wheel-bearing",
+   "name": "Wheel bearing",
+   "group": "suspension",
+   "icon": "bearing",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "wheel bearing hub kit",
+   "synonyms": [
+    "wheel bearing",
+    "hub bearing",
+    "hub unit"
+   ]
+  },
+  {
+   "id": "c-steering-rack",
+   "name": "Steering rack",
+   "group": "suspension",
+   "icon": "tie-rod",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "steering rack gear",
+   "synonyms": [
+    "steering rack",
+    "steering gear",
+    "rack and pinion"
+   ]
+  },
+  {
+   "id": "c-power-steering-fluid",
+   "name": "Power steering fluid",
+   "group": "suspension",
+   "icon": "hydraulic-fluid",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "power steering fluid",
+   "synonyms": [
+    "power steering fluid",
+    "steering fluid",
+    "hydraulic oil"
+   ]
+  },
+  {
+   "id": "c-power-steering-pump",
+   "name": "Power steering pump",
+   "group": "suspension",
+   "icon": "water-pump",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "power steering pump",
+   "synonyms": [
+    "power steering pump",
+    "steering pump",
+    "hydraulic pump"
+   ]
+  },
+  {
+   "id": "c-front-tire",
+   "name": "Front tyres",
+   "group": "wheels",
+   "icon": "tire",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "front tyres",
+   "synonyms": [
+    "front tyres",
+    "front tire",
+    "front tyre",
+    "tire pressure",
+    "tyre pressure",
+    "tread depth"
+   ]
+  },
+  {
+   "id": "c-rear-tire",
+   "name": "Rear tyres",
+   "group": "wheels",
+   "icon": "tire",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear tyres",
+   "synonyms": [
+    "rear tyres",
+    "rear tire",
+    "rear tyre"
+   ]
+  },
+  {
+   "id": "c-spare-wheel",
+   "name": "Spare wheel",
+   "group": "wheels",
+   "icon": "wheel",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "spare wheel",
+   "synonyms": [
+    "spare wheel",
+    "spare tyre",
+    "space saver",
+    "temporary spare"
+   ]
+  },
+  {
+   "id": "c-wheel",
+   "name": "Alloy wheel",
+   "group": "wheels",
+   "icon": "wheel",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "alloy wheel rim",
+   "synonyms": [
+    "alloy wheel",
+    "wheel",
+    "rim",
+    "steel wheel"
+   ]
+  },
+  {
+   "id": "c-valve-stem",
+   "name": "Tyre valve",
+   "group": "wheels",
+   "icon": "valve-stem",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "tyre valve stem",
+   "synonyms": [
+    "tyre valve",
+    "valve stem",
+    "valve cap"
+   ]
+  },
+  {
+   "id": "c-tpms-sensor",
+   "name": "TPMS sensor",
+   "group": "wheels",
+   "icon": "sensor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "tpms tyre pressure sensor",
+   "synonyms": [
+    "tpms sensor",
+    "tpms",
+    "tyre pressure sensor",
+    "pressure monitoring",
+    "rdc"
+   ]
+  },
+  {
+   "id": "c-wheel-bolts",
+   "name": "Wheel bolts & nuts",
+   "group": "wheels",
+   "icon": "bolt-torque",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "wheel bolt nut set",
+   "synonyms": [
+    "wheel bolts & nuts",
+    "wheel bolt",
+    "wheel nut",
+    "lug nut",
+    "wheel stud",
+    "wheel bolts"
+   ]
+  },
+  {
+   "id": "c-tyre-sealant",
+   "name": "Tyre sealant kit",
+   "group": "wheels",
+   "icon": "tool-kit",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "tyre repair sealant kit",
+   "synonyms": [
+    "tyre sealant kit",
+    "tyre sealant",
+    "tire sealant",
+    "repair kit",
+    "puncture"
+   ]
+  },
+  {
+   "id": "c-battery",
+   "name": "Battery",
+   "group": "electrics",
+   "icon": "battery",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "12v car battery",
+   "synonyms": [
+    "battery",
+    "agm",
+    "battery voltage",
+    "cold cranking"
+   ]
+  },
+  {
+   "id": "c-battery-terminal",
+   "name": "Battery terminals",
+   "group": "electrics",
+   "icon": "battery",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "battery terminal clamp",
+   "synonyms": [
+    "battery terminals",
+    "battery terminal",
+    "battery clamp",
+    "battery post"
+   ]
+  },
+  {
+   "id": "c-alternator",
+   "name": "Alternator",
+   "group": "electrics",
+   "icon": "alternator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "alternator",
+   "synonyms": [
+    "alternator",
+    "generator",
+    "charging"
+   ]
+  },
+  {
+   "id": "c-starter-motor",
+   "name": "Starter motor",
+   "group": "electrics",
+   "icon": "starter-motor",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "starter motor",
+   "synonyms": [
+    "starter motor",
+    "starter"
+   ]
+  },
+  {
+   "id": "c-starter-relay",
+   "name": "Starter relay",
+   "group": "electrics",
+   "icon": "relay",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "starter solenoid relay",
+   "synonyms": [
+    "starter relay",
+    "solenoid"
+   ]
+  },
+  {
+   "id": "c-fuse",
+   "name": "Fuses",
+   "group": "electrics",
+   "icon": "fuse",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "blade fuse set",
+   "synonyms": [
+    "fuses",
+    "fuse",
+    "main fuse",
+    "fuse box"
+   ]
+  },
+  {
+   "id": "c-fuse-box",
+   "name": "Fuse box",
+   "group": "electrics",
+   "icon": "fuse",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fuse box",
+   "synonyms": [
+    "fuse box",
+    "fuse holder",
+    "relay box"
+   ]
+  },
+  {
+   "id": "c-relay",
+   "name": "Relays",
+   "group": "electrics",
+   "icon": "relay",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "relay",
+   "synonyms": [
+    "relays",
+    "relay",
+    "flasher relay"
+   ]
+  },
+  {
+   "id": "c-headlight-bulb",
+   "name": "Headlight bulbs",
+   "group": "electrics",
+   "icon": "bulb-headlight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "headlight bulb",
+   "synonyms": [
+    "headlight bulbs",
+    "headlight bulb",
+    "low beam",
+    "high beam",
+    "dipped beam",
+    "bulb"
+   ]
+  },
+  {
+   "id": "c-headlight-unit",
+   "name": "Headlight unit",
+   "group": "electrics",
+   "icon": "bulb-headlight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "headlight assembly",
+   "synonyms": [
+    "headlight unit",
+    "headlight",
+    "head lamp",
+    "headlight range"
+   ]
+  },
+  {
+   "id": "c-fog-light",
+   "name": "Fog light",
+   "group": "electrics",
+   "icon": "bulb-headlight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "fog light bulb",
+   "synonyms": [
+    "fog light",
+    "fog lamp",
+    "rear fog"
+   ]
+  },
+  {
+   "id": "c-taillight",
+   "name": "Tail light",
+   "group": "electrics",
+   "icon": "taillight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "tail light unit",
+   "synonyms": [
+    "tail light",
+    "rear light",
+    "rear lamp",
+    "taillight"
+   ]
+  },
+  {
+   "id": "c-brake-light-bulb",
+   "name": "Brake light bulb",
+   "group": "electrics",
+   "icon": "taillight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake light bulb",
+   "synonyms": [
+    "brake light bulb",
+    "brake light",
+    "stop light",
+    "third brake light"
+   ]
+  },
+  {
+   "id": "c-indicator-bulb",
+   "name": "Indicator bulb",
+   "group": "electrics",
+   "icon": "indicator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "turn signal indicator bulb",
+   "synonyms": [
+    "indicator bulb",
+    "turn signal",
+    "indicator",
+    "flasher",
+    "direction indicator"
+   ]
+  },
+  {
+   "id": "c-plate-light",
+   "name": "Number plate bulb",
+   "group": "electrics",
+   "icon": "taillight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "number plate light bulb",
+   "synonyms": [
+    "number plate bulb",
+    "number plate light",
+    "license plate light",
+    "licence plate",
+    "plate light"
+   ]
+  },
+  {
+   "id": "c-interior-bulb",
+   "name": "Interior bulb",
+   "group": "electrics",
+   "icon": "bulb-headlight",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "interior courtesy light bulb",
+   "synonyms": [
+    "interior bulb",
+    "interior light",
+    "courtesy light",
+    "reading light",
+    "dome light"
+   ]
+  },
+  {
+   "id": "c-horn",
+   "name": "Horn",
+   "group": "electrics",
+   "icon": "horn",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "horn",
+   "synonyms": [
+    "horn",
+    "warning signal"
+   ]
+  },
+  {
+   "id": "c-wiper-motor",
+   "name": "Wiper motor",
+   "group": "electrics",
+   "icon": "wiper-blade",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "windscreen wiper motor",
+   "synonyms": [
+    "wiper motor",
+    "wiper linkage"
+   ]
+  },
+  {
+   "id": "c-washer-pump",
+   "name": "Washer pump",
+   "group": "electrics",
+   "icon": "washer-fluid",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "windscreen washer pump",
+   "synonyms": [
+    "washer pump",
+    "washer system",
+    "washer nozzle"
+   ]
+  },
+  {
+   "id": "c-key-fob-battery",
+   "name": "Key fob battery",
+   "group": "electrics",
+   "icon": "button-cell",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "key fob button cell battery",
+   "synonyms": [
+    "key fob battery",
+    "button cell",
+    "cr2032",
+    "remote key",
+    "key battery",
+    "transmitter"
+   ]
+  },
+  {
+   "id": "c-earth-strap",
+   "name": "Earth strap",
+   "group": "electrics",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "battery earth ground strap",
+   "synonyms": [
+    "earth strap",
+    "ground strap",
+    "earth cable",
+    "negative cable"
+   ]
+  },
+  {
+   "id": "c-cabin-filter",
+   "name": "Cabin filter",
+   "group": "interior",
+   "icon": "cabin-filter",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "cabin pollen filter",
+   "synonyms": [
+    "cabin filter",
+    "pollen filter",
+    "dust filter",
+    "interior filter",
+    "microfilter"
+   ]
+  },
+  {
+   "id": "c-wiper-front",
+   "name": "Front wiper blades",
+   "group": "interior",
+   "icon": "wiper-blade",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "front windscreen wiper blades",
+   "synonyms": [
+    "front wiper blades",
+    "wiper blade",
+    "windscreen wiper",
+    "windshield wiper",
+    "wiper",
+    "wiper front"
+   ]
+  },
+  {
+   "id": "c-wiper-rear",
+   "name": "Rear wiper blade",
+   "group": "interior",
+   "icon": "wiper-blade",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "rear wiper blade",
+   "synonyms": [
+    "rear wiper blade",
+    "rear wiper",
+    "rear window wiper",
+    "wiper rear"
+   ]
+  },
+  {
+   "id": "c-washer-fluid",
+   "name": "Washer fluid",
+   "group": "interior",
+   "icon": "washer-fluid",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "windscreen washer fluid",
+   "synonyms": [
+    "washer fluid",
+    "screen wash",
+    "washer reservoir",
+    "windscreen washer"
+   ]
+  },
+  {
+   "id": "c-ac-refrigerant",
+   "name": "A/C refrigerant",
+   "group": "interior",
+   "icon": "hydraulic-fluid",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "air conditioning refrigerant r134a",
+   "synonyms": [
+    "a/c refrigerant",
+    "refrigerant",
+    "r134a",
+    "r1234yf",
+    "air conditioning",
+    "ac refrigerant"
+   ]
+  },
+  {
+   "id": "c-ac-compressor",
+   "name": "A/C compressor",
+   "group": "interior",
+   "icon": "water-pump",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "air conditioning compressor",
+   "synonyms": [
+    "a/c compressor",
+    "air conditioning compressor",
+    "climate compressor",
+    "ac compressor"
+   ]
+  },
+  {
+   "id": "c-ac-condenser",
+   "name": "A/C condenser",
+   "group": "interior",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "air conditioning condenser",
+   "synonyms": [
+    "a/c condenser",
+    "condenser",
+    "air conditioning condenser",
+    "ac condenser"
+   ]
+  },
+  {
+   "id": "c-blower-motor",
+   "name": "Blower motor",
+   "group": "interior",
+   "icon": "radiator",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "heater blower motor",
+   "synonyms": [
+    "blower motor",
+    "heater fan",
+    "blower fan",
+    "ventilation"
+   ]
+  },
+  {
+   "id": "c-windscreen",
+   "name": "Windscreen",
+   "group": "body",
+   "icon": "windscreen",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "windscreen windshield glass",
+   "synonyms": [
+    "windscreen",
+    "windshield",
+    "front glass"
+   ]
+  },
+  {
+   "id": "c-wiper-arm",
+   "name": "Wiper arm",
+   "group": "body",
+   "icon": "wiper-blade",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "windscreen wiper arm",
+   "synonyms": [
+    "wiper arm"
+   ]
+  },
+  {
+   "id": "c-wing-mirror",
+   "name": "Wing mirror",
+   "group": "body",
+   "icon": "mirror",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "wing door mirror",
+   "synonyms": [
+    "wing mirror",
+    "door mirror",
+    "exterior mirror",
+    "rear view mirror"
+   ]
+  },
+  {
+   "id": "c-mirror-glass",
+   "name": "Mirror glass",
+   "group": "body",
+   "icon": "mirror",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "wing mirror glass",
+   "synonyms": [
+    "mirror glass",
+    "mirror lens"
+   ]
+  },
+  {
+   "id": "c-door-handle",
+   "name": "Door handle",
+   "group": "body",
+   "icon": "generic-part",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "exterior door handle",
+   "synonyms": [
+    "door handle",
+    "door lock",
+    "door catch"
+   ]
+  },
+  {
+   "id": "c-bonnet-strut",
+   "name": "Bonnet gas strut",
+   "group": "body",
+   "icon": "strut",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "bonnet hood gas strut",
+   "synonyms": [
+    "bonnet gas strut",
+    "bonnet strut",
+    "hood strut",
+    "gas spring",
+    "bonnet"
+   ]
+  },
+  {
+   "id": "c-boot-strut",
+   "name": "Tailgate gas strut",
+   "group": "body",
+   "icon": "strut",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "tailgate boot gas strut",
+   "synonyms": [
+    "tailgate gas strut",
+    "tailgate strut",
+    "boot strut",
+    "gas spring",
+    "tailgate"
+   ]
+  },
+  {
+   "id": "c-wheel-arch-liner",
+   "name": "Wheel arch liner",
+   "group": "body",
+   "icon": "mudguard",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "wheel arch liner splash guard",
+   "synonyms": [
+    "wheel arch liner",
+    "splash guard",
+    "inner wing"
+   ]
+  },
+  {
+   "id": "c-mudflap",
+   "name": "Mud flaps",
+   "group": "body",
+   "icon": "mudguard",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "mud flap set",
+   "synonyms": [
+    "mud flaps",
+    "mud flap",
+    "mudflap",
+    "spray guard"
+   ]
+  },
+  {
+   "id": "c-bumper-clips",
+   "name": "Trim clips & fasteners",
+   "group": "body",
+   "icon": "bolt-torque",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "bumper trim clip fastener set",
+   "synonyms": [
+    "trim clips & fasteners",
+    "trim clip",
+    "fastener",
+    "bumper clip",
+    "rivet",
+    "bumper clips"
+   ]
+  },
+  {
+   "id": "c-grease",
+   "name": "Grease",
+   "group": "consumables",
+   "icon": "grease",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "multi purpose grease",
+   "synonyms": [
+    "grease",
+    "lubricating grease",
+    "lubricant"
+   ]
+  },
+  {
+   "id": "c-threadlock",
+   "name": "Threadlock",
+   "group": "consumables",
+   "icon": "threadlock",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "threadlocker",
+   "synonyms": [
+    "threadlock",
+    "loctite",
+    "thread lock",
+    "locking compound"
+   ]
+  },
+  {
+   "id": "c-brake-cleaner",
+   "name": "Brake cleaner",
+   "group": "consumables",
+   "icon": "cleaner-spray",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "brake cleaner spray",
+   "synonyms": [
+    "brake cleaner",
+    "degreaser",
+    "cleaner"
+   ]
+  },
+  {
+   "id": "c-tool-kit",
+   "name": "On-board tool kit",
+   "group": "consumables",
+   "icon": "tool-kit",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "on board tool kit jack",
+   "synonyms": [
+    "on-board tool kit",
+    "tool kit",
+    "jack",
+    "wheel brace",
+    "toolkit"
+   ]
+  },
+  {
+   "id": "c-fasteners",
+   "name": "Bolts & nuts",
+   "group": "consumables",
+   "icon": "bolt-torque",
+   "applies": {
+    "kind": "car"
+   },
+   "searchHint": "bolt nut washer set",
+   "synonyms": [
+    "bolts & nuts",
+    "screw",
+    "bolt",
+    "nut",
+    "washer",
+    "tightening torque",
+    "fasteners"
+   ]
+  }
+ ]
+}

@@ -994,6 +994,18 @@
     "via": "alias",
     "aliasOf": "bmw|k-1300-s"
   },
+  "bmw|k-1600-b": {
+    "image": "store/img/bikes2/bmw-k-1600-b.webp",
+    "thumb": "store/img/bikes2/bmw-k-1600-b.thumb.webp",
+    "title": "BMW K1600.jpg",
+    "author": "A1AA1A",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_K1600.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/bmw-k-1600-b.hero.webp"
+  },
   "bmw|k-1600-gt-se": {
     "image": "store/img/bikes/bmw-k-1600-gt.webp",
     "thumb": "store/img/bikes/bmw-k-1600-gt-thumb.webp",
@@ -1013,6 +1025,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GT_-_001.jpg",
     "via": "alias",
     "aliasOf": "bmw|k-1600-gt"
+  },
+  "bmw|m-1000-rr": {
+    "image": "store/img/bikes2/bmw-m-1000-rr.webp",
+    "thumb": "store/img/bikes2/bmw-m-1000-rr.thumb.webp",
+    "title": "2024-06 BMW M Motorrad S1000RR.jpg",
+    "author": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024-06_BMW_M_Motorrad_S1000RR.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/bmw-m-1000-rr.hero.webp"
+  },
+  "bmw|m-1000-xr": {
+    "image": "store/img/bikes2/bmw-m-1000-xr.webp",
+    "thumb": "store/img/bikes2/bmw-m-1000-xr.thumb.webp",
+    "title": "2022-05 BMW M Motorrad S1000RR.jpg",
+    "author": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022-05_BMW_M_Motorrad_S1000RR.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/bmw-m-1000-xr.hero.webp"
   },
   "bmw|r-1100-s-boxercup-replica": {
     "image": "store/img/bikes/bmw-r-1100-s.webp",
@@ -2718,56 +2754,6 @@
     "via": "alias",
     "aliasOf": "harley-davidson|livewire"
   },
-  "harley-davidson|low-rider-s": {
-    "image": "store/img/bikes/harley-davidson-low-rider.webp",
-    "thumb": "store/img/bikes/harley-davidson-low-rider-thumb.webp",
-    "title": "Harley-Davidson Low Rider (17149269014).jpg",
-    "author": "emperornie",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Low_Rider_(17149269014).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|low-rider"
-  },
-  "harley-davidson|pan-america-1250-special": {
-    "image": "store/img/bikes/harley-davidson-pan-america-1250.webp",
-    "thumb": "store/img/bikes/harley-davidson-pan-america-1250-thumb.webp",
-    "title": "Harley-Davidson Museum May 2024 29 (2023 Pan America 1250 Special).jpg",
-    "author": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_29_(2023_Pan_America_1250_Special).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|pan-america-1250"
-  },
-  "harley-davidson|road-glide-custom": {
-    "image": "store/img/bikes/harley-davidson-road-glide.webp",
-    "thumb": "store/img/bikes/harley-davidson-road-glide-thumb.webp",
-    "title": "Man on Harley-Davidson Road Glide (entering Town Square) - Ride for Kids Las Vegas 2019.jpg",
-    "author": "Noah Wulf",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Man_on_Harley-Davidson_Road_Glide_(entering_Town_Square)_-_Ride_for_Kids_Las_Vegas_2019.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|road-glide"
-  },
-  "harley-davidson|road-glide-limited": {
-    "image": "store/img/bikes/harley-davidson-road-glide.webp",
-    "thumb": "store/img/bikes/harley-davidson-road-glide-thumb.webp",
-    "title": "Man on Harley-Davidson Road Glide (entering Town Square) - Ride for Kids Las Vegas 2019.jpg",
-    "author": "Noah Wulf",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Man_on_Harley-Davidson_Road_Glide_(entering_Town_Square)_-_Ride_for_Kids_Las_Vegas_2019.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|road-glide"
-  },
-  "harley-davidson|road-glide-ultra": {
-    "image": "store/img/bikes/harley-davidson-road-glide.webp",
-    "thumb": "store/img/bikes/harley-davidson-road-glide-thumb.webp",
-    "title": "Man on Harley-Davidson Road Glide (entering Town Square) - Ride for Kids Las Vegas 2019.jpg",
-    "author": "Noah Wulf",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Man_on_Harley-Davidson_Road_Glide_(entering_Town_Square)_-_Ride_for_Kids_Las_Vegas_2019.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|road-glide"
-  },
   "harley-davidson|road-king-fire-rescue": {
     "image": "store/img/bikes/harley-davidson-road-king.webp",
     "thumb": "store/img/bikes/harley-davidson-road-king-thumb.webp",
@@ -2777,16 +2763,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Man_Exiting_on_Harley-Davidson_Road_King_-_Las_Vegas_Ride_for_Kids_2019.jpg",
     "via": "alias",
     "aliasOf": "harley-davidson|road-king"
-  },
-  "harley-davidson|softail-breakout-special-edition": {
-    "image": "store/img/bikes/harley-davidson-softail-breakout.webp",
-    "thumb": "store/img/bikes/harley-davidson-softail-breakout-thumb.webp",
-    "title": "Harley-Davidson Softail Breakout FXSB103 (2015-08-25 Sp).jpg",
-    "author": "Lothar Spurzem",
-    "license": "CC BY-SA 2.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Softail_Breakout_FXSB103_(2015-08-25_Sp).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|softail-breakout"
   },
   "harley-davidson|softail-slim-s": {
     "image": "store/img/bikes/harley-davidson-softail-slim.webp",
@@ -2858,26 +2834,6 @@
     "via": "alias",
     "aliasOf": "harley-davidson|street-bob"
   },
-  "harley-davidson|street-rod-dark-custom": {
-    "image": "store/img/bikes/harley-davidson-street-rod.webp",
-    "thumb": "store/img/bikes/harley-davidson-street-rod-thumb.webp",
-    "title": "Harley-Davidson Street Rod (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Street_Rod_(1).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|street-rod"
-  },
-  "harley-davidson|tri-glide-ultra-classic": {
-    "image": "store/img/bikes/harley-davidson-tri-glide-ultra.webp",
-    "thumb": "store/img/bikes/harley-davidson-tri-glide-ultra-thumb.webp",
-    "title": "Harley-Davidson Tri Glide Ultra (トライク WORKS) (Ent No.-) (24021012072).jpg",
-    "author": "先従隗始",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Tri_Glide_Ultra_(%E3%83%88%E3%83%A9%E3%82%A4%E3%82%AF_WORKS)_(Ent_No.-)_(24021012072).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|tri-glide-ultra"
-  },
   "harley-davidson|ultra-limited-low": {
     "image": "store/img/bikes/harley-davidson-ultra-limited.webp",
     "thumb": "store/img/bikes/harley-davidson-ultra-limited-thumb.webp",
@@ -2908,16 +2864,6 @@
     "via": "alias",
     "aliasOf": "harley-davidson|xl-883-sportster"
   },
-  "harley-davidson|xr1200x": {
-    "image": "store/img/bikes/harley-davidson-xr1200.webp",
-    "thumb": "store/img/bikes/harley-davidson-xr1200-thumb.webp",
-    "title": "Flickr - ronsaunders47 - HARLEY-DAVIDSON XR1200 SPORTSTER. 2010..jpg",
-    "author": "Ronald Saunders from Warrington, UK",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_HARLEY-DAVIDSON_XR1200_SPORTSTER._2010..jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|xr1200"
-  },
   "hero|karizma-zmr": {
     "image": "store/img/bikes/hero-karizma.webp",
     "thumb": "store/img/bikes/hero-karizma-thumb.webp",
@@ -2927,16 +2873,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Hero_honda_Karizma_by_smruti.jpg",
     "via": "alias",
     "aliasOf": "hero|karizma"
-  },
-  "hero|maestro-edge": {
-    "image": "store/img/bikes/hero-maestro.webp",
-    "thumb": "store/img/bikes/hero-maestro-thumb.webp",
-    "title": "Cripta de los Heroes, Presbitero Maestro, Lima Peru.jpg",
-    "author": "Ironshot",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cripta_de_los_Heroes,_Presbitero_Maestro,_Lima_Peru.jpg",
-    "via": "alias",
-    "aliasOf": "hero|maestro"
   },
   "hero|passion-pro-tr": {
     "image": "store/img/bikes/hero-passion-pro.webp",
@@ -2988,16 +2924,6 @@
     "via": "alias",
     "aliasOf": "hero|splendor+"
   },
-  "hero|splendor+-xtec-(disc)": {
-    "image": "store/img/bikes/hero-splendor-xtec.webp",
-    "thumb": "store/img/bikes/hero-splendor-xtec-thumb.webp",
-    "title": "Hero Splendor XTEC 2022.png",
-    "author": "Sonachalam 2k Ramalingame",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Hero_Splendor_XTEC_2022.png",
-    "via": "alias",
-    "aliasOf": "hero|splendor+-xtec"
-  },
   "hero|splendor-pro-classic": {
     "image": "store/img/bikes/hero-splendor-pro.webp",
     "thumb": "store/img/bikes/hero-splendor-pro-thumb.webp",
@@ -3018,16 +2944,6 @@
     "via": "alias",
     "aliasOf": "hero|super-splendor"
   },
-  "hero|xpulse-200-4v-rally-edition": {
-    "image": "store/img/bikes/hero-xpulse-200-4v.webp",
-    "thumb": "store/img/bikes/hero-xpulse-200-4v-thumb.webp",
-    "title": "Hero Xpulse 200 4V Pro.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Hero_Xpulse_200_4V_Pro.jpg",
-    "via": "alias",
-    "aliasOf": "hero|xpulse-200-4v"
-  },
   "hero|xpulse-200-fi": {
     "image": "store/img/bikes/hero-xpulse-200.webp",
     "thumb": "store/img/bikes/hero-xpulse-200-thumb.webp",
@@ -3047,26 +2963,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Hero_Honda_CBZ_Xtreme_2007_Model_black.jpg",
     "via": "alias",
     "aliasOf": "hero|xtreme"
-  },
-  "honda|919-cb-900-f": {
-    "image": "store/img/bikes/honda-919.webp",
-    "thumb": "store/img/bikes/honda-919-thumb.webp",
-    "title": "Honda CBR 919 RR SC33 Left Side.jpg",
-    "author": "Galant",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR_919_RR_SC33_Left_Side.jpg",
-    "via": "alias",
-    "aliasOf": "honda|919"
-  },
-  "honda|919-hornet-900": {
-    "image": "store/img/bikes/honda-919.webp",
-    "thumb": "store/img/bikes/honda-919-thumb.webp",
-    "title": "Honda CBR 919 RR SC33 Left Side.jpg",
-    "author": "Galant",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR_919_RR_SC33_Left_Side.jpg",
-    "via": "alias",
-    "aliasOf": "honda|919"
   },
   "honda|activa-e:": {
     "image": "store/img/bikes/honda-activa.webp",
@@ -3098,46 +2994,6 @@
     "via": "alias",
     "aliasOf": "honda|adv160"
   },
-  "honda|adv350a": {
-    "image": "store/img/bikes/honda-adv350.webp",
-    "thumb": "store/img/bikes/honda-adv350-thumb.webp",
-    "title": "2022 Honda ADV350.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Honda_ADV350.jpg",
-    "via": "alias",
-    "aliasOf": "honda|adv350"
-  },
-  "honda|africa-twin-adventure-sports-dct": {
-    "image": "store/img/bikes/honda-africa-twin-adventure-sports.webp",
-    "thumb": "store/img/bikes/honda-africa-twin-adventure-sports-thumb.webp",
-    "title": "Honda XRV 750 Africa Twin Adventure Sports 2000 (9680690897).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_XRV_750_Africa_Twin_Adventure_Sports_2000_(9680690897).jpg",
-    "via": "alias",
-    "aliasOf": "honda|africa-twin-adventure-sports"
-  },
-  "honda|africa-twin-adventure-sports-es": {
-    "image": "store/img/bikes/honda-africa-twin-adventure-sports.webp",
-    "thumb": "store/img/bikes/honda-africa-twin-adventure-sports-thumb.webp",
-    "title": "Honda XRV 750 Africa Twin Adventure Sports 2000 (9680690897).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_XRV_750_Africa_Twin_Adventure_Sports_2000_(9680690897).jpg",
-    "via": "alias",
-    "aliasOf": "honda|africa-twin-adventure-sports"
-  },
-  "honda|africa-twin-adventure-sports-es-dct": {
-    "image": "store/img/bikes/honda-africa-twin-adventure-sports.webp",
-    "thumb": "store/img/bikes/honda-africa-twin-adventure-sports-thumb.webp",
-    "title": "Honda XRV 750 Africa Twin Adventure Sports 2000 (9680690897).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_XRV_750_Africa_Twin_Adventure_Sports_2000_(9680690897).jpg",
-    "via": "alias",
-    "aliasOf": "honda|africa-twin-adventure-sports-es"
-  },
   "honda|africa-twin-enduro-sports-concept": {
     "image": "store/img/bikes/honda-africa-twin.webp",
     "thumb": "store/img/bikes/honda-africa-twin-thumb.webp",
@@ -3147,16 +3003,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda-1000-Africa-Twin-2016-700px3.jpg",
     "via": "alias",
     "aliasOf": "honda|africa-twin"
-  },
-  "honda|ape-100-type-d": {
-    "image": "store/img/bikes/honda-ape-100.webp",
-    "thumb": "store/img/bikes/honda-ape-100-thumb.webp",
-    "title": "Honda Ape 100 Type D.jpg",
-    "author": "Ypy31",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_Ape_100_Type_D.jpg",
-    "via": "alias",
-    "aliasOf": "honda|ape-100"
   },
   "honda|ape-50-type-d": {
     "image": "store/img/bikes/honda-ape-50.webp",
@@ -3228,16 +3074,6 @@
     "via": "alias",
     "aliasOf": "honda|cb-500"
   },
-  "honda|cb1000f-(cb1000s)": {
-    "image": "store/img/bikes/honda-cb1000f.webp",
-    "thumb": "store/img/bikes/honda-cb1000f-thumb.webp",
-    "title": "Honda CB1000F Moriwaki Engineering.jpg",
-    "author": "TTTNIS",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1000F_Moriwaki_Engineering.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1000f"
-  },
   "honda|cb1000r-5four": {
     "image": "store/img/bikes/honda-cb1000r.webp",
     "thumb": "store/img/bikes/honda-cb1000r-thumb.webp",
@@ -3288,126 +3124,6 @@
     "via": "alias",
     "aliasOf": "honda|cb1000r"
   },
-  "honda|cb1100-abs": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100-black-style": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100-dlx": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100-rs": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100-type-2": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100-type-2-abs": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100-type-2"
-  },
-  "honda|cb1100-type1": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100-type1-abs": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100-type1"
-  },
-  "honda|cb1100ex": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100na": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100rs": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
-  "honda|cb1100tr-concept": {
-    "image": "store/img/bikes/honda-cb1100.webp",
-    "thumb": "store/img/bikes/honda-cb1100-thumb.webp",
-    "title": "Honda CB1100@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1100%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1100"
-  },
   "honda|cb125r-neo-sports-cafe": {
     "image": "store/img/bikes/honda-cb125r.webp",
     "thumb": "store/img/bikes/honda-cb125r-thumb.webp",
@@ -3417,16 +3133,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB125R.jpg",
     "via": "alias",
     "aliasOf": "honda|cb125r"
-  },
-  "honda|cb1300-super-four-abs": {
-    "image": "store/img/bikes/honda-cb1300-super-four.webp",
-    "thumb": "store/img/bikes/honda-cb1300-super-four-thumb.webp",
-    "title": "Honda CB1300 SUPER FOUR SP (2BL-SC54) rear.jpg",
-    "author": "Tokumeigakarinoaoshima",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1300_SUPER_FOUR_SP_(2BL-SC54)_rear.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb1300-super-four"
   },
   "honda|cb300f-abs": {
     "image": "store/img/bikes/honda-cb300f.webp",
@@ -3488,36 +3194,6 @@
     "via": "alias",
     "aliasOf": "honda|cb400-super-bol-dor"
   },
-  "honda|cb400-super-four-abs": {
-    "image": "store/img/bikes/honda-cb400-super-four.webp",
-    "thumb": "store/img/bikes/honda-cb400-super-four-thumb.webp",
-    "title": "Honda CB400 SUPER FOUR HYPER VTEC Revo.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB400_SUPER_FOUR_HYPER_VTEC_Revo.JPG",
-    "via": "alias",
-    "aliasOf": "honda|cb400-super-four"
-  },
-  "honda|cb500f-abs": {
-    "image": "store/img/bikes/honda-cb500f.webp",
-    "thumb": "store/img/bikes/honda-cb500f-thumb.webp",
-    "title": "Salon de la Moto et du Scooter de Paris 2013 - Honda - CB500F - 006.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Salon_de_la_Moto_et_du_Scooter_de_Paris_2013_-_Honda_-_CB500F_-_006.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb500f"
-  },
-  "honda|cb500fa": {
-    "image": "store/img/bikes/honda-cb500f.webp",
-    "thumb": "store/img/bikes/honda-cb500f-thumb.webp",
-    "title": "Salon de la Moto et du Scooter de Paris 2013 - Honda - CB500F - 006.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Salon_de_la_Moto_et_du_Scooter_de_Paris_2013_-_Honda_-_CB500F_-_006.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb500f"
-  },
   "honda|cb500xa": {
     "image": "store/img/bikes/honda-cb500x.webp",
     "thumb": "store/img/bikes/honda-cb500x-thumb.webp",
@@ -3537,26 +3213,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB600F_in_Athens_on_2-11-2023.jpg",
     "via": "alias",
     "aliasOf": "honda|cb600f"
-  },
-  "honda|cb600f-hornet-600": {
-    "image": "store/img/bikes/honda-cb600f-hornet.webp",
-    "thumb": "store/img/bikes/honda-cb600f-hornet-thumb.webp",
-    "title": "Honda cb600f hornet model 2012, Audi A3 model 2010.jpg",
-    "author": "B.H. Dhiaeddine",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_cb600f_hornet_model_2012,_Audi_A3_model_2010.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb600f-hornet"
-  },
-  "honda|cb600f-hornet-abs": {
-    "image": "store/img/bikes/honda-cb600f-hornet.webp",
-    "thumb": "store/img/bikes/honda-cb600f-hornet-thumb.webp",
-    "title": "Honda cb600f hornet model 2012, Audi A3 model 2010.jpg",
-    "author": "B.H. Dhiaeddine",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_cb600f_hornet_model_2012,_Audi_A3_model_2010.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb600f-hornet"
   },
   "honda|cb650r-abs": {
     "image": "store/img/bikes/honda-cb650r.webp",
@@ -3597,16 +3253,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB650R_Motorcycle_2021.jpg",
     "via": "alias",
     "aliasOf": "honda|cb650r"
-  },
-  "honda|cb750-hornet-e-clutch": {
-    "image": "store/img/bikes/honda-cb750-hornet.webp",
-    "thumb": "store/img/bikes/honda-cb750-hornet-thumb.webp",
-    "title": "2025 Honda CB750 Hornet.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cb750-hornet"
   },
   "honda|cbf-1000-f-abs": {
     "image": "store/img/bikes/honda-cbf-1000.webp",
@@ -3828,16 +3474,6 @@
     "via": "alias",
     "aliasOf": "honda|cbr1000rr-fireblade"
   },
-  "honda|cbr1000rr-sp-repsol-edition": {
-    "image": "store/img/bikes/honda-cbr1000rr-sp.webp",
-    "thumb": "store/img/bikes/honda-cbr1000rr-sp-thumb.webp",
-    "title": "Honda CBR 1000 RR SP 2014-07.jpg",
-    "author": "TheMalsa",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR_1000_RR_SP_2014-07.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cbr1000rr-sp"
-  },
   "honda|cbr250r-abs": {
     "image": "store/img/bikes/honda-cbr250r.webp",
     "thumb": "store/img/bikes/honda-cbr250r-thumb.webp",
@@ -3847,16 +3483,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR250R_2011_profile.jpg",
     "via": "alias",
     "aliasOf": "honda|cbr250r"
-  },
-  "honda|cbr250r-repsol-edition": {
-    "image": "store/img/bikes/honda-cbr250r-repsol.webp",
-    "thumb": "store/img/bikes/honda-cbr250r-repsol-thumb.webp",
-    "title": "Honda CBR250R Repsol.JPG",
-    "author": "Dennis Bratland",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR250R_Repsol.JPG",
-    "via": "alias",
-    "aliasOf": "honda|cbr250r-repsol"
   },
   "honda|cbr300r-abs": {
     "image": "store/img/bikes/honda-cbr300r.webp",
@@ -3887,16 +3513,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR500R_2019.jpg",
     "via": "alias",
     "aliasOf": "honda|cbr500r"
-  },
-  "honda|cbr650f-abs": {
-    "image": "store/img/bikes/honda-cbr650f.webp",
-    "thumb": "store/img/bikes/honda-cbr650f-thumb.webp",
-    "title": "Honda CBR650F.JPG",
-    "author": "69PAULWALKER69",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR650F.JPG",
-    "via": "alias",
-    "aliasOf": "honda|cbr650f"
   },
   "honda|cbr650r-abs": {
     "image": "store/img/bikes/honda-cbr650r.webp",
@@ -3938,46 +3554,6 @@
     "via": "alias",
     "aliasOf": "honda|cd70"
   },
-  "honda|cl500a": {
-    "image": "store/img/bikes/honda-cl500.webp",
-    "thumb": "store/img/bikes/honda-cl500-thumb.webp",
-    "title": "2023 Honda CL500.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Honda_CL500.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cl500"
-  },
-  "honda|cmx1100-rebel": {
-    "image": "store/img/bikes/honda-cmx1100.webp",
-    "thumb": "store/img/bikes/honda-cmx1100-thumb.webp",
-    "title": "Honda Rebel CMX1100.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_Rebel_CMX1100.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cmx1100"
-  },
-  "honda|cmx1100-rebel-dct": {
-    "image": "store/img/bikes/honda-cmx1100.webp",
-    "thumb": "store/img/bikes/honda-cmx1100-thumb.webp",
-    "title": "Honda Rebel CMX1100.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_Rebel_CMX1100.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cmx1100-rebel"
-  },
-  "honda|cmx500a": {
-    "image": "store/img/bikes/honda-cmx500.webp",
-    "thumb": "store/img/bikes/honda-cmx500-thumb.webp",
-    "title": "Honda CMX500 Rebel parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg",
-    "author": "Chris Woodrich",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CMX500_Rebel_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
-    "via": "alias",
-    "aliasOf": "honda|cmx500"
-  },
   "honda|crf1000l-adventure-sports": {
     "image": "store/img/bikes/honda-crf1000l.webp",
     "thumb": "store/img/bikes/honda-crf1000l-thumb.webp",
@@ -3987,26 +3563,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(213)_-_Honda_CRF1000L_Africa_Twin.JPG",
     "via": "alias",
     "aliasOf": "honda|crf1000l"
-  },
-  "honda|crf1000l-africa-twin-dct": {
-    "image": "store/img/bikes/honda-crf1000l-africa-twin.webp",
-    "thumb": "store/img/bikes/honda-crf1000l-africa-twin-thumb.webp",
-    "title": "Osaka Motor Show 2015 (214) - Honda CRF1000L Africa Twin.JPG",
-    "author": "Tokumeigakarinoaoshima",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(214)_-_Honda_CRF1000L_Africa_Twin.JPG",
-    "via": "alias",
-    "aliasOf": "honda|crf1000l-africa-twin"
-  },
-  "honda|crf1100l-africa-twin-adventure-sports": {
-    "image": "store/img/bikes/honda-crf1100l.webp",
-    "thumb": "store/img/bikes/honda-crf1100l-thumb.webp",
-    "title": "2026 Honda CRF1100L Africa Twin DCT.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Honda_CRF1100L_Africa_Twin_DCT.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf1100l"
   },
   "honda|crf150f-big-wheel": {
     "image": "store/img/bikes/honda-crf150f.webp",
@@ -4098,76 +3654,6 @@
     "via": "alias",
     "aliasOf": "honda|crf250l-rally"
   },
-  "honda|crf250r-delete": {
-    "image": "store/img/bikes/honda-crf250r.webp",
-    "thumb": "store/img/bikes/honda-crf250r-thumb.webp",
-    "title": "2010 Honda CRF250R at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF250R_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250r"
-  },
-  "honda|crf250r-hrc-works-edition": {
-    "image": "store/img/bikes/honda-crf250r.webp",
-    "thumb": "store/img/bikes/honda-crf250r-thumb.webp",
-    "title": "2010 Honda CRF250R at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF250R_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250r"
-  },
-  "honda|crf250re": {
-    "image": "store/img/bikes/honda-crf250r.webp",
-    "thumb": "store/img/bikes/honda-crf250r-thumb.webp",
-    "title": "2010 Honda CRF250R at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF250R_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250r"
-  },
-  "honda|crf250rwe": {
-    "image": "store/img/bikes/honda-crf250r.webp",
-    "thumb": "store/img/bikes/honda-crf250r-thumb.webp",
-    "title": "2010 Honda CRF250R at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF250R_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250r"
-  },
-  "honda|crf250rx": {
-    "image": "store/img/bikes/honda-crf250r.webp",
-    "thumb": "store/img/bikes/honda-crf250r-thumb.webp",
-    "title": "2010 Honda CRF250R at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF250R_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250r"
-  },
-  "honda|crf250rx-enduro": {
-    "image": "store/img/bikes/honda-crf250r.webp",
-    "thumb": "store/img/bikes/honda-crf250r-thumb.webp",
-    "title": "2010 Honda CRF250R at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF250R_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250rx"
-  },
-  "honda|crf250xrl": {
-    "image": "store/img/bikes/honda-crf250x.webp",
-    "thumb": "store/img/bikes/honda-crf250x-thumb.webp",
-    "title": "HSV Maloo 317kw + CRF250X (3530160169).jpg",
-    "author": "Tom Reynolds from Melbourne, Australia",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:HSV_Maloo_317kw_%2B_CRF250X_(3530160169).jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf250x"
-  },
   "honda|crf300l-abs": {
     "image": "store/img/bikes/honda-crf300l.webp",
     "thumb": "store/img/bikes/honda-crf300l-thumb.webp",
@@ -4238,85 +3724,17 @@
     "via": "alias",
     "aliasOf": "honda|crf300l"
   },
-  "honda|crf450r-50th-anniversary-edition": {
-    "image": "store/img/bikes/honda-crf450r.webp",
-    "thumb": "store/img/bikes/honda-crf450r-thumb.webp",
-    "title": "2010 Honda CRF450R at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF450R_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450r"
-  },
-  "honda|crf450r-hrc-works-edition": {
-    "image": "store/img/bikes/honda-crf450r.webp",
-    "thumb": "store/img/bikes/honda-crf450r-thumb.webp",
-    "title": "2010 Honda CRF450R at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF450R_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450r"
-  },
-  "honda|crf450r-slettes": {
-    "image": "store/img/bikes/honda-crf450r.webp",
-    "thumb": "store/img/bikes/honda-crf450r-thumb.webp",
-    "title": "2010 Honda CRF450R at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF450R_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450r"
-  },
-  "honda|crf450re": {
-    "image": "store/img/bikes/honda-crf450r.webp",
-    "thumb": "store/img/bikes/honda-crf450r-thumb.webp",
-    "title": "2010 Honda CRF450R at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF450R_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450r"
-  },
-  "honda|crf450rwe": {
-    "image": "store/img/bikes/honda-crf450r.webp",
-    "thumb": "store/img/bikes/honda-crf450r-thumb.webp",
-    "title": "2010 Honda CRF450R at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF450R_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450r"
-  },
-  "honda|crf450rx-delete": {
-    "image": "store/img/bikes/honda-crf450rx.webp",
-    "thumb": "store/img/bikes/honda-crf450rx-thumb.webp",
-    "title": "Honda CRF450RX@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CRF450RX%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450rx"
-  },
-  "honda|crf450rx-enduro": {
-    "image": "store/img/bikes/honda-crf450rx.webp",
-    "thumb": "store/img/bikes/honda-crf450rx-thumb.webp",
-    "title": "Honda CRF450RX@Motodays 2017.jpg",
-    "author": "Nicholas Gemini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_CRF450RX%40Motodays_2017.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450rx"
-  },
-  "honda|crf450xrl": {
-    "image": "store/img/bikes/honda-crf450x.webp",
-    "thumb": "store/img/bikes/honda-crf450x-thumb.webp",
-    "title": "2007 Honda CRF450X at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2007_Honda_CRF450X_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "via": "alias",
-    "aliasOf": "honda|crf450x"
+  "honda|crf450r": {
+    "image": "store/img/bikes2/honda-crf450r.webp",
+    "thumb": "store/img/bikes2/honda-crf450r.thumb.webp",
+    "title": "Honda 2000 CRF450R in the Honda Collection Hall.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_2000_CRF450R_in_the_Honda_Collection_Hall.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-crf450r.hero.webp"
   },
   "honda|crosstourer-highlander": {
     "image": "store/img/bikes/honda-crosstourer.webp",
@@ -4327,26 +3745,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Honda_-_Crosstourer_-_001.jpg",
     "via": "alias",
     "aliasOf": "honda|crosstourer"
-  },
-  "honda|ctx1300-deluxe": {
-    "image": "store/img/bikes/honda-ctx1300.webp",
-    "thumb": "store/img/bikes/honda-ctx1300-thumb.webp",
-    "title": "Ctx1300.jpg",
-    "author": "ウェルワィ",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ctx1300.jpg",
-    "via": "alias",
-    "aliasOf": "honda|ctx1300"
-  },
-  "honda|ctx1300-dlx": {
-    "image": "store/img/bikes/honda-ctx1300.webp",
-    "thumb": "store/img/bikes/honda-ctx1300-thumb.webp",
-    "title": "Ctx1300.jpg",
-    "author": "ウェルワィ",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ctx1300.jpg",
-    "via": "alias",
-    "aliasOf": "honda|ctx1300"
   },
   "honda|ctx700-dct": {
     "image": "store/img/bikes/honda-ctx700.webp",
@@ -4438,26 +3836,6 @@
     "via": "alias",
     "aliasOf": "honda|ev-neo"
   },
-  "honda|faze-abs": {
-    "image": "store/img/bikes/honda-faze.webp",
-    "thumb": "store/img/bikes/honda-faze-thumb.webp",
-    "title": "Honda FAZE.jpg",
-    "author": "Missile shot",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_FAZE.jpg",
-    "via": "alias",
-    "aliasOf": "honda|faze"
-  },
-  "honda|faze-type-s": {
-    "image": "store/img/bikes/honda-faze.webp",
-    "thumb": "store/img/bikes/honda-faze-thumb.webp",
-    "title": "Honda FAZE.jpg",
-    "author": "Missile shot",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_FAZE.jpg",
-    "via": "alias",
-    "aliasOf": "honda|faze"
-  },
   "honda|forza-ex": {
     "image": "store/img/bikes/honda-forza.webp",
     "thumb": "store/img/bikes/honda-forza-thumb.webp",
@@ -4487,26 +3865,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Forza_z_mf08.jpg",
     "via": "alias",
     "aliasOf": "honda|forza-z"
-  },
-  "honda|fourtrax-rancher-at": {
-    "image": "store/img/bikes/honda-fourtrax-rancher.webp",
-    "thumb": "store/img/bikes/honda-fourtrax-rancher-thumb.webp",
-    "title": "Honda FourTrax Rancher.jpg",
-    "author": "DoD photo by TSGT Joan D Anderson-Brown, USAF",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_FourTrax_Rancher.jpg",
-    "via": "alias",
-    "aliasOf": "honda|fourtrax-rancher"
-  },
-  "honda|fourtrax-rancher-es": {
-    "image": "store/img/bikes/honda-fourtrax-rancher.webp",
-    "thumb": "store/img/bikes/honda-fourtrax-rancher-thumb.webp",
-    "title": "Honda FourTrax Rancher.jpg",
-    "author": "DoD photo by TSGT Joan D Anderson-Brown, USAF",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_FourTrax_Rancher.jpg",
-    "via": "alias",
-    "aliasOf": "honda|fourtrax-rancher"
   },
   "honda|fury-abs": {
     "image": "store/img/bikes/honda-fury.webp",
@@ -4567,16 +3925,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Gold_Wing_GL1800_White.jpg",
     "via": "alias",
     "aliasOf": "honda|gl1800-gold-wing"
-  },
-  "honda|gl1800-luxury": {
-    "image": "store/img/bikes/honda-gl1800.webp",
-    "thumb": "store/img/bikes/honda-gl1800-thumb.webp",
-    "title": "Honda Gold Wing GL1800 - Indonesia International Motor Show 2018 - April 26 2018.jpg",
-    "author": "Wilzz99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_Gold_Wing_GL1800_-_Indonesia_International_Motor_Show_2018_-_April_26_2018.jpg",
-    "via": "alias",
-    "aliasOf": "honda|gl1800"
   },
   "honda|gold-wing-air-bag": {
     "image": "store/img/bikes/honda-gold-wing.webp",

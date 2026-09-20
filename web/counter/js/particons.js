@@ -68,6 +68,81 @@ const SIZES = { sm: 32, md: 48, lg: 96 };
  * space-separated.
  */
 const RULES = [
+  /* ---------------------------------------------------------------- the standard catalogue
+   * api/data/parts-taxonomy.json names ~300 parts a mechanic would search for on a given bike,
+   * far past the ten a manual prints a spec for, and 54 of its illustration ids are new. These
+   * rules teach iconFor() the words those parts are written with. They sit first because each
+   * is a phrase - "fork oil", "master cylinder", "turn signal" - that the looser rules below
+   * would otherwise swallow into "engine-oil", "brake-caliper" or "taillight".
+   *
+   * Every id here exists in ../store/icons-parts-3d/ (what the Parts screens load) but NOT in
+   * ../store/icons-parts/, so iconUrl() answers generic-part.svg for them - the SVG set is
+   * unchanged and PART_ICONS above still describes exactly what it holds.
+   */
+  // the seven types part_illustrations.py already renders that no rule ever reached
+  ["chain-lube", /chain ?(?:lube|spray|lubricant)|chainlube|cable lubricant/],
+  ["cleaner-spray", /clean(?:er|ing agent)|degreas/],
+  // narrow on purpose: "thread lock", "locking compound" and "microencapsulated" stay with
+  // bolt-torque, which is what the screws they describe actually are
+  ["threadlock", /loctite|thread ?locker|threadlock\b/],
+  ["grease", /\bgrease\b/],
+  ["gear-oil", /gear ?oil|final drive oil|transmission (?:oil|fluid)|differential oil|hypoid|\batf\b/],
+  ["fuel-additive", /fuel (?:additive|stabilis?er|system cleaner)/],
+  ["button-cell", /button cell|cr ?20\d\d|key (?:fob )?batter|remote key/],
+  ["brake-line", /brake (?:line|hose|pipe)|braided line/],
+  ["brake-shoes", /brake shoe|drum brake|brake drum/],
+  ["brake-pedal", /brake pedal|foot brake/],
+  ["master-cylinder", /master cylinder|slave cylinder|release cylinder/],
+  ["fork-seal", /fork (?:oil )?seal|dust seal|dust boot|wiper seal/],
+  ["fork-oil", /fork oil|suspension (?:oil|fluid)/],
+  ["fork-spring", /fork spring|coil spring|road spring/],
+  ["seal-kit", /seal kit|repair kit|piston seal|caliper seal|guide pin|slide pin/],
+  ["clutch-plates", /clutch (?:plate|disc|disk|kit)|friction plate|pressure plate|clutch lining/],
+  ["clutch-spring", /clutch spring|diaphragm spring/],
+  ["valve-shim", /valve (?:shim|clearance|play)|\bshims?\b/],
+  ["timing-belt", /timing belt|cam ?belt/],
+  ["serpentine-belt", /serpentine belt|v-?ribbed belt|auxiliary belt|fan belt|accessory belt/],
+  ["drive-belt", /drive belt|toothed belt|belt drive|belt tension/],
+  ["cv-boot", /\bcv (?:joint|boot)|constant velocity|drive ?shaft boot|\bgaiter\b/],
+  ["final-drive", /final drive|bevel gear|\bcardan\b|drive ?shaft|propeller shaft|half ?shaft|universal joint/],
+  ["cush-drive", /cush drive|rubber damper|hub damper|variator|roller weight/],
+  ["water-pump", /water pump|coolant pump|steering pump|hydraulic pump/],
+  ["thermostat", /thermostat/],
+  ["radiator-cap", /radiator cap|pressure cap|expansion tank cap/],
+  ["ignition-coil", /ignition coil|coil pack|stick coil/],
+  ["ignition-lead", /ignition lead|plug wire|\bht lead|spark ?plug wire/],
+  ["plug-cap", /spark ?plug cap|plug connector|plug boot/],
+  ["carburettor", /carburett?or|float chamber|main jet|jet needle/],
+  ["injector", /injector|injection valve|fuel rail|throttle body/],
+  ["fuel-pump", /fuel pump|in-?tank pump|high pressure pump/],
+  ["washer-fluid", /washer (?:fluid|pump|nozzle|reservoir)|screen ?wash|adblue|\bdef\b/],
+  ["fuel-cap", /(?:fuel|tank|filler) cap|filler neck|fuel filler/],
+  ["regulator", /regulator|rectifier/],
+  ["stator", /\bstator\b|charging coil/],
+  ["alternator", /alternator|\bgenerator\b/],
+  ["relay", /\brelays?\b|solenoid/],
+  ["starter-motor", /starter motor|electric starter|\bstarters?\b/],
+  ["horn", /\bhorns?\b/],
+  ["indicator", /turn (?:indicator|signal)|direction indicator|\bindicators?\b|flasher|blinker/],
+  ["wiper-blade", /wiper/],
+  ["windscreen", /wind ?(?:screen|shield)|wind deflector/],
+  ["cabin-filter", /cabin (?:air )?filter|pollen filter|dust filter|interior filter|microfilter/],
+  ["mudguard", /mud ?(?:guard|flap)|\bfenders?\b|splash guard|wheel arch liner|chain guard/],
+  ["fairing", /fairing|side panel|\bcowls?\b|spoiler|body panel/],
+  ["bar-end", /bar ?ends?|handlebar end|bar weight/],
+  ["grips", /(?:hand|heated|rubber) ?grips?|\bgrips?\b(?! play)/],
+  ["gear-lever", /(?:gear|shift) ?(?:lever|linkage|rod|shaft)|gearshift|foot shift/],
+  ["side-stand", /side ?stand|kick ?stand|(?:centre|center|main) ?stand/],
+  ["inner-tube", /inner tube|tube type/],
+  ["valve-stem", /valve stem|(?:tyre|tire) valve|valve cap/],
+  ["control-arm", /control arm|wishbone|suspension arm/],
+  ["ball-joint", /ball joint/],
+  ["tie-rod", /(?:track|tie) rod|steering rack|steering gear|drop link|anti-?roll bar|stabilis?er link|sway bar/],
+  ["strut", /\bstruts?\b|gas spring|macpherson/],
+  ["hydraulic-fluid", /power steering fluid|hydraulic (?:oil|fluid)|refrigerant|r ?134a|r ?1234yf/],
+  ["gasket", /gasket|sealing ring|\bo-?rings?\b|crush washer/],
+  ["hose", /(?:radiator|coolant|water|fuel|vacuum|charge air|intercooler|breather) (?:hose|line|pipe)|\bhoses?\b/],
+  /* ---------------------------------------------------------------- the original SVG set */
   ["brake-fluid", /brake fluid|fluid,? (?:front|rear) brake|\bdot ?[45](?: ?\d)?\b|fluid level,? (?:front|rear)/],
   ["brake-pads", /brake (?:pad|lining|shoe)|(?:pad|lining) (?:material|thickness|wear)|brake ?pad|friction material/],
   ["brake-disc", /brake (?:disc|disk|rotor)|(?:disc|disk|rotor) (?:thickness|runout)|\bbrake discs?\b/],
@@ -103,6 +178,9 @@ const RULES = [
   ["footpeg", /foot ?(?:peg|rest|board)|\bpegs?\b/],
   ["engine-oil", /\boils?\b|lubricant|lubricat|\bgrease\b|\bfluid\b/],
   ["brake-disc", /\bbrakes?\b|braking|\babs\b/],
+  // last of the catalogue rules: "sensor" is broad enough that "tyre pressure sensor" has to
+  // reach the tire rule above it first
+  ["sensor", /\bsensors?\b|lambda probe|egr valve|pcv valve|light switch|\bswitch\b/],
   ["bolt-torque", /torque|tighten|\bscrews?\b|\bbolts?\b|\bnuts?\b|fastener|\bclamps?\b|encapsulated|thread ?lock|locking compound/],
   ["tool-kit", /\btools?\b|tool ?kit|on ?board kit|repair kit|workshop|maintenance|servicing|service (?:work|schedule|due|display|interval|requirement|instruction)/],
 ];

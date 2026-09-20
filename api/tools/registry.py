@@ -24,7 +24,7 @@ from pydantic import ValidationError
 
 from app.config import settings
 from app.models import Bike, IngestJob, RegistryEntry
-from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, discover, free_owner_manuals, select, verify
+from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, discover, free_owner_manuals, kind_of, select, verify
 from app.registry._http import client, request, slug
 from app.store import get_store
 
@@ -118,6 +118,19 @@ def cmd_seed_catalog(args: argparse.Namespace) -> int:
     return 0
 
 
+def by_kind(entries: list[RegistryEntry], bikes: list[Bike]) -> None:
+    """Motorcycles and cars share one registry; every headline number is reported per kind."""
+    print(f"  {'kind':<12}{'rows':>8}{'free en pdf':>13}{'distinct':>10}{'vehicles':>10}{'with pdf':>10}")
+    for kind in ("motorcycle", "car"):
+        rows = [e for e in entries if kind_of(e) == kind]
+        free = [e for e in rows if _ingestable(e)]
+        mine = [b for b in bikes if kind_of(b) == kind]
+        print(
+            f"  {kind:<12}{len(rows):>8}{len(free):>13}{len({e.url for e in free}):>10}"
+            f"{len(mine):>10}{sum(1 for b in mine if b.manualUrl):>10}"
+        )
+
+
 def cmd_merge_fragments(args: argparse.Namespace) -> int:
     """Fold api/data/registry-fragments/*.json into the registry. Other agents own those files; this
     is the only writer of registry.json and bikes.json, so nothing races over the merge."""
@@ -126,8 +139,12 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     before = {e.id for e in store.registry()}
     merged: list[tuple[str, int, int, int]] = []
     incoming: dict[str, RegistryEntry] = {}
+    skip = {s.strip().lower().removesuffix(".json") for s in (args.skip or [])}
     for path in sorted(FRAGMENTS.glob("*.json")):
         if path.name.startswith("."):
+            continue
+        if path.stem.lower() in skip:
+            print(f"  {path.name:<28} skipped")
             continue
         try:
             raw = json.loads(path.read_text(encoding="utf-8"))
@@ -163,6 +180,7 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     with_url = sum(1 for b in bikes if b.manualUrl)
     files = len({e.url for e in free})
     print(f"registry {len(entries)} rows, {len(free)} free english owner pdfs ({files} distinct files); bikes {len(bikes)}, {with_url} with a free PDF")
+    by_kind(entries, bikes)
     by_make: dict[str, int] = {}
     for e in free:
         by_make[e.make] = by_make.get(e.make, 0) + 1
@@ -194,7 +212,8 @@ def cmd_stats(args: argparse.Namespace) -> int:
         print()
         for site, (n, free) in sorted(sites.items(), key=lambda kv: -kv[1][1]):
             print(f"  {site:<34}{n:>8}{free:>13}")
-    print(f"\ncatalog: {len(bikes)} bikes, {offered} with a free PDF, {linked} already ingested")
+    print(f"\ncatalog: {len(bikes)} vehicles, {offered} with a free PDF, {linked} already ingested")
+    by_kind(entries, bikes)
     if args.verify:
         print(f"\nverifying {args.verify} per site ...")
         by_site: dict[str, list] = {}
@@ -257,6 +276,7 @@ def main(argv: list[str] | None = None) -> int:
     c2.set_defaults(fn=cmd_seed_catalog)
 
     c6 = sub.add_parser("merge-fragments", help="fold data/registry-fragments/*.json into the registry")
+    c6.add_argument("--skip", action="append", help="fragment to leave out, by file name (repeatable)")
     c6.set_defaults(fn=cmd_merge_fragments)
 
     c5 = sub.add_parser("stats", help="per-brand rows and free-PDF totals")
