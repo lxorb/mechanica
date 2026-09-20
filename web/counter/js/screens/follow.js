@@ -1,33 +1,28 @@
 import { state, set, go, emit, registerScreen } from "../bus.js";
-import * as Q from "../query.js";
+import * as Q from "../ttm.js";
+import { cachedRatio, pageRatio, preloadPage, renderPage, releaseCanvas } from "../pdf.js";
 
 const SVG = "http://www.w3.org/2000/svg";
 const SWIPE = 48;
 const TAP = 10;
 const PINCH_MAX = 4;
-const LANDSCAPE_AR = 1.2;
+const LANDSCAPE = 1 / 1.2;
 const BORDER = 6;
+const STAGGER = 60;
+
 const els = {};
-
-const MANUAL_RASTER = {
-  "honda-cb650r-2021-om": [1400, 994],
-  "yamaha-mt-07-2021-om": [1400, 985],
-  "kawasaki-z650-2020-om": [1400, 993],
-  "suzuki-sv650-2019-om": [1400, 1991],
-};
-
-const sizeCache = new Map();
+const ratioCache = new Map();
 
 let live = false;
 let job = null;
 let manualRec = null;
+let fileUrl = "";
 let steps = [];
+let marks = new Map();
 let index = 0;
-let cropped = true;
+let ratio = 1.4142;
 let fit = "width";
 let chromeOn = true;
-let pageW = 1400;
-let pageH = 994;
 let frameW = 0;
 let frameH = 0;
 let contentW = 0;
@@ -35,6 +30,9 @@ let contentH = 0;
 let scale = 1;
 let tx = 0;
 let ty = 0;
+let enterGen = 0;
+let showGen = 0;
+
 const pointers = new Map();
 let pinch0 = 1;
 let scale0 = 1;
@@ -42,8 +40,8 @@ let pinchContent = { x: 0, y: 0 };
 let pan0 = { x: 0, y: 0 };
 let pt0 = { x: 0, y: 0 };
 let didPinch = false;
-let didPan = false;
-let enterGen = 0;
+
+/* ---------- helpers ---------- */
 
 function glyph(...ds) {
   const svg = document.createElementNS(SVG, "svg");
@@ -63,13 +61,6 @@ function glyph(...ds) {
   return svg;
 }
 
-function preload(src) {
-  if (!src) return;
-  const img = new Image();
-  img.decoding = "async";
-  img.src = src;
-}
-
 function bounce() {
   const dest = state.bikeId ? "book" : "identify";
   queueMicrotask(() => go(dest, { replace: true }));
@@ -82,27 +73,33 @@ function pageOf(step) {
   return Number.isFinite(n) && n > 0 ? n : null;
 }
 
-function cropOf(step) {
-  const raw = step && step.crop;
-  if (!Array.isArray(raw) || raw.length !== 4) return null;
-  const [x, y, w, h] = raw.map(Number);
-  if (![x, y, w, h].every((n) => Number.isFinite(n))) return null;
-  if (w <= 0 || h <= 0) return null;
-  return [x, y, w, h];
+function stepsOf(rec) {
+  const list = (rec.steps || []).filter((step) => pageOf(step) != null);
+  if (list.length) return list;
+  return (rec.pages || []).filter((n) => Number(n) > 0).map((page) => ({ page: Number(page) }));
 }
 
-function stepsOf(rec) {
-  return (rec.steps || []).filter((step) => pageOf(step) != null);
+function markMap(rec) {
+  const map = new Map();
+  for (const h of rec.highlights || []) {
+    const n = Number(h && h.page);
+    if (!Number.isFinite(n)) continue;
+    const list = map.get(n);
+    if (list) list.push(h);
+    else map.set(n, [h]);
+  }
+  return map;
 }
+
+/* ---------- printed page numbers ---------- */
 
 function tocPagesOf(manual) {
   const out = [];
   for (const row of (manual && manual.toc) || []) {
     const n = Number(row && row.page);
-    if (!Number.isFinite(n)) continue;
-    out.push(n);
+    if (Number.isFinite(n)) out.push(n);
   }
-  out.sort((a, b) => a - b);
+  out.sort((a, z) => a - z);
   return out;
 }
 
@@ -110,10 +107,10 @@ function tocSpanContains(tocPages, n) {
   if (n == null) return { start: null, end: Infinity };
   let start = tocPages[0] ?? n;
   let end = Infinity;
-  for (let i = 0; i < tocPages.length; i++) {
-    if (tocPages[i] <= n) start = tocPages[i];
-    if (tocPages[i] > n) {
-      end = tocPages[i];
+  for (const page of tocPages) {
+    if (page <= n) start = page;
+    if (page > n) {
+      end = page;
       break;
     }
   }
@@ -126,21 +123,18 @@ function printedLabel(pdfIndex) {
   const base = job.pages && job.pages[0];
   if (raw == null || String(raw).trim() === "" || base == null) return null;
   const printed = String(raw).trim();
-  if (/^\d+$/.test(printed)) {
-    return String(pdfIndex - Number(base) + Number(printed));
-  }
+  if (/^\d+$/.test(printed)) return String(pdfIndex - Number(base) + Number(printed));
   if (pdfIndex === Number(base)) return printed;
   const sec = printed.match(/^(\d+)-(\d+)$/);
   if (!sec) return null;
-  const tocPages = tocPagesOf(manualRec);
-  const here = tocSpanContains(tocPages, Number(base));
+  const here = tocSpanContains(tocPagesOf(manualRec), Number(base));
   if (pdfIndex < here.start || pdfIndex >= here.end) return null;
   return `${sec[1]}-${Number(sec[2]) + (pdfIndex - Number(base))}`;
 }
 
 function stampText(n) {
   const label = printedLabel(n);
-  return label ? `p.${label}` : "";
+  return label ? `p.${label}` : n != null ? `p.${n}` : "";
 }
 
 function writeStamp(node, n) {
@@ -150,61 +144,74 @@ function writeStamp(node, n) {
   return text;
 }
 
+/* ---------- page media ---------- */
+
 function isLandscape() {
-  return pageW / pageH > LANDSCAPE_AR;
+  return ratio < LANDSCAPE;
 }
 
-function rememberSize(w, h, manualId) {
-  if (!w || !h) return;
-  pageW = w;
-  pageH = h;
-  if (manualId) sizeCache.set(manualId, { w, h });
-  if (els.frame) els.frame.style.setProperty("--page-ar", String(w / h));
-}
-
-function applyKnownRaster(manualId) {
-  const cached = sizeCache.get(manualId);
-  if (cached) {
-    rememberSize(cached.w, cached.h, manualId);
-    return true;
-  }
-  const pair = MANUAL_RASTER[manualId];
-  if (pair) {
-    rememberSize(pair[0], pair[1], manualId);
-    return true;
-  }
-  return false;
-}
-
-function probePage(manualId, page) {
-  applyKnownRaster(manualId);
-  const src = Q.pageUrl(manualId, page);
-  const known = sizeCache.has(manualId) || MANUAL_RASTER[manualId];
-  const img = new Image();
-  img.decoding = "async";
-  const apply = () => {
-    if (img.naturalWidth && img.naturalHeight) {
-      rememberSize(img.naturalWidth, img.naturalHeight, manualId);
-    }
-  };
-  if (img.complete && img.naturalWidth) {
-    apply();
-    return Promise.resolve();
-  }
-  img.src = src;
-  if (img.complete && img.naturalWidth) {
-    apply();
-    return Promise.resolve();
-  }
+function probeImage(url) {
   return new Promise((resolve) => {
-    img.onload = () => {
-      apply();
-      resolve();
-    };
-    img.onerror = () => resolve();
-    if (known) resolve();
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = () => resolve(img.naturalWidth ? img.naturalHeight / img.naturalWidth : null);
+    img.onerror = () => resolve(null);
+    img.src = url;
   });
 }
+
+async function resolveRatio(page) {
+  const key = `${job.manualId}|${page}`;
+  if (ratioCache.has(key)) return ratioCache.get(key);
+  const url = Q.pageUrl(job.manualId, page);
+  let found = null;
+  if (url) found = await probeImage(url);
+  else if (fileUrl) found = await pageRatio(fileUrl, page).catch(() => null);
+  const value = found || (fileUrl ? cachedRatio(fileUrl, page) : 1.4142);
+  ratioCache.set(key, value);
+  return value;
+}
+
+/** Draws a page into an {img, canvas} pair. Resolves once the pixels are there. */
+async function paintInto(pair, page, width) {
+  const url = Q.pageUrl(job.manualId, page);
+  if (url) {
+    pair.canvas.hidden = true;
+    pair.img.hidden = false;
+    pair.img.alt = stampText(page);
+    if (pair.img.getAttribute("src") !== url) {
+      pair.img.src = url;
+      await new Promise((resolve) => {
+        pair.img.onload = resolve;
+        pair.img.onerror = resolve;
+      });
+    }
+    if (pair.img.naturalWidth) return true;
+  }
+  if (!fileUrl) return false;
+  pair.img.hidden = true;
+  pair.canvas.hidden = false;
+  return renderPage(fileUrl, page, Math.max(120, Math.round(width)), pair.canvas).catch(() => false);
+}
+
+function ink(box, page) {
+  box.replaceChildren();
+  const list = marks.get(page) || [];
+  const frag = document.createDocumentFragment();
+  list.forEach((h, i) => {
+    const m = document.createElement("i");
+    m.className = "mark";
+    m.style.left = `${Number(h.x) * 100}%`;
+    m.style.top = `${Number(h.y) * 100}%`;
+    m.style.width = `${Number(h.w) * 100}%`;
+    m.style.height = `${Number(h.h) * 100}%`;
+    m.style.animationDelay = `${i * STAGGER}ms`;
+    frag.append(m);
+  });
+  box.append(frag);
+}
+
+/* ---------- zoom / pan ---------- */
 
 function resetZoom() {
   scale = 1;
@@ -212,7 +219,6 @@ function resetZoom() {
   ty = 0;
   pointers.clear();
   didPinch = false;
-  didPan = false;
   chromeOn = true;
   if (els.zoom) els.zoom.style.transform = "";
   if (els.root) els.root.classList.remove("is-reading");
@@ -221,9 +227,10 @@ function resetZoom() {
 function framePoint(clientX, clientY) {
   const rect = els.frame.getBoundingClientRect();
   const cs = getComputedStyle(els.frame);
-  const bl = parseFloat(cs.borderLeftWidth) || 0;
-  const bt = parseFloat(cs.borderTopWidth) || 0;
-  return { x: clientX - rect.left - bl, y: clientY - rect.top - bt };
+  return {
+    x: clientX - rect.left - (parseFloat(cs.borderLeftWidth) || 0),
+    y: clientY - rect.top - (parseFloat(cs.borderTopWidth) || 0),
+  };
 }
 
 function clampPan() {
@@ -236,7 +243,6 @@ function clampPan() {
 }
 
 function paintIndicator() {
-  if (!els.ind || !els.indThumb) return;
   const sw = contentW * scale;
   const canX = sw > frameW + 1;
   els.frame.classList.toggle("is-pan-x", canX);
@@ -255,7 +261,7 @@ function applyZoom(opts) {
   const zoomed = scale > 1.02;
   if (opts && opts.fromZoom) chromeOn = !zoomed;
   if (!zoomed) chromeOn = true;
-  if (els.root) els.root.classList.toggle("is-reading", zoomed && !chromeOn);
+  els.root.classList.toggle("is-reading", zoomed && !chromeOn);
   paintIndicator();
 }
 
@@ -277,33 +283,16 @@ function measureAvailH() {
 }
 
 function layout() {
-  if (!els.frame || !els.zoom || !els.stage) return;
-  const ar = pageW / pageH;
+  if (!els.frame) return;
+  const ar = 1 / ratio;
   els.frame.style.setProperty("--page-ar", String(ar));
-
-  if (els.frame.classList.contains("is-crop")) {
-    els.frame.classList.remove("is-sized", "is-fit-height", "is-fit-width", "is-pan-x");
-    els.frame.style.removeProperty("--stage-w");
-    els.frame.style.removeProperty("--stage-h");
-    els.zoom.style.width = "";
-    els.zoom.style.height = "";
-    requestAnimationFrame(() => {
-      frameW = els.frame.clientWidth;
-      frameH = els.frame.clientHeight;
-      contentW = frameW;
-      contentH = frameH;
-      clampPan();
-      applyZoom();
-    });
-    return;
-  }
+  els.frame.classList.add("is-sized");
 
   const availH = measureAvailH();
   const stageW = els.stage.clientWidth || els.root.clientWidth || 366;
   const useHeight = isLandscape() && fit === "height";
   els.frame.classList.toggle("is-fit-height", useHeight);
   els.frame.classList.toggle("is-fit-width", !useHeight);
-  els.frame.classList.add("is-sized");
 
   const innerMaxW = Math.max(80, stageW - BORDER);
   const innerMaxH = Math.max(80, availH - BORDER);
@@ -354,12 +343,8 @@ function capturePinch() {
   const [a, b] = pts;
   pinch0 = Math.hypot(a.x - b.x, a.y - b.y) || 1;
   scale0 = scale;
-  const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-  const pt = framePoint(mid.x, mid.y);
-  pinchContent = {
-    x: (pt.x - tx) / scale,
-    y: (pt.y - ty) / scale,
-  };
+  const pt = framePoint((a.x + b.x) / 2, (a.y + b.y) / 2);
+  pinchContent = { x: (pt.x - tx) / scale, y: (pt.y - ty) / scale };
   didPinch = true;
 }
 
@@ -373,44 +358,23 @@ function onTap() {
   fit = fit === "height" ? "width" : "height";
   resetZoom();
   layout();
+  repaint();
 }
+
+/* ---------- related ---------- */
 
 function closeOverlay() {
   if (!els.overlay || els.overlay.hidden) return;
   els.overlay.hidden = true;
   els.overImg.removeAttribute("src");
   els.overImg.alt = "";
+  releaseCanvas(els.overCanvas);
 }
 
-function openOverlay(page) {
-  const src = Q.pageUrl(job.manualId, page);
-  els.overImg.loading = "lazy";
-  els.overImg.decoding = "async";
-  els.overImg.alt = stampText(page);
-  els.overImg.src = src;
+async function openOverlay(page) {
   els.overlay.hidden = false;
   els.closeBtn.focus();
-}
-
-function publish(step) {
-  const n = pageOf(step);
-  set({ page: n });
-  emit("page", { n });
-}
-
-function paintDots() {
-  const n = steps.length;
-  const row = els.dots;
-  while (row.childNodes.length > n) row.removeChild(row.lastChild);
-  while (row.childNodes.length < n) {
-    const dot = document.createElement("i");
-    dot.className = "dot";
-    row.append(dot);
-  }
-  row.childNodes.forEach((dot, i) => {
-    dot.classList.toggle("done", i < index);
-    dot.classList.toggle("now", i === index);
-  });
+  await paintInto({ img: els.overImg, canvas: els.overCanvas }, page, els.overlay.clientWidth);
 }
 
 function paintRelated() {
@@ -429,76 +393,99 @@ function paintRelated() {
     btn.className = "related-item";
     btn.addEventListener("click", () => openOverlay(page));
 
-    const img = document.createElement("img");
-    img.loading = "lazy";
-    img.decoding = "async";
+    const thumb = Q.thumbUrl(job.manualId, page);
     const text = stampText(page);
-    img.alt = text;
-    img.src = Q.thumbUrl(job.manualId, page);
-    img.addEventListener("load", () => {
-      if (img.naturalWidth && img.naturalHeight) {
-        btn.style.setProperty("--thumb-ar", String(img.naturalWidth / img.naturalHeight));
-      }
-    });
+    if (thumb) {
+      const img = document.createElement("img");
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.alt = text;
+      img.src = thumb;
+      img.addEventListener("load", () => {
+        if (img.naturalWidth && img.naturalHeight) {
+          btn.style.setProperty("--thumb-ar", String(img.naturalWidth / img.naturalHeight));
+        }
+      });
+      btn.append(img);
+    } else {
+      btn.classList.add("is-plain");
+      const n = document.createElement("b");
+      n.textContent = String(page);
+      btn.append(n);
+      btn.setAttribute("aria-label", text);
+    }
 
     const tag = document.createElement("span");
     tag.className = "tag";
     tag.setAttribute("aria-hidden", "true");
     tag.textContent = text;
-    tag.hidden = !text;
-
-    btn.append(img, tag);
+    tag.hidden = !text || btn.classList.contains("is-plain");
+    btn.append(tag);
     els.related.append(btn);
   }
 }
 
-function applyCrop(step) {
-  const crop = cropped ? cropOf(step) : null;
-  els.frame.classList.toggle("is-crop", Boolean(crop));
-  els.cropBtn.hidden = !cropOf(step);
-  els.cropBtn.setAttribute("aria-pressed", crop ? "true" : "false");
-  if (crop) {
-    const [x, y, w, h] = crop;
-    els.frame.style.setProperty("--cx", String(x));
-    els.frame.style.setProperty("--cy", String(y));
-    els.frame.style.setProperty("--cw", String(w));
-    els.frame.style.setProperty("--ch", String(h));
-  } else {
-    els.frame.style.removeProperty("--cx");
-    els.frame.style.removeProperty("--cy");
-    els.frame.style.removeProperty("--cw");
-    els.frame.style.removeProperty("--ch");
+/* ---------- steps ---------- */
+
+function paintDots() {
+  const n = steps.length;
+  const row = els.dots;
+  while (row.childNodes.length > n) row.removeChild(row.lastChild);
+  while (row.childNodes.length < n) {
+    const dot = document.createElement("i");
+    dot.className = "dot";
+    row.append(dot);
   }
+  row.childNodes.forEach((dot, i) => {
+    dot.classList.toggle("done", i < index);
+    dot.classList.toggle("now", i === index);
+  });
 }
 
-function show() {
-  const step = steps[index];
-  const page = pageOf(step);
-  const n = steps.length;
-  const src = Q.pageUrl(job.manualId, page);
+function publish(page) {
+  set({ page });
+  emit("page", { n: page });
+}
 
-  applyKnownRaster(job.manualId);
+function repaint() {
+  const page = pageOf(steps[index]);
+  if (page == null) return;
+  paintInto({ img: els.pageImg, canvas: els.pageCanvas }, page, contentW);
+}
+
+async function show() {
+  const my = ++showGen;
+  const page = pageOf(steps[index]);
+  const n = steps.length;
 
   els.indexStamp.textContent = `${index + 1} / ${n}`;
   writeStamp(els.pageStamp, page);
-  els.pageImg.alt = stampText(page);
-  applyCrop(step);
+  els.marks.replaceChildren();
   paintDots();
-
   els.prevBtn.disabled = index <= 0;
   els.nextBtn.disabled = index >= n - 1;
-
   resetZoom();
-  fit = isLandscape() ? "height" : "width";
-  els.pageImg.src = src;
-  if (els.pageImg.complete && els.pageImg.naturalWidth) {
-    rememberSize(els.pageImg.naturalWidth, els.pageImg.naturalHeight, job.manualId);
-  }
-  layout();
-  publish(step);
 
-  const next = steps[index + 1];
-  if (next) preload(Q.pageUrl(job.manualId, pageOf(next)));
+  ratio = await resolveRatio(page);
+  if (my !== showGen || !live) return;
+  fit = isLandscape() ? "height" : "width";
+  layout();
+
+  const ok = await paintInto({ img: els.pageImg, canvas: els.pageCanvas }, page, contentW);
+  if (my !== showGen || !live) return;
+  if (ok) ink(els.marks, page);
+  publish(page);
+
+  const next = pageOf(steps[index + 1]);
+  if (next == null) return;
+  const url = Q.pageUrl(job.manualId, next);
+  if (url) {
+    const im = new Image();
+    im.decoding = "async";
+    im.src = url;
+  } else if (fileUrl) {
+    preloadPage(fileUrl, next, Math.max(120, Math.round(contentW)));
+  }
 }
 
 function goStep(delta) {
@@ -506,9 +493,10 @@ function goStep(delta) {
   const next = index + delta;
   if (next < 0 || next >= steps.length) return;
   index = next;
-  cropped = true;
   show();
 }
+
+/* ---------- input ---------- */
 
 function onKey(event) {
   if (!live) return;
@@ -531,6 +519,7 @@ function onKey(event) {
 function onResize() {
   if (!live) return;
   layout();
+  repaint();
 }
 
 function onPointerDown(event) {
@@ -546,7 +535,6 @@ function onPointerDown(event) {
     pt0 = { x: event.clientX, y: event.clientY };
     pan0 = { x: tx, y: ty };
     didPinch = false;
-    didPan = false;
   } else if (pointers.size >= 2) {
     capturePinch();
   }
@@ -558,10 +546,8 @@ function onPointerMove(event) {
   if (pointers.size >= 2) {
     const [a, b] = [...pointers.values()];
     const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
-    const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-    const next = Math.min(PINCH_MAX, Math.max(1, scale0 * (dist / pinch0)));
-    const pt = framePoint(mid.x, mid.y);
-    scale = next;
+    const pt = framePoint((a.x + b.x) / 2, (a.y + b.y) / 2);
+    scale = Math.min(PINCH_MAX, Math.max(1, scale0 * (dist / pinch0)));
     tx = pt.x - pinchContent.x * scale;
     ty = pt.y - pinchContent.y * scale;
     clampPan();
@@ -569,14 +555,9 @@ function onPointerMove(event) {
     didPinch = true;
     return;
   }
-  const canPan =
-    scale > 1.01 || contentW * scale > frameW + 1 || contentH * scale > frameH + 1;
-  if (canPan) {
-    const ndx = event.clientX - pt0.x;
-    const ndy = event.clientY - pt0.y;
-    if (Math.hypot(ndx, ndy) >= TAP) didPan = true;
-    tx = pan0.x + ndx;
-    ty = pan0.y + ndy;
+  if (scale > 1.01 || contentW * scale > frameW + 1 || contentH * scale > frameH + 1) {
+    tx = pan0.x + (event.clientX - pt0.x);
+    ty = pan0.y + (event.clientY - pt0.y);
     clampPan();
     applyZoom();
   }
@@ -594,8 +575,7 @@ function onPointerUp(event) {
     if (!didPinch) {
       const dx = event.clientX - pt0.x;
       const dy = event.clientY - pt0.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < TAP) {
+      if (Math.hypot(dx, dy) < TAP) {
         onTap();
       } else if (scale <= 1.01 && Math.abs(dx) >= SWIPE && Math.abs(dx) > Math.abs(dy)) {
         const sw = contentW * scale;
@@ -623,8 +603,7 @@ function onWheel(event) {
   if (!live || !els.overlay.hidden) return;
   if (event.ctrlKey || event.metaKey) {
     event.preventDefault();
-    const next = scale * (event.deltaY < 0 ? 1.12 : 0.9);
-    zoomAt(event.clientX, event.clientY, next);
+    zoomAt(event.clientX, event.clientY, scale * (event.deltaY < 0 ? 1.12 : 0.9));
     return;
   }
   if (contentW * scale > frameW + 1) {
@@ -635,51 +614,45 @@ function onWheel(event) {
   }
 }
 
+/* ---------- screen ---------- */
+
 registerScreen("follow", {
   mount(root) {
     const progress = document.createElement("div");
     progress.className = "sheet follow-progress";
-
     const indexStamp = document.createElement("span");
     indexStamp.className = "stamp";
-
     const dots = document.createElement("div");
     dots.className = "dots";
     dots.setAttribute("aria-hidden", "true");
-
     const pageStamp = document.createElement("span");
     pageStamp.className = "stamp";
-
     progress.append(indexStamp, dots, pageStamp);
 
     const stage = document.createElement("div");
     stage.className = "stage";
-
     const frame = document.createElement("div");
     frame.className = "stage-frame";
-
     const zoom = document.createElement("div");
     zoom.className = "stage-zoom";
 
+    const pageCanvas = document.createElement("canvas");
+    pageCanvas.className = "page-canvas";
+    pageCanvas.hidden = true;
     const pageImg = document.createElement("img");
-    pageImg.loading = "lazy";
+    pageImg.className = "page-img";
     pageImg.decoding = "async";
     pageImg.alt = "";
-    pageImg.addEventListener("load", () => {
-      if (pageImg.naturalWidth && pageImg.naturalHeight) {
-        rememberSize(pageImg.naturalWidth, pageImg.naturalHeight, job && job.manualId);
-        if (live) layout();
-      }
-    });
-
-    zoom.append(pageImg);
+    const marks = document.createElement("div");
+    marks.className = "page-marks";
+    marks.setAttribute("aria-hidden", "true");
+    zoom.append(pageCanvas, pageImg, marks);
 
     const ind = document.createElement("div");
     ind.className = "pan-ind";
     ind.setAttribute("aria-hidden", "true");
     const indThumb = document.createElement("i");
     ind.append(indThumb);
-
     frame.append(zoom, ind);
 
     const prevBtn = document.createElement("button");
@@ -696,37 +669,25 @@ registerScreen("follow", {
     nextBtn.append(glyph("M9.5 5 16 12l-6.5 7"));
     nextBtn.addEventListener("click", () => goStep(1));
 
-    const cropBtn = document.createElement("button");
-    cropBtn.type = "button";
-    cropBtn.className = "btn btn-icon crop-btn";
-    cropBtn.setAttribute("aria-label", "Crop");
-    cropBtn.hidden = true;
-    cropBtn.append(glyph("M3 9V3h6", "M21 9V3h-6", "M3 15v6h6", "M21 15v6h-6"));
-    cropBtn.addEventListener("click", () => {
-      cropped = !cropped;
-      applyCrop(steps[index]);
-      resetZoom();
-      layout();
-    });
-
     const overlay = document.createElement("div");
     overlay.className = "overlay card";
     overlay.hidden = true;
-
+    const overCanvas = document.createElement("canvas");
+    overCanvas.className = "page-canvas";
+    overCanvas.hidden = true;
     const overImg = document.createElement("img");
-    overImg.loading = "lazy";
+    overImg.className = "page-img";
     overImg.decoding = "async";
     overImg.alt = "";
-
     const closeBtn = document.createElement("button");
     closeBtn.type = "button";
     closeBtn.className = "btn btn-icon overlay-close";
     closeBtn.setAttribute("aria-label", "Close");
     closeBtn.append(glyph("M5 5l14 14M19 5 5 19"));
     closeBtn.addEventListener("click", closeOverlay);
+    overlay.append(overCanvas, overImg, closeBtn);
 
-    overlay.append(overImg, closeBtn);
-    stage.append(frame, prevBtn, nextBtn, cropBtn, overlay);
+    stage.append(frame, prevBtn, nextBtn, overlay);
 
     const related = document.createElement("div");
     related.className = "related";
@@ -735,7 +696,7 @@ registerScreen("follow", {
     const partBtn = document.createElement("button");
     partBtn.type = "button";
     partBtn.className = "btn btn-primary part-btn";
-    partBtn.textContent = "Part";
+    partBtn.textContent = "Parts";
     partBtn.addEventListener("click", () => go("invoice"));
 
     root.append(progress, stage, related, partBtn);
@@ -750,13 +711,15 @@ registerScreen("follow", {
       frame,
       zoom,
       pageImg,
+      pageCanvas,
+      marks,
       ind,
       indThumb,
       prevBtn,
       nextBtn,
-      cropBtn,
       overlay,
       overImg,
+      overCanvas,
       closeBtn,
       related,
       partBtn,
@@ -780,7 +743,9 @@ registerScreen("follow", {
       return;
     }
 
-    const rec = Q.jobById(state.jobId);
+    const my = ++enterGen;
+    const rec = await Q.jobById(state.jobId);
+    if (my !== enterGen || !live) return;
     if (!rec) {
       bounce();
       return;
@@ -792,25 +757,23 @@ registerScreen("follow", {
       return;
     }
 
-    const my = ++enterGen;
     job = rec;
-    manualRec = Q.manual(rec.manualId) || {};
+    manualRec = (await Q.manual(rec.manualId)) || {};
+    if (my !== enterGen || !live) return;
+    fileUrl = manualRec.file ? Q.asset(manualRec.file) : "";
     steps = list;
-    cropped = true;
+    marks = markMap(rec);
 
-    const raw = params && params.step;
-    const wanted = Number(raw);
+    const wanted = Number(params && params.step);
     index = Number.isFinite(wanted) ? Math.max(0, Math.min(list.length - 1, Math.trunc(wanted))) : 0;
 
-    applyKnownRaster(rec.manualId);
     paintRelated();
-    await probePage(rec.manualId, pageOf(list[index]));
-    if (my !== enterGen || !live) return;
-    show();
+    await show();
   },
 
   leave() {
     live = false;
+    showGen += 1;
     closeOverlay();
     resetZoom();
     pointers.clear();

@@ -1,49 +1,34 @@
 import { state, set, go, emit, registerScreen } from "../bus.js";
-import * as Q from "../query.js";
+import * as Q from "../ttm.js";
 import { loadAsk, ask, fetchJobPages, contextWindow } from "../ask.js";
+import { cachedRatio, pageRatio, preloadPage, renderPage, releaseCanvas } from "../pdf.js";
+import { agentId as voiceAgent, start as voiceStart } from "../voice.js";
 
-registerScreen("book", {
-  mount(root) {
-    build(root);
-    const job = state.jobId ? Q.jobById(state.jobId) : null;
-    if (job && job.pages && job.pages[0] != null) {
-      preload(Q.pageUrl(job.manualId, job.pages[0]));
-    }
-  },
-  enter() {
-    if (!state.bikeId) {
-      bounce("identify");
-      return;
-    }
-    if (!state.jobId) {
-      bounce("pick");
-      return;
-    }
-    const job = Q.jobById(state.jobId);
-    if (!job || job.bikeId !== state.bikeId || !job.pages || job.pages[0] == null) {
-      bounce("pick");
-      return;
-    }
-    paint(job);
-    preload(Q.pageUrl(job.manualId, job.pages[0]));
-  },
-  leave() {
-    teardown();
-  },
-});
+const STAGGER = 60;
+const MAX_W = 720;
+const ZOOM_MIN = 1;
+const ZOOM_MAX = 3;
+const ZOOM_DOUBLE = 2;
+const TAP_MS = 320;
+const TAP_PX = 28;
+const NEAR = "120% 0px";
+const SVG = "http://www.w3.org/2000/svg";
 
-let rootEl = null;
+/* ---------- module state ---------- */
+
 let coverEl = null;
 let titleEl = null;
+let trailEl = null;
 let stampEl = null;
-let viewEl = null;
-let stageEl = null;
-let imgEl = null;
-let canvasEl = null;
-let stripEl = null;
-let followEl = null;
 let toolsEl = null;
+let micBtn = null;
 let askBtn = null;
+let viewEl = null;
+let padEl = null;
+let colEl = null;
+let stripEl = null;
+let outlineEl = null;
+let followEl = null;
 let askSheet = null;
 let askInput = null;
 let askBar = null;
@@ -52,28 +37,42 @@ let askHits = null;
 
 let jobRec = null;
 let manualRec = null;
-let currentPage = null;
-let fit = "width";
-let drag = null;
+let hasThumb = false;
+let fileUrl = "";
+let outline = [];
+let marks = new Map();
+let pages = [];
+let chapter = null;
+let sheets = new Map();
+let chips = new Map();
+let visited = new Set();
+let ratios = new Map();
+let baseRatio = 1.4142;
+let sheetW = 0;
+let current = null;
+let enterGen = 0;
+let nearIo = null;
+let seenIo = null;
 let ro = null;
-let gen = 0;
-let fitLocked = false;
+let seenAmount = new Map();
+
+let zoom = ZOOM_MIN;
+let zoomW = 0;
+let pinch0 = 0;
+let pinchBase = ZOOM_MIN;
+let tapAt = 0;
+let tapX = 0;
+let tapY = 0;
+
+let voiceId = null;
+let session = null;
 let askPages = [];
 let askFetchTok = 0;
 let askRunTok = 0;
-let askFlashTimer = 0;
 let askBusy = false;
+let askFlashTimer = 0;
 
-function bounce(id) {
-  queueMicrotask(() => go(id));
-}
-
-function preload(url) {
-  if (!url) return;
-  const im = new Image();
-  im.decoding = "async";
-  im.src = url;
-}
+/* ---------- small helpers ---------- */
 
 function el(tag, attrs) {
   const node = document.createElement(tag);
@@ -88,56 +87,154 @@ function el(tag, attrs) {
   return node;
 }
 
+function glyph(width, ...ds) {
+  const svg = document.createElementNS(SVG, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("width", "22");
+  svg.setAttribute("height", "22");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  for (const d of ds) {
+    const path = document.createElementNS(SVG, "path");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", String(width));
+    path.setAttribute("stroke-linecap", "square");
+    path.setAttribute("stroke-linejoin", "miter");
+    path.setAttribute("d", d);
+    svg.append(path);
+  }
+  return svg;
+}
+
+function bounce(id) {
+  queueMicrotask(() => go(id));
+}
+
+/* ---------- manual shape ---------- */
+
+function outlineNodes(manual) {
+  if (Array.isArray(manual.outline) && manual.outline.length) return manual.outline;
+  return (Array.isArray(manual.toc) ? manual.toc : [])
+    .map((row) => ({
+      title: String(row && row.title ? row.title : ""),
+      page: Number(row && row.page),
+      children: (row && row.children) || null,
+    }))
+    .filter((row) => row.title && Number.isFinite(row.page));
+}
+
+function flatten(nodes, depth, out) {
+  for (const node of nodes || []) {
+    const page = Number(node.page);
+    if (node.title && Number.isFinite(page)) out.push({ title: node.title, page, depth });
+    if (node.children) flatten(node.children, depth + 1, out);
+  }
+  return out;
+}
+
+function trailFor(nodes, page) {
+  let best = [];
+  const walk = (list, path) => {
+    for (const node of list || []) {
+      if (Number(node.page) > page) continue;
+      const next = [...path, node.title];
+      best = next;
+      if (node.children) walk(node.children, next);
+    }
+  };
+  walk(nodes, []);
+  return best;
+}
+
+function readingPages(job) {
+  const out = [];
+  const seen = new Set();
+  const add = (raw) => {
+    const n = Number(raw);
+    if (!Number.isFinite(n) || n <= 0 || seen.has(n)) return;
+    seen.add(n);
+    out.push(n);
+  };
+  const own = (job.pages || []).map(Number).filter(Number.isFinite).sort((a, z) => a - z);
+  for (const n of own) add(n);
+  for (const row of job.related || []) add(row && typeof row === "object" ? row.page : row);
+  return out;
+}
+
+function markMap(job) {
+  const map = new Map();
+  for (const h of job.highlights || []) {
+    const n = Number(h && h.page);
+    if (!Number.isFinite(n)) continue;
+    const list = map.get(n);
+    if (list) list.push(h);
+    else map.set(n, [h]);
+  }
+  return map;
+}
+
+function ratioOf(n) {
+  return ratios.get(n) || baseRatio;
+}
+
+/* ---------- build ---------- */
+
 function build(root) {
-  rootEl = root;
   root.replaceChildren();
 
   const head = el("header", { class: "sheet book-head" });
-  coverEl = el("img", {
-    class: "book-cover",
-    width: "44",
-    height: "62",
-    alt: "",
-    loading: "lazy",
-    decoding: "async",
-  });
+  coverEl = el("button", { class: "book-cover", type: "button", "aria-label": "Contents" });
+  coverEl.append(
+    el("img", { width: "44", height: "62", alt: "", loading: "lazy", decoding: "async" }),
+  );
+  const id = el("div", { class: "book-id" });
   titleEl = el("p", { class: "book-title" });
+  trailEl = el("p", { class: "book-trail" });
+  id.append(titleEl, trailEl);
+
   stampEl = el("span", { class: "stamp book-stamp" });
-  toolsEl = el("div", { class: "book-tools" });
+  micBtn = el("button", {
+    class: "btn btn-icon book-mic",
+    type: "button",
+    "aria-label": "Voice",
+    "aria-pressed": "false",
+    hidden: true,
+  });
+  micBtn.append(
+    glyph(2.4, "M9 4.5a3 3 0 0 1 6 0V11a3 3 0 0 1-6 0Z", "M5 11a7 7 0 0 0 14 0", "M12 18v2.5"),
+  );
   askBtn = el("button", {
     class: "btn btn-icon book-ask",
     type: "button",
     "aria-label": "Ask",
     hidden: true,
   });
-  askBtn.append(askGlyph());
-  toolsEl.append(stampEl, askBtn);
-  head.append(coverEl, titleEl, toolsEl);
+  askBtn.append(
+    glyph(2.4, "M15 15 20 20", "M8.4 8.6c0-1.1.9-1.9 1.8-1.9s1.8.8 1.8 1.8c0 1.1-1.8 1.3-1.8 2.6", "M10.2 14.6v.2"),
+  );
+  const lens = document.createElementNS(SVG, "circle");
+  lens.setAttribute("cx", "10");
+  lens.setAttribute("cy", "10");
+  lens.setAttribute("r", "6");
+  lens.setAttribute("fill", "none");
+  lens.setAttribute("stroke", "currentColor");
+  lens.setAttribute("stroke-width", "2.4");
+  askBtn.querySelector("svg").append(lens);
 
-  viewEl = el("div", {
-    class: "page-view",
-    tabindex: "0",
-    role: "button",
-    "aria-pressed": "false",
-  });
-  stageEl = el("div", { class: "page-stage" });
-  imgEl = el("img", {
-    class: "page-img",
-    alt: "",
-    loading: "lazy",
-    decoding: "async",
-  });
-  canvasEl = el("canvas", { class: "page-canvas", hidden: true });
-  stageEl.append(imgEl, canvasEl);
-  viewEl.append(stageEl);
+  toolsEl = el("div", { class: "book-tools" });
+  toolsEl.append(micBtn, askBtn, stampEl);
+  head.append(coverEl, id, toolsEl);
 
-  stripEl = el("div", { class: "page-strip", role: "list" });
+  viewEl = el("div", { class: "page-view" });
+  padEl = el("div", { class: "page-pad" });
+  colEl = el("div", { class: "page-col" });
+  padEl.append(colEl);
+  viewEl.append(padEl);
 
-  followEl = el("button", {
-    class: "btn btn-primary book-follow",
-    type: "button",
-    text: "Follow",
-  });
+  stripEl = el("nav", { class: "page-strip", "aria-label": "Pages" });
+  outlineEl = el("div", { class: "book-outline", hidden: true });
+  followEl = el("button", { class: "btn btn-primary book-follow", type: "button", text: "Follow" });
 
   askSheet = el("div", { class: "sheet ask-sheet", hidden: true, role: "dialog", "aria-label": "Ask" });
   askInput = el("input", {
@@ -153,426 +250,506 @@ function build(root) {
   askHits = el("div", { class: "ask-hits" });
   askSheet.append(askInput, askBar, askHits);
 
-  root.append(head, viewEl, stripEl, followEl, askSheet);
+  root.append(head, viewEl, stripEl, outlineEl, followEl, askSheet);
 
-  imgEl.addEventListener("load", onImgLoad);
-  imgEl.addEventListener("error", onImgError);
-  viewEl.addEventListener("pointerdown", onPtrDown);
-  viewEl.addEventListener("pointermove", onPtrMove);
-  viewEl.addEventListener("pointerup", onPtrUp);
-  viewEl.addEventListener("pointercancel", () => {
-    drag = null;
+  coverEl.addEventListener("click", () => {
+    if (chapter) openOutline();
   });
-  viewEl.addEventListener("click", onViewClick);
-  viewEl.addEventListener("keydown", onViewKey);
   followEl.addEventListener("click", () => go("follow"));
+  micBtn.addEventListener("click", onMic);
   askBtn.addEventListener("click", onAskToggle);
   askInput.addEventListener("keydown", onAskKey);
-  window.addEventListener("keydown", onAskEsc);
-  window.addEventListener("resize", applyZoom);
+  window.addEventListener("keydown", onEsc);
+  window.addEventListener("resize", measure);
 
-  ro = new ResizeObserver(() => applyZoom());
+  viewEl.addEventListener("touchstart", onTouchStart, { passive: true });
+  viewEl.addEventListener("touchmove", onTouchMove, { passive: false });
+  viewEl.addEventListener("touchend", onTouchEnd, { passive: false });
+  viewEl.addEventListener("wheel", onWheel, { passive: false });
+  viewEl.addEventListener("dblclick", onDouble);
+
+  ro = new ResizeObserver(() => measure());
   ro.observe(viewEl);
 }
 
-function teardown() {
-  fit = "width";
-  drag = null;
-  closeAsk();
-  if (viewEl) {
-    viewEl.setAttribute("aria-pressed", "false");
-    viewEl.classList.remove("fit-h");
-  }
-}
+/* ---------- paint ---------- */
 
-function jobPagesOf(job) {
-  const pages = [];
-  const seen = new Set();
-  for (const n of job.pages || []) {
-    if (n == null || seen.has(n)) continue;
-    seen.add(n);
-    pages.push(n);
-  }
-  return pages;
-}
-
-function relatedPagesOf(job, used) {
-  const pages = [];
-  for (const row of job.related || []) {
-    const n = row && row.page;
-    if (n == null || used.has(n)) continue;
-    used.add(n);
-    pages.push(n);
-  }
-  return pages;
-}
-
-function tocPagesOf(manual) {
-  const out = [];
-  for (const row of (manual && manual.toc) || []) {
-    const n = Number(row && row.page);
-    if (!Number.isFinite(n)) continue;
-    out.push(n);
-  }
-  out.sort((a, b) => a - b);
-  return out;
-}
-
-function tocSpanContains(tocPages, n) {
-  if (n == null) return { start: null, end: Infinity };
-  let start = tocPages[0] ?? n;
-  let end = Infinity;
-  for (let i = 0; i < tocPages.length; i++) {
-    if (tocPages[i] <= n) start = tocPages[i];
-    if (tocPages[i] > n) {
-      end = tocPages[i];
-      break;
-    }
-  }
-  return { start, end };
-}
-
-function isJobPage(pdfIndex) {
-  if (pdfIndex == null || !jobRec || !jobRec.pages) return false;
-  const n = Number(pdfIndex);
-  return jobRec.pages.some((page) => Number(page) === n);
-}
-
-function printedLabel(pdfIndex) {
-  if (pdfIndex == null || !jobRec) return null;
-  const raw = jobRec.printedPage;
-  const base = jobRec.pages && jobRec.pages[0];
-  if (raw == null || String(raw).trim() === "" || base == null) return null;
-  const printed = String(raw).trim();
-  const pdf = Number(pdfIndex);
-  const origin = Number(base);
-  if (/^\d+$/.test(printed)) {
-    return String(pdf - origin + Number(printed));
-  }
-  const sec = printed.match(/^(\d+)-(\d+)$/);
-  if (sec) {
-    const label = `${sec[1]}-${Number(sec[2]) + (pdf - origin)}`;
-    if (isJobPage(pdf)) return label;
-    const tocPages = tocPagesOf(manualRec);
-    const here = tocSpanContains(tocPages, origin);
-    if (pdf < here.start || pdf >= here.end) return null;
-    return label;
-  }
-  if (pdf === origin) return printed;
-  return null;
-}
-
-function stampText(n) {
-  const label = printedLabel(n);
-  return label ? `p.${label}` : "";
-}
-
-function writeStamp(node, n) {
-  const text = stampText(n);
-  node.textContent = text;
-  node.hidden = !text;
-  return text;
-}
-
-function guessRaster(manualId) {
-  if (String(manualId || "").includes("suzuki")) return { w: 1400, h: 1991 };
-  return { w: 1400, h: 994 };
-}
-
-function setAspectBox(w, h) {
-  if (!w || !h) return;
-  const ar = `${w} / ${h}`;
-  if (rootEl) {
-    rootEl.style.setProperty("--page-ar", ar);
-    rootEl.style.setProperty("--thumb-ar", w >= h ? "300 / 213" : "300 / 427");
-  }
-}
-
-function applyDefaultFit(w, h) {
-  fit = w > h ? "height" : "width";
-  if (!viewEl) return;
-  viewEl.setAttribute("aria-pressed", fit === "height" ? "true" : "false");
-  viewEl.classList.toggle("fit-h", fit === "height");
-}
-
-function paint(job) {
+async function paint(job) {
   jobRec = job;
-  manualRec = Q.manual(job.manualId) || {};
-  currentPage = job.pages[0];
-  fitLocked = false;
-  const guess = guessRaster(job.manualId);
-  setAspectBox(guess.w, guess.h);
-  applyDefaultFit(guess.w, guess.h);
-  if (viewEl) {
-    viewEl.scrollTop = 0;
-    viewEl.scrollLeft = 0;
-  }
+  manualRec = (await Q.manual(job.manualId)) || {};
+  fileUrl = manualRec.file ? Q.asset(manualRec.file) : "";
+  outline = flatten(outlineNodes(manualRec), 0, []);
+  marks = markMap(job);
+  chapter = null;
 
-  const title = manualRec.title || "";
-  titleEl.textContent = title;
+  titleEl.textContent = manualRec.title || "";
+  const cover = coverEl.firstElementChild;
+  const thumb = Q.thumbUrl(job.manualId, 1);
+  hasThumb = Boolean(thumb);
+  coverEl.classList.toggle("is-plain", !hasThumb);
+  if (thumb) cover.src = thumb;
+  cover.alt = manualRec.title || "";
 
-  coverEl.src = Q.thumbUrl(job.manualId, 1);
-  coverEl.alt = title;
-
-  paintStrip(job);
-  showPage(currentPage, job.title);
+  setPages(readingPages(job));
+  syncVoice(job);
   syncAsk(job);
 }
 
-function paintStrip(job) {
-  stripEl.replaceChildren();
-  const jobPages = jobPagesOf(job);
-  const used = new Set(jobPages);
-  const related = relatedPagesOf(job, used);
-  const relatedTitle = new Map();
-  for (const row of job.related || []) {
-    if (row && row.page != null) relatedTitle.set(row.page, row.title || "");
+function setPages(list) {
+  releaseSheets();
+  pages = list;
+  visited = new Set();
+  seenAmount = new Map();
+  current = null;
+  resetZoom();
+
+  const empty = pages.length === 0;
+  outlineEl.hidden = !empty;
+  viewEl.hidden = empty;
+  stripEl.hidden = empty;
+  followEl.hidden = empty;
+  coverEl.classList.toggle("is-back", Boolean(chapter));
+  coverEl.hidden = !hasThumb && !chapter;
+  if (empty) {
+    paintOutline();
+    stampEl.hidden = true;
+    trailEl.textContent = "";
+    return;
   }
 
-  jobPages.forEach((n) => stripEl.append(thumbBtn(n, false, false, job.title)));
-  related.forEach((n, i) =>
-    stripEl.append(thumbBtn(n, true, i === 0 && jobPages.length > 0, relatedTitle.get(n) || job.title)),
+  baseRatio = fileUrl ? cachedRatio(fileUrl, pages[0]) : 1.4142;
+  ratios = new Map();
+  paintSheets();
+  paintStrip();
+  measure();
+  observe();
+  setCurrent(pages[0]);
+  if (fileUrl) {
+    pageRatio(fileUrl, pages[0])
+      .then((r) => {
+        baseRatio = r;
+        for (const rec of sheets.values()) {
+          if (!ratios.has(rec.page)) rec.host.style.aspectRatio = `1 / ${r}`;
+        }
+        measure();
+      })
+      .catch(() => {});
+  }
+}
+
+function paintOutline() {
+  outlineEl.replaceChildren();
+  outline.forEach((entry, i) => {
+    const hit = /^([\d.]+)\s+(\S.*)$/.exec(entry.title);
+    const row = el("button", { class: "toc-row", type: "button" });
+    row.style.paddingLeft = `${12 + entry.depth * 14}px`;
+    if (entry.depth > 0) row.classList.add("sub");
+    if (hit) row.append(el("b", { class: "toc-n", text: hit[1] }));
+    row.append(el("span", { class: "toc-t", text: hit ? hit[2] : entry.title }));
+    row.append(el("span", { class: "stamp", text: `p.${entry.page}` }));
+    row.addEventListener("click", () => openChapter(i));
+    outlineEl.append(row);
+  });
+}
+
+function openChapter(i) {
+  const here = outline[i];
+  const start = here.page;
+  // A parent entry owns its children: the chapter ends at the next entry of the same rank.
+  const after = outline
+    .slice(i + 1)
+    .find((entry) => entry.depth <= here.depth && entry.page > start);
+  const total = Number(manualRec.pages) || start;
+  const last = Math.max(start, Math.min(total, (after ? after.page : total + 1) - 1));
+  const list = [];
+  for (let p = start; p <= last; p++) list.push(p);
+  chapter = list;
+  setPages(list);
+}
+
+function openOutline() {
+  chapter = null;
+  setPages([]);
+}
+
+function releaseSheets() {
+  if (nearIo) nearIo.disconnect();
+  if (seenIo) seenIo.disconnect();
+  for (const rec of sheets.values()) releaseCanvas(rec.canvas);
+  sheets = new Map();
+  chips = new Map();
+  if (colEl) colEl.replaceChildren();
+  if (stripEl) stripEl.replaceChildren();
+}
+
+function paintSheets() {
+  const frag = document.createDocumentFragment();
+  for (const n of pages) {
+    const host = el("article", { class: "page-sheet", "data-page": String(n) });
+    host.style.aspectRatio = `1 / ${ratioOf(n)}`;
+    const canvas = el("canvas", { class: "page-canvas" });
+    const img = el("img", { class: "page-img", alt: "", decoding: "async", hidden: true });
+    const box = el("div", { class: "page-marks", "aria-hidden": "true" });
+    host.append(canvas, img, box);
+    frag.append(host);
+    const rec = {
+      page: n,
+      host,
+      canvas,
+      img,
+      box,
+      near: false,
+      inked: false,
+      failed: false,
+      src: "",
+      drawn: 0,
+    };
+    img.addEventListener("load", () => onImgLoad(rec));
+    img.addEventListener("error", () => onImgError(rec));
+    sheets.set(n, rec);
+  }
+  colEl.append(frag);
+}
+
+function paintStrip() {
+  const frag = document.createDocumentFragment();
+  for (const n of pages) {
+    const chip = el("button", {
+      class: "strip-chip",
+      type: "button",
+      "data-page": String(n),
+      "aria-label": `p. ${n}`,
+      text: String(n),
+    });
+    chip.addEventListener("click", () => jump(n));
+    frag.append(chip);
+    chips.set(n, chip);
+  }
+  stripEl.append(frag);
+}
+
+function observe() {
+  nearIo = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const rec = sheets.get(Number(entry.target.getAttribute("data-page")));
+        if (!rec) continue;
+        rec.near = entry.isIntersecting;
+        if (rec.near) draw(rec);
+      }
+    },
+    { root: viewEl, rootMargin: NEAR },
+  );
+
+  seenIo = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        seenAmount.set(Number(entry.target.getAttribute("data-page")), entry.intersectionRatio);
+      }
+      let best = 0;
+      let top = 0;
+      for (const [page, amount] of seenAmount) {
+        if (amount > best) {
+          best = amount;
+          top = page;
+        }
+      }
+      if (top > 0 && top !== current) setCurrent(top);
+    },
+    { root: viewEl, threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
+  );
+
+  for (const rec of sheets.values()) {
+    nearIo.observe(rec.host);
+    seenIo.observe(rec.host);
+  }
+}
+
+/* ---------- render ---------- */
+
+function webpFor(n) {
+  const url = Q.pageUrl(jobRec.manualId, n);
+  return url ? url : "";
+}
+
+function draw(rec) {
+  if (!rec.near || !(sheetW > 0)) return;
+  const url = rec.failed ? "" : webpFor(rec.page);
+  if (!url) {
+    drawPdf(rec);
+    return;
+  }
+  if (rec.src === url) return;
+  rec.src = url;
+  rec.img.hidden = false;
+  rec.img.src = url;
+}
+
+async function drawPdf(rec) {
+  if (!fileUrl) return;
+  const want = Math.round(sheetW);
+  if (rec.drawn === want) return;
+  rec.drawn = want;
+  const my = enterGen;
+  try {
+    const r = await pageRatio(fileUrl, rec.page);
+    if (my !== enterGen) return;
+    if (ratios.get(rec.page) !== r) {
+      ratios.set(rec.page, r);
+      rec.host.style.aspectRatio = `1 / ${r}`;
+    }
+    const ok = await renderPage(fileUrl, rec.page, want, rec.canvas);
+    if (my !== enterGen || !ok) return;
+    rec.host.classList.add("is-ready");
+    ink(rec);
+  } catch {
+    rec.drawn = 0;
+  }
+}
+
+function onImgLoad(rec) {
+  if (rec.img.naturalWidth && rec.img.naturalHeight) {
+    const r = rec.img.naturalHeight / rec.img.naturalWidth;
+    ratios.set(rec.page, r);
+    rec.host.style.aspectRatio = `1 / ${r}`;
+    if (rec.page === pages[0] && Math.abs(baseRatio - r) > 0.001) {
+      baseRatio = r;
+      measure();
+    }
+  }
+  rec.host.classList.add("is-ready");
+  ink(rec);
+}
+
+function onImgError(rec) {
+  rec.failed = true;
+  rec.img.hidden = true;
+  rec.img.removeAttribute("src");
+  rec.src = "";
+  drawPdf(rec);
+}
+
+function ink(rec) {
+  if (rec.inked) return;
+  rec.inked = true;
+  const list = marks.get(rec.page) || [];
+  if (!list.length) return;
+  const frag = document.createDocumentFragment();
+  list.forEach((h, i) => {
+    const m = el("i", { class: "mark" });
+    m.style.left = `${Number(h.x) * 100}%`;
+    m.style.top = `${Number(h.y) * 100}%`;
+    m.style.width = `${Number(h.w) * 100}%`;
+    m.style.height = `${Number(h.h) * 100}%`;
+    m.style.animationDelay = `${i * STAGGER}ms`;
+    frag.append(m);
+  });
+  rec.box.append(frag);
+}
+
+/* ---------- layout ---------- */
+
+function measure() {
+  if (!viewEl || pages.length === 0) return;
+  const boxW = viewEl.clientWidth;
+  const boxH = viewEl.clientHeight;
+  if (boxW <= 0) return;
+  const next = Math.max(
+    120,
+    Math.min(boxW - 24, Math.floor((boxH - 28) / baseRatio) || MAX_W, MAX_W),
+  );
+  if (next === sheetW) return;
+  sheetW = next;
+  colEl.style.setProperty("--sheet-w", `${sheetW}px`);
+  for (const rec of sheets.values()) if (rec.near) draw(rec);
+}
+
+/* ---------- current page ---------- */
+
+function setCurrent(n) {
+  current = n;
+  visited.add(n);
+  for (const [page, chip] of chips) {
+    const now = page === n;
+    chip.classList.toggle("now", now);
+    chip.classList.toggle("seen", !now && visited.has(page));
+    if (now) chip.setAttribute("aria-current", "true");
+    else chip.removeAttribute("aria-current");
+  }
+  const chip = chips.get(n);
+  if (chip) {
+    stripEl.scrollTo({
+      left: chip.offsetLeft - stripEl.clientWidth / 2 + chip.offsetWidth / 2,
+      behavior: "smooth",
+    });
+  }
+
+  stampEl.hidden = false;
+  stampEl.replaceChildren(
+    el("span", { class: "p", text: "p." }),
+    el("b", { text: String(n) }),
+    el("span", { class: "m", text: `/${manualRec.pages || pages[pages.length - 1]}` }),
+  );
+  trailEl.textContent = trailFor(outlineNodes(manualRec), n).join(" · ");
+
+  set({ page: n });
+  emit("page", { n });
+
+  const next = pages[pages.indexOf(n) + 1];
+  if (next != null && sheetW > 0) {
+    const url = webpFor(next);
+    if (url) {
+      const im = new Image();
+      im.decoding = "async";
+      im.src = url;
+    } else if (fileUrl) {
+      preloadPage(fileUrl, next, Math.round(sheetW));
+    }
+  }
+}
+
+function jump(n) {
+  const rec = sheets.get(n);
+  if (!rec) return;
+  applyZoom(ZOOM_MIN, 0, 0);
+  rec.host.scrollIntoView({ behavior: "smooth", block: "start" });
+  setCurrent(n);
+}
+
+/* ---------- zoom ---------- */
+
+function applyZoom(next, px, py) {
+  if (!viewEl || !padEl || !colEl) return;
+  const from = zoom;
+  const to = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, next));
+  if (Math.abs(to - from) < 0.001) return;
+  if (from === ZOOM_MIN) zoomW = colEl.offsetWidth;
+  const rect = viewEl.getBoundingClientRect();
+  const cx = (viewEl.scrollLeft + px - rect.left) / from;
+  const cy = (viewEl.scrollTop + py - rect.top) / from;
+  zoom = to;
+  if (to === ZOOM_MIN) {
+    colEl.style.transform = "";
+    colEl.style.width = "";
+    padEl.style.width = "";
+    padEl.style.height = "";
+  } else {
+    colEl.style.width = `${zoomW}px`;
+    colEl.style.transform = `scale(${to})`;
+    padEl.style.width = `${zoomW * to}px`;
+    padEl.style.height = `${colEl.offsetHeight * to}px`;
+  }
+  viewEl.classList.toggle("zoomed", to > ZOOM_MIN);
+  viewEl.scrollLeft = cx * to - (px - rect.left);
+  viewEl.scrollTop = cy * to - (py - rect.top);
+}
+
+function resetZoom() {
+  if (!viewEl) return;
+  const rect = viewEl.getBoundingClientRect();
+  applyZoom(ZOOM_MIN, rect.left + rect.width / 2, rect.top);
+}
+
+function gap(a, b) {
+  return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+}
+
+function onTouchStart(e) {
+  if (e.touches.length !== 2) return;
+  pinch0 = gap(e.touches[0], e.touches[1]);
+  pinchBase = zoom;
+}
+
+function onTouchMove(e) {
+  if (e.touches.length !== 2 || pinch0 <= 0) return;
+  e.preventDefault();
+  const now = gap(e.touches[0], e.touches[1]);
+  applyZoom(
+    (pinchBase * now) / pinch0,
+    (e.touches[0].clientX + e.touches[1].clientX) / 2,
+    (e.touches[0].clientY + e.touches[1].clientY) / 2,
   );
 }
 
-function thumbBtn(n, related, gapStart, fallbackName) {
-  const label = printedLabel(n);
-  const btn = el("button", {
-    class: "strip-item" + (related ? " related" : "") + (gapStart ? " related-start" : ""),
-    type: "button",
-    role: "listitem",
-    "aria-label": label || fallbackName || undefined,
-    "data-page": String(n),
-  });
-  const img = el("img", {
-    alt: "",
-    loading: "lazy",
-    decoding: "async",
-    width: "90",
-    height: "64",
-  });
-  img.src = Q.thumbUrl(jobRec.manualId, n);
-  img.addEventListener("load", () => {
-    if (img.naturalWidth && img.naturalHeight) {
-      btn.style.setProperty("--thumb-ar", `${img.naturalWidth} / ${img.naturalHeight}`);
-    }
-  });
-  const stripLabel = el("span", { class: "strip-label", "aria-hidden": "true" });
-  const stamp = el("span", { class: "stamp" });
-  writeStamp(stamp, n);
-  btn.append(img, stripLabel, stamp);
-  btn.addEventListener("click", () => {
-    showPage(n, jobRec.title);
-  });
-  return btn;
-}
-
-function markStrip() {
-  stripEl.querySelectorAll(".strip-item").forEach((btn) => {
-    const on = Number(btn.getAttribute("data-page")) === currentPage;
-    btn.classList.toggle("now", on);
-    if (on) btn.setAttribute("aria-current", "true");
-    else btn.removeAttribute("aria-current");
-  });
-}
-
-function publishPage(n) {
-  set({ page: n });
-  emit("page", { n });
-}
-
-function showPage(n, alt) {
-  currentPage = n;
-  gen += 1;
-  fitLocked = false;
-  markStrip();
-  writeStamp(stampEl, n);
-  imgEl.alt = alt || "";
-  canvasEl.hidden = true;
-  canvasEl.removeAttribute("data-ready");
-  imgEl.hidden = false;
-  const guess = guessRaster(jobRec && jobRec.manualId);
-  applyDefaultFit(guess.w, guess.h);
-  if (viewEl) {
-    viewEl.scrollTop = 0;
-    viewEl.scrollLeft = 0;
-  }
-  const url = Q.pageUrl(jobRec.manualId, n);
-  imgEl.src = url;
-  publishPage(n);
-  if (imgEl.complete) {
-    if (imgEl.naturalWidth) onImgLoad();
-    else onImgError();
-  }
-}
-
-function onImgLoad() {
-  canvasEl.hidden = true;
-  imgEl.hidden = false;
-  if (imgEl.naturalWidth && imgEl.naturalHeight) {
-    setAspectBox(imgEl.naturalWidth, imgEl.naturalHeight);
-    if (!fitLocked) applyDefaultFit(imgEl.naturalWidth, imgEl.naturalHeight);
-  }
-  applyZoom();
-}
-
-async function onImgError() {
-  const n = pageFromSrc(imgEl.src) ?? currentPage;
-  const file = manualRec && manualRec.file;
-  if (!file || n == null) return;
-  const token = gen;
-  imgEl.hidden = true;
-  canvasEl.hidden = false;
-  canvasEl.removeAttribute("data-ready");
-  try {
-    const { renderPage } = await import("../pdf.js");
-    if (token !== gen) return;
-    await renderPage(Q.asset(file), n, canvasEl);
-    if (token !== gen) return;
-    canvasEl.setAttribute("data-ready", "1");
-    if (canvasEl.width && canvasEl.height) {
-      setAspectBox(canvasEl.width, canvasEl.height);
-      if (!fitLocked) applyDefaultFit(canvasEl.width, canvasEl.height);
-    }
-    applyZoom();
-  } catch {
-    /* leave the empty canvas; no copy */
-  }
-}
-
-function pageFromSrc(src) {
-  const m = String(src || "").match(/p-(\d+)\.(?:webp|png|jpg|jpeg)(?:\?|$)/i);
-  return m ? Number(m[1]) : null;
-}
-
-function mediaSize() {
-  if (!imgEl.hidden && imgEl.naturalWidth) {
-    return { w: imgEl.naturalWidth, h: imgEl.naturalHeight, node: imgEl };
-  }
-  if (!canvasEl.hidden && canvasEl.width) {
-    return { w: canvasEl.width, h: canvasEl.height, node: canvasEl };
-  }
-  return null;
-}
-
-function scaleFor(media) {
-  if (!viewEl || !media) return 0;
-  const availW = viewEl.clientWidth;
-  const availH = viewEl.clientHeight;
-  if (!availW) return 0;
-  if (fit === "height") {
-    const h = availH > 0 ? availH : 160;
-    return h / media.h;
-  }
-  return availW / media.w;
-}
-
-function applyZoom() {
-  if (!viewEl || !stageEl) return;
-  const media = mediaSize();
-  if (!media) return;
-  const scale = scaleFor(media);
-  if (!scale) return;
-  stageEl.style.width = `${media.w * scale}px`;
-  stageEl.style.height = `${media.h * scale}px`;
-  media.node.style.width = `${media.w}px`;
-  media.node.style.height = `${media.h}px`;
-  media.node.style.transform = `scale(${scale})`;
-  const other = media.node === imgEl ? canvasEl : imgEl;
-  other.style.transform = "";
-}
-
-function viewLocal(e) {
-  const rect = viewEl.getBoundingClientRect();
-  if (e && Number.isFinite(e.clientX) && Number.isFinite(e.clientY)) {
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-  }
-  return { x: rect.width / 2, y: rect.height / 2 };
-}
-
-function toggleFit(e) {
-  fitLocked = true;
-  const media = mediaSize();
-  const prev = scaleFor(media);
-  const local = viewLocal(e);
-  const pageX = prev ? (viewEl.scrollLeft + local.x) / prev : 0;
-  const pageY = prev ? (viewEl.scrollTop + local.y) / prev : 0;
-  fit = fit === "width" ? "height" : "width";
-  viewEl.setAttribute("aria-pressed", fit === "height" ? "true" : "false");
-  viewEl.classList.toggle("fit-h", fit === "height");
-  applyZoom();
-  const next = scaleFor(mediaSize());
-  if (next) {
-    viewEl.scrollLeft = pageX * next - local.x;
-    viewEl.scrollTop = pageY * next - local.y;
-  }
-}
-
-function onPtrDown(e) {
-  drag = { x: e.clientX, y: e.clientY, moved: false };
-}
-
-function onPtrMove(e) {
-  if (!drag) return;
-  if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 10) drag.moved = true;
-}
-
-function onPtrUp() {
-  /* click handler reads drag.moved */
-}
-
-function onViewClick(e) {
-  if (e.target.closest("button")) return;
-  if (drag && drag.moved) {
-    drag = null;
+function onTouchEnd(e) {
+  if (e.touches.length < 2) pinch0 = 0;
+  if (e.touches.length > 0 || e.changedTouches.length !== 1) return;
+  const touch = e.changedTouches[0];
+  const at = Date.now();
+  if (at - tapAt < TAP_MS && Math.hypot(touch.clientX - tapX, touch.clientY - tapY) < TAP_PX) {
+    e.preventDefault();
+    applyZoom(zoom > ZOOM_MIN ? ZOOM_MIN : ZOOM_DOUBLE, touch.clientX, touch.clientY);
+    tapAt = 0;
     return;
   }
-  drag = null;
-  toggleFit(e);
+  tapAt = at;
+  tapX = touch.clientX;
+  tapY = touch.clientY;
 }
 
-function onViewKey(e) {
-  if (e.key !== "Enter" && e.key !== " ") return;
+function onWheel(e) {
+  if (!e.ctrlKey) return;
   e.preventDefault();
-  toggleFit();
+  applyZoom(zoom * (1 - e.deltaY / 240), e.clientX, e.clientY);
 }
 
-function askGlyph() {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("width", "22");
-  svg.setAttribute("height", "22");
-  svg.setAttribute("aria-hidden", "true");
-  svg.setAttribute("focusable", "false");
-  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  g.setAttribute("fill", "none");
-  g.setAttribute("stroke", "currentColor");
-  g.setAttribute("stroke-width", "2.4");
-  g.setAttribute("stroke-linecap", "square");
-  g.setAttribute("stroke-linejoin", "miter");
-  const lens = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  lens.setAttribute("cx", "10");
-  lens.setAttribute("cy", "10");
-  lens.setAttribute("r", "6");
-  const handle = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  handle.setAttribute("d", "M15 15 20 20");
-  const q = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  q.setAttribute("d", "M8.4 8.6c0-1.1.9-1.9 1.8-1.9s1.8.8 1.8 1.8c0 1.1-1.8 1.3-1.8 2.6");
-  const dot = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  dot.setAttribute("d", "M10.2 14.6v.2");
-  g.append(lens, handle, q, dot);
-  svg.append(g);
-  return svg;
+function onDouble(e) {
+  applyZoom(zoom > ZOOM_MIN ? ZOOM_MIN : ZOOM_DOUBLE, e.clientX, e.clientY);
 }
+
+/* ---------- voice ---------- */
+
+async function syncVoice(job) {
+  endVoice();
+  micBtn.hidden = true;
+  const my = enterGen;
+  voiceId = await voiceAgent();
+  if (my !== enterGen || !voiceId) return;
+  micBtn.hidden = false;
+  const bike = Q.bike(job.bikeId);
+  micBtn.dataset.bike = bike ? `${bike.make} ${bike.model} ${bike.year}` : "";
+  micBtn.dataset.manual = job.manualId || "";
+}
+
+function endVoice() {
+  if (session) session.end();
+  session = null;
+  if (micBtn) micBtn.setAttribute("aria-pressed", "false");
+}
+
+async function onMic() {
+  if (session) {
+    endVoice();
+    return;
+  }
+  micBtn.setAttribute("aria-pressed", "true");
+  const handle = await voiceStart({
+    id: voiceId,
+    dynamicVariables: {
+      bike_name: micBtn.dataset.bike || "",
+      manual_id: micBtn.dataset.manual || "",
+    },
+    onPage: (n) => jump(n),
+    onStatus: (status) => {
+      if (status === "disconnected") endVoice();
+    },
+  });
+  if (!handle) {
+    micBtn.setAttribute("aria-pressed", "false");
+    return;
+  }
+  session = handle;
+}
+
+/* ---------- ask ---------- */
 
 function setAskBar(pct) {
-  if (!askBarFill) return;
   const n = Math.max(0, Math.min(1, Number(pct) || 0));
   askBarFill.style.width = `${Math.round(n * 100)}%`;
 }
 
 function onAskProgress(info) {
-  if (!info || !askBar) return;
+  if (!info) return;
   if (info.status === "progress" && Number(info.total) > 0) {
     askBar.hidden = false;
     setAskBar(Number(info.loaded) / Number(info.total));
@@ -583,52 +760,43 @@ function onAskProgress(info) {
     setAskBar(Number(info.progress) / 100);
     return;
   }
-  if (info.status === "done" || info.status === "ready") {
-    setAskBar(1);
-  }
+  if (info.status === "done" || info.status === "ready") setAskBar(1);
 }
 
 async function syncAsk(job) {
   askPages = [];
   askFetchTok += 1;
   const token = askFetchTok;
-  const man = job && Q.manual(job.manualId);
-  if (!askBtn) return;
-  if (man && man.ocr === false) {
-    askBtn.hidden = true;
-    closeAsk();
-    return;
-  }
   askBtn.hidden = true;
   closeAsk();
-  const pages = await fetchJobPages(job);
+  if (manualRec.ocr === false) return;
+  const list = await fetchJobPages(job).catch(() => []);
   if (token !== askFetchTok) return;
-  askPages = pages;
-  askBtn.hidden = pages.length === 0;
+  // Rows with no text still carry the manual id, and /ask answers with section titles.
+  askPages = list;
+  askBtn.hidden = list.length === 0;
 }
 
 function openAsk() {
-  if (!askSheet || !askBtn || askBtn.hidden) return;
+  if (askBtn.hidden) return;
   askSheet.hidden = false;
   askSheet.classList.add("open");
   askSheet.dataset.state = "idle";
   askBtn.setAttribute("aria-expanded", "true");
-  if (askInput) {
-    askInput.value = "";
-    askInput.focus();
-  }
-  if (askHits) askHits.replaceChildren();
+  askInput.value = "";
+  askInput.focus();
+  askHits.replaceChildren();
   askBar.hidden = false;
   setAskBar(0);
   loadAsk(onAskProgress)
     .then(() => {
       setAskBar(1);
       window.setTimeout(() => {
-        if (askBar) askBar.hidden = true;
+        askBar.hidden = true;
       }, 120);
     })
     .catch(() => {
-      if (askBar) askBar.hidden = true;
+      askBar.hidden = true;
     });
 }
 
@@ -637,20 +805,19 @@ function closeAsk() {
   askSheet.hidden = true;
   askSheet.classList.remove("open");
   askSheet.dataset.state = "";
-  if (askBtn) askBtn.setAttribute("aria-expanded", "false");
-  if (askHits) askHits.replaceChildren();
-  if (askBar) askBar.hidden = true;
+  askBtn.setAttribute("aria-expanded", "false");
+  askHits.replaceChildren();
+  askBar.hidden = true;
   askBusy = false;
 }
 
 function onAskToggle() {
-  if (!askSheet || askSheet.hidden) openAsk();
+  if (askSheet.hidden) openAsk();
   else closeAsk();
 }
 
-function onAskEsc(e) {
-  if (e.key !== "Escape") return;
-  if (!askSheet || askSheet.hidden) return;
+function onEsc(e) {
+  if (e.key !== "Escape" || askSheet.hidden) return;
   closeAsk();
 }
 
@@ -660,8 +827,20 @@ function onAskKey(e) {
   runAsk();
 }
 
+function flash(n) {
+  const rec = sheets.get(n);
+  if (!rec) return;
+  if (askFlashTimer) window.clearTimeout(askFlashTimer);
+  rec.host.classList.remove("ask-flash");
+  void rec.host.offsetWidth;
+  rec.host.classList.add("ask-flash");
+  askFlashTimer = window.setTimeout(() => {
+    rec.host.classList.remove("ask-flash");
+    askFlashTimer = 0;
+  }, 900);
+}
+
 function paintAskHits(rows) {
-  if (!askHits) return;
   askHits.replaceChildren();
   for (const row of rows || []) {
     const pageText = (askPages.find((p) => p.n === row.page) || {}).text || "";
@@ -676,43 +855,29 @@ function paintAskHits(rows) {
     bold.textContent = mid || row.answer;
     ctx.append(bold);
     if (after) ctx.append(document.createTextNode(after));
-    const stamp = el("span", { class: "stamp" });
-    writeStamp(stamp, row.page);
-    btn.append(ctx, stamp);
+    btn.append(ctx, el("span", { class: "stamp", text: `p.${row.page}` }));
     btn.addEventListener("click", () => {
-      showPage(row.page, jobRec && jobRec.title);
-      flashStage();
+      jump(row.page);
+      flash(row.page);
       closeAsk();
     });
     askHits.append(btn);
   }
 }
 
-function flashStage() {
-  if (!stageEl) return;
-  if (askFlashTimer) window.clearTimeout(askFlashTimer);
-  stageEl.classList.remove("ask-flash");
-  void stageEl.offsetWidth;
-  stageEl.classList.add("ask-flash");
-  askFlashTimer = window.setTimeout(() => {
-    if (stageEl) stageEl.classList.remove("ask-flash");
-    askFlashTimer = 0;
-  }, 900);
-}
-
 async function runAsk() {
-  if (askBusy || !askInput) return;
+  if (askBusy) return;
   const q = String(askInput.value || "").trim();
   if (!q || !askPages.length) {
-    if (askHits) askHits.replaceChildren();
-    if (askSheet) askSheet.dataset.state = "done";
+    askHits.replaceChildren();
+    askSheet.dataset.state = "done";
     return;
   }
   askBusy = true;
   askRunTok += 1;
   const token = askRunTok;
-  if (askSheet) askSheet.dataset.state = "run";
-  if (askHits) askHits.replaceChildren();
+  askSheet.dataset.state = "run";
+  askHits.replaceChildren();
   askBar.hidden = false;
   setAskBar(0.15);
   let rows = [];
@@ -725,5 +890,39 @@ async function runAsk() {
   askBusy = false;
   askBar.hidden = true;
   paintAskHits(rows);
-  if (askSheet) askSheet.dataset.state = "done";
+  askSheet.dataset.state = "done";
 }
+
+/* ---------- screen ---------- */
+
+registerScreen("book", {
+  mount(root) {
+    build(root);
+  },
+
+  async enter() {
+    if (!state.bikeId) {
+      bounce("identify");
+      return;
+    }
+    if (!state.jobId) {
+      bounce("pick");
+      return;
+    }
+    const my = ++enterGen;
+    const job = await Q.jobById(state.jobId);
+    if (my !== enterGen) return;
+    if (!job) {
+      bounce("pick");
+      return;
+    }
+    await paint(job);
+  },
+
+  leave() {
+    enterGen += 1;
+    endVoice();
+    closeAsk();
+    resetZoom();
+  },
+});

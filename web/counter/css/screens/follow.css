@@ -1,4 +1,5 @@
 [data-screen="follow"] [data-root] {
+  --mark: rgba(232, 93, 4, 0.34);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -29,6 +30,7 @@
   align-items: center;
   gap: 4px;
   min-width: 0;
+  overflow: hidden;
 }
 
 [data-screen="follow"] .dot {
@@ -57,7 +59,7 @@
 }
 
 [data-screen="follow"] .stage-frame {
-  --page-ar: 1.40845;
+  --page-ar: 0.7071;
   position: relative;
   width: var(--stage-w, 100%);
   height: var(--stage-h, auto);
@@ -75,12 +77,6 @@
   aspect-ratio: auto;
 }
 
-[data-screen="follow"] .stage-frame.is-crop {
-  width: 100%;
-  height: auto;
-  aspect-ratio: calc(var(--page-ar) * var(--cw) / var(--ch));
-}
-
 [data-screen="follow"] .stage-zoom {
   position: absolute;
   left: 0;
@@ -89,13 +85,12 @@
   will-change: transform;
 }
 
-[data-screen="follow"] .stage-frame.is-crop .stage-zoom {
+[data-screen="follow"] .stage-zoom img,
+[data-screen="follow"] .stage-zoom canvas,
+[data-screen="follow"] .overlay img,
+[data-screen="follow"] .overlay canvas {
+  position: absolute;
   inset: 0;
-  width: auto;
-  height: auto;
-}
-
-[data-screen="follow"] .stage-frame img {
   width: 100%;
   height: 100%;
   object-fit: fill;
@@ -103,14 +98,38 @@
   pointer-events: none;
 }
 
-[data-screen="follow"] .stage-frame.is-crop img {
+[data-screen="follow"] .overlay img,
+[data-screen="follow"] .overlay canvas {
+  object-fit: contain;
+}
+
+[data-screen="follow"] .page-marks {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: calc(100% / var(--cw));
-  height: calc(100% / var(--ch));
-  max-width: none;
-  transform: translate(calc(var(--cx) * -100%), calc(var(--cy) * -100%));
+  inset: 0;
+  pointer-events: none;
+}
+
+[data-screen="follow"] .mark {
+  position: absolute;
+  display: block;
+  background: var(--mark);
+  mix-blend-mode: multiply;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: mark-in 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mark-in {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-screen="follow"] .mark {
+    transform: scaleX(1);
+    animation: none;
+  }
 }
 
 [data-screen="follow"] .pan-ind {
@@ -139,7 +158,6 @@
 
 [data-screen="follow"] .nav-prev,
 [data-screen="follow"] .nav-next,
-[data-screen="follow"] .crop-btn,
 [data-screen="follow"] .overlay-close {
   position: absolute;
   z-index: 2;
@@ -155,21 +173,18 @@
   bottom: 0;
 }
 
-[data-screen="follow"] .crop-btn {
-  right: 0;
-  bottom: 52px;
-}
-
-[data-screen="follow"] .crop-btn[aria-pressed="true"] {
-  background: var(--orange);
-  color: #fff;
+[data-screen="follow"] .nav-prev,
+[data-screen="follow"] .nav-next {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  min-height: 64px;
 }
 
 [data-screen="follow"] [data-root].is-reading .follow-progress,
 [data-screen="follow"] [data-root].is-reading .part-btn,
 [data-screen="follow"] [data-root].is-reading .nav-prev,
 [data-screen="follow"] [data-root].is-reading .nav-next,
-[data-screen="follow"] [data-root].is-reading .crop-btn,
 [data-screen="follow"] [data-root].is-reading .related {
   visibility: hidden;
   pointer-events: none;
@@ -181,8 +196,8 @@
 }
 
 [data-screen="follow"] .btn-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   display: block;
   pointer-events: none;
 }
@@ -193,13 +208,6 @@
   z-index: 4;
   overflow: hidden;
   background: var(--card);
-}
-
-[data-screen="follow"] .overlay img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
 }
 
 [data-screen="follow"] .overlay-close {
@@ -225,6 +233,7 @@
   padding: 0;
   border: 3px solid var(--ink);
   background: var(--card);
+  color: var(--ink);
   aspect-ratio: var(--thumb-ar, 1.40845);
   overflow: hidden;
   cursor: pointer;
@@ -237,6 +246,23 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+[data-screen="follow"] .related-item.is-plain {
+  aspect-ratio: auto;
+  min-width: 64px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-screen="follow"] .related-item.is-plain b {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 [data-screen="follow"] .related-item .tag {
