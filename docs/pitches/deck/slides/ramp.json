@@ -353,8 +353,8 @@
     {
       "kind": "diagram",
       "at": "3:15",
-      "title": "Why the bill is small",
-      "caption": "The time he loses is the cost. The page is the product. The hours come back.",
+      "title": "The hours, and how they come back",
+      "caption": "A fifth of his week goes into looking for a page. The page is the product — the hours are the return, and the next slide prices what it costs to give them back.",
       "flow": {
         "w": 1180,
         "bands": [
@@ -389,9 +389,9 @@
         ]
       },
       "notes": [
-        "\"The manual is never in the prompt. That's the whole trick.\"",
-        "85.3% of asks never pay for a picker at all — the spec path and the decisive-BM25 path both skip it. 172 model calls for 150 asks.",
-        "Retrieval itself is free: BM25 in process, no embeddings, no vector database. Do not go further into architecture than this slide."
+        "Five boxes, one sentence: ~a fifth of his week goes into looking for a page, and this is the box that gives it back.~ Do not go further into architecture than this slide.",
+        "If they push on how: the manual is never in the prompt. That is the whole trick — BM25 in process over the manual’s own printed headings, no embeddings, no vector database, and 85.3% of asks never pay for a picker at all (172 model calls for 150 asks).",
+        "Then straight into the next slide: the hours have a price, and so does giving them back. One is EUR 24,640 a year and the other is cents a month."
       ],
       "defs": [
         {

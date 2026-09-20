@@ -132,7 +132,7 @@
         ]
       },
       "notes": [
-        "Read it once, out loud, as: ~everything black is ElevenLabs, everything cream is ours, and every arrow into the model comes out of a PDF.~ Then stop.",
+        "Read it once, out loud, as: ~everything orange is ElevenLabs, everything cream is ours, and every arrow into the model comes out of a PDF.~ Then stop.",
         "Deepgram is stateless — we push the whole prompt, models and tool endpoints down the socket every session. An ElevenLabs agent is a persistent workspace object with one static prompt and tool ids, and the per-session facts arrive as dynamic variables. That is why there is a separate setup tool, session endpoint, credential flow and manual-id binding.",
         "Why WebRTC and not the WebSocket: a WebSocket is TCP, so one lost packet head-of-line blocks the audio behind it. WebRTC drops a frame instead of stalling a sentence."
       ]

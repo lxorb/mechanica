@@ -9,7 +9,7 @@ the pitches with no sponsor tech, for the thing that room is there to look at).
 ![the nine diagrams](DIAGRAMS.png)
 
 Each diagram lives in three places, all generated from the same node list: the `.mmd` beside its
-pitch, the ```mermaid``` block inside the pitch `.md`, and the `diagram` slide in
+pitch, the `mermaid` block inside the pitch `.md`, and the `diagram` slide in
 `deck/slides/<pitch>.json`. Re-render with `node docs/pitches/deck/mermaid.mjs`, then rebuild the
 decks with `node docs/pitches/deck/build.mjs`.
 
