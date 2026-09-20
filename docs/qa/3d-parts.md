@@ -3,9 +3,24 @@
 Answers QA-FINAL open item 1: *"on `generic/naked` — the KTM 390 Duke, the demo bike — there is no
 `chain` or `front-brake` group … on the seven single-group models nothing explodes at all."*
 
-Measured with `node web/tools/model-check.mjs --summary` (the numbers match what the browser
-reports in `node web/tools/viewer-shots.mjs <model>`, which is how each row below was confirmed).
-Render sheets: `docs/qa/3d-parts/states3-*.png` — default / exploded / focused, desktop.
+Measured with `node web/tools/model-check.mjs --summary`. The numbers match what the browser
+reports in `node web/tools/viewer-shots.mjs <model>` — checked model by model, e.g.
+`ok naked generic/naked #ff6600 18 groups · 42 meshes`, `ok enduro generic/enduro 10 groups`,
+`ok car corvette-c8 15 groups`.
+
+Render sheets in `docs/qa/3d-parts/` — default / exploded / focused, desktop, from
+`viewer-shots.mjs --states3`:
+
+| sheet | shows |
+| --- | --- |
+| `states3-naked.png` | the demo bike: the fix, full width |
+| `states3-naked-sportbike-supermoto.png` (+ `-phone`) | the three biggest gains |
+| `states3-enduro-classic-car.png` | the material-merged bikes and the RX-7 |
+| `states3-adventure-scooter.png`, `states3-cruiser-touring-motocross.png` | the four "no explode" models, identical in all three states, next to a working one |
+| `orientation-sheet.png` | all 14 models, every nose now pointing `+x` |
+
+`--states3` can only select generics, so the Corvette has no sheet here; its 12 → 15 was confirmed
+in the browser by the `viewer-shots.mjs` run above.
 
 ## Before → after
 
