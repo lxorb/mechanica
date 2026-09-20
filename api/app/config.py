@@ -29,7 +29,7 @@ def _elastic() -> tuple[str | None, str | None]:
 
 class Settings:
     data_dir = Path(os.getenv("DATA_DIR") or ROOT / "data")
-    openai_api_key = _secret("OPENAI_API_KEY", "openai.txt")
+    openai_api_key = _secret("OPENAI_API_KEY", "openai-mechanica.txt") or _secret("OPENAI_API_KEY", "openai.txt")
     es_url, es_api_key = _elastic()
     mongodb_uri = os.getenv("MONGODB_URI") or None
     azure_storage_connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING") or None
