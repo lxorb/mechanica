@@ -10,7 +10,7 @@
 :root {
   --part-icon-size: 48px;
   --part-icon-radius: 12px;
-  --part-icon-pad: 4px;
+  --part-icon-pad: 2px;
   --part-icon-tile: #f4f0e7;
   --part-icon-edge: #ddd6c6;
 }
@@ -32,22 +32,23 @@
   user-select: none;
 }
 
+/* The SVGs already carry 8 % padding, so the tile only needs a hair more. */
 .part-icon.sm {
   --part-icon-size: 32px;
   --part-icon-radius: 9px;
-  --part-icon-pad: 2px;
+  --part-icon-pad: 0px;
 }
 
 .part-icon.md {
   --part-icon-size: 48px;
   --part-icon-radius: 12px;
-  --part-icon-pad: 4px;
+  --part-icon-pad: 2px;
 }
 
 .part-icon.lg {
   --part-icon-size: 96px;
   --part-icon-radius: 16px;
-  --part-icon-pad: 8px;
+  --part-icon-pad: 5px;
 }
 
 /* No tile — for places that already sit on white card stock. */
