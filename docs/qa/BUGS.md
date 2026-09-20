@@ -1,0 +1,282 @@
+# BUGS — bug hunt pass 1, 2026-09-20
+
+Surfaces: `api/app/chat.py`, `ingest/**`, `ondemand.py`, `store.py`, `store_blob.py`, `parts_catalog.py`,
+`parts/**`, `ttc.py`, `cost_ttc.py`, `llm.py`, `models.py`, `worker/index.js`, `wrangler.jsonc`,
+`counter/js/bus.js`, `pick-search.js`, `parts-search.js`, `particons.js`, `index-data.js`, `search.js`,
+`query.js`, and the Identify/Confirm/Pick screens. Read for defects, then fuzzed live at ≤ 5 req/s.
+
+Tests: `api/tests/test_bughunt_store.py`, `api/tests/test_bughunt_api.py`, `web/tools/bughunt-check.mjs`.
+`api/.venv/Scripts/python -m pytest api/tests -q` → **708 passed, 20 skipped**.
+`node web/tools/bughunt-check.mjs` → **32 passed**. `node web/tools/adapter-test.mjs` → **68 passed**.
+
+## Findings
+
+| id | sev | surface | what | state |
+|---|---|---|---|---|
+| BUG-01 | high | `main.py` `/cost`, `store.py` | `/cost` downloaded all 535 Manuals (~72 MB) to read one number; 7.52 s live | fixed |
+| BUG-02 | high | `store_blob.py` | a missing / half-built document was remembered for 300 s | fixed |
+| BUG-03 | med | `ondemand.py` | the on-demand registry index froze for the life of the process on blob | fixed |
+| BUG-04 | med | `ingest/__init__.py` | every ingest failure leaked the open `pymupdf.Document` | fixed |
+| BUG-05 | med | `worker/index.js` | the API's own 307 was passed through as `http://ttm-api…` | fixed |
+| BUG-06 | med | `parts_catalog.py` | `taxonomy()` published itself before its id map was filled | fixed |
+| BUG-07 | low | `search.js`, `pick-search.js` | highlight offsets were computed on a different string than they marked | fixed |
+| BUG-08 | low | `search.js`, `pick-search.js` | no ceiling on query tokens: a pasted paragraph pins the main thread | fixed |
+| BUG-09 | **high** | `main.py` `/ingest`, `/ingest/upload` | unauthenticated arbitrary-URL fetch + writes into the shared catalog | open |
+| BUG-10 | med | `worker/index.js` | the Deepgram proxy accepts a handshake with no `Origin` | open |
+| BUG-11 | med | `store_blob.py` `bikes()` | every cache miss lists and downloads every `links/*.json` | open |
+| BUG-12 | med | `store_blob.py` `costs()` | every 30 s miss re-reads and re-parses every cost event ever written | open |
+| BUG-13 | med | `ondemand.py` | one in-flight job per **replica**; a restart leaves a job "running" for ever | open |
+| BUG-14 | low | `climate/rules.py:389` | the same all-Manuals load as BUG-01, in another owner's file | open |
+| BUG-15 | low | `worker/index.js`, `main.py` | `GET /manuals/{id}` is `max-age=60`, so the early manual can outlive the real one | open |
+| BUG-16 | low | `ondemand.py` | ingest-failure markers are per-replica files on an ephemeral disk | open |
+| BUG-17 | low | `ingest/curate.py` | `curate()` mutates the Section objects the manual cache is holding | open |
+| BUG-18 | low | `main.py` (FastAPI) | `HEAD` on every `GET` route answers 405 | open |
+| BUG-19 | low | `main.py` `/manuals/ensure` | `vin` has no length cap: 5,000 chars accepted | open |
+| BUG-20 | low | `main.py` `_pushed` | unbounded set, and a racing request can skip a needed re-push | open |
+| BUG-21 | low | `index-data.js` | a year range with `to < from` threw `RangeError` out of `expandBundle` | fixed |
+
+9 fixed · 12 open · 0 crashes or hangs in 143 live requests.
+
+---
+
+## Fixed
+
+### BUG-01 — `/cost` downloads every manual to read one number · high
+**Repro** `curl -s -o NUL -w "%{time_total}" https://mechanica.emilvinu.ch/api/cost` → **7.52 s** cold.
+**Root cause** `main.py` computed `naivePerAsk` as `naive_usd(max(m.pages for m in get_store().manuals()))`.
+`BlobStore.manuals()` fans 16 workers out over `manuals/` and parses every document: 535 manuals × ~134 KB
+= **~72 MB of JSON**, then caches the whole list of parsed models for 60 s in the listings cache — in a
+1 CPU / 2 GiB container. The only field wanted is the page count, which the blob listing already carries
+as metadata (`manual_summaries()`, used by `/manuals`, answers in 0.31 s).
+**Fix** `store.max_manual_pages()` prefers `manual_summaries()` and falls back to `manuals()` for a store
+without one; `/cost` calls it. Same number (775 → `naivePerAsk` 12.4000), none of the download.
+**Test** `test_bughunt_store.py::test_max_manual_pages_uses_the_listing_not_every_document` (and the
+fallback + route tests beside it).
+
+### BUG-02 — a document that is not there **yet** was remembered as missing for five minutes · high
+**Repro** (two replicas, which is the deployed shape) open a bike whose manual is being ingested; poll
+`GET /manuals/<id>` while the job runs; when the job finishes, the replica that answered the earlier poll
+keeps answering 404 for up to `DOC_TTL` = 300 s.
+**Root cause** `BlobStore.manual()` put its result in the cache unconditionally, including `None`.
+`pages()`/`specs()` cached `[]` the same way, and `offers()` cached `None` — so a part another replica had
+just paid a web search for looked cold enough to pay for again. Worse than the 404: `early=True` publishes
+a **section-less** manual so the PDF is readable at once, and that provisional document was also cached for
+300 s, so Pick could show zero sections for five minutes after the real one landed.
+**Fix** `MISS_TTL = 5.0`, applied to a missing manual, a section-less manual, empty pages/specs and an
+un-looked-up offer. `_Cache` entries may now carry their own TTL; nothing else changed.
+**Test** five cases in `test_bughunt_store.py`.
+
+### BUG-03 — the on-demand registry index never refreshed on the live deployment · med
+**Repro** add a row with `put_registry`, then `POST /manuals/ensure` for that bike: not found until redeploy.
+**Root cause** `ondemand._index()` keyed its cache on the mtime of `DATA_DIR/registry.json`. On Azure the
+registry lives in blob and that file does not exist, so `stamp` is `0.0` for ever, `stamp == _registry_at`
+is always true after the first build, and the index is frozen for the life of the process.
+**Fix** `REGISTRY_MAX_AGE = 300 s`: rebuild when the index is older than that, whatever the stamp says.
+**Test** `test_bughunt_api.py::test_the_ondemand_registry_index_refreshes`.
+
+### BUG-04 — a failed ingest leaked the open PDF · med
+**Root cause** `ingest.run()` called `doc.close()` only on the success path and at two explicit `raise`s.
+Any other failure — a fetch that yields a corrupt file, an LLM pass that dies, a blob write that throws —
+left the `pymupdf.Document` open, and with it the mapped file and its handle. On-demand ingests fail
+routinely (`FAIL_COOLDOWN` exists precisely for that), so a long-lived replica leaks both.
+**Fix** `finally: doc.close()`, guarded; the two explicit closes are gone so nothing closes twice.
+**Test** `test_bughunt_api.py::test_a_failed_ingest_closes_the_pdf` and the short-PDF case.
+
+### BUG-05 — the proxy handed the browser a plain-`http://` redirect to the Azure origin · med
+**Repro** `curl -sI https://mechanica.emilvinu.ch/api/health/` →
+`307` · `location: http://ttm-api.victoriousground-5b684586.eastus.azurecontainerapps.io/health`.
+**Root cause** FastAPI's `redirect_slashes` builds the redirect from what uvicorn sees, and Azure Container
+Apps terminates TLS, so the URL comes back as `http://`. `worker/index.js` copies the upstream headers
+verbatim. From an https page that is a mixed-content redirect the browser refuses to follow, it leaves the
+same-origin proxy the service worker caches against, and it names the origin the proxy exists to hide.
+**Fix** `backToApi()`: a `Location` pointing back at `API_ORIGIN` (either scheme, or relative) is rewritten
+to `/api/<path>` on this origin. The 307 from `/manuals/<id>/file` points at the blob and is untouched.
+**Test** five cases in `bughunt-check.mjs`.
+
+### BUG-06 — a concurrent first `/parts/catalog` could lose every standard part · med
+**Repro** (deterministic, in the test) hold `_by_id.update()` open and call `entry()` from another thread.
+**Root cause**
+
+```python
+_taxonomy = Taxonomy.model_validate(json.loads(raw))   # published here
+_fingerprint = ...
+_by_id.clear()                                          # <- second thread passes `is None` now
+_by_id.update({p.id: p for p in _taxonomy.parts})
+```
+
+A second thread — `/parts/catalog` and the `/parts/offers/warm` prefetch land together on every Parts open —
+sees `_taxonomy` non-`None`, reads an **empty** `_by_id`, and `entry()` returns `None` for every id. Nothing
+raises; the answer just silently comes back without the standard catalogue. Confirmed against the old code:
+`entry()` returned `None` inside the window.
+**Fix** double-checked lock; `_taxonomy` is assigned only after `_by_id` is complete.
+**Test** `test_bughunt_api.py::test_taxonomy_is_never_visible_with_a_half_built_id_map`.
+
+### BUG-07 — search highlights marked the wrong characters on accented headings · low
+**Repro** `marks("Ténéré 700", "700")` with the title's accents decomposed (`e` + U+0301, which plenty of
+PDF text layers emit) → the span covered `"é "` instead of `"700"`.
+**Root cause** both `search.js::foldWithMap()` and `pick-search.js::marks()` normalised the whole string
+(`NFD` + strip marks), counted characters in **that** copy, and then applied the offsets to the **original**.
+Every combining mark shifts the two apart by one.
+**Fix** one exported `foldWithMap()` in `search.js`, folding a code point at a time and recording start and
+end in the original; `marks()` uses it. A span now also swallows the combining marks trailing its letter, so
+an accent is never sliced off the end of a mark.
+**Test** four cases in `bughunt-check.mjs`.
+
+### BUG-08 — a pasted paragraph in either search box pins the main thread · low
+**Root cause** `search()` scored every query token against every row (27.4k vehicles) / every entry (a few
+hundred headings), through trigrams and Damerau-Levenshtein. Tokens that all match — `"a a a a …"`, a VIN
+dump, a stuck key — never hit the early `break`, so the work is tokens × rows × terms.
+**Fix** `MAX_QUERY_TOKENS = 12` on the query side only; indexing is untouched. Past a dozen words a query
+cannot narrow any further.
+**Test** two timing cases in `bughunt-check.mjs` (both well under 1.5 s where the old path ran for minutes).
+
+### BUG-21 — one malformed bundle row took the whole offline roster with it · low
+`index-data.js::yearsOf({r:[2026, 2020]})` reached `new Array(-6)` → `RangeError`, thrown straight out of
+`expandBundle()`, so a single reversed or non-numeric year range left the app with no roster at all.
+Our own generator never emits one, so this is defence only.
+**Fix** a reversed / non-finite range yields `[]` and the rows beside it still expand.
+**Test** three cases in `bughunt-check.mjs`.
+
+---
+
+## Open
+
+### BUG-09 — `POST /ingest` is an unauthenticated arbitrary-URL fetch · **high, security**
+`/ingest` takes `{url, make, model, year}` from anyone on the internet and hands the url to
+`ingest/fetch.py`, which follows redirects with a **180 s** timeout. That is a server-side request forgery
+primitive against anything the container can reach, an unbounded resource drain (each call starts a real
+ingest thread and pays OpenAI), and it writes a bike with attacker-chosen `make`/`model`/`year` into the
+shared catalogue every browser downloads. `/ingest/upload` takes 60 MB uploads on the same terms.
+Not exploitable as a file read — a local path is accepted but the `%PDF` check rejects whatever comes back.
+**Open because** the fix is a policy decision (a shared token? an allowlist of registry hosts? drop the
+route from the public surface and keep it for `api/tools`?), not a code change I should make alone.
+Cheapest partial mitigation inside `fetch.py`: refuse loopback / link-local / RFC1918 targets after
+resolution, which costs the legitimate registry hosts nothing.
+
+### BUG-10 — the Deepgram proxy trusts a missing `Origin` · med, security
+`worker/index.js::originOk()` returns `true` when there is no `Origin` header, on the reasoning that
+browsers always send one. Everything that is not a browser also never sends one, so any client can open
+`wss://mechanica.emilvinu.ch/ws/deepgram/agent` and spend the account's Deepgram key. One-line fix
+(`if (!origin) return false;`), left open only because `web/tools/*-shots.mjs` may drive that socket from
+node and I did not want to break the demo harnesses without checking with the voice owner.
+
+### BUG-11 — `bikes()` fans out over every link blob on every cache miss · med
+Single-bike writes drop `links/<id>.json`, and `bikes()` lists the prefix and downloads every one of them
+each time the 60 s listing cache expires. `compact_bikes()` folds them back but is documented as
+"maintenance only — run it when idle", so nothing runs it. With 13.5k on-demand-capable vehicles this
+grows into thousands of blob GETs a minute. Suggested fix: compact automatically once `len(links) >` a
+threshold, from inside `bikes()`, guarded so only one thread does it.
+
+### BUG-12 — `costs()` re-reads every cost event ever logged · med
+`GET /cost` (and `ask.py`'s spend guard) parse every line of every `costs/<yyyymmdd>.jsonl` blob on each
+30 s cache miss — 1,668 events today, monotonically growing. Two related limits: an Azure **append blob
+caps at 50,000 blocks**, and `log_cost` writes one block per LLM call, so a busy day eventually fails to
+append; and `log_cost` is called synchronously inside the request path. Suggested fix: keep a rolling
+daily total blob and read only today's file for the live counter.
+
+### BUG-13 — a job can be "running" for ever, and two replicas can ingest the same manual · med
+`ondemand._jobs` is a process-local dict, so with 1–3 replicas two of them can start the same ingest at
+once (both pay). Worse, if a replica is recycled mid-ingest the blob job stays `running` with nobody
+advancing it: `GET /ingest/<id>` keeps returning it, and `ttm.js` polls for `INGEST_MAX_MS` = **15 minutes**
+before giving up. `ensure()` itself recovers (it starts a fresh job), but the Confirm screen is watching the
+dead one. Suggested fix: stamp the job with a heartbeat and treat a job whose heartbeat is older than a
+minute as failed.
+
+### BUG-14 — `climate/rules.py:389` repeats BUG-01 · low
+`sorted(m.id for m in store.manuals())` — the same ~72 MB load, in the climate owner's file. It wants ids
+only, which `manual_summaries()` gives for free.
+
+### BUG-15 — the early manual can outlive the real one in the browser cache · low
+The Worker sets `Cache-Control: public, max-age=60` on `GET /manuals/*`. The section-less manual published
+by `early=true` is a 200, so a browser that fetched it during ingest keeps it for up to a minute after the
+full one lands. Harmless once BUG-02 is deployed (the server no longer holds it for 300 s), but the minute
+remains. Suggested fix: `no-store` for a manual with no sections, or a short `max-age` for that shape.
+
+### BUG-16 — ingest-failure markers are per-replica · low
+`ondemand.remember_failure()` writes `DATA_DIR/failed/<id>.json`, which on Azure is the container's
+ephemeral disk. Replica A refuses a broken manual for 6 h while replica B cheerfully retries it.
+
+### BUG-17 — `curate()` mutates cached Section objects in place · low
+`curate.curate()` assigns `section.related` and `section.highlights` on the sections of the manual it was
+handed, and `ondemand._work` hands it a shallow `model_copy` of the manual that was just written — so those
+are the very objects `BlobStore._manuals` is holding. The window closes when `apply()` re-puts, but a
+concurrent reader can see a half-curated manual. Also worth noting for the store generally: `bikes()`,
+`registry()` and `manual()` hand callers the cached object itself, so any future caller that sorts or
+appends in place corrupts the cache for everyone. (Audited: no current caller does.)
+
+### BUG-18 — `HEAD` answers 405 on every route · low
+`HEAD /api/health` → 405 `allow: GET`, at the origin too. FastAPI's `APIRoute` does not add `HEAD` to a
+`GET` route the way Starlette's `Route` does. Nothing in the app issues a HEAD, so this is a note, not a
+defect to chase.
+
+### BUG-19 — `vin` has no length cap · low
+`POST /manuals/ensure {"bikeId": "...", "vin": "a"×5000}` → 200. The string is passed on to the per-make
+dynamic resolvers. A `max_length=32` on the field would settle it.
+
+### BUG-20 — `main.py::_pushed` · low
+An unbounded `set[str]`, and `_pushed.add()` happens before the upload, so a second request during the
+upload returns early and a failed upload that is being retried can be skipped. Both tiny; noted for
+whoever owns that route next.
+
+---
+
+## Checked and **not** bugs
+
+Recorded so pass 2 does not re-chase them.
+
+- **Rotated-page highlight maths is right.** Measured at 0/90/180/270 against the ink in a rendered
+  pixmap: `get_text` reports the unrotated page, `page.rect` is the rotated one, and
+  `ground.displayed()`'s `rect * page.rotation_matrix` lands the rect exactly on the rendered glyphs
+  (rot 90: computed x 0.868–0.902 / y 0.125–0.517 vs. rendered ink x 0.875–0.892 / y 0.130–0.515).
+- **Page numbering is consistent 1-based** from `extract_pages` (`enumerate(doc, start=1)`) through
+  `PageText.highlight` (`page.number + 1`) and `assemble.locate` (`doc[page_no - 1]`) to the UI.
+- **SSE is not gzipped.** `text/event-stream` is in Starlette 1.6's `DEFAULT_EXCLUDED_CONTENT_TYPES`, and
+  the live stream confirms it: no `content-encoding`, first frame at 1.77 s, 31 frames.
+- **`/catalog` is compressed for real browsers** — 437 KB with a browser UA, `br` down to 345 KB. The
+  5.9 MB an unidentified client sees is Cloudflare declining to compress for that UA, not our middleware.
+- **No path traversal.** `/manuals/..%2f..%2fetc%2fpasswd` → 404, `..%2F..` → 400 at uvicorn,
+  `/manuals/%2e%2e%2f%2e%2e%2fbikes.json` → 404. Blob keys are only ever built from ids that passed an
+  existence check.
+- **`particons.js`** — every one of the 96 rule ids has an asset in `icons-parts/` or `icons-parts-3d/`;
+  `PART_ICONS` and the SVG folder agree exactly; the two duplicate ids (`engine-oil`, `brake-disc`) are
+  the intended specific-then-loose pair in an ordered array.
+- **`/parts/offers/warm` is capped** at `WARM_PARTS = 12`, so 1,000 part ids do not become 1,000 searches.
+- **`ttc.py`** never raises and never lets a failure change an answer; the cache is keyed on the text hash
+  and capped at 2,000.
+- **`chat.py` `_split()`** rejects a compression that lost or moved a `PAGE n` marker and falls back to the
+  original text, so a quote can never be attributed to the wrong page.
+
+## Fuzz log
+
+`https://mechanica.emilvinu.ch/api`, ≤ 5 req/s, two rounds, **143 requests, zero 5xx, zero hangs**.
+Nothing that would start a paid ingest was ever sent: `/ingest` got only bodies that fail validation, and
+the `ensure` concurrency test used a bike whose manual is already warm.
+
+- **Malformed bodies** — empty, `{`, `null`, `[1,2,3]`, and no `content-type`, against `/manuals/ensure`,
+  `/ask`, `/chat`, `/identify/vin`, `/parts/offers`, `/parts/offers/warm`, `/ingest`: 422 every time.
+- **Wrong types and huge values** — 5,000-char `bikeId` / `partId` / `query` / `make` / `vin`, 1,000
+  `partIds`, 5,000 chat messages, `year=notayear` / `-1` / `99999999999999999999`, `q=%00`, `q=.*`,
+  repeated `q`: 404/422/200 as appropriate, nothing over 3.6 s except `/cost` (BUG-01).
+- **Unicode and CRLF** — `é你好😀` in `q`, `bikeId`, `vin`, `manualId` and a query with `\r\n`: clean.
+- **Traversal** — see above.
+- **Unknown ids** — unknown `bikeId`/`manualId`/`partId`/`jobId` all 404, never 500.
+- **Methods** — `PUT`/`DELETE`/`PATCH`/`HEAD`/`OPTIONS` on `/health` → 405; CORS preflight from
+  `https://evil.example` → `access-control-allow-origin: *` (by design; `allow_credentials` is off).
+- **Concurrency** — 6 simultaneous `/manuals/ensure` for one warm bike: six identical `ready` answers,
+  0.23–0.33 s, no duplicate job.
+- **Range** — the 307 from `/manuals/<id>/file` reaches the browser and the blob honours
+  `Range: bytes=0-99` → `206 bytes 0-99/6725039`.
+- **Ask cache** — repeated query 0.16 s at `$0`; empty and whitespace queries return `matches: []`.
+
+Scripts: `%TEMP%/…/scratchpad/fuzz.py` and `fuzz2.py` (throwaway; the cases worth keeping are in the
+test files listed at the top).
+
+## Not covered — for pass 2
+
+`screens/identify.js`, `confirm.js`, `pick.js` were read for async/lifecycle defects (no `innerHTML`
+anywhere, every fetch has a `catch`, every timer is cleared) but their interaction logic was **not**
+exercised in a browser. Untouched by this pass: `viewer3d.js`, `book.js`, `pdf.js`, `chat-ui.js`,
+`voice-*.js`, `ttm.js`, `sw.js`, `app.js`, `ask.py`, `search/`, `identify.py`, `offers.py`, `climate/`,
+`registry/`, `dropbox_sync.py`, `voice.py`, all CSS. The open items in `web/QA-FINAL.md` (3D part groups,
+photo identify accuracy, cold offers latency, offline reload, the Book/chapter markers, themes, voice)
+belong to their owners and are not repeated here.

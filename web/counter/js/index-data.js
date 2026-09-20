@@ -76,7 +76,11 @@ export function decorate(bikes) {
 function yearsOf(packed) {
   if (Array.isArray(packed)) return packed;
   if (packed && Array.isArray(packed.r)) {
-    const [from, to] = packed.r;
+    // A reversed or non-numeric range used to reach `new Array(-6)` and throw a RangeError out of
+    // expandBundle, which takes the whole offline roster with it. One bad row is not worth that.
+    const from = Number(packed.r[0]);
+    const to = Number(packed.r[1]);
+    if (!Number.isFinite(from) || !Number.isFinite(to) || to < from) return [];
     const out = new Array(to - from + 1);
     for (let i = 0; i < out.length; i++) out[i] = from + i;
     return out;

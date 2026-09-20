@@ -140,6 +140,28 @@ const DECOMPOSED = "Ténéré 700".normalize("NFD");
   eq("another host is left alone", worker.backToApi("https://example.com/x", here), "");
 }
 
+/* ------------------------------------------- BUG-21  one bad bundle row must not kill the roster */
+
+{
+  const indexData = await mod("web/counter/js/index-data.js");
+  const good = indexData.expandBundle({ rows: [["KTM", "390 Duke", { r: [2023, 2025] }, {}, "EU"]] });
+  eq("a normal year range expands", good.map((b) => b.year), [2023, 2024, 2025]);
+  let survived = true;
+  let rows = [];
+  try {
+    rows = indexData.expandBundle({
+      rows: [
+        ["KTM", "390 Duke", { r: [2026, 2020] }, {}, "EU"],
+        ["BMW", "R 1300 GS", { r: [2024, 2024] }, {}, "EU"],
+      ],
+    });
+  } catch {
+    survived = false;
+  }
+  ok("a reversed year range does not throw", survived);
+  eq("the good row beside it still expands", rows.map((b) => b.id), ["bmw-r-1300-gs-2024"]);
+}
+
 /* ------------------------------------------------------------------- bus.js hash routing edges */
 
 {
