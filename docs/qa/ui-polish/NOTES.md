@@ -138,10 +138,26 @@ the collapsed-border tricks that depended on 3 px (`margin-left: -3px`, `border-
    image frames — use the weaker `--edge-soft`, so "bordered" keeps meaning "tappable".
 5. **Mic + camera flush.** `.ask .btn` lost its per-button right border; mic sits hard against
    the bar's left edge and the camera is divided from it by one `--edge-soft` hairline.
-6. **Chat moved into the search bar.** The floating `.chat-pill` over the list is gone; it is
-   now a 48 px icon button in the `.ask` grid, between the field and the submit arrow, divided
-   by the same hairline. `syncFoot()` no longer consults it — the foot is the MANUAL button
-   alone.
+6. **A chat + voice pair at the bottom.** Superseded mid-pass: *"in the bottom there should be
+   both a chat and a voice button (just icons) so that the voice is easier accessible."* The
+   floating `.chat-pill` is gone and chat did **not** end up in the search bar. Instead
+   `js/dock.js` builds one body-level fixed pair — chat bubble, microphone, 48 px each, the
+   same radius/hairline/token system — shown on Pick, Book and the Parts sheet
+   (`body[data-here="pick"|"book"] .dock`).
+
+   It is **bottom left**, not bottom right: the voice orb docks bottom right
+   (`voice-orb.css`, `--dock-gap`), and the pair may never sit under it. On Book it lifts to
+   `108px` to clear the page strip and the thumb row, and the Parts sheet's body gained
+   bottom padding so its last row is never behind it. `z-index: 46` — over the Parts sheet
+   (45), under the chat view (60) and the orb (70).
+
+   No voice code is imported into a screen: the mic dispatches
+   `window.dispatchEvent(new CustomEvent("mechanica:voice", { detail: { action: "start" } }))`
+   and `voice-session.js` owns it from there. Chat is a callback the live screen claims with
+   `setChat()`; Book's handler fires `mechanica:chat`, which Pick answers with its own
+   `chat.toggle()` — one conversation per manual, openable from either screen.
+   `syncFoot()` no longer consults a pill, and Pick's `.foot` gained `padding-left: 112px`
+   so the MANUAL button never runs under the pair.
 7. **"COND" → "Conditions".** It only ever appeared in the reader's bottom row, where it was
    removed earlier the same day. The newest instruction wins, so it is **restored there,
    spelled out** (`book.js`, `climateBtn`, `text: "Conditions"`, → `openConditions()`). The

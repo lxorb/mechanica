@@ -15,6 +15,137 @@ Pick → Book → the Parts sheet → back is invisible to it.
 
 ---
 
+## "Mechanica."
+
+> "When you say 'mechanica' it should activate the voice integration, like anytime basically."
+
+His hands are on the bike and the phone on the bench has brake fluid between it and him. Tapping
+is the one thing he cannot do — so the app starts with a word, and the word carries the sentence
+with it: **"Mechanica, I'm working on a YZF R1"** opens the session *and* asks the first question,
+in one breath.
+
+`js/voice-wake.js`, mounted by `js/app.js`. Off by default; the toggle is the ear beside the theme
+disc in the orange bar, and the choice is remembered in `localStorage["mechanica.wake"]`. A tap is
+also the user gesture a microphone legally needs, which is why this is a toggle and not a setting:
+a remembered "yes" still waits for the first touch of the visit before it opens anything.
+
+**Why the Web Speech API and not Deepgram.** An always-on Deepgram socket is $0.075 a *minute* and
+a microphone permanently on the wire. `webkitSpeechRecognition` is free and stays in the room. It
+is a much worse transcriber — which is exactly why it is only ever asked one question, *did this
+contain the word*, and the sentence it heard is handed to Deepgram to hear properly.
+
+**Two stages, because the two things he wants pull against each other.** The socket should open
+the instant the word lands — connecting, settings and greeting are about a second, and a second he
+spends finishing his sentence is a second he does not spend waiting. But the *sentence* is only
+whole when the recogniser settles it: firing once on the first interim hands Deepgram "I'm" out of
+"I'm working on a YZF R1". So the wake fires twice — `final:false` opens the session and nothing
+else, `final:true` carries the question — and `app.js` joins them up. Measured, our side of it:
+**1–2 ms** from the first transcript carrying the word to the socket opening, and **1 ms** from the
+settled sentence to `InjectUserMessage` on the wire.
+
+**What counts as the word.** `mechanica`, `mechanika`, `mecanica`, and **`mechanic a`** — which is
+what Chrome most often returns for it. Deliberately **not** the bare word *mechanic*: this is a
+workshop, somebody says it every ten minutes, and a false start that opens a paid socket and talks
+over the room is worse than a missed one he can repeat. The judgement is made on the *matched
+word*, not the sentence, so "mechanica, ask the mechanic about it" still fires.
+
+| `node web/tools/wake-test.mjs` | |
+|---|---|
+| summons taken | **10 / 10** (every spelling, plus "mechanic a" and "hey mechanica") |
+| the sentence after it, extracted whole | **10 / 10** |
+| shop lines that fired it | **0 / 60** — twenty sentences × three spellings, including *"the mechanic said"*, *"it's a mechanical fault"*, *"three mechanics in today"*, *"that's a mechanic's job"*, *"the mechanics of it are simple"* |
+| word heard → socket opening | **1–2 ms** |
+| settled sentence → on the wire | **1 ms** |
+
+**Two bugs the harness found**, both of which would only ever have shown up in a shop:
+
+- The cooldown was written as `now - opened < COOLDOWN_MS` with `opened` starting at 0. A page
+  younger than 2.5 s has a `performance.now()` smaller than the cooldown, so **the very first
+  summons was swallowed** — the one most likely to be shouted at a phone that has just been picked
+  up. It is `opened && now - opened < …` now.
+- Pausing the wake listener the moment the session started threw away the half of the utterance
+  that is the actual question, because the final result had not arrived yet. The pause now waits
+  out the utterance in flight (`SETTLE_MS` 1800), during which the agent is still connecting and
+  has not made a sound, so the two microphones never overlap on anything audible.
+
+**What could NOT be measured, and why it is said here rather than buried.** The plan was ten
+minutes of shop audio through `--use-file-for-fake-audio-capture` into a live recogniser.
+**Chrome's `SpeechRecognition` does not use the WebRTC capture path**, so the fake-device flags do
+not apply to it: it opened this machine's *real* microphone and transcribed the room. The first run
+came back with a colleague's conversation. That section was deleted rather than left in with a
+caveat, and **Chrome's own recognition latency is not measured anywhere in this document**. What it
+contributes is the delay before an interim carrying the word arrives, which Google does not
+document and which varies with its speech service.
+
+**Browser support.**
+
+| | continuous `webkitSpeechRecognition` | the wake word |
+|---|---|---|
+| Chrome, desktop | yes (Google's speech service, network) | works |
+| Chrome, Android | yes | works |
+| Edge | yes | works |
+| Safari, iOS 14.5+ | `webkitSpeechRecognition` exists, but **`continuous` is effectively ignored**: it stops after one utterance and re-`start()` needs a fresh user gesture | the toggle is **not shown** — `supported` is false-by-behaviour there and an affordance that cannot work must not be on screen. Voice still starts from the VOICE button and the corner mic. |
+| Firefox | no constructor | toggle not shown |
+
+The listener stops itself when the tab is hidden and while the Deepgram session has the
+microphone — two recognisers on one microphone is a fight nobody wins, and the agent's own voice
+coming back would trigger it.
+
+## Usable before there is a vehicle
+
+The wake word is pointless if the first thing it can do is nothing, so the agent now runs the app.
+A session can open with **no manual at all** (`GET /voice/agent-settings` with no `manualId`), and
+five client-side functions do the rest:
+
+| function | what it does | where it runs |
+|---|---|---|
+| `find_vehicle(make, model, year?)` | the catalogue, fuzzy, grouped by make+model with every year and whether a manual exists | **the browser** |
+| `select_vehicle(id)` | `bus.set({bikeId})`, Confirm, `ensureManual` with progress, then Pick | the browser |
+| `open_manual(page?)` | the reader, at a page | the browser |
+| `open_parts(query?)` | the Parts sheet | the browser |
+| `go_back()` | one step back | the browser |
+
+**Client-side on purpose.** The roster of 27k vehicles is already in the tab and already indexed
+by the same fuzzy search the Identify field uses; the navigation is the bus's. An API round trip
+for either would be slower, would need a second copy of a search that already exists, and would
+not work offline.
+
+**The problem this had to solve: Deepgram fixes the function list when `Settings` is applied.**
+There is no way to add a tool endpoint later without dropping the socket, and dropping the socket
+loses the conversation. So every tool is registered from the first second, and the grounded ones
+carry **`?session=<id>`** where the manual id would be. They answer
+
+```json
+{"error": "no_manual_yet", "say": "Which bike are you on?", "hint": "…call find_vehicle…"}
+```
+
+— a 200, not a 404, because an HTTP error closes the turn and makes the agent apologise for a
+fault, where this is simply the truth and something it can act on. When `select_vehicle` lands the
+browser `POST`s `/voice/session/{id}/manual?manualId=…`, which binds the id server-side (so every
+tool URL is instantly right) and hands back that book's grounding rules, which go down the **same
+socket** as an `UpdatePrompt`. **No reconnect, no second greeting, no lost conversation.**
+
+**The prompt's vehicle rules**, each attached to a turn that broke without it: call `find_vehicle`
+immediately on his own words and do not ask for the year first; one candidate means get on with
+it; make and model matching with the year missing or ambiguous earns **one** short question —
+*"Which year?"* — and never a list; take the year however he says it; if the exact year has no
+manual take the nearest that does **and say so**; never invent a vehicle; never read an id out
+loud; confirm the machine by its full name once.
+
+**Measured end to end** (`node web/tools/orb-shots.mjs`, stubbed socket, both viewports):
+
+```
+a session opens with no vehicle chosen at all
+his first sentence goes in as a user turn ("I'm working on a YZF R1")
+find_vehicle answers from the catalogue in this tab (6 candidates, first Yamaha YZF-R1 2026, 27 years)
+select_vehicle puts the app on it ({"ok":true,"name":"Yamaha YZF-R1 2026","manual":"ready",…})
+the bus is on that bike (yamaha-yzf-r1-2026)
+open_manual put page 77 on his screen
+and the orb docked itself the moment the manual was up
+```
+
+---
+
 ## It was hearing itself
 
 > "it is like detecting itself making sound in a loop"
@@ -383,10 +514,19 @@ Regenerate and re-verify with `node web/tools/orb-shots.mjs`.
 ## Living with the rest of the app
 
 `mechanica:voice` on the window carries everything out — `status`, `text`, `steps`, `page`, `step`,
-`spec`, `mute`, `interrupted`, `started`, `ended`, `dock`, `error` — and
-`mechanica:voice-toggle` is how a screen asks for the assistant. **No screen imports voice code and
-voice imports no screen.** `screens/book.js` is 12 lines of it: a listener that turns and pulses
-the page an answer named, one that steps on "next" / "previous", and the reader's own mic button.
+`spec`, `mute`, `vehicle`, `manual`, `manual-progress`, `interrupted`, `started`, `ended`, `dock`,
+`error` — and a screen asks for the assistant either with `mechanica:voice-toggle` or with
+`mechanica:voice` carrying `{action: "start" | "stop"}` (the corner mic on Pick, Book and Parts).
+The events this module *sends* carry `kind` and never `action`, so listening on its own name
+cannot loop. **No screen imports voice code and voice imports no screen.** `screens/book.js` is 12
+lines of it: a listener that turns and pulses the page an answer named, one that steps on
+"next" / "previous", and the reader's own mic button.
+
+Two things a screen can put in the orb's way, and both are honoured without either side importing
+the other: `<body data-voice="live">` while a session is up, so a screen can hide its own
+microphone button rather than show two of the same control; and `data-voice-anchor` on anything
+the docked orb must sit above — the reader's thumb row and the corner icon pair are both measured,
+and the highest wins.
 
 The answers act on the page:
 

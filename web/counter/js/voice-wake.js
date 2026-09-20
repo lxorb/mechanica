@@ -32,6 +32,8 @@ const KEY = "mechanica.wake";
 const RESTART_MS = 250;
 /** After a trigger, ignore the same words arriving again as a final result. */
 const COOLDOWN_MS = 2500;
+/** How long one spoken sentence has to settle after the wake word opened the socket. */
+const SETTLE_MS = 1800;
 
 const WAKE = /\bme(?:ch|k|c)h?an(?:ic|ik|ica|ika)\s*(?:a|ah|er)?\b/i;
 /**
@@ -151,13 +153,18 @@ function startRec() {
       const final = Boolean(event.results[i].isFinal);
       if (!final) {
         // One opening per utterance: every interim after the first carries the same word.
-        if (now - opened < COOLDOWN_MS) continue;
+        // `opened &&` matters — without it, a page younger than COOLDOWN_MS has a performance
+        // clock smaller than the cooldown and swallows the very first summons, which is the one
+        // most likely to be shouted at a phone that has just been picked up.
+        if (opened && now - opened < COOLDOWN_MS) continue;
         opened = now;
         onWake({ rest: hit.rest, text: String(said || "").trim(), final: false });
         return;
       }
       if (now - last < COOLDOWN_MS && last) continue;
       last = now;
+      // The sentence is settled, so the session has what it came for: hand the microphone over.
+      opened = 0;
       onWake({ rest: hit.rest, text: String(said || "").trim(), final: true });
       return;
     }
@@ -315,8 +322,19 @@ export function mountToggle(onWakeFn) {
     const kind = e && e.detail && e.detail.kind;
     // One microphone, one listener. The Deepgram session is the better recogniser and it is the
     // one being paid for; this one gets out of its way and comes back when it ends.
-    if (kind === "started") pause(true);
-    else if (kind === "ended") pause(false);
+    //
+    // But NOT instantly, when the session was started by the word itself: the sentence he is
+    // still saying only settles a beat later, and stopping the recogniser the moment the socket
+    // opens throws away the half of the utterance that is the actual question. So the pause
+    // waits out the utterance in flight — the agent is connecting through all of it and has not
+    // made a sound yet, so the two microphones never overlap on anything audible.
+    if (kind === "started") {
+      const flight = opened && performance.now() - opened < SETTLE_MS;
+      if (flight) window.setTimeout(() => pause(true), SETTLE_MS);
+      else pause(true);
+    } else if (kind === "ended") {
+      pause(false);
+    }
   });
 
   paint();

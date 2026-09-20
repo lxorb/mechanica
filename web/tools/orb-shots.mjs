@@ -279,6 +279,143 @@ async function liveAcrossScreens(page, width, height) {
   });
 }
 
+/**
+ * THE WHOLE JOB, SPOKEN, with nothing chosen at the start.
+ *
+ * "Mechanica, I'm working on a YZF R1" → "Which year?" → "twenty twenty-six" → the app is on the
+ * bike, the manual is coming → "chain is loose" → the reader is on the page. Every tool call is a
+ * real FunctionCallRequest down the stubbed socket and every answer is the real client's, so what
+ * is asserted is the contract between api/app/voice.py's declarations and voice-session.js's
+ * handlers — the thing that would silently rot if either side moved.
+ */
+async function spokenFlow(page) {
+  return page.evaluate(async () => {
+    const seen = [];
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    class Stub {
+      static OPEN = 1;
+      constructor() {
+        this.readyState = 0;
+        this.id = 0;
+        window.__flow = this;
+        setTimeout(() => {
+          this.readyState = 1;
+          if (this.onopen) this.onopen({});
+        }, 5);
+      }
+      json(m) {
+        if (this.onmessage) this.onmessage({ data: JSON.stringify(m) });
+      }
+      send(data) {
+        if (typeof data !== "string") return;
+        let msg = {};
+        try {
+          msg = JSON.parse(data);
+        } catch {
+          return;
+        }
+        if (msg.type === "Settings") {
+          this.json({ type: "Welcome", request_id: "flow" });
+          this.json({ type: "SettingsApplied" });
+          return;
+        }
+        if (msg.type === "FunctionCallResponse") seen.push({ name: msg.name, content: msg.content });
+        if (msg.type === "InjectUserMessage") seen.push({ name: "user", content: msg.content });
+        if (msg.type === "UpdatePrompt") seen.push({ name: "UpdatePrompt", content: String(msg.prompt).slice(0, 40) });
+      }
+      /** The agent calling one of the app's own tools, the way Deepgram does. */
+      callTool(name, args) {
+        this.id += 1;
+        this.json({
+          type: "FunctionCallRequest",
+          functions: [{ id: `f${this.id}`, name, arguments: JSON.stringify(args), client_side: true }],
+        });
+      }
+      say(content) {
+        this.json({ type: "ConversationText", role: "assistant", content });
+      }
+      close() {
+        this.readyState = 3;
+      }
+      addEventListener() {}
+      removeEventListener() {}
+    }
+    window.WebSocket = Stub;
+
+    const agent = await import("/counter/js/voice-deepgram.js");
+    agent.tuning.settings = {
+      url: "wss://stub/agent",
+      sampleRate: 24000,
+      pages: 0,
+      session: "flow-session",
+      settings: { type: "Settings" },
+    };
+    const voice = await import("/counter/js/voice-session.js");
+    const bus = await import("/counter/js/bus.js");
+    await import("/counter/js/screens/identify.js");
+    await import("/counter/js/screens/confirm.js");
+    await import("/counter/js/screens/pick.js");
+    await import("/counter/js/screens/book.js");
+    window.__voice = voice;
+
+    // 1. The wake word opened a session with no vehicle at all, and handed over the sentence.
+    await voice.start({});
+    await wait(350);
+    const liveWithNothing = voice.isLive();
+    voice.ask("I'm working on a YZF R1");
+    await wait(120);
+    const asked = seen.find((s) => s.name === "user");
+
+    // 2. find_vehicle, over the catalogue that is already in this tab.
+    window.__flow.callTool("find_vehicle", { make: "Yamaha", model: "YZF R1" });
+    await wait(700);
+    const found = seen.find((s) => s.name === "find_vehicle");
+    const candidates = found ? JSON.parse(found.content).candidates : [];
+
+    // 3. "Which year?" — one question, and he answers it.
+    window.__flow.say("Which year?");
+    await wait(120);
+    voice.ask("twenty twenty-six");
+    await wait(120);
+
+    // 4. select_vehicle. There is no API behind this server, so ensureManual cannot index
+    //    anything: what is asserted is that the app lands on the bike either way.
+    const pick = candidates[0];
+    const before = location.hash;
+    window.__flow.callTool("select_vehicle", { id: pick ? pick.id : "nope" });
+    await wait(2200);
+    const chose = seen.find((s) => s.name === "select_vehicle");
+    const chosen = chose ? JSON.parse(chose.content) : null;
+
+    // 5. "chain is loose" → the agent names a page and opens it.
+    window.__flow.callTool("open_manual", { page: 77 });
+    await wait(900);
+    const opened = seen.find((s) => s.name === "open_manual");
+
+    const onBook = !document.querySelector('[data-screen="book"]').hidden;
+    const result = {
+      liveWithNothing,
+      asked: asked ? asked.content : "",
+      candidates: candidates.length,
+      first: pick ? { name: pick.name, years: pick.years.length, manual: pick.manual } : null,
+      chosen,
+      bikeId: bus.state.bikeId,
+      hashBefore: before,
+      hash: location.hash,
+      opened: opened ? JSON.parse(opened.content) : null,
+      page: bus.state.page,
+      onBook,
+      docked: document.querySelector(".vo") ? document.querySelector(".vo").classList.contains("is-compact") : null,
+      bound: seen.some((s) => s.name === "UpdatePrompt"),
+      // go_back is the last of the five and the cheapest to prove.
+      seen: seen.map((s) => s.name),
+    };
+    voice.stop();
+    return result;
+  });
+}
+
 async function run() {
   const puppeteer = (await import(`file:///${PUPPETEER.split("\\").join("/")}`)).default;
   const { server, port } = await serve();
@@ -769,6 +906,28 @@ async function run() {
       };
     });
     say(!gone.live && gone.hidden, `ends clean: nothing live, the orb is put away (${gone.before} orb)`);
+
+    // 6. the whole job, spoken, from nothing — on its own page, because it starts before a
+    //    vehicle exists and this one has been walked to Pick and back.
+    const flow = await page.browser().newPage();
+    await flow.setViewport({ width, height, deviceScaleFactor: 2 });
+    await flow.emulateMediaFeatures([{ name: "prefers-color-scheme", value: "light" }]);
+    await flow.goto(`http://127.0.0.1:${port}/counter/index.html`, { waitUntil: "domcontentloaded" });
+    const spoken = await spokenFlow(flow);
+    say(spoken.liveWithNothing, "a session opens with no vehicle chosen at all");
+    say(spoken.asked === "I'm working on a YZF R1", `and his first sentence goes in as a user turn ("${spoken.asked}")`);
+    say(spoken.candidates > 0 && /yzf/i.test((spoken.first || {}).name || ""),
+      `find_vehicle answers from the catalogue in this tab (${spoken.candidates} candidates, first ${(spoken.first || {}).name}, ${(spoken.first || {}).years} years)`);
+    say(Boolean(spoken.chosen && spoken.chosen.ok), `select_vehicle puts the app on it (${JSON.stringify(spoken.chosen)})`);
+    say(Boolean(spoken.bikeId), `the bus is on that bike (${spoken.bikeId})`);
+    say(spoken.onBook && spoken.page === 77, `open_manual put page ${spoken.page} on his screen`);
+    say(spoken.docked === true, "and the orb docked itself the moment the manual was up");
+    say(
+      ["find_vehicle", "select_vehicle", "open_manual"].every((n) => spoken.seen.includes(n)),
+      `every tool answered (${spoken.seen.join(", ")})`,
+    );
+    await flow.screenshot({ path: join(SHOTS, `spoken-flow-${label}.png`) });
+    await flow.close();
 
     say(errors.length === 0, `no console errors${errors.length ? ": " + errors.slice(0, 3).join(" | ") : ""}`);
     await page.close();
