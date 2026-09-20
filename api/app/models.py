@@ -125,6 +125,7 @@ class RegistryEntry(BaseModel):
     title: str | None = None
     needsUa: str | None = None  # fetcher hint: "googlebot" or "browser" when the host rejects the default UA
     kind: str | None = None  # "motorcycle" | "car"; None = motorcycle
+    docKind: str | None = None  # owner | service | quickstart | brochure | warranty | supplement | infotainment | spec (from url/title only)
 
 
 class AskRequest(BaseModel):
