@@ -54,8 +54,7 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   background: var(--accent-2);
   color: var(--accent-2-ink);
   padding: 6px 8px;

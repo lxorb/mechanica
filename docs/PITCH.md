@@ -1,7 +1,7 @@
 # Pitch — one block per track
 
 **Mechanica.** You pick your exact bike, and you get that bike's official manual — the page, the printed
-lines marked, the part lit on a 3D model. Any of 14,770 free official manuals, fetched on demand in under a
+lines marked, the part lit on a 3D model. Any of 14,865 free official manuals, fetched on demand in under a
 minute. Nothing is rewritten.
 
 Live: **https://mechanica.emilvinu.ch** · API proxied at `/api`.
@@ -15,10 +15,10 @@ present, and do not type a number that is not in that file.
 
 | measured | value | where |
 |---|---|---|
-| free official manuals we can fetch | **14,770 distinct PDFs** (24,210 free English owner's-manual rows) | `registry.json`, `_ingestable()` |
-| registry | 53,557 rows, 80 makes, 84 portals, 182 service rows (15 not free) | `GET /api/registry` |
-| catalog | **27,751 vehicles** — 23,140 motorcycles, 4,611 cars — **13,537** with a free manual | `GET /api/catalog` |
-| warm cache | **535 manuals**, 95,914 pages, 91,388 sections, 662 vehicles | `GET /api/manuals` |
+| free official manuals we can fetch | **14,865 distinct PDFs** (24,324 free English owner's-manual rows) | `registry.json`, `_ingestable()` |
+| registry | 99,338 rows, 82 makes, 90 portals, 186 service rows (14 not free) | `GET /api/registry` |
+| catalog | **30,409 vehicles** — 24,026 motorcycles, 6,383 cars — **18,564** with a free manual | `GET /api/catalog` |
+| warm cache | **543 manuals**, 97,230 pages, 92,682 sections, 670 vehicles | `GET /api/manuals` |
 | cold bike → readable manual | **1.3 s to open, 40.4 s fully searchable** | timed live run, KTM 390 Duke 2014, 182 p, 2026-09-20 |
 | ingest cost | **$0.095** per manual (mean over 648 real ingests, mean 177 pages) | `api/data/mass_report.jsonl` |
 | ask | top-1 **100%** of 130 in-scope queries, 20/20 off-topic refused, p95 3.33 s, **$0.00038** | `api/eval/report.md` |
@@ -26,11 +26,11 @@ present, and do not type a number that is not in that file.
 | chat | **100% of 48 claim sentences cited**, 43/43 quotes verbatim, 0 invented numbers, $0.0041/answer | `api/eval/chat-report.md` |
 | chat, first token | **p50 2.64 s** / p95 5.87 s | `chat-report.md` |
 | token compression | **31.2% saved** (eval, 23 bear-2 calls) · 29.1% over 10 calls on the live replica | `chat-report.md`, `GET /api/cost/ttc` |
-| all OpenAI spend on the live API | **$8.93**, 1,633 calls — 2026-09-20 09:55, and it moves every hour | `GET /api/cost` |
-| naive baseline | **$12.40** per ask (largest deployed manual) · **$1.37** (median manual) | `GET /api/cost` → `naivePerAsk` |
+| all OpenAI spend on the live API | **$13.80**, 2,182 calls — 2026-09-20 15:40, and it moves every hour | `GET /api/cost` |
+| naive baseline | **$12.40** per ask (largest deployed manual) · **$1.36** (median manual) | `GET /api/cost` → `naivePerAsk` |
 
 Naive = the largest manual we hold (775 pages × 800 tok/page, from code, past the 272k long-context line so
-billed 2×) pasted into `gpt-6-astra` at $10/M. Our ask is **32,632× cheaper** — 3,600× against the median
+billed 2×) pasted into `gpt-6-astra` at $10/M. Our ask is **32,632× cheaper** — 3,579× against the median
 manual, say which — and the answer is a PDF page, not a paragraph.
 
 ---
@@ -47,8 +47,8 @@ manual, say which — and the answer is a PDF page, not a paragraph.
 router**, **page picker**, the one-time **manual structurer**, and **grounded chat**. Structured outputs via
 `responses.parse` with Pydantic schemas everywhere — the picker returns *ids only*, and `ask.py` drops any id
 that was not in the candidate list, so a hallucinated section cannot reach the UI. The whole app runs on the
-cheap tier (`gpt-5.6-luna`, $0.20/M) except the picker and chat (`gpt-5.6-terra`, $2/M): **$75.96 of the
-$83.05 build ledger is luna, and $71.52 of that is one-time ingest** — 86% of everything we have ever spent
+cheap tier (`gpt-5.6-luna`, $0.20/M) except the picker and chat (`gpt-5.6-terra`, $2/M): **$78.15 of the
+$87.75 build ledger is luna, and $71.52 of that is one-time ingest** — 82% of everything we have ever spent
 is paid once per manual, never per question. Codex usage, including the live search bug it found:
 [docs/CODEX.md](CODEX.md).
 
@@ -107,7 +107,7 @@ Ask the BMW R 12 G/S about a loose chain and it says so — it is shaft drive.
 | | |
 |---|---|
 | Judge sees | Two taps and one word, and the mechanic is on the printed page of a manual that did not exist on our servers a minute ago |
-| Say | **$0.095 per manual, once. $0.0004 per ask. 535 manuals are warm; the deployed app has spent $8.93 over 1,633 calls (2026-09-20 09:55, and it moves).** |
+| Say | **$0.095 per manual, once. $0.0004 per ask. 543 manuals are warm; the deployed app has spent $13.80 over 2,182 calls (2026-09-20 15:40, and it moves).** |
 | Status | Every figure logged per route, served by `GET /api/cost` |
 
 Measured: cold procedure ask 3.4 s, cold spec ask 1.5 s, repeat 0.2–0.4 s at $0, chat first token 2.2–2.6 s.
@@ -120,12 +120,12 @@ them the page they were liable for anyway. The AI line item stops being a line i
 | | |
 |---|---|
 | Judge sees | A bike with no free manual → **Dropbox** → pick the workshop PDF → progress bar → that bike answers questions |
-| Say | **Owner's manuals are free for 9,424 of our 23,140 motorcycles and 4,113 of our 4,611 cars. The service manual a shop actually needs is metered — BMW charges EUR 9 an hour. So we point at the copy the shop already bought.** |
+| Say | **Owner's manuals are free for 12,357 of our 24,026 motorcycles and 6,207 of our 6,383 cars. The service manual a shop actually needs is metered — BMW charges EUR 9 an hour. So we point at the copy the shop already bought.** |
 | Status | Upload path **live** (`POST /ingest/upload` → the same ingest). **Chooser pending `TTM_DROPBOX_APP_KEY`** — the button hides itself without it. Folder sync (`api/app/dropbox_sync.py`, 32 tests) is **built, deploying**: the router is in `main.py` but `/api/dropbox/*` is not in the live OpenAPI yet |
 
 `web/counter/js/screens/confirm.js` loads the Chooser drop-in, which returns a `linkType: 'direct'` URL that
 `/ingest` fetches and indexes exactly like an OEM URL; nothing is uploaded anywhere but the user's own index. This is the answer to the hard half of the
-problem, quantified in [MANUALS.md](MANUALS.md): 182 service-manual rows across every brand, 15 of them paid,
+problem, quantified in [MANUALS.md](MANUALS.md): 186 service-manual rows across every brand, 14 of them paid,
 subscription or dealer-login only — and we index none of them.
 
 ## Visa — parts basket

@@ -404,7 +404,7 @@
       "title": "The token path",
       "caption": "Three orange boxes are the whole bill, and bear-2 is the first of them — a cost lever between the pages and the model, never a correctness lever.",
       "flow": {
-        "w": 1180,
+        "w": 1440,
         "bands": [
           {
             "rows": [
@@ -426,6 +426,11 @@
                     "tone": "orange",
                     "t": "bear-2 compression"
                   }
+                ],
+                "labels": [
+                  "types",
+                  "retrieves",
+                  "compresses"
                 ]
               },
               {
@@ -447,7 +452,13 @@
                     "t": "Manual page"
                   }
                 ],
-                "down": true
+                "labels": [
+                  "prompts",
+                  "cites",
+                  "opens"
+                ],
+                "down": true,
+                "downLabel": "caches"
               }
             ]
           }

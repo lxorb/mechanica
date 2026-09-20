@@ -81,7 +81,7 @@
       "title": "Four functions, one book",
       "caption": "One socket — listen, think, speak. The agent's whole vocabulary is our four grounded tools, and the manual's text never enters the tab.",
       "flow": {
-        "w": 1180,
+        "w": 1440,
         "bands": [
           {
             "rows": [
@@ -107,6 +107,12 @@
                     "tone": "orange",
                     "t": "OpenAI think"
                   }
+                ],
+                "labels": [
+                  "speaks",
+                  "streams",
+                  "hears",
+                  "transcribes"
                 ]
               },
               {
@@ -128,7 +134,13 @@
                     "t": "Manual page"
                   }
                 ],
-                "down": true
+                "labels": [
+                  "queries",
+                  "answers",
+                  "turns"
+                ],
+                "down": true,
+                "downLabel": "calls"
               }
             ]
           }

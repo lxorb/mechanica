@@ -94,8 +94,8 @@ it, and that transcript arrives **on the same millisecond as the first byte of a
 
 ## 1:30 — The demo (exact utterances)
 
-**Setup on stage:** the bike is the **KTM 390 Duke 2024** — 143 printed pages, one of the **535 manuals**
-already warm (`GET /api/manuals`, 2026-09-20). (Any of **14,770** free official manuals works; a bike nobody has ever asked for is readable in **1.3 s**
+**Setup on stage:** the bike is the **KTM 390 Duke 2024** — 143 printed pages, one of the **543 manuals**
+already warm (`GET /api/manuals`, 2026-09-20). (Any of **14,865** free official manuals works; a bike nobody has ever asked for is readable in **1.3 s**
 and fully searchable in **40.4 s** for **$0.095**. If a judge names a bike, do that — but not on the clock.)
 Tap **VOICE**. The greeting is *"I see you're looking at the KTM 390 Duke 2024."* — **724 ms after the
 socket opens**.
@@ -128,18 +128,18 @@ you volunteer your own slowest path believes the rest of your numbers.
 ## 1:00 — Architecture, and where every millisecond goes
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> MIC("Mic"):::ours --> VA("Voice Agent API"):::them --> FLUX("Flux STT"):::them --> THINK("OpenAI think"):::them
+    MECH("Mechanic"):::ends -- "speaks" --> MIC("Mic"):::ours -- "streams" --> VA("Voice Agent API"):::them -- "hears" --> FLUX("Flux STT"):::them -- "transcribes" --> THINK("OpenAI think"):::them
   end
   subgraph R2[" "]
     direction LR
-    CALL("Function calls"):::them --> TOOLS("Mechanica tools"):::ours --> AURA("Aura-2 TTS"):::them --> PAGE("Manual page"):::ends
+    CALL("Function calls"):::them -- "queries" --> TOOLS("Mechanica tools"):::ours -- "answers" --> AURA("Aura-2 TTS"):::them -- "turns" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2
+  R1 -- "calls" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -290,7 +290,7 @@ covers a number.** General steps carry no figures; only the printed pages do.
 time rather than per turn, and the socket exists only between the two taps on VOICE. A typical spec
 question is a ~10-second session: **about 1.2 cents**. For comparison, the same question typed into our chat
 costs $0.0049, and the naive "paste the whole manual into a flagship model" baseline is **$12.40** on the
-largest deployed manual ($1.37 on the median one — say which). The
+largest deployed manual ($1.36 on the median one — say which). The
 Cloudflare Worker in the middle bills CPU time, not socket duration, so proxying is effectively free.
 
 **"Why not OpenAI Realtime?"**
@@ -318,8 +318,8 @@ live.) The dictation path (`web/counter/js/deepgram.js`, flux over `/ws/deepgram
 back to the browser's own Web Speech (`speech.js`, identical interface), and typing has always worked.
 
 **"Did you just wrap an API?"**
-The wrapping is four `Settings` fields. The product is everything the tools return: 53,557 registry rows
-across 80 makes, 14,770 distinct free English PDFs we can fetch, a per-page text layer with block coordinates, a
+The wrapping is four `Settings` fields. The product is everything the tools return: 99,338 registry rows
+across 82 makes, 14,865 distinct free English PDFs we can fetch, a per-page text layer with block coordinates, a
 router that rewrites rider slang into the manual's vocabulary, and the rule that a quote is sliced out of
 the original page by the *server* so citations are verbatim by construction rather than by trusting a
 model. The voice is a two-second door onto that. Take the index away and the same `Settings` message

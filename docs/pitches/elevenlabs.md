@@ -92,18 +92,18 @@ after the turn ends. One field, and it is the difference between a voice assista
 ### The flowchart
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> PHOT("Photo"):::ours --> AP("Agents Platform"):::them --> ST("Server tools"):::them
+    MECH("Mechanic"):::ends -- "shoots" --> PHOT("Photo"):::ours -- "sends" --> AP("Agents Platform"):::them -- "calls" --> ST("Server tools"):::them
   end
   subgraph R2[" "]
     direction LR
-    API("Mechanica API"):::ours --> SHOW("Client tool show_page"):::them --> PAGE("Manual page"):::ends
+    API("Mechanica API"):::ours -- "returns" --> SHOW("Client tool show_page"):::them -- "turns" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2
+  R1 -- "queries" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -180,7 +180,7 @@ numbers are measured and they told me which half was theirs.* 5 — *this ships 
 > agent must still look the part up in the book. Typed turns go into the same conversation. And it follows
 > the mechanic into German, with one rule: its own words translate, the manual's do not.
 >
-> Live: mechanica.emilvinu.ch — 14,770 free official manuals, $0.00038 an ask and $0.0041 a written answer.
+> Live: mechanica.emilvinu.ch — 14,865 free official manuals, $0.00038 an ask and $0.0041 a written answer.
 
 *(398 words.)*
 
@@ -206,7 +206,7 @@ grounding policy, imported rather than copied, with a test that fails if they dr
 **"Why not just use the knowledge base / RAG that ElevenLabs gives you?"**
 Because a RAG answer is a paraphrase with a citation stapled on, and this mechanic is liable for the
 number. Our tools return the page's verbatim text and the page number, and the prompt forbids any figure
-that a tool result did not print. Also: 14,770 distinct free English PDFs, 27,751 vehicles. Uploading them into a knowledge
+that a tool result did not print. Also: 14,865 distinct free English PDFs, 30,409 vehicles. Uploading them into a knowledge
 base is a copy we have no right to make — we index what the manufacturer publishes and link to their file.
 
 **"What stops the model from just answering from memory? Every prompt says 'don't hallucinate'."**

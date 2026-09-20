@@ -1,15 +1,15 @@
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> VIS("Vision"):::them --> LUNA("gpt-5.6-luna"):::them --> BM("BM25 index"):::ours --> TERRA("gpt-5.6-terra"):::them
+    MECH("Mechanic"):::ends -- "shoots" --> VIS("Vision"):::them -- "identifies" --> LUNA("gpt-5.6-luna"):::them -- "routes" --> BM("BM25 index"):::ours -- "shortlists" --> TERRA("gpt-5.6-terra"):::them
   end
   subgraph R2[" "]
     direction LR
-    SO("Structured Outputs"):::them --> GATE("Grounding gate"):::ours --> PAGE("Manual page"):::ends --> RESP("Responses API"):::them
+    SO("Structured Outputs"):::them -- "returns" --> GATE("Grounding gate"):::ours -- "verifies" --> PAGE("Manual page"):::ends -- "streams" --> RESP("Responses API"):::them
   end
 
-  R1 --> R2
+  R1 -- "picks" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414

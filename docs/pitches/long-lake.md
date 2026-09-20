@@ -76,8 +76,8 @@ And the problems they name, which are the technical taste of the room:
 | **Cycle time moved** | Five minutes of thumbing a 775-page PDF → **top-1 section in 3.9 s cold, 0.09 s on a repeat.** p95 **3.33 s** over a 150-query eval. Cold manual → readable **1.3 s**, fully searchable **40.4 s**. | live timed run 2026-09-20 (Honda Civic 2022); `api/eval/report.md`; live ingest run |
 | **Error rate moved** | Right section first on **100% of 150** rider queries; **0 of 20** off-topic questions answered instead of refused; chat: **100% of 43 quotes verbatim**, **100% of 48 claim sentences carry a page**, **0 invented numbers**, **0 dealer referrals**. | `api/eval/report.md`, `api/eval/chat-report.md` |
 | **Throughput / unit cost** | **$0.00038** per ask (eval mean); measured again live this morning on the largest manual we hold: **6 asks, $0.00357 total, $0.0006 each**. Against a **$12.40** naive per-ask baseline the live API reports for that same manual. | `GET /api/cost` before/after, 2026-09-20 |
-| **Legacy source with no clean API** | **34 adapter modules + 26 crawl fragments over 84 publisher hosts.** Ducati's PDFs are Akamai-fingerprinted — 403 to httpx *and* headless Chrome, 200 to headful, so that adapter drives a real browser over CDP. Kawasaki **401s if you send `Accept: application/json`**. Honda needs a Googlebot UA and a CSRF token, and 4 of its 41 distributor codes were found only by trying **479 candidates**. **17 makes are documented as unreachable** so nobody re-walks them. | `docs/MANUALS.md`, `api/app/registry/**` |
-| **Repeatable, not bespoke** | **535 manuals · 95,914 pages · 91,388 sections** ingested by one pipeline at **$0.096 a manual**, median 169 pages. **4,611 cars are already in the same catalog as 23,140 motorcycles** and answer through the identical code path — no per-vertical work. | live `GET /api/manuals`, `GET /api/catalog`, `api/data/mass_report.jsonl` |
+| **Legacy source with no clean API** | **34 adapter modules + 26 crawl fragments over 89 publisher hosts.** Ducati's PDFs are Akamai-fingerprinted — 403 to httpx *and* headless Chrome, 200 to headful, so that adapter drives a real browser over CDP. Kawasaki **401s if you send `Accept: application/json`**. Honda needs a Googlebot UA and a CSRF token, and 4 of its 41 distributor codes were found only by trying **479 candidates**. **17 makes are documented as unreachable** so nobody re-walks them. | `docs/MANUALS.md`, `api/app/registry/**` |
+| **Repeatable, not bespoke** | **543 manuals · 97,230 pages · 92,682 sections** ingested by one pipeline at **$0.096 a manual**, median 169 pages. **6,383 cars are already in the same catalog as 24,026 motorcycles** and answer through the identical code path — no per-vertical work. | live `GET /api/manuals`, `GET /api/catalog`, `api/data/mass_report.jsonl` |
 | **Evals and exception-flagging** | The grounding gate drops any quote it cannot find character-for-character in the PDF text layer; the picker returns **ids only** and any id outside the candidate list is dropped; every digit in a chat answer is checked against the pages the model was shown. A question the manual does not cover comes back as *"the manual does not print this"*, not as an invented torque figure — 5 of 5 in the eval. | `api/app/ingest/ground.py`, `api/app/ask.py`, `api/eval/chat-report.md` |
 | **Daily production use** | **We do not have this.** Zero paying shops, one design partner, no operator usage data. Say it before they ask. | — |
 
@@ -89,7 +89,7 @@ And the problems they name, which are the technical taste of the room:
 | Measurable business metric | **9** | Cycle time, error rate and unit cost all measured against a named baseline. Missing: throughput measured on a real operator, because there is no real operator yet. |
 | Second-deployment design | **9** | The corpus, the adapters and the grounding gate are built once; a new vehicle costs $0.096 and 40 s of machine time and zero engineering. Cars were the second deployment and they already work. |
 | Production reliability | **8** | Deployed, health-checked, degrades honestly (offline pages, dropped quotes, empty lists). But it is a hackathon deployment, not something an operator would notice going down. |
-| Legacy-integration credibility | **8** | We integrated 84 hostile publisher portals. We did **not** integrate a shop-management ERP (Mitchell 1, Tekmetric, Shop-Ware) — the analogue is genuine but not the same system. |
+| Legacy-integration credibility | **8** | We integrated 90 hostile publisher portals. We did **not** integrate a shop-management ERP (Mitchell 1, Tekmetric, Shop-Ware) — the analogue is genuine but not the same system. |
 | Daily production adoption | **4** | One design partner, zero installs, no adoption data. This is their hardest criterion and our weakest column. |
 
 **The deduction is real and you should name it in minute 4, not have it found in Q&A.** Long Lake's
@@ -108,7 +108,7 @@ Every one of these is strong somewhere else and actively costs you points here.
 | **Codex as the fifth teammate** (the FLOOR bug, run-1/run-2) | That is OpenAI's track. Here it reads as tooling trivia. |
 | **Anything pending a key: ElevenLabs voice, the Dropbox chooser, Elastic, Runpod, Visa checkout** | Long Lake's literal first criterion is "not a pilot or a proof of concept". Demoing a button that hides itself without a key is the single worst thing you can do in this room. **Do not say the word Elastic.** Deepgram voice is *not* in this list — it is live and measured — but it is off-thesis here, so open the mic only if a judge asks. |
 | **The 3D exploded model and the 97 generated part illustrations** | Let it appear on screen for four seconds because it is genuinely fast and pretty. Never argue from it. If asked: "it's a part locator, not a manufacturer parts catalogue" and move on. |
-| **The multiples — "32,632× cheaper", "3,600× cheaper"** | An operator discounts a multiple against a strawman on instinct. Lead with the two absolute numbers — **$12.40 and $0.0006** — and let them do the division themselves. |
+| **The multiples — "32,632× cheaper", "3,579× cheaper"** | An operator discounts a multiple against a strawman on instinct. Lead with the two absolute numbers — **$12.40 and $0.0006** — and let them do the division themselves. |
 | **Model names and price tiers** (luna/terra, $0.20/M vs $2/M) | Only in Q&A, only if asked "how is it that cheap". |
 | **Any market-size number** | We have no sourced TAM. Do not invent one. The arithmetic we can defend is per-mechanic and comes from our design partner; label it as his. |
 
@@ -135,7 +135,7 @@ they buy and operate rather than fund, and we have no sourced market data to mak
 It also puts our weakest column — zero deployments — at the centre of the slide.
 
 **C. "Designed for the second deployment."**
-Open with their own sentence. Show that the expensive, ugly, one-time work — 84 hostile publisher
+Open with their own sentence. Show that the expensive, ugly, one-time work — 90 hostile publisher
 portals, the PDF-to-structured-units pass, the grounding gate — is inherited, and that everything
 per-deployment is automatic: a new vehicle costs **$0.096 and 40 seconds of machine time with no
 human in the loop**, a new shop costs zero engineering, and a whole new vertical (cars) already runs
@@ -165,18 +165,18 @@ Rendered: [`long-lake/second-deployment.png`](long-lake/second-deployment.png) �
 bleed. Seven boxes: the only thing you need them to read is that the loop comes back to the registry.
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> ANY("Any vehicle"):::ours --> REG("Registry"):::them --> ING("On-demand ingest"):::them
+    MECH("Mechanic"):::ends -- "picks" --> ANY("Any vehicle"):::ours -- "looks up" --> REG("Registry"):::them -- "fetches" --> ING("On-demand ingest"):::them
   end
   subgraph R2[" "]
     direction LR
-    IDX("Index"):::them --> PAGE("Manual page"):::ends --> NEXT("Next vehicle"):::ours
+    IDX("Index"):::them -- "opens" --> PAGE("Manual page"):::ends -- "repeats" --> NEXT("Next vehicle"):::ours
   end
 
-  R1 --> R2
+  R1 -- "indexes" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -269,7 +269,7 @@ Every input below was returned by the live API on **2026-09-20**. Do not improvi
 | 2 | **Why he won't use AI** | *95% right — and he signs for the 5%. $4 a question when he tried.* Two numbers, huge, nothing else. | — |
 | 3 | **Built once. Deployed N times.** | The §4 diagram, full bleed. Three zone labels are the only text they read. | `long-lake/second-deployment.mmd` |
 | 4 | **The answer is a page** | KTM p.77, markers on the two answering lines. *The marker is only there because we found that ink.* | `general/05-book.png` |
-| 5 | **The metrics that moved** | cycle time **5 min → 2 s** (p95 3.33 s) · error rate **100% top-1 / 150**, **0 of 20** off-topic answered, **0** invented numbers · unit cost **$0.0006 vs $12.40** · **535 manuals, 95,914 pages, $8 spent** | — |
+| 5 | **The metrics that moved** | cycle time **5 min → 2 s** (p95 3.33 s) · error rate **100% top-1 / 150**, **0 of 20** off-topic answered, **0** invented numbers · unit cost **$0.0006 vs $12.40** · **543 manuals, 97,230 pages, $8 spent** | — |
 | 6 | **What we don't have yet** | *Not in daily production use. One shop. Ten shops for a month, and the number is how much of the 20% comes back.* Then the URL. | — |
 
 Slide 6 being the last slide is deliberate. In this room, the team that puts its own weakest column
@@ -327,7 +327,7 @@ It is the operating layer for any business whose work is bound to a document som
 is liable for. Today that's vehicle repair, because that's where our design partner is. The same
 three pieces — a registry of who publishes what, a pipeline that turns a PDF into grounded printed
 units, and a verifier that will not let a model's output ship unless it is found in the source — are
-vertical-agnostic. We already proved the second deployment inside the same weekend by adding 4,611
+vertical-agnostic. We already proved the second deployment inside the same weekend by adding 6,383
 cars to a motorcycle product without writing a car version. Whether it's a company depends on
 whether shops pay, and I don't know that yet because nobody has been asked.
 
@@ -342,11 +342,11 @@ is charge per question: our cost per question is $0.0006 and metering that costs
 serve.
 
 **"What's defensible? Anyone can call an LLM on a PDF."**
-Three things, none of them the model. **The registry**: 53,557 rows across 84 publisher hosts, built
+Three things, none of them the model. **The registry**: 99,338 rows across 89 publisher hosts, built
 by writing 34 adapters against portals that actively resist — Ducati is Akamai-fingerprinted and
 needs a headful browser over CDP, Kawasaki 401s if you send `Accept: application/json`, four of
 Honda's 41 distributor codes were found by trying 479 candidates. That is months of unglamorous work
-and it compounds. **The corpus**: 535 manuals, 95,914 pages, 91,388 grounded sections, and every
+and it compounds. **The corpus**: 543 manuals, 97,230 pages, 92,682 grounded sections, and every
 additional shop inherits every previous shop's ingest — the marginal cost of the tenth shop asking
 about a KTM 390 Duke is zero. **The constraint itself**: the reason a liable mechanic uses it is that
 it structurally cannot answer, and that's a product decision most people won't copy because it looks
@@ -418,12 +418,12 @@ naive baseline scales with it: $1.03 for a 128-page manual, **$12.40 for the 775
 
 **"What happens at a thousand shops?"**
 Ingest doesn't scale with shops, it scales with distinct documents, and there are only so many
-vehicles: 535 manuals cost about $51 total, once, shared by everyone, and the whole free-and-
+vehicles: 543 manuals cost about $51 total, once, shared by everyone, and the whole free-and-
 fetchable corpus is a three-figure spend. The marginal cost of a shop is the $0.0006 question, and
 repeats are $0.
 
 **"Could you point this at a shop-management system instead of a manual?"**
-Not today, and I'd rather say so. What we integrated is 84 publisher portals with no APIs, which is
+Not today, and I'd rather say so. What we integrated is 89 publisher portals with no APIs, which is
 the same *shape* of problem as a legacy ERP with no clean API but is not the same system. What
 transfers directly is the pattern: a deterministic verifier between the model and anything that ships
 to an operator, and a per-source adapter layer with its failures written down. What would have to be
@@ -464,10 +464,10 @@ Read the live ones again before you go on. They move.
 
 | claim | value | source | when |
 |---|---|---|---|
-| vehicles you can pick | **27,751** (23,140 motorcycles, 4,611 cars), 77 makes | live `GET /api/catalog` | 2026-09-20 09:30 UTC |
-| …with a free official manual attached | **13,537** | same | same |
-| manuals indexed | **535** · **95,914 pages** · **91,388 sections** · 662 vehicles covered | live `GET /api/manuals` | same |
-| all spend on the live API | **$8.93** over **1,633** calls — it moves every hour | live `GET /api/cost` | 2026-09-20 09:55 UTC |
+| vehicles you can pick | **30,409** (24,026 motorcycles, 6,383 cars), 79 makes | live `GET /api/catalog` | 2026-09-20 15:40 UTC |
+| …with a free official manual attached | **18,564** | same | same |
+| manuals indexed | **543** · **97,230 pages** · **92,682 sections** · 670 vehicles covered | live `GET /api/manuals` | same |
+| all spend on the live API | **$13.80** over **2,182** calls — it moves every hour | live `GET /api/cost` | 2026-09-20 15:40 UTC |
 | naive baseline, per ask | **$12.40** (the 775-page Civic read to a model once) | live `GET /api/cost` → `naivePerAsk` | same |
 | six asks against that 775-page manual | **$0.00357 total — $0.0006 an ask**, one of the six a $0 cache repeat | `GET /api/cost` before/after, `ask.router` + `ask.picker` delta | same |
 | that ask, cold / repeated | **3.95 s** / **0.088 s** | live timed `POST /api/ask`, Honda Civic Sedan 2022, `how do I change a flat tyre` → p.709 | same |
@@ -475,10 +475,10 @@ Read the live ones again before you go on. They move.
 | off-topic questions answered | **0 of 20** | `api/eval/report.md` | — |
 | chat honesty | **43/43 quotes verbatim · 48/48 claim sentences carry a page · 0 invented numbers · 0 dealer referrals** | `api/eval/chat-report.md` | — |
 | ingest a manual | **$0.0972** median (170 p), **$0.0951** mean (177 p); **1.3 s to readable, 40.4 s to searchable** | `api/data/mass_report.jsonl` (**648** real ingests of 773 lines); live run, KTM 390 Duke 2014, 182 p | 2026-09-20 |
-| registry | **53,557 rows**, 84 publisher hosts, 80 makes; **14,770 distinct free English PDFs**; **28,200 distinct URLs** | `api/data/registry.json`, `GET /api/registry` | 2026-09-20 |
+| registry | **99,338 rows**, 89 publisher hosts, 82 makes; **14,865 distinct free English PDFs**; **50,376 distinct URLs** | `api/data/registry.json`, `GET /api/registry` | 2026-09-20 |
 | adapters | **34 modules + 26 crawl fragments**; **17 makes documented unreachable** | `api/app/registry/**`, `docs/MANUALS.md` | — |
 | Ducati / Kawasaki / Honda portal behaviour | Akamai headful-only via CDP · 401 on `Accept: application/json` · Googlebot UA + CSRF, 4 of 41 codes from 479 candidates | `docs/MANUALS.md` | — |
-| the manual page counts quoted | KTM 390 Duke 2024 **143 p**, Honda Civic Sedan 2022 **775 p** (largest in the deployed catalog), Corvette 2022 **338 p**, median **171 p** | live `GET /api/manuals` | 2026-09-20 09:30 UTC |
+| the manual page counts quoted | KTM 390 Duke 2024 **143 p**, Honda Civic Sedan 2022 **775 p** (largest in the deployed catalog), Corvette 2022 **338 p**, median **170 p** | live `GET /api/manuals` | 2026-09-20 15:40 UTC |
 
 **His numbers — say "his number" out loud:** ~20% of his working time; ~$4 a question when he tried
 AI; *"95% right isn't enough when I sign for the 5%."*

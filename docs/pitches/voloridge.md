@@ -33,7 +33,7 @@ it is never allowed to type one.
 
 Measured: **$0.00038 per ask** and **$0.0041** for a written chat answer, against a **$12.40** naive
 baseline — the largest deployed manual read to the flagship once per question, so **32,632× cheaper**
-(3,600× against the $1.37 median manual). First token in ~2.6 s, 100% valid citations, 0 invented numbers.
+(3,579× against the $1.36 median manual). First token in ~2.6 s, 100% valid citations, 0 invented numbers.
 
 *(Live: type "KTM 1390 Super Adventure R 2026", one tap, the page is on screen.)*
 
@@ -51,9 +51,9 @@ publisher hosts** — and the registry that came out is a dataset-quality proble
 
 | | |
 |---|---|
-| registry rows | **53,557** across **84 hosts, 80 makes, 59 markets, 43 languages** |
-| distinct URLs behind them | **28,200** — 47% of rows point at a file another row already points at |
-| vehicles derived | **27,751** (23,140 motorcycles, 4,611 cars); **13,537** with a free manual |
+| registry rows | **99,338** across **89 hosts, 82 makes, 59 markets, 43 languages** |
+| distinct URLs behind them | **50,376** — 47% of rows point at a file another row already points at |
+| vehicles derived | **30,409** (24,026 motorcycles, 6,383 cars); **18,564** with a free manual |
 | makes documented as **unreachable** | **17** — CFMOTO, LiveWire, Beta, Norton, Ural, Energica, Sur-Ron… |
 
 The hardest parts, in order of how much time they cost:
@@ -87,9 +87,9 @@ We copy no manuals at crawl time. `RegistryEntry` has no field that could hold o
 
 > **Feel:** they turned unstructured documents into something you could actually query.
 
-From **535 live manuals · 95,914 pages** we extracted, grounded, and stored:
+From **543 live manuals · 97,230 pages** we extracted, grounded, and stored:
 
-- **91,388 sections** with per-block page coordinates,
+- **92,682 sections** with per-block page coordinates,
 - **431,292 highlights** — normalised rectangles over the real page,
 - **137,379 typed specs** — `torque | capacity | clearance | pressure | grade | size | electrical`,
   each with a page number and a **character-for-character quote**.
@@ -120,7 +120,7 @@ The manual knows the rule. It has no idea whether it applies to you. **NOAA does
 > **Feel:** this is a real data system, not a notebook.
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
@@ -132,10 +132,10 @@ flowchart TB
   end
   subgraph R3[" "]
     direction LR
-    MECH("Mechanic"):::ends --> FIT("Fit verdict"):::ours --> PAGE("Manual page"):::ends
+    MECH("Mechanic"):::ends -- "locates" --> FIT("Fit verdict"):::ours -- "cites" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2 --> R3
+  R1 -- "extracts" --> R2 -- "resolves" --> R3
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -302,10 +302,10 @@ is "the manufacturer printed X; your location measured Y". Joining NHTSA complai
 this would give the outcome side, and it is the obvious next dataset — it is just not on your curated
 list, and we would rather ship one honest join than two hand-wavy ones.
 
-**Scale: what happens at 27,751 vehicles instead of 662?**
+**Scale: what happens at 30,409 vehicles instead of 670?**
 The climatology does not grow — it is per station, not per vehicle. The rulebook is per *manual*, and
-one manual covers many model years, so it grows with ingests, not with the catalog: 535 manuals
-already cover 662 vehicles, and the registry has 28,200 distinct PDFs behind 53,557 rows. At
+one manual covers many model years, so it grows with ingests, not with the catalog: 543 manuals
+already cover 670 vehicles, and the registry has 50,376 distinct PDFs behind 99,338 rows. At
 $0.095/manual and ~$0.0017 of rule extraction per manual, the full free-and-fetchable set is a
 three-figure spend, not an architectural problem.
 
@@ -328,8 +328,8 @@ corpus instead of a sample.
 
 | claim | source |
 |---|---|
-| 53,557 rows · 28,200 URLs · 84 hosts · 27,751 vehicles · 13,537 with a manual | `api/data/registry.json`, `api/data/bikes.json` |
-| 535 manuals · 95,914 pages · 91,388 sections · 662 vehicles | `GET https://mechanica.emilvinu.ch/api/manuals` |
+| 99,338 rows · 50,376 URLs · 89 hosts · 30,409 vehicles · 18,564 with a manual | `api/data/registry.json`, `api/data/bikes.json` |
+| 543 manuals · 97,230 pages · 92,682 sections · 670 vehicles | `GET https://mechanica.emilvinu.ch/api/manuals` |
 | 137,379 specs · 431,292 highlights · 648 done / 80 error / 24 duplicate / 21 suspicious · $61.61 | `api/data/mass_report.jsonl` |
 | 107,452 specs locally · 206 manuals × −25 °C × 9 markets (spec corpus) | `docs/pitches/voloridge/antifreeze_scan.py` over `api/data/specs/*.json` |
 | 227 manuals × −25 °C × 9 markets · 1,028 pages · spread 0.0000 (page corpus) | `docs/pitches/voloridge/findings.py` → `findings.md`; `api/data/climate/anomalies.json` |

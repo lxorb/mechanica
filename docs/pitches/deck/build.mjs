@@ -36,7 +36,8 @@
  * qa             title, groups: [{ label, items: [ "…" ] }]   — set "presenterOnly": true
  *
  * flow = { w?, legend?: [{tone,label}], bands: [ { label?, tone?, labelColor?, rows: [ {
- *   items: [{ tone, t, sub }], gap?, link?: "none", down?: true, caption? } ] } ] }
+ *   items: [{ tone, t, sub }], labels?: [verb…] (one per arrow, items.length-1),
+ *   downLabel?: verb (the arrow from the row above), gap?, link?: "none", down?: true, caption? } ] } ] }
  * tones: paper · white · orange · green · ink · yellow · ghost. "|" in t/sub forces a line break.
  *
  * Inline markup in any string: *bold*  ~orange~
@@ -188,15 +189,25 @@ function drawItem(item, x, y, w, h, lay) {
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${tone.fill}" stroke="${tone.stroke}" stroke-width="3"${dash}/>` + body.join("");
 }
 
-function arrow(x, y, len) {
+/** Every arrow carries one verb. The gap a row is drawn with is sized so it always fits. */
+const EDGE_SIZE = 19;
+const edgeWidth = (label) => (label ? String(label).length * EDGE_SIZE * 0.52 + 34 : 0);
+
+function arrow(x, y, len, label) {
   const x2 = x + len;
-  return `<path d="M${x} ${y} H${x2 - 9}" stroke="#141414" stroke-width="2.5"/>`
+  const line = `<path d="M${x} ${y} H${x2 - 9}" stroke="#141414" stroke-width="2.5"/>`
     + `<path d="M${x2} ${y} l-11 -6 v12 z" fill="#141414"/>`;
+  if (!label) return line;
+  return `<text x="${((x + x2) / 2).toFixed(1)}" y="${(y - 12).toFixed(1)}" text-anchor="middle"`
+    + ` font-size="${EDGE_SIZE}" font-weight="600" fill="#4a453d">${esc(label)}</text>` + line;
 }
 
-function down(x, y, h) {
-  return `<path d="M${x} ${y} V${y + h - 12}" stroke="#141414" stroke-width="2.5"/>`
+function down(x, y, h, label) {
+  const line = `<path d="M${x} ${y} V${y + h - 12}" stroke="#141414" stroke-width="2.5"/>`
     + `<path d="M${x} ${y + h} l-7 -13 h14 z" fill="#141414"/>`;
+  if (!label) return line;
+  return `<text x="${x + 15}" y="${(y + h / 2 + 7).toFixed(1)}" font-size="${EDGE_SIZE}"`
+    + ` font-weight="600" fill="#4a453d">${esc(label)}</text>` + line;
 }
 
 function flowSvg(flow) {
@@ -233,11 +244,14 @@ function flowSvg(flow) {
     // Every box on a chart is the same width — the longest row sets the column, shorter rows are
     // centred in it — so a two-item row does not blow up into two half-slide slabs.
     const cols = Math.max(...(band.rows || []).map((r) => (r.items || []).length), 1);
+    // One gap for the whole band, wide enough for the longest verb on any arrow in it.
+    const bandGap = Math.max(...(band.rows || []).map((r) =>
+      Math.max(r.gap ?? 42, ...(r.labels || []).map(edgeWidth), 0)), 42);
 
     (band.rows || []).forEach((row, ri) => {
       const items = row.items || [];
       const n = items.length;
-      const gap = row.gap ?? 42;
+      const gap = bandGap;
       const inner = W - padX * 2 - 24;
       const iw = (inner - gap * (cols - 1)) / cols;
       const lays = items.map((it) => itemLayout(it, iw));
@@ -245,7 +259,9 @@ function flowSvg(flow) {
       let x = padX + 12 + (inner - (n * iw + gap * (n - 1))) / 2;
       items.forEach((it, i) => {
         parts.push(drawItem(it, x, iy, iw, rh, lays[i]));
-        if (i < n - 1 && row.link !== "none") parts.push(arrow(x + iw + 8, iy + rh / 2, gap - 16));
+        if (i < n - 1 && row.link !== "none") {
+          parts.push(arrow(x + iw + 8, iy + rh / 2, gap - 16, (row.labels || [])[i]));
+        }
         x += iw + gap;
       });
       if (row.caption) {
@@ -253,8 +269,8 @@ function flowSvg(flow) {
         iy += 26;
       }
       var nextRow = band.rows[ri + 1];
-      if (nextRow && nextRow.down) { parts.push(down(W / 2, iy + rh + 6, 30)); iy += 30; }
-      iy += rh + (ri < band.rows.length - 1 ? 16 : 0);
+      if (nextRow && nextRow.down) { parts.push(down(W / 2, iy + rh + 8, 40, nextRow.downLabel)); iy += 40; }
+      iy += rh + (ri < band.rows.length - 1 ? 20 : 0);
     });
 
     const bh = iy - top + (band.label || band.tone ? 16 : 0);

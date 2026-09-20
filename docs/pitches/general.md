@@ -31,7 +31,7 @@ than ours. Then the product isn't an idea — it's what we built for him.
 ## The user path
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
@@ -39,14 +39,14 @@ flowchart TB
   end
   subgraph R2[" "]
     direction LR
-    VEH("Vehicle"):::them --> QN("Question"):::ours --> PAGE("Manual page"):::ends
+    VEH("Vehicle"):::them -- "asks" --> QN("Question"):::ours -- "opens" --> PAGE("Manual page"):::ends
   end
   subgraph R3[" "]
     direction LR
     PRTS("Parts"):::them ~~~ CHAT("Chat"):::them
   end
 
-  R1 --> R2 --> R3
+  R1 -- "identifies" --> R2 -- "offers" --> R3
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -97,13 +97,13 @@ Start the slow thing first (0:20) and talk over it. Every input is literal: type
 | 1 | **Mechanica** | Don't trust the AI. Trust the manual. | `01-landing.png` |
 | 2 | **My friend's workshop** | He fixes bikes for a living and spends a fifth of his week looking for a page. | — (his shop, or blank) |
 | 3 | **Why he won't use AI** | 95% right, and he signs for the 5%. $4 a question when he tried. | — (the two numbers, huge) |
-| 4 | **Start with the bike** | 27,751 vehicles — type it, photograph it, or scan the VIN. | `02-cards.png` |
+| 4 | **Start with the bike** | 30,409 vehicles — type it, photograph it, or scan the VIN. | `02-cards.png` |
 | 5 | **The exact one** | Year and market, because a torque figure from the wrong year strips a thread. | `03-chooser.png` |
 | 6 | **Say what's wrong** | Plain words in; the manual's own headings out, and the part lit on the bike. | `04-pick-3d.png` |
 | 7 | **The answer is a page** | KTM's page 77, marked on the two lines that answer — and only where we found that ink. | `05-book.png` |
 | 8 | **What it needs, what it costs** | 135 parts, each one there because the manual prints a spec for it. Live prices. | `06-parts.png` → `07-part-detail.png` |
 | 9 | **When you do want a sentence** | It may only write page numbers. Every claim is one tap from the ink. | `08-chat.png` |
-| 10 | **Today** | 14,770 free manuals reachable · any of them searchable in under a minute for 10¢ · four hundredths of a cent a question. | — (numbers) |
+| 10 | **Today** | 14,865 free manuals reachable · any of them searchable in under a minute for 10¢ · four hundredths of a cent a question. | — (numbers) |
 
 ---
 
@@ -159,11 +159,11 @@ already liable for.
 We only use manuals the manufacturers publish free on their own sites — KTM, BMW, Yamaha, Honda,
 Ford, Toyota, Tesla and seventy-odd others. We don't host them: the PDF you're looking at is the
 manufacturer's own file, and the page is the one they typed. We index where things are; we don't
-republish and we don't paraphrase. Service manuals — our registry lists 182 rows, and the 15 that are paid, subscription or dealer-login
+republish and we don't paraphrase. Service manuals — our registry lists 186 rows, and the 14 that are paid, subscription or dealer-login
 only we deliberately don't touch. For those, a shop points us at the copy it already bought.
 
 **3. "Bikes are a niche. What about cars?"**
-Cars are already in — 4,611 of them, 4,113 with a free official manual, and you can ask one right now.
+Cars are already in — 6,383 of them, 6,207 with a free official manual, and you can ask one right now.
 We lead with bikes because the person who feels this pain hardest is the one-man motorcycle shop, and
 he's reachable. Cars are the bigger market and the identical product: a Corvette owner's manual is
 four hundred pages of exactly the same problem. Honestly: our bike answers are better today, because
@@ -207,7 +207,7 @@ Three things. Service manuals: the paid documents a shop has already bought. The
 them today — it's a rights conversation, not a build. Second, put it in real shops: ten workshops for
 a month, and the number we care about is how much of that twenty percent comes back. Third, parts
 properly — we know the part and we know the spec, so ordering it should be one tap, not three tabs.
-And underneath all of it, more vehicles: 13,537 of our 27,751 have a free manual attached today, and
+And underneath all of it, more vehicles: 18,564 of our 30,409 have a free manual attached today, and
 the rest is patient work.
 
 ---
@@ -218,10 +218,10 @@ Say **measured** or **his number** out loud. Never round up.
 
 | claim | number | source |
 |---|---|---|
-| vehicles you can pick | **27,751** — 23,140 motorcycles, 4,611 cars, 77 makes | live `GET /api/catalog` |
-| …with a free official manual attached | **13,537** | same |
-| manuals we can reach | **53,557** registry rows across 80 makes; **14,770** distinct free English PDFs | live `GET /api/registry` |
-| manuals already indexed | **535** | live `GET /api/manuals` |
+| vehicles you can pick | **30,409** — 24,026 motorcycles, 6,383 cars, 79 makes | live `GET /api/catalog` |
+| …with a free official manual attached | **18,564** | same |
+| manuals we can reach | **99,338** registry rows across 82 makes; **14,865** distinct free English PDFs | live `GET /api/registry` |
+| manuals already indexed | **543** | live `GET /api/manuals` |
 | brand-new manual → readable | **1.3 s** | live run, KTM 390 Duke 2014, 182 p, 2026-09-20 |
 | brand-new manual → fully searchable | **40.4 s** | same run |
 | what that cost | **$0.089** | cost-log delta over that run |
@@ -236,7 +236,7 @@ Say **measured** or **his number** out loud. Never round up.
 | VIN → the exact bike | **1.3 s** | live `POST /api/identify/vin`, `VBKJSA40XXXXXXXXX` → KTM 390 Duke 2024 |
 | parts for the KTM 390 Duke 2024 | **135**, each with the spec the manual prints | live `GET /api/parts/catalog` |
 | reading the whole manual to a model instead | **$12.40** a question, worst case | live `GET /api/cost` → `naivePerAsk` |
-| everything the deployed app has spent | **$8.93** over 1,633 model calls, as of 2026-09-20 09:55 — it moves every hour and resets on redeploy, so re-read it | live `GET /api/cost` |
+| everything the deployed app has spent | **$13.80** over 2,182 model calls, as of 2026-09-20 15:40 — it moves every hour and resets on redeploy, so re-read it | live `GET /api/cost` |
 
 **His numbers, not ours — say so:** about 20% of his working time; ~$4 a question when he tried AI;
 "95% right isn't enough when I sign for the 5%."

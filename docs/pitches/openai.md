@@ -19,16 +19,16 @@ Diagram: [`openai/architecture.png`](openai/architecture.png) · [`.svg`](openai
 
 Two ledgers, both real, do not mix them on stage:
 
-- **build ledger** — `api/data/costs.jsonl`, 41,612 calls, **$83.05**, as of 2026-09-20 09:55 UTC. This is the
+- **build ledger** — `api/data/costs.jsonl`, 44,494 calls, **$87.75**, as of 2026-09-20 15:40 UTC. This is the
   mass ingest of the warm cache plus the image work. It grows every time anything runs, so re-read
   `docs/pitches/numbers.md` before you quote it.
-- **live ledger** — `GET /api/cost`, **$8.93 over 1,633 calls**, as of 2026-09-20 09:55. This is the deployed
+- **live ledger** — `GET /api/cost`, **$13.80 over 2,182 calls**, as of 2026-09-20 15:40. This is the deployed
   app serving users; it moves every hour and resets on redeploy, so read it again before you quote it.
 
-Where the $83.05 went, and it is the whole business model in four rows: **$71.52 one-time ingest ·
-$4.31 generating the 97 illustrations · $3.60 grading catalog photos over 7,561 calls · $3.62 for every ask,
-chat, photo-id and offer ever served.** 86% of what we have spent on OpenAI is a cost we pay once per
-manual, not per user — and that 86% is the stable number; the totals move.
+Where the $87.75 went, and it is the whole business model in four rows: **$71.52 one-time ingest ·
+$4.31 generating the 97 illustrations · $4.63 grading catalog photos over 8,654 calls · $3.62 for every ask,
+chat, photo-id and offer ever served.** 82% of what we have spent on OpenAI is a cost we pay once per
+manual, not per user — and that 82% is the stable number; the totals move.
 
 Everything below is aggregated from the build ledger unless marked. Every call in both goes through
 **one file**, `api/app/llm.py` (206 lines), which is the only place the `OpenAI` client is constructed and
@@ -37,14 +37,14 @@ the only place a cost event is written: `route · model · inputTokens · cached
 | # | capability | where it is used | route · model | measured |
 |---|---|---|---|---|
 | 1 | **Structured outputs** (`responses.parse`, strict `json_schema` from Pydantic) | 7 of our 9 call sites | `ask.router`, `ask.picker`, `ingest.struct`, `ingest.keywords`, `identify.photo`, `identify.part`, `images.score`, `parts.map`, `offers.*.extract` | **All but 362 of our logged calls** are strict-schema calls — everything except the 248 streamed chat answers, the 102 image generations and the 12 web-search calls. The app never parses free text from a model — the only free text we take is the `offers` line format, and that is regex-parsed and then verified |
-| 2 | **Model tiering** by task | luna for the volume, terra for the judgement calls | `gpt-5.6-luna` $0.20/M · `gpt-5.6-terra` $2/M · `gpt-6-astra` $10/M | **$75.96 of $83.05 is luna — 91% of the build ledger.** The log carries both prices for the same route: photo id on astra **$0.0247/call**, on luna **$0.00053** (**46×**); part id on astra $0.0140, on luna $0.00024 (**59×**). Once the catalog constraint and the fuzzy match were doing the accuracy work, the flagship stopped earning its price |
+| 2 | **Model tiering** by task | luna for the volume, terra for the judgement calls | `gpt-5.6-luna` $0.20/M · `gpt-5.6-terra` $2/M · `gpt-6-astra` $10/M | **$78.15 of $87.75 is luna — 89% of the build ledger.** The log carries both prices for the same route: photo id on astra **$0.0247/call**, on luna **$0.00053** (**46×**); part id on astra $0.0140, on luna $0.00024 (**59×**). Once the catalog constraint and the fuzzy match were doing the accuracy work, the flagship stopped earning its price |
 | 3 | **Prompt caching** (`prompt_cache_key` pinned per route+model; big static system prompts on purpose) | router (5.3 KB system prompt), picker, chat, ingest | `ask.router` | **99.5% cache hit on 3.45M input tokens** → $0.000132/call. `ingest.struct` 47.0% of 70.4M. `chat.answer` 42.7%. `ask.picker` 34.6% |
 | 4 | **Responses API streaming** | the chat drawer | `chat.answer` · terra | **first token p50 2.64 s / p95 5.87 s**, full answer p50 4.18 s (`api/eval/chat-report.md`) |
 | 5 | **Built-in `web_search` tool** | fitment-exact parts with live prices | `offers` · terra, `search_context_size: "low"`, `max_tool_calls: 2` | ~7 ¢ cold, **$0 cached** (24 h). Fee modelled explicitly: `$10/1k calls` on top of tokens (`WEB_SEARCH_CALL_USD`) |
 | 6 | **Vision — vehicle id** | photo → the exact bike | `identify.photo` · luna | **$0.00046/photo**, 400 catalog names in the prompt, answer fuzzy-matched back to a real row, floor 0.80, kind-locked so a car photo cannot return a motorcycle |
 | 7 | **Vision — part id** | photo of a part → one of 30 labels | `identify.part` · luna | $0.00024/call, zero-shot against a fixed label list (no fine-tune, no checkpoint) |
 | 8 | **Image generation** | the product's own art | `gpt-image-1`, 1024², `background: transparent` | **97 part illustrations** shipped + the logo. 102 calls, **$4.31**, $0.042 each. One style prompt + one camera for the whole set, so it reads as a set |
-| 9 | **Vision as a judge** | automated art direction over 22k catalog photos | `images.score` · luna, strict rubric schema | **7,561 calls, $3.60** — grades single-bike / whole-bike / sharpness / view angle / is-it-really-the-model, and rejects below threshold |
+| 9 | **Vision as a judge** | automated art direction over 22k catalog photos | `images.score` · luna, strict rubric schema | **8,654 calls, $4.63** — grades single-bike / whole-bike / sharpness / view angle / is-it-really-the-model, and rejects below threshold |
 | 10 | **An OpenAI model behind the voice agent** | hands-free in the workshop | Deepgram Voice Agent, `think.provider.type: open_ai` | first audio **median 2.08 s** over 5 spec turns (range 1.73–4.01 s; the greeting is 0.72 s and a procedure question is 9.9 s — say so). It may only call our four grounded tools (`find_procedure`, `read_page`, `get_spec`, `list_parts`); Deepgram calls our API directly so manual text never passes through the browser |
 
 ### The numbers a judge will ask for
@@ -57,9 +57,9 @@ the only place a cost event is written: `route · model · inputTokens · cached
 | ask, repeated | **$0** | 0.2–0.4 s | answer cache |
 | chat answer | $0.0049 | first token 2.6 s | `api/eval/chat-report.md` |
 | naive baseline (the largest deployed manual, 775 p, in `gpt-6-astra`) | **$12.40** | — | `GET /api/cost` → `naivePerAsk` |
-| …the same baseline on the **median** manual (171 p) | **$1.37** | — | `app/llm.naive_usd(171)` |
+| …the same baseline on the **median** manual (170 p) | **$1.36** | — | `app/llm.naive_usd(170)` |
 
-**32,632× cheaper than the naive prompt on the largest deployed manual — 3,600× against the median one,
+**32,632× cheaper than the naive prompt on the largest deployed manual — 3,579× against the median one,
 say which — and the answer is a PDF page instead of a paragraph.**
 
 ### What we do NOT use — say this before a judge asks
@@ -80,18 +80,18 @@ say which — and the answer is a PDF page instead of a paragraph.**
 ![architecture](openai/architecture.png)
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> VIS("Vision"):::them --> LUNA("gpt-5.6-luna"):::them --> BM("BM25 index"):::ours --> TERRA("gpt-5.6-terra"):::them
+    MECH("Mechanic"):::ends -- "shoots" --> VIS("Vision"):::them -- "identifies" --> LUNA("gpt-5.6-luna"):::them -- "routes" --> BM("BM25 index"):::ours -- "shortlists" --> TERRA("gpt-5.6-terra"):::them
   end
   subgraph R2[" "]
     direction LR
-    SO("Structured Outputs"):::them --> GATE("Grounding gate"):::ours --> PAGE("Manual page"):::ends --> RESP("Responses API"):::them
+    SO("Structured Outputs"):::them -- "returns" --> GATE("Grounding gate"):::ours -- "verifies" --> PAGE("Manual page"):::ends -- "streams" --> RESP("Responses API"):::them
   end
 
-  R1 --> R2
+  R1 -- "picks" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -238,7 +238,7 @@ Do these in order. Every one is verified live on 2026-09-20. Do not improvise a 
 | 3:25 | back to the landing — the **MT-07 is ready** | ready chip | "That manual didn't exist two minutes ago." |
 
 **Fallbacks.** Photo id is the flakiest moment — if it misses, tap the model card and say "or you just type
-it; 23,140 motorcycles". BMW R 12 G/S is shaft drive, so never ask it a chain question. If the network dies, keep
+it; 24,026 motorcycles". BMW R 12 G/S is shaft drive, so never ask it a chain question. If the network dies, keep
 going: the service worker serves the shell and any page already opened.
 
 ### Slide outline (5 slides, no more)
@@ -271,7 +271,7 @@ allowlist for truth.
 
 **"Why not one big prompt? One model, one call, the whole manual."**
 That is the $12.40 baseline, and we measured it: the largest manual we hold is 775 pages. It is 32,632×
-more expensive — 3,600× against the median 171-page manual, which is $1.37 — it is slower, and it gives you a paragraph when a liable mechanic needs a page number. The
+more expensive — 3,579× against the median 170-page manual, which is $1.36 — it is slower, and it gives you a paragraph when a liable mechanic needs a page number. The
 decomposition is what makes it $0.0004 — and **85% of our asks never reach a second model call at all**
 (172 LLM calls for 150 asks in the eval: 150 routers, 22 pickers), because BM25 was already decisive or the
 question was a spec.
@@ -281,11 +281,11 @@ Everything that requires judgement, and nothing that requires being right about 
 We will also tell you what we *don't* use: no fine-tuning, no Batch API, no Assistants, no embeddings in the
 live path.
 
-**"$0.095 per manual × 14,770 fetchable manuals is ~$1,400. What happens at scale?"**
+**"$0.095 per manual × 14,865 fetchable manuals is ~$1,400. What happens at scale?"**
 That is the entire worst case, once, for the whole free corpus — and it is a one-time cost per manual,
-amortised across every shop that ever asks about that bike. The warm cache already holds 535. The marginal
-cost of a user is the $0.0004 ask, and repeats are $0. The build ledger shows the shape: **$83.05 total —
-$71.52 one-time ingest, $4.31 generating the illustrations, $3.60 grading catalog photos, and $3.62 for
+amortised across every shop that ever asks about that bike. The warm cache already holds 543. The marginal
+cost of a user is the $0.0004 ask, and repeats are $0. The build ledger shows the shape: **$87.75 total —
+$71.52 one-time ingest, $4.31 generating the illustrations, $4.63 grading catalog photos, and $3.62 for
 every ask, chat, photo-id and offer the app has ever served.**
 
 **"What breaks?"**

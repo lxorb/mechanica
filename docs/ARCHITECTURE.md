@@ -15,9 +15,9 @@ https://mechanica.emilvinu.ch · API at `/api` (same origin). Measured 2026-09-2
 
 ## Data flow
 
-1. **Identify** — `GET /catalog` (27,751 vehicles, 13,537 with a free manual) drives typeahead and model cards;
+1. **Identify** — `GET /catalog` (30,409 vehicles, 18,564 with a free manual) drives typeahead and model cards;
    `POST /identify/photo` or `/identify/vin` short-circuit to one bike.
-2. **Confirm** — `POST /manuals/ensure` → `ready` if warm (535 manuals), else a job: registry lookup → OEM
+2. **Confirm** — `POST /manuals/ensure` → `ready` if warm (543 manuals), else a job: registry lookup → OEM
    PDF → PyMuPDF text layer with per-block coords → LLM structure pass over 5-page windows (32 workers) →
    quotes grounded against the text layer, ungrounded ones dropped → blob. `early=true` publishes the PDF
    and contents first, so the manual is readable long before it is searchable.

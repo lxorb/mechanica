@@ -1,4 +1,4 @@
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
@@ -10,10 +10,10 @@ flowchart TB
   end
   subgraph R3[" "]
     direction LR
-    MECH("Mechanic"):::ends --> FIT("Fit verdict"):::ours --> PAGE("Manual page"):::ends
+    MECH("Mechanic"):::ends -- "locates" --> FIT("Fit verdict"):::ours -- "cites" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2 --> R3
+  R1 -- "extracts" --> R2 -- "resolves" --> R3
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414

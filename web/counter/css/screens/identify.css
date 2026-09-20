@@ -2,6 +2,8 @@
 
 /* ------------------------------------------------------------ search dock */
 
+/* The dock still spans the window so the list scrolls under an opaque bar, but the field
+   inside it keeps the app's one gutter, so its edges line up with the cards below. */
 [data-screen="identify"] .id-dock {
   position: sticky;
   top: 0;
@@ -9,7 +11,8 @@
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  margin-top: -12px;
+  margin-top: calc(var(--gutter) * -1);
+  padding: 8px max(var(--gutter), calc(50vw - var(--column) / 2 + var(--gutter)));
   background: var(--bg);
 }
 
@@ -17,14 +20,16 @@
   display: flex;
   align-items: stretch;
   height: 56px;
-  border: 3px solid var(--line);
-  border-top: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
   background: var(--card);
+  overflow: hidden;
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 
 [data-screen="identify"] .id-search:focus-within {
-  outline: 3px solid var(--focus);
-  outline-offset: -3px;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--focus) 30%, transparent);
 }
 
 [data-screen="identify"] .id-shot {
@@ -32,9 +37,11 @@
   height: 44px;
   min-width: 44px;
   min-height: 44px;
-  margin: auto 0 auto 3px;
+  margin: auto 0 auto 5px;
   padding: 0;
   border: 0;
+  border-radius: var(--r-sm);
+  overflow: hidden;
   background: var(--slab);
   cursor: pointer;
   appearance: none;
@@ -53,20 +60,21 @@
   min-width: 0;
   height: 100%;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--r);
   background: transparent;
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
+  font-weight: 600;
   font-size: 1rem;
-  letter-spacing: 0.03em;
-  padding: 0 12px;
+  letter-spacing: 0.01em;
+  padding: 0 14px;
   appearance: none;
+  text-overflow: ellipsis;
 }
 
 [data-screen="identify"] .id-q::placeholder {
-  color: var(--faint);
-  font-weight: 700;
+  color: var(--muted);
+  font-weight: 500;
 }
 
 [data-screen="identify"] .id-q:focus,
@@ -87,39 +95,50 @@
   align-self: center;
   flex: none;
   margin-right: 10px;
-  padding: 4px 7px;
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
   background: var(--accent);
   color: var(--accent-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.66rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
 }
 
+/* The camera fills the right end of the field flush, with one hairline as the divider. */
 [data-screen="identify"] .id-cam {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 53px;
-  min-width: 53px;
+  width: 52px;
+  min-width: 52px;
   min-height: 44px;
   padding: 0;
   border: 0;
-  border-left: 3px solid var(--line);
+  border-left: var(--hair) solid var(--edge-soft);
   border-radius: 0;
   background: var(--card);
   color: var(--fg);
   cursor: pointer;
   appearance: none;
   flex: none;
+  transition: background-color var(--t-fast) var(--ease);
+}
+
+[data-screen="identify"] .id-cam:active {
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
 }
 
 [data-screen="identify"] .id-cam svg {
   display: block;
+  flex: none;
 }
 
 [data-screen="identify"] .id-progress {
   height: 3px;
+  margin-top: 6px;
+  border-radius: var(--r-pill);
   background: var(--accent);
   transform-origin: left center;
   animation: id-scan 0.8s linear infinite;
@@ -145,16 +164,19 @@ body.id-landing [data-screen="identify"] .id-dock {
   position: static;
   width: auto;
   margin: 0;
+  padding: 0;
   background: transparent;
 }
 
 body.id-landing [data-screen="identify"] .id-search {
   height: 68px;
-  border-top: 3px solid var(--line);
+  box-shadow: var(--lift);
 }
 
+/* The one line on the landing is the whole instruction, so it may not be cut: it shrinks
+   with the viewport instead. 41 characters at 0.86 rem clear 390 px with room to spare. */
 body.id-landing [data-screen="identify"] .id-q {
-  font-size: 1.15rem;
+  font-size: 0.86rem;
   padding: 0 16px;
 }
 
@@ -165,8 +187,14 @@ body.id-landing [data-screen="identify"] .id-shot {
 }
 
 body.id-landing [data-screen="identify"] .id-cam {
-  width: 62px;
-  min-width: 62px;
+  width: 60px;
+  min-width: 60px;
+}
+
+@media (min-width: 440px) {
+  body.id-landing [data-screen="identify"] .id-q {
+    font-size: 1rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -175,7 +203,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   }
 
   body.id-landing [data-screen="identify"] .id-q {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -184,16 +212,17 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 12px;
+  gap: var(--gap);
+  margin-top: var(--gap);
 }
 
 [data-screen="identify"] .id-make-chip {
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
   background: var(--card);
   font-size: 0.85rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
 }
 
 /* ------------------------------------------------------------ model cards */
@@ -201,8 +230,8 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-  gap: 8px;
-  margin-top: 12px;
+  gap: var(--gap);
+  margin-top: var(--gap);
 }
 
 [data-screen="identify"] .id-card {
@@ -216,13 +245,28 @@ body.id-landing [data-screen="identify"] .id-cam {
   cursor: pointer;
   appearance: none;
   overflow: hidden;
+  transition:
+    border-color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  [data-screen="identify"] .id-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--lift);
+  }
+}
+
+[data-screen="identify"] .id-card:active {
+  transform: scale(0.985);
 }
 
 [data-screen="identify"] .id-art {
   position: relative;
   display: block;
   aspect-ratio: 3 / 2;
-  border-bottom: 3px solid var(--line);
+  border-bottom: var(--hair) solid var(--edge-soft);
   background: var(--bg);
   overflow: hidden;
 }
@@ -268,14 +312,15 @@ body.id-landing [data-screen="identify"] .id-cam {
 
 [data-screen="identify"] .id-flag {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 6px;
+  top: 6px;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 26px;
   height: 26px;
+  border-radius: var(--r-pill);
   background: var(--accent);
   color: var(--accent-ink);
 }
@@ -283,8 +328,7 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-flag.is-ondemand {
   background: var(--card);
   color: var(--fg);
-  border-right: 3px solid var(--line);
-  border-bottom: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
 }
 
 [data-screen="identify"] .id-flag svg {
@@ -296,15 +340,14 @@ body.id-landing [data-screen="identify"] .id-cam {
   flex-direction: column;
   gap: 1px;
   min-width: 0;
-  padding: 7px 8px 8px;
+  padding: 10px 11px 11px;
 }
 
 [data-screen="identify"] .id-make {
   font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
   color: var(--muted);
   white-space: nowrap;
   overflow: hidden;
@@ -314,39 +357,41 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-model {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.92rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  line-height: 1.15;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* The query match used to be painted yellow inside the title. "No mark/highlight styling
+   on text anywhere" — the name of a bike is the name of a bike, so the run stays plain. */
 [data-screen="identify"] .id-make b,
 [data-screen="identify"] .id-model b {
   font-weight: inherit;
-  background: var(--match);
-  color: var(--match-ink);
-  box-shadow: 0 0 0 1px var(--match);
+  background: none;
+  color: inherit;
+  box-shadow: none;
 }
 
 [data-screen="identify"] .id-span {
-  margin-top: 3px;
+  margin-top: 4px;
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 700;
   font-size: 0.76rem;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   color: var(--muted-2);
 }
 
 [data-screen="identify"] .id-span.is-pin {
   align-self: flex-start;
+  border-radius: var(--r-pill);
   background: var(--accent);
   color: var(--accent-ink);
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 2px 9px;
 }
 
 /* ---------------------------------------------------------- year chooser */
@@ -356,7 +401,7 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-chooser {
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
+  margin-top: var(--gap);
   padding: 0;
   overflow: hidden;
 }
@@ -365,7 +410,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 2;
-  border-bottom: 3px solid var(--line);
+  border-bottom: var(--hair) solid var(--edge-soft);
   background: var(--bg);
   overflow: hidden;
 }
@@ -378,7 +423,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: 12px;
+  padding: 16px;
 }
 
 [data-screen="identify"] .id-chooser-head {
@@ -391,9 +436,8 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-chooser-make {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.74rem;
+  letter-spacing: 0.01em;
   color: var(--muted);
 }
 
@@ -403,7 +447,6 @@ body.id-landing [data-screen="identify"] .id-cam {
   font-size: 2.1rem;
   line-height: 0.95;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
   color: var(--fg);
   overflow-wrap: anywhere;
 }
@@ -411,26 +454,31 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-chooser-years {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
+  gap: var(--gap);
+  margin-top: 14px;
 }
 
 [data-screen="identify"] .id-year {
   flex: none;
   min-width: 64px;
   min-height: 52px;
-  padding: 0 12px;
-  border: 3px solid var(--line);
+  padding: 0 16px;
+  border: var(--hair) solid var(--edge);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 700;
   font-size: 1rem;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
+  border-radius: var(--r-pill);
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+
+[data-screen="identify"] .id-year:active {
+  transform: scale(0.96);
 }
 
 [data-screen="identify"] .id-year.is-ready {
@@ -479,23 +527,20 @@ body.id-landing [data-screen="identify"] .id-cam {
   [data-screen="identify"] .id-chooser {
     flex-direction: row;
     align-items: stretch;
-    width: min(1040px, calc(100vw - 24px));
-    margin-left: calc(50% - min(1040px, calc(100vw - 24px)) / 2);
-    margin-right: calc(50% - min(1040px, calc(100vw - 24px)) / 2);
   }
 
   [data-screen="identify"] .id-chooser-art {
-    flex: 0 0 600px;
-    width: 600px;
-    max-width: 60%;
+    flex: 0 0 55%;
+    width: 55%;
+    max-width: 55%;
     border-bottom: 0;
-    border-right: 3px solid var(--line);
+    border-right: var(--hair) solid var(--edge-soft);
   }
 
   [data-screen="identify"] .id-chooser-side {
     flex: 1 1 auto;
     justify-content: center;
-    padding: 16px;
+    padding: 20px;
   }
 
   [data-screen="identify"] .id-chooser-model {
@@ -526,7 +571,6 @@ body.id-landing [data-screen="identify"] .id-cam {
   font-weight: 800;
   font-size: 0.6rem;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   vertical-align: 1px;
   opacity: 0.72;
 }

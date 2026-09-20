@@ -134,9 +134,9 @@ Never type a question that is not in this file.
 ### The architecture slice that makes the bill small
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart LR
-  MECH("Mechanic"):::ends --> TIME("Search time"):::ours --> MECA("Mechanica"):::them --> PAGE("Manual page"):::ends --> HRS("Hours back"):::them
+  MECH("Mechanic"):::ends -- "loses" --> TIME("Search time"):::ours -- "replaced by" --> MECA("Mechanica"):::them -- "opens" --> PAGE("Manual page"):::ends -- "gives back" --> HRS("Hours back"):::them
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -338,7 +338,7 @@ gap. The failure mode that scares me is the opposite one — a *wrong page* — 
 makes visible: the heading says *Checking the front brake fluid level* and he asked about the chain, and he
 knows in half a second. When a chatbot is wrong it's wrong in a sentence that reads exactly like the right
 one. We also deliberately don't touch the paid service manuals — our registry lists
-182 service rows, 15 of them paid, subscription or dealer-login only, and we have indexed none. For those, a shop points us at the copy it already bought.
+186 service rows, 14 of them paid, subscription or dealer-login only, and we have indexed none. For those, a shop points us at the copy it already bought.
 
 **6. "Why now? The PDFs and the models both existed last year."**
 The PDFs did. The economics didn't. Reading a 500-page manual end to end to a flagship model is 400,000
@@ -404,7 +404,7 @@ Internal, measured:
 - `api/eval/report.md` — 150 queries: top-1 **100%**, p95 **3.33 s**, mean **$0.00038** an ask.
 - `api/eval/chat-report.md` — first token p50 **2.64 s**; **100%** of quotes verbatim; 31.2% of tokens stripped before billing.
 - `docs/pitches/token-company/cost-report.md` — the savings ladder, $1.365 → $0.00038, and the monthly-bill table.
-- live `GET /api/cost`, read 2026-09-20 09:55 — **$8.93** total over 1,633 model calls (it moves every
+- live `GET /api/cost`, read 2026-09-20 15:40 — **$13.80** total over 2,182 model calls (it moves every
   hour and resets on redeploy), `naivePerAsk` **$12.40**.
 - live latency runs on 2026-09-20 — VIN 0.11 s, photo 5.01/5.80/7.66 s, ask 1.46/1.54/1.59/2.98/4.37 s,
   repeat ask 0.075/0.179 s, PDF first range 0.24 s.

@@ -285,7 +285,7 @@
       "title": "One poller, one webhook, one ingest",
       "caption": "The manual he already bought takes the same path as a factory PDF. A file that does not parse comes back unmatched.",
       "flow": {
-        "w": 1180,
+        "w": 1440,
         "bands": [
           {
             "rows": [
@@ -307,6 +307,11 @@
                     "tone": "orange",
                     "t": "Dropbox API"
                   }
+                ],
+                "labels": [
+                  "drops",
+                  "notifies",
+                  "polls"
                 ]
               },
               {
@@ -324,7 +329,12 @@
                     "t": "Manual page"
                   }
                 ],
-                "down": true
+                "labels": [
+                  "stores",
+                  "renders"
+                ],
+                "down": true,
+                "downLabel": "downloads"
               }
             ]
           }

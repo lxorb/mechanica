@@ -18,11 +18,11 @@ not ours. The fix is not a better model: everything he needs is already printed 
 the thing that never answers.
 
 ## What it does
-Pick your exact vehicle from **27,751** — 23,140 motorcycles and 4,611 cars — by typing it, photographing
-it, or scanning the VIN. **13,537** of them already carry a free official manual. Never seen that bike? We
+Pick your exact vehicle from **30,409** — 24,026 motorcycles and 6,383 cars — by typing it, photographing
+it, or scanning the VIN. **18,564** of them already carry a free official manual. Never seen that bike? We
 fetch its manual from the manufacturer: **readable in 1.3 seconds, fully searchable in 40 seconds, for nine
-and a half cents.** **14,770** distinct free English PDFs are reachable; **535** are already indexed —
-95,914 printed pages, 91,388 grounded sections.
+and a half cents.** **14,865** distinct free English PDFs are reachable; **543** are already indexed —
+97,230 printed pages, 92,682 grounded sections.
 
 Then say what is wrong, in the words a mechanic actually uses. A 3D model explodes and lights the part you
 typed, next to the manual's own headings. Open one and you get the manufacturer's page, rendered as
@@ -50,15 +50,15 @@ ship 0.3 and take 31% by deleting dealer boilerplate first instead.
 Top-1 **100%** over the 130 in-scope queries of a 150-query eval, **0 of 20** off-topic questions answered,
 p95 **3.33 s**, **$0.00038** an ask against **$12.40** to read the largest deployed manual naively.
 **43 of 43** chat quotes verbatim on the page they name, **100%** of 48 claim sentences cited, **0** invented
-numbers. 14,770 manuals reachable, none copied.
+numbers. 14,865 manuals reachable, none copied.
 
 ## What we learned
 Constraining a model is cheaper than trusting it, in tokens and in liability. The hard part was never the
 model — it was the portals and the PDF text layer.
 
 ## What's next
-Service manuals: a rider's manual is free, a shop's is metered by the hour (182 service rows in our registry,
-15 of them paid, subscription or dealer-login only, and we index none) — so we point at the shop's own
+Service manuals: a rider's manual is free, a shop's is metered by the hour (186 service rows in our registry,
+14 of them paid, subscription or dealer-login only, and we index none) — so we point at the shop's own
 folder. Then parts checkout, and ten real workshops for a month.
 
 ## Built with
@@ -88,7 +88,7 @@ moment is the architecture flowchart: orange is an API call, green is the guardr
 **The Token Company — cost is the product** —
 [`docs/pitches/token-company.md`](pitches/token-company.md). The AI was never not-good-enough for this
 mechanic; it was too expensive to use. A savings ladder that re-prices the same measured token counts rung
-by rung, from $1.37 naive on the median manual down to $0.00038 an ask, with bear-2 removing **31.2%** of
+by rung, from $1.36 naive on the median manual down to $0.00038 an ask, with bear-2 removing **31.2%** of
 the prompt before it is billed. The demo moment is `/api/cost/ttc` moving live while a citation stays
 verbatim — compression is a cost lever, never a correctness lever.
 

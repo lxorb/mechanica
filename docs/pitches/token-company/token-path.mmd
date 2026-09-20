@@ -1,15 +1,15 @@
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> QN("Question"):::ours --> BM("BM25 pages"):::ours --> BEAR("bear-2 compression"):::them
+    MECH("Mechanic"):::ends -- "types" --> QN("Question"):::ours -- "retrieves" --> BM("BM25 pages"):::ours -- "compresses" --> BEAR("bear-2 compression"):::them
   end
   subgraph R2[" "]
     direction LR
-    CACHE("Prompt cache"):::them --> TERRA("gpt-5.6-terra"):::them --> CITE("Cited answer"):::ours --> PAGE("Manual page"):::ends
+    CACHE("Prompt cache"):::them -- "prompts" --> TERRA("gpt-5.6-terra"):::them -- "cites" --> CITE("Cited answer"):::ours -- "opens" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2
+  R1 -- "caches" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414

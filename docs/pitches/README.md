@@ -15,7 +15,7 @@ ago. He says about **20%** of his working time goes to looking for the right pag
 year. He does not use AI, for two reasons he gave himself: it is right 95% of the time and he is liable for
 the 5%, and when he tried it one question cost about **$4** because the model had to read a 500-page manual,
 so he hit usage limits constantly. Say "he says" every time. His ~$4 is **his** bill on **his** manual; our
-own measured naive worst case is **$12.40** and our median is **$1.37** — three different numbers, never
+own measured naive worst case is **$12.40** and our median is **$1.36** — three different numbers, never
 blended.
 
 **The demo bike, identical in all nine** unless the pitch says why not: **KTM 390 Duke 2024**
@@ -72,10 +72,10 @@ These are claims that would be **false today**. Check this list the morning of.
   workshop scene — there is none.
 - **Dropbox folder sync** and **Climate Fit** are "built, deploying", not deployed features: `/api/dropbox/*`
   is not in the live OpenAPI, and `/api/climate/fit` answers `no climatology` on the replica.
-- Never quote a **running ledger total** without the date beside it. `GET /api/cost` moved from $8.08 to
-  $8.93 in thirteen minutes on the day these files were written. Prefer not quoting it.
-- Never call **13,537** "manuals" — it is *vehicles carrying a free manual*. Distinct fetchable PDFs is
-  **14,770**. Never call **4,081** and **1,489** the same number: owner-typed over every row vs the
+- Never quote a **running ledger total** without the date beside it. `GET /api/cost` moved from $13.80 to
+  $13.80 in thirteen minutes on the day these files were written. Prefer not quoting it.
+- Never call **18,564** "manuals" — it is *vehicles carrying a free manual*. Distinct fetchable PDFs is
+  **14,865**. Never call **6,244** and **1,507** the same number: owner-typed over every row vs the
   free-English subset.
 - There is **no checkout**. "Live prices", never "buy".
 

@@ -36,6 +36,10 @@ const MIC_PATH_ARC = "M5 11a7 7 0 0 0 14 0M12 18v3";
 const CAM_PATH =
   "M8 5h2l1-2h2l1 2h4v13H4V5h4zm4 3.25A3.75 3.75 0 1 0 12 15.75 3.75 3.75 0 0 0 12 8.25zm0 2A1.75 1.75 0 1 1 12 13.75 1.75 1.75 0 0 1 12 10.25z";
 const CHAT_PATH = "M3 4h18v12H9l-6 5V4z";
+/** Submit. A stroked path, not the "up arrow" character: a glyph cannot be clipped by its box. */
+const SEND_PATH = "M12 19V5M5 12l7-7 7 7";
+/** The expand twist, rotated 90 degrees by CSS when the group is open. */
+const TWIST_PATH = "M9 5l7 7-7 7";
 
 const MISS_MS = 900;
 const VIEW_MS = 120;
@@ -160,8 +164,17 @@ function mount(el) {
   input.addEventListener("input", onType);
   input.addEventListener("search", onType);
 
-  const send = node("button", { type: "submit", class: "btn btn-icon send", "aria-label": "Ask", text: "↑" });
-  form.append(mic, cam, input, send);
+  const send = node("button", { type: "submit", class: "btn btn-icon send", "aria-label": "Ask" });
+  send.append(glyph([SEND_PATH], true));
+
+  // Ask the manual in words instead of headings. It lives in the search bar, at the same end
+  // as the submit arrow, because it is the same question asked another way - it used to be a
+  // pill floating over the list.
+  const chatPill = node("button", { type: "button", class: "btn btn-icon chat-pill", hidden: "", "aria-label": "Chat" });
+  chatPill.append(glyph([CHAT_PATH], false));
+  chatPill.addEventListener("click", toggleChat);
+
+  form.append(mic, cam, input, chatPill, send);
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     onSubmit();
@@ -188,11 +201,7 @@ function mount(el) {
   open.append(openT, openP);
   open.addEventListener("click", openManual);
 
-  // Ask the manual in words instead of headings. Only here, where the bike is finally settled.
-  const chatPill = node("button", { type: "button", class: "chat-pill", hidden: "", "aria-label": "Chat" });
-  chatPill.append(glyph([CHAT_PATH], false), node("span", { text: "Chat" }));
-  chatPill.addEventListener("click", toggleChat);
-  foot.append(open, chatPill);
+  foot.append(open);
 
   const chatHost = node("div", { hidden: "" });
 
@@ -590,8 +599,8 @@ function rowFor(entry, q, browsing) {
       class: on ? "hit-x is-on" : "hit-x",
       "aria-expanded": on ? "true" : "false",
       "aria-label": on ? "Collapse" : "Expand",
-      text: "›",
     });
+    twist.append(glyph([TWIST_PATH], true));
     twist.addEventListener("click", () => {
       if (expanded.has(entry.id)) expanded.delete(entry.id);
       else expanded.add(entry.id);
@@ -604,8 +613,8 @@ function rowFor(entry, q, browsing) {
 
 function syncFoot() {
   if (!els) return;
-  // The bar carries the Chat pill from the moment a manual exists; MANUAL joins it on a pick.
-  els.foot.hidden = !selected && els.chatPill.hidden;
+  // The foot is the MANUAL button and nothing else now - Chat moved into the search bar.
+  els.foot.hidden = !selected;
   els.open.hidden = !selected;
   if (!selected) return;
   const part = partOf(selected);

@@ -86,7 +86,7 @@
   line-height: 1;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
+  border-radius: var(--r);
 }
 
 [data-screen="book"] .bar-btn svg {
@@ -127,8 +127,7 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 [data-screen="book"] .bar-word.is-on,
@@ -379,7 +378,7 @@
   font-variant-numeric: tabular-nums;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
+  border-radius: var(--r);
   transition: background-color 220ms cubic-bezier(0.2, 0.8, 0.2, 1), color 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -417,7 +416,7 @@
   min-height: 48px;
   padding: 10px 10px 10px 12px;
   border: 0;
-  border-bottom: 3px solid var(--line);
+  border-bottom: var(--hair) solid var(--edge);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
@@ -427,7 +426,7 @@
   text-align: left;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
+  border-radius: var(--r);
 }
 
 [data-screen="book"] .toc-row.sub {
@@ -485,8 +484,8 @@
   height: 52px;
   min-height: 44px;
   box-sizing: border-box;
-  border: 3px solid var(--line);
-  border-radius: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
@@ -537,13 +536,13 @@
   width: 100%;
   min-height: 44px;
   padding: 12px;
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
   background: var(--card);
   color: inherit;
   text-align: left;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
+  border-radius: var(--r);
 }
 
 [data-screen="book"] .ask-ctx {

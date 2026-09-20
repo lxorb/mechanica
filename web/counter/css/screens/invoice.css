@@ -48,7 +48,7 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.8rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.01em;
   line-height: 1.2;
 }
 
@@ -78,7 +78,7 @@
   gap: 8px;
   padding: 8px 12px;
   background: var(--bg);
-  border-bottom: 3px solid var(--line);
+  border-bottom: var(--hair) solid var(--edge);
 }
 
 .pv-q {
@@ -86,8 +86,8 @@
   min-width: 0;
   min-height: 44px;
   padding: 8px 12px;
-  border: 3px solid var(--line);
-  border-radius: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
@@ -165,13 +165,12 @@
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   line-height: 1.1;
   margin: 0 0 8px;
   padding: 8px 0 5px;
   background: var(--bg);
-  border-bottom: 3px solid var(--line);
+  border-bottom: var(--hair) solid var(--edge);
 }
 
 .pv-tiles {
@@ -191,8 +190,8 @@
   text-align: left;
   min-height: 44px;
   padding: 8px;
-  border: 3px solid var(--line);
-  border-radius: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
   background: var(--card);
   color: inherit;
   font: inherit;
@@ -308,7 +307,7 @@
   max-height: 42dvh;
   overflow: hidden;
   background: var(--page-tint);
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
 }
 
 .pv-det-name {
@@ -336,7 +335,7 @@
   min-height: 44px;
   padding: 0 14px;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--r);
   font-size: 0.8rem;
   cursor: pointer;
   appearance: none;
@@ -392,15 +391,14 @@
 .pv-pill {
   min-height: 44px;
   padding: 0 12px;
-  border: 3px solid var(--line);
-  border-radius: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   cursor: pointer;
   appearance: none;
 }
@@ -428,7 +426,7 @@
   align-items: center;
   min-height: 44px;
   padding: 9px 10px;
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
   background: var(--card);
   color: inherit;
   text-decoration: none;
@@ -444,8 +442,7 @@
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--accent);
   line-height: 1.1;
 }
@@ -486,8 +483,7 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.64rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   padding: 2px 5px;
   box-shadow: inset 0 0 0 2px var(--line);
 }
@@ -534,7 +530,7 @@
   min-height: 44px;
   padding: 0 12px;
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.01em;
   text-decoration: none;
 }
 
@@ -568,7 +564,7 @@
 
 .pv-skel-row {
   height: 66px;
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
   background-color: var(--shim);
   background-image: linear-gradient(90deg, var(--shim) 25%, var(--shim-hi) 38%, var(--shim) 62%);
   background-size: 400% 100%;
@@ -619,7 +615,7 @@
 
   .pv-detail {
     flex: 0 0 clamp(360px, 36vw, 520px);
-    border-left: 3px solid var(--line);
+    border-left: var(--hair) solid var(--edge);
     background: var(--bg);
   }
 

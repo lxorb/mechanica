@@ -2,7 +2,7 @@
 
 **5 minutes.** The one claim: *the AI was never not-good-enough for this mechanic. It was too expensive to use.*
 
-Every number below is measured. Sources: `api/data/costs.jsonl` (41,612 billed calls as of 2026-09-20 09:55), `api/eval/report.md`,
+Every number below is measured. Sources: `api/data/costs.jsonl` (44,494 billed calls as of 2026-09-20 15:40), `api/eval/report.md`,
 `api/eval/report-baseline.md`, `api/eval/chat-report.md`, `api/docs/CHAT-RESEARCH.md`, and the live
 `GET /api/cost` + `GET /api/cost/ttc`. Regenerate the whole table with:
 
@@ -19,12 +19,12 @@ Full output: [`token-company/cost-report.md`](token-company/cost-report.md) · r
 | | |
 |---|---|
 | naive, OUR measured worst case — the largest **deployed** manual (775 p) in the flagship | **$12.40 / question** |
-| naive, the **median** deployed manual (171 p) | **$1.37 / question** |
+| naive, the **median** deployed manual (170 p) | **$1.36 / question** |
 | naive, modelled on **his** 500-page workshop manual | **$8.005 / question** |
 | **his own lived bill** when he tried it — his number, not ours, on his manual | **~$4 / question** |
 | ours — the default path (question → the manual's pages) | **$0.00038 / ask** |
 | ours — worst case (a written answer with citations) | **$0.0041–0.0049 / answer** |
-| x-factor, our $12.40 worst case against our $0.00038 ask | **32,632x** — and **3,600x** against the $1.37 median |
+| x-factor, our $12.40 worst case against our $0.00038 ask | **32,632x** — and **3,579x** against the $1.36 median |
 | tokens removed before the prompt was ever billed (bear-2 + stripping) | **31.2%** eval · **29.1% over 10 calls** on the live replica now |
 | his month at 40 questions/day | **$4,800 → $5.04**, and $5.04 is the worst case |
 
@@ -53,7 +53,7 @@ At 40 questions a day that is **$160/day, $4,800/month**. That is not an accurac
 | manual | pages | prompt tokens | naive `gpt-6-astra` | whole manual in `gpt-5.6-luna` |
 |---|---|---|---|---|
 | KTM 390 Duke 2024 (our demo bike) | 143 | 114,400 | $1.144 | $0.0229 |
-| **median deployed manual** | 171 | 136,800 | **$1.37** | $0.0274 |
+| **median deployed manual** | 170 | 136,000 | **$1.36** | $0.0274 |
 | BMW R 12 G/S 2026 | 270 | 216,000 | $2.165 | $0.0433 |
 | his 500-page workshop manual | 500 | 400,000 **(2x)** | **$8.005** | $0.1601 |
 | **largest in the deployed catalog** (live `/api/cost` reports this as `naivePerAsk`) | 775 | 620,000 **(2x)** | **$12.40** | — |
@@ -150,7 +150,7 @@ place the other levers cannot touch: the printed page that must go into the prom
   **581 tokens per answer**.
 - At `gpt-5.6-terra` fresh input that is **$0.00116/answer — 21.7% of the chat bill**
   ($0.00536 → $0.00420), on top of everything else.
-- Live `/api/cost/ttc`, read 2026-09-20 09:42 UTC: 8,811 → 6,247, **29.1% saved over 10 calls**. That
+- Live `/api/cost/ttc`, read 2026-09-20 15:40 UTC: 8,811 → 6,247, **29.1% saved over 10 calls**. That
   counter is **in-memory per replica** and resets on deploy, so a low number means a fresh replica, not a
   worse compressor. Read it fresh before the pitch and quote the 31.2% eval figure on stage.
 
@@ -163,7 +163,7 @@ prompt is fenced `PAGE 62 … PAGE 63 …`, compressed in one call, and split ba
 On-demand ingest: **$0.0951 per manual**, mean over **648 real ingests** (mean 177 pages, 114,565 pages
 total, **$0.538 per 1,000 pages**). Readable in **1.3 s**, fully searchable in **40.4 s** on the timed live run.
 That is **7% of ONE naive question**, and it
-then answers every question about that bike forever. The 535 manuals in the deployed catalog cost about
+then answers every question about that bike forever. The 543 manuals in the deployed catalog cost about
 **$51 total, once**.
 
 ---
@@ -171,18 +171,18 @@ then answers every question about that bike forever. The 535 manuals in the depl
 ## The token path
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> QN("Question"):::ours --> BM("BM25 pages"):::ours --> BEAR("bear-2 compression"):::them
+    MECH("Mechanic"):::ends -- "types" --> QN("Question"):::ours -- "retrieves" --> BM("BM25 pages"):::ours -- "compresses" --> BEAR("bear-2 compression"):::them
   end
   subgraph R2[" "]
     direction LR
-    CACHE("Prompt cache"):::them --> TERRA("gpt-5.6-terra"):::them --> CITE("Cited answer"):::ours --> PAGE("Manual page"):::ends
+    CACHE("Prompt cache"):::them -- "prompts" --> TERRA("gpt-5.6-terra"):::them -- "cites" --> CITE("Cited answer"):::ours -- "opens" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2
+  R1 -- "caches" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -307,8 +307,8 @@ degrades to *more expensive*, never to *slower than the timeout* and never to *w
 **What is the cost at 1,000 mechanics?**
 1.2M questions/month. **$5,040/month** if every one of them is a full chat answer; **$456/month** on the
 default ask path. The naive stack at the same volume is **$1.64M/month, $19.7M/year**. The part that
-doesn't scale linearly is ingest: 535 manuals cost about **$51, once**, shared by every shop — there are
-**14,770** distinct free English PDFs we can reach, so the whole reachable corpus is roughly **$1,400, once**.
+doesn't scale linearly is ingest: 543 manuals cost about **$51, once**, shared by every shop — there are
+**14,865** distinct free English PDFs we can reach, so the whole reachable corpus is roughly **$1,400, once**.
 
 **bear-2's pricing is "you only pay for the tokens compression removes" — so what does it cost you?**
 There is no public $/M, so we log it as `usd = 0` and count the saving in **tokens** instead, in a separate

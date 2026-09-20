@@ -356,7 +356,7 @@
       "title": "The hours, and how they come back",
       "caption": "A fifth of his week goes into looking for a page. The page is the product — the hours are the return, and the next slide prices what it costs to give them back.",
       "flow": {
-        "w": 1180,
+        "w": 1440,
         "bands": [
           {
             "rows": [
@@ -382,6 +382,12 @@
                     "tone": "orange",
                     "t": "Hours back"
                   }
+                ],
+                "labels": [
+                  "loses",
+                  "replaced by",
+                  "opens",
+                  "gives back"
                 ]
               }
             ]

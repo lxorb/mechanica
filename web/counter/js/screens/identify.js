@@ -1087,8 +1087,10 @@ registerScreen("identify", {
       spellcheck: "false",
       enterkeyhint: "go",
       maxlength: "120",
-      placeholder: "Search",
-      "aria-label": "Search",
+      // The whole instruction, in one line, in the only field on the landing. A VIN is still
+      // detected as you type; the placeholder does not have to say so.
+      placeholder: "Search for motorcycle part or upload image",
+      "aria-label": "Search for motorcycle part or upload image",
     });
 
     const cam = el("button", { type: "button", className: "id-cam", "aria-label": "Photo" });

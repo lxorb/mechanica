@@ -543,32 +543,37 @@ function showRef(title, src) {
   els.body.classList.toggle("has-ref", Boolean(src));
 }
 
+/**
+ * ONE step when the manual is missing.
+ *
+ * It used to be two. `none` means the registry knows no manual for this vehicle, and the
+ * screen answered that with an unlabelled book button; pressing it ran POST /manuals/ensure,
+ * which for a vehicle with neither `manualId` nor `manualUrl` answers `status: "none"` in
+ * practically every case — and only THEN did the real upload row (PDF / Dropbox / x) appear.
+ * Two prompts, the first of which could not succeed. Now the card says the manual is not
+ * available and offers the one control that can fix it, and the file picker opens on the
+ * first tap. The lookup still runs where it can actually find something: the `ondemand`
+ * state, behind the same Yes the rider presses to go on.
+ */
 function showActions(mState) {
-  const add = mState === "none" && Q.online();
-  els.yes.hidden = mState === "none";
-  els.add.hidden = !add;
-  els.none.hidden = mState !== "none" || add;
+  const gone = mState === "none";
+  const canUpload = gone && Q.online();
+  els.yes.hidden = gone;
+  els.add.hidden = !canUpload;
+  els.dropbox.hidden = !canUpload || !globalThis.TTM_DROPBOX_APP_KEY;
+  els.none.hidden = !gone || canUpload;
+  els.note.hidden = !gone;
   els.prompt.hidden = false;
   els.actions.hidden = false;
-  els.source.hidden = true;
   els.work.hidden = true;
-}
-
-function showSource() {
-  els.prompt.hidden = true;
-  els.actions.hidden = true;
-  els.source.hidden = false;
-  els.work.hidden = true;
-  els.dropbox.hidden = !globalThis.TTM_DROPBOX_APP_KEY;
-  els.pdf.focus();
 }
 
 function showWork() {
   working = true;
   workRatio = -1;
   els.prompt.hidden = true;
+  els.note.hidden = true;
   els.actions.hidden = true;
-  els.source.hidden = true;
   els.work.hidden = false;
   // The sweep only covers the wait for the first poll; CSS owns the width while it runs.
   els.bar.classList.add("is-wait");
@@ -634,8 +639,10 @@ async function runWork(task) {
     go("pick");
     return;
   }
-  if (Q.online()) showSource();
-  else showActions(shownState);
+  // The lookup found nothing. The bike now has no manual, which is the state the card
+  // already knows how to show — with the upload control in it. No second prompt.
+  shownState = "none";
+  showActions("none");
 }
 
 /** The VIN this bike was identified by, so /manuals/ensure can pin the market variant. */
@@ -652,20 +659,9 @@ function onYes() {
   go("pick");
 }
 
-/**
- * "none" only means this session has no manual mapped. The API can still find and index a
- * free official PDF for the bike, so try that first; runWork falls back to showSource().
- */
+/** The one control on the missing-manual card: the file picker, on the first tap. */
 function onAdd() {
   if (working) return;
-  if (!shownBike) {
-    showSource();
-    return;
-  }
-  runWork((progress) => Q.ensureManual(shownBike.id, progress, vinOpts()));
-}
-
-function onPdf() {
   els.file.click();
 }
 
@@ -780,7 +776,13 @@ registerScreen("confirm", {
 
     const prompt = document.createElement("p");
     prompt.className = "confirm-prompt";
-    prompt.textContent = "IS THIS YOUR BIKE?";
+    prompt.textContent = "Is this your bike?";
+
+    // Shown only in the `none` state, directly above the one upload control.
+    const note = document.createElement("p");
+    note.className = "confirm-note";
+    note.textContent = "Manual not available. Upload the PDF.";
+    note.hidden = true;
 
     const actions = document.createElement("div");
     actions.className = "confirm-actions";
@@ -803,14 +805,23 @@ registerScreen("confirm", {
     const add = document.createElement("button");
     add.type = "button";
     add.className = "btn confirm-add";
-    add.setAttribute("aria-label", "Manual");
+    add.setAttribute("aria-label", "Upload PDF");
     add.hidden = true;
-    add.append(bookGlyph());
+    add.append(bookGlyph(), document.createTextNode("Upload PDF"));
     add.addEventListener("click", onAdd);
+
+    // Dropbox is the same step, not another one: a second source for the same file, and it
+    // only renders where TTM_DROPBOX_APP_KEY is set (nowhere, today).
+    const dropbox = document.createElement("button");
+    dropbox.type = "button";
+    dropbox.className = "btn confirm-dropbox";
+    dropbox.textContent = "Dropbox";
+    dropbox.hidden = true;
+    dropbox.addEventListener("click", onDropbox);
 
     const yesSlot = document.createElement("div");
     yesSlot.className = "confirm-yes-slot";
-    yesSlot.append(yes, add, none);
+    yesSlot.append(yes, add, dropbox, none);
 
     const no = document.createElement("button");
     no.type = "button";
@@ -827,32 +838,6 @@ registerScreen("confirm", {
     alts.hidden = true;
 
     actions.append(yesSlot, no);
-
-    const source = document.createElement("div");
-    source.className = "confirm-actions confirm-source";
-    source.hidden = true;
-
-    const pdf = document.createElement("button");
-    pdf.type = "button";
-    pdf.className = "btn btn-primary confirm-pdf";
-    pdf.textContent = "PDF";
-    pdf.addEventListener("click", onPdf);
-
-    const dropbox = document.createElement("button");
-    dropbox.type = "button";
-    dropbox.className = "btn confirm-dropbox";
-    dropbox.textContent = "Dropbox";
-    dropbox.hidden = true;
-    dropbox.addEventListener("click", onDropbox);
-
-    const cancel = document.createElement("button");
-    cancel.type = "button";
-    cancel.className = "btn";
-    cancel.setAttribute("aria-label", "No");
-    cancel.append(glyph("M5 5l14 14M19 5L5 19"));
-    cancel.addEventListener("click", () => showActions(shownState));
-
-    source.append(pdf, dropbox, cancel);
 
     const file = document.createElement("input");
     file.type = "file";
@@ -876,7 +861,7 @@ registerScreen("confirm", {
 
     work.append(bar, workTitle);
 
-    body.append(sheet, alts, ref, prompt, actions, source, work, file);
+    body.append(sheet, alts, ref, prompt, note, actions, work, file);
 
     const overlay = document.createElement("div");
     overlay.className = "confirm-overlay";
@@ -923,14 +908,13 @@ registerScreen("confirm", {
       refImg,
       refCap,
       prompt,
+      note,
       actions,
       alts,
       yes,
       add,
       none,
       no,
-      source,
-      pdf,
       dropbox,
       file,
       work,

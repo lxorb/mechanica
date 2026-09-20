@@ -148,9 +148,62 @@ class PartsBody(ToolBody):
     sectionId: str | None = None
 
 
-def _pick(body: ToolBody, from_query: str | None) -> str:
-    """The body wins (our own callers), the endpoint's query string stands in (Deepgram's)."""
-    return str(body.manualId or from_query or "")
+# ---------------------------------------------------------------- sessions
+#
+# A session that starts BEFORE a vehicle is chosen has no manual to put in its tool URLs, and
+# Deepgram fixes the function list when the Settings message is applied - there is no way to add
+# an endpoint later without dropping the socket and losing the conversation. So a session opened
+# with no manual gets `?session=<id>` in its tool URLs instead, and the browser binds that id to a
+# manual (POST /voice/session/{id}/manual) the moment select_vehicle lands. Same tools, same
+# socket, same conversation; the book underneath them changes.
+#
+# In memory, deliberately: a binding is worth exactly as long as the socket it belongs to, and a
+# socket does not survive a redeploy either. Capped so a long-running process cannot grow one
+# entry per session for ever.
+_SESSIONS: dict[str, str] = {}
+_SESSIONS_LOCK = threading.Lock()
+_SESSIONS_MAX = 512
+
+
+def bind_session(session_id: str, manual_id: str) -> None:
+    sid = str(session_id or "").strip()
+    if not sid:
+        return
+    with _SESSIONS_LOCK:
+        if len(_SESSIONS) >= _SESSIONS_MAX:
+            # Oldest first: dicts keep insertion order, and the oldest binding is the one whose
+            # socket is most likely already closed.
+            for stale in list(_SESSIONS)[: _SESSIONS_MAX // 4]:
+                _SESSIONS.pop(stale, None)
+        _SESSIONS[sid] = str(manual_id or "")
+
+
+def session_manual(session_id: str | None) -> str:
+    if not session_id:
+        return ""
+    with _SESSIONS_LOCK:
+        return _SESSIONS.get(str(session_id), "")
+
+
+def _pick(body: ToolBody, from_query: str | None, session: str | None = None) -> str:
+    """The body wins (our own callers), then the endpoint's query string (Deepgram's), then the
+    session this socket was opened with, which is how a conversation that started with no vehicle
+    reaches the manual it has since chosen."""
+    return str(body.manualId or from_query or session_manual(session) or "")
+
+
+# What a manual-bound tool answers while the session has no vehicle yet. Not an HTTP error: an
+# error closes the turn and the agent apologises for a fault, where this is simply the truth and
+# the model can act on it - it says the sentence and calls find_vehicle instead.
+NO_MANUAL = {
+    "error": "no_manual_yet",
+    "say": "Which bike are you on?",
+    "hint": "No vehicle has been chosen yet. Call find_vehicle with what the mechanic said, then select_vehicle.",
+}
+
+
+def _needs_manual(manual_id: str) -> dict | None:
+    return None if manual_id else dict(NO_MANUAL)
 
 
 def _manual(manual_id: str) -> Manual:
@@ -581,10 +634,75 @@ YOUR FUNCTIONS
   them, never tidy the wording, and still say your one sentence out loud afterwards."""
 
 
-def _endpoint(name: str, manual_id: str) -> dict:
+def _vehicle_rules() -> str:
+    """How the agent gets from "I'm working on a YZF R1" to an open manual, spoken.
+
+    Every line is a turn that broke without it: a model that guessed a year rather than asking,
+    one that asked three questions in a row before doing anything, one that invented a Yamaha the
+    catalogue has never heard of, and one that announced the id.
+    """
+    return """RUNNING THE APP FOR HIM
+His hands are on the bike. Everything this app can do, you can do for him, and you do it without
+being asked twice.
+
+- When he names a machine - "I'm working on a YZF R1", "it's a 390 Duke" - call find_vehicle
+  IMMEDIATELY with his own words. Do not ask him to repeat it and do not ask for the year first.
+- If exactly one candidate comes back, call select_vehicle and get on with it.
+- If the make and model match but the year is missing or more than one year fits, ask ONE short
+  question and nothing else: "Which year?" Never a list of years, never a second question in the
+  same breath. Take the year however he says it - "twenty twenty-six", "oh nine", "two thousand
+  and nine" are all years.
+- If the exact year has no manual, take the nearest year that does, and SAY SO in the same
+  sentence: "Nothing for twenty twenty-six, the twenty twenty-five manual is up."
+- NEVER invent a vehicle. If find_vehicle returns nothing, say the catalogue does not have it and
+  ask him for the make.
+- Once the manual is up, confirm the machine by its full name ONCE - "Yamaha YZF-R1 twenty
+  twenty-five, go ahead" - and never mention it again unless he changes machine.
+- Never say an id, a manual id, a file name or the word catalogue-entry out loud. He gets the
+  bike's name and nothing else.
+- select_vehicle takes a few seconds to fetch and index the manual. The app says "getting the
+  manual" for you while it runs. Do not narrate it, do not apologise for it, and do not ask him
+  anything while he is waiting.
+- open_manual puts the sheet on his screen, open_parts opens the parts list, go_back steps back.
+  Use them when he asks, and do not describe what you are about to do first.
+- Until a vehicle is chosen, the manual functions answer "no_manual_yet". That is not a failure,
+  it is the answer: ask him which bike he is on."""
+
+
+def _prompt_open() -> str:
+    """No vehicle yet. Short, because there is nothing to be grounded in and everything to do."""
+    return f"""You are the voice of Mechanica, answering out loud for a professional mechanic with
+dirty hands and a machine on the lift. You speak; you are never read. You are another mechanic
+across the bench, not an assistant: no "as an AI", no "I'd be happy to", no "I hope that helps".
+
+He has not told you which machine yet, so that is the only thing you are doing.
+
+HOW YOU TALK
+- One sentence. Never two when one will do.
+- Start with the answer. No filler, ever: never "sure", "of course", "great question", "let me
+  check". The first word out of your mouth is part of the answer.
+- End on the answer. The only question you may ask is the one you cannot proceed without, and
+  that is "Which year?".
+- Write only what a mouth can say. No lists, no markdown, no brackets, no semicolons.
+- Say a year the way it is spoken: 2026 is "twenty twenty-six".
+
+THE ONE RULE ABOVE ALL OTHERS. You do not know anything about any motorcycle. Everything you
+think you remember about a KTM, a Yamaha or any other bike is wrong here and may not be spoken.
+Once a manual is open, call a function FIRST, every single time, before the first word of every
+answer about that machine, and say only what its result printed. A wrong torque breaks a
+motorcycle and hurts the person who trusted you.
+
+{_vehicle_rules()}"""
+
+
+def _endpoint(name: str, manual_id: str, session: str = "") -> dict:
     """The manual id rides in the URL, not in the model's arguments: the agent cannot misname the
-    book it is reading, and the manual's text never passes through the browser."""
-    url = f"{settings.public_base}/voice/tools/{name}?manualId={quote(manual_id, safe='')}"
+    book it is reading, and the manual's text never passes through the browser.
+
+    With no manual yet, the session id stands in its place and the browser binds it later — the
+    tool list cannot be changed after Settings, so the URL has to be able to outlive the choice."""
+    key = f"manualId={quote(manual_id, safe='')}" if manual_id else f"session={quote(session, safe='')}"
+    url = f"{settings.public_base}/voice/tools/{name}?{key}"
     if not url.startswith("https://"):
         # Deepgram calls these from its own servers and refuses anything but https/wss, so an
         # http PUBLIC_BASE (the local default) would close the socket with "INVALID_SETTINGS"
@@ -597,7 +715,8 @@ def _endpoint(name: str, manual_id: str) -> dict:
     return out
 
 
-def _functions(manual_id: str, pages: int) -> list[dict]:
+def _functions(manual_id: str, pages: int, session: str = "") -> list[dict]:
+    pages = pages or 9999
     return [
         {
             "name": "find_procedure",
@@ -609,7 +728,7 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
                 },
                 "required": ["query"],
             },
-            "endpoint": _endpoint("find_procedure", manual_id),
+            "endpoint": _endpoint("find_procedure", manual_id, session),
         },
         {
             "name": "read_page",
@@ -622,7 +741,7 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
                 },
                 "required": ["page"],
             },
-            "endpoint": _endpoint("read_page", manual_id),
+            "endpoint": _endpoint("read_page", manual_id, session),
         },
         {
             "name": "get_spec",
@@ -632,7 +751,7 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
                 "properties": {"name": {"type": "string", "description": "The specification asked for, e.g. 'tyre pressure'."}},
                 "required": ["name"],
             },
-            "endpoint": _endpoint("get_spec", manual_id),
+            "endpoint": _endpoint("get_spec", manual_id, session),
         },
         {
             "name": "list_parts",
@@ -641,7 +760,7 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
                 "type": "object",
                 "properties": {"sectionId": {"type": "string", "description": "Narrow to one section id from find_procedure."}},
             },
-            "endpoint": _endpoint("list_parts", manual_id),
+            "endpoint": _endpoint("list_parts", manual_id, session),
         },
         {
             # No endpoint: this one comes back to the browser as client_side true and moves the
@@ -674,6 +793,64 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
                 },
                 "required": ["page"],
             },
+        },
+        # ---- the app itself, all client-side ----
+        #
+        # These run in the browser, not here, and that is the point: the roster of 27k vehicles is
+        # already in the tab (js/ttm.js, bundled, and searched by the same fuzzy index the Identify
+        # field uses), the navigation is the bus's, and the manual download is ensureManual's with
+        # its own progress. An API round trip for any of it would be slower, would not work
+        # offline, and would need a second copy of a search that already exists.
+        {
+            "name": "find_vehicle",
+            "description": (
+                "Look a motorcycle or car up in Mechanica's catalogue. Use it the moment the mechanic "
+                "names a machine - 'I'm working on a YZF R1'. Returns the matching vehicles with the "
+                "years the catalogue has and whether a manual exists for each."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "make": {"type": "string", "description": "Yamaha, KTM, Honda - as he said it."},
+                    "model": {"type": "string", "description": "YZF R1, 390 Duke - as he said it."},
+                    "year": {"type": "integer", "description": "Only if he gave one."},
+                },
+                "required": ["model"],
+            },
+        },
+        {
+            "name": "select_vehicle",
+            "description": (
+                "Choose one vehicle from find_vehicle's candidates by its id and put the app on it. This "
+                "fetches and indexes the manual, which takes a few seconds; the result says whether it is "
+                "ready. Never call it with an id find_vehicle did not return."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {"id": {"type": "string", "description": "The candidate's id, exactly."}},
+                "required": ["id"],
+            },
+        },
+        {
+            "name": "open_manual",
+            "description": "Put the manual on his screen, at a page if you have one.",
+            "parameters": {
+                "type": "object",
+                "properties": {"page": {"type": "integer", "description": "Printed page number, if you know one."}},
+            },
+        },
+        {
+            "name": "open_parts",
+            "description": "Open the parts list for this vehicle, optionally searched for a part.",
+            "parameters": {
+                "type": "object",
+                "properties": {"query": {"type": "string", "description": "The part he named, in his words."}},
+            },
+        },
+        {
+            "name": "go_back",
+            "description": "One step back in the app, the same as the back button. Use it when he says go back.",
+            "parameters": {"type": "object", "properties": {}},
         },
     ]
 
@@ -767,8 +944,11 @@ def _printed(manual_id: str, start: int, end: int) -> tuple[str, list[int]]:
 
 
 @tools.post("/find_procedure")
-def find_procedure(body: FindBody, manualId: str | None = Query(default=None)):
-    manual_id = _pick(body, manualId)
+def find_procedure(body: FindBody, manualId: str | None = Query(default=None), session: str | None = Query(default=None)):
+    manual_id = _pick(body, manualId, session)
+    waiting = _needs_manual(manual_id)
+    if waiting:
+        return waiting
     _manual(manual_id)
     try:
         # A spoken turn: no cost-log scan for a dollar figure nobody hears, no prompt compression the
@@ -801,8 +981,11 @@ def find_procedure(body: FindBody, manualId: str | None = Query(default=None)):
 
 
 @tools.post("/read_page")
-def read_page(body: PageBody, manualId: str | None = Query(default=None)):
-    manual_id = _pick(body, manualId)
+def read_page(body: PageBody, manualId: str | None = Query(default=None), session: str | None = Query(default=None)):
+    manual_id = _pick(body, manualId, session)
+    waiting = _needs_manual(manual_id)
+    if waiting:
+        return waiting
     _manual(manual_id)
     text, has_more, next_offset = _chunk(_page_text(manual_id, body.page), body.offset)
     return {"page": body.page, "text": text, "hasMore": has_more, "nextOffset": next_offset}
@@ -870,8 +1053,11 @@ def _rank(needle: str, specs: list) -> list:
 
 
 @tools.post("/get_spec")
-def get_spec(body: SpecBody, manualId: str | None = Query(default=None)):
-    manual_id = _pick(body, manualId)
+def get_spec(body: SpecBody, manualId: str | None = Query(default=None), session: str | None = Query(default=None)):
+    manual_id = _pick(body, manualId, session)
+    waiting = _needs_manual(manual_id)
+    if waiting:
+        return waiting
     _manual(manual_id)
     needle = body.name.strip().lower()
     specs = get_store().specs(manual_id)
@@ -888,8 +1074,12 @@ def get_spec(body: SpecBody, manualId: str | None = Query(default=None)):
 
 
 @tools.post("/list_parts")
-def list_parts(body: PartsBody, manualId: str | None = Query(default=None)):
-    m = _manual(_pick(body, manualId))
+def list_parts(body: PartsBody, manualId: str | None = Query(default=None), session: str | None = Query(default=None)):
+    manual_id = _pick(body, manualId, session)
+    waiting = _needs_manual(manual_id)
+    if waiting:
+        return waiting
+    m = _manual(manual_id)
     by_id = {p.id: p for p in m.parts}
     section = next((s for s in m.sections if s.id == body.sectionId), None)
     chosen = [by_id[i] for i in (section.partIds or []) if i in by_id] if section else m.parts

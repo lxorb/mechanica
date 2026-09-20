@@ -75,6 +75,34 @@
   --theme-swap: 180ms;
 
   /**
+   * ---- shape: the soft system ----
+   * The app was cut from a 3 px ink rule and square corners. The founder asked for
+   * "less boxy and smoother", so the rule became a hairline and every box got a radius —
+   * in ONE place, so a screen never invents its own. `--edge` is mixed out of `--line`,
+   * which means every theme keeps its own rule colour without a line in themes.css.
+   */
+  --r-sm: 10px;                  /* small tiles, flags, thumbs */
+  --r: 14px;                     /* the default: cards, fields, buttons, rows */
+  --r-lg: 20px;                  /* sheets and panels */
+  --r-pill: 999px;               /* chips, stamps, round targets */
+  --hair: 1.5px;                 /* the structural border, hairline */
+  --edge: color-mix(in srgb, var(--line) 42%, transparent);   /* that hairline's colour */
+  --edge-soft: color-mix(in srgb, var(--line) 22%, transparent);  /* dividers inside a box */
+  --lift:
+    0 1px 2px color-mix(in srgb, var(--shadow) 14%, transparent),
+    0 10px 28px -16px color-mix(in srgb, var(--shadow) 46%, transparent);
+
+  /* ---- one gutter, one content width: every screen measures from these ---- */
+  --gutter: 12px;
+  --column: 720px;
+  --gap: 10px;
+
+  /* ---- motion: 160-200 ms ease-out on hover, press and appear ---- */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --t-fast: 160ms;
+  --t-mid: 200ms;
+
+  /**
    * Names the app was built on, kept as aliases so that nothing outside this folder has to
    * change. New rules should use the semantic names above: --ink covered three different jobs
    * (text, border, dark slab) which a dark theme has to be able to tell apart.
@@ -127,9 +155,8 @@ body {
   padding: 10px 16px;
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
 }
 
 .ticket span {
@@ -138,20 +165,26 @@ body {
 }
 
 .ticket-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
+  width: 44px;
   min-width: 44px;
+  height: 44px;
   min-height: 44px;
-  margin: -10px 0 -10px -16px;
-  padding: 0 10px 2px;
+  margin: -10px 6px -10px -12px;
+  padding: 0;
   border: 0;
+  border-radius: var(--r-pill);
   background: transparent;
   color: var(--accent-ink);
   font: inherit;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   line-height: 1;
-  text-align: left;
   appearance: none;
   cursor: pointer;
+  transition: color var(--t-fast) var(--ease);
 }
 
 .ticket-back.is-off {
@@ -211,13 +244,17 @@ body {
   transform: scale(0.88);
 }
 
+/* One content width and one gutter: the rail lines up with everything under it. */
 .rail {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   list-style: none;
-  width: 100%;
-  border: 3px solid var(--line);
-  border-left: 0;
+  width: calc(100% - var(--gutter) * 2);
+  max-width: var(--column);
+  margin: 10px auto 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
+  overflow: hidden;
 }
 
 .rail li {
@@ -228,7 +265,7 @@ body {
   height: 44px;
   min-height: 44px;
   padding: 0 4px;
-  border-left: 3px solid var(--line);
+  border-left: var(--hair) solid var(--edge);
   background: var(--card);
   color: var(--fg);
   font-family: "Big Shoulders Display", sans-serif;
@@ -236,6 +273,11 @@ body {
   font-size: 1.35rem;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.rail li:first-child {
+  border-left: 0;
 }
 
 .rail li b {
@@ -243,9 +285,8 @@ body {
 }
 
 .rail li span {
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.86rem;
+  letter-spacing: 0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -262,9 +303,9 @@ body {
 }
 
 main {
-  max-width: 720px;
+  max-width: var(--column);
   margin: 0 auto;
-  padding: 12px 12px 32px;
+  padding: var(--gutter) var(--gutter) 32px;
 }
 
 /* Book reads fullscreen: the ticket bar and the rail fold into the reader's own 34 px bar. */
@@ -279,55 +320,61 @@ body[data-here="book"] main {
   padding: 0;
 }
 
-@media (min-width: 900px) {
-  .ticket,
-  .rail {
-    width: 100%;
-    max-width: none;
-  }
-
-  main {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-}
-
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 52px;
   padding: 12px 16px;
-  border: 3px solid var(--line);
+  /* Rule 4 of this pass: anything clickable carries a visible edge. */
+  border: var(--hair) solid var(--edge);
   background: var(--accent-2);
   color: var(--accent-2-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
+  border-radius: var(--r);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn-primary {
   background: var(--slab);
   color: var(--slab-fg);
+  border-color: var(--slab);
 }
 
+/* A glyph button is a square with the glyph centred in it and nothing clipped. */
 .btn-icon {
   width: 52px;
   height: 52px;
   min-width: 52px;
   min-height: 52px;
   padding: 0;
+  line-height: 1;
+  overflow: visible;
+}
+
+.btn-icon svg {
+  display: block;
+  flex: none;
 }
 
 .card {
   background: var(--card);
-  border: 3px solid var(--line);
-  border-radius: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
 }
 
 .tile {
@@ -335,9 +382,9 @@ body[data-here="book"] main {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   margin: 0;
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
   background: var(--card);
-  border-radius: 0;
+  border-radius: var(--r);
 }
 
 .tile img {
@@ -357,8 +404,7 @@ body[data-here="book"] main {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   padding: 8px 10px;
 }
 
@@ -370,19 +416,18 @@ body[data-here="book"] main {
   color: var(--accent-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  border-radius: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
 }
 
+/* A surface, not a control: the softer edge, so "bordered" keeps meaning "you can tap it". */
 .sheet {
   width: 100%;
   background: var(--card);
-  border: 0;
-  border-top: 3px solid var(--line);
-  border-radius: 0;
+  border: var(--hair) solid var(--edge-soft);
+  border-radius: var(--r);
 }
 
 /* ---------- overlay sheet (Parts) ---------- */
@@ -413,13 +458,17 @@ body[data-here="book"] main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 720px;
+  max-width: var(--column);
   margin: 0 auto;
   max-height: min(86dvh, 860px);
   background: var(--bg);
-  border-top: 3px solid var(--line);
+  border: var(--hair) solid var(--edge-soft);
+  border-bottom: 0;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  overflow: hidden;
+  box-shadow: var(--lift);
   transform: translateY(100%);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--t-mid) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ov.open .ov-sheet {
@@ -437,23 +486,30 @@ body[data-here="book"] main {
   color: var(--accent-ink);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
 }
 
+/* A 44 px square with the glyph centred in it — never a glyph with padding around it. */
 .ov-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
   min-width: 44px;
+  height: 44px;
   min-height: 44px;
-  padding: 0 8px 4px;
+  padding: 0;
   border: 0;
+  border-radius: var(--r-pill);
   background: transparent;
   color: var(--accent-ink);
   font: inherit;
-  font-size: 1.9rem;
+  font-size: 1.6rem;
   line-height: 1;
   cursor: pointer;
   appearance: none;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
 
 .ov-x:active {
@@ -465,7 +521,7 @@ body[data-here="book"] main {
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  padding: 12px 12px calc(16px + env(safe-area-inset-bottom));
+  padding: var(--gutter) var(--gutter) calc(16px + env(safe-area-inset-bottom));
 }
 
 /* ---------- the theme crossfade ----------

@@ -238,7 +238,56 @@ def catalog_numbers(book: Book, live: bool) -> None:
              f"{src} - same filter plus `row.manualUrl`", g, sum(1 for b in cars if b.manualUrl))
     book.add("catalog_makes", "makes in the catalog", f"{len({b.make for b in bikes}):,}", "measured",
              f"{src} - `len({{row.make}})`. Lower than the registry's makes: a make with no usable row never becomes a vehicle", g, len({b.make for b in bikes}))
+
+    # Two subsets of `vehicles_with_manual` that a pitch must never quietly fold into it. `Bike.lang` is
+    # set ONLY when no English manual exists for that vehicle, so it is exactly the language-fallback tail;
+    # and a handful of Lexus rows point at a PDF we rendered ourselves because the publisher ships the
+    # manual as a web app and no PDF exists anywhere.
+    fallback = [b for b in withman if b.lang]
+    langs = collections.Counter(b.lang for b in fallback)
+    rendered = [b for b in withman if "/pdf/rendered/" in (b.manualUrl or "")]
+    rendered_files = {b.manualUrl for b in rendered}
+    rendered_makes = sorted({b.make for b in rendered})
+    book.add("lang_fallback", "…of those, an official manual NOT in English", f"**{len(fallback):,}**", "measured",
+             f"{src} - `count(row.manualUrl and row.lang)`. `Bike.lang` is set only when no English manual exists for "
+             f"that vehicle, so this is the language-fallback tail of the {len(withman):,}: "
+             + ", ".join(f"{k} {v:,}" for k, v in langs.most_common(5))
+             + ", … Still the manufacturer's own book - but never present these as English manuals", g, len(fallback))
+    book.add("rendered_manuals", "…of those, a PDF we rendered from the publisher's online manual",
+             f"**{len(rendered):,}**", "measured",
+             f"{src} - `row.manualUrl` under `/pdf/rendered/`: {len(rendered_files)} distinct files, "
+             f"{'/'.join(rendered_makes)} only, where the official manual is published as a web app and no PDF exists. "
+             "The manufacturer's own text, re-laid-out by us - the one place the page is not literally their file, "
+             "so say so", g, len(rendered))
     return bikes
+
+
+def photo_numbers(book: Book) -> None:
+    """Catalog photo coverage. Measured by `node web/tools/images-coverage.mjs --write`, which walks the
+    SAME `lookupImage` ladder the app uses (slug, trim-stripping, flat-key) - re-implementing that ladder
+    here would be a second, differently-wrong answer, so we read its generated report instead."""
+    g = "2. The catalog - what a rider can pick"
+    report = REPO / "docs" / "qa" / "images-gaps.md"
+    if not report.exists():
+        return
+    import re as _re
+
+    m = _re.search(
+        r"Coverage: \*\*(\d[\d,]*)/(\d[\d,]*)\*\* catalog rows \(([\d.]+)%\)"
+        r".{0,40}?\*\*(\d[\d,]*)/(\d[\d,]*)\*\* distinct models \(([\d.]+)%\)",
+        report.read_text(encoding="utf-8"), _re.S)
+    if not m:
+        return
+    rows_hit, rows_all, rows_pct, mod_hit, mod_all, mod_pct = m.groups()
+    book.add("photo_rows_pct", "catalog rows that show a photo", f"**{rows_pct}%**", "measured",
+             f"`docs/qa/images-gaps.md` - {int(rows_hit.replace(',', '')):,} of {int(rows_all.replace(',', '')):,} rows "
+             "resolve through `lookupImage` in `web/counter/js/ttm.js`. Regenerate with "
+             "`node web/tools/images-coverage.mjs --write`; its row total is its own catalog read, so it "
+             "trails the live one by a few rows", g, float(rows_pct))
+    book.add("photo_models_pct", "…distinct models that show a photo", f"{mod_pct}%", "measured",
+             f"same - {int(mod_hit.replace(',', '')):,} of {int(mod_all.replace(',', '')):,} distinct (make, model) "
+             "pairs. Lower than the row figure because the models still missing are long-tail ones with few "
+             "model years - quote the row figure for coverage, this one for how much work is left", g, float(mod_pct))
 
 
 def manual_numbers(book: Book, live: bool) -> None:
@@ -355,6 +404,8 @@ def cost_numbers(book: Book, pages: list[int], live: bool) -> None:
                  f"`ingest_usd / naive_median` = ${statistics.mean(u):.4f} / ${naive_usd(med):.2f}", g, statistics.mean(u) / naive_usd(med))
     book.add("cheaper_factor", "ours vs naive, per question", f"**{naive_usd(big) / EVAL['usd']:,.0f}x cheaper**", "computed",
              f"`naive_max / ask_usd_eval` = ${naive_usd(big):.2f} / ${EVAL['usd']:.5f}. Against the MEDIAN manual it is {naive_usd(med) / EVAL['usd']:,.0f}x - say which", g, naive_usd(big) / EVAL["usd"])
+    book.add("cheaper_median", "…the same against the MEDIAN manual", f"{naive_usd(med) / EVAL['usd']:,.0f}x cheaper", "computed",
+             f"`naive_median / ask_usd_eval` = ${naive_usd(med):.2f} / ${EVAL['usd']:.5f}. The honest one to pair with the headline factor", g, naive_usd(med) / EVAL["usd"])
 
 
 def quality_numbers(book: Book, live: bool) -> None:
@@ -515,6 +566,54 @@ CHECKS: tuple[Check, ...] = (
           "13,537 is vehicles with a manual; distinct PDFs is a different count"),
     Check(r"\$4-6 per question|\$4-6 a question", "$4-6 per naive question", "naive_max", None,
           "his lived bill was ~$4; OUR measured naive worst case is different and must not be blended with it"),
+
+    # ---- superseded by the 2026-09-20 afternoon crawl merge and catalog freeze. Everything below was
+    # correct at 09:55 and is wrong by 15:40; the growth loops have stopped, so these are the last set.
+    Check(r"27,751", "27,751 vehicles", "vehicles", None, "pre-freeze catalog"),
+    Check(r"13,537", "13,537 vehicles with a manual", "vehicles_with_manual", None, "pre-freeze catalog"),
+    Check(r"23,140", "23,140 motorcycles", "motorcycles", None, "pre-freeze catalog"),
+    Check(r"\b4,611\b", "4,611 cars", "cars", None, "pre-freeze catalog"),
+    Check(r"9,42[14]", "9,421 motorcycles with a manual", "moto_with_manual", None, "pre-freeze catalog"),
+    Check(r"\b4,113\b", "4,113 cars with a manual", "cars_with_manual", None, "pre-freeze catalog"),
+    Check(r"\b77 makes\b", "77 makes in the catalog", "catalog_makes", None, "pre-freeze catalog"),
+    Check(r"53,557", "53,557 registry rows", "registry_rows", None, "pre-merge crawl state"),
+    Check(r"14,770", "14,770 distinct free English PDFs", "free_pdfs", None, "pre-merge crawl state"),
+    Check(r"24,210", "24,210 free English rows", "free_rows", None, "pre-merge crawl state"),
+    Check(r"28,200", "28,200 distinct URLs", "distinct_urls", None, "pre-merge crawl state"),
+    Check(r"25,357", "25,357 duplicate-naming rows", "dup_rows", None, "pre-merge crawl state"),
+    Check(r"\b80 makes\b", "80 makes in the registry", "registry_makes", None, "pre-merge crawl state"),
+    Check(r"\b84 (?:portals|publisher (?:hosts|portals))\b|\b84 hosts\b", "84 portals", "portals", None,
+          "pre-merge crawl state"),
+    Check(r"1,444", "1,444 retracted rows", "drop_rows", None, "pre-merge crawl state"),
+    Check(r"182 service|182 rows|182\*\* of them are service", "182 service-manual rows", "service_rows", None,
+          "pre-merge crawl state"),
+    Check(r"15 (?:of them |that are )?(?:paid|not free)|\*\*15 are not free\*\*", "15 service rows not free",
+          "service_not_free", None, "pre-merge crawl state"),
+    Check(r"4,081", "4,081 mislabelled owner-typed rows", "mislabelled_owner_typed", None, "pre-merge crawl state"),
+    Check(r"1,489", "1,489 mislabelled free-English rows", "mislabelled_free_en", None, "pre-merge crawl state"),
+    Check(r"\b535 (?:manuals|live manuals)\b|holds 535|535 manuals", "535 manuals", "manuals_indexed", None,
+          "more have been ingested since"),
+    Check(r"95,914", "95,914 pages", "manual_pages", None, "same"),
+    Check(r"91,388", "91,388 sections", "manual_sections", None, "same"),
+    Check(r"\b662 vehicles\b", "662 vehicles covered", "manual_vehicles", None, "same"),
+    Check(r"\$8[23]\.\d\d", "$82.98 / $83.05 build ledger", "build_total", None,
+          "the build ledger grows every time anything runs"),
+    Check(r"41,(?:535|612)", "41,535 / 41,612 logged calls", "build_calls", None, "same"),
+    Check(r"\$7[56]\.\d\d", "$75.89 / $75.96 of it luna", "build_top_model", None, "same"),
+    Check(r"7,(?:484|561)", "7,484 / 7,561 images.score calls", "images_score_calls", None, "same"),
+    Check(r"\$3\.(?:54|60)\b", "$3.54 / $3.60 spent grading photos", "images_score_calls", None, "same"),
+    Check(r"\$8\.(?:08|93)\b", "$8.08 / $8.93 live ledger", "live_total", None,
+          "the live ledger moves every hour; quote it with a timestamp or not at all"),
+    Check(r"1,(?:612|633) (?:model )?calls|over \*\*1,(?:612|633)\*\*", "1,612 / 1,633 live calls", "live_calls",
+          None, "same"),
+    Check(r"\$1\.37\b", "$1.37 naive median", "naive_median", None, "the median deployed manual is a page shorter now"),
+    Check(r"3,600\s*[x×]", "3,600x against the median", "cheaper_median", None, "follows from the stale $1.37 median",
+          unless=r"multiples|strawman"),
+    Check(r"86% of (?:what|everything)", "86% of spend is one-time ingest", "build_ingest_share", None,
+          "the build ledger grew without more ingest, so the share fell"),
+    Check(r"91% of the build ledger", "91% of the build ledger is luna", "build_top_model", None, "same"),
+    Check(r"median 171|171-page|171 p\b|\(171 p\)", "median manual 171 pages", "manual_pages_median", None,
+          "the median deployed manual is 170 pages now"),
 )
 
 PITCH_FILES = ("general.md", "openai.md", "token-company.md", "voloridge.md", "elevenlabs.md",
@@ -598,7 +697,10 @@ def two_definitions(book: Book, rows: list, free: list) -> list[tuple[str, str, 
          f"**{book.val('vehicles_with_manual')}** vehicles",
          f"{book.val('free_pdfs')} = distinct URLs behind the free-English-owner-PDF rows. "
          f"{book.val('vehicles_with_manual')} = catalog rows carrying a `manualUrl`; many model years point at one file, and "
-         f"many fetchable PDFs belong to no catalog vehicle. Never call the vehicle count 'manuals'."),
+         f"many fetchable PDFs belong to no catalog vehicle. Never call the vehicle count 'manuals'. And of those "
+         f"{book.val('vehicles_with_manual')}, {book.val('lang_fallback')} carry an official manual in another language "
+         f"(no English one exists for that vehicle) and {book.val('rendered_manuals')} carry a PDF we rendered from the "
+         "publisher's online manual - both are the manufacturer's own book, neither is an English PDF."),
         ("$ per question, naive",
          f"**{book.val('naive_max')}** worst case",
          f"**{book.val('naive_median')}** median",
@@ -709,6 +811,7 @@ def main() -> int:
     book = Book()
     rows, free = registry_numbers(book)
     catalog_numbers(book, args.live)
+    photo_numbers(book)
     pages = manual_numbers(book, args.live)
     cost_numbers(book, pages, args.live)
     quality_numbers(book, args.live)

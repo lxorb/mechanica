@@ -29,7 +29,7 @@
   z-index: 6;
   /* the paper texture must not show through the model while the list slides under it */
   background: var(--bg);
-  margin-bottom: 8px;
+  padding-bottom: var(--gap);
 }
 
 [data-screen="pick"] .vx {
@@ -37,45 +37,49 @@
   position: relative;
   height: max(260px, 42vh);
   aspect-ratio: auto;
+  border-radius: var(--r) var(--r) 0 0;
   border-bottom-width: 0;
 }
 
 /* The bike chip is also the way back to Confirm, so it obeys the 44 px floor the rest of the
    app does: at 34 px it was the one control on this screen a gloved thumb could miss. */
+/* A floating pill inside the rounded stage, not a block welded into its corner. */
 [data-screen="pick"] .who {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
   z-index: 3;
   display: flex;
   align-items: center;
   gap: 8px;
-  max-width: calc(100% - 12px);
+  max-width: calc(100% - 20px);
   min-height: 44px;
-  padding: 3px 12px 3px 3px;
-  border: 0;
+  padding: 4px 14px 4px 4px;
+  border: var(--hair) solid var(--slab-line);
+  border-radius: var(--r-pill);
   background: var(--slab);
   color: var(--slab-fg);
   cursor: pointer;
   text-align: left;
   appearance: none;
+  transition: background-color var(--t-fast) var(--ease);
 }
 
 [data-screen="pick"] .who img {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
   object-fit: cover;
   display: block;
+  border-radius: var(--r-pill);
   background: var(--card);
 }
 
 [data-screen="pick"] .who-name {
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
   line-height: 1.1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -91,7 +95,14 @@
 [data-screen="pick"] .askbar {
   width: 100%;
   background: var(--card);
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
+  border-radius: 0 0 var(--r) var(--r);
+  overflow: hidden;
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+[data-screen="pick"] .askbar:focus-within {
+  border-color: var(--focus);
 }
 
 [data-screen="pick"] .meter {
@@ -120,36 +131,51 @@
   }
 }
 
+/* The mic and the camera fill the left end of the bar flush, divided by one hairline;
+   the chat button and the submit arrow do the same at the right end. */
 [data-screen="pick"] .ask {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
   align-items: stretch;
 }
 
 [data-screen="pick"] .ask .btn {
   border: 0;
-  border-right: 3px solid var(--line);
+  border-radius: 0;
   width: 48px;
   min-width: 48px;
   height: 48px;
   min-height: 48px;
-}
-
-[data-screen="pick"] .ask .send {
-  border-right: 0;
-  border-left: 3px solid var(--line);
-  background: var(--slab);
-  color: var(--slab-fg);
-  font-family: "Big Shoulders Display", sans-serif;
-  font-size: 1.5rem;
+  padding: 0;
   line-height: 1;
 }
 
+[data-screen="pick"] .ask .btn:active {
+  transform: none;
+}
+
+[data-screen="pick"] .ask .cam {
+  border-left: var(--hair) solid var(--edge-soft);
+}
+
+[data-screen="pick"] .ask .chat-pill {
+  border-left: var(--hair) solid var(--edge-soft);
+}
+
+[data-screen="pick"] .ask .send {
+  border-left: var(--hair) solid var(--edge-soft);
+  background: var(--slab);
+  color: var(--slab-fg);
+}
+
 [data-screen="pick"] .ask .mic svg,
-[data-screen="pick"] .ask .cam svg {
+[data-screen="pick"] .ask .cam svg,
+[data-screen="pick"] .ask .send svg,
+[data-screen="pick"] .ask .chat-pill svg {
   width: 21px;
   height: 21px;
   display: block;
+  flex: none;
 }
 
 [data-screen="pick"] .ask .mic.is-on {
@@ -165,7 +191,7 @@
 [data-screen="pick"] .ask-q {
   min-width: 0;
   min-height: 48px;
-  padding: 0 12px;
+  padding: 0 14px;
   border: 0;
   background: var(--card);
   color: var(--fg);
@@ -174,6 +200,7 @@
   font-size: 1rem;
   appearance: none;
   border-radius: 0;
+  text-overflow: ellipsis;
 }
 
 [data-screen="pick"] .ask-q::-webkit-search-cancel-button {
@@ -186,8 +213,7 @@
 }
 
 [data-screen="pick"] .ask-q:focus {
-  outline: 3px solid var(--focus);
-  outline-offset: -3px;
+  outline: none;
 }
 
 [data-screen="pick"] .askbar.is-busy .ask-q {
@@ -216,37 +242,43 @@
 [data-screen="pick"] .hits {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-bottom: 8px;
+  gap: var(--gap);
+  padding-bottom: var(--gap);
 }
 
 [data-screen="pick"] .hit {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
-  border: 3px solid var(--line);
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r);
   background: var(--card);
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 
 [data-screen="pick"] .hit:has(.hit-x) {
   grid-template-columns: minmax(0, 1fr) auto;
 }
 
+/* The heading sets the height of the row, never the other way round: a two-line title
+   grows the row instead of being cut off at its baseline. */
 [data-screen="pick"] .hit-go {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   min-width: 0;
-  min-height: 52px;
-  padding: 8px 10px;
+  min-height: 60px;
+  padding: 14px;
   border: 0;
+  border-radius: var(--r);
   background: transparent;
   color: inherit;
   text-align: left;
   cursor: pointer;
   appearance: none;
   font: inherit;
+  overflow: visible;
 }
 
 /* keeps titles on one column whether or not the row earned an icon */
@@ -258,17 +290,18 @@
 [data-screen="pick"] .hit-b {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 3px;
   min-width: 0;
+  padding: 2px 0;
 }
 
 [data-screen="pick"] .hit-n {
   font-family: "Big Shoulders Display", sans-serif;
   font-style: normal;
   font-weight: 800;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  line-height: 1;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
@@ -277,14 +310,16 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.95rem;
-  line-height: 1.2;
+  line-height: 1.35;
+  padding-bottom: 1px;
   overflow-wrap: anywhere;
 }
 
+/* No mark styling on text anywhere: the matched run is the same text as the rest. */
 [data-screen="pick"] .hit-t mark {
-  background: var(--match);
-  color: var(--match-ink);
-  padding: 0 1px;
+  background: none;
+  color: inherit;
+  padding: 0;
 }
 
 [data-screen="pick"] .hit .stamp {
@@ -304,37 +339,52 @@
 
 [data-screen="pick"] .hits:not(.is-flat) .hit[data-depth="0"] .hit-t {
   font-family: "Big Shoulders Display", sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
 }
 
+/* A 44 px square with a chevron centred in it. It used to be a text glyph with padding,
+   which rotated to a down arrow that hung outside its box. */
 [data-screen="pick"] .hit-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
   min-width: 48px;
-  padding: 0 4px 2px;
+  padding: 0;
   border: 0;
-  border-left: 3px solid var(--line);
+  border-left: var(--hair) solid var(--edge-soft);
+  border-radius: 0 var(--r) var(--r) 0;
   background: var(--card);
   color: var(--fg);
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 1.6rem;
-  line-height: 1;
   cursor: pointer;
   appearance: none;
-  transition: transform 140ms ease-out;
+  overflow: hidden;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+[data-screen="pick"] .hit-x svg {
+  display: block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  transition: transform var(--t-fast) var(--ease);
 }
 
 [data-screen="pick"] .hit-x.is-on {
   background: var(--slab);
   color: var(--accent-2);
+}
+
+[data-screen="pick"] .hit-x.is-on svg {
   transform: rotate(90deg);
 }
 
+/* The selected row states itself with its own edge, so nothing bleeds onto its neighbours. */
 [data-screen="pick"] .hit.is-on {
   border-color: var(--accent);
-  outline: 3px solid var(--accent);
-  outline-offset: -6px;
+  box-shadow: inset 0 0 0 var(--hair) var(--accent);
   background: var(--slab);
   color: var(--slab-fg);
 }
@@ -355,16 +405,16 @@
 
 [data-screen="pick"] .more,
 [data-screen="pick"] .none {
-  min-height: 44px;
-  padding: 12px;
-  border: 3px dashed var(--line);
+  min-height: 48px;
+  padding: 14px;
+  border: var(--hair) dashed var(--edge);
+  border-radius: var(--r);
   background: transparent;
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.86rem;
+  letter-spacing: 0.01em;
   text-align: center;
   cursor: pointer;
   appearance: none;
@@ -383,7 +433,7 @@
   z-index: 5;
   display: flex;
   justify-content: flex-end;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding: var(--gap) 0 calc(var(--gap) + env(safe-area-inset-bottom));
   background: var(--bg);
 }
 
@@ -396,20 +446,15 @@
   min-width: 0;
   min-height: 56px;
   text-align: left;
-}
-
-/* the two share one rule where they meet */
-[data-screen="pick"] .open:not([hidden]) + .chat-pill {
-  border-left: 0;
+  box-shadow: var(--lift);
 }
 
 [data-screen="pick"] .open b {
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
 }
 
 [data-screen="pick"] .open b::after {
@@ -419,9 +464,8 @@
 [data-screen="pick"] .open-p {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
   color: var(--accent-2);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -452,7 +496,68 @@
   }
 
   [data-screen="pick"] .hit-go {
-    min-height: 56px;
+    min-height: 64px;
+  }
+}
+
+/* ------------------------------------------------------------------ wide desktop
+ *
+ * "Make the bike large in the left panel and the instruction manual on the right."
+ * The column becomes two: the stage is a sticky panel filling the height under the rail,
+ * and the field plus the manual's own headings scroll beside it. The phone layout above
+ * is untouched - this whole block starts at 1100 px.
+ *
+ * The stage goes display:contents so its two children (the viewer and the search bar) can
+ * land in different columns of the same grid; the stickiness moves onto the viewer, which
+ * is the thing that has to stay put.
+ */
+@media (min-width: 1100px) {
+  body[data-here="pick"] main {
+    max-width: min(1600px, 100vw);
+  }
+
+  [data-screen="pick"] [data-root] {
+    display: grid;
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0 var(--gutter);
+  }
+
+  [data-screen="pick"] .stage {
+    display: contents;
+  }
+
+  [data-screen="pick"] .vx {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    position: sticky;
+    top: var(--gutter);
+    /* the ticket bar, the rail and the gutters, measured: 44 + 10 + 44 + 12 + 12 */
+    height: calc(100dvh - 134px);
+    min-height: 420px;
+    border-radius: var(--r);
+    border-bottom-width: var(--hair);
+  }
+
+  [data-screen="pick"] .askbar {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: var(--gutter);
+    z-index: 6;
+    border-radius: var(--r);
+    margin-bottom: var(--gap);
+  }
+
+  [data-screen="pick"] .hits {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  [data-screen="pick"] .foot {
+    grid-column: 2;
+    grid-row: 3;
   }
 }
 

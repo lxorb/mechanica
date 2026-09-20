@@ -20,7 +20,7 @@ Three angles were considered. Scores are 1–5.
 
 | angle | fit to "chaos → order" | fit to *Dropbox* | judge appeal | build | verdict |
 |---|---|---|---|---|---|
-| **(a) the registry as chaos→order** — 53,557 rows, 84 portals, 4,081 **owner-typed** rows a portal filed as a handbook that are not | **5** | **1** | 3 | 1 (done already) | **opening only** |
+| **(a) the registry as chaos→order** — 99,338 rows, 90 portals, 6,244 **owner-typed** rows a portal filed as a handbook that are not | **5** | **1** | 3 | 1 (done already) | **opening only** |
 | **(b) the shop's own folder** — a workshop drops its PDFs in Dropbox, we index them page-exact next to the OEM manual | 4 | **5** | **5** | 3 | **primary** |
 | **(c) Dropbox as the archive / shared links to customers** | 2 | 3 | 2 | 3 | **no** |
 
@@ -37,7 +37,7 @@ also could not retrieve the parameters of `sharing/create_shared_link_with_setti
 spec, so nothing in this pitch depends on it.
 
 **(b) wins because it is the half of our own problem we cannot solve any other way.** The registry
-indexes 53,557 rows and **182** of them are service manuals; **15 are not free** — BMW meters its at
+indexes 99,338 rows and **186** of them are service manuals; **14 are not free** — BMW meters its at
 **EUR 9/hour**, Triumph at **GBP 5.99/month per bike**, and Ducati, Piaggio, Moto Guzzi, Aprilia and
 Royal Enfield hand theirs to dealers only. We fetch none of them, ever. The shop already bought its
 copy. It is sitting in a Dropbox folder next to the scanned bulletins and the PDFs the importer
@@ -89,8 +89,8 @@ Screen: [`dropbox/chaos-to-order.svg`](dropbox/chaos-to-order.svg), then
 >
 > And it is still the wrong document."
 
-*(If the track turns out not to be about chaos→order, cut this to ten seconds: "we indexed 53,557
-manuals from 84 portals — and none of them is the one a professional needs.")*
+*(If the track turns out not to be about chaos→order, cut this to ten seconds: "we indexed 99,338
+manuals from 90 portals — and none of them is the one a professional needs.")*
 
 ## 1:30 — what order looks like in the product
 
@@ -134,18 +134,18 @@ to fake one on stage."
 ## 1:00 — how it is done
 
 ```mermaid
-%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":70,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
-    MECH("Mechanic"):::ends --> FLD("Shop folder"):::them --> WH("Webhook"):::them --> API("Dropbox API"):::them
+    MECH("Mechanic"):::ends -- "drops" --> FLD("Shop folder"):::them -- "notifies" --> WH("Webhook"):::them -- "polls" --> API("Dropbox API"):::them
   end
   subgraph R2[" "]
     direction LR
-    ING("Mechanica ingest"):::ours --> BLOB("Blob store"):::ours --> PAGE("Manual page"):::ends
+    ING("Mechanica ingest"):::ours -- "stores" --> BLOB("Blob store"):::ours -- "renders" --> PAGE("Manual page"):::ends
   end
 
-  R1 --> R2
+  R1 -- "downloads" --> R2
 
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
@@ -178,15 +178,15 @@ guarantees and not a watered-down version of them.
 | # | title | the one line | art |
 |---|---|---|---|
 | 1 | **Mechanica** | Don't trust the AI. Trust the manual. | — |
-| 2 | **53,557 rows. 84 portals.** | Every one a different shape. | `dropbox/rows-per-portal.svg` |
-| 3 | **What a portal calls a handbook** | 4,081 rows typed *owner* that are a brochure, a warranty insert, an infotainment guide — counted over **every** row, in every language and access level. | table from `dropbox/registry-report.md` |
-| 4 | **Order** | 14,770 fetchable PDFs · 13,537 vehicles · one page. | `dropbox/chaos-to-order.svg` |
-| 5 | **And it is the wrong document** | 182 service manuals. 15 not free. BMW: **EUR 9 / hour**. | the four rows of the access table |
+| 2 | **99,338 rows. 90 portals.** | Every one a different shape. | `dropbox/rows-per-portal.svg` |
+| 3 | **What a portal calls a handbook** | 6,244 rows typed *owner* that are a brochure, a warranty insert, an infotainment guide — counted over **every** row, in every language and access level. | table from `dropbox/registry-report.md` |
+| 4 | **Order** | 14,865 fetchable PDFs · 18,564 vehicles · one page. | `dropbox/chaos-to-order.svg` |
+| 5 | **And it is the wrong document** | 186 service manuals. 14 not free. BMW: **EUR 9 / hour**. | the four rows of the access table |
 | 6 | **He already owns it** | It is a PDF in a folder, next to 400 scans. | photo of a shop folder / Dropbox screenshot |
 | 7 | **Connect the folder** | Demo. | live |
 | 8 | **The same ingest** | Four documented calls, then the identical function that reads a factory PDF. | the mermaid flowchart |
 | 9 | **What the model is allowed to do** | Emit page numbers. That's all. The server cuts the quote out of the page. | `08-chat.png` (from `docs/pitches/general/`) |
-| 10 | **The last mile is a folder** | 53,557 rows of order — and the one that matters is yours. | — |
+| 10 | **The last mile is a folder** | 99,338 rows of order — and the one that matters is yours. | — |
 
 Speaker notes: **slide 3 is the laugh** — say "the Gold Wing brochure is filed next to the owner's
 manual" and let it land; it is the single most human illustration of the mess. **Slide 5 is the
@@ -258,7 +258,7 @@ no button, and the code says so.
 **6. "What if the file name is wrong, or in German, or just `scan0001.pdf`?"**
 Then it is `unmatched` and it stays in the folder, visible in the status endpoint. We read the **whole
 path**, not just the file name, because a shop's filing *is* metadata —
-`/Manuals/Yamaha/MT-07/2019.pdf` resolves fine. The make list comes from the 80 makes in our own
+`/Manuals/Yamaha/MT-07/2019.pdf` resolves fine. The make list comes from the 82 makes in our own
 catalog plus a small alias table (`harley`, `gasgas`, `mv`). The next step is obvious and cheap: when a
 path does not parse, read page one of the PDF — the cover says the make, the model and the year, and we
 are already reading the text layer. I did not build it because guessing is worse than asking.
@@ -276,25 +276,25 @@ line. Nothing else was touched.
 
 | claim | number | source |
 |---|---|---|
-| registry rows | **53,557** | `api/data/registry.json`, `tools/dropbox_report` |
+| registry rows | **99,338** | `api/data/registry.json`, `tools/dropbox_report` |
 | portals | **84** | same |
 | makes | **80** | same |
-| rows naming a file another row already names | **25,357** | 53,557 − 28,200 distinct URLs |
-| rows typed `owner` that are not a handbook | **4,081** | `registry/doctype.py` over **every** row, every language, every access level. The free-English subset — the rows we would actually fetch — is **1,489**. Say which one you mean |
+| rows naming a file another row already names | **48,962** | 99,338 − 50,376 distinct URLs |
+| rows typed `owner` that are not a handbook | **6,244** | `registry/doctype.py` over **every** row, every language, every access level. The free-English subset — the rows we would actually fetch — is **1,507**. Say which one you mean |
 | …from Triumph's portal alone | **3,030** | same, by site |
-| distinct free English PDFs we can fetch | **14,770** | `_ingestable()` over the registry |
-| vehicles with a free official manual | **13,537** of 27,751 | `api/data/bikes.json`, live `GET /api/catalog` |
-| service-manual rows | **182** — 167 free, 7 paid, 5 dealer, 3 subscription | registry, `docs/MANUALS.md` |
+| distinct free English PDFs we can fetch | **14,865** | `_ingestable()` over the registry |
+| vehicles with a free official manual | **18,564** of 30,409 | `api/data/bikes.json`, live `GET /api/catalog` |
+| service-manual rows | **186** — 172 free, 7 paid, 5 dealer, 2 subscription | registry, `docs/MANUALS.md` |
 | BMW service manual | **EUR 9 / hour** (`aos.bmwgroup.com`) | `docs/MANUALS.md` |
 | Triumph service manual | **GBP 5.99 / month per bike** | same |
 | OEM portals written off as unreachable | **17** | `docs/MANUALS.md` |
-| rows explicitly retracted by a drop list | **1,444** | `api/data/registry-fragments/*.drop.json` |
+| rows explicitly retracted by a drop list | **1,449** | `api/data/registry-fragments/*.drop.json` |
 | cost to ingest one manual | **$0.096** median, 169 pages | `api/data/mass_report.jsonl`, 773 manuals |
 | cost per question afterwards | **$0.00038** mean | `api/eval/report.md` |
 | Dropbox tests | **32 passed**; full API suite **528 passed, 20 skipped** | `cd api && python -m pytest` |
 
-**Do not say** "53,557 manuals" — they are rows, and 25,357 of them are the same file under another
-year. Say **rows**, then say **14,770 distinct PDFs**. The honesty is the pitch.
+**Do not say** "99,338 manuals" — they are rows, and 48,962 of them are the same file under another
+year. Say **rows**, then say **14,865 distinct PDFs**. The honesty is the pitch.
 
 ---
 

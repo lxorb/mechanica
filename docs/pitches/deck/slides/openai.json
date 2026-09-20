@@ -99,7 +99,7 @@
       "title": "Every lane has the same shape",
       "caption": "Schema for shape, allowlist for truth: the API does the part only a model can do, our code decides whether it is allowed out.",
       "flow": {
-        "w": 1180,
+        "w": 1440,
         "bands": [
           {
             "rows": [
@@ -125,6 +125,12 @@
                     "tone": "orange",
                     "t": "gpt-5.6-terra"
                   }
+                ],
+                "labels": [
+                  "shoots",
+                  "identifies",
+                  "routes",
+                  "shortlists"
                 ]
               },
               {
@@ -146,7 +152,13 @@
                     "t": "Responses API"
                   }
                 ],
-                "down": true
+                "labels": [
+                  "returns",
+                  "verifies",
+                  "streams"
+                ],
+                "down": true,
+                "downLabel": "picks"
               }
             ]
           }

@@ -46,7 +46,8 @@ export function mermaidOf(pitch) {
 const PAGE = `<!doctype html><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>.nodeLabel,.nodeLabel text,.nodeLabel tspan,svg text,svg tspan{font-weight:600}</style>
+<style>.nodeLabel,.nodeLabel text,.nodeLabel tspan,svg text,svg tspan{font-weight:600}
+.edgeLabel,.edgeLabel text,.edgeLabel tspan{font-size:17px;font-weight:600;fill:#4a453d}</style>
 <body style="margin:0;background:#fff"><div id="out"></div>
 <script type="module">
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -82,7 +83,8 @@ const OUR_FONT = 'Barlow,"Segoe UI",system-ui,sans-serif';
 
 function dress(svg, id) {
   let out = svg.split("font-family:Barlow").join("font-family:" + OUR_FONT);
-  out = out.replace("</style>", `#${id} .nodeLabel,#${id} .nodeLabel *,#${id} text,#${id} tspan{font-weight:600}</style>`);
+  out = out.replace("</style>", `#${id} .nodeLabel,#${id} .nodeLabel *,#${id} text,#${id} tspan{font-weight:600}`
+    + `#${id} .edgeLabel,#${id} .edgeLabel text,#${id} .edgeLabel tspan{font-size:17px;fill:#4a453d}</style>`);
   return out;
 }
 

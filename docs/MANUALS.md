@@ -13,7 +13,7 @@ by `api/tools/pitch_numbers.py --live` — re-run it rather than editing a numbe
 | …English **and** a directly fetchable PDF, so `/ingest` can take it unattended | **24,324** |
 | …distinct PDF files behind those rows (one file often covers several years) | **14,865** |
 | catalog vehicles derived from the registry | **30,409**, of which **18,564** have a free manual — 4,643 of those in the maker's own non-English printing, 24 printed by us from the maker's online-only manual |
-| already ingested and warm in Azure Blob | **535 manuals** (`GET /api/manuals`) |
+| already ingested and warm in Azure Blob | **543 manuals** (`GET /api/manuals`) |
 
 ## Where the free manuals come from
 

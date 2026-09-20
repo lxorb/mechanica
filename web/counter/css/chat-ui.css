@@ -13,32 +13,24 @@
 
 /* ------------------------------------------------------------------ the pill */
 
+/* Chat now rides inside the search bar (pick.css owns its box there), so this only has to
+   say what colour it is. It was a pill floating over the list. */
 [data-screen="pick"] .chat-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   flex: 0 0 auto;
-  min-height: 56px;
-  padding: 0 16px;
-  border: 3px solid var(--line);
   background: var(--accent-2);
   color: var(--accent-2-ink);
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1;
   cursor: pointer;
   appearance: none;
-  border-radius: 0;
 }
 
 [data-screen="pick"] .chat-pill svg {
   width: 20px;
   height: 20px;
   display: block;
+  flex: none;
 }
 
 [data-screen="pick"] .chat-pill:active {
@@ -97,7 +89,7 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.78rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.01em;
   line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -123,7 +115,7 @@
   padding: 6px 12px;
   background: var(--slab);
   color: var(--accent-2);
-  border-bottom: 3px solid var(--line);
+  border-bottom: var(--hair) solid var(--edge);
 }
 
 .cv-meter {
@@ -176,8 +168,7 @@
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   opacity: 0.55;
 }
 
@@ -186,14 +177,13 @@
 .cv-foot {
   flex: 0 0 auto;
   padding: 5px 12px calc(5px + env(safe-area-inset-bottom));
-  border-top: 3px solid var(--line);
+  border-top: var(--hair) solid var(--edge);
   background: var(--slab);
   color: var(--accent-2);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.66rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
@@ -210,8 +200,8 @@
   .cv-body {
     max-width: 766px;
     margin: 0 auto;
-    border-left: 3px solid var(--line);
-    border-right: 3px solid var(--line);
+    border-left: var(--hair) solid var(--edge);
+    border-right: var(--hair) solid var(--edge);
   }
 
   .cv-mic,
