@@ -1,50 +1,77 @@
+/**
+ * Step 3 — Pick. Owner: step-3 agent. Pairs with js/screens/pick.js + js/pick-search.js.
+ *
+ * Shape: one sticky panel at the top of the scroller — the 3D bike, with the search field
+ * welded to its bottom edge — and the manual's headings scrolling underneath it. A single
+ * primary MANUAL button sticks to the bottom once a heading is picked.
+ *
+ * The viewer and the part icons style themselves (css/viewer3d.css, css/particons.css);
+ * they are pulled in here so this screen does not need a line in index.html, which another
+ * agent owns. Duplicate <link>s there are harmless.
+ */
+
+@import url("../viewer3d.css");
+@import url("../particons.css");
+
 [data-screen="pick"] .root,
 [data-screen="pick"] [data-root] {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
 }
 
-[data-screen="pick"] .strip {
-  display: flex;
-  align-items: stretch;
-  min-height: 52px;
-  border-top: 3px solid var(--ink);
-  border-bottom: 3px solid var(--ink);
+/* ------------------------------------------------------------------ sticky stage */
+
+[data-screen="pick"] .stage {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  /* the paper texture must not show through the model while the list slides under it */
+  background: var(--paper);
+  margin-bottom: 8px;
+}
+
+[data-screen="pick"] .vx {
+  /* .viewer3d (from viewer3d.css) supplies the frame; the height belongs to this screen */
+  position: relative;
+  height: max(260px, 42vh);
+  aspect-ratio: auto;
+  border-bottom-width: 0;
 }
 
 [data-screen="pick"] .who {
-  flex: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-width: 0;
-  min-height: 52px;
-  padding: 4px 10px;
+  gap: 8px;
+  max-width: calc(100% - 12px);
+  min-height: 34px;
+  padding: 3px 10px 3px 3px;
   border: 0;
-  background: transparent;
-  color: var(--ink);
+  background: var(--ink);
+  color: #fff;
   cursor: pointer;
   text-align: left;
   appearance: none;
 }
 
 [data-screen="pick"] .who img {
-  box-sizing: content-box;
-  width: 44px;
-  height: 44px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   object-fit: cover;
   display: block;
-  border: 3px solid var(--ink);
   background: var(--card);
 }
 
 [data-screen="pick"] .who-name {
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 1.2rem;
-  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   line-height: 1.1;
   overflow: hidden;
@@ -52,141 +79,16 @@
   white-space: nowrap;
 }
 
-[data-screen="pick"] .bins {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-[data-screen="pick"] .tile {
-  display: block;
-  width: 100%;
-  padding: 0;
-  cursor: pointer;
-  appearance: none;
-  font: inherit;
-  color: inherit;
-  text-align: left;
-}
-
-[data-screen="pick"] .chap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 5 / 3;
-}
-
-[data-screen="pick"] .chap-n {
-  display: flex;
-  align-items: baseline;
-  gap: 3px;
-  padding-bottom: 30px;
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-
-[data-screen="pick"] .chap-n b {
-  font-size: 2.4rem;
-  font-weight: 800;
-}
-
-[data-screen="pick"] .chap-p {
-  font-family: Barlow, system-ui, sans-serif;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 0.85rem;
-}
-
-[data-screen="pick"] .tile .cap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  background: var(--yellow);
-  color: var(--ink);
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 7px 8px;
-  line-height: 1.15;
-}
-
-[data-screen="pick"] .tile .stamp {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-}
-
-[data-screen="pick"] .tile.is-on {
-  border-color: var(--orange);
-  outline: 3px solid var(--orange);
-  outline-offset: -3px;
-  z-index: 1;
-}
-
-[data-screen="pick"] .tile.is-on .cap {
+[data-screen="pick"] .who:active {
   background: var(--orange);
-  color: #fff;
 }
 
-[data-screen="pick"] .jobs {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-[data-screen="pick"] .jobs:empty {
-  display: none;
-}
-
-[data-screen="pick"] .job {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
-  align-items: center;
-  width: 100%;
-  min-height: 52px;
-  padding: 10px 12px;
-  border: 3px solid var(--ink);
-  background: var(--card);
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-  appearance: none;
-  border-radius: 0;
-}
-
-[data-screen="pick"] .job-t {
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 0.95rem;
-  line-height: 1.2;
-}
-
-[data-screen="pick"] .job .stamp {
-  white-space: nowrap;
-}
-
-[data-screen="pick"] .job.is-on {
-  background: var(--ink);
-  color: #fff;
-}
+/* ------------------------------------------------------------------ search field */
 
 [data-screen="pick"] .askbar {
-  position: sticky;
-  bottom: 0;
-  z-index: 4;
-  margin-top: 4px;
-  border-bottom: 3px solid var(--ink);
+  width: 100%;
+  background: var(--card);
+  border: 3px solid var(--ink);
 }
 
 [data-screen="pick"] .meter {
@@ -222,22 +124,28 @@
 }
 
 [data-screen="pick"] .ask .btn {
-  border-top: 0;
-  border-bottom: 0;
-  border-left: 0;
+  border: 0;
+  border-right: 3px solid var(--ink);
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
 }
 
 [data-screen="pick"] .ask .send {
   border-right: 0;
+  border-left: 3px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
   font-family: "Big Shoulders Display", sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   line-height: 1;
 }
 
 [data-screen="pick"] .ask .mic svg,
 [data-screen="pick"] .ask .cam svg {
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
   display: block;
 }
 
@@ -247,13 +155,13 @@
 }
 
 [data-screen="pick"] .ask .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: default;
 }
 
 [data-screen="pick"] .ask-q {
   min-width: 0;
-  min-height: 52px;
+  min-height: 48px;
   padding: 0 12px;
   border: 0;
   background: var(--card);
@@ -263,6 +171,15 @@
   font-size: 1rem;
   appearance: none;
   border-radius: 0;
+}
+
+[data-screen="pick"] .ask-q::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+[data-screen="pick"] .ask-q::placeholder {
+  color: #8d8778;
+  font-weight: 600;
 }
 
 [data-screen="pick"] .ask-q:focus {
@@ -291,8 +208,246 @@
   }
 }
 
+/* ------------------------------------------------------------------ the list */
+
+[data-screen="pick"] .hits {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 8px;
+}
+
+[data-screen="pick"] .hit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  border: 3px solid var(--ink);
+  background: var(--card);
+}
+
+[data-screen="pick"] .hit:has(.hit-x) {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+[data-screen="pick"] .hit-go {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  min-height: 52px;
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+}
+
+/* keeps titles on one column whether or not the row earned an icon */
+[data-screen="pick"] .hit-pad {
+  display: block;
+  width: 4px;
+}
+
+[data-screen="pick"] .hit-b {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+[data-screen="pick"] .hit-n {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  color: var(--orange);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-screen="pick"] .hit-t {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+[data-screen="pick"] .hit-t mark {
+  background: var(--yellow);
+  color: inherit;
+  padding: 0 1px;
+}
+
+[data-screen="pick"] .hit .stamp {
+  white-space: nowrap;
+  align-self: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* depth reads as indent, the way the printed contents does */
+[data-screen="pick"] .hits:not(.is-flat) .hit[data-depth="1"] {
+  margin-left: 14px;
+}
+
+[data-screen="pick"] .hits:not(.is-flat) .hit[data-depth="2"] {
+  margin-left: 28px;
+}
+
+[data-screen="pick"] .hits:not(.is-flat) .hit[data-depth="0"] .hit-t {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+[data-screen="pick"] .hit-x {
+  min-width: 48px;
+  padding: 0 4px 2px;
+  border: 0;
+  border-left: 3px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  transition: transform 140ms ease-out;
+}
+
+[data-screen="pick"] .hit-x.is-on {
+  background: var(--ink);
+  color: var(--yellow);
+  transform: rotate(90deg);
+}
+
+[data-screen="pick"] .hit.is-on {
+  border-color: var(--orange);
+  outline: 3px solid var(--orange);
+  outline-offset: -6px;
+  background: var(--ink);
+  color: #fff;
+}
+
+[data-screen="pick"] .hit.is-on .hit-n {
+  color: var(--yellow);
+}
+
+[data-screen="pick"] .hit.is-on .hit-t mark {
+  background: var(--orange);
+  color: #fff;
+}
+
+[data-screen="pick"] .hit.is-on .part-icon {
+  --part-icon-tile: #fff;
+  --part-icon-edge: transparent;
+}
+
+[data-screen="pick"] .more,
+[data-screen="pick"] .none {
+  min-height: 44px;
+  padding: 12px;
+  border: 3px dashed var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  appearance: none;
+}
+
+[data-screen="pick"] .none {
+  cursor: default;
+  opacity: 0.55;
+}
+
+/* ------------------------------------------------------------------ the one button */
+
+[data-screen="pick"] .foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--paper);
+}
+
+[data-screen="pick"] .open {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+  width: 100%;
+  min-height: 56px;
+  text-align: left;
+}
+
+[data-screen="pick"] .open b {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+[data-screen="pick"] .open b::after {
+  content: " →";
+}
+
+[data-screen="pick"] .open-p {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-screen="pick"] .foot:not([hidden]) .open {
+    animation: pick-rise 180ms ease-out;
+  }
+}
+
+@keyframes pick-rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------ desktop */
+
 @media (min-width: 900px) {
-  [data-screen="pick"] .systems {
-    grid-template-columns: repeat(4, 1fr);
+  [data-screen="pick"] .vx {
+    height: max(260px, 46vh);
+  }
+
+  [data-screen="pick"] .hit-go {
+    min-height: 56px;
+  }
+}
+
+/* A short landscape phone would give the list nothing; trade model height for rows. */
+@media (max-height: 560px) {
+  [data-screen="pick"] .vx {
+    height: max(200px, 34vh);
   }
 }
