@@ -15,4 +15,5 @@ tests
 # Azure Blob is the system of record (app/store_blob.py). Nothing under data/ goes into the image:
 # a replica must cost the same whether the corpus is 28 manuals or 5000. Ingest workers keep a local
 # data/ and api/tools/sync_blob.py pushes it up.
-data
+data/*
+!data/parts-taxonomy.json
