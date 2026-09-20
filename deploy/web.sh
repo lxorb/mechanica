@@ -10,5 +10,8 @@ if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
 fi
 export CLOUDFLARE_API_TOKEN
 cd "$ROOT"
-npx wrangler deploy
-echo "https://trustthemanual.cloudflare-disjoin783.workers.dev/counter/"
+# `vite build` leaves a redirect that makes wrangler deploy dist/ (the old React build)
+# instead of the wrangler.jsonc next to it, which serves web/. There is no build step here.
+rm -f .wrangler/deploy/config.json
+npx wrangler deploy --config wrangler.jsonc
+echo "https://mechanica.emilvinu.ch/counter/  (also https://trustthemanual.cloudflare-disjoin783.workers.dev/counter/)"
