@@ -1,51 +1,52 @@
-# Devpost submission
+# Devpost submission — Mechanica
 
-**Tagline** (37 chars)
+**Tagline**
 Don't trust the AI. Trust the manual.
 
+Live: https://mechanica.emilvinu.ch
+
 ## Inspiration
-A friend who runs a motorcycle shop refuses to use AI — not because it is bad, but because it is right
-95% of the time, and the 5% is where a liable mechanic gets burned. He is correct, and the fix is not a
-better model. Everything he needs is already printed in the manufacturer's manual; it just takes five
-minutes of scrolling a 268-page PDF. So we built the thing that never answers.
+A friend who runs a motorcycle shop refuses to use AI: it is right 95% of the time, and the 5% is where a
+liable mechanic gets burned. The fix is not a better model — everything he needs is already printed in the
+manual. So we built the thing that never answers.
 
 ## What it does
-Pick your exact bike — photo, VIN, or typeahead over 17,800 models. Ask in your own words: "chain is
-loose", "what torque for the rear axle". You get the official manual's own pages, rendered as printed,
-with a marker over the lines that answer you and the page number to quote. No summary, no chat bubble,
-no AI prose. If the manual doesn't cover it, you see that too.
+Search 22,300 bikes and pick yours from a photo card, a snapshot, or a VIN. Never seen that bike? We fetch
+its official manual from the manufacturer — **openable in 6 seconds, fully searchable in under a minute,
+for ten cents.** 8,319 free official PDFs are reachable; 332 are already warm.
+
+Then say what is wrong. A 3D model explodes and lights the part you typed, next to the manual's own
+headings. Open one and you get the manufacturer's page, rendered as printed, an orange marker on the lines
+that answer you — plus the whole manual, its real contents, and a Parts sheet built only from specs the
+manual prints. The chat may only emit page numbers: the server slices every quote out of the original
+page, so citations are verbatim by construction.
 
 ## How we built it
-A Vite/React PWA (installable, offline) over FastAPI. PyMuPDF extracts the text layer with per-block
-coordinates. One LLM pass over 3-page windows turns the PDF into sections, specs and parts, and every
-quote is searched back into that text layer — so a highlight can only sit on ink the manufacturer
-printed. At ask time a cheap router rewrites rider slang into manual vocabulary, BM25 (Elasticsearch 9,
-RRF hybrid with ELSER when a cluster is configured) returns candidates, and a picker returns ids only,
-validated server-side, so a hallucinated section cannot reach the UI. Spec questions skip the picker
-entirely. An ElevenLabs agent reads pages verbatim through four webhook tools and turns the page with a
-`show_page` client tool; Deepgram Flux is primed with keyterms from the manual's headings. API on Azure
-Container Apps, web on a Cloudflare Worker.
+A no-build vanilla PWA over FastAPI. PyMuPDF extracts the text layer with per-block coordinates; one cheap
+LLM pass over 5-page windows turns a PDF into sections, specs and parts, and every quote is searched back
+into that layer — a highlight can only sit on ink the manufacturer printed. At ask time a router rewrites
+rider slang into manual vocabulary, BM25 ranks, and a picker returns validated ids only; spec questions
+skip the picker. bear-2 compresses each retrieved page first. Azure Blob is the system of record, the API
+runs on Azure Container Apps, and a Cloudflare Worker serves the app and proxies `/api`.
 
 ## Challenges
 Making a model that cannot lie: ids only, validated; quotes grounded or dropped. Eleven OEM portals, all
-different — one 401s if you send `Accept: application/json`. And Deepgram's browser auth: the documented
-JWT isn't accepted in a WebSocket subprotocol, so we mint a scoped 600-second key server-side.
+different — one 401s if you send `Accept: application/json`. And compression that eats printed torque
+figures at 0.5 aggressiveness, so we take 0.3 and 22% instead of 32%.
 
 ## Accomplishments
-$0.0014 an ask against $2.14 to read the manual naively — 1,500×, measured from a per-route cost log,
-with a cost screen in the app to prove it. 7,511 official manuals indexed across 15 brands, none copied.
-Highlights provably made of the manufacturer's ink. An app whose whole vocabulary is nine UI strings.
+Top-1 100% over 150 rider queries, p95 3.33 s, $0.00038 an ask against $6.10 to read the manual naively.
+100% of chat citations verbatim on the page they name. 8,319 manuals reachable, none copied. The whole
+project has cost $1.17 in model calls.
 
 ## What we learned
-Constraining a model is cheaper than trusting it, in tokens and in liability. A 2,000-token system prompt
-cached at 99% costs less than a short uncached one. The hard part was never the model.
+Constraining a model is cheaper than trusting it, in tokens and in liability. The hard part was never the
+model — it was the portals and the PDF text layer.
 
 ## What's next
-Service manuals: owner's manuals are free for 7,496 models, but the manual a shop needs is paid at every
-brand — so we point at the shop's own Dropbox folder. Then one-tap parts checkout, and a self-hosted
-classifier for shops with no signal.
+Service manuals: a rider's manual is free, a shop's is metered by the hour, so we point at the shop's own
+folder. Then voice and parts checkout.
 
 ## Built with
-python · fastapi · pymupdf · openai · elasticsearch · elevenlabs · deepgram · react · typescript · vite ·
-tailwindcss · pdf.js · pydantic · rank-bm25 · mongodb · azure-container-apps · cloudflare-workers ·
-dropbox · ultralytics · nhtsa-vpic
+python · fastapi · pymupdf · openai · the-token-company · elasticsearch · three.js · pdf.js · deep-chat ·
+azure-blob-storage · azure-container-apps · cloudflare-workers

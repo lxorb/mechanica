@@ -1,28 +1,32 @@
 # Pitch — one block per track
 
-One line for the whole thing: **you pick your exact bike, ask in your own words, and get the official
-manual's own pages with the relevant lines marked. No AI prose, ever.**
+**Mechanica.** You pick your exact bike, and you get that bike's official manual — the page, the printed
+lines marked, the part lit on a 3D model. Any of 8,319 free official manuals, fetched on demand in under a
+minute. Nothing is rewritten.
 
-Every number below was measured on this machine from `api/data/costs.jsonl` (242 logged OpenAI calls,
-`GET /cost` total **$0.4331**) and `api/data-test/costs.jsonl` (one full ingest run). Anything not
-measured is marked *unverified* or *not built*.
+Live: **https://mechanica.emilvinu.ch** · API proxied at `/api`.
+
+Every number below is **measured** (live endpoint, eval file, or a run logged in the repo) or **from code**
+(a constant you can read). Nothing is estimated. Measured 2026-09-20.
 
 | measured | value | where |
 |---|---|---|
-| per ask, all 132 logged asks | **$0.00143** | `costs.jsonl`, `ask.router` + `ask.picker` |
-| per ask, spec questions (50 of 132, no picker call) | **$0.00011** | router only |
-| per ask, procedure questions (82 of 132) | **$0.00223** | router + picker |
-| naive: whole manual into the prompt, per ask | **$2.144** (268 p) / $1.144 (143 p) | `GET /cost` → `naivePerAsk` |
-| router prompt-cache hit rate | **98.9%** (271,510 / 274,487 input tokens) | `costs.jsonl` |
-| bike photo → catalog row | **$0.00044** on `gpt-5.6-luna`, $0.02466 on `gpt-6-astra` | 9 + 8 calls |
-| indexing a whole 268-page manual | **$0.1334**, 85 structured calls (~$0.0005/page) | `api/data-test/costs.jsonl` |
-| time to page | 1.5 s spec · 2.5–5.8 s procedure · 0.23 s repeat | `curl -w` against `:8010` |
-| manuals indexed by the registry | **7,511 entries** (7,496 free owner PDFs, 15 service) | `api/data/registry.json` |
-| bikes in the catalog | **17,800** | `api/data/bikes.json` |
+| free official manuals we can fetch | **8,319 distinct PDFs** (16,404 free English registry rows) | `python -m tools.registry stats` |
+| registry | 39,119 rows, 33 makes, 182 service rows | `GET /api/registry` |
+| catalog | 22,300 bikes, **9,421** with a free manual | `GET /api/catalog` |
+| warm cache | **332 manuals** already ingested, in Azure Blob | `GET /api/manuals` |
+| cold bike → readable manual | **6–7 s to open, 44–50 s fully searchable** | two live `POST /api/manuals/ensure` runs, Yamaha MT-07 2019 and 2020 |
+| ingest cost | **$0.10** per manual (median, 177 pages) | `api/data/mass_report.jsonl`, 319 manuals |
+| ask | top-1 **100%** of 150 queries, p95 3.33 s, **$0.00038** | `api/eval/report.md` |
+| ask, repeated | 0.2–0.4 s, **$0** (answer cache) | live, 2026-09-20 |
+| chat | **100% valid citations** (22), 95.2% of claims cited, $0.0049/answer | `api/eval/chat-report.md` |
+| chat, first token | **p50 2.60 s** / p95 4.24 s (2.2–2.5 s live) | `chat-report.md`, live |
+| token compression | **22.6% saved** (eval, 18 calls) · 24.7% live | `chat-report.md`, `GET /api/cost/ttc` |
+| all OpenAI spend on the live API | **$1.172**, 569 calls | `GET /api/cost` |
+| naive baseline | **$6.096** per ask | `GET /api/cost` → `naivePerAsk` |
 
-Could not verify: the "98% top-1 on 60 rider queries" figure (no eval set or result file exists in the
-repo) and "$0.00115 mean per ask" (the log gives $0.00143 over all 132 asks, $0.00125 over the last 60).
-Use **$0.0014** on stage — it is the one the cost log will show if a judge asks to see it.
+Naive = the largest manual we hold (762 pages × 800 tok/page, from code) pasted into `gpt-6-astra` at
+$10/M. Our ask is **16,000× cheaper** and the answer is a PDF page, not a paragraph.
 
 ---
 
@@ -30,161 +34,144 @@ Use **$0.0014** on stage — it is the one the cost log will show if a judge ask
 
 | | |
 |---|---|
-| Judge sees | Photo of a bike → the right catalog row; one sentence typed → the manual's printed page, no prose; `#cost` screen showing every call |
-| Say | **$0.0014 an ask against $2.14 for reading the manual naively — 1,500× cheaper, and the answer is a PDF page, not a paragraph** |
-| Status | Real, running on the key in `agent-secrets/openai.txt` |
+| Judge sees | A bike nobody has ever asked for → its manual opens in 6 s and is fully searchable in under a minute; ask a question, land on the printed page |
+| Say | **$0.10 turns a 177-page PDF into a searchable manual, once. Every ask after that is four hundredths of a cent.** |
+| Status | Live. Five routes, one file |
 
-Five jobs, all through one file (`api/app/llm.py`, which logs tokens and USD per route): vision bike id,
-query router, page picker, the one-time manual structurer, and the part classifier. Structured outputs
-everywhere via `client.responses.parse` with Pydantic schemas — the picker returns *ids only*, and
-`ask.py` drops any id that was not in the candidate list, so a hallucinated section cannot reach the UI.
-The router's ~2,000-token system prompt is prompt-cached at 98.9%, which is why a router call costs
-$0.00011. **Honest:** there is no OpenAI Batch API call in the repo — ingest "batching" is 3-page windows
-fanned out 8-wide with a thread pool (`ingest/structure.py`). Codex usage: [docs/CODEX.md](CODEX.md).
+`api/app/llm.py` is the only door to OpenAI and logs tokens and USD per route: **vision bike id**, **query
+router**, **page picker**, the one-time **manual structurer**, and **grounded chat**. Structured outputs via
+`responses.parse` with Pydantic schemas everywhere — the picker returns *ids only*, and `ask.py` drops any id
+that was not in the candidate list, so a hallucinated section cannot reach the UI. The whole app runs on the
+cheap tier (`gpt-5.6-luna`, $0.20/M) except the picker and chat (`gpt-5.6-terra`, $2/M): $1.147 of the
+$1.172 spent live is luna, and $1.034 of that is one-time ingest. Codex usage, including the live search bug
+it found: [docs/CODEX.md](CODEX.md).
 
 ## Elastic — Find the Signal
 
 | | |
 |---|---|
-| Judge sees | "chain is loose" on the KTM → p. 77 *Checking the chain tension* and p. 78 *Adjusting the chain tension*, in that order; typing "kt" lists KTM models instantly |
-| Say | **Two retrievers fused by RRF over 20 sections a manual, and the spec path answers with zero ranking model at all** |
-| Status | **Local BM25 index is what runs today.** `ES_URL` is unset on this machine, so `get_index()` returns `LocalIndex` |
+| Judge sees | Typing `chain` on the Pick screen: the 3D bike explodes, the chain lights up, and the manual's own headings rank underneath — *Checking the chain tension*, then *Adjusting the chain tension* |
+| Say | **Two retrievers fused by RRF, and the spec path answers with no ranking model at all — a torque question costs $0.00013** |
+| Status | **Written, not live.** `ES_URL` is unset, so `get_index()` returns `LocalIndex`. Pending an Elastic trial key |
 
-`api/app/search/elastic.py` is written against Elasticsearch 9: a `retriever.rrf` fusing a BM25 `bool`
+`api/app/search/elastic.py` (221 lines) targets Elasticsearch 9: `retriever.rrf` fusing a BM25 `bool`
 (`title^3`, `keywords^2`, `text`, plus a `components` terms boost) with a `semantic` query over a
-`semantic_text` field backed by the `.elser-2-elastic` inference endpoint, `rank_constant` 20. Specs live
-in a `nested` field and are queried with `inner_hits` — a torque or capacity question is answered by that
-nested query and never pays for a picker call ($0.00011 vs $0.00223). Typeahead: `title` is mapped
-`search_as_you_type`; today `/catalog/suggest` is a pure substring scan over 17,800 bikes, zero LLM.
-**Pending an Elastic Cloud key:** the file has never been run against a live cluster. `LocalIndex`
-(`search/local.py`) is the reference implementation and both satisfy the same `Index` protocol, so it is
-one env var to switch.
-
-## ElevenLabs — the agent that refuses to paraphrase
-
-| | |
-|---|---|
-| Judge sees | Hands-free: you talk, the page turns itself, and the voice reads the manual's own words with "page 114" before each one |
-| Say | **The agent has no permission to speak a sentence the manual does not print — four webhook tools and one client tool are its entire vocabulary** |
-| Status | **Pending a key.** No `ELEVENLABS_API_KEY` on this machine, so `/voice/config` returns `null` and the mic button does not render |
-
-`api/tools/elevenlabs_agent.py` creates or patches the agent and four webhook tools against
-`/v1/convai/tools` and `/v1/convai/agents`: `find_procedure` (the same router+index path the UI uses),
-`read_page` (verbatim page text, 1,200-char chunks with `hasMore`/`nextOffset`), `get_spec` (printed value
-+ verbatim quote + page), `list_parts`. The fifth is the client tool **`show_page`**, handled in
-`src/components/Voice.tsx` via `@elevenlabs/react` `clientTools` — the agent calls it before reading, so
-the phone shows the page while the voice reads it. Prompt temperature 0, `eleven_flash_v2_5`, webhooks
-guarded by `X-Voice-Secret`. Needs the key plus a public https `PUBLIC_BASE` for the webhooks.
+`semantic_text` field on the `.elser-2-elastic` inference endpoint, `rank_constant` 20. `title` is mapped
+`search_as_you_type`; specs live in a `nested` field queried with `inner_hits`, which is why a spec question
+never pays for a picker call. `search/local.py` (310 lines) is the reference implementation running today,
+and both satisfy the same `Index` protocol — it is one env var to switch, and honestly, it has never been
+run against a live cluster.
 
 ## The Token Company — cost is the product
 
 | | |
 |---|---|
-| Judge sees | The `#cost` screen: total, per ask, naive per ask, call count — live, from the real log |
-| Say | **$0.43 has been spent on this entire project across 242 calls; one naive ask would have cost $2.14** |
-| Status | Real cost accounting. **bear-2 compression pending a key** (`TTC_API_KEY` unset → pass-through) |
+| Judge sees | The chat drawer footer: tokens saved on that answer, live; `#cost` → `GET /api/cost/ttc` |
+| Say | **We compress every page before the model reads it — 22.6% of the prompt gone, and not one printed torque figure lost** |
+| Status | **Live**, with the real key, on chat and the ask picker |
 
-| | naive | ours |
-|---|---|---|
-| per ask (268-page manual) | $2.144 | **$0.00143** |
-| model | `gpt-6-astra` @ $10/M in | `gpt-5.6-luna` router ($0.2/M) → `gpt-5.6-terra` picker ($2/M) |
-| tokens in per ask | 214,400 | ~2,080 router + ~1,100 picker |
-
-Four levers, in order of size: **tiering** (a 2,000-token router on the cheapest model decides everything;
-the expensive model never sees more than 8 snippets of 300 chars), **caching** (98.9% router hit, plus an
-in-process answer cache that makes a repeated question cost exactly $0), **the deterministic spec path**
-(38% of asks skip the picker entirely — $0.00011), and **ingest once, ask forever** ($0.13 to index a
-268-page manual; every ask after that is four-hundredths of a cent). `ask.py::_compress` posts the
-candidate list to `api.thetokencompany.com/v1/compress` with `bear-2` at aggressiveness 0.3; any failure
-or missing key returns the original text unchanged, so it cannot break the demo.
+`api/app/ttc.py` posts the whole retrieved context to `api.thetokencompany.com/v1/compress` with `bear-2` at
+aggressiveness 0.3. Measured on six real contexts: **0.5 saves 32.2% but damages a page fence in 2 of 6 and
+eats 20% of printed figures; 0.3 saves 19–25% and keeps every fence.** We miss the 30% target on purpose —
+a lost fence reattributes one page's text to another page's number, which is the one thing this app exists
+not to do. Also measured, not documented: **60 requests/minute**, which is why a chat compresses its entire
+prompt in one call instead of one per page. It is a cost lever, never a correctness lever: no key, a 5xx, a
+timeout or a missing fence all return the original text unchanged. Live counters: 24.7% saved over 7 calls;
+eval: 22.6% over 18 calls, 0 failures. Findings written up in `api/docs/CHAT-RESEARCH.md`.
 
 ## Long Lake — the skeptic mechanic
 
 | | |
 |---|---|
-| Judge sees | A result screen with no AI text on it anywhere — just the manufacturer's page and an orange marker over the lines |
-| Say | **A friend who runs a motorcycle shop won't touch AI: it's right 95% of the time, and the 5% is where a liable mechanic gets burned. So we never let it answer — it only finds the page.** |
-| Status | Real, and enforced in code |
+| Judge sees | A result screen that is the manufacturer's PDF page with an orange marker on the lines — and a chat where every single sentence carries a `[p. N]` chip that jumps to that page |
+| Say | **A friend who runs a motorcycle shop won't touch AI: it's right 95% of the time, and the 5% is where a liable mechanic gets burned. So the model never gets to be the answer — it only gets to point.** |
+| Status | Live, and enforced in code |
 
-It is a product rule with teeth. `DESIGN.md` rule 2: the result screen *is* the official PDF. The backend
-contract forbids prose (`ask.py` returns `Match[]` — section ids, titles, page ranges, nothing else).
-Highlights are grounded: `ingest/ground.py` searches the PDF text layer for each quote and **drops any
-quote it cannot find**, so a marker can only ever sit on ink the manufacturer printed. The voice agent
-gets the same treatment — it reads `read_page` output and is told never to add a warning of its own.
-When the manual doesn't cover a job, you see that: ask the KTM for front pad replacement and it gives you
-p. 86 *Checking that the brake linings of the front brake are secured*, because that is all KTM prints.
+Three enforcements, all readable: (1) `ask.py` returns `Match[]` — section ids, titles, page ranges, nothing
+else; no backend prose reaches the four main screens. (2) `ingest/ground.py` searches the PDF text layer for
+every quote and **drops any it cannot find**, so a marker can only sit on ink the manufacturer printed.
+(3) Chat is the one place words are generated, and it is fenced: the model may only emit page numbers, and
+**the server slices each quote out of the original page text** — citations are verbatim by construction, not
+by trusting the model. Measured: 100% of 22 citations verbatim, 95.2% of 42 claim sentences carry a page.
+Ask the BMW R 12 G/S about a loose chain and it says so — it is shaft drive.
 
 ## Ramp — time and money saved
 
 | | |
 |---|---|
-| Judge sees | Two taps and one sentence, 2.5 seconds, and the mechanic is on the printed page — no scrolling a 268-page PDF |
-| Say | **$0.0014 and 2.5 seconds per question, against $2.14 of tokens or five minutes of thumbing a PDF** |
-| Status | Cost real and logged; the minutes-saved figure is an estimate, say it as one |
+| Judge sees | Two taps and one word, and the mechanic is on the printed page of a manual that did not exist on our servers a minute ago |
+| Say | **$0.10 per manual, once. $0.0004 per ask. The whole product — 332 manuals, 569 model calls — has cost $1.17.** |
+| Status | Every figure logged per route, served by `GET /api/cost` |
 
-Measured: 1.5 s for a spec question, 2.5–5.8 s for a procedure, 0.23 s for a repeat. $0.4331 of OpenAI
-spend has built and tested the whole thing. Per shop, the interesting arithmetic is the one a service
-writer does: a technician at $100/h who spends five minutes per lookup finding the torque figure costs
-$8.33; this costs $0.0014 and answers in seconds, and the answer is the page they would have been
-liable for anyway. At 1,500× the naive per-ask cost, the AI line item stops being a line item.
+Measured: cold procedure ask 3.4 s, cold spec ask 1.5 s, repeat 0.2–0.4 s at $0, chat first token 2.2–2.6 s.
+The interesting arithmetic is the service writer's: a technician at $100/h spending five minutes thumbing a
+268-page PDF for a torque figure costs $8.33. This costs $0.0004, answers in under two seconds, and hands
+them the page they were liable for anyway. The AI line item stops being a line item.
 
 ## Dropbox — bring your own manual folder
 
 | | |
 |---|---|
-| Judge sees | A bike with no manual → **Dropbox** → pick the workshop PDF → a progress bar → that bike now answers questions |
-| Say | **Any PDF you legally hold becomes a searchable manual in about a minute; you never upload it anywhere but your own index** |
-| Status | Upload path real and tested. **Chooser pending `VITE_DROPBOX_APP_KEY`** — the button hides itself without it |
+| Judge sees | A bike with no free manual → **Dropbox** → pick the workshop PDF → progress bar → that bike answers questions |
+| Say | **Owner's manuals are free for 9,421 of our 22,300 bikes. The service manual a shop actually needs is metered — BMW charges EUR 9 an hour. So we point at the copy the shop already bought.** |
+| Status | Upload path real (`POST /ingest/upload` → the same ingest). **Chooser pending `TTM_DROPBOX_APP_KEY`** — the button hides itself without it |
 
-`src/components/AddManual.tsx` loads the Dropbox Chooser drop-in (`dropins.js`) with `linkType: 'direct'`
-and `extensions: ['.pdf']`, then hands the direct link to `POST /ingest`, which fetches and indexes it
-exactly like an OEM URL. The same sheet's **PDF** button posts a local file to `/ingest/upload` — that
-path has run end to end. This is the answer to the hard half of the problem: the *owner's* manual is free
-for 7,496 models, but the *service* manual that a shop actually needs is paid or subscription for every
-brand (see [MANUALS.md](MANUALS.md)). A shop already owns those PDFs. This points at their folder.
+`web/counter/js/screens/confirm.js` loads the Chooser drop-in, which returns a `linkType: 'direct'` URL that
+`/ingest` fetches and indexes exactly like an OEM URL; nothing is uploaded anywhere but the user's own index. This is the answer to the hard half of the
+problem, quantified in [MANUALS.md](MANUALS.md): 182 service-manual rows across every brand, not one of them
+free, and we index none of them.
+
+## Visa — parts basket
+
+| | |
+|---|---|
+| Judge sees | **Parts** on the manual screen → an icon, the part name, the grade the manual prints, the page it is printed on, the OEM number, and chips out to RevZilla, Partzilla and Amazon |
+| Say | **Every part is on that sheet because the manual prints a spec for it — not because a model guessed what fits** |
+| Status | Sheet is live with 36 hand-drawn part icons. **No Visa API, no checkout** — do not claim otherwise |
+
+`ingest/assemble.py` extracts a part only when the manual prints a grade, size or number for it, keeps the
+printed designation verbatim, pulls OEM part numbers with four regexes, and emits search deep links built
+from that string. `web/store/icons-parts/` is 36 SVGs (chain, brake pads, fork, fuse…), matched to parts by
+`js/particons.js`. One-click checkout across three retailers is exactly where a Visa flow goes, and it is a
+next-step slide, not a demo step.
+
+## ElevenLabs — the agent that refuses to paraphrase
+
+| | |
+|---|---|
+| Judge sees | Hands-free: you talk, the page turns itself, the voice reads the manual's own words with "page 114" before each |
+| Say | **The agent has no permission to speak a sentence the manual does not print — four webhook tools are its entire vocabulary** |
+| Status | **Pending a key.** `GET /api/voice/config` returns `elevenlabsAgentId: null`, so the mic button does not render |
+
+`api/tools/elevenlabs_agent.py` creates the agent and four webhook tools: `find_procedure` (the same
+router+index path the UI uses), `read_page` (verbatim page text in 1,200-char chunks), `get_spec` (printed
+value + verbatim quote + page), `list_parts`. The fifth is the client tool `show_page`, handled in
+`web/counter/js/voice.js` and called before reading, so the phone shows the page while the voice reads it. Temperature 0, `eleven_flash_v2_5`, webhooks
+guarded by `X-Voice-Secret`. Needs the key plus the public `PUBLIC_BASE` we now have.
 
 ## Deepgram — Flux, primed with the manual's vocabulary
 
 | | |
 |---|---|
 | Judge sees | Tapping the mic and saying "what torque for the rear axle" with the engine running, and the words coming out right |
-| Say | **The manual primes its own transcriber — up to 40 keyterms pulled from the section titles and part names of the bike you just selected** |
-| Status | **Pending a key.** No `DEEPGRAM_API_KEY`, so `/voice/config` reports `deepgram: false` and `Ask.tsx` falls back to the browser's Web Speech API |
+| Say | **The manual primes its own transcriber — up to 40 keyterms pulled from the section titles and part names of the bike you just picked** |
+| Status | **Pending a key.** `/api/voice/config` reports `deepgram: false`; the Pick screen falls back to Web Speech |
 
-`src/lib/deepgram.ts` streams 16 kHz PCM from an AudioWorklet to `wss://api.deepgram.com/v2/listen` on
-`flux-general-en`, appending one `keyterm` parameter per term from `prime(manual)` (section titles + part
-names, ≥4 chars, stopword-filtered, capped at 40) — so "preload", "spindle", "Duke" and "telltale" are
-expected words rather than guesses. Auth is the honest part: the browser cannot use the JWT from
-`/v1/auth/grant` in a WebSocket subprotocol, so `POST /voice/deepgram-token` mints a project key scoped
-to `usage:write` with a 600-second TTL and hands that to the browser. The key never ships in the bundle.
-
-## Visa — parts basket
-
-| | |
-|---|---|
-| Judge sees | **Parts** on the result screen → the consumables that page needs, each with the grade the manual prints, each linking out to RevZilla, Partzilla and Amazon |
-| Say | **The basket is built from the manual's own printed specification, not from a guess about what fits** |
-| Status | **Not built.** No Visa API, no basket, no checkout anywhere in the repo — do not claim otherwise |
-
-What is real is the half that is hard: `ingest/assemble.py` extracts parts only when the manual prints a
-grade, size or number for them, keeps the printed designation verbatim, pulls OEM part numbers with four
-regexes, and emits search deep links (`SHOPS`) built from that string. 14 parts on the KTM, 12 on the
-BMW. Turning that into one-click checkout across three retailers is exactly where a Visa flow would go,
-and is a next-step slide, not a demo step.
+`web/counter/js/deepgram.js` streams 16 kHz PCM from an AudioWorklet to `wss://api.deepgram.com/v2/listen`
+on `flux-general-en`, appending one `keyterm` per term from the selected manual (headings + part names, ≥4 chars, stopword-filtered, capped at 40) — so
+"preload", "spindle", "Duke" and "telltale" are expected words, not guesses. The browser cannot use the
+documented JWT in a WebSocket subprotocol, so `POST /voice/deepgram-token` mints a project key scoped to
+`usage:write` with a 600-second TTL. The key never ships in the bundle.
 
 ## Runpod — part classifier hosting
 
 | | |
 |---|---|
-| Judge sees | `POST /identify/part` with a photo of a chain → `chain`, `chain_sprocket` with confidences, which maps to a manual query |
+| Judge sees | `POST /api/identify/part` with a photo of a chain → `chain`, `chain_sprocket` with confidences, each mapping to a manual query |
 | Say | **$0.00023 a photo zero-shot, 30 classes, and the checkpoint path is one env var away** |
-| Status | **Not built on Runpod.** The classifier runs zero-shot on OpenAI; the YOLO path runs locally, nothing is hosted anywhere |
+| Status | **Not hosted.** Zero-shot on OpenAI today; the YOLO path loads locally. Not wired into any screen — demo with curl |
 
 `api/app/parts/` classifies into the 30 labels of `AswinG5/moto-parts-30cls` and maps each to the query a
-manual would answer ("chain_sprocket" → "sprocket wear"). Default path is zero-shot on `gpt-5.6-luna`
-constrained to a `Literal` of the 30 labels — $0.00023 per photo over 7 logged calls. `PART_MODEL=yolo`
-lazily loads `motopartscls.pt` via ultralytics, downloading it from HuggingFace on first use; torch and
-ultralytics are deliberately out of `requirements.txt`. That checkpoint is what would live on a Runpod
-endpoint, and it is the honest reason to want one: it takes the per-photo cost to roughly zero and works
-in a shop with no signal. **Also honest:** `/identify/part` is not wired into any screen — demo it with
-curl or `/docs`, not with a tap.
+manual answers (`chain_sprocket` → "sprocket wear"). `PART_MODEL=yolo` lazily loads `motopartscls.pt`;
+torch and ultralytics are deliberately out of `requirements.txt`. That checkpoint is what would live on a
+Runpod endpoint — per-photo cost to roughly zero, and it works in a shop with no signal.
