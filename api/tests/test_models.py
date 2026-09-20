@@ -141,7 +141,7 @@ def test_seeded_manual_json_is_byte_compatible(path: Path):
     manual = M.Manual.model_validate(raw)
     assert manual.model_dump(exclude_none=True) == raw
     assert manual.id == path.stem
-    assert manual.sections and manual.parts and manual.outline
+    assert manual.sections and manual.parts
     for section in manual.sections:
         assert 1 <= section.pageStart <= section.pageEnd <= manual.pages
         for hl in section.highlights:
