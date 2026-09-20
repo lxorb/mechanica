@@ -68,17 +68,107 @@ def outline(items: list[tuple[int, str, int]]) -> list[OutlineNode]:
     return roots
 
 
-def chapters(items: list[tuple[int, str, int]], page_count: int) -> list[tuple[int, int, str]]:
-    """(pageStart, pageEnd, title) for every top-level outline entry.
+MIN_CHAPTERS = 3
+_EXTENSION = re.compile(r"\.(pdf|docx?|indd|ai|xml|txt)$", re.I)
 
-    Sorted by page on purpose: Honda's US outlines end with a broken 'Index' destination pointing at page 1,
-    and in document order that one chapter would claim the whole manual.
-    """
-    tops = sorted(((p, t) for lvl, t, p in items if lvl == 1), key=lambda x: x[0])
+
+def filename_like(title: str) -> bool:
+    """Honda and GM ship outlines whose only top node is the production filename. It must never reach a rider."""
+    text = " ".join((title or "").split())
+    if not text:
+        return True
+    if _EXTENSION.search(text):
+        return True
+    digits = sum(c.isdigit() for c in text)
+    if " " not in text and ("_" in text or digits >= 4):
+        return True
+    longest = max((len(w) for w in text.split()), default=0)
+    return digits >= 8 and longest >= 12
+
+
+def _ranges(entries: list[tuple[int, str]], page_count: int) -> list[tuple[int, int, str]]:
+    ordered = sorted(entries, key=lambda x: x[0])
     out = []
-    for i, (page, title) in enumerate(tops):
-        end = tops[i + 1][0] - 1 if i + 1 < len(tops) else page_count
+    for i, (page, title) in enumerate(ordered):
+        end = ordered[i + 1][0] - 1 if i + 1 < len(ordered) else page_count
         out.append((page, max(end, page), title))
+    return out
+
+
+def chapters(items: list[tuple[int, str, int]], page_count: int) -> list[tuple[int, int, str]]:
+    """(pageStart, pageEnd, title) per chapter, taken from the shallowest outline level that is actually usable.
+
+    Level 1 is the right answer for a normal manual. When it is a single filename node (Honda scooters, GM cars)
+    or too thin to group anything, the printed structure is one level down, so drop to it rather than invent one.
+    Sorted by page throughout: Honda's US outlines end with a broken 'Index' pointing at page 1, and in document
+    order that entry would claim the whole manual.
+    """
+    for level in (1, 2, 3):
+        entries = [(p, t) for lvl, t, p in items if lvl == level]
+        if len(entries) < MIN_CHAPTERS or any(filename_like(t) for _, t in entries):
+            continue
+        return _ranges(entries, page_count)
+    clean = [(p, t) for _, t, p in items if not filename_like(t)]
+    return _ranges(clean, page_count) if len(clean) >= MIN_CHAPTERS else []
+
+
+_NUMBERED = re.compile(r"^\s*(\d{1,2})\s*[.)]?\s+([A-Z][^\d].{2,58})$")
+_CALLOUT = re.compile(r"\(\s*\d+\s*\)")
+MAX_HEADING = 60
+
+
+def _headingish(line: str) -> bool:
+    """A figure's callout list is set in the same type as a heading on some pages: '(2) Adjusting nut (4) Brake arm'."""
+    return (
+        4 <= len(line) <= MAX_HEADING
+        and len(_CALLOUT.findall(line)) == 0
+        and not filename_like(line)
+        and not _BOILER.match(line)
+        and not garbled(line)
+    )
+
+
+def text_chapters(doc: pymupdf.Document) -> list[tuple[int, int, str]]:
+    """No usable outline: read the chapter titles the manual prints, biggest type first. Never an LLM call."""
+    tops: list[tuple[int, float, str]] = []
+    for n in range(doc.page_count):
+        best: tuple[float, str] | None = None
+        for size, text in _candidates(doc[n]):
+            line = " ".join(text.split())
+            if _headingish(line):
+                best = (size, line)
+                break
+        if best:
+            tops.append((n + 1, best[0], best[1]))
+    if not tops:
+        return []
+
+    numbered = [(p, m.group(2).strip()) for p, _, t in tops if (m := _NUMBERED.match(t))]
+    if len(numbered) >= MIN_CHAPTERS:
+        return _ranges(_dedupe(numbered), doc.page_count)
+
+    # Not the biggest type in the book - the type that carries the most distinct chapter names (the running head).
+    buckets: dict[float, list[tuple[int, str]]] = {}
+    for page, size, title in tops:
+        buckets.setdefault(round(size, 1), []).append((page, title))
+    best = max(
+        (_dedupe(entries) for entries in buckets.values()),
+        key=lambda entries: (min(len(entries), 40), -entries[0][0]),
+        default=[],
+    )
+    return _ranges(best, doc.page_count) if len(best) >= MIN_CHAPTERS else []
+
+
+def _dedupe(entries: list[tuple[int, str]]) -> list[tuple[int, str]]:
+    """A chapter starts once: a heading repeated as a running head on every page is not a new chapter."""
+    out: list[tuple[int, str]] = []
+    seen: set[str] = set()
+    for page, title in sorted(entries, key=lambda x: x[0]):
+        key = title.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append((page, title))
     return out
 
 

@@ -140,7 +140,7 @@ def run(
 
         toc = pagelib.toc(doc)
         outline = pagelib.outline(toc)
-        chaps = pagelib.chapters(toc, doc.page_count)
+        chaps = pagelib.chapters(toc, doc.page_count) or pagelib.text_chapters(doc)
         title = pagelib.cover_title(doc, make, model, year)
         bike = " ".join(str(p) for p in (make, model, year) if p).strip()
 

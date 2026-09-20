@@ -1,7 +1,9 @@
-"""Recompute the cover title of manuals already in the store. Nothing else about them changes.
+"""Recompute the cover title and the chapter of manuals already in the store. No re-ingest, no LLM call.
 
-    python -m tools.retitle              # show what would change
-    python -m tools.retitle --write      # write the new titles
+    python -m tools.retitle                       # titles: show what would change
+    python -m tools.retitle --write               # titles: write them
+    python -m tools.retitle --chapters            # chapters: show what would change
+    python -m tools.retitle --chapters --write    # chapters: write them
 """
 
 from __future__ import annotations
@@ -28,14 +30,53 @@ def bike_of(manual):
     return "", "", 0
 
 
+def unusable(chapters: list[str], sections: int) -> bool:
+    """A chapter set nobody can navigate: the production filename, or one bucket holding the whole manual."""
+    distinct = {c for c in chapters if c}
+    if any(pagelib.filename_like(c) for c in distinct):
+        return True
+    return sections >= 10 and len(distinct) < 3
+
+
+def rechapter(store, only: list[str], write: bool) -> int:
+    fixed = 0
+    for manual in store.manuals():
+        if only and not any(o.lower() in manual.id for o in only):
+            continue
+        path = ingest.pdf_path(manual.id)
+        if not path.exists() or not manual.sections:
+            continue
+        current = [s.chapter for s in manual.sections]
+        if not unusable(current, len(manual.sections)):
+            continue
+        doc = pymupdf.open(path)
+        chaps = pagelib.chapters(pagelib.toc(doc), doc.page_count) or pagelib.text_chapters(doc)
+        doc.close()
+        fresh = [pagelib.chapter_of(chaps, s.pageStart) for s in manual.sections]
+        if len({c for c in fresh if c}) <= len({c for c in current if c}) or any(pagelib.filename_like(c) for c in fresh if c):
+            print(f"-   {manual.id:<44} no better grouping found")
+            continue
+        fixed += 1
+        was, now = sorted({c for c in current if c})[:1], sorted({c for c in fresh if c})
+        print(f"{'+' if write else '~'}   {manual.id:<44} {len({c for c in current if c})} -> {len(set(now))} chapters  {was} -> {now[:3]}")
+        if write:
+            sections = [s.model_copy(update={"chapter": c}) for s, c in zip(manual.sections, fresh)]
+            store.put_manual(manual.model_copy(update={"sections": sections}))
+    print(f"\n{fixed} manuals {'re-chaptered' if write else 'would be re-chaptered'}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     p = argparse.ArgumentParser(prog="tools.retitle")
     p.add_argument("--write", action="store_true")
+    p.add_argument("--chapters", action="store_true")
     p.add_argument("--only", action="append", default=[])
     args = p.parse_args(argv)
 
     store = get_store()
+    if args.chapters:
+        return rechapter(store, args.only, args.write)
     changed = 0
     for manual in store.manuals():
         if args.only and not any(o.lower() in manual.id for o in args.only):

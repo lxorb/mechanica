@@ -24,7 +24,21 @@ from pydantic import ValidationError
 
 from app.config import settings
 from app.models import Bike, IngestJob, RegistryEntry
-from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, discover, free_owner_manuals, kind_of, merge_ua, select, verify
+from app.registry import (
+    ADAPTERS,
+    _ingestable,
+    _pick,
+    bikes_from_registry,
+    crawl,
+    discover,
+    doc_kind,
+    free_owner_manuals,
+    kind_of,
+    merge_ua,
+    pdf_index,
+    select,
+    verify,
+)
 from app.registry._http import client, request, slug
 from app.store import get_store
 
@@ -265,7 +279,12 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
 
     if incoming:
         store.put_registry(merge_ua(incoming.values()))  # one write for every fragment, not one each
-    pending = [e for e in store.registry() if not e.docKind or not e.needsUa]
+    pending = store.registry()
+    if args.restamp:  # the classifier improved: re-label every row from its url and title
+        for e in pending:
+            e.docKind = None
+    else:
+        pending = [e for e in pending if not e.docKind or not e.needsUa]
     stamped = [e for e in merge_ua(pending) if e.docKind or e.needsUa]
     if stamped:  # rows indexed before docKind existed, or before their host was known to need a UA
         store.put_registry(stamped)
@@ -298,6 +317,58 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     for e in free:
         by_make[e.make] = by_make.get(e.make, 0) + 1
     print("  " + "  ".join(f"{make} {n}" for make, n in sorted(by_make.items(), key=lambda kv: -kv[1])))
+    return 0
+
+
+def weak_vehicles(store) -> list[tuple[Bike, RegistryEntry, str]]:
+    """Vehicles whose best free English PDF is a brochure, quick guide, warranty insert or spec sheet."""
+    index = pdf_index()
+    out = []
+    for b in store.bikes():
+        rows = index.get(b.id)
+        if not rows:
+            continue
+        best = _pick(rows, b.market, kind_of(b))
+        kind = doc_kind(best)
+        if kind != "owner":
+            out.append((b, best, kind))
+    return out
+
+
+def cmd_enrich(args: argparse.Namespace) -> int:
+    """Re-ask the OEM's own manual endpoint for the vehicles that only have a brochure or a quick
+    guide, and write whatever new PDF it names as a fragment. Adds rows, never edits or deletes one:
+    the brochure stays indexed, it just stops being the best answer for that vehicle."""
+    store = get_store()
+    weak = weak_vehicles(store)
+    by_site: dict[str, int] = {}
+    for _b, e, _k in weak:
+        by_site[e.site] = by_site.get(e.site, 0) + 1
+    print(f"{len(weak)} vehicle(s) have no owner's manual; by site: " + ", ".join(f"{s} {n}" for s, n in sorted(by_site.items(), key=lambda kv: -kv[1])))
+    names = select(args.brand)
+    if not names:
+        print("nothing to re-query: pass --brand for an adapter that owns one of those sites")
+        return 0
+    known = {e.url for e in store.registry()}
+    wanted = {(b.make.lower(), b.model.lower()) for b, _e, _k in weak}
+    FRAGMENTS.mkdir(parents=True, exist_ok=True)
+    for name in names:
+        try:
+            rows = [e for e in ADAPTERS[name]() if e.url]
+        except Exception as exc:
+            print(f"  {name}: adapter failed: {type(exc).__name__}: {exc}", file=sys.stderr)
+            continue
+        fresh = [e for e in rows if e.url not in known and doc_kind(e) == "owner"]
+        hits = [e for e in fresh if (e.make.lower(), e.model.lower()) in wanted]
+        if not fresh:
+            print(f"  {name}: {len(rows)} rows, nothing the registry was missing")
+            continue
+        merge_ua(fresh)
+        site = fresh[0].site
+        path = FRAGMENTS / f"enrich-{site}.json"
+        path.write_text(json.dumps([e.model_dump(exclude_none=True) for e in fresh], ensure_ascii=False), encoding="utf-8")
+        print(f"  {name}: {len(fresh)} new owner PDF(s) -> {path.name} ({len(hits)} for a vehicle that had none)")
+    print("run merge-fragments to fold them in")
     return 0
 
 
@@ -388,9 +459,14 @@ def main(argv: list[str] | None = None) -> int:
     c2.add_argument("--refresh", action="store_true")
     c2.set_defaults(fn=cmd_seed_catalog)
 
+    c7 = sub.add_parser("enrich", help="re-ask an OEM endpoint for vehicles that only have a brochure")
+    c7.add_argument("--brand", action="append")
+    c7.set_defaults(fn=cmd_enrich)
+
     c6 = sub.add_parser("merge-fragments", help="fold data/registry-fragments/*.json into the registry")
     c6.add_argument("--skip", action="append", help="fragment to leave out, by file name (repeatable)")
     c6.add_argument("--replace", action="append", help="fragment that owns its site/kind scope: rows it no longer lists are deleted")
+    c6.add_argument("--restamp", action="store_true", help="re-classify docKind on every row, not just the unstamped ones")
     c6.set_defaults(fn=cmd_merge_fragments)
 
     c5 = sub.add_parser("stats", help="per-brand rows and free-PDF totals")
