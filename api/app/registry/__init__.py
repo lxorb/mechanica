@@ -213,7 +213,9 @@ def bikes_from_registry() -> list[Bike]:
             out[bid] = bike.model_copy()
     for bid, bike in out.items():
         rows = manuals.get(bid)
-        bike.manualUrl = _pick(rows, bike.market, kind_of(bike)).url if rows else (known[bid].manualUrl if bid in known else None)
+        # manualUrl is a pure function of the registry: no covering row means no offer, so a retracted
+        # row stops being advertised instead of lingering as a link nothing can fetch.
+        bike.manualUrl = _pick(rows, bike.market, kind_of(bike)).url if rows else None
     bikes = list(out.values())
     if bikes:
         store.put_bikes(bikes)

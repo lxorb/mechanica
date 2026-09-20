@@ -32,18 +32,26 @@ SITE = "fordservicecontent.com"
 
 PAIR = re.compile(r"owner-manuals-details/([a-z0-9][a-z0-9-]*)/((?:19|20)\d{2})")
 DOC = re.compile(r'title\\":\\"(.*?)\\",\\"link\\":\\"(https://[^\\"]+?\.pdf)\\"', re.I)
-# Warranty booklets and roadside guides ride along on the same pages and are not the owner's manual.
-SKIP_TITLE = re.compile(r"warranty|roadside|scheduled maintenance|emission", re.I)
+# Warranty booklets, quick-reference cards and roadside guides ride along on the same pages. They are
+# real PDFs for the same model year, so one would sometimes be served instead of the manual.
+SKIP_TITLE = re.compile(r"warranty|roadside|scheduled maintenance|emission|quick reference|quick start|supplement", re.I)
 THROTTLE = Throttle(2.0)
 
 
 def _pretty(model: str) -> str:
-    """'super-duty' -> 'Super Duty', 'f-150' -> 'F-150', 'e-transit' -> 'E-Transit'."""
-
-    def word(w: str) -> str:
-        return w.upper() if any(c.isdigit() for c in w) or len(w) == 1 else w.capitalize()
-
-    return " ".join("-".join(word(p) for p in tok.split("-")) for tok in model.split())
+    """The slug spends '-' on two jobs. 'super-duty' is two words; 'f-150' and 'e-transit' are one
+    name. A part that is a single letter or a number keeps the hyphen, everything else gets a space."""
+    parts = [p for p in model.split("-") if p]
+    out = ""
+    for i, part in enumerate(parts):
+        word = part.upper() if part.isdigit() or len(part) == 1 else part.capitalize()
+        if not out:
+            out = word
+        elif len(part) == 1 or part.isdigit() or len(parts[i - 1]) == 1 or parts[i - 1].isdigit():
+            out += "-" + word
+        else:
+            out += " " + word
+    return out
 
 
 def _clean(title: str) -> str:

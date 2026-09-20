@@ -36,19 +36,21 @@ if (!existsSync(SHOTS)) mkdirSync(SHOTS, { recursive: true });
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const browser = await puppeteer.launch({
-  executablePath: CHROME,
-  headless: "new",
-  protocolTimeout: 180000,
-  args: [
-    "--use-fake-ui-for-media-stream",
-    "--use-fake-device-for-media-stream",
-    "--autoplay-policy=no-user-gesture-required",
-    "--no-sandbox",
-  ],
-});
+const launch = () =>
+  puppeteer.launch({
+    executablePath: CHROME,
+    headless: "new",
+    protocolTimeout: 180000,
+    args: [
+      "--use-fake-ui-for-media-stream",
+      "--use-fake-device-for-media-stream",
+      "--autoplay-policy=no-user-gesture-required",
+      "--no-sandbox",
+    ],
+  });
 
 const errors = [];
+let browser = null;
 let page = null;
 
 async function newPage() {
@@ -101,7 +103,7 @@ async function newPage() {
 
 async function openChat() {
   await page.goto(`${WEB}/counter/`, { waitUntil: "networkidle2" });
-  await page.waitForFunction(() => window.HandyBus && window.Q, { timeout: 30000 });
+  await page.waitForFunction(() => window.HandyBus && window.Q, { timeout: 60000 });
   await page.evaluate((id) => {
     window.HandyBus.state.bikeId = id;
     window.HandyBus.go("pick");
@@ -109,7 +111,7 @@ async function openChat() {
   await page.waitForFunction(() => {
     const pill = document.querySelector('[data-screen="pick"] .chat-pill');
     return pill && !pill.hidden;
-  }, { timeout: 30000 });
+  }, { timeout: 60000 });
   await page.evaluate(() => document.querySelector(String.raw`[data-screen="pick"] .chat-pill`).click());
   await page.waitForSelector('[data-overlay="chat"].open .cv-body deep-chat', { timeout: 20000 });
   await wait(700);
@@ -118,6 +120,40 @@ async function openChat() {
 async function shoot(name) {
   await page.screenshot({ path: join(SHOTS, `${name}.png`) });
   console.log("shot  ", `${name}.png`);
+}
+
+/** The input row, measured and photographed on its own: the founder's alignment check. */
+async function inputRow(tag) {
+  const box = await page.evaluate(() => {
+    const root = document.querySelector(".cv-body deep-chat").shadowRoot;
+    const row = root.querySelector("#input");
+    const r = row.getBoundingClientRect();
+    const items = [...row.children]
+      .filter((c) => c.getBoundingClientRect().width > 0)
+      .map((c) => {
+        const b = c.getBoundingClientRect();
+        const el = c.classList.contains("input-button-container") ? c.firstElementChild || c : c;
+        const eb = el.getBoundingClientRect();
+        return {
+          what: c.id || (c.classList.contains("ttm-voice") ? "voice" : "send"),
+          x: Math.round(eb.x),
+          y: Math.round(eb.y),
+          w: Math.round(eb.width),
+          h: Math.round(eb.height),
+        };
+      });
+    return { row: { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) }, items };
+  });
+  console.log("row   ", JSON.stringify(box));
+  const gaps = [];
+  for (let i = 1; i < box.items.length; i++) gaps.push(box.items[i].x - (box.items[i - 1].x + box.items[i - 1].w));
+  console.log("gaps  ", gaps, "| tops", box.items.map((i) => i.y), "| heights", box.items.map((i) => i.h));
+  await page.screenshot({
+    path: join(SHOTS, `voice-input-row-${tag}.png`),
+    clip: { x: box.row.x, y: box.row.y - 6, width: box.row.w, height: box.row.h + 12 },
+  });
+  console.log("shot  ", `voice-input-row-${tag}.png`);
+  return box;
 }
 
 const bubbles = () =>
@@ -130,14 +166,17 @@ const bubbles = () =>
 
 async function runVoice() {
   await page.waitForFunction(() => {
-    const b = document.querySelector(".cv-voice");
+    const b = document.querySelector(".cv-body deep-chat").shadowRoot.querySelector(".cv-voice");
     return b && !b.hidden;
   }, { timeout: 30000 });
-  await page.evaluate(() => document.querySelector(".cv-voice").click());
+  await page.evaluate(() => document.querySelector(".cv-body deep-chat").shadowRoot.querySelector(".cv-voice").click());
   await page.waitForFunction(() => {
     const s = document.querySelector(".cv-said");
     return s && (s.textContent || "").trim() && !/Connecting/.test(s.textContent);
-  }, { timeout: 40000 });
+  }, { timeout: 40000 }).catch(async () => {
+    console.log("voice  STUCK:", await page.evaluate(() => document.querySelector(".cv-said").textContent), errors.slice(-6));
+    throw new Error("voice never started");
+  });
   console.log("voice ", await page.evaluate(() => document.querySelector(".cv-said").textContent));
   await wait(1200);
 }
@@ -162,23 +201,30 @@ async function injectTurn() {
 
 // ---------------------------------------------------------------- the two passes
 
-/** Each viewport gets a fresh page: a reload leaves an AudioContext and a WebGL stage behind,
- *  and headless Chrome will not hand back a screenshot while it is still draining them. */
+/**
+ * Each viewport gets a browser of its own. Reusing one leaves a live AudioContext, a WebGL
+ * stage and an open agent socket behind, and headless Chrome then either refuses the next
+ * screenshot or takes the renderer down with it. The pause after is for Deepgram, which does
+ * not like the next session opening on the heels of the last one.
+ */
 async function pass(tag, viewport) {
+  browser = await launch();
   page = await newPage();
   await page.setViewport(viewport);
   await openChat();
   await shoot(`voice-chat-${tag}`);
+  await inputRow(tag);
   await runVoice();
   await shoot(`voice-listening-${tag}`);
   const turns = await injectTurn();
   await shoot(`voice-answer-${tag}`);
   console.log("turns  ", JSON.stringify(turns, null, 1));
-  await page.close();
+  await browser.close();
+  await wait(4000);
 }
 
-await pass("390", { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-await pass("1280", { width: 1280, height: 800, deviceScaleFactor: 1 });
+const ONLY = process.env.ONLY || "";
+if (!ONLY || ONLY === "390") await pass("390", { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+if (!ONLY || ONLY === "1280") await pass("1280", { width: 1280, height: 800, deviceScaleFactor: 1 });
 
 console.log("errors ", errors.length ? errors : "none");
-await browser.close();

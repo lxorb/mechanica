@@ -96,11 +96,7 @@
  },
  "motocross": {
   "kind": "bike",
-  "rotate": [
-   90,
-   90,
-   0
-  ],
+  "rotate": null,
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -133,7 +129,7 @@
  "enduro": {
   "kind": "bike",
   "rotate": [
-   90,
+   0,
    90,
    0
   ],
@@ -157,11 +153,23 @@
   ],
   "paintMaterials": [],
   "extra": {
-   "handlebar": [
-    "^BONE_L_GRIP_66$",
-    "^BONE_R_GRIP_67$",
-    "^BONE_L_LEVER_68$",
-    "^BONE_R_LEVER_69$"
+   "engine": [
+    "^Cylinder\\.002_black_0$",
+    "^Cylinder\\.002_Metal_0$",
+    "^Cylinder\\.002_Redbull_0$",
+    "^Cylinder\\.006__0$",
+    "^Cylinder\\.007_Metal_0$",
+    "^Cylinder\\.075_Redbull_0$",
+    "^Cylinder\\.077_black_0$",
+    "^Cylinder\\.079_black_0$",
+    "^Cylinder\\.082_Redbull_0$",
+    "^Cylinder\\.002$",
+    "^Cylinder\\.006$",
+    "^Cylinder\\.007$",
+    "^Cylinder\\.075$",
+    "^Cylinder\\.077$",
+    "^Cylinder\\.079$",
+    "^Cylinder\\.082$"
    ]
   }
  },

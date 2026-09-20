@@ -1,11 +1,11 @@
 Model Information:
-* title:	2022 Husqavarna FS 450
-* source:	https://sketchfab.com/3d-models/2022-husqavarna-fs-450-15fb808dc81b4376bd201a4303253050
-* author:	OUTPISTON (https://sketchfab.com/outpiston)
+* title:	KTM REDBULL
+* source:	https://sketchfab.com/3d-models/ktm-redbull-8d755ea9d6c249a29cf771a921116a41
+* author:	LEKSA (https://sketchfab.com/LVDEV)
 
 Model License:
-* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
-* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "2022 Husqavarna FS 450" (https://sketchfab.com/3d-models/2022-husqavarna-fs-450-15fb808dc81b4376bd201a4303253050) by OUTPISTON (https://sketchfab.com/outpiston) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+This work is based on "KTM REDBULL" (https://sketchfab.com/3d-models/ktm-redbull-8d755ea9d6c249a29cf771a921116a41) by LEKSA (https://sketchfab.com/LVDEV) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -87,6 +87,12 @@ REJECT_WORDS = (
     "assembly cutaway frame_only"
 ).split()
 
+# A car photo that is really the cabin, the engine bay or the boot.
+CAR_REJECT = (
+    "interior interieur innenraum cockpit dashboard dash cabin console steering "
+    "upholstery trunk boot bay underhood odometer dials dial dashboardview"
+).split()
+
 CC_OK = re.compile(r"^cc[\s_-]*by(?:[\s_-]*sa)?[\s_-]*\d", re.I)
 CC_BAD = re.compile(r"\b(nc|nd|noncommercial|noderiv)\b", re.I)
 TAG = re.compile(r"<[^>]+>")
@@ -201,10 +207,15 @@ class Model:
     model: str
     years: list
     manual: bool
+    kind: str = "bike"
 
     @property
     def key(self) -> str:
         return image_key(self.make, self.model)
+
+    @property
+    def noun(self) -> str:
+        return "car" if self.kind == "car" else "motorcycle"
 
 
 def manual_models() -> set:
@@ -226,7 +237,7 @@ def manual_models() -> set:
 def build_models(limit: int = 0) -> list:
     bikes = json.loads(BIKES.read_text(encoding="utf-8"))
     have_manual = manual_models()
-    groups = defaultdict(lambda: {"years": set(), "manual": False, "names": None})
+    groups = defaultdict(lambda: {"years": set(), "manual": False, "names": None, "kind": "bike"})
     for b in bikes:
         make, model = (b.get("make") or "").strip(), (b.get("model") or "").strip()
         if not make or not model or len(norm(model).replace(" ", "")) < 2:
@@ -237,17 +248,25 @@ def build_models(limit: int = 0) -> list:
             g["names"] = (make, model)
         if isinstance(b.get("year"), int):
             g["years"].add(b["year"])
+        if b.get("kind") == "car":
+            g["kind"] = "car"
         if b.get("manualId") or b.get("manualUrl") or pair in have_manual:
             g["manual"] = True
 
     models = [
-        Model(g["names"][0], g["names"][1], sorted(g["years"]), g["manual"])
+        Model(g["names"][0], g["names"][1], sorted(g["years"]), g["manual"], g["kind"])
         for g in groups.values()
     ]
-    # Manual-bearing models first (those are the ones the app can actually answer
-    # from), then everything else newest first.
+
+    def tier(m: Model) -> int:
+        """Motorcycles the app can answer from, then the cars, then the rest."""
+        if m.kind == "car":
+            return 1
+        return 0 if m.manual else 2
+
     models.sort(
         key=lambda m: (
+            tier(m),
             0 if m.manual else 1,
             -(max(m.years) if m.years else 0),
             -len(m.years),
@@ -332,7 +351,9 @@ def rank(pages: list, m: Model, used: set) -> list:
             continue
 
         title_n = norm(stem)
-        if any(w in title_n.split() and w not in model_n.split() for w in REJECT_WORDS):
+        words = set(title_n.split()) - set(model_n.split())
+        reject = REJECT_WORDS + CAR_REJECT if m.kind == "car" else REJECT_WORDS
+        if words & set(reject):
             continue
 
         meta = info.get("extmetadata") or {}
@@ -575,24 +596,29 @@ def fix_bands(rps: float) -> int:
 # --------------------------------------------------------------------- the gate
 
 SCORE_MODEL = "gpt-5.6-luna"
-VIEWS = {"side": 2.0, "three_quarter": 1.8, "front": 0.6, "rear": 0.3, "other": 0.0}
+# A motorcycle reads best in profile; a car reads best turned three-quarter front.
+VIEWS = {
+    "bike": {"side": 2.0, "three_quarter": 1.8, "front": 0.6, "rear": 0.3, "other": 0.0},
+    "car": {"three_quarter": 2.0, "side": 1.5, "front": 1.4, "rear": 0.3, "other": 0.0},
+}
 
 RUBRIC = (
-    "You grade photographs for a motorcycle manual catalogue. Each tile is one bike, "
+    "You grade photographs for a vehicle manual catalogue. Each tile is one {noun}, "
     "shown whole, on a clean background, sharp enough to enlarge. Grade strictly; most "
     "snapshots are not good enough.\n"
-    "single_bike: exactly one motorcycle is the subject. false if a second bike is "
+    "single_bike: exactly one {noun} is the subject. false if a second {noun} is "
     "parked in frame, even partly, even blurred.\n"
-    "whole_bike_visible: the entire motorcycle is in frame, wheel to wheel, nothing "
-    "cropped or hidden behind an object. false for close-ups of any part.\n"
+    "whole_bike_visible: the entire {noun} is in frame, wheel to wheel, nothing "
+    "cropped or hidden behind an object. false for close-ups of any part, and "
+    "false for an interior, a dashboard or an engine bay.\n"
     "clean_background: 3 studio white or plain sky/wall; 2 tidy street or paddock; "
     "1 busy street, show stand, garage clutter; 0 crowd, showroom aisle, dense clutter.\n"
     "sharpness: 3 crisp and well lit; 2 acceptable; 1 soft, dim, noisy or small; "
     "0 blurred or heavily compressed.\n"
     "view: side (straight profile), three_quarter, front, rear, other.\n"
-    "people_or_other_bikes: any person, or any other motorcycle, visible anywhere.\n"
+    "people_or_other_bikes: any person, or any other {noun}, visible anywhere.\n"
     "is_the_model: could this be the make and model named? false only when it is "
-    "plainly a different make, a different model family, or not a motorcycle.\n"
+    "plainly a different make, a different model family, or not a {noun}.\n"
     "note: at most eight words on the worst flaw."
 )
 
@@ -608,19 +634,19 @@ class Shot(BaseModel):
     note: str
 
 
-def shot_score(s: Shot) -> float:
-    """0-10 from the rubric: quality first, then how the bike is turned."""
+def shot_score(s: Shot, kind: str = "bike") -> float:
+    """0-10 from the rubric: quality first, then how the vehicle is turned."""
     quality = 1.4 * (max(0, min(3, s.clean_background)) + max(0, min(3, s.sharpness)))
-    return round(min(10.0, quality + VIEWS.get(s.view, 0.0)), 2)
+    return round(min(10.0, quality + VIEWS[kind].get(s.view, 0.0)), 2)
 
 
-def passes(s: Shot, threshold: float) -> bool:
+def passes(s: Shot, threshold: float, kind: str = "bike") -> bool:
     return (
         s.single_bike
         and s.whole_bike_visible
         and not s.people_or_other_bikes
         and s.is_the_model
-        and shot_score(s) >= threshold
+        and shot_score(s, kind) >= threshold
     )
 
 
@@ -640,7 +666,7 @@ def grade(raw: bytes, m: Model) -> Shot:
         "images.score",
         SCORE_MODEL,
         Shot,
-        RUBRIC,
+        RUBRIC.format(noun=m.noun),
         [
             llm.text_part(f"Catalogue tile for a {m.make} {m.model}{years}. Grade it."),
             llm.image_part(as_jpeg(raw), "image/jpeg", "auto"),
@@ -678,13 +704,14 @@ def renditions(raw: bytes, key_slug: str) -> tuple:
     return (hero, dest, thumb), hero.stat().st_size + size[0] + size[1]
 
 
-def model_for(key: str, roster: dict) -> Model:
+def model_for(key: str, roster: dict, entry: dict | None = None) -> Model:
     """The Model behind a bike-images key, even if bikes.json has moved on."""
     got = roster.get(key)
     if got:
         return got
     make, _, name = key.partition("|")
-    return Model(make.replace("-", " ").title(), name.replace("-", " "), [], False)
+    kind = (entry or {}).get("kind") or "bike"
+    return Model(make.replace("-", " ").title(), name.replace("-", " "), [], False, kind)
 
 
 def best_candidate(client, bucket, m, used, tried, limit, threshold):
@@ -694,7 +721,7 @@ def best_candidate(client, bucket, m, used, tried, limit, threshold):
     queries = [f"{plain} filetype:bitmap"]
     if nodash != plain:
         queries.append(f"{nodash} filetype:bitmap")
-    queries.append(f"{plain} motorcycle filetype:bitmap")
+    queries.append(f"{plain} {m.noun} filetype:bitmap")
 
     rows, seen = [], set()
     for q in queries:
@@ -727,12 +754,13 @@ def best_candidate(client, bucket, m, used, tried, limit, threshold):
     for _heuristic, page, info, title, meta in sorted(rows, key=lambda row: -row[0])[:limit]:
         raw = get(client, info.get("thumburl") or info.get("url"), bucket).content
         shot = grade(raw, m)
-        sc = shot_score(shot)
-        if not passes(shot, threshold):
+        sc = shot_score(shot, m.kind)
+        if not passes(shot, threshold, m.kind):
             continue
         if best is None or sc > best[0]:
             best = (sc, page, info, title, meta, shot)
-        if sc >= 8.0 and shot.view in ("side", "three_quarter"):
+        good = ("three_quarter", "front") if m.kind == "car" else ("side", "three_quarter")
+        if sc >= 8.0 and shot.view in good:
             break
     return best
 
@@ -741,6 +769,10 @@ def run_gate(args) -> int:
     entries = json.loads(OUT_JSON.read_text(encoding="utf-8"))
     roster = {m.key: m for m in build_models()}
     keys = sorted(entries)
+    if args.kind != "all":
+        keys = [k for k in keys if (entries[k].get("kind") or "bike") == args.kind]
+    if args.ungated_only:
+        keys = [k for k in keys if not entries[k].get("hero")]
     used = {e.get("title") for e in entries.values()}
     bucket = Bucket(args.rps)
     lock = threading.Lock()
@@ -761,7 +793,7 @@ def run_gate(args) -> int:
 
     def one(key: str) -> None:
         entry = entries[key]
-        m = model_for(key, roster)
+        m = model_for(key, roster, entry)
         name = Path(entry["image"]).stem
         if name in PROTECTED or stop.is_set():
             with lock:
@@ -774,7 +806,7 @@ def run_gate(args) -> int:
             shot = grade(tile, m)
             with lock:
                 stats["graded"] += 1
-            if passes(shot, args.threshold):
+            if passes(shot, args.threshold, m.kind):
                 raw = get(client, source_url(client, bucket, entry["title"]), bucket).content
                 renditions(raw, name)
                 entry["hero"] = f"store/img/bikes/{name}-hero.webp"
@@ -795,7 +827,7 @@ def run_gate(args) -> int:
                     not shot.is_the_model
                     or shot.people_or_other_bikes
                     or not shot.single_bike
-                    or shot_score(shot) < args.threshold - 2.0
+                    or shot_score(shot, m.kind) < args.threshold - 2.0
                 )
                 if severe:
                     for rel in (entry.get("hero"), entry["image"], entry["thumb"]):
@@ -823,6 +855,7 @@ def run_gate(args) -> int:
                 used.add(title)
             entry.update(
                 hero=f"store/img/bikes/{name}-hero.webp",
+                **({"kind": "car"} if m.kind == "car" else {}),
                 title=title,
                 author=strip_html((meta.get("Artist") or {}).get("value", "")) or "Unknown",
                 license=strip_html((meta.get("LicenseShortName") or {}).get("value", "")),
@@ -862,7 +895,19 @@ def run_gate(args) -> int:
             list(pool.map(one, keys))
 
     write_outputs(entries)
-    print(json.dumps({**stats, "entries_after": len(entries), "usd": round(spent() - start, 3)}, indent=2))
+    cars = sum(1 for e in entries.values() if e.get("kind") == "car")
+    print(
+        json.dumps(
+            {
+                **stats,
+                "entries_after": len(entries),
+                "cars_after": cars,
+                "bikes_after": len(entries) - cars,
+                "usd": round(spent() - start, 3),
+            },
+            indent=2,
+        )
+    )
     for row in swapped[:5]:
         print("sample:", row)
     return 0
@@ -892,6 +937,17 @@ def main() -> int:
     ap.add_argument("--threshold", type=float, default=6.0, help="--gate: lowest score kept, 0-10")
     ap.add_argument("--candidates", type=int, default=8, help="--gate: photos graded per model")
     ap.add_argument("--usd", type=float, default=10.0, help="--gate: spend ceiling for grading")
+    ap.add_argument(
+        "--kind",
+        choices=("all", "bike", "car"),
+        default="all",
+        help="restrict the queue to motorcycles or to cars",
+    )
+    ap.add_argument(
+        "--ungated-only",
+        action="store_true",
+        help="--gate: skip entries that already carry a hero, i.e. already graded",
+    )
     args = ap.parse_args()
 
     if args.fix_bands:
@@ -902,6 +958,8 @@ def main() -> int:
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     models = build_models(args.limit)
+    if args.kind != "all":
+        models = [m for m in models if m.kind == args.kind]
     manual_total = sum(1 for m in models if m.manual)
 
     entries = {}
@@ -965,7 +1023,7 @@ def main() -> int:
         queries = [f"{plain} filetype:bitmap"]
         if nodash != plain:
             queries.append(f"{nodash} filetype:bitmap")
-        queries.append(f"{plain} motorcycle filetype:bitmap")
+        queries.append(f"{plain} {m.noun} filetype:bitmap")
 
         chosen = None
         try:
@@ -1033,6 +1091,7 @@ def main() -> int:
         entry = {
             "image": f"store/img/bikes/{name}.webp",
             "thumb": f"store/img/bikes/{name}-thumb.webp",
+            **({"kind": "car"} if m.kind == "car" else {}),
             "title": title,
             "author": strip_html((meta.get("Artist") or {}).get("value", "")) or "Unknown",
             "license": strip_html((meta.get("LicenseShortName") or {}).get("value", "")),
@@ -1095,6 +1154,8 @@ def main() -> int:
         json.dumps(
             {
                 "models_considered": len(models),
+                "cars_considered": sum(1 for m in models if m.kind == "car"),
+                "car_images": sum(1 for e in entries.values() if e.get("kind") == "car"),
                 "attempted": stats["attempted"],
                 "images": len(entries),
                 "new_this_run": stats["hit"],

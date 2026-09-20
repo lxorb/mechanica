@@ -54,7 +54,14 @@ const CDN = `https://cdn.jsdelivr.net/npm/three@${THREE_VERSION}/`;
 const IMPORTS = { three: `${CDN}build/three.module.js`, "three/addons/": `${CDN}examples/jsm/` };
 
 const ORANGE = 0xe85d04;
-const DIM_OPACITY = 0.35;
+/**
+ * How far the unselected parts fade when one part is focused. 0.35 made the exploded view
+ * unreadable — everything that was not the answer went to a silhouette, and against the ink grid
+ * backdrop that is close to invisible. 0.62 still says "this one, not those" while leaving the
+ * rest of the bike legible, which is the point of an exploded view.
+ * Nothing dims on explode alone: coming apart is not the same as choosing.
+ */
+const DIM_OPACITY = 0.62;
 const EXPLODE_MS = 400;
 const FOCUS_MS = 600;
 const IDLE_MS = 3000;
@@ -87,15 +94,26 @@ export const PART_ALIASES = {
   chassis: "frame", motor: "engine", tank: "fuel-tank", light: "headlight", bulb: "headlight",
 };
 
-/** When a model has no group for a key, highlight the next best thing instead of nothing. */
+/**
+ * When a model has no group for a key, the next best thing — but ONLY where the next best thing
+ * is genuinely the same component. Every entry here answers "where does a mechanic find this?"
+ * and the answer has to be right: the oil, the spark plug, the clutch and the air filter are all
+ * parts of the engine, and a tyre is the wheel.
+ *
+ * What used to be here and is deliberately gone: front-brake -> front-wheel, chain -> rear-wheel,
+ * seat -> fairing, handlebar -> frame, headlight -> fairing, exhaust -> engine, frame -> engine.
+ * Those are not fallbacks, they are wrong answers. Searching a Yamaha MT-09 for "brake fluid" lit
+ * up the wheel, because the model has no brake mesh and the table quietly substituted one. An
+ * unhighlighted part is a gap; a confidently highlighted WRONG part is a lie, and the user has no
+ * way to tell which they are looking at. So a key with no group now highlights nothing.
+ */
 const FALLBACK = {
-  tire: "front-wheel", oil: "engine", "spark-plug": "engine", clutch: "engine",
-  "air-filter": "engine", radiator: "engine", fuse: "battery", battery: "frame",
-  sprocket: "rear-wheel", chain: "rear-wheel", "rear-shock": "swingarm", swingarm: "frame",
-  footpeg: "frame", mirrors: "handlebar", handlebar: "frame", taillight: "fairing",
-  headlight: "fairing", "front-brake": "front-wheel", "rear-brake": "rear-wheel",
-  "front-fork": "frame", seat: "fairing", "fuel-tank": "fairing", fairing: "frame",
-  exhaust: "engine", frame: "engine",
+  tire: "front-wheel",
+  oil: "engine",
+  "spark-plug": "engine",
+  clutch: "engine",
+  "air-filter": "engine",
+  radiator: "engine",
 };
 
 /** The exact models. Generic keys are "generic/<name>" and come from ../store/models/generic. */
@@ -321,7 +339,16 @@ export function matchPart(modelKey, ...names) {
   return null;
 }
 
-/** Group every unmatched node lands in, so nothing is ever invisible. */
+/**
+ * Group every unmatched node lands in, so nothing is ever invisible.
+ *
+ * It is called "frame" because on a well-named model the leftovers really are frame and brackets,
+ * but a group that was BUILT from leftovers must never be the answer to a question. On a generic
+ * whose author named nothing, the catch-all is the entire motorcycle — highlighting it for
+ * "brake fluid" would light the whole bike up orange and call that the brakes. pickGroup() below
+ * refuses to select a catch-all group, so those models explode and rotate but do not pretend to
+ * know where anything is.
+ */
 const CATCH_ALL = "frame";
 
 /* ------------------------------------------------------------------ model + part lookup */
@@ -402,9 +429,14 @@ const RULES = [
   [/\bchain\b|\bdrive belt\b/, "chain"],
   [/\bsprocket\b|\bpinion\b/, "sprocket"],
   [/head ?li|head ?la|high beam|low beam|main beam|\bdrl\b/, "headlight"],
-  [/tail ?li|tail ?la|rear ?li|brake ?li|indicator|turn signal|blinker|hazard|licence plate light|license plate light/, "taillight"],
+  // "brake ?li" used to live here and swallowed "brake LININGS" — brake pads routed to the tail
+  // light. Lights have to name themselves now, and a bare "indicator" is a dashboard warning lamp
+  // far more often than it is a turn signal, so it no longer matches on its own.
+  [/tail ?light|tail ?lamp|rear ?light|rear ?lamp|brake ?light|brake ?lamp|turn ?signal|turn ?indicator|direction ?indicator|blinker|hazard ?(light|lamp|warning)|licen[sc]e plate light/, "taillight"],
   [/\bbulb\b|\blamp\b|\bbeam\b/, "headlight"],
-  [/\bbrakes?\b|\bbrake |\bpads?\b|\bdiscs?\b|\bdisks?\b|\brotors?\b|\bcalipers?\b/, (t) => pick(t, "front-brake", "rear-brake")],
+  // handbrake and footbrake are one word, so \bbrake\b never saw them and they fell through to
+  // the lever and footpeg rules — "Adjusting handbrake lever" came out as the handlebar
+  [/\bbrakes?\b|\bbrake |handbrake|footbrake|hand ?brake|foot ?brake|\bbrake ?lin(?:ing|er)s?\b|\bpads?\b|\bdiscs?\b|\bdisks?\b|\brotors?\b|\bcalipers?\b/, (t) => pick(t, "front-brake", "rear-brake")],
   [/\btyres?\b|\btires?\b|\bwheels?\b|\brims?\b|\bspokes?\b|\btread\b|pressure|puncture|\bhub\b/, (t) => pick(t, "front-wheel", "rear-wheel")],
   [/swing ?arm/, "swingarm"],
   [/\bforks?\b|triple clamp|steering head|front suspension/, "front-fork"],
@@ -426,12 +458,48 @@ const RULES = [
   [/fairing|bodywork|\bcowl\b|windscreen|windshield|\bfender\b|mudguard|\bpanels?\b|\bbodywork\b/, "fairing"],
 ];
 
-export function partFor(title, keywords = []) {
+/**
+ * Words that decide nothing on their own. "Front", "check", "level", "replacing", "adjustment"
+ * appear in half the headings in a manual and belong to whatever noun follows them — a rule that
+ * fires on one of these is matching the grammar, not the component.
+ */
+const EMPTY_WORDS = /^(the|a|an|and|or|of|for|to|in|on|at|your|its|front|rear|left|right|upper|lower|check|checking|checks|inspect|inspection|replace|replacing|replacement|adjust|adjusting|adjustment|clean|cleaning|remove|removing|removal|install|installing|installation|fit|fitting|level|levels|change|changing|service|servicing|maintenance|general|before|after|every|when|how|what|part|parts|system|procedure|note|warning|caution|if|is|are|be|not|no|yes|with|without|from|by|about|during)$/;
+
+/**
+ * partFor(title, keywords) -> part key | null
+ *
+ * Which component a manual heading is about. **Null is the normal answer for anything ambiguous**
+ * and it is not a failure: the Pick screen explodes the model and highlights nothing, which is
+ * honest. The thing this must never do is answer confidently and wrongly — "Brake fluid level" on
+ * a Yamaha MT-09 highlighted the front wheel, and to a rider that is the app saying the brake
+ * fluid is in the wheel.
+ *
+ * Two rules keep it honest:
+ *   1. the decision is noun-driven. The RULES below are ordered most-specific first and every one
+ *      of them matches a component NOUN. Front/rear only pick a side once a noun has decided the
+ *      component, which is what `pick()` does.
+ *   2. a heading made only of EMPTY_WORDS returns null before any rule runs, so "Checking the
+ *      front" and "Before every ride" cannot land on a part through an incidental word.
+ *
+ * `opts.debug` logs the decision, which is how the regression table in web/tools/partfor-test.mjs
+ * gets reviewed.
+ */
+export function partFor(title, keywords = [], opts = {}) {
   const list = Array.isArray(keywords) ? keywords : keywords ? [keywords] : [];
-  const text = ` ${String(title || "")} ${list.join(" ")} `.toLowerCase().replace(/[\s_/,.;:()-]+/g, " ");
+  const raw = `${String(title || "")} ${list.join(" ")}`;
+  const text = ` ${raw} `.toLowerCase().replace(/[\s_/,.;:()-]+/g, " ");
+
+  // nothing here names a component: "Before every ride", "Checking the front", "General notes"
+  const meaningful = text.trim().split(" ").filter((word) => word && !EMPTY_WORDS.test(word));
+  if (!meaningful.length) return null;
+
   for (const [re, out] of RULES) {
-    if (re.test(text)) return typeof out === "function" ? out(text) : out;
+    if (!re.test(text)) continue;
+    const key = typeof out === "function" ? out(text) : out;
+    if (opts.debug) console.info(`viewer3d: partFor(${JSON.stringify(raw)}) -> ${key}`);
+    return key;
   }
+  if (opts.debug) console.info(`viewer3d: partFor(${JSON.stringify(raw)}) -> null`);
   return null;
 }
 
@@ -567,15 +635,23 @@ async function loadGlb(THREE, modelKey, url, onProgress) {
       geometry.userData.sourceJoint,
       object.parent && (object.parent.name || (object.parent.userData && object.parent.userData.name)),
     ];
-    const key = matchPart(modelKey, ...names) || CATCH_ALL;
+    const matched = matchPart(modelKey, ...names);
+    const key = matched || CATCH_ALL;
     let part = groups.get(key);
     if (!part) {
       const node = new THREE.Group();
       node.name = key;
       root.add(node);
-      part = { key, label: PART_LABELS[key] || key, node, meshes: [], explode: new THREE.Vector3() };
+      part = {
+        key, label: PART_LABELS[key] || key, node, meshes: [],
+        explode: new THREE.Vector3(),
+        // true until some mesh actually matches this key by name. A group that only ever
+        // collected leftovers is not something the viewer knows the identity of.
+        catchAll: !matched,
+      };
       groups.set(key, part);
     }
+    if (matched) part.catchAll = false;
     const mesh = new THREE.Mesh(geometry, object.material);
     mesh.name = object.name;
     mesh.userData.partKey = key;
@@ -863,21 +939,27 @@ void main() {
     float t = -1.0 / dir.y;
     vec2 floorUv = vec2(dir.x, dir.z) * t;
     float fade = 1.0 / (1.0 + t * t * 0.02);          // distance fog, or it aliases into moire
-    color = mix(color, uLine, grid(floorUv * 0.5, 1.4) * 0.30 * fade);
-    color = mix(color, uAccent, grid(floorUv * 2.0, 1.1) * 0.10 * fade);
+    color = mix(color, uLine, grid(floorUv * 0.5, 1.4) * 0.55 * fade);
+    color = mix(color, uAccent, grid(floorUv * 2.0, 1.1) * 0.18 * fade);
   } else {
     // above the horizon: a much fainter lat/long grid, just enough to say "technical"
     vec2 sky = vec2(atan(dir.z, dir.x) * 2.5, asin(clamp(dir.y, -1.0, 1.0)) * 4.0);
-    color = mix(color, uLine, grid(sky, 1.2) * 0.07);
+    color = mix(color, uLine, grid(sky, 1.2) * 0.14);
   }
 
   // the horizon itself, thin and orange
-  float horizon = 1.0 - smoothstep(0.0, 0.012, abs(dir.y));
-  color = mix(color, uAccent, horizon * 0.55);
+  float horizon = 1.0 - smoothstep(0.0, 0.006, abs(dir.y));
+  color = mix(color, uAccent, horizon * 0.40);
 
-  // vignette towards the poles so the frame edges settle down
-  color *= 1.0 - smoothstep(0.35, 1.0, abs(dir.y)) * 0.35;
+  // vignette towards the poles so the frame edges settle down, but gently — the parts are lit by
+  // the environment map, not by this, and a heavy vignette just makes the panel feel unlit
+  color *= 1.0 - smoothstep(0.45, 1.0, abs(dir.y)) * 0.22;
 
+  // The colours above are picked in sRGB, the way a designer picks them, but a raw ShaderMaterial
+  // gets none of three's automatic output conversion — writing them straight out treats them as
+  // linear and renders roughly a third as bright. #1a1f24 came out near black, which is precisely
+  // what the grid backdrop must not be. So convert here, explicitly.
+  color = pow(clamp(color, 0.0, 1.0), vec3(1.0 / 2.2));
   gl_FragColor = vec4(color, uOpacity);
 }`;
 
@@ -887,14 +969,22 @@ function technicalBackdrop(THREE) {
     fragmentShader: GRID_FRAG,
     uniforms: {
       uOpacity: { value: 0 },
-      uInk: { value: new THREE.Color(0x14110f) },
-      uLine: { value: new THREE.Color(0x8d8a85) },
+      // mid-dark slate, not black: the parts floating in front of it are themselves dark, and
+      // black behind dark metal is a silhouette. The grid lines have to be visible too — a grid
+      // you cannot see is just a dark rectangle.
+      uInk: { value: new THREE.Color(0x1a1f24) },
+      uLine: { value: new THREE.Color(0xb6bcc4) },
       uAccent: { value: new THREE.Color(ORANGE) },
     },
     side: THREE.BackSide,
     transparent: true,
+    // depthWrite off so it never occludes anything; depthTest ON so the vehicle occludes IT.
+    // With depthTest off this sphere painted straight over the bike — three draws transparent
+    // objects after opaque ones, so at full opacity the exploded view was a flat dark rectangle
+    // with the parts hidden behind it. That is exactly what "everything is so dark you can't see
+    // a thing" looked like.
     depthWrite: false,
-    depthTest: false,
+    depthTest: true,
   });
   const mesh = new THREE.Mesh(new THREE.SphereGeometry(40, 48, 32), material);
   mesh.renderOrder = -1;       // behind the vehicle, in front of scene.background
@@ -903,9 +993,94 @@ function technicalBackdrop(THREE) {
   return mesh;
 }
 
+/* ------------------------------------------------------------------ environments
+ * Where the vehicle is standing. Four of them, switchable without reloading the model, and the
+ * choice is remembered per browser.
+ *
+ * Three are Poly Haven HDRIs (CC0): the .hdr lights the vehicle through PMREM, the tonemapped
+ * .jpg is the picture behind it. The fourth is an actual 3D room — a GLB loaded into the scene
+ * with the vehicle placed on its floor — lit by the auto_service HDRI, because a room modelled
+ * without materials has nothing to light itself with.
+ *
+ * `scene` on an entry means "this environment is geometry, not just a background".
+ */
+export const ENVIRONMENTS = [
+  { id: "auto_service", label: "Service", swatch: "#b08d5e" },
+  { id: "garage", label: "Garage", swatch: "#8f9196", scene: "garage-interior.glb", lighting: "auto_service" },
+  { id: "studio_small_09", label: "Studio", swatch: "#e6e2da" },
+  { id: "empty_warehouse_01", label: "Warehouse", swatch: "#6f7680" },
+];
+
 export const DEFAULT_ENV = "auto_service";
+const ENV_STORAGE_KEY = "mechanica.viewer3d.env";
+
+const envById = (id) => ENVIRONMENTS.find((row) => row.id === id) || ENVIRONMENTS[0];
+
+/** The remembered choice, or the default. Storage can throw in private mode; it is not important. */
+function rememberedEnv() {
+  try {
+    const saved = localStorage.getItem(ENV_STORAGE_KEY);
+    if (saved && ENVIRONMENTS.some((row) => row.id === saved)) return saved;
+  } catch { /* private mode, or storage disabled */ }
+  return DEFAULT_ENV;
+}
+
+function rememberEnv(id) {
+  try { localStorage.setItem(ENV_STORAGE_KEY, id); } catch { /* not important enough to handle */ }
+}
 
 const envCache = new Map();
+const roomCache = new Map();
+
+/**
+ * The "Garage" environment: a real room around the vehicle rather than a photograph of one.
+ *
+ * garage-interior.glb is 98k triangles and ships with no materials at all, so it gets one — matte
+ * light concrete, which is what a garage interior is and which takes the HDRI's light without
+ * competing with the bike for attention.
+ *
+ * Placing it is the fiddly half. The viewer normalises every vehicle to a unit bounding sphere at
+ * the origin, so the room has to be scaled and moved to suit the vehicle, not the other way
+ * round: scale it so its floor is a sensible size next to a 2-unit motorcycle, then drop it so
+ * its floor sits exactly at the vehicle's wheels. Floor height is read from the geometry — the
+ * lowest large horizontal extent — rather than assumed to be y = 0, because it rarely is.
+ */
+async function loadRoom(THREE, file, radius) {
+  const key = `${file}:${radius.toFixed(2)}`;
+  if (roomCache.has(key)) return roomCache.get(key);
+  const job = (async () => {
+    const url = new URL(`../../store/models/env/${file}`, import.meta.url).href;
+    const { GLTFLoader } = await loadAddon("loaders/GLTFLoader.js");
+    const gltf = await new GLTFLoader().loadAsync(url);
+    const root = gltf.scene;
+
+    const concrete = new THREE.MeshStandardMaterial({
+      color: 0x9fa2a6, roughness: 0.92, metalness: 0.0, side: THREE.DoubleSide,
+    });
+    root.traverse((object) => {
+      if (!object.isMesh) return;
+      object.material = concrete;
+      object.castShadow = false;
+      object.receiveShadow = true;
+    });
+
+    root.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(root);
+    const size = box.getSize(new THREE.Vector3());
+    const centre = box.getCenter(new THREE.Vector3());
+
+    // a garage bay is roughly six motorcycles wide; that ratio is what makes the room read as a
+    // room rather than as a warehouse the bike has been lost in
+    const scale = (radius * 12) / Math.max(size.x, size.z, 1e-3);
+    root.scale.setScalar(scale);
+    root.position.set(-centre.x * scale, -box.min.y * scale, -centre.z * scale);
+    root.updateMatrixWorld(true);
+    return { root, dispose: () => { concrete.dispose(); } };
+  })();
+  roomCache.set(key, job);
+  job.catch(() => roomCache.delete(key));
+  return job;
+}
 
 function loadEnvironment(THREE, renderer, name, big) {
   const id = `${name}:${big ? "big" : "small"}`;
@@ -1154,6 +1329,40 @@ function progressRing(host) {
   return api;
 }
 
+/* ------------------------------------------------------------------ environment picker
+ * Four dots in the corner of the stage. No labels on screen — the swatch colours are the
+ * environments, and the name is on the tooltip and on the accessible name, because four words
+ * of chrome over a 3D panel is four words competing with the vehicle.
+ */
+
+function environmentPicker(host, onPick) {
+  const wrap = document.createElement("div");
+  wrap.className = "viewer3d-envs";
+  wrap.setAttribute("role", "radiogroup");
+  wrap.setAttribute("aria-label", "Stage environment");
+  const buttons = new Map();
+  for (const entry of ENVIRONMENTS) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "viewer3d-env";
+    button.setAttribute("role", "radio");
+    button.setAttribute("aria-checked", "false");
+    button.setAttribute("aria-label", entry.label);
+    button.title = entry.label;
+    button.style.setProperty("--swatch", entry.swatch);
+    button.addEventListener("click", () => onPick(entry.id));
+    wrap.append(button);
+    buttons.set(entry.id, button);
+  }
+  host.append(wrap);
+  return {
+    select(id) {
+      for (const [key, button] of buttons) button.setAttribute("aria-checked", String(key === id));
+    },
+    remove() { wrap.remove(); },
+  };
+}
+
 /* ------------------------------------------------------------------ mount */
 
 /**
@@ -1368,6 +1577,92 @@ function createScene(THREE, host, initialModel, opts) {
     scene.backgroundBlurriness = 0;
   }
 
+  /* ------------------------------------------------------------- auto exposure
+   * A safety net, not a look. Some Sketchfab exports come out legible and some come out as a
+   * silhouette, and which is which cannot be known before the thing is on screen — it depends on
+   * the author's metalness values, whether the textures are sRGB, and what is behind it.
+   *
+   * So after the first frames, read back the pixels where the model is and compare their mean
+   * luminance to the backdrop's. If the vehicle is darker than 35% of its surroundings it is
+   * unreadable whatever the intent, and the exposure and the fill light come up until it is not.
+   * Re-armed on every model swap and whenever the assembly explodes, because exploding changes
+   * both what is on screen and what is behind it.
+   */
+  let exposureChecked = false;
+  let exposureLift = 0;
+  const BASE_EXPOSURE = 1.1;
+
+  function luminanceOf(pixels, predicate) {
+    let sum = 0;
+    let n = 0;
+    for (let i = 0; i < pixels.length; i += 4) {
+      const a = pixels[i + 3];
+      if (!predicate(a)) continue;
+      sum += (pixels[i] * 0.2126 + pixels[i + 1] * 0.7152 + pixels[i + 2] * 0.0722) / 255;
+      n += 1;
+    }
+    return n ? { mean: sum / n, count: n } : { mean: 0, count: 0 };
+  }
+
+  /**
+   * Render the model alone on a transparent target to get its mask and its brightness, then the
+   * backdrop alone for the reference. Two offscreen renders at 96x96, once per model — cheap
+   * enough to be invisible and far more reliable than guessing from material values.
+   */
+  function checkExposure() {
+    if (exposureChecked || !model.meshes.length || exposureLift >= 0.6) return;
+    exposureChecked = true;
+    try {
+      const size = 96;
+      const target = new THREE.WebGLRenderTarget(size, size, { colorSpace: THREE.SRGBColorSpace });
+      const buffer = new Uint8Array(size * size * 4);
+
+      const background = scene.background;
+      const gridWasVisible = gridBackdrop.visible;
+      scene.background = null;
+      gridBackdrop.visible = false;
+      renderer.setRenderTarget(target);
+      renderer.setClearAlpha(0);
+      renderer.clear();
+      renderer.render(scene, camera);
+      renderer.readRenderTargetPixels(target, 0, 0, size, size, buffer);
+      const vehicle = luminanceOf(buffer, (a) => a > 200);
+
+      model.root.visible = false;
+      shadow.visible = false;
+      scene.background = background;
+      gridBackdrop.visible = gridWasVisible;
+      renderer.clear();
+      renderer.render(scene, camera);
+      renderer.readRenderTargetPixels(target, 0, 0, size, size, buffer);
+      const behind = luminanceOf(buffer, () => true);
+
+      model.root.visible = true;
+      shadow.visible = true;
+      renderer.setRenderTarget(null);
+      target.dispose();
+
+      // too little of the model on screen to judge, or the backdrop is itself black
+      if (vehicle.count < size * size * 0.02 || behind.mean < 0.05) return;
+      const ratio = vehicle.mean / behind.mean;
+      if (ratio >= 0.35) return;
+
+      const lift = Math.min(0.6, (0.35 / Math.max(ratio, 0.05) - 1) * 0.35);
+      exposureLift = Math.min(0.6, exposureLift + lift);
+      renderer.toneMappingExposure = BASE_EXPOSURE + exposureLift;
+      fill.intensity = 0.6 + exposureLift * 1.6;
+      hemi.intensity = 0.4 + exposureLift * 1.2;
+      console.info(
+        `viewer3d: ${model.modelKey} read ${(ratio * 100).toFixed(0)}% of the backdrop's brightness; ` +
+        `exposure ${(BASE_EXPOSURE + exposureLift).toFixed(2)}`,
+      );
+      run();
+    } catch (error) {
+      // a readback can fail on a lost context; it is a safety net, not a feature
+      if (opts.debug) console.warn("viewer3d: exposure check skipped", error && error.message);
+    }
+  }
+
   /** A new scene.environment only reaches materials that are told to recompile. */
   function applyEnvironment() {
     for (const material of model.materials) material.needsUpdate = true;
@@ -1375,15 +1670,34 @@ function createScene(THREE, host, initialModel, opts) {
     dimMaterials.forEach((material) => { material.needsUpdate = true; });
   }
 
-  if (opts.environment !== false) {
-    const name = typeof opts.environment === "string" ? opts.environment : DEFAULT_ENV;
+  /**
+   * Switch environment. Called once at mount and again whenever the picker is used — the model
+   * is never touched, so switching is a texture swap (and, for the garage, a scene graph swap),
+   * not a reload. `token` guards against a slow environment landing after a faster one the user
+   * chose afterwards.
+   */
+  let envToken = 0;
+  let envId = opts.environment === false ? null : typeof opts.environment === "string" ? opts.environment : rememberedEnv();
+  let room = null;
+
+  async function useEnvironment(id) {
+    const entry = envById(id);
+    const token = ++envToken;
+    envId = entry.id;
+    host.setAttribute("data-env", entry.id);
+    if (picker) picker.select(entry.id);
+
+    // a 3D room replaces the panorama entirely; leaving a photograph behind its walls would show
+    // through every doorway and window
+    if (room) { scene.remove(room.root); room.dispose(); room = null; }
+
     const big = Math.max(window.innerWidth || 0, 1) >= 900;
-    loadEnvironment(THREE, renderer, name, big).then((loaded) => {
-      if (disposed) return;
-      // the HDRI takes over the lighting; the hand-placed lights drop back to shaping the form
+    const lighting = entry.lighting || entry.id;
+    try {
+      const loaded = await loadEnvironment(THREE, renderer, lighting, big);
+      if (disposed || token !== envToken) return;
       scene.environment = loaded.environment.texture;
       scene.environmentIntensity = 1;
-      setBackdrop(loaded.background);
       scene.backgroundIntensity = 1;
       // the HDRI leads, but the hand lights stay up: see the block where they are created
       hemi.intensity = 0.4;
@@ -1391,21 +1705,41 @@ function createScene(THREE, host, initialModel, opts) {
       rim.intensity = 0.8;
       fill.intensity = 0.6;
       shadow.material.opacity = 1;
-      renderer.toneMappingExposure = 1.1;
-      host.setAttribute("data-env", name);
-      applyEnvironment();
-      run();
-      // the 8k, when it arrives, replaces the 4k in place — same framing, more pixels
-      if (loaded.upgrade) {
-        loaded.upgrade.then((texture) => {
-          if (disposed || !texture) return;
-          setBackdrop(texture);
-          host.setAttribute("data-env-detail", "8k");
-          run();
-        });
+      renderer.toneMappingExposure = BASE_EXPOSURE + exposureLift;
+
+      if (entry.scene) {
+        const built = await loadRoom(THREE, entry.scene, model.radius);
+        if (disposed || token !== envToken) return;
+        room = built;
+        scene.add(room.root);
+        scene.background = null;
+        scene.backgroundBlurriness = 0;
+      } else {
+        setBackdrop(loaded.background);
+        // the 8k, when it arrives, replaces the 4k in place — same framing, more pixels
+        if (loaded.upgrade) {
+          loaded.upgrade.then((texture) => {
+            if (disposed || token !== envToken || !texture) return;
+            setBackdrop(texture);
+            host.setAttribute("data-env-detail", "8k");
+            run();
+          });
+        }
       }
-    }).catch(() => { /* no HDRI: the procedural studio stays, which is the old transparent look */ });
+      applyEnvironment();
+      exposureChecked = false;
+      settled = 0;
+      run();
+    } catch {
+      /* the procedural studio light stays; the panel still renders the vehicle */
+    }
   }
+
+  const picker = opts.environment === false || opts.picker === false
+    ? null
+    : environmentPicker(host, (id) => { rememberEnv(id); useEnvironment(id); });
+
+  if (envId) useEnvironment(envId);
 
   let controls = null;
   let controlsDispose = null;
@@ -1424,6 +1758,7 @@ function createScene(THREE, host, initialModel, opts) {
   let frame = 0;
   let disposed = false;
   let lastTime = performance.now();
+  let settled = 0;
 
   // materials: one highlight clone and one dim clone per source material
   const hlMaterials = new Map();
@@ -1476,12 +1811,17 @@ function createScene(THREE, host, initialModel, opts) {
   const tmpVec = new THREE.Vector3();
   const HOME = new THREE.Vector3(1.35, 0.72, 2.1).normalize();
 
+  /**
+   * The group a part key selects, or null. Null is a real answer — see FALLBACK and CATCH_ALL:
+   * the viewer would rather highlight nothing than highlight the wrong thing.
+   */
   function pickGroup(partKey) {
     if (!partKey) return null;
     const seen = new Set();
     let key = PART_ALIASES[partKey] || partKey;
     while (key && !seen.has(key)) {
-      if (model.groups.has(key)) return model.groups.get(key);
+      const group = model.groups.get(key);
+      if (group && !group.catchAll) return group;
       seen.add(key);
       key = FALLBACK[key];
     }
@@ -1623,6 +1963,7 @@ function createScene(THREE, host, initialModel, opts) {
       shadow.position.y = model.floor - model.radius * 0.01;
       warmMaterials();
       applyEnvironment();
+      exposureChecked = false;
       applySpacing();
       selected = pickGroup(key);
       dimTarget = selected ? 1 : 0;
@@ -1641,6 +1982,8 @@ function createScene(THREE, host, initialModel, opts) {
       host.setAttribute("data-exploded", on ? "on" : "off");
       gridTarget = on ? 1 : 0;              // cross-fade the panorama to the technical grid
       gridBackdrop.visible = true;
+      exposureChecked = false;               // ink behind the parts is a different exposure problem
+      settled = 0;
       if (instant || reduced.matches) {
         spacing = to;
         spacingTween = null;
@@ -1806,6 +2149,12 @@ function createScene(THREE, host, initialModel, opts) {
     if (controls && !cameraTween && !reduced.matches && idle > IDLE_MS && !down) controls.autoRotate = true;
     if (controls) controls.update();
     renderer.render(scene, camera);
+
+    // once the model, the environment and any tween have settled, check it is actually visible
+    if (!exposureChecked && !spacingTween && !cameraTween && model.meshes.length) {
+      settled += 1;
+      if (settled > 3) { settled = 0; checkExposure(); }
+    }
     if (visible && onScreen) frame = requestAnimationFrame(step);
   }
   function run() {
@@ -1826,6 +2175,10 @@ function createScene(THREE, host, initialModel, opts) {
     renderer.domElement.removeEventListener("wheel", touch);
     renderer.domElement.removeEventListener("touchstart", touch);
     if (controlsDispose) controlsDispose();
+    if (picker) picker.remove();
+    if (room) { scene.remove(room.root); room.dispose(); room = null; }
+    gridBackdrop.geometry.dispose();
+    gridBackdrop.material.dispose();
     hlMaterials.forEach((material) => material.dispose());
     dimMaterials.forEach((material) => material.dispose());
     xrayMaterial.dispose();

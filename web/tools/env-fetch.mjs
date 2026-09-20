@@ -21,7 +21,7 @@
  * 4k is already on screen.
  */
 
-import { existsSync, mkdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -29,6 +29,10 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ENV = resolve(HERE, "..", "store", "models", "env");
 const SHARP = process.env.SHARP_DIR
   || "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad/node_modules/sharp/dist/index.cjs";
+
+// the founder's budget: 10 MB desktop, 4 MB phone, per environment
+const MAX_8K = 9 * 1024 * 1024;
+const MAX_4K = 3 * 1024 * 1024;
 
 const mb = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 
@@ -57,22 +61,33 @@ async function main() {
     else console.log(`  ! no ${size} hdr`);
   }
 
-  // the tonemapped export is 8192x4096 — exactly the 8k backdrop, no resizing needed
+  // the tonemapped export is 8192x4096 — the 8k backdrop. Poly Haven's own encoding quality
+  // varies wildly between assets (auto_service ships at 4.8 MB, studio_small_09 at 20.9 MB for
+  // the same pixels), so it is re-encoded to a budget rather than shipped as downloaded.
   const tone = files.tonemapped?.url;
   if (!tone) { console.log("  ! no tonemapped jpg offered"); return; }
-  const eight = await grab(tone, join(ENV, `${name}-8k.jpg`));
+  const raw = await grab(tone, join(ENV, `.${name}-source.jpg`));
+  const sharp = (await import(`file:///${SHARP.replace(/\\/g, "/")}`)).default;
 
-  const four = join(ENV, `${name}-4k.jpg`);
-  if (existsSync(four) && statSync(four).size > 50_000) {
-    console.log(`  = ${name}-4k.jpg ${mb(statSync(four).size)}`);
-  } else {
-    const sharp = (await import(`file:///${SHARP.replace(/\\/g, "/")}`)).default;
-    await sharp(eight)
-      .resize({ width: 4096, height: 2048, fit: "fill", kernel: "lanczos3" })
-      .jpeg({ quality: 90, mozjpeg: true, chromaSubsampling: "4:4:4" })
-      .toFile(four);
-    console.log(`  + ${name}-4k.jpg ${mb(statSync(four).size)}`);
+  for (const [label, width, cap, quality] of [["8k", 8192, MAX_8K, 86], ["4k", 4096, MAX_4K, 88]]) {
+    const out = join(ENV, `${name}-${label}.jpg`);
+    if (existsSync(out) && statSync(out).size > 50_000 && statSync(out).size <= cap) {
+      console.log(`  = ${name}-${label}.jpg ${mb(statSync(out).size)}`);
+      continue;
+    }
+    let q = quality;
+    for (let attempt = 0; attempt < 4; attempt++) {
+      await sharp(raw)
+        .resize({ width, height: width / 2, fit: "fill", kernel: "lanczos3" })
+        .jpeg({ quality: q, mozjpeg: true, chromaSubsampling: "4:2:0" })
+        .toFile(out);
+      if (statSync(out).size <= cap) break;
+      q -= 8;
+    }
+    const over = statSync(out).size > cap ? "  (still over budget)" : "";
+    console.log(`  + ${name}-${label}.jpg ${mb(statSync(out).size)} q${q}${over}`);
   }
+  rmSync(raw, { force: true });
 
   console.log(`\n${name}: hdr for the light, jpg for the picture. Set DEFAULT_ENV in js/viewer3d.js.`);
 }

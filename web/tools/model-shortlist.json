@@ -139,7 +139,8 @@
       "husqvarna",
       "gasgas"
     ],
-    "note": "180k faces, 5 textures — long-travel forks, knobbly tyres, number plates: the MX shape"
+    "note": "180k faces, 5 textures — long-travel forks, knobbly tyres, number plates: the MX shape",
+    "rotate": null
   },
   {
     "name": "enduro",
@@ -161,19 +162,24 @@
       "sherco",
       "gasgas"
     ],
-    "note": "dual-sport trail bike with a headlight and mirrors — the enduro, not the race MX"
+    "note": "dual-sport trail bike with a headlight and mirrors — the enduro, not the race MX",
+    "rotate": [
+      0,
+      90,
+      0
+    ]
   },
   {
     "name": "supermoto",
     "type": "supermoto",
     "kind": "bike",
     "orient": 180,
-    "uid": "15fb808dc81b4376bd201a4303253050",
-    "title": "2022 Husqvarna FS 450",
-    "author": "OUTPISTON",
-    "authorUrl": "https://sketchfab.com/OUTPISTON",
-    "url": "https://sketchfab.com/3d-models/2022-husqavarna-fs-450-15fb808dc81b4376bd201a4303253050",
-    "license": "by-nc-sa",
+    "uid": "8d755ea9d6c249a29cf771a921116a41",
+    "title": "KTM REDBULL",
+    "author": "LEKSA",
+    "authorUrl": "https://sketchfab.com/LEKSA",
+    "url": "https://sketchfab.com/3d-models/ktm-redbull-8d755ea9d6c249a29cf771a921116a41",
+    "license": "by",
     "makes": [
       "husqvarna",
       "ktm",
@@ -183,7 +189,8 @@
       "aprilia",
       "ducati"
     ],
-    "note": "an FS 450 IS a supermoto: MX chassis on 17in road wheels with a big front disc"
+    "note": "the Husqvarna FS 450 it replaced ships welded to a paddock stand that dominates the frame",
+    "rotate": null
   },
   {
     "name": "touring",
@@ -228,7 +235,12 @@
       "royal-enfield",
       "aprilia"
     ],
-    "note": "dual-sport: tall stance, beak front mudguard, wire wheels — the adventure shape"
+    "note": "dual-sport: tall stance, beak front mudguard, wire wheels — the adventure shape",
+    "rotate": [
+      0,
+      90,
+      0
+    ]
   },
   {
     "name": "car",
@@ -245,6 +257,11 @@
     "paint": [
       "fairing"
     ],
-    "note": "41k faces — the non-Corvette car, for any four-wheeler that is not a Stingray"
+    "note": "41k faces — the non-Corvette car, for any four-wheeler that is not a Stingray",
+    "rotate": [
+      0,
+      90,
+      0
+    ]
   }
 ]

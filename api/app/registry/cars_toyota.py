@@ -30,8 +30,11 @@ from ._http import Throttle, client, get_json, log, pmap, slug
 API = "https://www.toyota.com/service/tcom/downloadableManuals/{series}/{year}"
 SITE = "assets.sipb.toyota.com"
 YEARS = range(1996, 2029)
-BUCKETS = ("ownerManuals", "navigationManuals", "warrantyGuides", "omotaOwnersManualOverTheAir", "driversExcerpts")
-SKIP_TITLE = re.compile(r"warranty|maintenance guide|services guide|roadside", re.I)
+# The handbook buckets only. `navigationManuals` (multimedia), `warrantyGuides` and `driversExcerpts`
+# are real PDFs for the same model year and `pdf_index()` cannot rank them below the manual, so one of
+# them would sometimes be served instead of it.
+BUCKETS = ("ownerManuals", "omotaOwnersManualOverTheAir")
+SKIP_TITLE = re.compile(r"warranty|maintenance guide|services guide|roadside|quick guide|quick reference|excerpt", re.I)
 THROTTLE = Throttle(2.0)
 
 TOYOTA = """4runner 4runnerhybrid avalon avalonhybrid bz bz4x bzwoodland camry camryhybrid camrysolara

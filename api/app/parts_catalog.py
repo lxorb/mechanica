@@ -32,6 +32,7 @@ every bike the manual covers and the per-bike applicability filter runs fresh on
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import time
@@ -42,7 +43,7 @@ from pydantic import BaseModel
 
 from .config import ROOT
 from .ingest.assemble import links
-from .models import Bike, Link, Manual, Part, Section
+from .models import Bike, Manual, Part, Section
 
 TAXONOMY_PATH = ROOT / "data" / "parts-taxonomy.json"
 CACHE_VERSION = 2
@@ -255,13 +256,24 @@ _taxonomy: Taxonomy | None = None
 _by_id: dict[str, TaxonomyPart] = {}
 
 
+_fingerprint = ""
+
+
 def taxonomy() -> Taxonomy:
-    global _taxonomy
+    global _taxonomy, _fingerprint
     if _taxonomy is None:
-        _taxonomy = Taxonomy.model_validate(json.loads(TAXONOMY_PATH.read_text(encoding="utf-8")))
+        raw = TAXONOMY_PATH.read_text(encoding="utf-8")
+        _taxonomy = Taxonomy.model_validate(json.loads(raw))
+        _fingerprint = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
         _by_id.clear()
         _by_id.update({p.id: p for p in _taxonomy.parts})
     return _taxonomy
+
+
+def fingerprint() -> str:
+    """Which taxonomy a cached scan was made against: edit the file and every cache is stale."""
+    taxonomy()
+    return _fingerprint
 
 
 def entry(part_id: str) -> TaxonomyPart | None:
@@ -382,6 +394,18 @@ _LEADERS = re.compile(r"\.{4,}|·{4,}|_{4,}")
 _WORD = re.compile(r"[a-z0-9]+")
 
 
+_compiled: dict[str, tuple[re.Pattern[str], set[str]]] = {}
+
+
+def matcher(part: TaxonomyPart) -> tuple[re.Pattern[str], set[str]]:
+    """(regex, probe words) for one entry, built once and kept - warming 500 manuals compiles 295
+    regexes, not 147,500."""
+    hit = _compiled.get(part.id)
+    if hit is None:
+        hit = _compiled[part.id] = (_pattern(part), _probes(part))
+    return hit
+
+
 def _pattern(part: TaxonomyPart) -> re.Pattern[str]:
     """One alternation per entry: every synonym, whitespace-tolerant, plural-tolerant, word-bounded."""
     alts = []
@@ -445,16 +469,17 @@ def scan(manual: Manual, pages: list) -> dict[str, dict]:
     corpus = []
     for page in pages:
         text = getattr(page, "text", "") or ""
-        lines = text.splitlines()
-        corpus.append((int(getattr(page, "page", 0) or 0), lines, {w for w in _WORD.findall(text.lower())}))
-    sections = [(s, _section_text(s), {w for w in _WORD.findall(_section_text(s).lower())}) for s in manual.sections]
+        corpus.append((int(getattr(page, "page", 0) or 0), text, set(_WORD.findall(text.lower()))))
+    sections = []
+    for section in manual.sections:
+        text = _section_text(section)
+        sections.append((section, text, set(_WORD.findall(text.lower()))))
 
     out: dict[str, dict] = {}
     for part in taxonomy().parts:
-        probes = _probes(part)
+        pattern, probes = matcher(part)
         if not probes:
             continue
-        pattern = None
         mentions: list[Mention] = []
         spec: str | None = None
         section_ids: list[str] = []
@@ -462,20 +487,19 @@ def scan(manual: Manual, pages: list) -> dict[str, dict]:
         for section, text, words in sections:
             if not probes & words:
                 continue
-            if pattern is None:
-                pattern = _pattern(part)
             if pattern.search(text):
                 section_ids.append(section.id)
                 if len(mentions) < MAX_MENTIONS:
                     mentions.append(Mention(page=section.pageStart, quote=section.title[:QUOTE_LEN]))
 
-        for page_no, lines, words in corpus:
+        # Two filters before any line work: the page's word set, then one regex over the whole page.
+        # Without them this is 300 entries x 140 pages x 60 lines of regex per manual.
+        for page_no, text, words in corpus:
             if len(mentions) >= MAX_MENTIONS and spec:
                 break
-            if not probes & words:
+            if not probes & words or not pattern.search(text):
                 continue
-            if pattern is None:
-                pattern = _pattern(part)
+            lines = text.splitlines()
             for index, line in enumerate(lines):
                 if _LEADERS.search(line) or not pattern.search(line):
                     continue  # a contents entry names the part and says nothing about it
@@ -499,30 +523,32 @@ def scan(manual: Manual, pages: list) -> dict[str, dict]:
 # --- tying the manual's own parts to taxonomy ids ------------------------
 
 
+MIN_MATCH = 4  # "oil" alone is not enough to call a part an entry
+
+
 def _match_manual_part(part: Part, candidates: Iterable[TaxonomyPart]) -> str | None:
-    """A manual part IS a taxonomy entry when one of the entry's synonyms is in its name."""
+    """A manual part IS a taxonomy entry when one of the entry's synonyms is written in its name.
+    The longest thing matched wins, so "Fork oil (SAE 5)" is the fork oil and not the engine oil."""
     haystack = flat(f"{part.name} {part.spec}")
     best: tuple[int, str] | None = None
-    for entry_part in candidates:
-        for phrase in entry_part.synonyms:
-            needle = flat(phrase)
-            if not needle or len(needle) < 4:
-                continue
-            if re.search(rf"\b{re.escape(needle)}\b", haystack):
-                score = len(needle)
-                if best is None or score > best[0]:
-                    best = (score, entry_part.id)
+    for candidate in candidates:
+        found = matcher(candidate)[0].search(haystack)
+        if found is None or len(found.group(0)) < MIN_MATCH:
+            continue
+        score = len(found.group(0))
+        if best is None or score > best[0]:
+            best = (score, candidate.id)
     return best[1] if best else None
 
 
-def map_parts(manual: Manual) -> dict[str, str]:
-    """{manualPartId: taxonomyId}, both kinds tried - a car manual and a bike manual land on the
-    right half of the taxonomy because the synonyms only ever match one of them."""
-    taxonomy()
+def map_parts(manual: Manual, kind: str = "motorcycle") -> dict[str, str]:
+    """{manualPartId: taxonomyId}. Only the half of the taxonomy this vehicle kind uses is offered:
+    "engine oil" is written the same in both, and a bike must never land on the car entry."""
+    candidates = [p for p in taxonomy().parts if p.applies.kind == kind]
     return {
         part.id: found
         for part in manual.parts
-        if (found := _match_manual_part(part, taxonomy().parts)) is not None
+        if (found := _match_manual_part(part, candidates)) is not None
     }
 
 
@@ -624,15 +650,17 @@ def scanned(manual: Manual, store=None, refresh: bool = False) -> dict:
         store = get_store()
     if not refresh:
         cached = cache_read(store, manual.id)
-        if cached and cached.get("version") == CACHE_VERSION:
+        if cached and cached.get("version") == CACHE_VERSION and cached.get("taxonomy") == fingerprint():
             return cached
-    pages = store.pages(manual.id)
+    # one manual covers one vehicle kind, so the map is still bike-independent
+    first = store.bike(manual.bikeIds[0]) if manual.bikeIds else None
     data = {
         "version": CACHE_VERSION,
+        "taxonomy": fingerprint(),
         "manualId": manual.id,
         "builtAt": time.time(),
-        "mentions": scan(manual, pages),
-        "map": map_parts(manual),
+        "mentions": scan(manual, store.pages(manual.id)),
+        "map": map_parts(manual, profile_of(first).kind),
     }
     cache_write(store, manual.id, data)
     return data

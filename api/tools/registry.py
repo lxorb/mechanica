@@ -131,40 +131,125 @@ def by_kind(entries: list[RegistryEntry], bikes: list[Bike]) -> None:
         )
 
 
+def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int]:
+    """Validated rows of one fragment, keyed by id, plus the count that failed validation."""
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  {path.name:<28} unreadable: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return {}, 0
+    items = raw.get("entries") if isinstance(raw, dict) else raw
+    rows: dict[str, RegistryEntry] = {}
+    bad = 0
+    for item in items if isinstance(items, list) else []:
+        try:
+            entry = RegistryEntry.model_validate(item)
+        except ValidationError:
+            bad += 1
+            continue
+        if entry.url:
+            rows[entry.id] = entry
+    return rows, bad
+
+
+def _rewrite(store, entries: list[RegistryEntry] | None = None, bikes: list[Bike] | None = None) -> None:
+    """Delete by rewriting the whole file: put_registry/put_bikes only ever merge. FileStore only -
+    a hosted backend has no wholesale-replace call, and guessing one would be worse than refusing."""
+    root = getattr(store, "root", None)
+    if root is None:
+        raise SystemExit(f"retraction needs the file store; {type(store).__name__} is active")
+    for name, rows in (("registry.json", entries), ("bikes.json", bikes)):
+        if rows is None:
+            continue
+        path = root / name
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        tmp.write_text(json.dumps([r.model_dump(exclude_none=True) for r in rows], ensure_ascii=False), encoding="utf-8")
+        tmp.replace(path)
+
+
+def _retract(store, drop: set[str], print_line: bool = True) -> list[RegistryEntry]:
+    """Remove rows by id and tidy the vehicles they produced. Returns the rows that were removed."""
+    rows = store.registry()
+    gone = [e for e in rows if e.id in drop]
+    if not gone:
+        return []
+    _rewrite(store, entries=[e for e in rows if e.id not in drop])
+    left = {e.id for e in store.registry()}
+    touched = {slug(e.make, e.model, year) for e in gone for year in e.years}
+    dead_urls = {e.url for e in gone} - {e.url for e in store.registry()}
+    alive = {slug(e.make, e.model, y) for e in store.registry() if e.type == "owner" for y in e.years}
+    bikes = store.bikes()
+    keep: list[Bike] = []
+    removed = 0
+    for b in bikes:
+        if b.id in touched and b.id not in alive and not b.manualId:
+            removed += 1  # a vehicle only the retracted rows ever produced, never ingested
+            continue
+        if b.manualUrl in dead_urls:
+            b.manualUrl = None  # bikes_from_registry re-points it if another row still covers the bike
+        keep.append(b)
+    if removed or len(keep) != len(bikes):
+        _rewrite(store, bikes=keep)
+    if print_line:
+        print(f"  retracted {len(gone)} row(s), removed {removed} vehicle(s), {len(left)} rows left")
+    return gone
+
+
 def cmd_merge_fragments(args: argparse.Namespace) -> int:
     """Fold api/data/registry-fragments/*.json into the registry. Other agents own those files; this
-    is the only writer of registry.json and bikes.json, so nothing races over the merge."""
+    is the only writer of registry.json and bikes.json, so nothing races over the merge.
+
+    Retraction, because a rewritten fragment cannot un-say a row on its own:
+      <name>.drop.json   a JSON list of registry ids to delete
+      --replace <name>   the fragment is the whole truth for the (site, kind) pairs it covers, so
+                         every row in that scope whose id it no longer lists is deleted. An id that
+                         changed because the URL did (http/https) is therefore dropped and re-added
+                         under the new id, which is what "prefer the new URL" means."""
     FRAGMENTS.mkdir(parents=True, exist_ok=True)
     store = get_store()
     before = {e.id for e in store.registry()}
     merged: list[tuple[str, int, int, int]] = []
     incoming: dict[str, RegistryEntry] = {}
+    fragments: dict[str, dict[str, RegistryEntry]] = {}
     skip = {s.strip().lower().removesuffix(".json") for s in (args.skip or [])}
+    replace = {s.strip().lower().removesuffix(".json") for s in (args.replace or [])}
     for path in sorted(FRAGMENTS.glob("*.json")):
-        if path.name.startswith("."):
+        if path.name.startswith(".") or path.name.endswith(".drop.json"):
             continue
         if path.stem.lower() in skip:
             print(f"  {path.name:<28} skipped")
             continue
+        rows, bad = _read_fragment(path)
+        fresh = sum(1 for eid in rows if eid not in before and eid not in incoming)
+        fragments[path.stem.lower()] = rows
+        incoming.update(rows)
+        merged.append((path.name, len(rows), fresh, bad))
+
+    drop: set[str] = set()
+    for name in sorted(replace):
+        rows = fragments.get(name)
+        if not rows:
+            print(f"  --replace {name}: no such fragment, nothing retracted", file=sys.stderr)
+            continue
+        scope = {(e.site, kind_of(e)) for e in rows.values()}
+        stale = {e.id for e in store.registry() if (e.site, kind_of(e)) in scope and e.id not in rows}
+        print(f"  --replace {name}: {len(rows)} rows own {len(scope)} site/kind scope(s), {len(stale)} superseded")
+        drop |= stale
+    for path in sorted(FRAGMENTS.glob("*.drop.json")):
         try:
-            raw = json.loads(path.read_text(encoding="utf-8"))
+            ids = json.loads(path.read_text(encoding="utf-8"))
         except Exception as exc:
             print(f"  {path.name:<28} unreadable: {type(exc).__name__}: {exc}", file=sys.stderr)
             continue
-        items = raw.get("entries") if isinstance(raw, dict) else raw
-        rows: dict[str, RegistryEntry] = {}
-        bad = 0
-        for item in items if isinstance(items, list) else []:
-            try:
-                entry = RegistryEntry.model_validate(item)
-            except ValidationError:
-                bad += 1
-                continue
-            if entry.url:
-                rows[entry.id] = entry
-        fresh = sum(1 for eid in rows if eid not in before and eid not in incoming)
-        incoming.update(rows)
-        merged.append((path.name, len(rows), fresh, bad))
+        listed = {str(i) for i in ids} if isinstance(ids, list) else set()
+        still = len(listed & set(incoming))
+        for eid in listed:  # an explicit drop list is the owner retracting the row, so it outranks
+            incoming.pop(eid, None)  # a fragment that still happens to carry it
+        print(f"  {path.name:<28} {len(listed):>6} id(s) to drop" + (f" ({still} also still in a fragment)" if still else ""))
+        drop |= listed
+    if drop:
+        _retract(store, drop)
+
     if incoming:
         store.put_registry(merge_ua(incoming.values()))  # one write for every fragment, not one each
     stale = [e for e in store.registry() if not e.needsUa and merge_ua([e])[0].needsUa]
@@ -281,6 +366,7 @@ def main(argv: list[str] | None = None) -> int:
 
     c6 = sub.add_parser("merge-fragments", help="fold data/registry-fragments/*.json into the registry")
     c6.add_argument("--skip", action="append", help="fragment to leave out, by file name (repeatable)")
+    c6.add_argument("--replace", action="append", help="fragment that owns its site/kind scope: rows it no longer lists are deleted")
     c6.set_defaults(fn=cmd_merge_fragments)
 
     c5 = sub.add_parser("stats", help="per-brand rows and free-PDF totals")

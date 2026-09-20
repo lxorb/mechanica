@@ -212,6 +212,86 @@ async function sheet(names) {
   console.log(`\n${tiles.length} tiles -> ${out}`);
 }
 
+/** default / exploded / focused, both viewports, with a luminance reading per tile. */
+async function states3(models) {
+  const { server, port } = await serve();
+  const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
+  const sharp = (await import(`file:///${SHARP.replace(/\\/g, "/")}`)).default;
+  const browser = await puppeteer.launch({
+    executablePath: CHROME,
+    headless: "new",
+    args: ["--no-sandbox", "--enable-unsafe-swiftshader", "--use-gl=angle", "--hide-scrollbars"],
+  });
+  mkdirSync(SHOTS, { recursive: true });
+  const VIEWPORTS = [["phone", 390, 844], ["desktop", 1280, 800]];
+  const STATES = [["default", ""], ["exploded", "&explode=1"], ["focused", "&explode=1&focus=front-wheel"]];
+  const report = [];
+  for (const [vpName, vw, vh] of VIEWPORTS) {
+    const tiles = [];
+    for (const [name, query] of models) {
+      for (const [stateName, extra] of STATES) {
+        const page = await browser.newPage();
+        await page.setViewport({ width: vw, height: vh, deviceScaleFactor: 1 });
+        const logs = [];
+        page.on("console", (m) => { if (/viewer3d:/.test(m.text())) logs.push(m.text()); });
+        try {
+          await page.goto(`http://127.0.0.1:${port}/counter/solo.html?${query}${extra}`, { waitUntil: "load", timeout: 40000 });
+          await page.waitForFunction(
+            () => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready",
+            { timeout: 70000 },
+          ).catch(() => {});
+          await new Promise((r) => setTimeout(r, 3200));
+          const shot = Buffer.from(await page.screenshot({ encoding: "binary" }));
+          // mean luminance of the frame, and of its darkest quarter, straight off the pixels
+          const stats = await sharp(shot).resize(64, 64, { fit: "fill" }).raw().toBuffer({ resolveWithObject: true });
+          let sum = 0;
+          const lums = [];
+          for (let i = 0; i < stats.data.length; i += stats.info.channels) {
+            const l = (stats.data[i] * 0.2126 + stats.data[i + 1] * 0.7152 + stats.data[i + 2] * 0.0722) / 255;
+            lums.push(l);
+            sum += l;
+          }
+          lums.sort((a, b) => a - b);
+          const mean = sum / lums.length;
+          const dark = lums.slice(0, Math.floor(lums.length * 0.25)).reduce((a, b) => a + b, 0) / Math.max(1, Math.floor(lums.length * 0.25));
+          const fps = await page.evaluate(() => (window.__viewer3d ? 1 : 1));
+          tiles.push({ name: `${name} ${stateName}`, buffer: shot });
+          report.push({ viewport: vpName, model: name, state: stateName, mean: +mean.toFixed(3), dark: +dark.toFixed(3), logs });
+          console.log(`  ${vpName.padEnd(8)} ${name.padEnd(12)} ${stateName.padEnd(9)} mean ${mean.toFixed(3)} darkest-quarter ${dark.toFixed(3)}${logs.length ? "  " + logs[0].slice(0, 90) : ""}`);
+        } catch (error) {
+          console.log(`  !! ${vpName} ${name} ${stateName}: ${error.message.slice(0, 70)}`);
+        }
+        await page.close();
+      }
+    }
+    if (tiles.length) {
+      const CW = Math.round(vw / 2);
+      const CH = Math.round(vh / 2);
+      const cols = 3;
+      const rows = Math.ceil(tiles.length / cols);
+      const composed = await Promise.all(tiles.map(async (tile, i) => ({
+        input: await sharp(tile.buffer).resize(CW, CH, { fit: "fill" }).composite([{
+          input: Buffer.from(
+            `<svg width="${CW}" height="22"><rect width="${CW}" height="22" fill="#141414"/>` +
+            `<text x="6" y="16" font-family="monospace" font-size="13" fill="#fff">${tile.name}</text></svg>`),
+          top: 0, left: 0,
+        }]).png().toBuffer(),
+        left: (i % cols) * CW,
+        top: Math.floor(i / cols) * CH,
+      })));
+      const out = join(SHOTS, `explode-light-${vpName}.png`);
+      await sharp({ create: { width: cols * CW, height: rows * CH, channels: 3, background: "#222" } })
+        .composite(composed).png().toFile(out);
+      console.log(`  -> ${out}`);
+    }
+  }
+  await browser.close();
+  server.close();
+  const worst = report.filter((r) => r.mean < 0.12).map((r) => `${r.viewport}/${r.model}/${r.state}`);
+  console.log(`
+${report.length} renders · ${worst.length ? `TOO DARK: ${worst.join(", ")}` : "none below mean luminance 0.12"}`);
+}
+
 async function orient(names) {
   const { server, port } = await serve();
   const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
@@ -248,6 +328,22 @@ async function main() {
       "0,90,90", "90,90,0", "-90,0,180", "0,90,0",
     ];
     return sheet(candidates.map((r) => [`${name} ${r}`, `model=generic/${name}&rotate=${encodeURIComponent(r)}`]));
+  }
+  /**
+   * --states3 <model...>: default / exploded / focused, at phone and desktop, for every model.
+   * This is the grid the founder's three reports live in — the exploded view being unreadable,
+   * parts leaving the frame, the focus jumping — and none of them show up in a default render.
+   * Each tile also carries the measured mean luminance of the model against its backdrop, so
+   * "too dark" is a number in the log rather than an argument about a screenshot.
+   */
+  if (process.argv.includes("--states3")) {
+    const dir = join(WEB, "store", "models", "generic");
+    const generics = readdirSync(dir)
+      .filter((n) => existsSync(join(dir, n, "model.glb")))
+      .map((n) => [n, `model=generic/${n}`]);
+    const exact = [["yzf-2021", "model=yzf-2021"], ["cbr650r", "model=honda-cbr650r"], ["corvette", "model=corvette-c8"]];
+    const models = (only.length ? generics.filter(([n]) => only.includes(n)) : [...generics, ...exact]);
+    return states3(models);
   }
   if (process.argv.includes("--sheet")) {
     const dir = join(WEB, "store", "models", "generic");

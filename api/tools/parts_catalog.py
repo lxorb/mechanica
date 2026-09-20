@@ -202,38 +202,45 @@ def art(budget: float, quality: str, model: str | None) -> int:
     unknown = [i for i in missing if i not in SUBJECTS]
     if unknown:
         raise SystemExit(f"no subject line for: {unknown}")
-    if not missing:
-        print("every taxonomy icon already has an illustration")
-        return 0
-    art_tool.SUBJECTS.update({i: SUBJECTS[i] for i in missing})
+    # The catalogue's ids live here, not in part_illustrations.SUBJECTS, so that file stays the
+    # parts-art agent's. Injecting them means its manifest() writes the whole set - and re-running
+    # this command is how the set is restored if a plain part_illustrations.py run ever drops them.
+    art_tool.SUBJECTS.update(SUBJECTS)
     chosen = model or art_tool.settings.model_image
-    per = art_tool.IMAGE_TOKENS[quality] * art_tool.IMAGE_USD_PER_MTOK.get(chosen, 40.0) / 1_000_000
-    print(f"{len(missing)} to render at ~${per:.3f} each, ~${per * len(missing):.2f} total, budget ${budget:.2f}")
-    if per * len(missing) > budget:
-        raise SystemExit("over budget")
-
     spent, failed = 0.0, []
-    from concurrent.futures import ThreadPoolExecutor
 
-    def one(icon_id: str):
-        try:
-            png, usd = art_tool.render(icon_id, chosen, quality)
-            art_tool.write(icon_id, png)
-            return icon_id, usd, ""
-        except Exception as exc:
-            return icon_id, 0.0, repr(exc)[:160]
+    if missing:
+        per = art_tool.IMAGE_TOKENS[quality] * art_tool.IMAGE_USD_PER_MTOK.get(chosen, 40.0) / 1_000_000
+        print(f"{len(missing)} to render at ~${per:.3f} each, ~${per * len(missing):.2f} total, "
+              f"budget ${budget:.2f}")
+        if per * len(missing) > budget:
+            raise SystemExit("over budget")
 
-    with ThreadPoolExecutor(max_workers=art_tool.WORKERS) as pool:
-        for icon_id, usd, error in pool.map(one, missing):
-            spent += usd
-            if error:
-                failed.append(icon_id)
-            print(f"  {'FAIL' if error else 'ok  '} {icon_id:<18} ${spent:.2f} {error}")
-            if spent > budget:
-                print("budget reached, stopping")
-                break
+        from concurrent.futures import ThreadPoolExecutor
 
-    art_tool.manifest(art_tool.icon_ids(), chosen, quality)
+        def one(icon_id: str):
+            try:
+                png, usd = art_tool.render(icon_id, chosen, quality)
+                art_tool.write(icon_id, png)
+                return icon_id, usd, ""
+            except Exception as exc:  # one bad id must not cost the other fifty
+                return icon_id, 0.0, repr(exc)[:160]
+
+        with ThreadPoolExecutor(max_workers=art_tool.WORKERS) as pool:
+            for icon_id, usd, error in pool.map(one, missing):
+                spent += usd
+                if error:
+                    failed.append(icon_id)
+                print(f"  {'FAIL' if error else 'ok  '} {icon_id:<18} ${spent:.2f} {error}")
+                if spent > budget:
+                    print("budget reached, stopping")
+                    break
+    else:
+        print("every taxonomy icon already has an illustration")
+
+    every = art_tool.icon_ids()
+    art_tool.manifest(every, chosen, quality)
+    art_tool.sheet(every)
     print(f"{len(missing) - len(failed)} rendered, ${spent:.2f} spent")
     if failed:
         print("failed:", ", ".join(failed))

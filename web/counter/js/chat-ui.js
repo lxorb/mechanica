@@ -69,7 +69,17 @@ const SAY = {
   closed: "",
 };
 
-/** Raw CSS handed to the component's shadow root — the only way in. */
+/**
+ * Raw CSS handed to the component's shadow root — the only way in, and therefore also where the
+ * VOICE button injected into #input is styled (see placeVoice).
+ *
+ * THE INPUT ROW. The component ships #text-input-container at width:80% with 0.8em margins and
+ * floats the submit button over the field (`inside-end`, absolutely positioned). That reads as a
+ * misaligned icon, and it leaves nowhere for a second button to stand. So: the submit button moves
+ * out of the field (`outside-end`), #input becomes a real flex row, and the row is
+ *     [ field flex-1 ] 8px [ VOICE 44x44 ] 8px [ SEND 44x44 ]
+ * with every box 44 tall and every 3px border on the same two lines.
+ */
 const AUX = `
   #chat-view { background: ${PAPER}; }
   #messages { background: ${PAPER}; padding-top: 10px; scrollbar-width: thin; }
@@ -86,14 +96,47 @@ const AUX = `
   .error-message-text { font-family: ${SANS}; font-weight: 800; font-size: 0.8rem;
     letter-spacing: 0.06em; text-transform: uppercase; background: ${INK} !important;
     color: ${YELLOW} !important; border-radius: 0 !important; border: 0 !important; }
-  /* the component ships #text-input-container at width:80% with 0.8em margins — a phone
-     cannot spare 20% of the field, and the view already frames it */
-  #input { box-sizing: border-box; }
-  #text-input-container { box-sizing: border-box; width: 100%; margin-top: 0; margin-bottom: 0; }
-  #text-input { font-family: ${SANS}; font-weight: 600; font-size: 1rem; }
+
+  #input { box-sizing: border-box; display: flex; align-items: center; gap: 8px; }
+  /* the component leaves four button slots around the field; the empty ones must not eat a gap */
+  .input-button-container { flex: 0 0 auto; margin: 0 !important; padding: 0 !important;
+    display: flex; align-items: center; }
+  .input-button-container:empty { display: none; }
+  #text-input-container { box-sizing: border-box; flex: 1 1 auto; min-width: 0; width: auto;
+    min-height: 44px !important; height: 44px; margin: 0 !important; display: flex;
+    align-items: center; }
+  #text-input { flex: 1 1 auto; min-width: 0; font-family: ${SANS}; font-weight: 600;
+    font-size: 1rem; line-height: 20px; padding: 9px 10px !important; max-height: 20px; }
   #text-input[textarea] { border-radius: 0; }
+  /* border-box !important because the component sizes these boxes content-box, so a 44px box
+     with a 3px border came out 50 wide and sat 3px proud of the field */
+  .input-button { position: static !important; box-sizing: border-box !important;
+    width: 44px !important; height: 44px !important; min-width: 44px; margin: 0 !important;
+    padding: 0 !important; border-radius: 0 !important; display: flex !important;
+    align-items: center; justify-content: center; }
+  .input-button svg { display: block; margin: 0; }
+  /* the component blows the lone submit button up by 10% and adds .3em either side, which is
+     exactly the 48x48-in-a-44-row misalignment this row is here to fix */
+  .input-button.submit-button-enlarged { scale: 1 !important; margin-inline: 0 !important; }
+
+  /* the VOICE toggle, injected into the row next to SEND */
+  .ttm-voice { flex: 0 0 auto; width: 44px; height: 44px; padding: 0; box-sizing: border-box;
+    display: flex; align-items: center; justify-content: center; border: 3px solid ${INK};
+    border-radius: 0; background: ${YELLOW}; color: ${INK}; cursor: pointer; appearance: none; }
+  .ttm-voice svg { display: block; width: 20px; height: 20px; }
+  /* the flex display above outranks the UA rule behind the hidden attribute */
+  .ttm-voice[hidden] { display: none !important; }
+  .ttm-voice.is-on { background: ${INK}; color: ${YELLOW}; }
+  .ttm-voice.is-on svg { animation: ttm-pulse 1.1s ease-in-out infinite; }
+  .ttm-voice:active { background: ${ORANGE}; color: #fff; }
+  @media (hover: hover) { .ttm-voice:hover { background: ${ORANGE}; color: #fff; } }
+  @keyframes ttm-pulse { 50% { opacity: 0.3; } }
+
   #scroll-button { border-radius: 0; border: 3px solid ${INK}; background: ${YELLOW}; }
 `;
+
+const MIC_BODY = "M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z";
+const MIC_ARC = "M5 11a7 7 0 0 0 14 0M12 18v3";
 
 /** manualId -> [{role, content, citations?, saved?}] for this session. */
 const sessions = new Map();
@@ -124,6 +167,23 @@ const ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&
 
 function esc(text) {
   return String(text ?? "").replace(/[&<>"']/g, (c) => ESCAPES[c]);
+}
+
+function glyph(paths) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  for (const d of paths) {
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "2.2");
+    path.setAttribute("stroke-linecap", "round");
+    svg.append(path);
+  }
+  return svg;
 }
 
 /** The done frame's citations as one row of tappable chips, or "" when nothing was cited. */
@@ -225,14 +285,16 @@ export function mountChat(host, opts = {}) {
   const who = node("span", { class: "cv-bike", text: label });
   title.append(node("b", { text: "Chat" }), who);
 
+  // The VOICE toggle lives in the input row, beside SEND — see placeVoice(). `cv-voice` stays on
+  // it so the screenshot tool and any outside CSS can still find it.
   const voiceBtn = node("button", {
     type: "button",
-    class: "cv-voice",
+    class: "cv-voice ttm-voice",
+    "aria-label": "Voice",
     "aria-pressed": "false",
     hidden: "",
   });
-  const voiceDot = node("i", { class: "cv-dot", "aria-hidden": "true" });
-  voiceBtn.append(voiceDot, node("span", { text: "Voice" }));
+  voiceBtn.append(glyph([MIC_BODY, MIC_ARC]));
   const shut = node("button", {
     type: "button",
     class: "ov-x cv-x",
@@ -240,7 +302,7 @@ export function mountChat(host, opts = {}) {
     "aria-label": "Close",
     text: "✕",
   });
-  head.append(title, voiceBtn, shut);
+  head.append(title, shut);
 
   // The live voice strip: level meter + what the session is doing + the last thing said.
   const strip = node("div", { class: "cv-mic", hidden: "", role: "status", "aria-live": "polite" });
@@ -395,15 +457,18 @@ export function mountChat(host, opts = {}) {
     };
     // backgroundColor, not the `background` shorthand: the component merges its own defaults
     // into this object and the shorthand comes back out as `background-color: unset`.
-    const square = (backgroundColor) => ({
+    const square = (backgroundColor, border = INK) => ({
       backgroundColor,
+      border: `3px solid ${border}`,
       borderRadius: "0",
-      width: "38px",
-      height: "38px",
-      margin: "0 4px 0 0",
+      width: "44px",
+      height: "44px",
+      margin: "0",
     });
+    // outside-end, not inside-end: inside-end absolutely positions the icon over the field, which
+    // is what made it look misaligned. Out here it is one 44x44 box in the row.
     el.submitButtonStyles = {
-      position: "inside-end",
+      position: "outside-end",
       submit: {
         container: { default: square(INK), hover: square(ORANGE), click: square(ORANGE) },
         svg: { styles: { default: { filter: "brightness(0) invert(1)", width: "20px" } } },
@@ -457,6 +522,27 @@ export function mountChat(host, opts = {}) {
     el.history = historyOf(manualId);
   }
 
+  /**
+   * Put the VOICE toggle in the input row, immediately before SEND.
+   *
+   * The component renders into an OPEN shadow root and owns only the nodes it created, so a
+   * button appended into #input survives its re-renders. This is the one place chat-ui reaches
+   * inside the fork — the alternative is a second row under the field, which is exactly the
+   * "chopped" shape the full-screen view was built to get rid of. Retried across a few frames
+   * because #input appears one tick after the element is attached.
+   */
+  function placeVoice(el, tries = 20) {
+    const root = el && el.shadowRoot;
+    const row = root && root.querySelector("#input");
+    if (!row) {
+      if (tries > 0) requestAnimationFrame(() => placeVoice(el, tries - 1));
+      return;
+    }
+    if (voiceBtn.parentNode === row) return;
+    const send = [...row.querySelectorAll(".input-button-container")].find((c) => c.children.length);
+    row.insertBefore(voiceBtn, send || null);
+  }
+
   async function ensure() {
     if (chat) return chat;
     if (building) return building;
@@ -466,6 +552,7 @@ export function mountChat(host, opts = {}) {
         configure(el);
         body.append(el);
         chat = el;
+        placeVoice(el);
         paintSaved(lastSaved(manualId));
         return el;
       })

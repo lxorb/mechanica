@@ -109,59 +109,10 @@
   flex: 0 0 auto;
 }
 
-/* ---------- the voice toggle ---------- */
-
-.cv-voice {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  flex: 0 0 auto;
-  min-height: 38px;
-  padding: 0 11px;
-  border: 3px solid var(--ink);
-  border-radius: 0;
-  background: var(--yellow);
-  color: var(--ink);
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1;
-  cursor: pointer;
-  appearance: none;
-}
-
-.cv-voice .cv-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--ink);
-  display: block;
-}
-
-.cv-voice.is-on {
-  background: var(--ink);
-  color: var(--yellow);
-}
-
-.cv-voice.is-on .cv-dot {
-  background: #ff4d4d;
-  animation: cv-pulse 1.1s ease-in-out infinite;
-}
-
-.cv-voice:active {
-  background: var(--orange);
-  color: #fff;
-}
-
-@keyframes cv-pulse {
-  50% {
-    opacity: 0.25;
-  }
-}
-
-/* ---------- the live voice strip ---------- */
+/* ---------- the live voice strip ---------- *
+ * The VOICE toggle itself is NOT styled here: it sits in the input row inside <deep-chat>'s
+ * shadow root, so its rules travel with the rest of the shadow CSS in js/chat-ui.js (`.ttm-voice`
+ * in AUX). This strip is the only voice chrome on this side of the boundary. */
 
 .cv-mic {
   display: flex;
@@ -274,14 +225,3 @@
   }
 }
 
-@media (hover: hover) {
-  .cv-voice:hover {
-    background: var(--orange);
-    color: #fff;
-  }
-
-  .cv-voice.is-on:hover {
-    background: var(--orange);
-    color: #fff;
-  }
-}

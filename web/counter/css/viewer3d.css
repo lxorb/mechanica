@@ -85,6 +85,51 @@
   pointer-events: none;
 }
 
+/* ---------------------------------------------------------------- environment picker
+ * Four swatches, top right of the stage. Deliberately small and unlabelled: the vehicle is the
+ * subject and this is a preference, not a control the user has to read. The colour of each dot
+ * IS the environment; the name is the tooltip and the accessible name.
+ */
+
+.viewer3d-envs {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 4;
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  background: rgba(20, 20, 20, 0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.viewer3d-env {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: var(--swatch, #888);
+  cursor: pointer;
+  appearance: none;
+  transition: transform 140ms ease-out, border-color 140ms ease-out;
+}
+
+.viewer3d-env:hover {
+  transform: scale(1.12);
+}
+
+.viewer3d-env[aria-checked="true"] {
+  border-color: var(--orange, #e85d04);
+  transform: scale(1.12);
+}
+
+/* phones: the stage is small enough that the swatches have to give way a little */
+@media (max-width: 480px) {
+  .viewer3d-envs { top: 6px; right: 6px; gap: 5px; padding: 4px; }
+  .viewer3d-env { width: 17px; height: 17px; }
+}
+
 /* ---------------------------------------------------------------- the loading ring
  * While the GLB is on the wire the panel shows the garage environment and this ring over it —
  * nothing else. mount() appends .viewer3d-load and removes it the moment the model is on screen.
