@@ -56,9 +56,11 @@ import re
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import urllib.parse
 from collections.abc import Iterable, Iterator
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -360,6 +362,41 @@ def cmd_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def by_coverage(manuals: list[Manual]) -> list[Manual]:
+    """Most catalog vehicles served first, then breadth-first across nameplates, newest year first.
+
+    "Served" means: existing catalog vehicles that have no manual today and that this render would
+    give one to, found the same way `_pick` would - exact id or alias. For Toyota/Lexus Europe that
+    count is **zero for all 457**, because the European model-type names (`Corolla Hybrid Hatchback`,
+    `ES 350h`) are not the US catalogue's names, so every render creates a new vehicle rather than
+    filling an empty one. The ordering is still computed rather than assumed: the next site may be
+    the other way round, and a tie falls through to breadth-first, which is the right answer when
+    every render is worth exactly one vehicle."""
+    score: dict[int, int] = {}
+    try:
+        from app.registry import alias_key
+        from app.store import get_store
+
+        empty: dict[str, int] = {}
+        for bike in get_store().bikes():
+            if bike.manualUrl:
+                continue
+            for key in (slug(bike.make, bike.model, bike.year), alias_key(bike.make, bike.model, bike.year)):
+                if key:
+                    empty[key] = empty.get(key, 0) + 1
+        for m in manuals:
+            score[id(m)] = max(
+                empty.get(slug(m.make, m.model, m.year), 0),
+                empty.get(alias_key(m.make, m.model, m.year), 0),
+            )
+    except Exception as exc:  # the catalogue is not needed to render, only to prioritise
+        log.warning("render: cannot read the catalogue to order by coverage (%s)", exc)
+    ordered = breadth_first(manuals)
+    served = sum(1 for m in ordered if score.get(id(m), 0))
+    print(f"  {served} of {len(ordered)} manual(s) would fill a catalog vehicle that has none")
+    return sorted(ordered, key=lambda m: -score.get(id(m), 0))
+
+
 def breadth_first(manuals: list[Manual]) -> list[Manual]:
     """Round-robin across nameplates, newest year first.
 
@@ -382,55 +419,83 @@ def breadth_first(manuals: list[Manual]) -> list[Manual]:
 
 def cmd_render(args: argparse.Namespace) -> int:
     find, fetch = RECIPES[args.site]
-    manuals = breadth_first(find(args.lang))
+    manuals = by_coverage(find(args.lang))
     if not args.all:
         manuals = manuals[: args.limit]
     fetched = datetime.date.today().isoformat()
     print(f"{len(manuals)} manual(s) to render from {args.site}")
     blob = None
+    uploaded: dict[str, int] = {}
     if args.upload:
         from tools.sync_blob import store as blob_store
 
         blob = blob_store()
+        uploaded = already_there(blob)
+        print(f"  {len(uploaded)} rendered manual(s) already public in the blob")
     rows: list[RegistryEntry] = []
     failed = 0
     started = time.monotonic()
-    for n, manual in enumerate(manuals, 1):
+    lock = threading.Lock()
+    out_of_time = threading.Event()
+
+    def one(numbered: tuple[int, Manual]) -> None:
+        nonlocal failed
+        n, manual = numbered
+        if out_of_time.is_set():
+            return
         if args.max_minutes and (time.monotonic() - started) / 60 >= args.max_minutes:
-            print(f"  stopping at the {args.max_minutes} minute budget with {n - 1} of {len(manuals)} done")
-            break
+            if not out_of_time.is_set():
+                out_of_time.set()
+                print(f"  stopping at the {args.max_minutes} minute budget")
+            return
         label = f"[{n}/{len(manuals)}] {manual.make} {manual.model} {manual.year}"
         if manual.local.exists() and not args.force:
             ok, why = verify(manual.local)
             if ok:
                 # Re-upload: the file on disk may predate the container, and overwrite is idempotent.
-                if blob is not None and not _upload(blob, manual):
-                    failed += 1
-                    continue
+                if blob is not None and not _upload(blob, manual, uploaded):
+                    with lock:
+                        failed += 1
+                    return
                 print(f"  {label}: already rendered ({why})")
-                rows.append(row(manual, _url(blob, manual), fetched))
-                continue
+                with lock:
+                    rows.append(row(manual, _url(blob, manual), fetched))
+                return
         if args.only_rendered:
-            continue
+            return
         manual.sections = fetch(manual)
         if len(manual.sections) < MIN_PAGES:
             print(f"  {label}: only {len(manual.sections)} section(s), skipped")
-            failed += 1
-            continue
+            with lock:
+                failed += 1
+            return
         footer = f"Official source: {manual.source}  ·  fetched {fetched}"
         if not print_pdf(assemble(manual, fetched), manual.local, footer):
-            failed += 1
-            continue
+            with lock:
+                failed += 1
+            return
         ok, why = verify(manual.local)
         print(f"  {label}: {len(manual.sections)} sections -> {why}{'' if ok else '  REJECTED'}")
         if not ok:
             manual.local.unlink(missing_ok=True)
-            failed += 1
-            continue
-        if blob is not None and not _upload(blob, manual):
-            failed += 1
-            continue
-        rows.append(row(manual, _url(blob, manual), fetched))
+            with lock:
+                failed += 1
+            return
+        if blob is not None and not _upload(blob, manual, uploaded):
+            with lock:
+                failed += 1
+            return
+        with lock:
+            rows.append(row(manual, _url(blob, manual), fetched))
+
+    # Each worker drives its own Chrome. The HTTP side is throttled globally (THROTTLE), so more
+    # workers never means hammering the publisher harder - only more of the waiting overlapped.
+    if args.workers > 1:
+        with ThreadPoolExecutor(max_workers=args.workers) as pool:
+            list(pool.map(one, enumerate(manuals, 1)))
+    else:
+        for numbered in enumerate(manuals, 1):
+            one(numbered)
     if rows and args.fragment:
         path = FRAGMENTS / args.fragment
         path.write_text(json.dumps([r.model_dump(exclude_none=True) for r in rows], ensure_ascii=False), encoding="utf-8")
@@ -444,11 +509,28 @@ def _url(blob, manual: Manual) -> str:
     return f"{base}/{manual.blob_name}"
 
 
-def _upload(blob, manual: Manual) -> bool:
+def already_there(blob) -> dict[str, int]:
+    """blob name -> size for what is already under `rendered/`.
+
+    Every cycle re-runs the whole list so that a finished manual is picked up wherever it stopped,
+    and without this the reuse path would re-upload the entire 50 MB-per-manual cache each time.
+    Same name and same size means the file is already public; nothing else needs checking, because
+    a render is deterministic for a given publication."""
+    try:
+        container = blob.service.get_container_client(settings.azure_pdf_container)
+        return {b.name: int(b.size or 0) for b in container.list_blobs(name_starts_with=f"{BLOB_PREFIX}/")}
+    except Exception as exc:
+        log.warning("render: cannot list the blob container (%s); uploading everything", exc)
+        return {}
+
+
+def _upload(blob, manual: Manual, known: dict[str, int] | None = None) -> bool:
     from azure.storage.blob import ContentSettings
 
     from tools.sync_blob import upload
 
+    if known is not None and known.get(manual.blob_name) == manual.local.stat().st_size:
+        return True  # same name, same bytes: it is already public
     try:
         size = upload(
             blob,
@@ -480,6 +562,7 @@ def main(argv: list[str] | None = None) -> int:
             c.add_argument("--fragment", default="rendered-tweddle.json")
             c.add_argument("--max-minutes", type=int, default=0, help="stop cleanly after this long")
             c.add_argument("--only-rendered", action="store_true", help="upload and index what is already on disk, render nothing new")
+            c.add_argument("--workers", type=int, default=1, help="Chrome renders in parallel")
     args = p.parse_args(argv)
     return args.fn(args)
 

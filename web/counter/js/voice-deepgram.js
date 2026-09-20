@@ -77,11 +77,50 @@ const KEEPALIVE_MS = 8000;
 // so the window has to outlive the flush. Short enough that a lost UserStartedSpeaking costs
 // nothing, because a mute nothing lifts would silence the session for good.
 const BARGE_MUTE_MS = 500;
-// Local barge-in. RMS of a voice a metre from the phone with echo cancellation on; three frames
-// (~130 ms) so a dropped spanner is not a conversation.
-const DUCK_RMS = 0.05;
-const DUCK_FRAMES = 3;
 const DUCKED_GAIN = 0.08;
+
+/* ---- half duplex: the mic must not hear the agent ----------------------------------------
+ *
+ * THE LOOP, MEASURED. The phone's speaker is 20 cm from its microphone, so while the agent
+ * talks the mic hears the agent. Every one of those frames used to go straight up the socket,
+ * and Deepgram's VAD cannot tell our voice from his: it answered its own greeting with
+ * UserStartedSpeaking, this client flushed the playback it had just scheduled, the orb flashed
+ * "interrupted", the agent started a new turn - and the first syllable of THAT turn started the
+ * same loop again. Reproduced in headless Chrome with the agent's own greeting on the fake
+ * capture device (web/tools/voice-echo.mjs) and fixed on four layers:
+ *
+ *   1. constraints          echoCancellation + noiseSuppression on, autoGainControl OFF. AGC is
+ *                           what lifts a quiet room's echo up to a speaking level.
+ *   2. playback route       through a MediaStreamAudioDestinationNode into an <audio> element,
+ *                           which is the render path Chrome's AEC has a reference for and the
+ *                           ONLY one iOS Safari cancels at all.
+ *   3. this guard           while the agent is audible (first frame -> drained + TAIL_MS) the
+ *                           mic is not forwarded, unless it is loud enough to be a person.
+ *   4. one threshold        "loud enough" is measured, not guessed: the echo's own level during
+ *                           the first ECHO_MS of the turn, times BARGE_RATIO, held for BARGE_MS.
+ *                           The local duck obeys the same number, so the agent can no longer
+ *                           duck itself.
+ */
+
+// How long after the last scheduled sample the mic stays shut. Room reverb and the speaker's own
+// decay outlive the samples; 250 ms is past both and still inside a human turn gap.
+const TAIL_MS = 250;
+// The window at the start of a spoken turn where the mic is only measuring, never judging: what
+// it hears here IS the echo, by definition, because the rider has not started talking yet.
+const ECHO_MS = 300;
+// A real voice has to beat the measured echo by this much, for this long, to be believed.
+const BARGE_RATIO = 2.5;
+const BARGE_MS = 120;
+// Floors, so a silent room (echo ~0) does not make every cough a barge-in, and so a session that
+// never measured an echo still needs a real voice. RMS of speech a metre from a phone is ~0.05.
+const BARGE_FLOOR = 0.035;
+const ECHO_FLOOR = 0.006;
+// The mic frames withheld during the guard are kept this long: on a true barge-in they are sent
+// first, so Deepgram hears the word he started with and not the second half of it.
+const PRIME_MS = 320;
+// Frames are AudioWorklet render quanta - 128 samples, ~5 ms at 24 kHz - so every "how long has
+// this been loud" is counted in milliseconds. The old code counted three FRAMES and called it
+// 130 ms; three quanta is 16 ms, which is why the agent ducked itself on its own first syllable.
 // If Deepgram never agrees that the rider spoke, it was not speech: put the answer back.
 const UNDUCK_MS = 900;
 // A turn with a lookup running and no sound yet gets one spoken acknowledgement at this mark.
@@ -92,6 +131,14 @@ const ACK_TEXT = "One sec, checking the manual.";
 // "page 115 says ...", "on page 115", "pages 85 and 86" — the first printed page an answer names.
 // Only ever "page N": a bare number in an answer is a torque or a capacity, never somewhere to go.
 const SPOKEN_PAGE = /\bpages?\s+(\d{1,4})\b/i;
+
+/**
+ * The one knob, and it exists for the measurement rather than for the product: with `guard`
+ * false this file behaves exactly as it shipped before the half-duplex guard, so
+ * web/tools/voice-echo.mjs can run the loop and the fix against the same stub, the same audio
+ * and the same VAD and attribute the difference to one thing. Nothing in the app writes it.
+ */
+export const tuning = { guard: true };
 
 const WORKLET = `class Tap extends AudioWorkletProcessor {
   process(inputs) {
@@ -160,6 +207,9 @@ function player(ctx, rate, onDone) {
   let meter = null;
   let window = null;
   let muteUntil = 0;
+  let audible = 0; // performance.now() of the last sample scheduled, so the guard knows the tail
+  let route = "element";
+  let tag = null;
 
   function sink() {
     if (!gain) {
@@ -172,12 +222,47 @@ function player(ctx, rate, onDone) {
       meter.smoothingTimeConstant = 0;
       window = new Float32Array(meter.fftSize);
       gain.connect(meter);
-      gain.connect(ctx.destination);
+      // THE ROUTE MATTERS. ctx.destination is a WebAudio render stream of this context's own
+      // sample rate (24 kHz here, never the device's), and the platform echo canceller's
+      // reference is the DEVICE render stream. A MediaStreamAudioDestinationNode played through
+      // an <audio> element goes out the media pipeline instead, which is the one Chrome
+      // references and the only one iOS Safari cancels at all. If the element will not play -
+      // an autoplay policy, an ancient browser - fall back rather than lose the voice.
+      try {
+        const dest = ctx.createMediaStreamDestination();
+        gain.connect(dest);
+        tag = new Audio();
+        tag.srcObject = dest.stream;
+        tag.autoplay = true;
+        tag.muted = false;
+        tag.volume = 1;
+        const played = tag.play();
+        if (played && typeof played.catch === "function") {
+          played.catch(() => {
+            if (route !== "element") return;
+            route = "destination";
+            gain.connect(ctx.destination);
+          });
+        }
+      } catch {
+        route = "destination";
+        gain.connect(ctx.destination);
+      }
     }
     return gain;
   }
 
   return {
+    /** Which render path the voice is leaving by, for VOICE.md and the harness. */
+    route: () => route,
+    /**
+     * Is the agent audible right now, or was it within `tail` ms? `busy()` goes false the moment
+     * the last buffer's onended fires, and the room is still ringing for a moment after that.
+     */
+    audible(tail) {
+      if (live.length) return true;
+      return performance.now() < audible + (tail || 0);
+    },
     /** RMS of what is coming out of the speaker right now, 0..1. */
     level() {
       if (!meter || !live.length) return 0;
@@ -213,6 +298,10 @@ function player(ctx, rate, onDone) {
       if (cursor < now + 0.005) cursor = now + JITTER_S;
       src.start(cursor);
       cursor += frame.duration;
+      // Wall-clock moment the last scheduled sample stops being in the room. The guard reads it,
+      // so the mic stays shut through the whole jitter buffer and not just through what has
+      // already been handed to the speaker.
+      audible = performance.now() + Math.max(0, (cursor - ctx.currentTime) * 1000);
       live.push(src);
       src.onended = () => {
         live = live.filter((s) => s !== src);
@@ -236,11 +325,25 @@ function player(ctx, rate, onDone) {
       }
       live = [];
       cursor = 0;
+      // Nothing is in the room any more, so the half-duplex guard must not keep the mic shut for
+      // a tail that no longer exists - the rider is mid-sentence and every frame counts.
+      audible = 0;
       if (gain) {
         // A flush ends the duck: the next answer must not arrive at eight percent.
         gain.gain.cancelScheduledValues(ctx.currentTime);
         gain.gain.value = 1;
       }
+    },
+    /** The element keeps a live MediaStream; a session that ends without this leaves it playing. */
+    close() {
+      if (!tag) return;
+      try {
+        tag.pause();
+        tag.srcObject = null;
+      } catch {
+        /* already gone */
+      }
+      tag = null;
     },
     /** The agent is starting a new answer: take the mute off early. */
     resume() {
@@ -297,7 +400,10 @@ function tear(s) {
       /* already closed */
     }
   }
-  if (s.play) s.play.flush();
+  if (s.play) {
+    s.play.flush();
+    s.play.close();
+  }
   try {
     if (s.src) s.src.disconnect();
     if (s.node) s.node.disconnect();
@@ -336,9 +442,21 @@ export async function start(opts = {}) {
     acked: false, // this turn has already had its one acknowledgement
     said: false, // this turn has made a sound
     spoke: false, // this turn already has an assistant line in the transcript
-    loud: 0, // consecutive loud mic frames, for the local barge-in
+    loudMs: 0, // how long the mic has been over the barge threshold, in ms
     ducked: false,
     unduck: 0,
+    /* half duplex */
+    echo: 0, // measured RMS of our own voice coming back into the mic
+    echoPeak: 0, // the peak of the turn being measured
+    echoMs: 0, // how much of ECHO_MS this turn has collected
+    echoTurn: false, // this spoken turn has been measured
+    gated: false, // the mic is currently not being forwarded
+    barged: false, // a real voice beat the threshold; forward everything until the turn ends
+    held: [], // the withheld frames, newest last, ~PRIME_MS of them
+    heldMs: 0,
+    withheld: 0, // frames the guard kept out of the socket, for the harness
+    sent: 0, // frames that did go up
+    settings: null, // what getUserMedia actually applied
   };
   current = session;
 
@@ -375,7 +493,22 @@ export async function start(opts = {}) {
     level: () => session.level,
     out: () => (session.play ? session.play.level() : 0),
     status: () => session.status,
+    /** Everything the echo harness and VOICE.md quote. Not used by the UI. */
+    audio: () => ({
+      constraints: session.settings,
+      route: session.play ? session.play.route() : "",
+      echo: session.echo,
+      threshold: barge(session),
+      gated: session.gated,
+      withheld: session.withheld,
+      sent: session.sent,
+    }),
   };
+}
+
+/** What a voice has to beat to be a voice and not our own speaker. Measured, with a floor. */
+function barge(session) {
+  return Math.max(BARGE_FLOOR, (session.echo || ECHO_FLOOR) * BARGE_RATIO);
 }
 
 /** One status, said once. Everything that drives the orb goes through here. */
@@ -414,6 +547,13 @@ function fresh(session) {
   session.acked = false;
   session.spoke = false;
   session.lookups = 0;
+  // A new turn is a new room: the guard shuts again, and the next answer re-measures its own
+  // echo rather than trusting a number taken while the rider was holding an impact wrench.
+  session.barged = false;
+  session.echoTurn = false;
+  session.echoMs = 0;
+  session.echoPeak = 0;
+  session.loudMs = 0;
 }
 
 async function run(session, opts, say) {
@@ -437,10 +577,25 @@ async function run(session, opts, say) {
   }
   const rate = Number(config.sampleRate) || FALLBACK_RATE;
 
+  // autoGainControl OFF. The other two are obvious; this one is the subtle half of the loop. AGC
+  // normalises the mic towards a target level, so in a quiet workshop it winds the gain UP until
+  // the only thing in the room - the phone's own speaker - is at speaking level, and every
+  // threshold downstream of it is measuring an amplified echo. Off, the echo stays quiet and the
+  // rider's voice stays louder than it, which is the entire premise of the barge-in threshold.
   session.stream = await navigator.mediaDevices.getUserMedia({
-    audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+    audio: {
+      channelCount: 1,
+      echoCancellation: true,
+      noiseSuppression: true,
+      autoGainControl: false,
+    },
   });
   if (session.dead) return;
+  // What the browser actually applied, not what we asked for: a device that refuses echo
+  // cancellation is a device where the guard below is the only thing standing between the agent
+  // and its own voice, and it is worth being able to read that back.
+  const track = session.stream.getAudioTracks()[0];
+  session.settings = track && typeof track.getSettings === "function" ? track.getSettings() : null;
 
   const ctx = new AudioContext({ sampleRate: rate });
   session.ctx = ctx;
@@ -509,12 +664,15 @@ function handle(session, ws, msg, say) {
       const cut = session.play.busy();
       session.play.flush();
       session.ducked = false;
-      session.loud = 0;
+      session.loudMs = 0;
       if (session.unduck) {
         clearTimeout(session.unduck);
         session.unduck = 0;
       }
       fresh(session);
+      // Deepgram agrees there is a person talking, so the guard opens for the rest of this turn
+      // whatever the levels say - the flush above just took our own voice out of the room.
+      session.barged = true;
       if (cut) say({ type: "interrupted" });
       status(session, "listening", say);
       break;
@@ -626,30 +784,105 @@ function run_function(session, ws, call, say) {
 }
 
 /**
- * One frame of the mic, judged only for whether the rider has started talking over the answer.
- * Deepgram's own UserStartedSpeaking is authoritative and this is not, so this only DUCKS - it
- * never throws audio away - and it undoes itself if the server never agrees.
+ * One frame of the mic while the agent is audible, judged for two things at once: is this our own
+ * echo (measure it), and is this a person (let him through).
+ *
+ * Returns true when the frame may go up the socket. Everything else here is the local duck, which
+ * is the same decision taken 0.4-2.2 s before Deepgram's UserStartedSpeaking can agree with it:
+ * a duck is reversible and a flush is not, so this ducks and the server event flushes.
  */
-function listen(session, rms, say) {
-  if (session.dead || !session.play) return;
-  if (!session.play.busy() || session.ducked) {
-    if (!session.play.busy()) session.loud = 0;
-    return;
+function listen(session, rms, ms, say) {
+  if (session.dead || !session.play) return true;
+  // The harness turns the guard off to reproduce the loop against the same stub and the same
+  // audio (web/tools/voice-echo.mjs). Nothing in the app ever writes this.
+  if (!tuning.guard) return true;
+
+  const speaking = session.play.audible(TAIL_MS);
+  if (!speaking) {
+    // The room is ours again. Everything about the last turn's echo is spent except the number.
+    session.loudMs = 0;
+    session.echoTurn = false;
+    session.echoMs = 0;
+    session.echoPeak = 0;
+    if (session.gated) {
+      session.gated = false;
+      session.barged = false;
+      session.held = [];
+      session.heldMs = 0;
+    }
+    return true;
   }
-  if (rms < DUCK_RMS) {
-    session.loud = 0;
-    return;
+
+  session.gated = true;
+  // Already through the gate this turn: he is talking, keep sending.
+  if (session.barged) return true;
+
+  // CALIBRATION. The first ECHO_MS of a spoken turn is our own voice by definition - he has not
+  // started talking yet, because the turn only just started - so whatever the mic hears here IS
+  // the echo, at this room's volume, with this phone's speaker, past this device's canceller.
+  if (!session.echoTurn) {
+    session.echoMs += ms;
+    if (rms > session.echoPeak) session.echoPeak = rms;
+    if (session.echoMs >= ECHO_MS) {
+      session.echoTurn = true;
+      // Follow a rising echo at once and a falling one slowly: the threshold must never sit
+      // under the echo, and the loudest thing this turn is the safest number to stand on.
+      session.echo =
+        session.echoPeak > session.echo ? session.echoPeak : session.echo * 0.7 + session.echoPeak * 0.3;
+    }
+    // Nothing goes up during calibration. This IS the loop, in one line: these are the frames
+    // that used to make Deepgram answer its own greeting.
+    return false;
   }
-  session.loud += 1;
-  if (session.loud < DUCK_FRAMES) return;
-  session.loud = 0;
+
+  if (rms < barge(session)) {
+    session.loudMs = 0;
+    return false;
+  }
+  session.loudMs += ms;
+  if (session.loudMs < BARGE_MS) return false;
+
+  // A real voice, over our own speaker, for long enough to be a sentence. Stop talking, send him
+  // the words he has already said, and let the rest through until the turn is over.
+  session.loudMs = 0;
+  session.barged = true;
+  session.play.flush();
+  if (!session.ducked) say({ type: "interrupted" });
+  session.ducked = false;
+  if (session.unduck) {
+    clearTimeout(session.unduck);
+    session.unduck = 0;
+  }
+  status(session, "listening", say);
+  return true;
+}
+
+/**
+ * The softer half of the same decision: he is over the threshold but not yet for BARGE_MS, so the
+ * answer drops to a whisper rather than stopping. If nothing confirms it inside UNDUCK_MS it was
+ * a dropped spanner and the answer comes back up where it left off.
+ */
+function duck(session, rms, say) {
+  if (session.ducked || session.barged || !session.play || !session.play.busy()) return;
+  if (tuning.guard) {
+    if (!session.echoTurn || rms < barge(session)) return;
+  } else {
+    // The rule as it shipped: a fixed RMS, held for three FRAMES. A worklet render quantum is 128
+    // samples, so "three frames" was 16 ms, not the 130 ms the comment claimed - which is why the
+    // agent ducked itself on its own first syllable.
+    if (rms < 0.05) {
+      session.loudMs = 0;
+      return;
+    }
+    session.loudMs += 1;
+    if (session.loudMs < 3) return;
+    session.loudMs = 0;
+  }
   session.ducked = true;
   session.play.duck(true);
   say({ type: "interrupted" });
   session.unduck = window.setTimeout(() => {
     session.unduck = 0;
-    // No UserStartedSpeaking: nobody was talking. Give the answer back rather than leaving the
-    // rider with a voice he can no longer hear and no way to ask for it again.
     if (session.dead || !session.ducked) return;
     session.ducked = false;
     session.play.duck(false);
@@ -661,22 +894,52 @@ async function capture(session, ws, rate, say) {
   const ctx = session.ctx;
   let queue = new Float32Array(0);
 
+  const send = (buffer) => {
+    if (ws.readyState !== WebSocket.OPEN) return;
+    ws.send(buffer);
+    session.sent += 1;
+  };
+
   const push = (chunk) => {
     // RMS, not peak: the orb has to grow with how loud the sentence is, and a peak meter is
     // pinned at the top by the first consonant and says nothing after that.
     let sum = 0;
     for (let i = 0; i < chunk.length; i++) sum += chunk[i] * chunk[i];
     const rms = Math.sqrt(sum / (chunk.length || 1));
+    const ms = (chunk.length / (ctx.sampleRate || 1)) * 1000;
+    // The orb rides the mic even while the guard is shut: he has to see that it hears him, and
+    // the two are different questions. What he sees is never what we forward.
     session.level = Math.max(rms, session.level * LEVEL_DECAY);
-    listen(session, rms, say);
+
+    const open = listen(session, rms, ms, say);
+    if (!open) duck(session, rms, say);
 
     const merged = new Float32Array(queue.length + chunk.length);
     merged.set(queue);
     merged.set(chunk, queue.length);
     queue = merged;
     while (queue.length >= FRAME) {
-      if (ws.readyState === WebSocket.OPEN) ws.send(pcm16(queue.subarray(0, FRAME), ctx.sampleRate, rate));
+      const frame = pcm16(queue.subarray(0, FRAME), ctx.sampleRate, rate);
       queue = queue.slice(FRAME);
+      if (open) {
+        // A barge-in sends what he already said before it sends what he is saying: the guard was
+        // holding the first syllables of the word that broke it.
+        if (session.held.length) {
+          for (const old of session.held) send(old);
+          session.held = [];
+          session.heldMs = 0;
+        }
+        send(frame);
+        continue;
+      }
+      // Held, not dropped. PRIME_MS of the most recent frames, and the rest go.
+      session.withheld += 1;
+      session.held.push(frame);
+      session.heldMs += (FRAME / rate) * 1000;
+      while (session.heldMs > PRIME_MS && session.held.length > 1) {
+        session.held.shift();
+        session.heldMs -= (FRAME / rate) * 1000;
+      }
     }
   };
 

@@ -1012,3 +1012,48 @@ row and therefore one vehicle, so the remaining 454 are 454 vehicles, English, a
 The cache lives in `api/data/uploads/rendered/` on purpose: the test harness copies `api/data` for
 every run and ignores `uploads`, and a 50 MB-per-manual cache has no business in git. The blob is
 the real home.
+
+---
+
+## Cycle 9 — 2026-09-20
+
+The renderer now owns most of the cycle. Two changes to it, one finding about ordering, and a
+structure check on the other four HTML-only publishers.
+
+### Renderer: parallel Chrome, and an ordering that is measured rather than assumed
+
+* **`--workers N` runs N Chrome renders at once**, each with its own browser. The HTTP side still
+  goes through the one global 2 req/s throttle, so more workers never means hammering the publisher
+  harder — only more of the waiting overlapped. Two workers ran clean, no failures.
+* **`by_coverage()` orders by how many catalog vehicles a render would actually serve**: existing
+  vehicles that have no manual today and that this render would give one to, matched the way
+  `_pick` matches — exact id or alias. **For Toyota/Lexus Europe the answer is zero for all 457**,
+  and the tool says so on every run (`0 of 457 manual(s) would fill a catalog vehicle that has
+  none`). The European model-type names — `Corolla Hybrid Hatchback`, `ES 350h`, `NX 450h+` — are
+  not the US catalogue's names, so **every render creates a new vehicle rather than filling an
+  empty one**. That makes the yield exactly one vehicle per render, and the tie-break that matters
+  is breadth across nameplates, newest year first, which is what it falls through to. The ordering
+  is still computed, because the next site may well be the other way round.
+
+### Are Polestar, Tesla, Mercedes and JLR renderable the same way? Checked.
+
+Three things have to be true: a list of (model, year, manual) without a VIN or a login, a
+machine-readable table of contents, and each section's body as fetchable HTML. Tweddle has all
+three. The others:
+
+| | list | contents | bodies | verdict |
+|---|---|---|---|---|
+| **Polestar** | partly | yes | **no** | renderable, but ~10× the cost — see below |
+| **Tesla** | — | — | — | **unreachable from this network**: `tesla.com` itself answers nothing, root included, to the default and the browser UA alike. Not a path problem and not assessable here. The 19 stale Tesla rows in the registry point at URLs that no longer answer. |
+| **Mercedes** | — | — | — | same: `mercedes-benz.com/en/owners/` does not answer from here at all. |
+| **JLR** | no | no | no | `ownerinfo.jaguar.com` / `ownerinfo.landrover.com` are 25 KB SPA shells, as cycle 2 found; every document route 302s to the root. |
+
+**Polestar in detail**, because it is the one that could be done. `polestar.com/uk/manual/<model>/<year>/`
+answers 200 for polestar-2 across 2024/2026/2027 and lists **21 topic ids** per year; a topic page
+`/uk/manual/polestar-2/2027/<32-hex>/` also answers 200 — but **only to a browser User-Agent**, and
+what comes back is 251 KB of which the manual body is *not* part: the served HTML is navigation
+chrome and the topic text is drawn client-side. So Polestar needs a full Chrome navigation **per
+topic** (21+ per manual, against one API call for a whole Tweddle manual) plus chrome-stripping
+before printing, for a range of roughly 12–20 manuals (Polestar 2/3/4/5 × a few years), and
+polestar-3/4/5 expose only one topic id to a plain fetch, so their structure is not even confirmed.
+**Low priority**: the same hour spent on Tweddle buys ~12 manuals with no new machinery.

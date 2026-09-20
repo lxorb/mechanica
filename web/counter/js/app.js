@@ -122,11 +122,6 @@ function firstGo() {
  * /health answer that keeps ttm.js in REMOTE mode never reaches its cache and a later
  * offline reload would fall back to the bundled-only store. One 31-byte re-probe once the
  * worker has claimed the page fixes that, and costs nothing on every later visit.
- *
- * Registration waits for the page to finish loading. Installing a worker means it precaches,
- * and on a cold first load those fetches raced the ones the search field was waiting for —
- * the roster went down the same wire twice. The worker is for the *second* visit, so it is
- * started once the first one is standing.
  */
 function registerSw() {
   if (!("serviceWorker" in navigator)) return;
@@ -149,36 +144,6 @@ function registerSw() {
   );
 }
 
-/**
- * Everything the second visit needs and the first one does not: the other screens, the
- * deep-chat bundle, the worker's own copy of the roster. The worker only takes them when the
- * page says it is done loading, so an offline reload still finds them and a cold load never
- * waits behind them. Sent once; the worker ignores a repeat.
- */
-function fillCaches() {
-  if (!("serviceWorker" in navigator)) return;
-  navigator.serviceWorker.ready
-    .then((reg) => {
-      const worker = reg.active || navigator.serviceWorker.controller;
-      if (worker) worker.postMessage({ type: "precache-rest" });
-    })
-    .catch(() => {});
-}
-
-/** requestIdleCallback with a deadline, so a busy main thread cannot postpone this forever. */
-function idle(fn, timeout = 2000) {
-  if (typeof requestIdleCallback === "function") requestIdleCallback(fn, { timeout });
-  else setTimeout(fn, Math.min(timeout, 250));
-}
-
-function measure(name, from) {
-  try {
-    performance.measure?.(`ttm:${name}`, from);
-  } catch {
-    /* the mark buffer was cleared: a missing timing is not worth a throw on the boot path */
-  }
-}
-
 async function pickStore() {
   const started = performance.now();
   try {
@@ -192,109 +157,27 @@ async function pickStore() {
   return Q;
 }
 
-/* --------------------------------------------------------- screen modules */
-
-const loading = new Map();
-
-function loadScreen(id) {
-  let hit = loading.get(id);
-  if (!hit) {
-    hit = import(`./screens/${id}.js`).catch((err) => {
-      loading.delete(id); // a dropped connection must not make the screen permanently missing
-      console.warn(`screen module missing: ${id}`, err);
-    });
-    loading.set(id, hit);
-  }
-  return hit;
-}
-
-let restStarted = false;
-
-/**
- * Identify is the only screen the landing needs, and the other four bring the 3D viewer, the
- * chat bundle, the PDF reader and the parts sheet with them — 90 KB gzipped of JavaScript that
- * used to be fetched, parsed and compiled one module at a time *before* the search field
- * existed. They come in as soon as the roster is there (the earliest a mechanic can tap a
- * card), or on the first touch, whichever happens first.
- */
-function loadRest() {
-  if (restStarted) return Promise.resolve();
-  restStarted = true;
-  performance.mark?.("ttm:rest:a");
-  const rest = [...SCREENS.filter((id) => id !== "identify"), ...OVERLAYS].map(loadScreen);
-  return Promise.all(rest).then(() => {
-    measure("rest", "ttm:rest:a");
-    heal();
-  });
-}
-
-/**
- * A screen whose module arrived after the route had already asked for it: go() showed the
- * section, found nothing registered and left it empty. If that is where we are standing once
- * the modules are in, route to it again and let bus.js mount it. In the normal case — the
- * screen is painted, or we never left Identify — this is one DOM query.
- */
-function heal() {
-  const section = document.querySelector(`section[data-screen="${here}"]`);
-  const root = section && (section.querySelector("[data-root]") || section);
-  if (!root || root.childNodes.length) return;
-  go(here, { replace: true });
-}
-
 async function boot() {
   paintTicket();
   armBack();
+  registerSw();
   on("state", (patch) => {
     if (patch && Object.prototype.hasOwnProperty.call(patch, "ticket")) paintTicket();
     stash();
   });
 
-  // window.Q is the same module namespace object `import * as Q` hands every screen, so it can
-  // be published before the store has picked its backing.
-  window.Q = Q;
+  window.Q = await pickStore();
+  revive();
 
-  const hash = splitHash(location.hash).screen || "identify";
-  const deep = SCREENS.includes(hash) && hash !== "identify";
-
-  // A touch or a keystroke is a promise to navigate: bring the other screens in now.
-  addEventListener("pointerdown", () => loadRest(), { once: true, passive: true, capture: true });
-  addEventListener("keydown", () => loadRest(), { once: true, capture: true });
-
-  const store = pickStore().then(() => {
-    revive();
-    idle(() => loadRest(), 1200);
-    idle(fillCaches, 4000);
-  });
-
-  if (deep) {
-    // A reload on #pick or #book: revive() has to run before any screen registers itself, or
-    // bus.js routes off the hash with an empty state and rewrites it to #identify. That path
-    // therefore keeps the old order — store first, then screens.
-    await store;
-    await Promise.all([loadScreen("identify"), loadScreen(hash)]);
-    firstGo();
-    Q.uiUp();
-    loadRest();
-    return;
+  for (const id of [...SCREENS, ...OVERLAYS]) {
+    try {
+      await import(`./screens/${id}.js`);
+    } catch (err) {
+      console.warn(`screen module missing: ${id}`, err);
+    }
   }
 
-  performance.mark?.("ttm:identify:a");
-  await loadScreen("identify");
-  measure("identify", "ttm:identify:a");
-  // The field is on screen from here. The roster fills it in when it lands: ttm.js fires
-  // "ttm:catalog", which Identify already listens for.
-  //
-  // uiUp() releases the two heavy passes the store holds back until there is a screen to hold
-  // them back for. On a warm load the roster is in hand before this module has even finished
-  // evaluating, and the search index was being built in front of it: 12 s of blocked thread
-  // between the first paint and the search field.
   firstGo();
-  Q.uiUp();
-  await store;
 }
-
-// The worker is not part of the first paint: register it once the page has finished loading.
-if (document.readyState === "complete") idle(registerSw, 3000);
-else addEventListener("load", () => idle(registerSw, 3000), { once: true });
 
 boot();
