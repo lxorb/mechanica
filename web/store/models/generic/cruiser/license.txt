@@ -1,0 +1,11 @@
+Model Information:
+* title:	Harley Davidson Breakout
+* source:	https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268
+* author:	FWSean (https://sketchfab.com/FWSean)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Harley Davidson Breakout" (https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268) by FWSean (https://sketchfab.com/FWSean) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -32,10 +32,15 @@
   <header class="ticket"><span>Viewer 3D</span><b data-ticket id="fps">– fps</b></header>
   <div class="wrap">
     <div class="row">
+      <!-- exact models first, then one entry per bike the generics have to stand in for;
+           the generic list is filled in from store/models/generic/parts.json at boot -->
       <select id="model">
         <option value="yzf-2021">yzf-2021</option>
         <option value="honda-cbr650r">honda-cbr650r</option>
         <option value="corvette-c8">corvette-c8</option>
+      </select>
+      <select id="bike">
+        <option value="">— pick a bike —</option>
       </select>
       <button type="button" class="viewer3d-btn" id="mode" aria-pressed="false">Placeholder</button>
     </div>
@@ -51,7 +56,7 @@
   </div>
 
   <script type="module">
-    import { mount, modelFor, partFor, PART_KEYS } from "./js/viewer3d.js";
+    import { mount, modelFor, partFor, PART_KEYS, typesReady } from "./js/viewer3d.js";
 
     const host = document.getElementById("host");
     const out = document.getElementById("out");
@@ -65,6 +70,7 @@
     let readyAt = 0;
     let upgradedAt = 0;
     let usePlaceholder = false;
+    let loaded = 0;
     // ?src=gltf loads the uncompressed Sketchfab source instead of model.glb (dev only)
     const src = new URLSearchParams(location.search).get("src");
     // ?env=<polyhaven name> picks the HDRI, ?env=off drops back to the transparent studio look
@@ -72,8 +78,10 @@
 
     function log(extra = "") {
       const state = viewer ? viewer.state() : {};
+      const d = window.lastDescriptor;
       out.textContent =
-        `model ${state.model || "-"} · ${state.placeholder ? "placeholder" : "glb"} · first paint ${readyAt ? readyAt + " ms" : "…"} · glb ${upgradedAt ? upgradedAt + " ms" : "…"}\n` +
+        `model ${state.model || "-"} · ${state.placeholder ? "schematic" : "glb"} · scene ${readyAt ? readyAt + " ms" : "…"} · glb ${upgradedAt ? upgradedAt + " ms" : "…"} · dl ${loaded ? Math.round(loaded * 100) + "%" : "…"}\n` +
+        (d ? `${d.label} → ${d.key} · ${d.exact ? "exact" : "generic"} · type ${d.type} · tint ${d.tint || "none"}\n` : "") +
         `meshes ${state.meshes ?? "-"} · part ${state.part || "none"} · spacing ${(state.spacing ?? 0).toFixed(2)}\n` +
         `groups ${(state.parts || []).join(" ")}\n` +
         `errors ${errors.length ? errors.join(" | ") : "none"}${extra ? "\n" + extra : ""}`;
@@ -84,22 +92,63 @@
       errors.length = 0;
       readyAt = 0;
       upgradedAt = 0;
+      loaded = 0;
       started = performance.now();
+      const plainKey = typeof key === "string" ? key : key.key;
       viewer = mount(host, key, {
         placeholder: usePlaceholder,
         debug: true,
-        url: src ? (src === "gltf" ? `../store/models/${key}/scene.gltf` : `../store/models/${key}/_${src}.glb`) : undefined,
+        url: src ? (src === "gltf" ? `../store/models/${plainKey}/scene.gltf` : `../store/models/${plainKey}/_${src}.glb`) : undefined,
         environment: envParam === "off" ? false : envParam || undefined,
         onReady: () => { readyAt = Math.round(performance.now() - started); log(); },
         onUpgrade: () => { upgradedAt = Math.round(performance.now() - started); log(); },
+        onProgress: (fraction) => { loaded = fraction; },
         onSelect: (part) => log(`clicked ${part || "nothing"}`),
         onError: (error) => { errors.push(String(error && error.message || error)); log(); },
       });
       window.viewer = viewer;
+      window.lastDescriptor = typeof key === "string" ? null : key;
       log();
     }
 
-    document.getElementById("model").addEventListener("change", (e) => start(e.target.value));
+    document.getElementById("model").addEventListener("change", (e) => {
+      document.getElementById("bike").value = "";
+      start(e.target.value);
+    });
+
+    /**
+     * The bike list is the real path: modelFor(bike) picks the exact model or the generic for its
+     * type and carries the tint, and mount() takes that descriptor whole. These are the bikes the
+     * generics actually have to stand in for, one per type plus the three exact models.
+     */
+    const BIKES = [
+      { make: "KTM", model: "390 Duke", year: 2024 },
+      { make: "Yamaha", model: "YZF-R7", year: 2023 },
+      { make: "Honda", model: "CBR650R", year: 2024 },
+      { make: "KTM", model: "450 SX-F", year: 2024 },
+      { make: "KTM", model: "500 EXC-F", year: 2024 },
+      { make: "KTM", model: "690 SMC R", year: 2023 },
+      { make: "Vespa", model: "Primavera 150", year: 2024 },
+      { make: "Honda", model: "Gold Wing", year: 2023 },
+      { make: "BMW", model: "R 1250 GS", year: 2023 },
+      { make: "Harley-Davidson", model: "Softail Standard", year: 2022 },
+      { make: "Royal Enfield", model: "Classic 350", year: 2024 },
+      { make: "Honda", model: "Grom", year: 2024 },
+      { make: "GasGas", model: "TXT Racing 300", year: 2023 },
+      { make: "Chevrolet", model: "Corvette Stingray", year: 2021 },
+    ];
+
+    const bikeSelect = document.getElementById("bike");
+    for (const [i, bike] of BIKES.entries()) {
+      const option = document.createElement("option");
+      option.value = String(i);
+      option.textContent = `${bike.make} ${bike.model}`;
+      bikeSelect.append(option);
+    }
+    bikeSelect.addEventListener("change", (e) => {
+      if (!e.target.value) return;
+      start(modelFor(BIKES[Number(e.target.value)]));
+    });
     document.getElementById("mode").addEventListener("click", (e) => {
       usePlaceholder = !usePlaceholder;
       e.target.setAttribute("aria-pressed", String(usePlaceholder));
@@ -143,12 +192,24 @@
 
     // a couple of mapping sanity checks, printed once
     window.mapping = {
-      model: [modelFor({ make: "Honda", model: "CBR650R" }), modelFor({ make: "Chevrolet", model: "Corvette" }), modelFor({ make: "KTM", model: "790 Duke" })],
+      model: BIKES.map((b) => { const d = modelFor(b); return `${b.make} ${b.model} -> ${d.key}${d.tint ? " " + d.tint : ""}`; }),
       part: ["Checking the front brake fluid level", "Drive chain slack", "Tyre pressure", "Engine oil change", "Replacing a fuse", "Mirrors"].map((t) => `${t} -> ${partFor(t)}`),
       keys: PART_KEYS.length,
     };
 
-    start("yzf-2021");
+    // ?model=<key> or ?bike=<index> so a headless run can open one straight away
+    const params = new URLSearchParams(location.search);
+    typesReady.then(() => {
+      window.mapping.model = BIKES.map((b) => { const d = modelFor(b); return `${b.make} ${b.model} -> ${d.key}${d.tint ? " " + d.tint : ""}`; });
+      window.typesReady = true;
+      if (params.get("bike")) {
+        const i = BIKES.findIndex((b) => `${b.make} ${b.model}`.toLowerCase().includes(params.get("bike").toLowerCase()));
+        if (i >= 0) { bikeSelect.value = String(i); start(modelFor(BIKES[i])); return; }
+      }
+      if (params.get("model")) { start(params.get("model")); return; }
+      if (!viewer) start("yzf-2021");
+    });
+    if (!params.get("bike") && !params.get("model")) start("yzf-2021");
   </script>
 </body>
 </html>

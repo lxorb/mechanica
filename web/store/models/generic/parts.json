@@ -1,0 +1,88 @@
+{
+ "scooter": {
+  "kind": "bike",
+  "orient": 0,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {}
+ },
+ "sportbike": {
+  "kind": "bike",
+  "orient": 0,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {
+   "fairing": [
+    "^Windshield_Mesh_0$",
+    "^Windshield\\.001_Decal_0$",
+    "^Windshield$",
+    "^Windshield\\.001$"
+   ],
+   "headlight": [
+    "^Front Lights_Mesh_0$",
+    "^Front Lights$"
+   ],
+   "handlebar": [
+    "^Dashboard_Mesh_0$",
+    "^Dashboard Holder_Mesh_0$",
+    "^Dashboard\\.001_Decal_0$",
+    "^Dashboard$",
+    "^Dashboard Holder$",
+    "^Dashboard\\.001$"
+   ],
+   "engine": [
+    "^Cylinder_Mesh_0$",
+    "^Cylinders_Mesh_0$",
+    "^Cylinder$",
+    "^Cylinders$",
+    "^Damn theres a lot of cylinders$",
+    "^Cylinder\\.014$"
+   ]
+  }
+ },
+ "cruiser": {
+  "kind": "bike",
+  "orient": 0,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {}
+ },
+ "naked": {
+  "kind": "bike",
+  "orient": 0,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [
+   "MAT_Ducati_StreetFighter_V4S_Carpaint.008",
+   "MAT_Ducati_StreetFighter_V4S_Carpaint_Red.028",
+   "MAT_Ducati_StreetFighter_V4S_Carpaint_Red"
+  ],
+  "extra": {}
+ },
+ "classic": {
+  "kind": "bike",
+  "orient": 0,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {}
+ }
+}

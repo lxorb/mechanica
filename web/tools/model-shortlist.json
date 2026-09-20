@@ -1,0 +1,67 @@
+[
+  {
+    "name": "sportbike",
+    "type": "sportbike",
+    "kind": "bike",
+    "uid": "4af2b6840b8045a5af5e8df8a85f04fa",
+    "title": "Kawasaki Ninja ZX-6R",
+    "author": "valvetin",
+    "authorUrl": "https://sketchfab.com/valvetin",
+    "url": "https://sketchfab.com/3d-models/kawasaki-ninja-zx-6r-4af2b6840b8045a5af5e8df8a85f04fa",
+    "license": "by",
+    "makes": ["kawasaki", "suzuki", "honda", "aprilia", "mv-agusta"],
+    "note": "336k faces, full fairing, Kawasaki lime — the clearest sportbike silhouette in the CC pool"
+  },
+  {
+    "name": "naked",
+    "type": "naked",
+    "kind": "bike",
+    "uid": "c501252f8af64c559bf91dc306c3a550",
+    "title": "2024 Ducati Streetfighter V4 S",
+    "author": "OUTPISTON",
+    "authorUrl": "https://sketchfab.com/OUTPISTON",
+    "url": "https://sketchfab.com/3d-models/2024-ducati-streetfighter-v4-s-c501252f8af64c559bf91dc306c3a550",
+    "license": "by-nc-sa",
+    "makes": ["ducati", "ktm", "yamaha", "triumph", "bmw", "kawasaki", "suzuki", "honda"],
+    "note": "102k faces, exposed engine and trellis frame — the naked shape, and the app's biggest bucket"
+  },
+  {
+    "name": "cruiser",
+    "type": "cruiser",
+    "kind": "bike",
+    "uid": "7d446ec9135c4e35892714d117b37268",
+    "title": "Harley Davidson Breakout",
+    "author": "FWSean",
+    "authorUrl": "https://sketchfab.com/FWSean",
+    "url": "https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268",
+    "license": "by",
+    "makes": ["harley-davidson", "indian", "victory", "suzuki", "kawasaki", "yamaha", "honda"],
+    "note": "43k faces, V-twin, raked forks, fat rear — reads as a cruiser at a glance"
+  },
+  {
+    "name": "scooter",
+    "type": "scooter",
+    "kind": "bike",
+    "uid": "5431bb42de5743088c849ba080e7ac33",
+    "title": "Vespa",
+    "author": "fox_amelie",
+    "authorUrl": "https://sketchfab.com/fox_amelie",
+    "url": "https://sketchfab.com/3d-models/vespa-hp-5431bb42de5743088c849ba080e7ac33",
+    "license": "by",
+    "makes": ["vespa", "piaggio", "kymco", "sym", "lambretta", "honda", "yamaha", "suzuki", "aprilia"],
+    "note": "131k faces, step-through monocoque — the scooter everyone pictures; 8.3% of the roster"
+  },
+  {
+    "name": "classic",
+    "type": "classic",
+    "kind": "bike",
+    "uid": "5a530a5b91fc49df9f879544b88c5401",
+    "title": "Triumph Bonneville",
+    "author": "zizian",
+    "authorUrl": "https://sketchfab.com/zizian",
+    "url": "https://sketchfab.com/3d-models/3d-model-triumph-bonneville-5a530a5b91fc49df9f879544b88c5401",
+    "license": "by",
+    "makes": ["triumph", "royal-enfield", "moto-guzzi", "bmw", "honda", "yamaha", "kawasaki"],
+    "note": "435k faces, round tank, spoked wheels, twin shocks — the retro roadster"
+  }
+]

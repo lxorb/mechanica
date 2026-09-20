@@ -1,8 +1,17 @@
 # 3D model credits
 
-Three vehicles ship with the counter app. Each one is a Sketchfab model, used under its own
-licence, recompressed for the web. The per-model `license.txt` next to each `model.glb` is the
-author's original file and ships with it — keep both.
+Every vehicle in the counter app is a Sketchfab model, used under its own licence and
+recompressed for the web. The per-model `license.txt` next to each `model.glb` is the author's
+original file and ships with it — keep both.
+
+There are two kinds:
+
+- **exact** — the bike itself, for the three we have a model of
+- **generic** — one per vehicle type in `web/counter/js/vehicle-type.js`, under `generic/<type>/`,
+  which stands in for every bike of that type. A KTM 450 SX-F gets `generic/motocross`, a Vespa
+  gets `generic/scooter`. How they were found and converted: `web/tools/model-sources.md`.
+
+## Exact models
 
 | key | model | author | licence |
 | --- | --- | --- | --- |
@@ -19,6 +28,20 @@ Credit lines to reproduce wherever the models are shown:
 Two of the three are **NC — non-commercial**, and share-alike. Fine for the hackathon demo; swap
 them before anything is sold. The vehicles are visual references, not manufacturer parts
 catalogues: the source groups say "bodyshell" and "misc_a", not verified service parts.
+
+## Generic models, one per vehicle type
+
+<!-- GENERIC-TABLE-START — written by web/tools/credits-generic.mjs, do not hand-edit -->
+_None shipped yet — run `node web/tools/models-fetch.mjs`._
+<!-- GENERIC-TABLE-END -->
+
+Every generic carries its author's own `license.txt` and a `source.json` with the Sketchfab uid,
+the licence slug and the triangle count. `generic/parts.json` maps each model's node names onto
+the part keys in `js/viewer3d.js`, which is what makes explode / highlight / focus work on a
+model none of us named the meshes in.
+
+**Attribution is not optional on the CC BY and CC BY-NC-SA ones.** The credit lines above and in
+the generic table are what has to appear wherever the models are shown.
 
 ## The GLBs are Draco-compressed
 

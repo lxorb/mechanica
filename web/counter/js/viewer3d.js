@@ -1,17 +1,27 @@
 /**
- * 3D vehicle viewer for the Pick screen. Owner: 3d agent. Ported from rexheng/hackmit@threejs
- * (web/src/bikes/assembly-scene.js + yzf-model.js): exploded view, per-part highlight, focus fit.
+ * 3D vehicle viewer for the Pick screen. Owner: vehicle-models agent (was: 3d agent). Ported from
+ * rexheng/hackmit@threejs (web/src/bikes/assembly-scene.js + yzf-model.js): exploded view,
+ * per-part highlight, focus fit.
  *
- * Models live in ../store/models/<modelKey>/model.glb (Sketchfab, see ../store/models/CREDITS.md):
- *   yzf-2021 (Yamaha YZF, generic motorcycle fallback), honda-cbr650r, corvette-c8.
- * modelFor(bike) picks the key: Honda CBR650R -> honda-cbr650r, Chevrolet Corvette -> corvette-c8,
- * everything else -> yzf-2021.
+ * Models live in ../store/models/<modelKey>/model.glb (Sketchfab, see ../store/models/CREDITS.md).
+ * There are two kinds:
+ *   - EXACT, the bike itself:  yzf-2021, honda-cbr650r, corvette-c8
+ *   - GENERIC, one per vehicle type: generic/<name>, e.g. generic/motocross, generic/scooter
+ * Which one a bike gets is not decided here — ./vehicle-type.js owns that, because classifying
+ * 22.3k bikes is a data problem, not a rendering one. This module re-exports its `modelFor(bike)`
+ * so callers keep the one import they had:
  *
- * First paint is always a procedural placeholder assembly — grouped primitives carrying the same
- * part keys — so the panel is alive in well under a second; the real 1.5-4 MB GLB loads behind it
- * and is swapped in when it lands (opts.onUpgrade). If it never lands, the schematic stays and
- * explode/highlight/focus keep working, so there is no blank state and no failure state.
- * opts.placeholder: true keeps the schematic and skips the download entirely.
+ *   modelFor(bike) -> { key, url, exact, type, tint, parts, label }
+ *
+ * and mount() takes either that descriptor or a bare model key. See vehicle-type.js for the full
+ * contract. `tint` is applied to the paint groups only — base colour, never roughness/metalness.
+ *
+ * While the GLB comes down the wire the panel shows the environment plus a progress ring
+ * (.viewer3d-load in css/viewer3d.css, fed by the loader's onProgress), NOT a stand-in model —
+ * a wrong-looking bike for two seconds reads as a bug, an honest loader does not. The procedural
+ * schematic below is kept as the last-resort fallback: if the GLB 404s or the network dies it is
+ * revealed instead of the ring, so explode/highlight/focus still work and there is no dead panel.
+ * opts.placeholder: true goes straight to the schematic and skips the download entirely.
  *
  * Part keys (stable, used by the Pick screen to map manual sections -> 3D parts):
  *   front-wheel, rear-wheel, front-brake, rear-brake, front-fork, rear-shock, swingarm, chain,
@@ -87,7 +97,10 @@ const FALLBACK = {
   exhaust: "engine", frame: "engine",
 };
 
+/** The exact models. Generic keys are "generic/<name>" and come from ../store/models/generic. */
 export const MODEL_KEYS = ["yzf-2021", "honda-cbr650r", "corvette-c8"];
+
+const isGeneric = (key) => typeof key === "string" && key.startsWith("generic/");
 
 /* ------------------------------------------------------------------ parts tables
  * meshes: regexes tested against a GLB node's own name, its parent/group name and — for skinned
@@ -188,9 +201,87 @@ const PARTS = {
   "corvette-c8": CAR_PARTS,
 };
 
+/**
+ * The generic models are other people's Sketchfab uploads, so their node names are whatever each
+ * author happened to type — "Tank_low", "Circle.018", "polySurface42". The shared BIKE_PARTS /
+ * CAR_PARTS regexes catch the well-named ones; the rest are pinned per model in
+ * ../store/models/generic/parts.json, written by web/tools/models-fetch.mjs from the node names
+ * it reads out of each converted GLB. Shape:
+ *
+ *   { "motocross": { "kind": "bike", "extra": { "fuel-tank": ["^tank"], … },
+ *                    "paint": ["fuel-tank", "fairing"], "orient": 90 } }
+ *
+ * `orient` is the extra Y rotation in degrees that turns that model's nose to +x like the others.
+ * Registered at boot by registerGenericParts(); until it lands a generic still renders, it just
+ * drops more of its meshes into the catch-all group.
+ */
+const GENERIC_PARTS = new Map();
+
+/** Groups that carry the paint, and so are what a tint is allowed to touch. */
+const DEFAULT_PAINT = ["fuel-tank", "fairing", "frame"];
+
+/**
+ * registerGenericParts(table) — hand over the parsed generic/parts.json. Safe to call twice and
+ * safe to call with junk: anything malformed is skipped rather than thrown.
+ */
+export function registerGenericParts(table) {
+  if (!table || typeof table !== "object") return;
+  for (const [name, row] of Object.entries(table)) {
+    if (!row || typeof row !== "object") continue;
+    const base = row.kind === "car" ? CAR_PARTS : BIKE_PARTS;
+    const extra = {};
+    for (const [key, list] of Object.entries(row.extra || {})) {
+      if (!Array.isArray(list)) continue;
+      const res = [];
+      for (const source of list) {
+        try { res.push(new RegExp(source, "i")); } catch { /* a bad regex is not a dead viewer */ }
+      }
+      if (res.length) extra[key] = res;
+    }
+    GENERIC_PARTS.set(`generic/${name}`, {
+      table: withExtra(base, extra),
+      paint: Array.isArray(row.paint) && row.paint.length ? row.paint : DEFAULT_PAINT,
+      paintMaterials: Array.isArray(row.paintMaterials) ? row.paintMaterials : [],
+      orient: Number.isFinite(row.orient) ? row.orient : 0,
+      kind: row.kind === "car" ? "car" : "bike",
+    });
+  }
+}
+
 /** Every part a model key can show, in explode order. */
 export function partsFor(modelKey) {
-  return PARTS[modelKey] || BIKE_PARTS;
+  if (PARTS[modelKey]) return PARTS[modelKey];
+  const generic = GENERIC_PARTS.get(modelKey);
+  if (generic) return generic.table;
+  return CAR_KEY.test(String(modelKey)) ? CAR_PARTS : BIKE_PARTS;
+}
+
+/** Generic keys whose model is a car, when parts.json has not been registered yet. */
+const CAR_KEY = /(corvette|^generic\/(car|sedan|suv|pickup|coupe|truck))/;
+
+/** Which groups a tint may repaint on this model. */
+function paintGroupsFor(modelKey) {
+  const generic = GENERIC_PARTS.get(modelKey);
+  if (generic) return generic.paint;
+  return CAR_KEY.test(String(modelKey)) ? ["fairing"] : DEFAULT_PAINT;
+}
+
+/** The named paint materials on this model. Empty = do not tint it at all; see tintModel(). */
+function paintMaterialsFor(modelKey) {
+  const generic = GENERIC_PARTS.get(modelKey);
+  return generic ? generic.paintMaterials : [];
+}
+
+/**
+ * Y rotation, in radians, that puts this model's nose at +x.
+ * The three Sketchfab vehicles the app started with all face -x, hence the -90° default. Every
+ * generic is someone else's upload pointing somewhere else, so parts.json carries its own
+ * absolute value, set by eye with `node web/tools/viewer-shots.mjs --orient`.
+ */
+function orientFor(modelKey) {
+  const generic = GENERIC_PARTS.get(modelKey);
+  if (generic) return (generic.orient * Math.PI) / 180;
+  return -Math.PI / 2;
 }
 
 /**
@@ -217,16 +308,70 @@ const CATCH_ALL = "frame";
 
 const flat = (value) => String(value == null ? "" : value).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
+/**
+ * modelFor(bike) -> the descriptor from ./vehicle-type.js (see this file's header, and that
+ * module's, for the contract). Re-exported here so every caller keeps its single import.
+ *
+ * The result is memoised per bike, and that is load-bearing, not an optimisation: the Pick screen
+ * holds the last value and remounts when `modelFor(bike) !== previous`. A fresh object every call
+ * would tear the viewer down and rebuild it on every render.
+ */
+const descriptors = new Map();
+
 export function modelFor(bike) {
+  const id = bike && typeof bike === "object"
+    ? `${bike.id || ""}|${bike.make || bike.brand || ""}|${bike.model || bike.name || ""}`
+    : String(bike ?? "");
+  const cached = descriptors.get(id);
+  if (cached) return cached;
+  const made = describe(bike);
+  descriptors.set(id, made);
+  return made;
+}
+
+/** Everything modelFor needs from ./vehicle-type.js, once it has loaded. */
+let vehicleType = null;
+
+function describe(bike) {
+  if (vehicleType) return vehicleType.modelFor(bike);
+  // vehicle-type.js is imported at module load and resolves in the same tick as the first mount;
+  // this only runs if something asks before it lands, and the exact models cover the demo bikes.
   const text = bike && typeof bike === "object"
     ? flat([bike.make, bike.brand, bike.model, bike.name, bike.id].filter(Boolean).join(" "))
     : flat(bike);
-  if (!text) return "yzf-2021";
-  if (/\bcorvette\b/.test(text) || /\bc8\b/.test(text) || /\bstingray\b/.test(text)) return "corvette-c8";
-  if (/\bcbr\s?650\s?r?\b/.test(text) && /\bhonda\b/.test(text)) return "honda-cbr650r";
-  if (/\bcbr\s?650\b/.test(text)) return "honda-cbr650r";
-  return "yzf-2021";
+  const key = /\bcorvette\b|\bc8\b|\bstingray\b/.test(text)
+    ? "corvette-c8"
+    : /\bcbr ?650\b/.test(text)
+      ? "honda-cbr650r"
+      : "yzf-2021";
+  return {
+    key,
+    url: new URL(`../../store/models/${key}/model.glb`, import.meta.url).href,
+    exact: true,
+    type: key === "corvette-c8" ? "car" : "sportbike",
+    tint: null,
+    parts: key === "corvette-c8" ? "car" : "bike",
+    label: text,
+  };
 }
+
+/**
+ * Loading ./vehicle-type.js and the two tables it wants. Kicked off on import — it is ~12 KB of
+ * module plus two JSON fetches, and every one of them is optional: if any of it fails, describe()
+ * above still answers and the viewer still renders, just with the exact models only.
+ */
+const typesReady = import("./vehicle-type.js")
+  .then(async (module) => {
+    vehicleType = module;
+    descriptors.clear();
+    await module.ready();
+    descriptors.clear();
+    const res = await fetch(new URL("../../store/models/generic/parts.json", import.meta.url));
+    if (res.ok) registerGenericParts(await res.json());
+  })
+  .catch(() => { /* exact models only; see describe() */ });
+
+export { typesReady };
 
 const REAR = /\b(rear|back|pillion|tail)\b/;
 const pick = (text, front, rear) => (REAR.test(text) ? rear : front);
@@ -580,10 +725,67 @@ async function loadGlb(THREE, modelKey, url, onProgress) {
   skeletons.forEach((skeleton) => skeleton.dispose());
   if (!meshes.length) throw new Error("empty model");
 
-  // the source models face -x; turn them so the front is +x like the placeholder
-  const orient = new THREE.Matrix4().makeRotationY(-Math.PI / 2);
+  // turn the model so its front is +x, like the schematic and like every other model. See
+  // orientFor(): the three exact vehicles face -x, the generics each carry their own value.
+  const orient = new THREE.Matrix4().makeRotationY(orientFor(modelKey));
   meshes.forEach((mesh) => mesh.geometry.applyMatrix4(orient));
   return finishModel(THREE, { root, groups, meshes, materials, modelKey, placeholder: false });
+}
+
+/**
+ * Repaint the bike's paint to `hex` — base colour only. Roughness, metalness, the normal map and
+ * the AO map are what make a tank look like a tank rather than a coloured shape, so they are left
+ * exactly as the author set them.
+ *
+ * It tints a material only when that material's own NAME says it is paint — parts.json's
+ * `paintMaterials`, written by web/tools/models-fetch.mjs from a strict name match. A model with
+ * no such material is not tinted at all, and that is deliberate: three multiplies baseColorTexture
+ * by material.color, so tinting a material whose texture is bright red with a pale green gives a
+ * muddy red, not a green bike. Of the models we ship exactly one has a material called
+ * "…Carpaint…". Guessing on the others would make them look broken, not personalised.
+ *
+ * Materials are shared between meshes inside a GLB, so each is cloned once before it is
+ * recoloured; the clone joins model.materials, which is what disposeModel() walks, so nothing
+ * leaks. Called after finishModel(), so userData.originalMaterial is already set and is updated
+ * here to match — otherwise clearing a highlight would put the untinted material back.
+ */
+function tintModel(THREE, model, hex) {
+  if (!hex) return model;
+  const named = paintMaterialsFor(model.modelKey);
+  if (!named.length) return model;
+  let color;
+  try {
+    color = new THREE.Color(hex);
+  } catch {
+    return model;
+  }
+  const wanted = new Set(named);
+  const allowed = new Set(paintGroupsFor(model.modelKey));
+  const clones = new Map();
+  const isPaint = (material) =>
+    material && material.color && wanted.has(material.name) && material.name;
+
+  for (const mesh of model.meshes) {
+    // the material name decides, and the part group is the safety net: a material called "paint"
+    // on the wheels is still not the paint
+    if (allowed.size && !allowed.has(mesh.userData.partKey)) continue;
+    const swap = (material) => {
+      if (!isPaint(material)) return material;
+      let clone = clones.get(material);
+      if (!clone) {
+        clone = material.clone();
+        clone.color.copy(color);
+        clones.set(material, clone);
+        model.materials.add(clone);
+      }
+      return clone;
+    };
+    const next = Array.isArray(mesh.material) ? mesh.material.map(swap) : swap(mesh.material);
+    if (next === mesh.material) continue;
+    mesh.material = next;
+    mesh.userData.originalMaterial = next;
+  }
+  return model;
 }
 
 /** Normalise to a unit bounding sphere at the origin and attach explode vectors + bounds. */
@@ -806,18 +1008,61 @@ function miniOrbit(THREE, camera, dom) {
   return api;
 }
 
+/* ------------------------------------------------------------------ the loading ring
+ * One SVG ring over the panel while the GLB downloads. It is deliberately the only thing on
+ * screen besides the environment: showing a stand-in bike that is about to be replaced by a
+ * different bike reads as a glitch, and a model that is honestly still arriving does not.
+ * The ring reports the real byte fraction from the loader; before the first Content-Length it
+ * spins indeterminately, which is the truth rather than a fake 0%.
+ */
+
+const RING_R = 22;
+const RING_C = 2 * Math.PI * RING_R;
+
+function progressRing(host) {
+  const wrap = document.createElement("div");
+  wrap.className = "viewer3d-load";
+  wrap.setAttribute("role", "progressbar");
+  wrap.setAttribute("aria-label", "Loading the 3D model");
+  wrap.innerHTML =
+    `<svg class="viewer3d-load-ring" viewBox="0 0 56 56" aria-hidden="true">` +
+    `<circle class="viewer3d-load-track" cx="28" cy="28" r="${RING_R}"></circle>` +
+    `<circle class="viewer3d-load-arc" cx="28" cy="28" r="${RING_R}"` +
+    ` stroke-dasharray="${RING_C.toFixed(1)}" stroke-dashoffset="${(RING_C * 0.75).toFixed(1)}"></circle>` +
+    `</svg><b class="viewer3d-load-pct"></b>`;
+  host.append(wrap);
+  const arc = wrap.querySelector(".viewer3d-load-arc");
+  const pct = wrap.querySelector(".viewer3d-load-pct");
+  let known = false;
+  return {
+    set(fraction) {
+      if (fraction == null || !Number.isFinite(fraction)) return;
+      if (!known) { known = true; wrap.classList.add("is-known"); }
+      const value = Math.max(0, Math.min(1, fraction));
+      arc.setAttribute("stroke-dashoffset", (RING_C * (1 - value)).toFixed(1));
+      pct.textContent = `${Math.round(value * 100)}%`;
+      wrap.setAttribute("aria-valuenow", String(Math.round(value * 100)));
+    },
+    remove() { wrap.remove(); },
+  };
+}
+
 /* ------------------------------------------------------------------ mount */
 
 /**
- * mount(host, modelKey, opts) -> viewer
- *   host: an element the canvas fills (absolute/sticky positioning is the screen's job)
- *   opts: { onReady(viewer),      // first paint, on the placeholder — usually < 1 s
- *           onUpgrade(viewer),    // the real GLB arrived and replaced it
+ * mount(host, model, opts) -> viewer
+ *   host:  an element the canvas fills (absolute/sticky positioning is the screen's job)
+ *   model: a model key ("yzf-2021", "generic/scooter") OR a modelFor(bike) descriptor, which is
+ *          the normal case — it carries the url and the tint alongside the key.
+ *   opts: { onReady(viewer),      // the scene is up: environment lit, loader running
+ *           onUpgrade(viewer),    // the GLB arrived and is on screen
+ *           onProgress(0..1|null),// download fraction; null while the size is unknown
  *           onSelect(partKey),    // a tap landed on a part (null = background)
- *           onError(error),       // the GLB could not be loaded; the schematic stays
- *           placeholder: boolean, // keep the schematic, never fetch the GLB
+ *           onError(error),       // the GLB could not be loaded; the schematic is revealed
+ *           placeholder: boolean, // go straight to the schematic, never fetch the GLB
  *           environment: false | "<polyhaven name>",  // false = transparent canvas, no HDRI
  *           url: string,          // override the GLB url (dev)
+ *           tint: "#rrggbb"|null, // override the descriptor's tint
  *           xray: boolean, debug: boolean }
  *   The viewer is returned synchronously and every call is safe immediately: anything asked for
  *   before the scene exists is replayed once it does.
@@ -829,8 +1074,11 @@ function miniOrbit(THREE, camera, dom) {
  *   resize()
  *   dispose()
  */
-export function mount(host, modelKey, opts = {}) {
-  const key = MODEL_KEYS.includes(modelKey) ? modelKey : "yzf-2021";
+export function mount(host, model, opts = {}) {
+  const descriptor = model && typeof model === "object" ? model : null;
+  const key = (descriptor ? descriptor.key : model) || "yzf-2021";
+  const url = opts.url || (descriptor && descriptor.url) || new URL(`../../store/models/${key}/model.glb`, import.meta.url).href;
+  const tint = opts.tint !== undefined ? opts.tint : descriptor && descriptor.tint;
   const wish = { exploded: false, spacing: 1, part: null, focused: false, xray: !!opts.xray };
   let live = null;
   let dead = false;
@@ -838,11 +1086,12 @@ export function mount(host, modelKey, opts = {}) {
   host.classList.add("viewer3d");
   host.setAttribute("data-viewer3d", "loading");
   host.setAttribute("data-model", key);
+  const loader = opts.placeholder ? null : progressRing(host);
 
   boot().then((scene) => {
     if (dead) { scene.dispose(); return; }
     live = scene;
-    host.setAttribute("data-viewer3d", scene.model.placeholder ? "placeholder" : "ready");
+    host.setAttribute("data-viewer3d", opts.placeholder ? "placeholder" : "loading");
     if (wish.exploded) scene.explode(true, wish.spacing, true);
     if (wish.part) scene.highlight(wish.part);
     if (wish.focused && wish.part) scene.focus(wish.part);
@@ -850,31 +1099,44 @@ export function mount(host, modelKey, opts = {}) {
     if (typeof opts.onReady === "function") opts.onReady(api);
   }).catch((error) => {
     host.setAttribute("data-viewer3d", "error");
+    if (loader) loader.remove();
     if (typeof opts.onError === "function") opts.onError(error);
     else console.warn("viewer3d: could not start", error);
   });
 
   /**
-   * First paint is the procedural placeholder, which costs nothing and is on screen in one frame;
-   * the real GLB (4 MB, and a slow line is a slow line) is fetched behind it and swapped in when
-   * it arrives. Nobody waits on a blank panel, and if the model 404s or the network dies the
-   * schematic simply stays — there is no failure state to design for.
+   * The environment comes up immediately — it is cached across mounts and reads as the garage the
+   * bike is standing in — and the GLB downloads in front of a progress ring. The schematic is
+   * built at the same time but starts hidden: it is the fallback, not the preview. Only if the
+   * model never arrives does it become visible, and then explode / highlight / focus all still
+   * work on it, so a dead network degrades to a working diagram rather than an empty panel.
    */
   async function boot() {
     const THREE = await loadThree();
-    const placeholder = buildPlaceholder(THREE, key);
-    if (dead) { disposeModel(placeholder); throw new Error("disposed"); }
-    const scene = createScene(THREE, host, placeholder, opts);
-    if (!opts.placeholder) {
-      const url = opts.url || new URL(`../../store/models/${key}/model.glb`, import.meta.url).href;
-      loadGlb(THREE, key, url).then((real) => {
-        if (dead || !scene.adopt(real)) { disposeModel(real); return; }
-        host.setAttribute("data-viewer3d", "ready");
-        if (typeof opts.onUpgrade === "function") opts.onUpgrade(api);
-      }).catch((error) => {
-        if (typeof opts.onError === "function") opts.onError(error);
-      });
-    }
+    const fallback = buildPlaceholder(THREE, key);
+    if (dead) { disposeModel(fallback); throw new Error("disposed"); }
+    const scene = createScene(THREE, host, fallback, opts);
+    if (opts.placeholder) return scene;
+    scene.showModel(false);
+    loadGlb(THREE, key, url, (event) => {
+      const fraction = event && event.lengthComputable && event.total ? event.loaded / event.total : null;
+      if (loader) loader.set(fraction);
+      if (typeof opts.onProgress === "function") opts.onProgress(fraction);
+    }).then((real) => {
+      tintModel(THREE, real, tint);
+      if (dead || !scene.adopt(real)) { disposeModel(real); return; }
+      if (loader) loader.remove();
+      host.setAttribute("data-viewer3d", "ready");
+      if (typeof opts.onUpgrade === "function") opts.onUpgrade(api);
+    }).catch((error) => {
+      // the model is gone; show the schematic we already built rather than nothing at all
+      if (dead) return;
+      if (loader) loader.remove();
+      scene.showModel(true);
+      host.setAttribute("data-viewer3d", "placeholder");
+      if (typeof opts.onError === "function") opts.onError(error);
+      else console.warn(`viewer3d: ${key} did not load, showing the schematic`, error && error.message);
+    });
     return scene;
   }
 
@@ -1123,7 +1385,17 @@ function createScene(THREE, host, initialModel, opts) {
 
   const scene3d = {
     get model() { return model; },
-    /** Swap the placeholder for the real model, keeping the current explode/highlight state. */
+    /**
+     * Hide or show the vehicle without tearing the scene down. mount() hides it while the GLB
+     * downloads — the environment keeps rendering behind the loading ring, and the schematic
+     * underneath is only revealed if the download never lands.
+     */
+    showModel(on) {
+      model.root.visible = !!on;
+      shadow.visible = !!on;
+      run();
+    },
+    /** Swap the schematic for the real model, keeping the current explode/highlight state. */
     adopt(next) {
       if (disposed || !next || !next.meshes.length) return false;
       const key = selected ? selected.key : null;
@@ -1136,6 +1408,8 @@ function createScene(THREE, host, initialModel, opts) {
       model = next;
       cloneMaterials();
       scene.add(model.root);
+      model.root.visible = true;
+      shadow.visible = true;
       shadow.position.y = model.floor - model.radius * 0.01;
       applySpacing();
       selected = pickGroup(key);

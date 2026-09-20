@@ -1,0 +1,11 @@
+Model Information:
+* title:	vespa_HP
+* source:	https://sketchfab.com/3d-models/vespa-hp-5431bb42de5743088c849ba080e7ac33
+* author:	fox_amelie (https://sketchfab.com/fox_amelie)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "vespa_HP" (https://sketchfab.com/3d-models/vespa-hp-5431bb42de5743088c849ba080e7ac33) by fox_amelie (https://sketchfab.com/fox_amelie) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

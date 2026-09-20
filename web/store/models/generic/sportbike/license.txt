@@ -1,0 +1,11 @@
+Model Information:
+* title:	Kawasaki ninja ZX-6R
+* source:	https://sketchfab.com/3d-models/kawasaki-ninja-zx-6r-4af2b6840b8045a5af5e8df8a85f04fa
+* author:	valvetin (https://sketchfab.com/valvetin)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Kawasaki ninja ZX-6R" (https://sketchfab.com/3d-models/kawasaki-ninja-zx-6r-4af2b6840b8045a5af5e8df8a85f04fa) by valvetin (https://sketchfab.com/valvetin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

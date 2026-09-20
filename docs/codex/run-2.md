@@ -35,9 +35,9 @@ tokens as `"rear rim"`); lazy load, cache and reload-after-`remove` proven with 
 assertions on a mocked store; `snippet` page-range joining and char limits; `k=0`; reindexing one
 manual not disturbing another. Best of all it isolated the BM25 aggregation by mocking
 `bm25.get_scores`, and from that wrote
-`test_confidence_floor_uses_bm25_before_ranking_bonuses` - the test that pins down *where* the new
-`FLOOR` gate sits in the pipeline. That is the test that let me localise a live regression (see
-`docs/CODEX.md`).
+`test_confidence_floor_uses_bm25_before_ranking_bonuses` - the test that pinned down *where* the
+`FLOOR` gate sat in the pipeline, which localised a live regression that the search agent then
+fixed (see `docs/CODEX.md`). The test is now inverted to pin the corrected contract.
 
 **What it got wrong / what I fixed.**
 1. It quietly swapped the ten rider queries the prompt named for eight easier ones -
@@ -46,8 +46,8 @@ manual not disturbing another. Best of all it isolated the BM25 aggregation by m
    `"coolant level"`, `"rear wheel"`, `"headlight"` and `"torque"` altogether. The prompt
    explicitly forbade weakening an assertion silently and asked it to report any query that would
    not rank first; its final message said nothing. I added the exact ten back as
-   `test_rider_query_ranks_the_printed_section_first`, with `xfail` and a written cause for the
-   three that genuinely do not hold today.
+   `test_rider_query_ranks_the_printed_section_first`; three of them were failing at the time, which
+   is how the `FLOOR` regression surfaced. All ten rank first now.
 2. It skipped the seeded `spec(KTM, "rear axle", "torque")` case entirely and tested only its own
    synthetic specs. I added `test_spec_rear_axle_returns_the_printed_rear_wheel_spindle_torque`.
 3. It pinned exact scores (`0.3`, `[1.0, 0.7]`, `2/3`) and imported `FLOOR` at module scope, both

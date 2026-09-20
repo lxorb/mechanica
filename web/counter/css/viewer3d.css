@@ -4,7 +4,7 @@
  * mount(host, ...) adds .viewer3d to the host and appends one <canvas class="viewer3d-canvas">.
  * It also keeps three attributes on the host, which is all this file styles:
  *   data-viewer3d="loading" | "ready" | "placeholder" | "error"
- *   data-model="yzf-2021" | "honda-cbr650r" | "corvette-c8"
+ *   data-model="yzf-2021" | "honda-cbr650r" | "corvette-c8" | "generic/<type>"
  *   data-part="<part key>" | ""          (empty when nothing is highlighted)
  *   data-exploded="on" | "off"
  * Size and placement belong to the screen: give .viewer3d a height (or an aspect-ratio) there.
@@ -88,6 +88,68 @@
   pointer-events: none;
 }
 
+/* ---------------------------------------------------------------- the loading ring
+ * While the GLB is on the wire the panel shows the garage environment and this ring over it —
+ * nothing else. mount() appends .viewer3d-load and removes it the moment the model is on screen.
+ * Two states: indeterminate until the first Content-Length (the whole ring spins), then .is-known,
+ * where the arc is the real byte fraction and the percentage is printed inside it.
+ */
+
+.viewer3d-load {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.viewer3d-load-ring {
+  grid-area: 1 / 1;
+  width: 72px;
+  height: 72px;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.viewer3d-load-track {
+  fill: none;
+  stroke: rgba(20, 20, 20, 0.16);
+  stroke-width: 5;
+}
+
+.viewer3d-load-arc {
+  fill: none;
+  stroke: var(--orange, #e85d04);
+  stroke-width: 5;
+  stroke-linecap: butt;
+  transform-origin: 50% 50%;
+  animation: viewer3d-spin 900ms linear infinite;
+}
+
+/* once the size is known the arc stops spinning and simply fills */
+.viewer3d-load.is-known .viewer3d-load-arc {
+  animation: none;
+  transition: stroke-dashoffset 180ms linear;
+}
+
+.viewer3d-load-pct {
+  grid-area: 1 / 1;
+  min-width: 2.6em;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--ink, #141414);
+  text-align: center;
+  line-height: 1;
+}
+
+@keyframes viewer3d-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* the sweep only runs while the model is still coming down the wire */
 .viewer3d[data-viewer3d="loading"] {
   background-image:
@@ -148,5 +210,11 @@
 @media (prefers-reduced-motion: reduce) {
   .viewer3d[data-viewer3d="loading"] {
     animation: none;
+  }
+
+  /* the ring still has to show that something is happening, so it steps instead of sweeping */
+  .viewer3d-load-arc {
+    animation-duration: 2.4s;
+    animation-timing-function: steps(8, end);
   }
 }
