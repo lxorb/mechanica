@@ -71,11 +71,12 @@ const problems = [];
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** *bold*  ~orange~ */
+/** *bold*  ~orange~  `code` */
 function rich(s) {
   return esc(s)
     .replace(/\*([^*]+)\*/g, "<b>$1</b>")
-    .replace(/~([^~]+)~/g, '<em class="hl">$1</em>');
+    .replace(/~([^~]+)~/g, '<em class="hl">$1</em>')
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
 }
 
 /* ---------------------------------------------------------------- assets */
@@ -276,8 +277,11 @@ function inlineSvgFile(rel) {
   if (!existsSync(file)) { problems.push(`missing svg ${rel}`); return ""; }
   let svg = readFileSync(file, "utf8").trim();
   const uid = "d" + Math.abs([...rel].reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7)).toString(36);
-  svg = svg.replace(/my-svg/g, uid);                                   // mermaid's fixed id
-  svg = svg.replace(/(\sid=")([^"]+)"/g, `$1${uid}-$2"`).replace(/url\(#([^)]+)\)/g, `url(#${uid}-$1)`);
+  // A mermaid SVG carries its own <style> keyed on the root id, and mermaid-cli hard-codes that id
+  // as "my-svg" — so two of them on one page fight. Rename the root id (and every reference to it,
+  // in the style selectors and in the marker ids derived from it) to something unique to this file.
+  const root = /<svg[^>]*\sid="([^"]+)"/.exec(svg);
+  if (root) svg = svg.split(root[1]).join(uid);
   svg = svg.replace(/<svg([^>]*)>/, (m, attrs) => {
     let a = attrs.replace(/\swidth="[^"]*"/, "").replace(/\sheight="[^"]*"/, "").replace(/\sstyle="[^"]*"/, "");
     return `<svg${a} width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
@@ -470,6 +474,8 @@ html,body{height:100%}
 body{background:#0a0a0a;color:var(--ink);font-family:Barlow,system-ui,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
 b,strong{font-weight:700}
 em.hl{font-style:normal;color:var(--orange);font-weight:700}
+code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.86em;background:#fff;
+  border:1px solid #ddd5c4;padding:1px 6px;border-radius:4px;white-space:nowrap}
 #deck{position:fixed;inset:0}
 #stage{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
 .slide{position:absolute;inset:0;display:none;flex-direction:column;
@@ -479,7 +485,7 @@ em.hl{font-style:normal;color:var(--orange);font-weight:700}
 .chrome{display:flex;justify-content:space-between;font-family:"Big Shoulders Display",Barlow,sans-serif;
   font-weight:700;font-size:21px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);flex:0 0 auto}
 .chrome .right{color:var(--orange)}
-.hold{flex:1 1 auto;display:flex;align-items:center;justify-content:center;min-height:0;padding:14px 0 6px}
+.hold{flex:1 1 auto;display:flex;align-items:safe center;justify-content:safe center;min-height:0;padding:14px 0 6px}
 .bar{position:absolute;left:0;right:0;bottom:0;height:7px;background:rgba(20,20,20,.1)}
 .bar i{display:block;height:100%;background:var(--orange)}
 .print-only{display:none}
@@ -548,11 +554,11 @@ h1,h2,h3,h4{font-weight:700;line-height:1.04}
 .s-twoup{width:100%;text-align:center}
 .s-twoup h3{font-size:58px;margin-bottom:22px;letter-spacing:-.01em}
 .pair{display:flex;gap:48px;justify-content:center;align-items:stretch}
-.panel{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.panel{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px}
 .panel img{max-height:520px;max-width:100%;width:auto;border:3px solid var(--ink);background:#fff}
-.panel figcaption{font-size:24px;line-height:1.24}
+.panel figcaption{font-size:24px;line-height:1.24;margin-top:auto;padding-top:6px}
 .panel figcaption span{display:block;color:var(--dim);font-size:20px;margin-top:5px}
-.panel-text{background:var(--card);border:2px solid #ddd5c4;padding:38px 26px}
+.panel-text{background:var(--card);border:2px solid #ddd5c4;padding:38px 26px;justify-content:center}
 .panel-value{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-size:128px;
   line-height:.88;color:var(--orange)}
 .panel-label{font-size:29px;font-weight:600;line-height:1.16}
@@ -593,13 +599,14 @@ h1,h2,h3,h4{font-weight:700;line-height:1.04}
   font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
 
 /* demo */
-.s-demo{width:100%;max-width:1360px}
+.slide.k-demo .hold{padding-top:2px}
+.s-demo{width:100%;max-width:1400px}
 .s-demo .live{display:inline-block;background:var(--orange);color:#fff;font-family:"Big Shoulders Display",Barlow,sans-serif;
-  font-weight:800;font-size:28px;letter-spacing:.2em;padding:6px 18px}
-.s-demo h3{font-size:62px;margin-top:14px;letter-spacing:-.015em}
-.s-demo .line{font-size:26px;color:var(--dim);margin-top:10px}
-.s-demo table{width:100%;border-collapse:collapse;margin-top:24px}
-.s-demo td{padding:15px 16px;border-top:2px solid #ddd5c4;vertical-align:top;font-size:26px;line-height:1.24}
+  font-weight:800;font-size:25px;letter-spacing:.2em;padding:5px 16px}
+.s-demo h3{font-size:54px;margin-top:10px;letter-spacing:-.015em}
+.s-demo .line{font-size:23px;color:var(--dim);margin-top:8px}
+.s-demo table{width:100%;border-collapse:collapse;margin-top:16px}
+.s-demo td{padding:10px 14px;border-top:2px solid #ddd5c4;vertical-align:top;font-size:23px;line-height:1.26}
 .s-demo td.do{width:46%;font-weight:600}
 .s-demo td.see{color:#3b362e}
 
