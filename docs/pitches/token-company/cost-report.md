@@ -1,4 +1,4 @@
-# Measured LLM cost — Mechanica (41933 logged calls)
+# Measured LLM cost — Mechanica (41960 logged calls)
 
 Source: `C:\Users\me\trustthemanual\api\data\costs.jsonl` · `C:\Users\me\trustthemanual\api\data\mass_report.jsonl` · `C:\Users\me\trustthemanual\api\data\manuals` · live `/api/cost` + `/api/cost/ttc`
 
@@ -7,9 +7,9 @@ Source: `C:\Users\me\trustthemanual\api\data\costs.jsonl` · `C:\Users\me\trustt
 | manual | pages | prompt tokens | naive: gpt-6-astra | + prompt cache | reasonable: gpt-5.6-luna |
 | --- | --- | --- | --- | --- | --- |
 | KTM 390 Duke 2023 (demo) | 128 | 102,400 | $1.029 | $0.107 | $0.0206 |
-| median manual in our catalog | 170 | 136,000 | $1.365 | $0.141 | $0.0273 |
+| median manual in our catalog | 171 | 136,800 | $1.373 | $0.142 | $0.0275 |
 | BMW R 12 G/S 2026 (demo) | 270 | 216,000 | $2.165 | $0.221 | $0.0433 |
-| largest manual in our catalog | 381 | 304,800 (2x) | $6.101 | $0.615 | $0.1220 |
+| largest manual in our catalog | 775 | 620,000 (2x) | $12.405 | $1.245 | $0.2481 |
 | the founder's 500-page workshop manual | 500 | 400,000 (2x) | $8.005 | $0.805 | $0.1601 |
 
 `800` tokens/page and the >272,000-token 2x rule are `app/llm.py`. Output is 100 tokens at the model's output price. The cache column is the best case for the naive design, not the normal one: it needs the same manual re-asked inside the cache TTL.
@@ -20,15 +20,15 @@ Live `/api/cost` reports `naivePerAsk` **$12.40** for the biggest manual in the 
 
 | operation | n | mean tokens in | cached | mean out | mean $ | median $ | total $ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ask (router + picker) | 290 | 3,784 | 77.7% | 108 | $0.002350 | $0.002578 | $0.6816 |
-| ask (router only) | 745 | 3,297 | 99.6% | 51 | $0.000130 | $0.000129 | $0.0965 |
+| ask (router + picker) | 293 | 3,801 | 77.9% | 108 | $0.002345 | $0.002575 | $0.6871 |
+| ask (router only) | 750 | 3,298 | 99.6% | 51 | $0.000130 | $0.000129 | $0.0972 |
 | chat | 248 | 5,803 | 76.8% | 154 | $0.004200 | $0.004327 | $1.0417 |
 | identify.part:gpt-5.6-luna | 8 | 1,242 | 38.7% | 64 | $0.000239 | $0.000278 | $0.0019 |
 | identify.part:gpt-6-astra | 3 | 1,283 | 0.0% | 24 | $0.014047 | $0.014360 | $0.0421 |
-| identify.photo:gpt-5.6-luna | 18 | 2,607 | 51.2% | 206 | $0.000528 | $0.000511 | $0.0095 |
+| identify.photo:gpt-5.6-luna | 26 | 2,979 | 63.7% | 231 | $0.000532 | $0.000513 | $0.0138 |
 | identify.photo:gpt-6-astra | 8 | 1,254 | 0.0% | 242 | $0.024661 | $0.024455 | $0.1973 |
 
-Stitch check: 1035 asks, 290 paid for a picker, 745 did not (**72.0% of asks make zero picker calls**). Unstitched calls: 0 picker, 0 chat.
+Stitch check: 1043 asks, 293 paid for a picker, 750 did not (**71.9% of asks make zero picker calls**). Unstitched calls: 0 picker, 0 chat.
 
 This log is every call ever made, development included, so its ask mix is picker-heavier than a rider's. The controlled 150-query eval (`api/eval/report.md`) is the honest per-ask number: **$0.00038 per ask**, 1.15 LLM calls per ask. Both are carried below.
 
@@ -38,16 +38,16 @@ Ingest, from `mass_report.jsonl`: 648 manuals, mean **$0.0951** (median $0.0972,
 
 | route | model | calls | mean in | cached | mean out | $/call | $ total |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ask.picker | gpt-5.6-terra | 290 | 1,286 | 35.6% | 39 | $0.002215 | $0.6424 |
-| ask.router | gpt-5.6-luna | 1,283 | 3,153 | 99.5% | 55 | $0.000132 | $0.1696 |
+| ask.picker | gpt-5.6-terra | 293 | 1,294 | 36.2% | 39 | $0.002210 | $0.6475 |
+| ask.router | gpt-5.6-luna | 1,291 | 3,155 | 99.5% | 55 | $0.000132 | $0.1707 |
 | chat.answer | gpt-5.6-terra | 248 | 2,314 | 42.7% | 101 | $0.004064 | $1.0079 |
 | climate.extract | gpt-5.6-luna | 1,555 | 454 | 0.0% | 286 | $0.000434 | $0.6743 |
 | identify.part | gpt-5.6-luna | 8 | 1,242 | 38.7% | 64 | $0.000239 | $0.0019 |
 | identify.part | gpt-6-astra | 3 | 1,283 | 0.0% | 24 | $0.014047 | $0.0421 |
-| identify.photo | gpt-5.6-luna | 18 | 2,607 | 51.2% | 206 | $0.000528 | $0.0095 |
+| identify.photo | gpt-5.6-luna | 26 | 2,979 | 63.7% | 231 | $0.000532 | $0.0138 |
 | identify.photo | gpt-6-astra | 8 | 1,254 | 0.0% | 242 | $0.024661 | $0.1973 |
 | illustrations | gpt-image-1 | 102 | 140 | 0.0% | 1,056 | $0.042240 | $4.3085 |
-| images.score | gpt-5.6-luna | 7,619 | 773 | 0.1% | 271 | $0.000480 | $3.6546 |
+| images.score | gpt-5.6-luna | 7,627 | 774 | 0.1% | 271 | $0.000480 | $3.6619 |
 | ingest.keywords | gpt-5.6-luna | 3,335 | 536 | 0.0% | 1,564 | $0.001984 | $6.6161 |
 | ingest.struct | gpt-5.6-luna | 27,364 | 2,573 | 47.0% | 1,729 | $0.002372 | $64.9084 |
 | offers | gpt-5.6-terra | 12 | 21,341 | 21.5% | 1,109 | $0.075218 | $0.9026 |
@@ -59,10 +59,10 @@ Ingest, from `mass_report.jsonl`: 648 manuals, mean **$0.0951** (median $0.0972,
 
 | rung | $ / ask | $ / chat answer | step | how it is computed |
 | --- | --- | --- | --- | --- |
-| 0 · naive: whole manual, flagship, every question | $1.3650 | $1.3650 | 1x | 170-page manual x 800 tok in gpt-6-astra |
-| 1 · + prompt-cache the manual (best case for that design) | $0.1410 | $0.1410 | 10x | cached-input price, app/llm.py PRICES |
-| 2 · page retrieval instead of whole manual (still flagship) | $0.04667 | $0.02821 | 48x (chat) | logged token counts re-priced at gpt-6-astra |
-| 3 · + model tiering (luna router / terra picker + chat) | $0.001716 | $0.005845 | 4.8x vs rung 2 | same tokens, our models, cache ignored |
+| 0 · naive: whole manual, flagship, every question | $1.3730 | $1.3730 | 1x | 171-page manual x 800 tok in gpt-6-astra |
+| 1 · + prompt-cache the manual (best case for that design) | $0.1418 | $0.1418 | 10x | cached-input price, app/llm.py PRICES |
+| 2 · page retrieval instead of whole manual (still flagship) | $0.04667 | $0.02821 | 49x (chat) | logged token counts re-priced at gpt-6-astra |
+| 3 · + model tiering (luna router / terra picker + chat) | $0.001721 | $0.005845 | 4.8x vs rung 2 | same tokens, our models, cache ignored |
 | 4 · + prompt caching + spec path + picker gating + compression | $0.000752 | $0.004200 | 1.4x vs rung 3 | what the log actually billed |
 | 5 · + answer cache on a repeated question | $0.000000 | $0.000000 | ∞ | ask._cache / ttc._cache, `usd` forced to 0 |
 
@@ -84,12 +84,12 @@ Cheaper and more accurate on the same queries: the cheapest call is the one not 
 
 | route | model | calls | cache hit rate | $ paid | $ saved | $ without cache |
 | --- | --- | --- | --- | --- | --- | --- |
-| ask.picker | gpt-5.6-terra | 290 | 35.6% | $0.6424 | $0.2392 | $0.8816 |
-| ask.router | gpt-5.6-luna | 1,283 | 99.5% | $0.1696 | $0.7249 | $0.8945 |
+| ask.picker | gpt-5.6-terra | 293 | 36.2% | $0.6475 | $0.2473 | $0.8947 |
+| ask.router | gpt-5.6-luna | 1,291 | 99.5% | $0.1707 | $0.7299 | $0.9006 |
 | chat.answer | gpt-5.6-terra | 248 | 42.7% | $1.0079 | $0.4416 | $1.4494 |
 | identify.part | gpt-5.6-luna | 8 | 38.7% | $0.0019 | $0.0007 | $0.0026 |
-| identify.photo | gpt-5.6-luna | 18 | 51.2% | $0.0095 | $0.0043 | $0.0138 |
-| images.score | gpt-5.6-luna | 7,619 | 0.1% | $3.6546 | $0.0011 | $3.6557 |
+| identify.photo | gpt-5.6-luna | 26 | 63.7% | $0.0138 | $0.0089 | $0.0227 |
+| images.score | gpt-5.6-luna | 7,627 | 0.1% | $3.6619 | $0.0011 | $3.6630 |
 | ingest.struct | gpt-5.6-luna | 27,364 | 47.0% | $64.9084 | $5.9602 | $70.8686 |
 | offers | gpt-5.6-terra | 12 | 21.5% | $0.9026 | $0.0993 | $1.0019 |
 | probe.picker | gpt-5.6-terra | 48 | 75.8% | $0.0771 | $0.1258 | $0.2029 |
@@ -101,7 +101,7 @@ Cheaper and more accurate on the same queries: the cheapest call is the one not 
 | route | flagship | tier we ship | factor |
 | --- | --- | --- | --- |
 | identify.part | gpt-6-astra $0.014047 | gpt-5.6-luna $0.000239 | 59x |
-| identify.photo | gpt-6-astra $0.024661 | gpt-5.6-luna $0.000528 | 47x |
+| identify.photo | gpt-6-astra $0.024661 | gpt-5.6-luna $0.000532 | 46x |
 
 **Referral stripping + bear-2 compression** — tokens removed before the prompt was ever billed:
 
@@ -114,28 +114,28 @@ Cheaper and more accurate on the same queries: the cheapest call is the one not 
 **Deterministic spec path + picker gating** — the two levers that remove an LLM call entirely:
 
 - `api/eval/report.md`: 172 LLM calls for 150 asks = 1.15 calls per ask, so **85.3% of asks never pay for a picker**.
-- Over the whole log: 745 of 1035 asks (**72.0%**) are router-only.
+- Over the whole log: 750 of 1043 asks (**71.9%**) are router-only.
 - A spec question (`how much oil does it take`) is answered from parsed spec rows plus BM25: zero LLM calls past the router (`app/ask.py::_by_spec`).
 - A procedure question whose second BM25 hit is below `PICK_MARGIN` skips the picker too (`app/ask.py`, `decisive`).
 - Retrieval itself is free: BM25 in process, `app/search/local.py`, no embeddings, no vector DB.
 
 **On-demand ingest** — the cost that is paid once instead of per question:
 
-- $0.0951 mean per manual over 648 real ingests, paid once. That is **7% of ONE naive question** ($1.36), and it then answers every question about that bike forever.
-- Break-even against the naive stack: **0.07 questions**. Against the reasonable luna baseline ($0.0273): **4.1 questions**.
+- $0.0951 mean per manual over 648 real ingests, paid once. That is **7% of ONE naive question** ($1.37), and it then answers every question about that bike forever.
+- Break-even against the naive stack: **0.07 questions**. Against the reasonable luna baseline ($0.0275): **4.1 questions**.
 
 ## 4. The mechanic's monthly bill — 40 questions/day x 30 days = 1,200 questions
 
-| stack | $/q (170 p) | $/mo (170 p) | $/q (500 p) | $/mo (500 p) | questions per $1 (500 p) |
+| stack | $/q (171 p) | $/mo (171 p) | $/q (500 p) | $/mo (500 p) | questions per $1 (500 p) |
 | --- | --- | --- | --- | --- | --- |
-| naive, whole manual, flagship | $1.365000 | $1,638.00 | $8.005000 | $9,606.00 | 0.12 |
-| naive + prompt cache (best case for that design) | $0.141000 | $169.20 | $0.805000 | $966.00 | 1 |
-| reasonable, whole manual in gpt-5.6-luna | $0.027320 | $32.78 | $0.160120 | $192.14 | 6 |
+| naive, whole manual, flagship | $1.373000 | $1,647.60 | $8.005000 | $9,606.00 | 0.12 |
+| naive + prompt cache (best case for that design) | $0.141800 | $170.16 | $0.805000 | $966.00 | 1 |
+| reasonable, whole manual in gpt-5.6-luna | $0.027480 | $32.98 | $0.160120 | $192.14 | 6 |
 | ours, every question a chat answer (worst case) | $0.004200 | $5.04 | $0.004200 | $5.04 | 238 |
 | ours, every question an ask, whole-log mix | $0.000752 | $0.90 | $0.000752 | $0.90 | 1,330 |
 | ours, every question an ask, 150-query eval mix | $0.000380 | $0.46 | $0.000380 | $0.46 | 2,632 |
 
-Left pair: the median manual in our catalog (170 pages). Right pair: a 500-page workshop manual, the size behind the founder's "one question cost about $4". Our side does not move with page count, because the prompt never holds the manual - only the pages BM25 returned.
+Left pair: the median manual in our catalog (171 pages). Right pair: a 500-page workshop manual, the size behind the founder's "one question cost about $4". Our side does not move with page count, because the prompt never holds the manual - only the pages BM25 returned.
 
 Plus ingest: one manual per bike that comes through the door, $0.0951 each, forever, not per question.
 
@@ -143,9 +143,9 @@ Plus ingest: one manual per bike that comes through the door, $0.0951 each, fore
 
 | stack | questions / month | $ / month | $ / year |
 | --- | --- | --- | --- |
-| naive, whole manual, flagship (median manual) | 1,200,000 | $1,638,000 | $19,656,000 |
+| naive, whole manual, flagship (median manual) | 1,200,000 | $1,647,600 | $19,771,200 |
 | ours, worst case: every question a chat answer | 1,200,000 | $5,040 | $60,485 |
 | ours, the default path: an ask | 1,200,000 | $456 | $5,472 |
 
-Plus the catalog: 508 manuals already ingested at $0.0951 each = $48 spent once, shared by every shop. Ingest does not scale with mechanics, it scales with distinct manuals, and there are only so many motorcycles.
+Plus the catalog: 535 manuals already ingested at $0.0951 each = $51 spent once, shared by every shop. Ingest does not scale with mechanics, it scales with distinct manuals, and there are only so many motorcycles.
 

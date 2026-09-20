@@ -72,7 +72,6 @@ Three kinds of number live in this file and they are never mixed:
 | `naive_usd` | **8.005** | USD/question | cost-report.md: a 500-page workshop manual, 400k tokens, flagship, 2x long-context rule |
 | `naive_live_usd` | **12.4** | USD/question | live GET /api/cost -> naivePerAsk, biggest manual in the deployed catalog |
 | `his_usd` | **4** | USD/question | HIS bill, not ours: what the founder's friend measured when he tried an LLM |
-| `project_total_usd` | **6.14** | USD | live GET /api/cost, 1,550 model calls, everything ever spent |
 | `top1` | **100%** | of 130 in-scope queries | api/eval/report.md |
 | `oos` | **100%** | of 20 off-topic queries returned empty | api/eval/report.md |
 | `citations_verbatim` | **100%** | of 43 chat quotes | api/eval/chat-report.md |
@@ -169,8 +168,7 @@ bike. The 3- and 5-minute rows are the ones to quote.
 
 Ours does not move with page count: the prompt never holds the manual, only the pages BM25 returned.
 His did — that is the whole of the $4.00. Plus $0.0951 once per manual
-(api/data/mass_report.jsonl, 648 real ingests, paid once per manual), never per question. The entire project has spent
-$6.14 to date (live `GET /api/cost`).
+(api/data/mass_report.jsonl, 648 real ingests, paid once per manual), never per question.
 
 **What that does to the unit economics of a seat:**
 

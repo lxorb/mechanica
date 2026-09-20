@@ -136,7 +136,6 @@ MEASURED: dict[str, M] = {
     "naive_usd": M(8.005, "USD/question", "cost-report.md: a 500-page workshop manual, 400k tokens, flagship, 2x long-context rule"),
     "naive_live_usd": M(12.40, "USD/question", "live GET /api/cost -> naivePerAsk, biggest manual in the deployed catalog"),
     "his_usd": M(4.00, "USD/question", "HIS bill, not ours: what the founder's friend measured when he tried an LLM"),
-    "project_total_usd": M(6.14, "USD", "live GET /api/cost, 1,550 model calls, everything ever spent"),
     # --- accuracy, because a time saving nobody trusts is not a saving
     "top1": M(1.00, "of 130 in-scope queries", "api/eval/report.md"),
     "oos": M(1.00, "of 20 off-topic queries returned empty", "api/eval/report.md"),
@@ -666,8 +665,7 @@ bike. The 3- and 5-minute rows are the ones to quote.
 
 Ours does not move with page count: the prompt never holds the manual, only the pages BM25 returned.
 His did — that is the whole of the {usd(m['his_usd'])}. Plus {usd(m['ingest_usd'], 4)} once per manual
-({MEASURED['ingest_usd'].source}), never per question. The entire project has spent
-{usd(m['project_total_usd'])} to date (live `GET /api/cost`).
+({MEASURED['ingest_usd'].source}), never per question.
 
 **What that does to the unit economics of a seat:**
 

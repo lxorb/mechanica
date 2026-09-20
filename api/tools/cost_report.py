@@ -312,6 +312,14 @@ def _table(header: list[str], rows: list[list[str]]) -> list[str]:
 def report(args) -> tuple[str, dict]:
     rows = _rows(Path(args.log))
     cat = catalog(Path(args.manuals))
+    if args.live:
+        # the deployed catalog, not this checkout's copy: the local data/manuals lags the blob store,
+        # and the "largest manual" row (the naive baseline's worst case) must be the deployed one
+        deployed = live("/manuals")
+        pages = sorted(int(m.get("pages") or 0) for m in (deployed or []) if m.get("pages"))
+        if pages:
+            cat = {"manuals": len(pages), "mean": statistics.mean(pages), "median": statistics.median(pages),
+                   "max": max(pages), "min": min(pages)}
     ing = ingest(Path(args.ingest))
     routes = per_route(rows)
     ops = operations(rows)

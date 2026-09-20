@@ -1,11 +1,11 @@
 {
   "log": "C:\\Users\\me\\trustthemanual\\api\\data\\costs.jsonl",
-  "calls": 41933,
+  "calls": 41960,
   "catalog": {
-    "manuals": 508,
-    "mean": 177.6811023622047,
-    "median": 170.5,
-    "max": 381,
+    "manuals": 535,
+    "mean": 179.27850467289718,
+    "median": 171,
+    "max": 775,
     "min": 9
   },
   "ingest": {
@@ -22,22 +22,22 @@
     {
       "route": "ask.picker",
       "model": "gpt-5.6-terra",
-      "calls": 290,
-      "meanIn": 1286.203448275862,
-      "cachedPct": 35.63039043000115,
-      "meanOut": 38.95862068965517,
-      "usdPerCall": 0.0022150075862068987,
-      "usd": 0.6423522000000006
+      "calls": 293,
+      "meanIn": 1293.5290102389079,
+      "cachedPct": 36.24288925710547,
+      "meanOut": 38.88054607508533,
+      "usdPerCall": 0.002209762457337886,
+      "usd": 0.6474604000000006
     },
     {
       "route": "ask.router",
       "model": "gpt-5.6-luna",
-      "calls": 1283,
-      "meanIn": 3153.190958690569,
-      "cachedPct": 99.54376963889158,
-      "meanOut": 55.46609508963367,
-      "usdPerCall": 0.00013221257989088074,
-      "usd": 0.16962874
+      "calls": 1291,
+      "meanIn": 3155.2594887683967,
+      "cachedPct": 99.54608389960329,
+      "meanOut": 55.44384198295894,
+      "usdPerCall": 0.00013221580170410534,
+      "usd": 0.1706906
     },
     {
       "route": "chat.answer",
@@ -82,12 +82,12 @@
     {
       "route": "identify.photo",
       "model": "gpt-5.6-luna",
-      "calls": 18,
-      "meanIn": 2607.222222222222,
-      "cachedPct": 51.24653739612188,
-      "meanOut": 205.83333333333334,
-      "usdPerCall": 0.0005279444444444445,
-      "usd": 0.009503000000000001
+      "calls": 26,
+      "meanIn": 2979.346153846154,
+      "cachedPct": 63.723325974981606,
+      "meanOut": 231.15384615384616,
+      "usdPerCall": 0.0005315169230769231,
+      "usd": 0.01381944
     },
     {
       "route": "identify.photo",
@@ -112,12 +112,12 @@
     {
       "route": "images.score",
       "model": "gpt-5.6-luna",
-      "calls": 7619,
-      "meanIn": 772.9751935949599,
-      "cachedPct": 0.10444368751589748,
-      "meanOut": 271.02060637878986,
-      "usdPerCall": 0.00047967444809030236,
-      "usd": 3.6546396200000135
+      "calls": 7627,
+      "meanIn": 773.5019011406844,
+      "cachedPct": 0.10426309081499971,
+      "meanOut": 271.3031336043005,
+      "usdPerCall": 0.00048011897469516364,
+      "usd": 3.661867420000013
     },
     {
       "route": "ingest.keywords",
@@ -184,23 +184,23 @@
     "byOperation": [
       {
         "operation": "ask (router + picker)",
-        "n": 290,
-        "meanIn": 3783.955172413793,
-        "cachedPct": 77.71935404206691,
-        "meanOut": 107.87241379310345,
-        "meanUsd": 0.0023503889655172414,
-        "medianUsd": 0.0025783399999999997,
-        "usd": 0.6816128
+        "n": 293,
+        "meanIn": 3801.40614334471,
+        "cachedPct": 77.90928810248049,
+        "meanOut": 107.60409556313994,
+        "meanUsd": 0.0023450956313993175,
+        "medianUsd": 0.00257536,
+        "usd": 0.68711302
       },
       {
         "operation": "ask (router only)",
-        "n": 745,
-        "meanIn": 3296.577181208054,
-        "cachedPct": 99.63114069911846,
-        "meanOut": 51.220134228187916,
-        "meanUsd": 0.00012958445637583892,
+        "n": 750,
+        "meanIn": 3297.848,
+        "cachedPct": 99.63277062294361,
+        "meanOut": 51.230666666666664,
+        "meanUsd": 0.00012961368,
         "medianUsd": 0.00012913999999999997,
-        "usd": 0.09654042
+        "usd": 0.09721025999999999
       },
       {
         "operation": "chat",
@@ -234,13 +234,13 @@
       },
       {
         "operation": "identify.photo:gpt-5.6-luna",
-        "n": 18,
-        "meanIn": 2607.222222222222,
-        "cachedPct": 51.24653739612188,
-        "meanOut": 205.83333333333334,
-        "meanUsd": 0.0005279444444444445,
-        "medianUsd": 0.0005110799999999999,
-        "usd": 0.009503
+        "n": 26,
+        "meanIn": 2979.346153846154,
+        "cachedPct": 63.723325974981606,
+        "meanOut": 231.15384615384616,
+        "meanUsd": 0.0005315169230769231,
+        "medianUsd": 0.00051288,
+        "usd": 0.01381944
       },
       {
         "operation": "identify.photo:gpt-6-astra",
@@ -253,34 +253,34 @@
         "usd": 0.19729
       }
     ],
-    "asks": 1035,
-    "asksWithPicker": 290,
-    "asksZeroPicker": 745,
-    "zeroPickerPct": 71.98067632850241,
+    "asks": 1043,
+    "asksWithPicker": 293,
+    "asksZeroPicker": 750,
+    "zeroPickerPct": 71.90795781399808,
     "orphans": {
       "picker": 0,
       "chat": 0
     },
-    "askMeanUsd": 0.0007518388599033816
+    "askMeanUsd": 0.0007519878044103547
   },
   "caching": [
     {
       "route": "ask.picker",
       "model": "gpt-5.6-terra",
-      "calls": 290,
-      "hitPct": 35.63039043000115,
-      "usdPaid": 0.6423522000000006,
-      "usdSaved": 0.2392218,
-      "usdWithout": 0.8815740000000006
+      "calls": 293,
+      "hitPct": 36.24288925710547,
+      "usdPaid": 0.6474604000000006,
+      "usdSaved": 0.24725160000000002,
+      "usdWithout": 0.8947120000000006
     },
     {
       "route": "ask.router",
       "model": "gpt-5.6-luna",
-      "calls": 1283,
-      "hitPct": 99.54376963889158,
-      "usdPaid": 0.16962874,
-      "usdSaved": 0.72487566,
-      "usdWithout": 0.8945044
+      "calls": 1291,
+      "hitPct": 99.54608389960329,
+      "usdPaid": 0.1706906,
+      "usdSaved": 0.7298910000000001,
+      "usdWithout": 0.9005816000000001
     },
     {
       "route": "chat.answer",
@@ -321,11 +321,11 @@
     {
       "route": "identify.photo",
       "model": "gpt-5.6-luna",
-      "calls": 18,
-      "hitPct": 51.24653739612188,
-      "usdPaid": 0.009503000000000001,
-      "usdSaved": 0.004329000000000001,
-      "usdWithout": 0.013832000000000002
+      "calls": 26,
+      "hitPct": 63.723325974981606,
+      "usdPaid": 0.01381944,
+      "usdSaved": 0.008885160000000001,
+      "usdWithout": 0.022704600000000002
     },
     {
       "route": "identify.photo",
@@ -348,11 +348,11 @@
     {
       "route": "images.score",
       "model": "gpt-5.6-luna",
-      "calls": 7619,
-      "hitPct": 0.10444368751589748,
-      "usdPaid": 3.6546396200000135,
+      "calls": 7627,
+      "hitPct": 0.10426309081499971,
+      "usdPaid": 3.661867420000013,
       "usdSaved": 0.0011071800000000001,
-      "usdWithout": 3.6557468000000135
+      "usdWithout": 3.662974600000013
     },
     {
       "route": "ingest.keywords",
@@ -411,26 +411,26 @@
   ],
   "baselines": {
     "KTM 390 Duke 2023 (demo)": 1.029,
-    "median manual in our catalog": 1.365,
+    "median manual in our catalog": 1.373,
     "BMW R 12 G/S 2026 (demo)": 2.165,
-    "largest manual in our catalog": 6.101,
+    "largest manual in our catalog": 12.405,
     "the founder's 500-page workshop manual": 8.005
   },
-  "askUsd": 0.0007518388599033816,
+  "askUsd": 0.0007519878044103547,
   "askUsdEval": 0.00038,
   "chatUsd": 0.004200348870967742,
   "ladder": [
     [
       "0 \u00b7 naive: whole manual, flagship, every question",
-      "$1.3650",
-      "$1.3650",
+      "$1.3730",
+      "$1.3730",
       "1x",
-      "170-page manual x 800 tok in gpt-6-astra"
+      "171-page manual x 800 tok in gpt-6-astra"
     ],
     [
       "1 \u00b7 + prompt-cache the manual (best case for that design)",
-      "$0.1410",
-      "$0.1410",
+      "$0.1418",
+      "$0.1418",
       "10x",
       "cached-input price, app/llm.py PRICES"
     ],
@@ -438,12 +438,12 @@
       "2 \u00b7 page retrieval instead of whole manual (still flagship)",
       "$0.04667",
       "$0.02821",
-      "48x (chat)",
+      "49x (chat)",
       "logged token counts re-priced at gpt-6-astra"
     ],
     [
       "3 \u00b7 + model tiering (luna router / terra picker + chat)",
-      "$0.001716",
+      "$0.001721",
       "$0.005845",
       "4.8x vs rung 2",
       "same tokens, our models, cache ignored"
@@ -465,15 +465,15 @@
   ],
   "monthly": {
     "naive, whole manual, flagship": {
-      "median": 1638.0,
+      "median": 1647.6,
       "big": 9606.000000000002
     },
     "naive + prompt cache (best case for that design)": {
-      "median": 169.2,
+      "median": 170.16000000000003,
       "big": 966.0000000000001
     },
     "reasonable, whole manual in gpt-5.6-luna": {
-      "median": 32.784,
+      "median": 32.976,
       "big": 192.144
     },
     "ours, every question a chat answer (worst case)": {
@@ -481,8 +481,8 @@
       "big": 5.0404186451612905
     },
     "ours, every question an ask, whole-log mix": {
-      "median": 0.9022066318840579,
-      "big": 0.9022066318840579
+      "median": 0.9023853652924256,
+      "big": 0.9023853652924256
     },
     "ours, every question an ask, 150-query eval mix": {
       "median": 0.456,
