@@ -253,10 +253,12 @@ different `#cost` figures.
    online visit and nothing is broken today; adding the two lines just makes the first offline
    load match the rest of the shell.
 
-4. **`css/voice-orb.css` — voice agent.** It uses the legacy `--ink` / `--orange` / `--paper`
-   aliases, which resolve correctly in all five themes. Worth moving to `--fg` / `--accent` /
-   `--bg` next time that file is open, since `--ink` on a dark theme means "light text", which is
-   not what the name suggests.
+4. **`css/voice-orb.css` — voice agent.** The five names that file was told to build on —
+   `--accent`, `--fg`, `--bg`, `--card`, `--rule` — all exist and are themed; the orb needs no
+   change to follow a theme. What it actually uses today is the legacy `--ink` / `--orange` /
+   `--paper` aliases, which resolve correctly in all five themes, so nothing is broken. Worth
+   moving to `--fg` / `--accent` / `--bg` next time that file is open, since `--ink` on a dark
+   theme means "light text", which is not what the name suggests.
 
 5. **`css/screens/cost.css` — cost agent.** `.cost-lab` is a plain `--accent-2` fill with no rule
    around it, so in Paper (where `--accent-2` is near-white on a white card) the labels read as
