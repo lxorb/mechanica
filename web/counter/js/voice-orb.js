@@ -97,6 +97,9 @@ const CHEVRON = "M6 9l6 6 6-6";
 const MIC = ["M9 4.5a3 3 0 0 1 6 0V11a3 3 0 0 1-6 0Z", "M5 11a7 7 0 0 0 14 0", "M12 18v2.5"];
 /** The slash. Drawn, not implied: a mic icon that only changes colour reads as "selected". */
 const SLASH = "M4 3.5 20 20.5";
+/** A cone and two waves: the loudspeaker. And an ear: the receiver. */
+const SPEAKER = ["M4 9.5h3.5L12 5.5v13L7.5 14.5H4Z", "M16 9.2a4 4 0 0 1 0 5.6", "M18.8 6.6a8 8 0 0 1 0 10.8"];
+const EAR_ICON = ["M9 8.5a3 3 0 1 1 6 0c0 1.8-1.4 2.4-2 3.2-.5.8-.4 1.6-.4 2.3", "M12.6 17.4v.2", "M6 8.5a6 6 0 0 1 12 0c0 3.7-2.3 4.7-3 6.5-.4 1-.3 2.3-.3 3.2"];
 
 function svgIcon(ds, width = 2.4) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -153,6 +156,7 @@ export function mountOrb(host, opts = {}) {
   const onToggle = typeof opts.onToggle === "function" ? opts.onToggle : () => {};
   const onMute = typeof opts.onMute === "function" ? opts.onMute : () => {};
   const onPage = typeof opts.onPage === "function" ? opts.onPage : () => {};
+  const onSpeaker = typeof opts.onSpeaker === "function" ? opts.onSpeaker : () => {};
 
   const wrap = el("div", { class: "vo is-full", hidden: "" });
   // THE COLUMN. Voice is not audio-only: a torque you heard once and a torque you can read are
@@ -186,6 +190,17 @@ export function mountOrb(host, opts = {}) {
   });
   mute.append(micGlyph(), el("span", { class: "vo-mute-word", text: "Mute" }));
 
+  // SPEAKER OR EARPIECE. A phone with a live microphone routes playback to the earpiece, because
+  // to a phone that is a call. A workshop is not a call: loud is the default, and this is how he
+  // overrules it either way when the platform guesses wrong. Nothing is persisted.
+  const loudBtn = el("button", {
+    type: "button",
+    class: "vo-loud",
+    "aria-label": "Play through the earpiece",
+    "aria-pressed": "true",
+  });
+  loudBtn.append(svgIcon(SPEAKER), svgIcon(EAR_ICON));
+
   const back = el("button", { type: "button", class: "vo-back", "aria-label": "Dock the orb" });
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 24 24");
@@ -198,7 +213,7 @@ export function mountOrb(host, opts = {}) {
   svg.append(path);
   back.append(svg, document.createTextNode("Manual"));
 
-  wrap.append(feed, line, orb, state, chipEl, shut, mute, back);
+  wrap.append(feed, line, orb, state, chipEl, shut, mute, loudBtn, back);
   host.append(wrap);
 
   let raf = 0;
@@ -211,6 +226,7 @@ export function mountOrb(host, opts = {}) {
   let t0 = 0;
   let chipTimer = 0;
   let muted = false;
+  let loud = true;
 
   /* ---------------------------------------------------------- the loop */
 
@@ -313,6 +329,12 @@ export function mountOrb(host, opts = {}) {
     onMute(!muted);
   });
 
+  loudBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onSpeaker(!loud);
+  });
+
   // Docked, the one line beside the orb is the whole column folded up. Tapping it unfolds it.
   const expand = (event) => {
     if (!compact) return;
@@ -348,6 +370,14 @@ export function mountOrb(host, opts = {}) {
       return;
     }
     state.textContent = WORDS[value] || "";
+  }
+
+  /** Loud, or against his ear. The icon is the thing it will BE, which is how a toggle reads. */
+  function setLoud(on) {
+    loud = Boolean(on);
+    wrap.classList.toggle("is-quiet", !loud);
+    loudBtn.setAttribute("aria-pressed", loud ? "true" : "false");
+    loudBtn.setAttribute("aria-label", loud ? "Play through the earpiece" : "Play through the speaker");
   }
 
   /** Full screen, or a companion in the corner. One transform apart; nothing remounts. */
@@ -516,6 +546,8 @@ export function mountOrb(host, opts = {}) {
     setLine,
     setDock,
     setMuted,
+    setLoud,
+    isLoud: () => loud,
     say,
     steps,
     working,

@@ -167,6 +167,7 @@ function ensureOrb() {
       applyDock(userDock);
     },
     onMute: (on) => mute(on),
+    onSpeaker: (on) => speaker(on),
     onPage: (n) => turn(n),
     onLeave: stop,
   });
@@ -193,6 +194,24 @@ export function mute(on) {
 
 export function muted() {
   return Boolean(live && live.muted());
+}
+
+/**
+ * The workshop speaker, or the earpiece.
+ *
+ * A phone routes playback to the receiver the moment a microphone is open, because that is what a
+ * call is - and the founder heard it: "it should use my phone's actual speaker, not the telephone
+ * one". Loud is the default; this is how he overrules it. Nothing is persisted: the right answer
+ * is different at a bench and at a counter, and it is one tap either way.
+ */
+export async function speaker(on) {
+  if (!live) return false;
+  const got = await live.speaker(on === undefined ? !live.loud() : on);
+  // The orb shows what the platform ACHIEVED, not what was asked for: on a browser with no sink
+  // control the request quietly fails and a button that lied about it would be worse than none.
+  if (orb) orb.setLoud(got);
+  shout({ kind: "speaker", loud: got });
+  return got;
 }
 
 /* ------------------------------------------------------------------ the page */
@@ -528,6 +547,7 @@ export async function start(next = {}) {
     });
     starting = false;
     orb.setState(live.status() || "listening");
+    orb.setLoud(live.loud());
     shout({ kind: "status", status: live.status() || "listening" });
     return true;
   } catch (err) {

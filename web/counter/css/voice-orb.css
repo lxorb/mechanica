@@ -653,3 +653,64 @@
     background: repeating-conic-gradient(var(--fg, var(--ink, #141414)) 0 12deg, transparent 12deg 24deg);
   }
 }
+
+/* ---------- speaker or earpiece ----------
+ *
+ * A phone with a live microphone puts playback on the call route, which is the earpiece. A
+ * workshop is not a call. Loud is the default and this overrules it either way; the icon shown is
+ * the state it IS, so the cone means "coming out of the speaker". Sits beside mute, same 44 px,
+ * icon only, and it rides down with the orb when it docks. */
+
+.vo-loud {
+  position: absolute;
+  top: calc(8px + env(safe-area-inset-top));
+  right: calc(60px + env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--fg, var(--ink, #141414));
+  border-radius: 0;
+  background: var(--accent-2, var(--yellow, #ffe600));
+  color: var(--accent-2-ink, #141414);
+  cursor: pointer;
+  appearance: none;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s linear, color 0.18s linear, opacity 0.18s linear;
+}
+
+.vo-loud svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* One element, two glyphs, one of them hidden: no icon swap to keep in step, and no reflow. */
+.vo-loud svg:last-child,
+.vo.is-quiet .vo-loud svg:first-child {
+  display: none;
+}
+
+.vo.is-quiet .vo-loud svg:last-child {
+  display: block;
+}
+
+.vo.is-quiet .vo-loud {
+  background: var(--card, #fff);
+  color: var(--fg, var(--ink, #141414));
+}
+
+.vo-loud:focus-visible {
+  outline: 3px solid var(--fg, var(--ink, #141414));
+  outline-offset: 3px;
+}
+
+/* Docked, it keeps its place to the left of mute, which is to the left of the orb. */
+.vo.is-compact .vo-loud {
+  top: auto;
+  bottom: calc(var(--dock-gap) + env(safe-area-inset-bottom));
+  right: calc(16px + env(safe-area-inset-right));
+  transform: translateX(calc(-1 * var(--dock-size) - 64px));
+}

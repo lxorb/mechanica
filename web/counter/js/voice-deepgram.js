@@ -526,6 +526,14 @@ function tear(s) {
       /* already closed */
     }
   }
+  if (s.onDevices) {
+    try {
+      navigator.mediaDevices.removeEventListener("devicechange", s.onDevices);
+    } catch {
+      /* never attached */
+    }
+    s.onDevices = null;
+  }
   if (s.play) {
     s.play.flush();
     s.play.close();
@@ -586,6 +594,8 @@ export async function start(opts = {}) {
     settings: null, // what getUserMedia actually applied
     muted: false, // the rider shut the mic himself; the track is disabled, not a flag we consult
     session: "", // the id the tool URLs carry when this socket opened with no manual
+    loud: true, // the workshop speaker, not the earpiece
+    onDevices: null,
     first: "", // the rest of the wake utterance, injected once the settings are applied
   };
   current = session;
@@ -792,9 +802,30 @@ async function run(session, opts, say) {
   const track = session.stream.getAudioTracks()[0];
   session.settings = track && typeof track.getSettings === "function" ? track.getSettings() : null;
 
+  // WebKit's only lever, and it has to be pulled before the context exists: without it iOS puts
+  // a page that captures audio on the ambient route and the playback is quiet as well as wrong.
+  try {
+    if (navigator.audioSession) navigator.audioSession.type = "play-and-record";
+  } catch {
+    /* every browser but Safari 17+ */
+  }
+
   const ctx = new AudioContext({ sampleRate: rate });
   session.ctx = ctx;
   session.play = player(ctx, rate, () => status(session, session.lookups ? "thinking" : "listening", say));
+  // A workshop is not a phone call. Loud by default, and re-asserted whenever the device list
+  // changes - plugging a headset in and out re-enumerates everything and drops the sink.
+  session.play.speaker(true).then((got) => {
+    session.loud = got;
+  });
+  session.onDevices = () => {
+    if (!session.dead && session.play && session.loud) session.play.speaker(true);
+  };
+  try {
+    navigator.mediaDevices.addEventListener("devicechange", session.onDevices);
+  } catch {
+    /* older browsers have the property but not the event */
+  }
   if (ctx.state === "suspended") await ctx.resume();
   if (session.dead) return;
 
