@@ -1,8 +1,87 @@
 # Voice mode
 
-VOICE in the chat input row opens a Deepgram Voice Agent session over the manual on screen. While
-it is live the chat is not a chat: it is **the orb** — one round thing in the middle of the view,
-breathing on the mic, rippling on a lookup, pulsing on the answer.
+VOICE in the chat input row opens a Deepgram Voice Agent session over the manual on screen, and it
+stays open for the whole repair. While it is live the chat is not a chat: it is **the orb** — one
+round thing that is listening to you, breathing on the mic, rippling on a lookup, pulsing on the
+answer, with every turn written above it.
+
+**The session belongs to nobody's screen.** `js/voice-session.js` is a singleton that owns the
+socket, the microphone, the playback, the transcript, the state and the orb, and it is not inside
+the chat, the reader or any overlay. It used to be: `voice` was a local in `chat-ui.js` and the
+orb was mounted into the conversation, so closing the chat called `stop()` — and the first thing a
+spoken question does is open the manual, which closes the chat. **The assistant hung up on the way
+to the page it had just named.** Now the orb's home is one `position: fixed` host on `<body>`, and
+Pick → Book → the Parts sheet → back is invisible to it.
+
+---
+
+## It was hearing itself
+
+> "it is like detecting itself making sound in a loop"
+
+The phone's speaker is 20 cm from its microphone. While the agent talked, the mic heard the agent,
+and **every one of those frames was forwarded to Deepgram**. Deepgram's VAD cannot tell our voice
+from his: it answered its own greeting with `UserStartedSpeaking`, the client flushed the answer it
+had just scheduled, the orb flashed *interrupted* — and the first syllable of the replacement
+answer started the same loop again.
+
+**Reproduced** in headless Chrome with `--use-fake-device-for-media-stream` and
+`--use-file-for-fake-audio-capture=<aura-2 speaking the agent's own lines>`, so the microphone
+hears nothing but the agent. The socket is stubbed in the page and runs the same kind of VAD
+Deepgram runs. `node web/tools/voice-echo.mjs`; `--legacy` is `tuning.guard = false`, which is the
+code exactly as it shipped, against the same wav, the same stub and the same VAD.
+
+| run | mic frames up | over the agent | self-raised `UserStartedSpeaking` | agent turns in 9 s | answers cut mid-word |
+|---|---|---|---|---|---|
+| **as it shipped** | 206 | **206 (421,888 B)** | **3–5** | **4–6** | **3–5** |
+| **fixed** | 18 | **0 (0 B)** | **0** | **1** | **0** |
+
+Four layers, because no one of them is enough:
+
+1. **Constraints.** `echoCancellation: true, noiseSuppression: true, autoGainControl: false`,
+   read back from `track.getSettings()` and reported by the harness. AGC is the subtle half: it
+   normalises the mic towards a target level, so in a quiet workshop it winds the gain **up** until
+   the only thing in the room — the phone's own speaker — is at speaking level, and every threshold
+   downstream is measuring an amplified echo. It was `true`.
+2. **The playback route.** The voice now leaves through a `MediaStreamAudioDestinationNode` into an
+   `<audio>` element instead of `ctx.destination`. `ctx.destination` is a WebAudio render stream at
+   *this context's* sample rate (24 kHz here, never the device's) and the platform echo canceller's
+   reference is the **device** render stream. The element goes out the media pipeline, which is the
+   one Chrome references — and the only one **iOS Safari cancels at all**: on iOS, AEC works for
+   audio played through an `<audio>`/`<video>` element and not for WebAudio rendered to the default
+   destination, so on a phone this is not an optimisation, it is the whole canceller. If the element
+   refuses to play, it falls back to `ctx.destination` rather than losing the voice; `handle.audio()`
+   reports which route is live (`element` in every measured run).
+3. **Half duplex.** While the agent is audible — first frame → the last scheduled sample →
+   `TAIL_MS` 250 — the mic is **not forwarded**. The withheld frames are kept, not dropped:
+   `PRIME_MS` 320 of them, sent first on a real barge-in so Deepgram hears the word he started
+   with and not the second half of it.
+4. **One measured threshold.** The first `ECHO_MS` 300 of a spoken turn is our own voice *by
+   definition* — he has not started talking yet — so whatever the mic hears there **is** the echo,
+   at this room's volume, past this device's canceller. A voice has to beat it by `BARGE_RATIO`
+   2.5× for `BARGE_MS` 120 ms. Live in the harness: echo **0.0207–0.0231 RMS**, threshold
+   **0.0517–0.0578**. The local duck obeys the same number, so the agent can no longer duck itself.
+
+Two bugs found on the way, both in the old numbers:
+
+- The duck counted **three FRAMES**, and a comment called that 130 ms. An AudioWorklet render
+  quantum is 128 samples: three of them is **16 ms**. The agent ducked itself on its own first
+  syllable and reported an interruption to the UI every time it opened its mouth. Everything is
+  counted in milliseconds now.
+- Thresholds were compared against the raw RMS of one 5 ms quantum. Speech is mostly gaps at that
+  resolution — "wait wait hold on" spends half its quanta under any threshold you pick — so a
+  counter that resets on the first quiet frame never reaches 120 ms and **the rider is never
+  heard**. The comparison is now against an envelope (attack 0.5, release 0.08) and the hold
+  drains at half speed instead of resetting.
+
+**And a real voice still cuts in.** Same harness, second wav: quiet agent echo, then a *different*
+aura-2 voice at speaking level over the top. From the loud onset at the microphone to the first mic
+frame leaving for Deepgram: **+120 ms / +140 ms**, with the playback flushed on the same frame.
+
+*Honest limit:* a fake capture device is not an acoustic loop — Chrome's canceller has nothing to
+subtract from a file that was never in the room. This harness measures the guard and the
+thresholds, which is what the fix is. It does not measure AEC, and the constraints above are
+reported, not credited.
 
 **Flow.** `GET /voice/agent-settings?manualId=&bikeId=` builds the whole `Settings` message
 server-side: prompt, models, greeting, a ≤1,500-char digest of the manual's chapters, this bike's
@@ -14,7 +93,8 @@ printed page count) and `keyterms` (how many were sent).
 `js/voice-deepgram.js` opens `wss://mechanica.emilvinu.ch/ws/deepgram/agent` — the Worker's proxy,
 **no credential in the tab** (see *Socket auth* below) — forwards `settings` unread, streams the mic
 as 24 kHz linear16 from an AudioWorklet, and plays the returned linear16 through an 80 ms jitter
-buffer. `show_page` is the one client-side function: it jumps the reader, the same path a `[p. N]`
+buffer. `show_page(page, highlight, steps)` is the one client-side function: it jumps the reader
+and writes the manual's own steps under the answer, the same path a `[p. N]`
 citation chip takes.
 
 **Saying a page is showing it.** The prompt makes the agent name the page every figure came off, and
@@ -120,11 +200,11 @@ spoken for it so the model neither repeats it nor apologises for the wait.
 
 `UserStartedSpeaking` is the truth and it is **0.4–2.2 s** away (five sessions; median ~0.7 s, worst
 2.2 s). Being talked over for two seconds is the least human thing this agent does. So the mic's own
-RMS **ducks** playback locally after ~130 ms of speech while the agent is talking (`DUCK_RMS` 0.05,
-three 1,024-sample frames), and the server event turns the duck into a real `flush()`. If no server
+envelope **ducks** playback the moment it crosses the measured barge threshold, and holds for
+`BARGE_MS` 120 ms before it becomes a real `flush()` and the withheld frames go up. If no server
 event arrives within 900 ms nobody was talking — a dropped spanner, a compressor — and the answer
-comes back up where it left off. **A duck is reversible; a flush is not.** Tapping the orb is the
-same path, taken deliberately.
+comes back up where it left off. **A duck is reversible; a flush is not.** Tapping the orb while it
+is talking is the same path, taken deliberately.
 
 ## The events Deepgram does not send
 
@@ -191,20 +271,84 @@ arithmetic on measured hops, not a measured end-to-end turn.** Say it that way.
 
 ![listening](../../docs/voice/orb/listening-phone.png)
 
-`js/voice-orb.js` + `css/voice-orb.css`, mounted by `chat-ui.js` into the conversation — not over
-the header, so Back and the chat's own ✕ stay reachable while voice runs.
+`js/voice-orb.js` + `css/voice-orb.css`, mounted by `js/voice-session.js` into one `position:
+fixed` host on `<body>` — not into a screen and not into the chat, because both of those are
+hidden, replaced or re-rendered by their owners and an orb that lives in one of them stops
+existing when its landlord changes screens.
+
+### It docks
+
+Full screen when it is opened from the chat, because there is nothing else to look at yet.
+**Docked** the moment the manual is up, because now there is: a compact orb in the corner, above
+the reader's thumb row, with one line of transcript beside it, still listening.
+
+![docked over the manual](../../docs/voice/orb/book-docked-phone.png)
+
+The dock is **one `transform` on one element over 180 ms** — `translate(…) scale(--dock-scale)` —
+so no width, no height and no position changes and the page underneath cannot feel it. Measured
+at 390×844: the docked disc is **71 px** (44 px minimum, cleared on every viewport), **16 px** from
+the right edge and **16 px above `.book-acts`**, which `voice-session.js` measures rather than
+guesses. Asserted in `orb-shots.mjs`: `transition-property: transform`, `0.18s`, and the
+conversation's box identical before and after.
+
+Which size it is, is `bus.on("screen")` and nothing more — Book docks it, anything else does not —
+until he taps, and his own choice wins until the next screen change. **Tap** the orb while it is
+talking: stop the answer. **Tap** while it is not: the other size. **Long-press** (600 ms) or the
+✕: leave. A tap has to mean "be quiet" while it is talking, because that is the only thing anyone
+ever wants from a talking machine, and it cannot mean two things at once.
 
 | state | the disc | under it |
 |---|---|---|
 | listening | breathes (one 3.4 s cycle, ±3.5%) and rides the **mic's RMS** on top of the breath | LISTENING |
 | thinking | dead still; three rings leave the edge on a 1.9 s stagger | THINKING |
 | speaking | pulses on the **agent's own output level**, taken from an `AnalyserNode` on the playback gain node | SPEAKING |
+| muted | still, desaturated | MUTED |
 
-The output meter is on the gain node rather than on the incoming chunks because a chunk is scheduled
-up to 80 ms before it is audible, and an orb 80 ms ahead of the sound looks broken. One line of live
-transcript fades in above it. **Tap** the orb to stop the answer; **long-press** (600 ms) or the ✕ to
-leave voice mode; the **chevron** fades the veil and hands the conversation back with the session
-still running.
+The output meter is on the gain node rather than on the incoming chunks because a chunk is
+scheduled up to 80 ms before it is audible, and an orb 80 ms ahead of the sound looks broken.
+
+### It is also written
+
+![the column](../../docs/voice/orb/column-phone.png)
+
+Voice is not audio-only. A torque you heard once and a torque you can read are not the same fact,
+and a procedure spoken aloud is gone the moment it is said. So every turn is **written into a
+column above the orb** — his own words quiet and right-aligned, the agent's on the accent rule,
+newest at the bottom nearest his eye, scrollable, and it stops following the bottom the moment he
+scrolls up, because a column that yanks itself down while a man is reading a torque is a column he
+will stop trusting.
+
+- **A lookup** is one quiet line — *checking the manual…* — that the answer **replaces** rather
+  than sits under.
+- **One breath is one turn.** The model emits one `ConversationText` per sentence; sentences after
+  the first carry `part: true` and are appended to the paragraph already there.
+- **A procedure is a numbered list**, one step per line, in the manual's order, with **the page as
+  a chip** underneath that opens the sheet. Those lines come from `show_page`'s new `steps`
+  argument: the browser never sees a tool result — Deepgram fetches the manual's text, not the tab
+  — so the *only* way the printed steps can reach his screen is if the agent hands them over in
+  the call that turns the page. The prompt tells it to copy them word for word and never to write
+  a step no result printed.
+- **The same messages are in the chat.** `voice-session.js` emits them on `mechanica:voice` and
+  `chat-ui.js` puts every one into the same `sessions` history a typed turn lands in, so leaving
+  voice mode leaves **one** conversation.
+
+Docked, the column folds to the last answer beside the orb; tapping that line opens it again.
+
+### Mute
+
+![muted](../../docs/voice/orb/muted-phone.png)
+
+A 44 px toggle beside the orb **in both sizes** — top right full screen, to the left of the disc
+when docked — and the **M** key while a session is live (never while he is typing into something).
+
+Muted means the **track is disabled** (`track.enabled = false`), not a flag this client checks: the
+microphone produces silence at the source, so Deepgram receives silence, the agent cannot hear the
+shop, and there is no code path left by which a frame could reach it. It deliberately does **not**
+stop the answer in flight and does not close anything — muting yourself is not hanging up, and a
+mute that cut the sentence you were listening to would be the opposite of what it is for. Three
+signals say it at once, because a mechanic who thinks he is being heard and is not will say a whole
+sentence to nobody: the icon grows a drawn slash, the word under the orb becomes MUTED, and the
+disc stops moving. Nothing is persisted; mute is per session.
 
 **Sixty frames, no layout.** One `requestAnimationFrame` loop writes two custom properties, `--s`
 (scale) and `--g` (glow), and the stylesheet turns those into a `transform` and an `opacity`. No
@@ -213,8 +357,14 @@ every inline property the loop set across a second of frames and fails if any of
 custom property — and measures **57–59 frames per second** in both states that move, against **one
 scale value** for thinking, which is supposed to be still.
 
-**No layout shift.** The conversation's box is measured before, during and after voice mode; any
-difference fails. It is identical at 390×844 and on desktop.
+**No layout shift.** The conversation's box is measured before, during and after voice mode, and
+before and after the dock; any difference fails. It is identical at 390×844 and on desktop — which
+is now true by construction, since the orb's host is the viewport and not the view.
+
+**The disc is centred on the VIEWPORT**, not on "the disc plus whatever is written under it": the
+state word and the column are absolutely placed so the only in-flow child of `.vo` is the orb. A
+word in the flow under it pushed the disc 25 px up and put the docked orb 25 px off the corner it
+was aiming at, because the dock translate is measured from the viewport's middle.
 
 **Reduced motion.** No breath, no ripple, no pulse. The level becomes a ring that fills (`--lvl`
 into a conic gradient), which moves nothing, and the state word still changes — that is the part
@@ -226,8 +376,35 @@ the rest of the app. `css/voice-orb.css` is injected by `voice-orb.js` itself �
 module that needs it and the only one that knows where it lives — so neither `index.html` nor
 another agent's screen CSS carries a line for it.
 
-Screenshots: `docs/voice/orb/<state>-{phone,desktop}.png`, plus `peek-` and `reduced-motion-`.
+Screenshots: `docs/voice/orb/<state>-{phone,desktop}.png`, plus `docked-`, `book-docked-`,
+`column-`, `folded-`, `muted-`, `muted-docked-`, `reduced-motion-` and `theme-`.
 Regenerate and re-verify with `node web/tools/orb-shots.mjs`.
+
+## Living with the rest of the app
+
+`mechanica:voice` on the window carries everything out — `status`, `text`, `steps`, `page`, `step`,
+`spec`, `mute`, `interrupted`, `started`, `ended`, `dock`, `error` — and
+`mechanica:voice-toggle` is how a screen asks for the assistant. **No screen imports voice code and
+voice imports no screen.** `screens/book.js` is 12 lines of it: a listener that turns and pulses
+the page an answer named, one that steps on "next" / "previous", and the reader's own mic button.
+
+The answers act on the page:
+
+| the agent | the app |
+|---|---|
+| names a page, or calls `show_page` | the reader turns to it and the sheet pulses; out of the relevant-pages filter, the strip quietly becomes the whole manual so it can |
+| hands over `steps` | the manual's own lines are written under the answer with the page as a chip |
+| he says "next" / "previous" / "go back" | the reader steps, with **no round trip at all** — it is parsed out of his own `ConversationText` |
+| a figure with a page in it | a chip beside the orb for five seconds, then gone |
+
+Where the page turn is routed depends on where he is standing, and the session decides because it
+is the only thing that knows: on Book it is the reader's own `jump()`, anywhere else it is
+`chat-ui.js`'s `jump()`, which closes the overlay first and then navigates.
+
+**Ending cleanly.** `pagehide` and `offline` end the session; a different manual ends it, because
+an agent grounded in one book must not answer about another. A socket nobody is listening to still
+bills $0.075 a minute, and a phone whose microphone is open after the app is gone is worse than the
+money.
 
 ---
 
@@ -257,6 +434,14 @@ protects the proper nouns — but a real claim needs real mechanics in a real sh
 **Limits.** `PUBLIC_BASE` must be https or the endpoints are refused (503 here, not a dead socket).
 English only. No mic, no toggle.
 
+**Phones.** iOS Safari's echo canceller only works on audio played through an `<audio>` or
+`<video>` element — WebAudio rendered to `ctx.destination` is not in its reference — which is why
+the playback route above is an element and not a convenience. It also needs the element to be
+playing from a user gesture, which the VOICE tap provides; if `play()` is still refused the client
+falls back to `ctx.destination` and the half-duplex guard is then the *only* thing between the
+agent and its own voice, which is exactly why the guard does not depend on AEC working. Android
+Chrome cancels both paths. `handle.audio().route` says which one is live.
+
 **Probing it from node.** Since 2026-09-20 the Worker refuses a WebSocket handshake that carries no
 `Origin` (BUG-10: everything that is not a browser also sends none, so the old "no Origin means one
 of our own scripts" exemption was an open door to `DEEPGRAM_API_KEY`). That is the right call and it
@@ -276,7 +461,10 @@ harnesses (`web/tools/voice-shots.mjs`, `web/tools/orb-shots.mjs`) are unaffecte
 | one extra tool hop, model time only | ~550–800 ms |
 | spec turn, end of question → first audio | **1,441–1,850 ms** |
 | `UserStartedSpeaking` after the rider starts talking | 384–2,242 ms |
-| local duck (mic RMS) | **~130 ms**, no network |
+| local duck (mic envelope over the measured echo) | the frame it crosses on, no network |
+| measured echo, past the canceller | **0.0207–0.0231 RMS**; threshold **0.0517–0.0578** |
+| mic frames forwarded while the agent is audible | **0**, was 206 (421,888 B) in 9 s |
+| a real voice → its first frame on the socket | **120–140 ms** |
 | barge-in local stop | **<3 ms** (next render quantum) + a 500 ms window that drops the abandoned answer's chunks |
 | cost | **$0.075 per connected minute** — the hosted tier bundles STT + LLM + TTS and bills socket time, and the socket exists only between the two taps on VOICE |
 
