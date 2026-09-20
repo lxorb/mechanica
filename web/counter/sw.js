@@ -407,15 +407,9 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    dropOldCaches()
-      .then(() => self.clients.claim())
-      // The page asks for the rest as soon as it is done loading. This is the fallback for a
-      // page that never does — an old cached app.js, or a tab closed and reopened mid-load —
-      // far enough out that it cannot be the reason a first load is slow.
-      .then(() => new Promise((done) => setTimeout(done, 20000)))
-      .then(() => precacheRest())
-  );
+  // Nothing slow belongs in here: a worker is "activating" until this promise settles, and every
+  // fetch from the page it just claimed waits for that. (It cost a warm load 20 seconds once.)
+  event.waitUntil(dropOldCaches().then(() => self.clients.claim()));
 });
 
 self.addEventListener("message", (event) => {
@@ -423,12 +417,28 @@ self.addEventListener("message", (event) => {
   if (type === "precache-rest") event.waitUntil(precacheRest());
 });
 
+let restArmed = false;
+
+/**
+ * The fallback for a page that never sends "precache-rest" — an old app.js out of someone's
+ * cache, or a tab closed mid-load. Hung off the first fetch event rather than off activate,
+ * because a worker is not activated until its activate handler settles and every request from
+ * the page it has claimed waits for that.
+ */
+function armRest(event) {
+  if (restArmed || restDone) return;
+  restArmed = true;
+  event.waitUntil(new Promise((done) => setTimeout(done, 15000)).then(() => precacheRest()));
+}
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
   if (url.protocol !== "http:" && url.protocol !== "https:") return;
+
+  armRest(event);
 
   if (isOnnx(url)) {
     event.respondWith(fetch(request));

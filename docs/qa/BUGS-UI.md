@@ -18,11 +18,13 @@ cuts the API off at the proxy to drive the error states.
     node docs/qa/book/book-shots.mjs         -> unchanged, green
     node web/tools/theme-shots.mjs           -> unchanged, green
 
-Screenshots: `docs/qa/ui-bugs/` — before/after for the worst three (UI-01 the Conditions slab,
-UI-05 the reload that lost the reader, UI-02 the cold `#cost`). "Before" is produced by serving the
-single line that carried the bug as it was, so each pair differs only by that line. UI-06 has no
-pair worth keeping: the "before" is a page the renderer never painted at all (first paint 12.1 s),
-and a forced capture of it is a picture of something no user sees.
+Screenshots: `docs/qa/ui-bugs/` — before/after for UI-01 (the Conditions slab over the reader) and
+UI-02 (the cold `#cost`). "Before" is produced by serving the single line that carried the bug as
+it was, so each pair differs only by that line. The other two of the worst four are measurements
+rather than pictures, deliberately: UI-06's "before" is a page the renderer never painted at all
+(`first-contentful-paint` absent at 2.5 s, 12.1 s in the end) and a forced capture of it shows
+pixels no user ever sees; UI-05's is a reader that never settles, so any single frame of it is a
+transient — the number is `here=pick` vs `here=book, p.7/143`, which is what the check asserts.
 
 ## Findings
 

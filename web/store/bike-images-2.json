@@ -9,6 +9,54 @@
     "via": "alias",
     "aliasOf": "aprilia|atlantic-250"
   },
+  "aprilia|dorsoduro-750": {
+    "image": "store/img/bikes2/aprilia-dorsoduro-750-abs.webp",
+    "thumb": "store/img/bikes2/aprilia-dorsoduro-750-abs.thumb.webp",
+    "hero": "store/img/bikes2/aprilia-dorsoduro-750-abs.hero.webp",
+    "title": "Aprilia SMV750 Dorsoduro.jpg",
+    "author": "S. Bogdol",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_SMV750_Dorsoduro.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "aprilia|dorsoduro-750-abs"
+  },
+  "aprilia|dorsoduro-750-abs": {
+    "image": "store/img/bikes2/aprilia-dorsoduro-750-abs.webp",
+    "thumb": "store/img/bikes2/aprilia-dorsoduro-750-abs.thumb.webp",
+    "title": "Aprilia SMV750 Dorsoduro.jpg",
+    "author": "S. Bogdol",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_SMV750_Dorsoduro.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/aprilia-dorsoduro-750-abs.hero.webp"
+  },
+  "aprilia|dorsoduro-750-factory": {
+    "image": "store/img/bikes2/aprilia-dorsoduro-750-abs.webp",
+    "thumb": "store/img/bikes2/aprilia-dorsoduro-750-abs.thumb.webp",
+    "hero": "store/img/bikes2/aprilia-dorsoduro-750-abs.hero.webp",
+    "title": "Aprilia SMV750 Dorsoduro.jpg",
+    "author": "S. Bogdol",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_SMV750_Dorsoduro.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "aprilia|dorsoduro-750"
+  },
+  "aprilia|dorsoduro-750-factory-abs": {
+    "image": "store/img/bikes2/aprilia-dorsoduro-750-abs.webp",
+    "thumb": "store/img/bikes2/aprilia-dorsoduro-750-abs.thumb.webp",
+    "hero": "store/img/bikes2/aprilia-dorsoduro-750-abs.hero.webp",
+    "title": "Aprilia SMV750 Dorsoduro.jpg",
+    "author": "S. Bogdol",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_SMV750_Dorsoduro.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "aprilia|dorsoduro-750-factory"
+  },
   "aprilia|mojito-125-custom": {
     "image": "store/img/bikes/aprilia-mojito-125.webp",
     "thumb": "store/img/bikes/aprilia-mojito-125-thumb.webp",
@@ -608,6 +656,18 @@
     "via": "alias",
     "aliasOf": "aprilia|sr-50"
   },
+  "aprilia|sr-max-300": {
+    "image": "store/img/bikes2/aprilia-sr-max-300.webp",
+    "thumb": "store/img/bikes2/aprilia-sr-max-300.thumb.webp",
+    "title": "Aprilia SR Max.jpg",
+    "author": "Bicanski",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_SR_Max.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/aprilia-sr-max-300.hero.webp"
+  },
   "aprilia|srv-850-abs-atc": {
     "image": "store/img/bikes/aprilia-srv-850.webp",
     "thumb": "store/img/bikes/aprilia-srv-850-thumb.webp",
@@ -637,6 +697,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:2018-01-04_(120)_Aprilia_SX_50_at_Bahnhof_Kirchstetten,_Austria.jpg",
     "via": "alias",
     "aliasOf": "aprilia|sx-50"
+  },
+  "aprilia|sxv-4.5": {
+    "image": "store/img/bikes2/aprilia-sxv-4-5.webp",
+    "thumb": "store/img/bikes2/aprilia-sxv-4-5.thumb.webp",
+    "title": "Aprila SXV 450 links.jpg",
+    "author": "StealthFX",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprila_SXV_450_links.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/aprilia-sxv-4-5.hero.webp"
+  },
+  "aprilia|sxv-4.5-vdb-replica": {
+    "image": "store/img/bikes2/aprilia-sxv-4-5.webp",
+    "thumb": "store/img/bikes2/aprilia-sxv-4-5.thumb.webp",
+    "hero": "store/img/bikes2/aprilia-sxv-4-5.hero.webp",
+    "title": "Aprila SXV 450 links.jpg",
+    "author": "StealthFX",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprila_SXV_450_links.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "aprilia|sxv-4.5"
   },
   "aprilia|tuono-1000-r": {
     "image": "store/img/bikes/aprilia-tuono-1000-r-factory.webp",
@@ -4164,6 +4248,18 @@
     "via": "alias",
     "aliasOf": "gmc|sierra"
   },
+  "harley-davidson|cvo-limited": {
+    "image": "store/img/bikes2/harley-davidson-cvo-limited.webp",
+    "thumb": "store/img/bikes2/harley-davidson-cvo-limited.thumb.webp",
+    "title": "Pfingsttreffen Puetnitz 2018, Ribnitz-Damgarten (1X7A2510).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pfingsttreffen_Puetnitz_2018,_Ribnitz-Damgarten_(1X7A2510).jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-cvo-limited.hero.webp"
+  },
   "harley-davidson|dyna": {
     "image": "store/img/bikes2/harley-davidson-dyna.webp",
     "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
@@ -4324,6 +4420,66 @@
     "via": "alias",
     "aliasOf": "harley-davidson|flhr-road-king"
   },
+  "harley-davidson|flht-electra-glide-standard": {
+    "image": "store/img/bikes2/harley-davidson-flht-electra-glide-standard.webp",
+    "thumb": "store/img/bikes2/harley-davidson-flht-electra-glide-standard.thumb.webp",
+    "title": "Harley Davidson FLHT Electra Glide.jpg",
+    "author": "Callmeace",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_FLHT_Electra_Glide.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-flht-electra-glide-standard.hero.webp"
+  },
+  "harley-davidson|flstc-heritage-softail-classic": {
+    "image": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.webp",
+    "thumb": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.thumb.webp",
+    "title": "2001 FLSTC.jpg",
+    "author": "Bugwit ( talk ) ( Uploads )",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2001_FLSTC.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.hero.webp"
+  },
+  "harley-davidson|flstc-heritage-softail-classic-firefighter": {
+    "image": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.webp",
+    "thumb": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.hero.webp",
+    "title": "2001 FLSTC.jpg",
+    "author": "Bugwit ( talk ) ( Uploads )",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2001_FLSTC.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|flstc-heritage-softail-classic"
+  },
+  "harley-davidson|flstc-heritage-softail-classic-peace-officer": {
+    "image": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.webp",
+    "thumb": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-flstc-heritage-softail-classic.hero.webp",
+    "title": "2001 FLSTC.jpg",
+    "author": "Bugwit ( talk ) ( Uploads )",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2001_FLSTC.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|flstc-heritage-softail-classic"
+  },
+  "harley-davidson|freewheeler": {
+    "image": "store/img/bikes2/harley-davidson-freewheeler.webp",
+    "thumb": "store/img/bikes2/harley-davidson-freewheeler.thumb.webp",
+    "title": "Harley-Davidson Museum May 2024 27 (2024 Freewheeler).jpg",
+    "author": "Michael Barera",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_27_(2024_Freewheeler).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-freewheeler.hero.webp"
+  },
   "harley-davidson|heritage-softail-classic-injection": {
     "image": "store/img/bikes/harley-davidson-heritage-softail-classic.webp",
     "thumb": "store/img/bikes/harley-davidson-heritage-softail-classic-thumb.webp",
@@ -4367,6 +4523,30 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/harley-davidson-police.hero.webp"
+  },
+  "harley-davidson|road-glide": {
+    "image": "store/img/bikes2/harley-davidson-road-glide.webp",
+    "thumb": "store/img/bikes2/harley-davidson-road-glide.thumb.webp",
+    "title": "Harley Davidson Road Glide Prague Czech Republic 2021 D.jpg",
+    "author": "Mojmir Churavy",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_Glide_Prague_Czech_Republic_2021_D.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-road-glide.hero.webp"
+  },
+  "harley-davidson|road-glide-special": {
+    "image": "store/img/bikes2/harley-davidson-road-glide-special.webp",
+    "thumb": "store/img/bikes2/harley-davidson-road-glide-special.thumb.webp",
+    "title": "Moscow, 2023 Harley-Davidson Road Glide Special (Milwaukee-Eight 107) on sale 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_2023_Harley-Davidson_Road_Glide_Special_(Milwaukee-Eight_107)_on_sale_01.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-road-glide-special.hero.webp"
   },
   "harley-davidson|road-king-fire-rescue": {
     "image": "store/img/bikes/harley-davidson-road-king.webp",
@@ -4639,6 +4819,39 @@
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp"
   },
+  "harley-davidson|sportster-1200": {
+    "image": "store/img/bikes2/harley-davidson-sportster-1200-custom.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster-1200-custom.thumb.webp",
+    "title": "Harley-Davidson Sportster 1200 (2004).jpg",
+    "author": "Nomadic Lana",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Sportster_1200_(2004).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster-1200-custom"
+  },
+  "harley-davidson|sportster-1200-custom": {
+    "image": "store/img/bikes2/harley-davidson-sportster-1200-custom.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster-1200-custom.thumb.webp",
+    "title": "Harley-Davidson Sportster 1200 (2004).jpg",
+    "author": "Nomadic Lana",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Sportster_1200_(2004).jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 8.5
+  },
+  "harley-davidson|sportster-1200-sport": {
+    "image": "store/img/bikes2/harley-davidson-sportster-1200-custom.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster-1200-custom.thumb.webp",
+    "title": "Harley-Davidson Sportster 1200 (2004).jpg",
+    "author": "Nomadic Lana",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Sportster_1200_(2004).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster-1200"
+  },
   "harley-davidson|sportster-forty-eight-dark-custom": {
     "image": "store/img/bikes/harley-davidson-sportster-forty-eight.webp",
     "thumb": "store/img/bikes/harley-davidson-sportster-forty-eight-thumb.webp",
@@ -4842,6 +5055,18 @@
     "view": "three_quarter",
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-touring.hero.webp"
+  },
+  "harley-davidson|tri-glide-ultra": {
+    "image": "store/img/bikes2/harley-davidson-tri-glide-ultra.webp",
+    "thumb": "store/img/bikes2/harley-davidson-tri-glide-ultra.thumb.webp",
+    "title": "Harley Davidson Tri Glide taken 2013.jpg",
+    "author": "Cullen328",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Tri_Glide_taken_2013.jpg",
+    "via": "wikipedia",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-tri-glide-ultra.hero.webp"
   },
   "harley-davidson|trike": {
     "image": "store/img/bikes2/harley-davidson-trike.webp",
@@ -7776,6 +8001,18 @@
     "via": "alias",
     "aliasOf": "honda|dio"
   },
+  "honda|dream": {
+    "image": "store/img/bikes2/honda-dream.webp",
+    "thumb": "store/img/bikes2/honda-dream.thumb.webp",
+    "title": "64 Honda Dream CA77 (8795645624).jpg",
+    "author": "Greg Gjerdingen from Willmar, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:64_Honda_Dream_CA77_(8795645624).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-dream.hero.webp"
+  },
   "honda|ev-neo-pro": {
     "image": "store/img/bikes/honda-ev-neo.webp",
     "thumb": "store/img/bikes/honda-ev-neo-thumb.webp",
@@ -9048,6 +9285,30 @@
     "score": 9.5,
     "hero": "store/img/bikes2/honda-shadow-rs.hero.webp"
   },
+  "honda|shadow400": {
+    "image": "store/img/bikes2/honda-shadow400.webp",
+    "thumb": "store/img/bikes2/honda-shadow400.thumb.webp",
+    "title": "Shadow400.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Shadow400.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-shadow400.hero.webp"
+  },
+  "honda|shadow400-slasher": {
+    "image": "store/img/bikes2/honda-shadow400.webp",
+    "thumb": "store/img/bikes2/honda-shadow400.thumb.webp",
+    "hero": "store/img/bikes2/honda-shadow400.hero.webp",
+    "title": "Shadow400.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Shadow400.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|shadow400"
+  },
   "honda|silver-wing-abs": {
     "image": "store/img/bikes/honda-silver-wing.webp",
     "thumb": "store/img/bikes/honda-silver-wing-thumb.webp",
@@ -9984,6 +10245,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "husqvarna|te-250"
+  },
+  "husqvarna|wre-125": {
+    "image": "store/img/bikes2/husqvarna-wre-125.webp",
+    "thumb": "store/img/bikes2/husqvarna-wre-125.thumb.webp",
+    "title": "Husqvarna WRE 100th anniversary 2004.jpeg",
+    "author": "Andrea Ciolli",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Husqvarna_WRE_100th_anniversary_2004.jpeg",
+    "via": "makecat",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/husqvarna-wre-125.hero.webp"
   },
   "hyundai|all-models": {
     "image": "store/img/bikes2/hyundai-all-models.webp",
@@ -15149,6 +15422,30 @@
     "via": "alias",
     "aliasOf": "moto-guzzi|breva-750"
   },
+  "moto-guzzi|california-1400-touring": {
+    "image": "store/img/bikes2/moto-guzzi-california-1400-touring.webp",
+    "thumb": "store/img/bikes2/moto-guzzi-california-1400-touring.thumb.webp",
+    "title": "IMG-20230504-WA0002 Moto Guzzi Eldorado 1400.jpg",
+    "author": "MartWrN1163",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:IMG-20230504-WA0002_Moto_Guzzi_Eldorado_1400.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/moto-guzzi-california-1400-touring.hero.webp"
+  },
+  "moto-guzzi|california-1400-touring-se": {
+    "image": "store/img/bikes2/moto-guzzi-california-1400-touring.webp",
+    "thumb": "store/img/bikes2/moto-guzzi-california-1400-touring.thumb.webp",
+    "hero": "store/img/bikes2/moto-guzzi-california-1400-touring.hero.webp",
+    "title": "IMG-20230504-WA0002 Moto Guzzi Eldorado 1400.jpg",
+    "author": "MartWrN1163",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:IMG-20230504-WA0002_Moto_Guzzi_Eldorado_1400.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "moto-guzzi|california-1400-touring"
+  },
   "moto-guzzi|california-ev-touring": {
     "image": "store/img/bikes/moto-guzzi-california-ev.webp",
     "thumb": "store/img/bikes/moto-guzzi-california-ev-thumb.webp",
@@ -16340,6 +16637,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_500_7-4-2017_16-00-29.JPG",
     "via": "alias",
     "aliasOf": "royal-enfield|classic-500"
+  },
+  "royal-enfield|thunderbird-350": {
+    "image": "store/img/bikes2/royal-enfield-thunderbird-350.webp",
+    "thumb": "store/img/bikes2/royal-enfield-thunderbird-350.thumb.webp",
+    "title": "Thunderbird350.jpg",
+    "author": "Irrigator",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Thunderbird350.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/royal-enfield-thunderbird-350.hero.webp"
   },
   "royal-enfield|thunderbird-twinspark": {
     "image": "store/img/bikes/royal-enfield-thunderbird.webp",
@@ -17785,6 +18094,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2014_Suzuki_SFV650.JPG",
     "via": "alias",
     "aliasOf": "suzuki|sfv650"
+  },
+  "suzuki|smash-115": {
+    "image": "store/img/bikes2/suzuki-smash-115.webp",
+    "thumb": "store/img/bikes2/suzuki-smash-115.thumb.webp",
+    "title": "2012 Suzuki Smash Titan 115 R (20210914).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Suzuki_Smash_Titan_115_R_(20210914).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/suzuki-smash-115.hero.webp"
   },
   "suzuki|st250-e-type": {
     "image": "store/img/bikes/suzuki-st250-e.webp",
@@ -20874,6 +21195,18 @@
     "via": "alias",
     "aliasOf": "tvs|tvs-xl100"
   },
+  "victory|8-ball": {
+    "image": "store/img/bikes2/victory-8-ball.webp",
+    "thumb": "store/img/bikes2/victory-8-ball.thumb.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Vegas 8-Ball - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Vegas_8-Ball_-_001.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/victory-8-ball.hero.webp"
+  },
   "victory|hammer": {
     "image": "store/img/bikes2/victory-hammer.webp",
     "thumb": "store/img/bikes2/victory-hammer.thumb.webp",
@@ -21153,6 +21486,18 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/yamaha-bw-s-125.hero.webp"
+  },
+  "yamaha|bws-naked": {
+    "image": "store/img/bikes2/yamaha-bws-naked.webp",
+    "thumb": "store/img/bikes2/yamaha-bws-naked.thumb.webp",
+    "title": "Yamaha-bws2012.jpg",
+    "author": "Stealth3327",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha-bws2012.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-bws-naked.hero.webp"
   },
   "yamaha|bw’s-50": {
     "image": "store/img/bikes2/yamaha-bw-s-50.webp",
@@ -24794,6 +25139,18 @@
     "via": "alias",
     "aliasOf": "yamaha|v-star-950"
   },
+  "yamaha|v-star-classic": {
+    "image": "store/img/bikes2/yamaha-v-star-classic.webp",
+    "thumb": "store/img/bikes2/yamaha-v-star-classic.thumb.webp",
+    "title": "Yamaha Cruiser.jpg",
+    "author": "gerry.scappaticci",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Cruiser.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-v-star-classic.hero.webp"
+  },
   "yamaha|v-star-custom": {
     "image": "store/img/bikes2/yamaha-v-star-custom.webp",
     "thumb": "store/img/bikes2/yamaha-v-star-custom.thumb.webp",
@@ -24805,6 +25162,18 @@
     "view": "side",
     "score": 10.5,
     "hero": "store/img/bikes2/yamaha-v-star-custom.hero.webp"
+  },
+  "yamaha|v-star-silverado": {
+    "image": "store/img/bikes2/yamaha-v-star-silverado.webp",
+    "thumb": "store/img/bikes2/yamaha-v-star-silverado.thumb.webp",
+    "title": "Yamaha V-Star (7953121136).jpg",
+    "author": "Tony Hisgett from Birmingham, UK",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V-Star_(7953121136).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-v-star-silverado.hero.webp"
   },
   "yamaha|vega-force": {
     "image": "store/img/bikes/yamaha-vega.webp",
@@ -25509,6 +25878,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Xv250.JPG",
     "via": "alias",
     "aliasOf": "yamaha|xv250"
+  },
+  "yamaha|xv950r": {
+    "image": "store/img/bikes2/yamaha-xv950r.webp",
+    "thumb": "store/img/bikes2/yamaha-xv950r.thumb.webp",
+    "title": "Yamaha Xv 950 (199434915).jpeg",
+    "author": "Aleksey Potapov",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Xv_950_(199434915).jpeg",
+    "via": "search",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-xv950r.hero.webp"
   },
   "yamaha|xvs1100": {
     "image": "store/img/bikes2/yamaha-xvs1100.webp",

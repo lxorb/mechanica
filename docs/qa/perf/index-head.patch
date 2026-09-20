@@ -1,28 +1,35 @@
 From: performance agent
-Subject: [PATCH] counter/index.html — start the roster and the module graph with the HTML
+Subject: [PATCH] counter/index.html - start the roster and the module graph with the HTML
 
-web/counter/index.html is owned by another agent this week, so the two head changes the
-first-load work needs are here instead of in the file. Both were measured through
-web/tools/perf.mjs --patch, which applies exactly these hunks to the served bytes:
+web/counter/index.html is owned by another agent this week, so the head changes the first-load
+work needs are here instead of in the file. Both hunks were measured through
+web/tools/perf.mjs --patch, which applies exactly this diff to the served bytes:
 
-  hunk 1 (hints)  field 2.65 s -> 1.30 s, first card 9.8 s -> 6.9 s   (fast 4G + 4x CPU, cold)
-  hunk 2 (css)    first paint 1.4 s -> 1.1 s
+  preload + modulepreload   field 2.6 s -> 1.3 s, first card 9.8 s -> 6.9 s  (fast 4G + 4x CPU, cold)
+  non-blocking screen CSS   first paint 1.4 s -> 1.1 s
 
-Apply with `git apply docs/qa/perf/index-head.patch`, or by hand — the two hunks are
-independent and hunk 2 is the more opinionated of the two (see the note under it).
+  git apply docs/qa/perf/index-head.patch
+
+The second change (media="print" on the five screens the landing cannot reach) is the more
+opinionated one: such a sheet is applied on its load event, so a screen could in principle
+paint one frame before its own CSS. None of those screens can be reached in under two seconds
+- the roster has to arrive and a bike has to be chosen first - and every sheet is on the wire
+from the first HTML parse. If it is not worth the argument, drop that half and keep the hints:
+that is where most of the number is.
 
 --- a/web/counter/index.html
 +++ b/web/counter/index.html
-@@ -26,6 +26,20 @@
+@@ -24,17 +24,40 @@
+     <link rel="stylesheet"
+           href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap">
    </noscript>
-+  <!-- The roster is what the search field is waiting for, and it used to be requested two
-+       round trips after this file: html -> app.js -> ttm.js -> fetch. Preloading it starts the
-+       download with the HTML. No crossorigin and no type: ttm.js fetches it with no Accept
-+       header of its own, so the preload and the fetch are the same request and it is
-+       downloaded once. The photo index next to it is deliberately NOT preloaded — nothing on
-+       the first screen needs it. -->
++  <!-- The roster is what the search field is waiting for, and it used to be requested two round
++       trips after this file: html -> app.js -> ttm.js -> fetch. Preloading it starts the download
++       with the HTML. No crossorigin and no Accept: ttm.js fetches it with no header of its own, so
++       the preload and the fetch are one request. The photo index next to it is deliberately not
++       preloaded - nothing on the first screen needs it. -->
 +  <link rel="preload" href="../store/ttm-catalog.json" as="fetch">
-+  <!-- The module graph behind the search field, flattened from four serial round trips to one.
++  <!-- The module graph behind the search field, flattened from four serial round trips into one.
 +       The other four screens are not here on purpose: app.js loads them once Identify is up. -->
 +  <link rel="modulepreload" href="js/bus.js">
 +  <link rel="modulepreload" href="js/ttm.js">
@@ -30,14 +37,19 @@ independent and hunk 2 is the more opinionated of the two (see the note under it
 +  <link rel="modulepreload" href="js/index-data.js">
 +  <link rel="modulepreload" href="js/vision.js">
 +  <link rel="modulepreload" href="js/screens/identify.js">
-+  <!-- pdf.js (the reader) and three.js (the 3D viewer) are imported from these two at the
-+       moment a manual or a Pick screen opens. The TLS handshake can happen now instead. -->
++  <!-- pdf.js (the reader) and three.js (the 3D viewer) are imported from these two the moment a
++       manual or a Pick screen opens. The handshake can happen now instead. -->
 +  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 +  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
    <link rel="stylesheet" href="css/counter.css">
    <link rel="stylesheet" href="css/themes.css">
    <link rel="stylesheet" href="css/particons.css">
 -  <link rel="stylesheet" href="css/viewer3d.css">
++  <!-- Six sheets for five screens nobody can reach from the landing: 60 KB of render-blocking
++       CSS in front of a search field that uses none of it. media="print" drops them to a lower
++       priority and applies them on load - one frame after the first paint, seconds before
++       anything they style is on screen. Identify's own sheet, counter, themes and particons
++       stay blocking. -->
 +  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/viewer3d.css">
    <link rel="stylesheet" href="css/screens/identify.css">
 -  <link rel="stylesheet" href="css/screens/confirm.css">
@@ -46,11 +58,6 @@ independent and hunk 2 is the more opinionated of the two (see the note under it
 -  <link rel="stylesheet" href="css/screens/invoice.css">
 -  <link rel="stylesheet" href="css/screens/cost.css">
 -  <link rel="stylesheet" href="css/climate.css">
-+  <!-- Six sheets for five screens that cannot be reached from the landing, 60 KB of them, all
-+       of it render-blocking in front of a search field that uses none of it. media="print"
-+       makes the browser fetch them at a lower priority and apply them on load, which is one
-+       frame after the first paint and several seconds before anything they style is on screen.
-+       Identify's own sheet, counter.css, themes.css and particons.css stay blocking. -->
 +  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/confirm.css">
 +  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/pick.css">
 +  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/book.css">
@@ -58,10 +65,5 @@ independent and hunk 2 is the more opinionated of the two (see the note under it
 +  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/cost.css">
 +  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/climate.css">
    <!-- The saved theme, before the first paint. js/theme.js is a module and therefore deferred,
-
-Note on hunk 2. A `media="print"` sheet is applied on its load event, so a screen can in
-principle paint one frame before its own sheet is in. None of these five screens can be
-reached in under two seconds — the roster has to arrive and a bike has to be chosen first —
-and every one of the sheets is on the wire from the first HTML parse, so the window does not
-exist in practice. If it is not worth the argument, take hunk 1 alone: it is where most of
-the number is.
+        so leaving this to it would show one frame of Workshop to someone who chose Night. -->
+   <script>
