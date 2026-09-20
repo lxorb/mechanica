@@ -510,3 +510,101 @@ from one command.
 **77,993 rows · 24,236 free English owner PDFs · 14,783 distinct files · 27,776 vehicles ·
 15,449 with a manual (1,601 of them in another language).** 767 tests pass, 0 impossible years,
 roster 631 KB raw / 89 KB gzip.
+
+---
+
+## Cycle 4 — 2026-09-20
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 77,993 | **89,141** | +11,148 |
+| free English owner PDFs | 24,236 | **24,281** | +45 |
+| distinct PDF files | 14,783 | **14,822** | +39 |
+| catalog vehicles | 27,776 | **29,638** | +1,862 |
+| …with a `manualUrl` | 15,449 | **17,464** | **+2,015** |
+| …offered in another language | 1,586 | **3,558** | +1,972 |
+
+Motorcycles 12,383 with a manual (was 11,014), cars 5,081 (was 4,435). **788 tests pass.**
+
+### The `REGISTRY_LANGS='*'` sweep
+
+Every adapter that calls `keep_lang()` was re-run with the gate open, dumped to its own
+`langs-<module>.json` fragment, and sample-verified before merging — **32 non-English samples across
+7 fragments, 32/32 `%PDF-`, 0 bad.**
+
+| adapter | English-only | all languages | new rows | languages |
+|---|---|---|---|---|
+| `honda.py` | 1,486 | **4,170** | +2,684 | 21 — ja 906, es 207, ko 197, pl/cs/sk 126 each, pt, it, nl … |
+| `yamaha.py` | 4,162 | **6,480** | +2,318 | 16 — de 334, fr 333, it 267, es 263, nl 235, pt 234, sv 189 … |
+| `bmw.py` | 946 | **1,512** | +566 | 2 — the `BA-SPRACHE` 00/01 pair really is en + de, nothing was being skipped |
+| `royalenfield.py` | 168 | **352** | +184 | 9 — es 58, pt 27, fr 20, it 19, de 19, ja 15, th 14, tr 12 |
+| `electric.py` | 38 | **63** | +25 | 6 — NIU prints de/fr/it/es/nl beside English |
+| `cars_gm.py` | 2,185 | 2,218 | +39 | 1 — GM's Solr core is `en_US` only; the 39 are new English files |
+| `kawasaki.py` | 1,308 | 1,320 | +12 | 2 — 12 Spanish rows, none of them a fetchable PDF |
+| `suzuki_intl.py` | 361 | 361 | 0 | 2 — already built with ja + de, nothing gated |
+| `euro_small.py` | 94 | 94 | 0 | 1 — Sherco and Benelli publish English only |
+| `americas.py` | 582 | **3,775** | +3,193 | 17 — fr 523, es 383, de 330, sv 323, fi 323, ja 279, nl 248, it 238, pt 224 … Polaris/Indian and BRP both print a dozen languages |
+| `triumph.py` | — | still crawling when the cycle ended (1 req / 1.8 s over 304 names) | — | **carry to cycle 5**: run it, verify, merge |
+
+`yamaha_intl.py`, `triumph_pdf.py` and `pierer.py` were already built with `'*'`. That closes the
+list from cycle 3 except `triumph.py`. `americas.py` landed late and was merged in a second pass —
+4/4 verified, and its Can-Am rows prove `operatorsguides.brp.com` serves the non-English guides from
+the same `/readguide/<id>` route.
+
+### Source added: Honda Japan — `honda_jp.py`, 2,127 rows over 1,668 PDFs
+
+`honda.co.jp/manual/` redirects to `/ownersmanual/HondaMotor/auto/`, and that page loads its entire
+catalogue from one static file, `./data/search.json`: 2 categories, 36 document kinds, **119
+nameplates, 668 model years, 1982–2027**. Document urls are
+`honda.co.jp/ownersmanual/pdf/auto/<FolderName>/<PDFFileName>` — no session, no VIN, no browser.
+815 of the rows are the handbook itself (`オーナーズマニュアル` / `オーナーズガイド`); the rest are the
+navigation head unit, quick guides and equipment booklets, each filed under its own `docKind` so
+`_pick()` ranks them below a handbook. 8/8 verified `%PDF-`.
+
+The hard part was names: every name in that file is Japanese and `slug()` strips non-ASCII, so all
+119 models would have collapsed to one id. `FolderName` is Honda's own romanisation, and the split
+is data-driven — the base is the longest other folder that is a strict prefix, widened by the
+prefixes two folders share (`acty` from `actytruck`/`actyvan`, `clarity` from `clarityphev`) —
+so the family always comes from Honda's list, never from a list I typed. 21 tests in
+`api/tests/test_honda_jp.py` cover the naming (including that it stays injective, so no two
+nameplates collapse) and the category→`docKind` map.
+
+This is what moved the vehicle count: **+1,856 vehicles**, nearly all Honda Japan nameplates that
+existed nowhere in the catalogue before, and Honda is now the biggest beneficiary of the language
+fallback at 1,830 vehicles.
+
+### Language fallback now covers 3,558 vehicles
+
+ja 1,579 · id 404 · th 348 · vi 270 · de 268 · fr 159 · ko 114 · es 99 · pl 61 · it 40 · rest 216.
+By make: Honda 1,830 · Yamaha 965 · Suzuki 370 · Opel 170 · Fiat 49 · Royal Enfield 27 · Peugeot 26 ·
+Alfa Romeo 23 · Citroën 17 · QJ 15.
+
+(A second merge folded `americas.py` in after the numbers above were first taken; the table at the
+top of this entry is the final state, and `stats` agrees with it.)
+
+### The roster budget is now the binding constraint
+
+`ttm-catalog.json` blew past its 700 KB limit at 706 KB on the first rebuild. Fixed inside
+`catalog.mjs` by packing `extra.l` the way `packMarket` already packs markets: **one bare string
+when every on-demand year of a model shares the language**, which is almost always true, and the
+per-year map only for a genuinely mixed model. That brought it to **678 KB raw / 98 KB gzip** —
+22 KB of headroom, which the next source will eat. Cycle 5 has to either raise `LIMIT` (a call for
+the counter agent, since it owns what the browser downloads) or pack the roster harder; `extra.o`,
+the on-demand year list, is now the biggest single field and would compress well as a range.
+
+### Next leads, best first
+
+1. **Finish `triumph.py`** with `REGISTRY_LANGS='*'` — the last adapter on the `keep_lang()` list.
+   It was still crawling when the cycle ended; `triumph_pdf.py` already indexes every language, so
+   expect overlap rather than a large gain, but measure it rather than assume.
+2. **Honda Japan motorcycles.** The car portal is `/ownersmanual/HondaMotor/auto/`; the path shape
+   says there should be a sibling, and Honda Japan certainly publishes 取扱説明書 for bikes. Checked
+   and dead so far: `/ownersmanual/HondaMotor/motorcycle/`, `honda.co.jp/motor-manual/`. The two
+   index pages (`/ownersmanual/`, `/ownersmanual/HondaMotor/`) are ~2 KB shells with no category
+   list in the document. Find the bike portal's own entry point rather than guessing more folders.
+3. **The same `search.json` trick elsewhere.** A portal whose page is a renderer over one static
+   JSON is the cheapest possible source, and it is worth looking for the pattern on the other
+   Japanese makers (Toyota/Lexus JP, Nissan JP, Mazda JP, Subaru JP) — all four publish Japanese
+   owner's manuals and none is indexed.
+4. **`kawasaki.py`'s 12 Spanish rows are not fetchable**, which re-confirms that everything outside
+   the US KTIVS catalogue is a flipbook. Do not re-open Kawasaki.
