@@ -185,13 +185,25 @@ the collapsed-border tricks that depended on 3 px (`margin-left: -3px`, `border-
 - `node docs/qa/ui-polish/shots.mjs --tag after` — **0 console errors** across every stop, both
   themes, both viewports. Landing, model cards, year chooser, Confirm (manual present and
   missing), Pick (3D stage + headings) and Book all paint.
-- `node web/tools/bughunt-ui.mjs` — **9 of 13**. The four that fail all die in the same helper,
-  `toPick()`, on `waitForSelector("[data-screen='pick'] .hit")`, and **they are not the same
-  four between runs** (run 1: bus-overlay, invoice-chips, book-reload, geometry; run 2:
-  both bus checks, bike-chip, geometry) — the signature of the live API being slow under a box
-  running several agents, not of a code path. Pick reaches its headings reliably through the
-  real route (Identify → Confirm → Pick) in every shot run above, in both themes and both
-  viewports. Worth a clean re-run on a quiet box before anyone treats it as a bug.
+- `node web/tools/bughunt-ui.mjs` — **9 of 13**, and the four that fail all die in the same
+  helper, `toPick()`, on `waitForSelector("[data-screen='pick'] .hit")`. Evidence that this
+  is the box and not the code:
+  - the failing four are **not the same four between runs** (run 1: bus-overlay,
+    invoice-chips, book-reload, geometry; run 2: both bus checks, bike-chip, geometry);
+  - `shots.mjs` has a `pickdirect` stop that replays `toPick()` byte for byte — landing,
+    then `bus.set({bikeId}); bus.go("pick")`, then wait for `.hit`. It **passes, with 0
+    console errors**: `node docs/qa/ui-polish/shots.mjs --tag probe --stops pickdirect`;
+  - the same latency shows in the shot run itself — one stop of 32 (`workshop/390/pick`)
+    timed out waiting for Confirm while the other three viewport/theme combinations of the
+    same stop painted.
+
+  Several agents were hammering the same live `/api` through the same proxy. **Re-run on a
+  quiet box before treating this as a bug** — but do re-run it; the baseline in
+  `docs/qa/BUGS-UI.md` is 13/13 and this pass should not be signed off at 9.
+- `docs/qa/book/book-shots.mjs` and `web/tools/theme-shots.mjs` (all five themes) were **not
+  run** — the pass was cut short by the deadline. The two themes the founder asked for
+  (Workshop, Night) are covered by `after/` at both viewports; Blueprint, Track and Paper are
+  token-only overrides and nothing in this pass added a colour, but they are unphotographed.
 
 ## Not done / for someone else
 
