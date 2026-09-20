@@ -24,17 +24,40 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap">
   </noscript>
+  <!-- The roster is what the search field is waiting for, and it used to be requested two round
+       trips after this file: html -> app.js -> ttm.js -> fetch. Preloading it starts the download
+       with the HTML. No crossorigin and no Accept: ttm.js fetches it with no header of its own, so
+       the preload and the fetch are one request. The photo index next to it is deliberately not
+       preloaded - nothing on the first screen needs it. -->
+  <link rel="preload" href="../store/ttm-catalog.json" as="fetch">
+  <!-- The module graph behind the search field, flattened from four serial round trips into one.
+       The other four screens are not here on purpose: app.js loads them once Identify is up. -->
+  <link rel="modulepreload" href="js/bus.js">
+  <link rel="modulepreload" href="js/ttm.js">
+  <link rel="modulepreload" href="js/search.js">
+  <link rel="modulepreload" href="js/index-data.js">
+  <link rel="modulepreload" href="js/vision.js">
+  <link rel="modulepreload" href="js/screens/identify.js">
+  <!-- pdf.js (the reader) and three.js (the 3D viewer) are imported from these two the moment a
+       manual or a Pick screen opens. The handshake can happen now instead. -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="css/counter.css">
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/particons.css">
-  <link rel="stylesheet" href="css/viewer3d.css">
+  <!-- Six sheets for five screens nobody can reach from the landing: 60 KB of render-blocking
+       CSS in front of a search field that uses none of it. media="print" drops them to a lower
+       priority and applies them on load - one frame after the first paint, seconds before
+       anything they style is on screen. Identify's own sheet, counter, themes and particons
+       stay blocking. -->
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/viewer3d.css">
   <link rel="stylesheet" href="css/screens/identify.css">
-  <link rel="stylesheet" href="css/screens/confirm.css">
-  <link rel="stylesheet" href="css/screens/pick.css">
-  <link rel="stylesheet" href="css/screens/book.css">
-  <link rel="stylesheet" href="css/screens/invoice.css">
-  <link rel="stylesheet" href="css/screens/cost.css">
-  <link rel="stylesheet" href="css/climate.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/confirm.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/pick.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/book.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/invoice.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/cost.css">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/climate.css">
   <!-- The saved theme, before the first paint. js/theme.js is a module and therefore deferred,
        so leaving this to it would show one frame of Workshop to someone who chose Night. -->
   <script>
