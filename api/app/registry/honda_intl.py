@@ -37,7 +37,7 @@ from collections.abc import Iterable, Iterator
 import httpx
 
 from ..models import RegistryEntry
-from ._http import Throttle, client, get_json, get_text, keep_lang, log, pmap, slug
+from ._http import Throttle, client, get_json, get_text, keep_lang, log, plausible_years, pmap, slug
 
 BASE = "https://www.hondamotopub.com"
 SITE = "hondamotopub.com"
@@ -65,7 +65,8 @@ def _region(c: httpx.Client, code: str) -> Iterator[RegistryEntry]:
         quoted = urllib.parse.quote(str(model), safe="")
         found = get_json(c, f"{BASE}/ajax/get_data_model_code/{code}//{quoted}//om", headers=xhr, throttle=THROTTLE)
         seen = {str((r or {}).get("model_year") or "") for r in found or []}
-        return [(str(model), y) for y in sorted(seen) if y.isdigit()]
+        # Motopub answers 5019 for at least one 19YM file; an impossible year is skipped, not guessed at.
+        return [(str(model), str(y)) for y in plausible_years(seen)]
 
     todo = [pair for group in pmap(years, models) for pair in group]
 

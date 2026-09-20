@@ -160,6 +160,24 @@ def slug(*parts: object) -> str:
     return re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9]+", "-", raw.lower())).strip("-")
 
 
+MODEL_YEARS = range(1900, 2033)
+
+
+def plausible_years(years: Iterable[object]) -> list[int]:
+    """Keep only values that can be a model year. OEM portals do print impossible ones - Yamaha EU
+    ships a truncated `201` alongside 2011-2016, Honda's Motopub answers `5019` for a `19YM` file -
+    and an unclamped year mints a catalog vehicle nothing can ever match. Sorted and deduplicated."""
+    out: set[int] = set()
+    for y in years:
+        try:
+            value = int(str(y).strip())
+        except (TypeError, ValueError):
+            continue
+        if value in MODEL_YEARS:
+            out.add(value)
+    return sorted(out)
+
+
 def years_in(text: str) -> list[int]:
     return sorted({int(y) for y in re.findall(r"\b((?:19|20)\d{2})\b", text or "")})
 

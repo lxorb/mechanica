@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 
 from ..models import RegistryEntry
-from ._http import BROWSER_UA, client, get_json, keep_lang, log, pmap, post_json, slug
+from ._http import BROWSER_UA, client, get_json, keep_lang, log, plausible_years, pmap, post_json, slug
 
 EU_API = "https://www.yamaha-motor.eu/services/api/owner-manuals"
 EU_SITE = "yamaha-motor.eu"
@@ -35,7 +35,7 @@ def yamaha_eu() -> Iterable[RegistryEntry]:
         url = (row or {}).get("cdnUrl")
         if not url:
             continue
-        years = sorted({int(y) for y in (row.get("years") or []) if str(y).isdigit()})
+        years = plausible_years(row.get("years") or [])  # the EU feed prints a truncated "201" next to 2011-2016
         models = row.get("modelNames") or []
         codes = {(lg or {}).get("languageCode", "").lower() for lg in (row.get("languages") or [])}
         codes = {c2 for c2 in codes if c2}
