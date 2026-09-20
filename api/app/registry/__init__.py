@@ -5,7 +5,6 @@ crawl() stores them; bikes_from_registry() derives catalog Bikes; free_owner_man
 """
 
 import importlib
-import re
 from collections.abc import Callable, Iterable
 from pathlib import Path
 
