@@ -1,5 +1,5 @@
 /**
- * Trust-the-manual backend adapter for the Handy Book counter app.
+ * Trust-the-manual backend adapter for the Mechanica counter app.
  * Owner: adapter agent. Screens import ONLY this module: `import * as Q from "../ttm.js"`.
  *
  * DECISION (point 3 of the brief). ttm.js is the single store module. It picks its own
@@ -29,7 +29,7 @@
  * with the manual and the registry slug without) are merged, keeping the row that has the
  * manual; the other id stays in `idAliases` and resolves through bike().
  *
- * Mapping of our backend (api/app/models.py) onto the Handy Book model the screens use:
+ * Mapping of our backend (api/app/models.py) onto the Mechanica model the screens use:
  *   Bike    -> bike     {id, make, model, year, market, aliases[], manualId|null, manualUrl?,
  *                        idAliases[], thumb:null, image:null}
  *   Manual  -> manual   {id, bikeId, bikeIds[], title, kind:"owner", publisher, file (PDF url),

@@ -1,7 +1,7 @@
 {
   "id": "/counter/",
-  "name": "Handy Book",
-  "short_name": "Handy Book",
+  "name": "Mechanica",
+  "short_name": "Mechanica",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

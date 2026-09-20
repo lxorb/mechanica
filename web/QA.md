@@ -1,4 +1,4 @@
-# QA — Handy Book
+# QA — Mechanica
 
 Live: https://mechanica.emilvinu.ch/counter/ and https://trustthemanual.cloudflare-disjoin783.workers.dev/counter/ (`/` 302s to it on both). Headless Chrome, 390x844 + 1280x800, screenshots in `docs-shots/qa-*.png`.
 

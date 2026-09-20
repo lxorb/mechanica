@@ -1,6 +1,6 @@
 # Trust the manual
 
-Official motorcycle manual, right page. Frontend: Handy Book counter app in `web/` (no build). Backend: FastAPI in `api/`.
+Official motorcycle manual, right page. Frontend: Mechanica app (Handy Book base) in `web/` (no build). Backend: FastAPI in `api/`.
 
     npx serve web -l 5000            # http://localhost:5000/counter/
     cd api && .venv/Scripts/python -m uvicorn app.main:app --port 8000

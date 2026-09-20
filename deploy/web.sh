@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deploy the Handy Book app (web/, no build step) as the Cloudflare Worker `trustthemanual`.
+# Deploy the Mechanica app (web/, no build step) as the Cloudflare Worker `trustthemanual`.
 #   deploy/web.sh            (API base is the <meta name="ttm-api"> in web/counter/index.html)
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
