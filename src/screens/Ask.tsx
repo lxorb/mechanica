@@ -6,6 +6,7 @@ import * as deepgram from '../lib/deepgram'
 import { identifyPart } from '../lib/api'
 import { track } from '../lib/busy'
 import { online } from '../lib/source'
+import { useFit } from '../lib/fit'
 
 type Stt = {
   supported: boolean
@@ -83,6 +84,7 @@ export default function Ask({
   const [listening, setListening] = useState(false)
   const [busy, setBusy] = useState(false)
   const [stt, setStt] = useState<Stt>(speech)
+  const titleRef = useFit(17, manual.title)
   const input = useRef<HTMLInputElement>(null)
   const camRef = useRef<HTMLInputElement>(null)
   const alive = useRef(true)
@@ -199,7 +201,9 @@ export default function Ask({
         <div className="truncate text-[13px] leading-snug text-[var(--muted)]">
           {bike.make} {bike.model} {bike.year}
         </div>
-        <div className="cover truncate pt-1 pb-2 text-[17px] leading-tight">{manual.title}</div>
+        <div ref={titleRef} className="cover truncate pt-1 pb-2 text-[17px] leading-tight">
+          {manual.title}
+        </div>
       </header>
 
       <div

@@ -5,6 +5,7 @@ import Parts from '../components/Parts'
 import Voice from '../components/Voice'
 import { cachedRatio, getDocument, pageRatio, preloadPage } from '../lib/pdf'
 import { useZoom } from '../lib/zoom'
+import { useFit } from '../lib/fit'
 
 type Entry = { title: string; page: number; depth: number }
 
@@ -45,11 +46,19 @@ function reading(manual: Manual, matches: Match[]) {
 }
 
 function spread(sections: Section[], total: number) {
+  const blocks: { from: number; to: number }[] = []
+  for (const section of sections) {
+    const from = Math.max(1, Math.min(section.pageStart, section.pageEnd))
+    const to = Math.min(total, Math.max(section.pageStart, section.pageEnd))
+    if (to < from) continue
+    const hit = blocks.find((block) => from >= block.from && from <= block.to + 1)
+    if (hit) hit.to = Math.max(hit.to, to)
+    else blocks.push({ from, to })
+  }
   const pages: number[] = []
   const seen = new Set<number>()
-  for (const section of sections) {
-    const last = Math.min(total, Math.max(section.pageStart, section.pageEnd))
-    for (let p = Math.max(1, section.pageStart); p <= last; p++) {
+  for (const block of blocks) {
+    for (let p = block.from; p <= block.to; p++) {
       if (seen.has(p)) continue
       seen.add(p)
       pages.push(p)
@@ -75,7 +84,13 @@ export default function Result({
   onBack: () => void
 }) {
   const sections = useMemo(() => reading(manual, matches), [manual, matches])
-  const outline = useMemo(() => flatten(manual.outline, 0, []), [manual.outline])
+  const outline = useMemo(() => {
+    const flat = flatten(manual.outline, 0, [])
+    if (flat.length > 0) return flat
+    return manual.sections
+      .map((section) => ({ title: section.title, page: section.pageStart, depth: 0 }))
+      .sort((a, z) => a.page - z.page)
+  }, [manual.outline, manual.sections])
   const [chapter, setChapter] = useState<number[] | null>(null)
 
   const pages = useMemo(() => {
@@ -100,6 +115,7 @@ export default function Result({
     [matches],
   )
 
+  const titleRef = useFit(14, manual.title)
   const { scroller, spacer, inner, zoomed, reset } = useZoom()
   const stripRef = useRef<HTMLDivElement>(null)
   const pageEls = useRef(new Map<number, HTMLElement>())
@@ -227,7 +243,9 @@ export default function Result({
         >
           ←
         </button>
-        <div className="cover min-w-0 flex-1 truncate text-[14px]">{manual.title}</div>
+        <div ref={titleRef} className="cover min-w-0 flex-1 truncate text-[14px]">
+          {manual.title}
+        </div>
         {current > 0 && (
           <div className="flex shrink-0 items-baseline">
             <span className="mr-[3px] text-[12px] text-[var(--muted)]">p.</span>

@@ -26,7 +26,7 @@ function remember(url: string, page: number, ratio: number) {
 export function getDocument(url: string): Promise<PDFDocumentProxy> {
   const open = docs.get(url)
   if (open) return open
-  const job = loadDocument({ url }).promise.then((doc) => {
+  const job = loadDocument({ url, wasmUrl: '/wasm/' }).promise.then((doc) => {
     urls.set(doc, url)
     return doc
   })

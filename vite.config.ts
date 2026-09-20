@@ -34,7 +34,7 @@ export default defineConfig({
       globPatterns: ['**/*.{js,mjs,css,html,png,svg,json,woff2}'],
       runtimeCaching: [
         {
-          urlPattern: /\/manuals\/.*\.pdf$/,
+          urlPattern: /\/manuals\/[^/]+(\.pdf|\/file)$/,
           handler: 'CacheFirst',
           options: {
             cacheName: 'manuals',

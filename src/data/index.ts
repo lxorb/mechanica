@@ -110,7 +110,8 @@ export function marketOf(row: Model, year: number): string {
 
 export function bikeOf(row: Model, year: number): Bike {
   const known = ids.get(`${row.key}|${year}`)
-  if (known) return known
+  const manualId = row.manuals[year] ?? null
+  if (known) return known.manualId || !manualId ? known : { ...known, manualId }
   return {
     id: bikeId(row.make, row.model, year),
     make: row.make,
@@ -158,7 +159,8 @@ export function merge(into: Model[], extra: Model[]): Model[] {
 
 export function remember(list: Bike[]): void {
   for (const bike of list) {
-    ids.set(`${modelKey(bike.make, bike.model)}|${bike.year}`, bike)
+    const key = `${modelKey(bike.make, bike.model)}|${bike.year}`
+    if (bike.manualId || !ids.get(key)?.manualId) ids.set(key, bike)
     byId.set(bike.id, bike)
   }
 }

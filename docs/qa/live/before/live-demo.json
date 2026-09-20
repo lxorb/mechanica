@@ -1,0 +1,1142 @@
+[
+ {
+  "step": "identify",
+  "ms": 4580,
+  "error": null,
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "KTM\nBMW\nHonda\nYamaha\nKawasaki\nSuzuki\nTriumph\nHarley-Davidson\nAprilia\nHusqvarna\nDucati\nGasGas\nMoto Guzzi\nRoyal Enfield\nPHOTO\nVIN"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "01-identify.png"
+ },
+ {
+  "step": "identify-typed-ktm",
+  "ms": 1485,
+  "error": null,
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nKTM 390 Duke\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\n2018\n2017\n2016\n2015\n2014\n2013\nKTM 390 Duke Abs\n2015\n2014\nKTM 390 Duke R2R\n2022\nKTM 1390 Super Duke R\n2026\n2025\n2024\nKTM 1390 Super Duke R EVO\n2026\n2025\n2024\nKTM 1390 Super Duke RR\n2026\nKTM 1390 Super Duke RR TRACK\n2026\nKTM 390 Adventure Spoked Wheels\n2024\n2023\nPHOTO\nVIN"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "02-identify-typed-ktm.png"
+ },
+ {
+  "step": "ask-ktm",
+  "ms": 2892,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "KTM 390 Duke 2024",
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "←\nKTM 390 Duke 2024\nOWNER'S MANUAL 2024 390 DUKE\n18\nSERVICE WORK ON THE ENGINE\nChecking the engine oil level\np.\n114\nChanging the engine oil and oil filter, cleaning the oil screens\np.\n114\n16\nCOOLING SYSTEM\nChecking the coolant level\np.\n107\n12\nSERVICE WORK ON THE CHASSIS\nCleaning the chain\np.\n76\nChecking the chain tension\np.\n77\nAdjusting the chain tension\np.\n78\n13\nBRAKE SYSTEM\nChecking the front brake fluid level\np.\n84\nAdding front brake fluid\np.\n85\nChecking that the brake linings of the front brake are secured\np.\n86\nChecking the rear brake fluid level\np.\n86\nChecking that the brake linings of t"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "03-ask-ktm.png"
+ },
+ {
+  "step": "result-chain",
+  "ms": 5628,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "12 SERVICE WORK ON THE CHASSIS · 12.12 Checking the chain tension",
+   "trailTruncated": true,
+   "pageLabel": {
+    "current": 77,
+    "total": 143
+   },
+   "strip": [
+    77,
+    78,
+    128,
+    129,
+    130,
+    76,
+    91,
+    92,
+    123,
+    124,
+    125
+   ],
+   "sheets": [
+    {
+     "page": 77,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 78,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 128,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 129,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 130,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 76,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 91,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 92,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 123,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 124,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 125,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    }
+   ],
+   "hasParts": true,
+   "docOverflow": false,
+   "bodyText": "←\nOWNER'S MANUAL 2024 390 DUKE\np.\n77\n/143\n12 SERVICE WORK ON THE CHASSIS · 12.12 Checking the chain tension\n77\n78\n128\n129\n130\n76\n91\n92\n123\n124\n125\nPARTS"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "04-result-chain.png"
+ },
+ {
+  "step": "result-chain-scrolled",
+  "ms": 1939,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "12 SERVICE WORK ON THE CHASSIS · 12.13 Adjusting the chain tension",
+   "trailTruncated": true,
+   "pageLabel": {
+    "current": 78,
+    "total": 143
+   },
+   "strip": [
+    77,
+    78,
+    128,
+    129,
+    130,
+    76,
+    91,
+    92,
+    123,
+    124,
+    125
+   ],
+   "sheets": [
+    {
+     "page": 77,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 78,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 128,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 129,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 130,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 76,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 91,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 92,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 123,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 124,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 125,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    }
+   ],
+   "hasParts": true,
+   "docOverflow": false,
+   "bodyText": "←\nOWNER'S MANUAL 2024 390 DUKE\np.\n78\n/143\n12 SERVICE WORK ON THE CHASSIS · 12.13 Adjusting the chain tension\n77\n78\n128\n129\n130\n76\n91\n92\n123\n124\n125\nPARTS"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "05-result-chain-scrolled.png"
+ },
+ {
+  "step": "parts-ktm",
+  "ms": 974,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "12 SERVICE WORK ON THE CHASSIS · 12.13 Adjusting the chain tension",
+   "trailTruncated": true,
+   "pageLabel": {
+    "current": 78,
+    "total": 143
+   },
+   "strip": [
+    77,
+    78,
+    128,
+    129,
+    130,
+    76,
+    91,
+    92,
+    123,
+    124,
+    125
+   ],
+   "sheets": [
+    {
+     "page": 77,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 78,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 128,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 129,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 130,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 76,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 91,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 92,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 123,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 124,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 125,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    }
+   ],
+   "hasParts": true,
+   "docOverflow": false,
+   "bodyText": "←\nOWNER'S MANUAL 2024 390 DUKE\np.\n78\n/143\n12 SERVICE WORK ON THE CHASSIS · 12.13 Adjusting the chain tension\n77\n78\n128\n129\n130\n76\n91\n92\n123\n124\n125\nPARTS\n✕\nChain\np.\n126\n5/8 x 1/4” (520) X‑ring\nRevZilla\nPartzilla\nAmazon"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "06-parts-ktm.png"
+ },
+ {
+  "step": "parts-ktm-closed",
+  "ms": 841,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "12 SERVICE WORK ON THE CHASSIS · 12.13 Adjusting the chain tension",
+   "trailTruncated": true,
+   "pageLabel": {
+    "current": 78,
+    "total": 143
+   },
+   "strip": [
+    77,
+    78,
+    128,
+    129,
+    130,
+    76,
+    91,
+    92,
+    123,
+    124,
+    125
+   ],
+   "sheets": [
+    {
+     "page": 77,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 78,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 128,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 129,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 130,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 76,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 91,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 92,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 123,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 124,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 125,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    }
+   ],
+   "hasParts": true,
+   "docOverflow": false,
+   "bodyText": "←\nOWNER'S MANUAL 2024 390 DUKE\np.\n78\n/143\n12 SERVICE WORK ON THE CHASSIS · 12.13 Adjusting the chain tension\n77\n78\n128\n129\n130\n76\n91\n92\n123\n124\n125\nPARTS"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "07-parts-ktm-closed.png"
+ },
+ {
+  "step": "back-to-ask-ktm",
+  "ms": 956,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "KTM 390 Duke 2024",
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "←\nKTM 390 Duke 2024\nOWNER'S MANUAL 2024 390 DUKE\n18\nSERVICE WORK ON THE ENGINE\nChecking the engine oil level\np.\n114\nChanging the engine oil and oil filter, cleaning the oil screens\np.\n114\n16\nCOOLING SYSTEM\nChecking the coolant level\np.\n107\n12\nSERVICE WORK ON THE CHASSIS\nCleaning the chain\np.\n76\nChecking the chain tension\np.\n77\nAdjusting the chain tension\np.\n78\n13\nBRAKE SYSTEM\nChecking the front brake fluid level\np.\n84\nAdding front brake fluid\np.\n85\nChecking that the brake linings of the front brake are secured\np.\n86\nChecking the rear brake fluid level\np.\n86\nChecking that the brake linings of t"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "08-back-to-ask-ktm.png"
+ },
+ {
+  "step": "result-torque",
+  "ms": 7160,
+  "error": null,
+  "probe": {
+   "title": "OWNER'S MANUAL 2024 390 DUKE",
+   "titleTruncated": false,
+   "trail": "22 TECHNICAL SPECIFICATIONS · 22.9 Chassis tightening torques",
+   "trailTruncated": true,
+   "pageLabel": {
+    "current": 128,
+    "total": 143
+   },
+   "strip": [
+    128,
+    129,
+    130,
+    91,
+    92,
+    78,
+    123,
+    124,
+    125,
+    94,
+    95
+   ],
+   "sheets": [
+    {
+     "page": 128,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 129,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 130,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 91,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 92,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 78,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 123,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 124,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 125,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 94,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    },
+    {
+     "page": 95,
+     "sheet": {
+      "w": 366,
+      "h": 517.6
+     },
+     "canvas": {
+      "w": 300,
+      "h": 150
+     },
+     "marks": []
+    }
+   ],
+   "hasParts": true,
+   "docOverflow": false,
+   "bodyText": "←\nOWNER'S MANUAL 2024 390 DUKE\np.\n128\n/143\n22 TECHNICAL SPECIFICATIONS · 22.9 Chassis tightening torques\n128\n129\n130\n91\n92\n78\n123\n124\n125\n94\n95\nPARTS"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "09-result-torque.png"
+ },
+ {
+  "step": "back-identify",
+  "ms": 2379,
+  "error": null,
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "KTM\nBMW\nHonda\nYamaha\nKawasaki\nSuzuki\nTriumph\nHarley-Davidson\nAprilia\nHusqvarna\nDucati\nGasGas\nMoto Guzzi\nRoyal Enfield\nPHOTO\nVIN"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "10-back-identify.png"
+ },
+ {
+  "step": "identify-typed-bmw",
+  "ms": 1405,
+  "error": null,
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "11-identify-typed-bmw.png"
+ },
+ {
+  "step": "ask-bmw",
+  "ms": 21491,
+  "error": null,
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "12-ask-bmw.png"
+ },
+ {
+  "step": "result-bmw-pads",
+  "ms": 129,
+  "error": "no input What do you want to do?",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "13-result-bmw-pads.png"
+ },
+ {
+  "step": "parts-bmw",
+  "ms": 117,
+  "error": "no element with text Parts",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "14-parts-bmw.png"
+ },
+ {
+  "step": "back-ask-bmw",
+  "ms": 116,
+  "error": "no element with text ←",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "15-back-ask-bmw.png"
+ },
+ {
+  "step": "result-bmw-oil",
+  "ms": 111,
+  "error": "no input What do you want to do?",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "16-result-bmw-oil.png"
+ },
+ {
+  "step": "back-identify-2",
+  "ms": 107,
+  "error": "no element with text ←",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "17-back-identify-2.png"
+ },
+ {
+  "step": "vin",
+  "ms": 685,
+  "error": "no vin input",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "18-vin.png"
+ },
+ {
+  "step": "vin-ask",
+  "ms": 108,
+  "error": "no element with text 2024",
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "✕\nBMW R 12 G/S\n2026\n2025\nBMW R 1200 GS\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\n2005\n2004\n2003\nBMW R 1200 GS Adventure\n2019\n2018\n2017\n2016\n2015\n2014\n2013\n2012\n2011\n2010\n2009\n2008\n2007\n2006\nBMW R 1200 GS Adventure Triple Black\n2012\nBMW R 1200 GS Adventure Xe\n2014\nBMW R 1200 GS Enduro\n2014\nBMW R 1200 GS Rallye\n2018\n2012\nBMW R 1200 GS Rallye Te\n2018\nBMW R 1200 GS Te\n2018\n2014\nBMW R 1200 GS Te Exclusive\n2018\nBMW R 1200 GS Triple Black\n2016\n2012\nBMW R 1200 GS Xdrive Hybrid\n2018\nBMW R 1250 GS\n2022\n2021\n2020\n2019\n2018\nBMW R 1250 GS Adventure\n2023\n2022\n2021\n2020\n2019\n2018\n"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "19-vin-ask.png"
+ },
+ {
+  "step": "cost",
+  "ms": 33112,
+  "error": null,
+  "probe": {
+   "title": null,
+   "titleTruncated": false,
+   "trail": null,
+   "trailTruncated": false,
+   "pageLabel": null,
+   "strip": [],
+   "sheets": [],
+   "hasParts": false,
+   "docOverflow": false,
+   "bodyText": "←\n0.0023\nTOTAL\n0.0005\nPER ASK\n6.0640\nNAIVE PER ASK\n5\nCALLS"
+  },
+  "console": [],
+  "failed": [],
+  "shot": "20-cost.png"
+ }
+]

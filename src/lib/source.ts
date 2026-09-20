@@ -40,6 +40,8 @@ const POLL = 1000
 const MAX_POLLS = 900
 
 const resolved = (manual: Manual): Manual => {
+  const bundled = mockManuals[manual.id]
+  if (bundled) return { ...manual, file: bundled.file }
   if (!api.base) return manual
   try {
     const url = new URL(manual.file, api.base)
