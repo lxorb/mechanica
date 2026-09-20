@@ -12,6 +12,7 @@
 
 @import url("../viewer3d.css");
 @import url("../particons.css");
+@import url("../chat-ui.css");
 
 [data-screen="pick"] .root,
 [data-screen="pick"] [data-root] {
@@ -378,6 +379,8 @@
   position: sticky;
   bottom: 0;
   z-index: 5;
+  display: flex;
+  justify-content: flex-end;
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--paper);
 }
@@ -387,9 +390,15 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
   align-items: baseline;
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   min-height: 56px;
   text-align: left;
+}
+
+/* the two share one rule where they meet */
+[data-screen="pick"] .open:not([hidden]) + .chat-pill {
+  border-left: 0;
 }
 
 [data-screen="pick"] .open b {
@@ -419,7 +428,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  [data-screen="pick"] .foot:not([hidden]) .open {
+  [data-screen="pick"] .foot .open:not([hidden]) {
     animation: pick-rise 180ms ease-out;
   }
 }

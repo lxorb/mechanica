@@ -29,11 +29,13 @@ import { initCost } from "./cost.js";
 import { build, roots, search, marks, spanOf, byId, normTitle } from "../pick-search.js";
 import { mount as mountViewer, modelFor, partFor, PART_LABELS } from "../viewer3d.js";
 import { iconFor, iconEl } from "../particons.js";
+import { mountChat } from "../chat-ui.js";
 
 const MIC_PATH_BODY = "M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z";
 const MIC_PATH_ARC = "M5 11a7 7 0 0 0 14 0M12 18v3";
 const CAM_PATH =
   "M8 5h2l1-2h2l1 2h4v13H4V5h4zm4 3.25A3.75 3.75 0 1 0 12 15.75 3.75 3.75 0 0 0 12 8.25zm0 2A1.75 1.75 0 1 1 12 13.75 1.75 1.75 0 0 1 12 10.25z";
+const CHAT_PATH = "M3 4h18v12H9l-6 5V4z";
 
 const MISS_MS = 900;
 const VIEW_MS = 120;
@@ -43,6 +45,7 @@ let root;
 let els;
 let viewer = null;
 let viewerBike = null;
+let chat = null; // the chat drawer controller (../chat-ui.js), built once a manual is known
 
 let entries = [];
 let index = new Map();
@@ -179,17 +182,24 @@ function mount(el) {
 
   const hits = node("div", { class: "hits", role: "list" });
   const foot = node("div", { class: "foot", hidden: "" });
-  const open = node("button", { type: "button", class: "btn btn-primary open" });
+  const open = node("button", { type: "button", class: "btn btn-primary open", hidden: "" });
   const openT = node("b", { text: "Manual" });
   const openP = node("span", { class: "open-p" });
   open.append(openT, openP);
   open.addEventListener("click", openManual);
-  foot.append(open);
 
-  root.append(stage, hits, foot, file);
+  // Ask the manual in words instead of headings. Only here, where the bike is finally settled.
+  const chatPill = node("button", { type: "button", class: "chat-pill", hidden: "", "aria-label": "Chat" });
+  chatPill.append(glyph([CHAT_PATH], false), node("span", { text: "Chat" }));
+  chatPill.addEventListener("click", toggleChat);
+  foot.append(open, chatPill);
+
+  const chatHost = node("div", { hidden: "" });
+
+  root.append(stage, hits, foot, file, chatHost);
   stageViewer.append(who);
 
-  els = { stage, stageViewer, who, whoImg, whoName, bar, meter, form, mic, cam, input, send, file, hits, foot, open, openP };
+  els = { stage, stageViewer, who, whoImg, whoName, bar, meter, form, mic, cam, input, send, file, hits, foot, open, openP, chatPill, chatHost };
   els.mic.hidden = !stt.supported;
   syncSend();
 }
@@ -216,6 +226,7 @@ function enter() {
     selected = null;
     rowCap = MAX_ROWS;
     lastBikeId = state.bikeId;
+    if (chat) chat.close();
     if (els) {
       els.input.value = "";
       els.hits.replaceChildren();
@@ -231,6 +242,7 @@ function enter() {
 function leave() {
   freezeY = false;
   snapshotY();
+  if (chat) chat.close();
   stopMic();
   clearMiss();
   clearView();
@@ -240,8 +252,9 @@ function leave() {
   stopViewer();
 }
 
-/** Back pops the selection, then the query, before it walks a step back in the flow. */
+/** Back closes the chat, then pops the selection and the query, before it walks a step back. */
 function back() {
+  if (chat && chat.close()) return true;
   if (selected) {
     clearSelection();
     return true;
@@ -413,6 +426,7 @@ async function load() {
   }
   paintBike(rec);
   startViewer();
+  syncChat();
 
   const [made, jobs, sys] = await Promise.all([
     Promise.resolve().then(() => T.manual(rec.manualId || state.bikeId)).catch(() => null),
@@ -582,7 +596,9 @@ function rowFor(entry, q, browsing) {
 
 function syncFoot() {
   if (!els) return;
-  els.foot.hidden = !selected;
+  // The bar carries the Chat pill from the moment a manual exists; MANUAL joins it on a pick.
+  els.foot.hidden = !selected && els.chatPill.hidden;
+  els.open.hidden = !selected;
   if (!selected) return;
   const part = partOf(selected);
   els.openP.textContent = part && PART_LABELS[part] ? `${stamp(selected)} · ${PART_LABELS[part]}` : stamp(selected);
@@ -650,32 +666,21 @@ function systemIdFor(entry) {
 }
 
 /**
- * A heading with an indexed section behind it already has a job. A bare outline heading gets
- * one built from its page range and parked on the manual record, which is what T.jobById()
- * reads — without it Book would bounce straight back here.
+ * A job Book can open for something the index never named — a bare outline heading, or a page
+ * a chat citation points at. Parked on the manual record, which is what T.jobById() reads;
+ * without that Book would bounce straight back here. Marked `synthetic` so the index skips it.
  */
-async function jobFor(entry) {
-  if (!entry) return null;
-  if (entry.job) return entry.job;
-  const made = await T.manual(manualId() || state.bikeId).catch(() => null);
-  if (!made || !Array.isArray(made.jobs)) return null;
-
-  const sectionId = `toc-${entry.page}-${slug(entry.label || entry.title)}`;
+function bareJob(made, { sectionId, pages, title, chapter, systemId }) {
   const found = made.jobs.find((j) => j.sectionId === sectionId);
-  if (found) {
-    entry.job = found;
-    return found;
-  }
-
-  const pages = spanOf(entry);
+  if (found) return found;
   const job = {
     id: `${state.bikeId}/${sectionId}`,
     bikeId: state.bikeId,
     sectionId,
     manualId: made.id,
-    systemId: systemIdFor(entry),
-    chapter: entry.chapter || entry.title,
-    title: entry.label || entry.title,
+    systemId: systemId || null,
+    chapter: chapter || title,
+    title,
     partId: null,
     partIds: [],
     pages,
@@ -700,8 +705,24 @@ async function jobFor(entry) {
   };
   made.jobs.push(job);
   if (made.jobsById && typeof made.jobsById.set === "function") made.jobsById.set(job.id, job);
-  entry.job = job;
   return job;
+}
+
+/** A heading with an indexed section behind it already has a job; a bare one gets bareJob(). */
+async function jobFor(entry) {
+  if (!entry) return null;
+  if (entry.job) return entry.job;
+  const made = await T.manual(manualId() || state.bikeId).catch(() => null);
+  if (!made || !Array.isArray(made.jobs)) return null;
+
+  entry.job = bareJob(made, {
+    sectionId: `toc-${entry.page}-${slug(entry.label || entry.title)}`,
+    pages: spanOf(entry),
+    title: entry.label || entry.title,
+    chapter: entry.chapter || entry.title,
+    systemId: systemIdFor(entry),
+  });
+  return entry.job;
 }
 
 async function openManual() {
@@ -749,6 +770,72 @@ function openAskJob(job, rest) {
     page: (Array.isArray(job.pages) && job.pages[0]) || null,
   });
   emit("part", { partId });
+  go("book");
+}
+
+/* ------------------------------------------------------------------ chat */
+
+function bikeLabel() {
+  const rec = T.bike(state.bikeId);
+  if (!rec) return "";
+  return [rec.make, rec.model, rec.year].filter((x) => x != null && x !== "").join(" ");
+}
+
+/**
+ * The pill appears the moment this bike has an indexed manual to talk about, and the drawer
+ * is built on the first tap (the component is 387 KB — it must not sit in front of the list).
+ */
+function syncChat() {
+  if (!els) return;
+  const id = manualId();
+  els.chatPill.hidden = !id;
+  if (!id) {
+    if (chat) chat.close();
+  } else if (!chat) {
+    chat = mountChat(els.chatHost, { manualId: id, bike: bikeLabel(), onPage: openPage });
+  } else {
+    chat.setContext({ manualId: id, bike: bikeLabel() });
+  }
+  syncFoot();
+}
+
+function toggleChat() {
+  if (!chat) return;
+  stopMic();
+  chat.toggle();
+}
+
+/** The outline heading the cited page falls under, so the reader opens with its bearings. */
+function headingAt(page) {
+  let best = null;
+  for (const entry of entries) {
+    if (entry.page > page) continue;
+    if (!best || entry.page > best.page || (entry.page === best.page && entry.depth > best.depth)) best = entry;
+  }
+  return best;
+}
+
+/** A [p. N] chip: one synthetic job for that single printed page, then Book opens on it. */
+async function openPage(n) {
+  const page = Math.max(1, Math.floor(Number(n) || 0));
+  if (!page) return;
+  const made = await T.manual(manualId() || state.bikeId).catch(() => null);
+  if (!made || !Array.isArray(made.jobs)) {
+    miss();
+    return;
+  }
+  const under = headingAt(page);
+  const job = bareJob(made, {
+    sectionId: `chat-p${page}`,
+    pages: [page],
+    title: under ? under.label || under.title : `Page ${page}`,
+    chapter: under ? under.chapter || under.title : "",
+    systemId: under ? systemIdFor(under) : null,
+  });
+  if (chat) chat.close();
+  snapshotY();
+  set({ jobId: job.id, jobIds: [job.id], systemId: job.systemId || state.systemId || null, partId: null, page });
+  emit("part", { partId: null });
   go("book");
 }
 

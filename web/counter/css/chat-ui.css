@@ -1,0 +1,206 @@
+/**
+ * Chat drawer. Owner: chat-ui agent. Pairs with js/chat-ui.js.
+ *
+ * Only the chrome around the component lives here: <deep-chat> renders into a shadow root,
+ * so every rule inside the transcript is handed to it as `auxiliaryStyle` / `messageStyles`
+ * from js/chat-ui.js instead. Pulled in by css/screens/pick.css (which mounts the drawer),
+ * so index.html — another agent's file — needs no line.
+ */
+
+/* ------------------------------------------------------------------ the pill */
+
+[data-screen="pick"] .chat-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-height: 56px;
+  padding: 0 16px;
+  border: 3px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 0;
+}
+
+[data-screen="pick"] .chat-pill svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+[data-screen="pick"] .chat-pill:active {
+  background: var(--orange);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------ the drawer */
+
+.chat-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chat-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.34);
+  opacity: 0;
+  transition: opacity 0.18s ease-out;
+}
+
+.chat-wrap.is-open .chat-veil {
+  opacity: 1;
+}
+
+.chat-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  /* 66dvh leaves the 3D stage standing above the drawer on a phone */
+  height: 66dvh;
+  min-height: 320px;
+  background: var(--paper);
+  border-top: 3px solid var(--ink);
+  transform: translateY(100%);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chat-wrap.is-open .chat-sheet {
+  transform: translateY(0);
+}
+
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  padding: 6px 6px 6px 14px;
+  background: var(--orange);
+  color: #fff;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chat-who {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.chat-x {
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 8px 4px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+}
+
+.chat-x:active {
+  color: var(--yellow);
+}
+
+.chat-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+
+.chat-body deep-chat {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* the component itself failed to load — say so rather than showing an empty box */
+.chat-dead {
+  margin: auto;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.chat-foot {
+  flex: 0 0 auto;
+  padding: 5px 12px calc(5px + env(safe-area-inset-bottom));
+  border-top: 3px solid var(--ink);
+  background: var(--ink);
+  color: var(--yellow);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ side panel */
+
+@media (min-width: 1024px) {
+  .chat-wrap {
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row-reverse;
+    /* a panel, not a modal: Pick stays readable and clickable beside it */
+    pointer-events: none;
+  }
+
+  .chat-veil {
+    display: none;
+  }
+
+  .chat-sheet {
+    pointer-events: auto;
+  }
+
+  .chat-sheet {
+    width: min(420px, 38vw);
+    max-width: none;
+    height: 100dvh;
+    min-height: 0;
+    margin: 0;
+    border-top: 0;
+    border-left: 3px solid var(--ink);
+    transform: translateX(100%);
+  }
+
+  .chat-wrap.is-open .chat-sheet {
+    transform: translateX(0);
+  }
+}

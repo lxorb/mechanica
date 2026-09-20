@@ -55,8 +55,9 @@
  *     come from web/store/bike-images.json when that file exists, with `credit` alongside;
  *     they are relative paths, so wrap them in asset() like store/catalog.json's.
  *
- * Beyond query.js: ask, identifyPhoto/Vin/Part, partPhrase, ingest, ensureManual,
- * manualState, jobsFor, cost, voiceConfig, deepgramToken, apiBase, online, storeMode.
+ * Beyond query.js: ask, chat, identifyPhoto/Vin/Part, partPhrase, partOffers, ingest,
+ * ensureManual, manualState, jobsFor, cost, voiceConfig, deepgramToken, apiBase, online,
+ * storeMode.
  */
 
 import { highlight, search as searchIndex, tokens, fold } from "./search.js";
@@ -71,6 +72,8 @@ const HEALTH_MS = 2500;
 const CATALOG_MS = 25000;
 const MANUAL_MS = 25000;
 const ASK_MS = 12000;
+const OFFERS_MS = 6000;
+const CHAT_MS = 120000;
 const INGEST_POLL_MS = 1000;
 const INGEST_MAX_MS = 15 * 60 * 1000;
 const SECTIONS_POLL_MS = 2000;
@@ -134,6 +137,7 @@ let manualSummaries = [];
 const manualCache = new Map(); // manualId -> mapped manual
 const manualInflight = new Map();
 const partIndex = new Map(); // partId and manualId/partId -> part
+const offersCache = new Map(); // "manualId/partId/bikeId" -> OffersResult | null
 
 // ---------------------------------------------------------------- plumbing
 
@@ -770,6 +774,45 @@ export async function jobById(id) {
   return jobsOfManual(made, bikeId).find((j) => j.sectionId === sectionId);
 }
 
+/**
+ * POST /parts/offers — live retailer offers for one part of one manual, fitment-filtered
+ * by the bike when it is given. Owner of the endpoint: parts-backend agent.
+ *
+ *   { query, offers: [{ retailer, title, price, currency, url, variant, condition,
+ *     shipping, inStock }], fetchedAt, usd }
+ *
+ * Never rejects and never blocks longer than OFFERS_MS: resolves to null when the store is
+ * LOCAL, when the endpoint is not deployed yet (404), or when the search times out, so the
+ * sheet can drop back to the manual's own shop links. Answers are memoised per part for
+ * the session — the backend caches too, this only saves the round trip.
+ */
+export async function partOffers(manualId, partId, bikeId) {
+  await loadCatalog();
+  if (partId == null || partId === "") return null;
+  const id = manualIdFor(manualId) || manualId;
+  if (!id) return null;
+  if (mode !== "remote") return null;
+
+  const key = `${id}/${partId}/${bikeId ?? ""}`;
+  if (offersCache.has(key)) return offersCache.get(key);
+
+  const body = await quiet(
+    "/parts/offers",
+    {
+      method: "POST",
+      ms: OFFERS_MS,
+      json: { manualId: String(id), partId: String(partId), bikeId: bikeId ? String(bikeId) : null },
+    },
+    null
+  );
+  const offers = body && Array.isArray(body.offers)
+    ? body.offers.filter((o) => o && o.url && o.price != null && !Number.isNaN(Number(o.price)))
+    : null;
+  const made = offers ? { ...body, offers } : null;
+  offersCache.set(key, made);
+  return made;
+}
+
 /** Sync, like query.js: resolves against every manual loaded this session. */
 export function part(id) {
   if (id == null || id === "") return undefined;
@@ -902,6 +945,112 @@ export async function ask(manualOrBikeId, query) {
     }
   }
   return shape(localMatches(target, query), null, 0, "local");
+}
+
+// ---------------------------------------------------------------- chat
+
+/**
+ * POST /chat, `text/event-stream`. The only streaming call in this module, so it bypasses
+ * http() (which parses JSON) and reads the body itself.
+ *
+ * `messages` is the whole visible conversation, [{role:"user"|"assistant", content}]; the API
+ * keeps the last six turns of it as memory. `onFrame` is called for every SSE frame as it
+ * lands — {type:"token", text} while the answer is being written, then one
+ * {type:"done", answer, citations:[{page,quote}], usd, tokensIn, tokensSaved}. Resolves with
+ * that done frame (synthesised from the tokens if the stream ends without one).
+ *
+ * Unlike the rest of this module it REJECTS on a fault — there is no offline answer to a free
+ * question, and the chat UI has to say so. `opts.signal` aborts the stream (the stop button).
+ */
+export async function chat(manualOrBikeId, messages, onFrame, opts = {}) {
+  await loadCatalog();
+  if (mode !== "remote") throw new Error("chat needs the API");
+  const made = await manual(manualOrBikeId).catch(() => undefined);
+  const target = made ?? (await manualForBike(manualOrBikeId));
+  const manualId = target?.id ?? "";
+  if (!manualId) throw new Error("no indexed manual to chat about");
+
+  const turns = (messages ?? [])
+    .map((m) => ({
+      role: m && m.role === "assistant" ? "assistant" : "user",
+      content: String((m && m.content) ?? "").trim(),
+    }))
+    .filter((m) => m.content);
+  if (!turns.length) throw new Error("chat needs a question");
+
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), CHAT_MS);
+  const relay = () => ctl.abort();
+  const outer = opts.signal;
+  if (outer) {
+    if (outer.aborted) ctl.abort();
+    else outer.addEventListener("abort", relay, { once: true });
+  }
+  const done = () => {
+    clearTimeout(timer);
+    if (outer) outer.removeEventListener("abort", relay);
+  };
+
+  let res;
+  try {
+    res = await fetch(`${apiBase()}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
+      body: JSON.stringify({ manualId, messages: turns }),
+      signal: ctl.signal,
+    });
+  } catch (err) {
+    done();
+    throw err;
+  }
+  if (!res.ok || !res.body) {
+    done();
+    const err = new Error(`POST /chat -> ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+
+  const push = (frame) => {
+    if (typeof onFrame !== "function") return;
+    try {
+      onFrame(frame);
+    } catch {
+      /* a UI throwing must not tear down the stream */
+    }
+  };
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let answer = "";
+  let last = null;
+  try {
+    for (;;) {
+      const { value, done: end } = await reader.read();
+      if (end) break;
+      buffer += decoder.decode(value, { stream: true }).replace(/\r\n/g, "\n");
+      let cut;
+      while ((cut = buffer.indexOf("\n\n")) >= 0) {
+        const block = buffer.slice(0, cut);
+        buffer = buffer.slice(cut + 2);
+        for (const line of block.split("\n")) {
+          if (!line.startsWith("data:")) continue;
+          let frame;
+          try {
+            frame = JSON.parse(line.slice(5).trim());
+          } catch {
+            continue; // a half-written frame is not worth killing the answer over
+          }
+          if (frame.type === "token") answer += String(frame.text ?? "");
+          else if (frame.type === "done") last = frame;
+          push(frame);
+        }
+      }
+    }
+  } finally {
+    done();
+  }
+  return last ?? { type: "done", answer: answer.trim(), citations: [], usd: 0, tokensIn: 0, tokensSaved: 0 };
 }
 
 // ---------------------------------------------------------------- identify

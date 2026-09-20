@@ -1,4 +1,4 @@
-const VERSION = "v7";
+const VERSION = "v8";
 const SHELL = `mechanica-shell-${VERSION}`;
 const RUNTIME = `mechanica-runtime-${VERSION}`;
 const DATA = `mechanica-data-${VERSION}`;
@@ -32,6 +32,9 @@ const PRECACHE = [
   "css/screens/cost.css",
   "../store/ttm-catalog.json",
   "../store/bike-images.json",
+  "../vendor/deep-chat/deepChat.bundle.js",
+  "js/chat-ui.js",
+  "css/chat-ui.css",
   "../store/catalog.json",
   "manifest.webmanifest",
   "icons/favicon.ico",
