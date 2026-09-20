@@ -178,6 +178,21 @@ the collapsed-border tricks that depended on 3 px (`margin-left: -3px`, `border-
 
 ---
 
+## Verification
+
+- `node --check` clean on every JS touched: `dock.js`, `screens/{identify,confirm,pick,book,invoice,cost}.js`,
+  `particons.js`, `docs/qa/ui-polish/shots.mjs`. Brace-balance checked on all twelve stylesheets.
+- `node docs/qa/ui-polish/shots.mjs --tag after` — **0 console errors** across every stop, both
+  themes, both viewports. Landing, model cards, year chooser, Confirm (manual present and
+  missing), Pick (3D stage + headings) and Book all paint.
+- `node web/tools/bughunt-ui.mjs` — **9 of 13**. The four that fail all die in the same helper,
+  `toPick()`, on `waitForSelector("[data-screen='pick'] .hit")`, and **they are not the same
+  four between runs** (run 1: bus-overlay, invoice-chips, book-reload, geometry; run 2:
+  both bus checks, bike-chip, geometry) — the signature of the live API being slow under a box
+  running several agents, not of a code path. Pick reaches its headings reliably through the
+  real route (Identify → Confirm → Pick) in every shot run above, in both themes and both
+  viewports. Worth a clean re-run on a quiet box before anyone treats it as a bug.
+
 ## Not done / for someone else
 
 - **`css/voice-orb.css`** still holds 4 `text-transform: uppercase` and 2 `border-radius: 0`.
