@@ -183,6 +183,7 @@ npx @openai/codex exec -s workspace-write --skip-git-repo-check --color never "<
 |---|---|---|---|
 | 1 | `api/tests/test_store.py` — every method of the `Store` protocol | 29 tests, 69,345 tokens, ~2 min | found atomic-write `.tmp` leftovers, `exclude_none` on disk, a 20-thread `put_bikes` race — all cases I had not asked for |
 | 2 | `api/tests/test_local_index.py` — the retrieval index | 100 tests, 62,744 tokens, ~8 min | the bug, below |
+| 3 | `api/tests/test_llm.py` — the single door to OpenAI | 65 tests, 56,334 tokens, ~2 min | **green**: the arithmetic behind every USD figure on these slides is now pinned |
 
 ### The one concrete way Codex improved the outcome (say this, verbatim, on stage)
 
@@ -239,9 +240,18 @@ Then run .venv/Scripts/python -m pytest -q tests/test_llm.py from api/ and itera
 IMPORTANT: if any assertion above does not hold against the current app/llm.py, do NOT weaken it, do NOT skip it and do NOT edit app/llm.py. Leave the honest failing assertion as an xfail with a comment, and state clearly in your final message which property failed, what the code actually does instead, and why. A real finding is worth more to me than a green run." < /dev/null
 ```
 
-Two outcomes, both good on stage: it comes back green, and we say *Codex audited the arithmetic behind every
-number on this slide*; or it comes back with an xfail, and we say *Codex found a second one* — and we have a
-brand-new, genuinely honest Codex story recorded in `docs/codex/run-3.md`.
+**Result — the run is done, and it came back green.** `docs/codex/run-3.md` (transcript in `run-3.log`):
+2 min 02 s, 56,334 tokens, one `apply_patch`, one pytest run, **65 tests passing first try**, nothing
+marked xfail and not a line of `app/llm.py` touched. So the line on stage is the first one: *Codex audited
+the arithmetic behind every number on this slide.* Concretely pinned now — `usd()` subtracting cached
+tokens exactly once and clamping at zero instead of going negative; eleven hard-coded per-model USD
+literals, so a typo in `PRICES` fails a test instead of quietly re-pricing a slide; the `$6.096` baseline
+as the `naive_usd()` discontinuity at the 272,000-token long-context boundary (340 p = $2.72, 341 p =
+$5.456); the `$10/1k` web-search fee; and `prompt_cache_key` pinned to `route:model`, which is the claim
+the whole cost story rests on. Full suite: **617 passed, 20 skipped.** Two honest caveats for the diff-
+reading line: it silently swapped the `fresh_store` fixture the prompt named for its own in-memory store
+(better, but again a named instruction quietly replaced), and "every model in `PRICES`" became five of the
+ten — all three models this pitch quotes are covered, the five unused ones are not.
 
 ---
 

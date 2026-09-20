@@ -157,50 +157,53 @@ production use" from a position of strength instead of having it extracted.
 
 ## 4. The diagram
 
-Source: [`long-lake/second-deployment.mmd`](long-lake/second-deployment.mmd). One slide, full bleed.
-The only thing you need them to read is the three zone labels.
+![built once, deployed N times](long-lake/second-deployment.png)
+
+Rendered: [`long-lake/second-deployment.png`](long-lake/second-deployment.png) ·
+[`.svg`](long-lake/second-deployment.svg) · source
+[`.mmd`](long-lake/second-deployment.mmd) (`npx @mermaid-js/mermaid-cli@11`). One slide, full bleed.
+The only thing you need them to read is the four zone labels.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"system-ui, -apple-system, Segoe UI, sans-serif","clusterBkg":"#fbfaf8","clusterBorder":"#8a8177","lineColor":"#475569"}}}%%
 flowchart TB
   subgraph ONCE["BUILT ONCE — every deployment inherits this, forever"]
     direction LR
-    AD["<b>84 publisher hosts</b><br/>34 adapters + 26 crawl fragments<br/>Ducati: headful CDP (Akamai 403s httpx AND headless)<br/>Kawasaki: 401s on Accept: application/json<br/>Honda: Googlebot UA + CSRF, 4 of 41 codes found<br/>by trying 479 candidates<br/><b>17 makes documented UNREACHABLE</b>"]
-    DOC["<b>doctype.py</b> — 8 document kinds<br/>from URL + title alone, <b>never by downloading</b><br/>brochure / warranty / quickstart rejected"]
-    GRD["<b>ground.py</b> — the reliability layer<br/>a quote not found character-for-character<br/>in the PDF text layer is <b>DROPPED</b>"]
-    EVAL["<b>the evals</b> — 150 rider queries,<br/>20 off-topic negative controls,<br/>25 chat answers digit-checked"]
+    AD["<b>84 publisher hosts, none with an API</b><br/>34 adapters + 26 crawl fragments<br/>Ducati: headful CDP — Akamai 403s httpx AND headless<br/>Kawasaki: 401s on Accept: application/json<br/>Honda: Googlebot UA + CSRF; 4 of 41 codes<br/>found by trying 479 candidates<br/><b>17 makes documented UNREACHABLE</b>"]
+    DOC["<b>doctype.py</b><br/>8 document kinds from URL + title alone,<br/><b>never by downloading</b><br/>brochure · warranty · quickstart rejected"]
+    GRD["<b>ground.py — the reliability layer</b><br/>a quote not found character-for-character<br/>in the PDF text layer is <b>DROPPED</b>"]
+    EVAL["<b>the evals</b><br/>150 rider queries · 100% top-1<br/>20 off-topic negative controls · 0 answered<br/>25 chat answers, every digit checked"]
     AD --> DOC --> GRD --> EVAL
   end
 
-  subgraph PERV["PER VEHICLE — automatic, no human, $0.096, 40 s"]
+  subgraph PERV["PER VEHICLE — automatic, nobody in the loop, $0.096, 40 s"]
     direction LR
-    F["fetch the OEM PDF<br/>SHA-256 dedupe"] --> T["PyMuPDF text layer<br/>+ per-block coordinates<br/><b>zero LLM</b>"] --> S["one structuring pass<br/>5-page windows, 32 workers<br/>units · specs · parts · quotes"] --> G2["grounding gate"] --> M["<b>a searchable manual</b><br/>readable in 1.3 s<br/>searchable in 40.4 s"]
+    F["fetch the OEM PDF<br/>SHA-256 dedupe"] --> T["PyMuPDF text layer<br/>+ per-block coordinates<br/><b>zero LLM</b>"] --> S["one structuring pass<br/>5-page windows · 32 workers<br/>units · specs · parts · quotes"] --> G2["grounding gate"] --> M["<b>a searchable manual</b><br/>readable in <b>1.3 s</b><br/>searchable in <b>40.4 s</b>"]
   end
 
-  subgraph PERS["PER SHOP — zero engineering, zero migration"]
+  subgraph PERS["PER SHOP — zero engineering, zero migration, zero data to import"]
     direction LR
-    U["open the URL"] --> Q["type what is wrong,<br/>in the words a mechanic uses"] --> R["<b>the OEM page,<br/>answering lines marked</b><br/>3.9 s cold · 0.09 s repeat<br/><b>$0.0006</b>"]
+    U["open the URL"] --> Q["type what is wrong,<br/>in the words a mechanic uses"] --> R["<b>the OEM page,<br/>answering lines marked</b><br/>3.9 s cold · 0.09 s repeat · <b>$0.0006</b><br/>replaces: read the 775-page manual<br/>to a model per question, <b>$12.40</b>"]
   end
 
-  ONCE ==> PERV
-  PERV ==> PERS
+  subgraph NOW["WHERE THAT LEAVES US — measured 2026-09-20  "]
+    direction LR
+    C1["<b>the corpus</b><br/>535 manuals · 95,914 pages<br/>91,388 grounded sections<br/><b>$51 spent, once</b>"]
+    C2["<b>the catalog</b><br/>27,751 vehicles<br/>13,544 with a free official manual<br/><b>23,140 motorcycles AND 4,611 cars,<br/>identical code path</b>"]
+    C3["<b>the marginal deployment</b><br/>a new vehicle: $0.096, 40 s, no human<br/>a new shop: no engineering at all<br/><b>every shop inherits<br/>every other shop's ingest</b>"]
+    C1 ~~~ C2 ~~~ C3
+  end
 
-  CORP["<b>the corpus today</b><br/>535 manuals · 95,914 pages · 91,388 sections<br/>27,751 vehicles · 13,544 with a free manual<br/><b>23,140 motorcycles AND 4,611 cars,<br/>identical code path</b>"]
-  PERV -.->|"deployment N+1 costs<br/>$0.096 and 40 seconds"| CORP
-  CORP -.->|"every shop inherits<br/>every other shop's ingest"| PERS
-
-  BASE["<b>the baseline it replaces</b><br/>read the 775-page manual to a model<br/>once per question: <b>$12.40</b><br/>(live GET /api/cost naivePerAsk)"]
-  R -.->|"same question"| BASE
+  ONCE ==> PERV ==> PERS ==> NOW
 
   classDef once fill:#eef2f7,stroke:#475569,stroke-width:2px,color:#0f172a
   classDef perv fill:#e85d04,stroke:#5c2200,stroke-width:3px,color:#ffffff
   classDef pers fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ffffff
   classDef corp fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#053e2c
-  classDef base fill:#ffffff,stroke:#8a8177,stroke-width:2px,color:#141414
   class AD,DOC,GRD,EVAL once
   class F,T,S,G2,M perv
   class U,Q,R pers
-  class CORP corp
-  class BASE base
+  class C1,C2,C3 corp
 ```
 
 **The one line to say over it:** *"Grey is what took us the whole hackathon and is never paid for

@@ -1,3 +1,115 @@
+# Codex run 3 - api/tests/test_llm.py
+
+    npx @openai/codex exec -s workspace-write --skip-git-repo-check --color never "<prompt>" < /dev/null
+
+Run from `api/`, model `gpt-6-astra`, reasoning effort high, **56,334 tokens, 2 min 02 s**
+(07:31:25Z - 07:33:27Z, session `01a0bdba-25e7-7ed1-b9be-660a512b70b6`).
+The raw transcript is also kept verbatim beside this file as [`run-3.log`](run-3.log).
+
+The target: `app/llm.py` (206 lines) is the single door to the OpenAI API and the only place a USD
+figure is computed. Before this run it had **no direct test at all** - `usd()`, `naive_usd()`,
+`WEB_SEARCH_CALL_USD` and `prompt_cache_key` appeared in zero test files - while every cost number
+on the pitch slides is that arithmetic's output.
+
+## Prompt (verbatim)
+
+```
+Write api/tests/test_llm.py for this FastAPI repo. Create ONLY the file api/tests/test_llm.py. Do not touch api/app/** (especially not app/llm.py), api/data/**, api/pytest.ini, api/tests/conftest.py or any other file in api/tests/.
+
+app/llm.py is the single door to the OpenAI API and the only place cost is computed and logged. Every USD figure this project publishes comes out of it, so the arithmetic must be pinned. Use monkeypatch and fake objects; NEVER construct a real OpenAI client and never make a network call. Use the fresh_store fixture from conftest.py so log() writes into a tmp_path store, never api/data.
+
+Assert:
+1. usd() bills fresh input tokens at the input price, cached tokens at the cached price and output at the output rate, for every model in PRICES; that cached_tokens are subtracted from input_tokens exactly once and never double-billed; that cached > input clamps to zero fresh tokens rather than going negative; and that an unknown model name costs 0.0 instead of raising.
+2. naive_usd() multiplies pages by TOKENS_PER_PAGE at the NAIVE_MODEL input price, and doubles the price above the 272,000-token long-context threshold - assert the discontinuity from just below to just above that boundary.
+3. log() reads input_tokens, output_tokens and input_tokens_details.cached_tokens off a usage object, writes exactly one CostEvent with the right route, model and usd, and tolerates usage objects that are missing input_tokens_details entirely or carry None - it must record 0 cached, not raise. extra_usd is added on top of the token cost, and log() returns the same total it stored.
+4. web_search() adds WEB_SEARCH_CALL_USD once per web_search_call item present in response.output and nothing for other item types; it passes search_context_size and, when allowed_domains is given, a filters.allowed_domains tool field, and omits filters when it is not; and it returns (output_text, usd) with usd equal to the logged cost. Fake the client with monkeypatch on llm.client.
+5. stream() yields every response.output_text.delta as a ('delta', str) pair and then EXACTLY ONE ('usage', dict) pair whose dict carries usd, tokensIn, cachedTokens and tokensOut; that it still yields a usage pair when no response.completed event arrives (usd 0.0); and that the request it builds pins prompt_cache_key to 'route:model' by default and to the caller's cache_key when one is passed. Prompt caching is what makes this product cheap, so that key must be asserted.
+6. structured() sends the system prompt as a system message and wraps a bare string user argument in a single text_part, passes a list user argument through unchanged, forwards reasoning effort only when given, logs the call, and raises RuntimeError when output_parsed is None.
+7. image_part() emits a data: URL whose base64 payload round-trips back to the original bytes with the right mime and detail, and text_part() has the shape the Responses API expects.
+
+Then run .venv/Scripts/python -m pytest -q tests/test_llm.py from api/ and iterate until green.
+
+IMPORTANT: if any assertion above does not hold against the current app/llm.py, do NOT weaken it, do NOT skip it and do NOT edit app/llm.py. Leave the honest failing assertion as an xfail with a comment, and state clearly in your final message which property failed, what the code actually does instead, and why. A real finding is worth more to me than a green run.
+```
+
+## Result
+
+Codex wrote `api/tests/test_llm.py` - 474 lines, **24 test functions / 65 parametrised cases** -
+and they passed on its first and only pytest run. **They pass for me too**, which is new: run 1 was
+green for Codex and 28-of-29 errors for me, and the `PYTEST_DEBUG_TEMPROOT` pin that was added to
+`tests/conftest.py` afterwards held this time.
+
+```
+api/ $ .venv/Scripts/python -m pytest tests/test_llm.py -q
+65 passed in 0.95s
+
+api/ $ .venv/Scripts/python -m pytest -q -x
+617 passed, 20 skipped in 80.19s
+```
+
+**Nothing was marked xfail, and nothing in `app/llm.py` was changed.** Every one of the seven
+properties the prompt named holds against the current code. `app/llm.py` still carries its
+06:06 mtime; Codex ran `git status --short -- tests/test_llm.py` itself at the end and saw exactly
+one untracked file.
+
+### The verdict for the pitch
+
+Green, so the line on stage is the first of the two: **Codex audited the arithmetic behind every
+number on the slide.** Concretely, these are now pinned by a test that fails if the arithmetic
+drifts:
+
+| slide number | what pins it |
+|---|---|
+| the cached-token split behind "99.5% cache hit" | `usd()` bills `max(0, input - cached)` fresh + `cached` at the cached rate; `(terra, 100 in, 200 cached)` = `$0.00004`, not a negative |
+| the per-ask and per-call USD figures | 11 hard-coded `usd()` expectations - `$0.00524` terra, `$0.0232` astra, `$0.000524` luna - written as literals, so a typo in `PRICES` breaks the test rather than silently re-pricing the slide |
+| **`$6.096` naive baseline** | `naive_usd()` at `800` tokens/page with the 2x long-context rate: `340 p = $2.72`, `341 p = $5.456`. That discontinuity is the assertion. `naive_usd(381) = $6.096` is exactly the slide figure |
+| the `$10/1k` web-search fee | `WEB_SEARCH_CALL_USD` added once per `web_search_call` item, on top of tokens, and still billed when the model is unpriced |
+| **"prompt caching is what makes this cheap"** | `stream()` must send `prompt_cache_key="chat:gpt-5.6-terra"` by default and the caller's key when one is passed |
+| every `$` in `GET /api/cost` | `log()` writes exactly one `CostEvent` with the right route/model/usd and returns the same total it stored |
+
+**What it got right.** It went past the brief in ways worth keeping:
+
+1. An autouse fixture that makes a real client *impossible*, not merely unused:
+   `monkeypatch.setattr(llm, "OpenAI", Mock(side_effect=AssertionError("unexpected SDK construction")))`.
+   The prompt asked for no network call; Codex turned that into a structural guarantee.
+2. It pinned a genuine sharp edge in `web_search()`. Its fixture feeds `response.output` a plain
+   dict `{"type": "web_search_call"}` alongside the object items and asserts it is **not** billed -
+   because `getattr(item, "type", "")` on a dict returns `""`. That is current behaviour, correctly
+   captured, and it is also the one place the $10/1k fee could silently stop being charged if the
+   SDK ever hands back dicts instead of objects. Documented, not fixed - `app/llm.py` was off limits.
+3. Type coercion nobody asked about: `input_tokens="1000"` as a string, `cached_tokens=None`,
+   `input_tokens_details` missing entirely, `usage=None` - seven parametrised cases proving `log()`
+   records 0 rather than raising, which is exactly what a half-filled usage object from a dropped
+   stream looks like.
+4. Non-mutation assertions on every caller-owned argument (`history`, `allowed_domains`, the
+   multimodal parts list) via `deepcopy` before/after.
+5. `embed()` and `client()`, neither of which the prompt mentioned - including that a failed client
+   construction leaves `llm._client is None` so the next call can retry.
+
+**What it got wrong / what I would fix.**
+
+1. **It quietly substituted the fixture the prompt named.** The prompt said "use the `fresh_store`
+   fixture from conftest.py so `log()` writes into a tmp_path store"; Codex instead monkeypatched
+   `llm.get_store` to a `SimpleNamespace(log_cost=events.append)`. The substitution is *better* -
+   nothing touches a disk at all, and the `CostEvent` objects are asserted directly - but it is the
+   same move as run 2's swapped queries: a named instruction silently replaced, reported as done.
+   Benign this time. Read the diff, always.
+2. **"for every model in `PRICES`" is not what it delivered.** `PRICES` is never imported. Five of
+   the ten priced models are covered - `gpt-6-astra`, `gpt-5.6-terra`, `gpt-5.6-luna` and both
+   embedding models - and `gpt-5.6-sol`, `gpt-5.4-mini`, `gpt-5.4-nano`, `gpt-5-mini`, `gpt-5-nano`
+   are not asserted anywhere. The three models the pitch actually quotes are all in the covered set,
+   so no slide number is unpinned, but the suite would not notice a bad price on the other five.
+   The one-line fix is to parametrise over `PRICES.items()`; left in place rather than edited,
+   because this file is Codex's.
+3. Cosmetic: it burned its first two tool calls on `rg` against `.agents` and `.codex`, which do not
+   exist in this repo (`exited 1`), the same directory-probing tax as runs 1 and 2.
+
+**What it cost in wall time.** 2 minutes, one `apply_patch`, one pytest run, green first try - by
+far the cheapest of the three runs (run 1: ~2 min but 28 broken tests for me; run 2: ~8 min).
+
+## Full stdout
+
+```
 Reading additional input from stdin...
 OpenAI Codex v0.155.1
 --------
@@ -3838,3 +3950,4 @@ tokens used
 Created [api/tests/test_llm.py](/C:/Users/me/trustthemanual/api/tests/test_llm.py) covering pricing, logging, request payloads, embeddings, streaming, and failures.
 
 All **65 tests pass**. No other files were changed by me.
+```
