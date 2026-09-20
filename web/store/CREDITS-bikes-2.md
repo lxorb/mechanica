@@ -144,6 +144,8 @@ the source link for the full terms.
 | `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
 | `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
 | `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-yz125.webp` | Yamaha YZ125 Motorcycle.jpg | Goygoo | https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg | CC BY-SA 3.0 | search | side |
+| `store/img/bikes2/yamaha-yz125.thumb.webp` | Yamaha YZ125 Motorcycle.jpg | Goygoo | https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg | CC BY-SA 3.0 | search | side |
 | `store/img/bikes2/yamaha-yz250.hero.webp` | 1974 Yamaha YZ250 (OW12).JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1974_Yamaha_YZ250_(OW12).JPG | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/yamaha-yz250.webp` | 1974 Yamaha YZ250 (OW12).JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1974_Yamaha_YZ250_(OW12).JPG | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/yamaha-yz250.thumb.webp` | 1974 Yamaha YZ250 (OW12).JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1974_Yamaha_YZ250_(OW12).JPG | CC BY-SA 4.0 | search | three_quarter |

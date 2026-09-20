@@ -1,14 +1,4 @@
 {
-  "acura|ilx-hybrid": {
-    "image": "store/img/bikes/acura-ilx.webp",
-    "thumb": "store/img/bikes/acura-ilx-thumb.webp",
-    "title": "2019 Acura ILX DSC 2881.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2019_Acura_ILX_DSC_2881.jpg",
-    "via": "alias",
-    "aliasOf": "acura|ilx"
-  },
   "aprilia|atlantic-250-i.e.": {
     "image": "store/img/bikes/aprilia-atlantic-250.webp",
     "thumb": "store/img/bikes/aprilia-atlantic-250-thumb.webp",
@@ -17081,6 +17071,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:YZ250.jpg",
     "via": "alias",
     "aliasOf": "yamaha|yz-250"
+  },
+  "yamaha|yz125": {
+    "image": "store/img/bikes2/yamaha-yz125.webp",
+    "thumb": "store/img/bikes2/yamaha-yz125.thumb.webp",
+    "title": "Yamaha YZ125 Motorcycle.jpg",
+    "author": "Goygoo",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 7.0
   },
   "yamaha|yz250": {
     "image": "store/img/bikes2/yamaha-yz250.webp",

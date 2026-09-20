@@ -1,93 +1,53 @@
 {
-  "acura|ilx": {
-    "image": "store/img/bikes/acura-ilx.webp",
-    "thumb": "store/img/bikes/acura-ilx-thumb.webp",
-    "kind": "car",
-    "title": "2019 Acura ILX DSC 2881.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2019_Acura_ILX_DSC_2881.jpg"
-  },
-  "acura|ilx-hybrid": {
-    "image": "store/img/bikes/acura-ilx-hybrid.webp",
-    "thumb": "store/img/bikes/acura-ilx-hybrid-thumb.webp",
-    "kind": "car",
-    "title": "2013 Acura ILX Hybrid -- 07-13-2012.JPG",
-    "author": "IFCAR",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2013_Acura_ILX_Hybrid_--_07-13-2012.JPG"
-  },
   "acura|integra": {
     "image": "store/img/bikes/acura-integra.webp",
     "thumb": "store/img/bikes/acura-integra-thumb.webp",
     "kind": "car",
-    "title": "2023 Acura Integra A-Spec, front 12.29.22.jpg",
-    "author": "Kevauto",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Acura_Integra_A-Spec,_front_12.29.22.jpg"
+    "title": "Acura Integra (DE4) Washington DC Metro Area, USA (1).jpg",
+    "author": "OWS Photography",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Acura_Integra_(DE4)_Washington_DC_Metro_Area,_USA_(1).jpg",
+    "hero": "store/img/bikes/acura-integra-hero.webp"
   },
   "acura|mdx": {
     "image": "store/img/bikes/acura-mdx.webp",
     "thumb": "store/img/bikes/acura-mdx-thumb.webp",
     "kind": "car",
-    "title": "ACURA MDX (YD2) China (3).jpg",
+    "title": "ACURA MDX (YD2) China (18).jpg",
     "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(3).jpg"
-  },
-  "acura|rdx": {
-    "image": "store/img/bikes/acura-rdx.webp",
-    "thumb": "store/img/bikes/acura-rdx-thumb.webp",
-    "kind": "car",
-    "title": "ACURA RDX TC1 China.jpg",
-    "author": "Dinkun Chen",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:ACURA_RDX_TC1_China.jpg"
-  },
-  "acura|tl": {
-    "image": "store/img/bikes/acura-tl.webp",
-    "thumb": "store/img/bikes/acura-tl-thumb.webp",
-    "kind": "car",
-    "title": "ACURA TL (UA8–UA9) China.jpg",
-    "author": "Dinkun Chen",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:ACURA_TL_(UA8%E2%80%93UA9)_China.jpg"
-  },
-  "acura|tlx": {
-    "image": "store/img/bikes/acura-tlx.webp",
-    "thumb": "store/img/bikes/acura-tlx-thumb.webp",
-    "kind": "car",
-    "title": "2015 Acura TLX (front left).jpg",
-    "author": "Mr.choppers",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Acura_TLX_(front_left).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(18).jpg",
+    "hero": "store/img/bikes/acura-mdx-hero.webp"
   },
   "acura|tsx": {
     "image": "store/img/bikes/acura-tsx.webp",
     "thumb": "store/img/bikes/acura-tsx-thumb.webp",
     "kind": "car",
-    "title": "2009 Acura TSX NY.jpg",
-    "author": "IFCAR",
+    "title": "2009 Acura TSX -- NHTSA.jpg",
+    "author": "U.S. National Highway Traffic Safety Administration",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_NY.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_--_NHTSA.jpg",
+    "hero": "store/img/bikes/acura-tsx-hero.webp"
   },
   "alfa-romeo|147": {
     "image": "store/img/bikes/alfa-romeo-147.webp",
     "thumb": "store/img/bikes/alfa-romeo-147-thumb.webp",
     "kind": "car",
-    "title": "2009 Alfa Romeo 147 Collezione TS.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2009_Alfa_Romeo_147_Collezione_TS.jpg"
+    "title": "Alfa Romeo 147 at the 2023 Abreschviller hillclimb.jpg",
+    "author": "SunflowerYuri",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_147_at_the_2023_Abreschviller_hillclimb.jpg",
+    "hero": "store/img/bikes/alfa-romeo-147-hero.webp"
   },
   "alfa-romeo|156": {
     "image": "store/img/bikes/alfa-romeo-156.webp",
     "thumb": "store/img/bikes/alfa-romeo-156-thumb.webp",
     "kind": "car",
-    "title": "2004 Alfa Romeo 156 JTD Veloce 20v Multi-Jet.jpg",
-    "author": "Calreyn88",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Alfa_Romeo_156_JTD_Veloce_20v_Multi-Jet.jpg"
+    "title": "1999 Alfa Romeo 156 1.9 JTD.jpg",
+    "author": "Corvettec6r",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:1999_Alfa_Romeo_156_1.9_JTD.jpg",
+    "hero": "store/img/bikes/alfa-romeo-156-hero.webp"
   },
   "alfa-romeo|159": {
     "image": "store/img/bikes/alfa-romeo-159.webp",
@@ -96,7 +56,8 @@
     "title": "2007 Alfa Romeo 159 JTS Q4 sedan (2015-08-07) 01.jpg",
     "author": "OSX",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2007_Alfa_Romeo_159_JTS_Q4_sedan_(2015-08-07)_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Alfa_Romeo_159_JTS_Q4_sedan_(2015-08-07)_01.jpg",
+    "hero": "store/img/bikes/alfa-romeo-159-hero.webp"
   },
   "alfa-romeo|166": {
     "image": "store/img/bikes/alfa-romeo-166.webp",
@@ -105,25 +66,8 @@
     "title": "2004-2006 Alfa Romeo 166 (MY2004) sedan 02.jpg",
     "author": "OSX",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2004-2006_Alfa_Romeo_166_(MY2004)_sedan_02.jpg"
-  },
-  "alfa-romeo|4c": {
-    "image": "store/img/bikes/alfa-romeo-4c.webp",
-    "thumb": "store/img/bikes/alfa-romeo-4c-thumb.webp",
-    "kind": "car",
-    "title": "Alfa Romeo 4C, GIMS 2014 (Ank Kumar) 01.jpg",
-    "author": "Ank Kumar",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_4C,_GIMS_2014_(Ank_Kumar)_01.jpg"
-  },
-  "alfa-romeo|giulia": {
-    "image": "store/img/bikes/alfa-romeo-giulia.webp",
-    "thumb": "store/img/bikes/alfa-romeo-giulia-thumb.webp",
-    "kind": "car",
-    "title": "Alfa Romeo Giulia Nuova Super 1300 (parkend 2016-06-05 Sp).JPG",
-    "author": "Lothar Spurzem",
-    "license": "CC BY-SA 2.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_Nuova_Super_1300_(parkend_2016-06-05_Sp).JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:2004-2006_Alfa_Romeo_166_(MY2004)_sedan_02.jpg",
+    "hero": "store/img/bikes/alfa-romeo-166-hero.webp"
   },
   "alfa-romeo|giulietta": {
     "image": "store/img/bikes/alfa-romeo-giulietta.webp",
@@ -132,43 +76,28 @@
     "title": "\" 12 - ALFA ROMEO GIULIETTA 2010 - white hatchback in unknow location.JPG",
     "author": "Pava",
     "license": "CC BY-SA 3.0 it",
-    "source": "https://commons.wikimedia.org/wiki/File:%22_12_-_ALFA_ROMEO_GIULIETTA_2010_-_white_hatchback_in_unknow_location.JPG"
-  },
-  "alfa-romeo|gt": {
-    "image": "store/img/bikes/alfa-romeo-gt.webp",
-    "thumb": "store/img/bikes/alfa-romeo-gt-thumb.webp",
-    "kind": "car",
-    "title": "Alfa Romeo Giulia GT 1300 Junior (2008-06-28 Sp r).JPG",
-    "author": "Lothar Spurzem",
-    "license": "CC BY-SA 2.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_GT_1300_Junior_(2008-06-28_Sp_r).JPG"
-  },
-  "alfa-romeo|junior": {
-    "image": "store/img/bikes/alfa-romeo-junior.webp",
-    "thumb": "store/img/bikes/alfa-romeo-junior-thumb.webp",
-    "kind": "car",
-    "title": "Alfa Romeo GT 1300 Junior (1969) Solitude Revival 2022 1X7A0441.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_GT_1300_Junior_(1969)_Solitude_Revival_2022_1X7A0441.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:%22_12_-_ALFA_ROMEO_GIULIETTA_2010_-_white_hatchback_in_unknow_location.JPG",
+    "hero": "store/img/bikes/alfa-romeo-giulietta-hero.webp"
   },
   "alfa-romeo|mito": {
     "image": "store/img/bikes/alfa-romeo-mito.webp",
     "thumb": "store/img/bikes/alfa-romeo-mito-thumb.webp",
     "kind": "car",
-    "title": "2014 Alfa Romeo Mito Progression (16421701618).jpg",
-    "author": "TuRbO_J from Adelaide, Australia",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Alfa_Romeo_Mito_Progression_(16421701618).jpg"
+    "title": "ALFA ROMEO MITO MACAU (2).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:ALFA_ROMEO_MITO_MACAU_(2).jpg",
+    "hero": "store/img/bikes/alfa-romeo-mito-hero.webp"
   },
   "alfa-romeo|stelvio": {
     "image": "store/img/bikes/alfa-romeo-stelvio.webp",
     "thumb": "store/img/bikes/alfa-romeo-stelvio-thumb.webp",
     "kind": "car",
-    "title": "2017 Alfa Romeo Stelvio Milano Edizione TD Automatic 2.1.jpg",
-    "author": "Vauxford",
+    "title": "Alfa Romeo Stelvio Rear.jpg",
+    "author": "Jjamieallen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_Alfa_Romeo_Stelvio_Milano_Edizione_TD_Automatic_2.1.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Stelvio_Rear.jpg",
+    "hero": "store/img/bikes/alfa-romeo-stelvio-hero.webp"
   },
   "alfa-romeo|tonale": {
     "image": "store/img/bikes/alfa-romeo-tonale.webp",
@@ -177,7 +106,8 @@
     "title": "2022 Alfa Romeo Tonale Speciale in Verde Montreal, front left (NYIAS 2022).jpg",
     "author": "Mr.choppers",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Alfa_Romeo_Tonale_Speciale_in_Verde_Montreal,_front_left_(NYIAS_2022).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Alfa_Romeo_Tonale_Speciale_in_Verde_Montreal,_front_left_(NYIAS_2022).jpg",
+    "hero": "store/img/bikes/alfa-romeo-tonale-hero.webp"
   },
   "aprilia|atlantic-250": {
     "image": "store/img/bikes/aprilia-atlantic-250.webp",
@@ -1363,7 +1293,8 @@
     "title": "2022 BrightDrop EV600.jpg",
     "author": "42-BRT",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_BrightDrop_EV600.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2022_BrightDrop_EV600.jpg",
+    "hero": "store/img/bikes/brightdrop-ev600-hero.webp"
   },
   "brightdrop|zevo-600": {
     "image": "store/img/bikes/brightdrop-zevo-600.webp",
@@ -1372,25 +1303,8 @@
     "title": "BrightDrop Zevo 600.jpg",
     "author": "BrightDrop",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg"
-  },
-  "buick|allure": {
-    "image": "store/img/bikes/buick-allure.webp",
-    "thumb": "store/img/bikes/buick-allure-thumb.webp",
-    "kind": "car",
-    "title": "Buick Allure (Canada) (7700703956).jpg",
-    "author": "InSapphoWeTrust from Los Angeles, California, USA",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_Allure_(Canada)_(7700703956).jpg"
-  },
-  "buick|cascada": {
-    "image": "store/img/bikes/buick-cascada.webp",
-    "thumb": "store/img/bikes/buick-cascada-thumb.webp",
-    "kind": "car",
-    "title": "2016 Buick Cascada Premium.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Buick_Cascada_Premium.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg",
+    "hero": "store/img/bikes/brightdrop-zevo-600-hero.webp"
   },
   "buick|century": {
     "image": "store/img/bikes/buick-century.webp",
@@ -1435,7 +1349,8 @@
     "title": "Buick Envision S IMG003.jpg",
     "author": "Zotyefan",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg",
+    "hero": "store/img/bikes/buick-envision-hero.webp"
   },
   "buick|envista": {
     "image": "store/img/bikes/buick-envista.webp",

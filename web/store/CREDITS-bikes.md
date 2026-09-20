@@ -7,44 +7,37 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 
 | file | title | author | source | licence | bikez |
 |---|---|---|---|---|---|
-| `store/img/bikes/acura-ilx.webp` | 2019 Acura ILX DSC 2881.jpg | Alexander Migl | https://commons.wikimedia.org/wiki/File:2019_Acura_ILX_DSC_2881.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-ilx-thumb.webp` | 2019 Acura ILX DSC 2881.jpg | Alexander Migl | https://commons.wikimedia.org/wiki/File:2019_Acura_ILX_DSC_2881.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-ilx-hybrid.webp` | 2013 Acura ILX Hybrid -- 07-13-2012.JPG | IFCAR | https://commons.wikimedia.org/wiki/File:2013_Acura_ILX_Hybrid_--_07-13-2012.JPG | Public domain |  |
-| `store/img/bikes/acura-ilx-hybrid-thumb.webp` | 2013 Acura ILX Hybrid -- 07-13-2012.JPG | IFCAR | https://commons.wikimedia.org/wiki/File:2013_Acura_ILX_Hybrid_--_07-13-2012.JPG | Public domain |  |
-| `store/img/bikes/acura-integra.webp` | 2023 Acura Integra A-Spec, front 12.29.22.jpg | Kevauto | https://commons.wikimedia.org/wiki/File:2023_Acura_Integra_A-Spec,_front_12.29.22.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-integra-thumb.webp` | 2023 Acura Integra A-Spec, front 12.29.22.jpg | Kevauto | https://commons.wikimedia.org/wiki/File:2023_Acura_Integra_A-Spec,_front_12.29.22.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-mdx.webp` | ACURA MDX (YD2) China (3).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(3).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-mdx-thumb.webp` | ACURA MDX (YD2) China (3).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(3).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-rdx.webp` | ACURA RDX TC1 China.jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_RDX_TC1_China.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-rdx-thumb.webp` | ACURA RDX TC1 China.jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_RDX_TC1_China.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-tl.webp` | ACURA TL (UA8–UA9) China.jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_TL_(UA8%E2%80%93UA9)_China.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-tl-thumb.webp` | ACURA TL (UA8–UA9) China.jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_TL_(UA8%E2%80%93UA9)_China.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/acura-tlx.webp` | 2015 Acura TLX (front left).jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2015_Acura_TLX_(front_left).jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/acura-tlx-thumb.webp` | 2015 Acura TLX (front left).jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2015_Acura_TLX_(front_left).jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/acura-tsx.webp` | 2009 Acura TSX NY.jpg | IFCAR | https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_NY.jpg | Public domain |  |
-| `store/img/bikes/acura-tsx-thumb.webp` | 2009 Acura TSX NY.jpg | IFCAR | https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_NY.jpg | Public domain |  |
-| `store/img/bikes/alfa-romeo-147.webp` | 2009 Alfa Romeo 147 Collezione TS.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2009_Alfa_Romeo_147_Collezione_TS.jpg | CC0 |  |
-| `store/img/bikes/alfa-romeo-147-thumb.webp` | 2009 Alfa Romeo 147 Collezione TS.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2009_Alfa_Romeo_147_Collezione_TS.jpg | CC0 |  |
-| `store/img/bikes/alfa-romeo-156.webp` | 2004 Alfa Romeo 156 JTD Veloce 20v Multi-Jet.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2004_Alfa_Romeo_156_JTD_Veloce_20v_Multi-Jet.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/alfa-romeo-156-thumb.webp` | 2004 Alfa Romeo 156 JTD Veloce 20v Multi-Jet.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2004_Alfa_Romeo_156_JTD_Veloce_20v_Multi-Jet.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/acura-integra-hero.webp` | Acura Integra (DE4) Washington DC Metro Area, USA (1).jpg | OWS Photography | https://commons.wikimedia.org/wiki/File:Acura_Integra_(DE4)_Washington_DC_Metro_Area,_USA_(1).jpg | CC BY 4.0 |  |
+| `store/img/bikes/acura-integra.webp` | Acura Integra (DE4) Washington DC Metro Area, USA (1).jpg | OWS Photography | https://commons.wikimedia.org/wiki/File:Acura_Integra_(DE4)_Washington_DC_Metro_Area,_USA_(1).jpg | CC BY 4.0 |  |
+| `store/img/bikes/acura-integra-thumb.webp` | Acura Integra (DE4) Washington DC Metro Area, USA (1).jpg | OWS Photography | https://commons.wikimedia.org/wiki/File:Acura_Integra_(DE4)_Washington_DC_Metro_Area,_USA_(1).jpg | CC BY 4.0 |  |
+| `store/img/bikes/acura-mdx-hero.webp` | ACURA MDX (YD2) China (18).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(18).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/acura-mdx.webp` | ACURA MDX (YD2) China (18).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(18).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/acura-mdx-thumb.webp` | ACURA MDX (YD2) China (18).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(18).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/acura-tsx-hero.webp` | 2009 Acura TSX -- NHTSA.jpg | U.S. National Highway Traffic Safety Administration | https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_--_NHTSA.jpg | Public domain |  |
+| `store/img/bikes/acura-tsx.webp` | 2009 Acura TSX -- NHTSA.jpg | U.S. National Highway Traffic Safety Administration | https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_--_NHTSA.jpg | Public domain |  |
+| `store/img/bikes/acura-tsx-thumb.webp` | 2009 Acura TSX -- NHTSA.jpg | U.S. National Highway Traffic Safety Administration | https://commons.wikimedia.org/wiki/File:2009_Acura_TSX_--_NHTSA.jpg | Public domain |  |
+| `store/img/bikes/alfa-romeo-147-hero.webp` | Alfa Romeo 147 at the 2023 Abreschviller hillclimb.jpg | SunflowerYuri | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_147_at_the_2023_Abreschviller_hillclimb.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-147.webp` | Alfa Romeo 147 at the 2023 Abreschviller hillclimb.jpg | SunflowerYuri | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_147_at_the_2023_Abreschviller_hillclimb.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-147-thumb.webp` | Alfa Romeo 147 at the 2023 Abreschviller hillclimb.jpg | SunflowerYuri | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_147_at_the_2023_Abreschviller_hillclimb.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-156-hero.webp` | 1999 Alfa Romeo 156 1.9 JTD.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:1999_Alfa_Romeo_156_1.9_JTD.jpg | Public domain |  |
+| `store/img/bikes/alfa-romeo-156.webp` | 1999 Alfa Romeo 156 1.9 JTD.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:1999_Alfa_Romeo_156_1.9_JTD.jpg | Public domain |  |
+| `store/img/bikes/alfa-romeo-156-thumb.webp` | 1999 Alfa Romeo 156 1.9 JTD.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:1999_Alfa_Romeo_156_1.9_JTD.jpg | Public domain |  |
+| `store/img/bikes/alfa-romeo-159-hero.webp` | 2007 Alfa Romeo 159 JTS Q4 sedan (2015-08-07) 01.jpg | OSX | https://commons.wikimedia.org/wiki/File:2007_Alfa_Romeo_159_JTS_Q4_sedan_(2015-08-07)_01.jpg | Public domain |  |
 | `store/img/bikes/alfa-romeo-159.webp` | 2007 Alfa Romeo 159 JTS Q4 sedan (2015-08-07) 01.jpg | OSX | https://commons.wikimedia.org/wiki/File:2007_Alfa_Romeo_159_JTS_Q4_sedan_(2015-08-07)_01.jpg | Public domain |  |
 | `store/img/bikes/alfa-romeo-159-thumb.webp` | 2007 Alfa Romeo 159 JTS Q4 sedan (2015-08-07) 01.jpg | OSX | https://commons.wikimedia.org/wiki/File:2007_Alfa_Romeo_159_JTS_Q4_sedan_(2015-08-07)_01.jpg | Public domain |  |
+| `store/img/bikes/alfa-romeo-166-hero.webp` | 2004-2006 Alfa Romeo 166 (MY2004) sedan 02.jpg | OSX | https://commons.wikimedia.org/wiki/File:2004-2006_Alfa_Romeo_166_(MY2004)_sedan_02.jpg | Public domain |  |
 | `store/img/bikes/alfa-romeo-166.webp` | 2004-2006 Alfa Romeo 166 (MY2004) sedan 02.jpg | OSX | https://commons.wikimedia.org/wiki/File:2004-2006_Alfa_Romeo_166_(MY2004)_sedan_02.jpg | Public domain |  |
 | `store/img/bikes/alfa-romeo-166-thumb.webp` | 2004-2006 Alfa Romeo 166 (MY2004) sedan 02.jpg | OSX | https://commons.wikimedia.org/wiki/File:2004-2006_Alfa_Romeo_166_(MY2004)_sedan_02.jpg | Public domain |  |
-| `store/img/bikes/alfa-romeo-4c.webp` | Alfa Romeo 4C, GIMS 2014 (Ank Kumar) 01.jpg | Ank Kumar | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_4C,_GIMS_2014_(Ank_Kumar)_01.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/alfa-romeo-4c-thumb.webp` | Alfa Romeo 4C, GIMS 2014 (Ank Kumar) 01.jpg | Ank Kumar | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_4C,_GIMS_2014_(Ank_Kumar)_01.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/alfa-romeo-giulia.webp` | Alfa Romeo Giulia Nuova Super 1300 (parkend 2016-06-05 Sp).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_Nuova_Super_1300_(parkend_2016-06-05_Sp).JPG | CC BY-SA 2.0 de |  |
-| `store/img/bikes/alfa-romeo-giulia-thumb.webp` | Alfa Romeo Giulia Nuova Super 1300 (parkend 2016-06-05 Sp).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_Nuova_Super_1300_(parkend_2016-06-05_Sp).JPG | CC BY-SA 2.0 de |  |
+| `store/img/bikes/alfa-romeo-giulietta-hero.webp` | " 12 - ALFA ROMEO GIULIETTA 2010 - white hatchback in unknow location.JPG | Pava | https://commons.wikimedia.org/wiki/File:%22_12_-_ALFA_ROMEO_GIULIETTA_2010_-_white_hatchback_in_unknow_location.JPG | CC BY-SA 3.0 it |  |
 | `store/img/bikes/alfa-romeo-giulietta.webp` | " 12 - ALFA ROMEO GIULIETTA 2010 - white hatchback in unknow location.JPG | Pava | https://commons.wikimedia.org/wiki/File:%22_12_-_ALFA_ROMEO_GIULIETTA_2010_-_white_hatchback_in_unknow_location.JPG | CC BY-SA 3.0 it |  |
 | `store/img/bikes/alfa-romeo-giulietta-thumb.webp` | " 12 - ALFA ROMEO GIULIETTA 2010 - white hatchback in unknow location.JPG | Pava | https://commons.wikimedia.org/wiki/File:%22_12_-_ALFA_ROMEO_GIULIETTA_2010_-_white_hatchback_in_unknow_location.JPG | CC BY-SA 3.0 it |  |
-| `store/img/bikes/alfa-romeo-gt.webp` | Alfa Romeo Giulia GT 1300 Junior (2008-06-28 Sp r).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_GT_1300_Junior_(2008-06-28_Sp_r).JPG | CC BY-SA 2.0 de |  |
-| `store/img/bikes/alfa-romeo-gt-thumb.webp` | Alfa Romeo Giulia GT 1300 Junior (2008-06-28 Sp r).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_GT_1300_Junior_(2008-06-28_Sp_r).JPG | CC BY-SA 2.0 de |  |
-| `store/img/bikes/alfa-romeo-junior.webp` | Alfa Romeo GT 1300 Junior (1969) Solitude Revival 2022 1X7A0441.jpg | Alexander Migl | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_GT_1300_Junior_(1969)_Solitude_Revival_2022_1X7A0441.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/alfa-romeo-junior-thumb.webp` | Alfa Romeo GT 1300 Junior (1969) Solitude Revival 2022 1X7A0441.jpg | Alexander Migl | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_GT_1300_Junior_(1969)_Solitude_Revival_2022_1X7A0441.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/alfa-romeo-mito.webp` | 2014 Alfa Romeo Mito Progression (16421701618).jpg | TuRbO_J from Adelaide, Australia | https://commons.wikimedia.org/wiki/File:2014_Alfa_Romeo_Mito_Progression_(16421701618).jpg | CC BY 2.0 |  |
-| `store/img/bikes/alfa-romeo-mito-thumb.webp` | 2014 Alfa Romeo Mito Progression (16421701618).jpg | TuRbO_J from Adelaide, Australia | https://commons.wikimedia.org/wiki/File:2014_Alfa_Romeo_Mito_Progression_(16421701618).jpg | CC BY 2.0 |  |
-| `store/img/bikes/alfa-romeo-stelvio.webp` | 2017 Alfa Romeo Stelvio Milano Edizione TD Automatic 2.1.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2017_Alfa_Romeo_Stelvio_Milano_Edizione_TD_Automatic_2.1.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/alfa-romeo-stelvio-thumb.webp` | 2017 Alfa Romeo Stelvio Milano Edizione TD Automatic 2.1.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2017_Alfa_Romeo_Stelvio_Milano_Edizione_TD_Automatic_2.1.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-mito-hero.webp` | ALFA ROMEO MITO MACAU (2).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ALFA_ROMEO_MITO_MACAU_(2).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-mito.webp` | ALFA ROMEO MITO MACAU (2).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ALFA_ROMEO_MITO_MACAU_(2).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-mito-thumb.webp` | ALFA ROMEO MITO MACAU (2).jpg | Dinkun Chen | https://commons.wikimedia.org/wiki/File:ALFA_ROMEO_MITO_MACAU_(2).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-stelvio-hero.webp` | Alfa Romeo Stelvio Rear.jpg | Jjamieallen | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Stelvio_Rear.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-stelvio.webp` | Alfa Romeo Stelvio Rear.jpg | Jjamieallen | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Stelvio_Rear.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-stelvio-thumb.webp` | Alfa Romeo Stelvio Rear.jpg | Jjamieallen | https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Stelvio_Rear.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/alfa-romeo-tonale-hero.webp` | 2022 Alfa Romeo Tonale Speciale in Verde Montreal, front left (NYIAS 2022).jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2022_Alfa_Romeo_Tonale_Speciale_in_Verde_Montreal,_front_left_(NYIAS_2022).jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/alfa-romeo-tonale.webp` | 2022 Alfa Romeo Tonale Speciale in Verde Montreal, front left (NYIAS 2022).jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2022_Alfa_Romeo_Tonale_Speciale_in_Verde_Montreal,_front_left_(NYIAS_2022).jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/alfa-romeo-tonale-thumb.webp` | 2022 Alfa Romeo Tonale Speciale in Verde Montreal, front left (NYIAS 2022).jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2022_Alfa_Romeo_Tonale_Speciale_in_Verde_Montreal,_front_left_(NYIAS_2022).jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-atlantic-250-hero.webp` | Aprilia Atlantic Sprint 250 rear.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Atlantic_Sprint_250_rear.jpg | CC BY-SA 4.0 |  |
@@ -438,14 +431,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/bmw-s-1000-xr-hero.webp` | BMW S 1000 XR, li. Seite (2024-05-04 Sp).JPG | Unknown | https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-s-1000-xr.webp` | BMW S 1000 XR, li. Seite (2024-05-04 Sp).JPG | Unknown | https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-s-1000-xr-thumb.webp` | BMW S 1000 XR, li. Seite (2024-05-04 Sp).JPG | Unknown | https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG | CC BY-SA 3.0 de |  |
+| `store/img/bikes/brightdrop-ev600-hero.webp` | 2022 BrightDrop EV600.jpg | 42-BRT | https://commons.wikimedia.org/wiki/File:2022_BrightDrop_EV600.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/brightdrop-ev600.webp` | 2022 BrightDrop EV600.jpg | 42-BRT | https://commons.wikimedia.org/wiki/File:2022_BrightDrop_EV600.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/brightdrop-ev600-thumb.webp` | 2022 BrightDrop EV600.jpg | 42-BRT | https://commons.wikimedia.org/wiki/File:2022_BrightDrop_EV600.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/brightdrop-zevo-600-hero.webp` | BrightDrop Zevo 600.jpg | BrightDrop | https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg | CC0 |  |
 | `store/img/bikes/brightdrop-zevo-600.webp` | BrightDrop Zevo 600.jpg | BrightDrop | https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg | CC0 |  |
 | `store/img/bikes/brightdrop-zevo-600-thumb.webp` | BrightDrop Zevo 600.jpg | BrightDrop | https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg | CC0 |  |
-| `store/img/bikes/buick-allure.webp` | Buick Allure (Canada) (7700703956).jpg | InSapphoWeTrust from Los Angeles, California, USA | https://commons.wikimedia.org/wiki/File:Buick_Allure_(Canada)_(7700703956).jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/buick-allure-thumb.webp` | Buick Allure (Canada) (7700703956).jpg | InSapphoWeTrust from Los Angeles, California, USA | https://commons.wikimedia.org/wiki/File:Buick_Allure_(Canada)_(7700703956).jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/buick-cascada.webp` | 2016 Buick Cascada Premium.jpg | MercurySable99 | https://commons.wikimedia.org/wiki/File:2016_Buick_Cascada_Premium.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/buick-cascada-thumb.webp` | 2016 Buick Cascada Premium.jpg | MercurySable99 | https://commons.wikimedia.org/wiki/File:2016_Buick_Cascada_Premium.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/buick-century.webp` | Buick GL8 Century 003.jpg | JustAnotherCarDesigner | https://commons.wikimedia.org/wiki/File:Buick_GL8_Century_003.jpg | CC0 |  |
 | `store/img/bikes/buick-century-thumb.webp` | Buick GL8 Century 003.jpg | JustAnotherCarDesigner | https://commons.wikimedia.org/wiki/File:Buick_GL8_Century_003.jpg | CC0 |  |
 | `store/img/bikes/buick-enclave.webp` | Buick Enclave Sanming 01 2022-08-12.jpg | JamesYoung8167 | https://commons.wikimedia.org/wiki/File:Buick_Enclave_Sanming_01_2022-08-12.jpg | CC BY-SA 4.0 |  |
@@ -454,6 +445,7 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/buick-encore-thumb.webp` | Buick Encore GX 001.jpg | Jengtingchen | https://commons.wikimedia.org/wiki/File:Buick_Encore_GX_001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/buick-encore-gx.webp` | 2024 Buick Encore GX Avenir AWD, rear left, 10-29-2023.jpg | MercurySable99 | https://commons.wikimedia.org/wiki/File:2024_Buick_Encore_GX_Avenir_AWD,_rear_left,_10-29-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/buick-encore-gx-thumb.webp` | 2024 Buick Encore GX Avenir AWD, rear left, 10-29-2023.jpg | MercurySable99 | https://commons.wikimedia.org/wiki/File:2024_Buick_Encore_GX_Avenir_AWD,_rear_left,_10-29-2023.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/buick-envision-hero.webp` | Buick Envision S IMG003.jpg | Zotyefan | https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/buick-envision.webp` | Buick Envision S IMG003.jpg | Zotyefan | https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/buick-envision-thumb.webp` | Buick Envision S IMG003.jpg | Zotyefan | https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/buick-envista.webp` | 2024 Buick Envista Preferred in White.jpg | HJUdall | https://commons.wikimedia.org/wiki/File:2024_Buick_Envista_Preferred_in_White.jpg | CC0 |  |

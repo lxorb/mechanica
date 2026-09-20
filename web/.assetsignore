@@ -7,3 +7,6 @@ store/models/*/scene.*
 store/models/*/textures/
 store/icons-parts-3d/*.png
 store/icons-parts-3d/sheet.png
+*.tmp
+*.part
+*.part*
