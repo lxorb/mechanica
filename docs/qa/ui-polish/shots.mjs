@@ -140,6 +140,16 @@ async function pickNoManualYear(p) {
 }
 
 const STOPS = [
+  ["pickdirect", async (p, base) => {
+    await landing(p, base);
+    await p.evaluate(async (id) => {
+      const bus = await import("/counter/js/bus.js");
+      bus.set({ bikeId: id });
+      bus.go("pick");
+    }, "ktm-390-duke-2024");
+    await p.waitForSelector("[data-screen='pick'] .hit", { timeout: 60000 });
+    await nap(1000);
+  }],
   ["landing", landing],
   ["cards", async (p, base) => {
     await landing(p, base);

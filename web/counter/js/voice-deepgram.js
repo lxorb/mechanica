@@ -236,6 +236,8 @@ function player(ctx, rate, onDone) {
   let audible = 0; // performance.now() of the last sample scheduled, so the guard knows the tail
   let route = "element";
   let tag = null;
+  let dest = null;
+  let loud = false;
 
   function sink() {
     if (!gain) {
@@ -255,7 +257,7 @@ function player(ctx, rate, onDone) {
       // references and the only one iOS Safari cancels at all. If the element will not play -
       // an autoplay policy, an ancient browser - fall back rather than lose the voice.
       try {
-        const dest = ctx.createMediaStreamDestination();
+        dest = ctx.createMediaStreamDestination();
         gain.connect(dest);
         tag = new Audio();
         tag.srcObject = dest.stream;
@@ -278,9 +280,107 @@ function player(ctx, rate, onDone) {
     return gain;
   }
 
+  /**
+   * THE EARPIECE PROBLEM. "The voice mode where there's this orb should use my phone's actual
+   * speaker, not the telephone one."
+   *
+   * An <audio> element playing while a microphone is open is, to a phone, a phone call: both
+   * Android and iOS put that combination on the *communications* route, which is the earpiece.
+   * The element is also the only path iOS cancels echo on, so the two things we want are in
+   * direct conflict and the fix is per platform:
+   *
+   *   Android/Chrome  the element stays (AEC intact) and `setSinkId` moves it to the device
+   *                   whose label says speaker. Re-applied on `devicechange`, because plugging
+   *                   a headset in and out re-enumerates everything.
+   *   iOS/Safari      `navigator.audioSession.type = "play-and-record"` is the only lever WebKit
+   *                   offers and it does NOT force the loudspeaker while the mic is open. So on
+   *                   iOS "speaker" means leaving the element behind and rendering through the
+   *                   AudioContext, which is not on the call route. THE TRADE-OFF IS REAL: that
+   *                   is also the path iOS will not echo-cancel, so the half-duplex guard above
+   *                   becomes the only thing between the agent and its own voice. It is built to
+   *                   be exactly that, and it is measured, which is why this is affordable.
+   */
+  const iOS =
+    typeof navigator !== "undefined" &&
+    (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
+
+  async function toSpeaker() {
+    if (!tag || typeof tag.setSinkId !== "function") return false;
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const outs = devices.filter((d) => d.kind === "audiooutput");
+      const loud = outs.find((d) => /speaker|loud/i.test(d.label || ""));
+      const want = loud ? loud.deviceId : outs.length <= 1 ? "default" : "";
+      if (!want) return false;
+      await tag.setSinkId(want);
+      return true;
+    } catch {
+      // setSinkId throws on a device it will not switch to, and on every browser that has the
+      // method behind a permission we do not have. Not a failure worth ending a session for.
+      return false;
+    }
+  }
+
+  function connectTo(mode) {
+    if (!gain) return;
+    try {
+      gain.disconnect();
+    } catch {
+      /* nothing attached yet */
+    }
+    if (meter) gain.connect(meter);
+    if (mode === "context") {
+      gain.connect(ctx.destination);
+      route = "destination";
+      if (tag) {
+        try {
+          tag.pause();
+        } catch {
+          /* already idle */
+        }
+      }
+      return;
+    }
+    if (dest) gain.connect(dest);
+    route = "element";
+    if (tag) tag.play().catch(() => {});
+  }
+
   return {
     /** Which render path the voice is leaving by, for VOICE.md and the harness. */
     route: () => route,
+    /**
+     * Loud, or against his ear. `true` is the speaker and is what a workshop wants; `false` is
+     * the earpiece, which is what a phone does by default and what he may want at a counter.
+     */
+    async speaker(on) {
+      sink();
+      if (!on) {
+        connectTo("element");
+        if (tag && typeof tag.setSinkId === "function") {
+          // "" / "default" is whatever the platform would have chosen, which with a live mic is
+          // the earpiece. That IS the earpiece setting; there is no explicit id for it.
+          try {
+            await tag.setSinkId("");
+          } catch {
+            /* no sink control: the platform default is already the earpiece */
+          }
+        }
+        loud = false;
+        return false;
+      }
+      if (iOS) {
+        // WebKit has no loudspeaker switch while the microphone is open, so leave the element.
+        connectTo("context");
+        loud = true;
+        return true;
+      }
+      connectTo("element");
+      loud = await toSpeaker();
+      return loud;
+    },
+    loud: () => loud,
     /**
      * Is the agent audible right now, or was it within `tail` ms? `busy()` goes false the moment
      * the last buffer's onended fires, and the room is still ringing for a moment after that.
@@ -545,6 +645,13 @@ export async function start(opts = {}) {
       return session.muted;
     },
     muted: () => Boolean(session.muted),
+    /** Loud (the workshop's speaker) or against his ear. Returns what it actually achieved. */
+    async speaker(on) {
+      if (session.dead || !session.play) return false;
+      session.loud = await session.play.speaker(on);
+      return session.loud;
+    },
+    loud: () => Boolean(session.play && session.play.loud()),
     speaking: () => Boolean(session.play && session.play.busy()),
     level: () => (session.muted ? 0 : session.level),
     out: () => (session.play ? session.play.level() : 0),
