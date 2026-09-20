@@ -163,6 +163,48 @@ async function tapHit(page, index) {
   return true;
 }
 
+/**
+ * One step of the book's pinch zoom, centred on the last marker. It arrives as the ctrl+wheel
+ * event the reader already listens for — a trackpad pinch and a phone pinch both reach the same
+ * handler. Zooming back out this way rather than with a double-click is deliberate: a click on
+ * the sheet also toggles the immersive bar, which would hide ALL and PARTS for the next beat.
+ */
+async function pinch(page, deltaY) {
+  await page.evaluate((d) => {
+    const v = document.querySelector(".page-view");
+    const ms = [...document.querySelectorAll('.page-sheet[data-page="77"] .mark')];
+    const m = ms[ms.length - 1];
+    if (!v) return;
+    const b = m ? m.getBoundingClientRect() : v.getBoundingClientRect();
+    v.dispatchEvent(
+      new WheelEvent("wheel", {
+        deltaY: d,
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true,
+        clientX: b.x + b.width / 2,
+        clientY: b.y + b.height / 2,
+      }),
+    );
+  }, deltaY);
+}
+
+/** Whichever Back is on screen — the book runs fullscreen and folds the ticket bar away. */
+async function backTo(page, hash, tries = 5) {
+  for (let i = 0; i < tries; i++) {
+    const at = await page.evaluate(() => location.hash);
+    if (at === hash) return true;
+    await page.evaluate(() => {
+      const bar = document.querySelector(".bar-back");
+      const ticket = document.querySelector("[data-back]");
+      const visible = (el) => el && el.offsetParent !== null && el.getBoundingClientRect().width > 2;
+      (visible(bar) ? bar : visible(ticket) ? ticket : bar || ticket)?.click();
+    });
+    await sleep(1200);
+  }
+  return (await page.evaluate(() => location.hash)) === hash;
+}
+
 /** Orbit the 3D stage with a slow pointer drag. */
 async function orbit(page, dx = 210, ms = 1700) {
   const box = await page.evaluate(() => {
@@ -186,24 +228,28 @@ async function orbit(page, dx = 210, ms = 1700) {
 
 async function takeOne(page, take) {
   take.start();
-  take.mark("Landing", "one search field, 29k vehicles behind it");
-  await dwell(2400);
+  take.mark("Landing", "one search field, 29,890 vehicles behind it");
+  await dwell(2000);
 
   await tap(page, ".id-q");
   await type(page, "2024 390");
-  await dwell(2600);
+  await dwell(2200);
   take.mark("Model cards", "photo cards while the query is still ambiguous");
-  await dwell(1400);
+  await dwell(900);
 
   await type(page, " duke");
+  // The landing jumps by itself once one bike has been the only candidate for 400 ms; Enter is
+  // the other way in, and the one a mechanic uses. Whichever fires first, we end up on Confirm.
+  await dwell(900);
+  if ((await page.evaluate(() => location.hash)) !== "#confirm") await page.keyboard.press("Enter");
   await page.waitForFunction(() => location.hash === "#confirm", { timeout: 30000 });
   await page.waitForFunction(
     () => !!document.querySelector('section[data-screen="confirm"] button[aria-label="Yes"]'),
     { timeout: 30000 },
   );
-  await dwell(2200);
-  take.mark("Confirm", "KTM 390 DUKE 2024, the hero photo and the manual it carries");
-  await dwell(2600);
+  await dwell(1800);
+  take.mark("Confirm", "KTM 390 DUKE 2024 — the hero photo and the manual it carries");
+  await dwell(2000);
 
   await tap(page, 'section[data-screen="confirm"] button[aria-label="Yes"]');
   await page.waitForFunction(() => location.hash === "#pick", { timeout: 60000 });
@@ -212,29 +258,29 @@ async function takeOne(page, take) {
       timeout: 90000,
     })
     .catch(() => {});
-  await dwell(4200);
-  take.mark("Pick · 3D stage", "the model idles into a slow spin after three seconds");
-  await dwell(1200);
+  await dwell(3600);
+  take.mark("Pick · the 3D stage", "the model idles into a slow spin after three seconds, then a drag");
+  await dwell(900);
   await orbit(page);
-  await dwell(3400);
+  await dwell(2400);
 
   await tap(page, ".ask-q");
-  await type(page, "chain is loose", 120);
-  await dwell(500);
+  await type(page, "chain is loose", 118);
+  await dwell(450);
   await page.keyboard.press("Enter");
   await page.waitForFunction(() => document.querySelectorAll(".hit").length > 0, { timeout: 60000 });
-  await dwell(2200);
-  take.mark("The manual's own headings", "12.12 p.77–78 and 12.13 p.78 — KTM's section numbers");
-  await dwell(2200);
+  await dwell(1700);
+  take.mark("The manual's own headings", "12.12 p.77–78 and 12.13 p.78 — KTM's section numbers, not ours");
+  await dwell(1500);
 
-  take.mark("Exploded view, chain lit", "the bike explodes and the drive chain lights on the top heading");
-  await dwell(2600);
+  take.mark("Exploded view, chain lit", "the bike explodes and the drive chain lights under the top heading");
+  await dwell(2100);
   await tapHit(page, 1);
-  await dwell(2400);
-  take.mark("The second heading", "12.13 Adjusting the chain tension — the focus follows the heading");
-  await dwell(1800);
+  await dwell(1900);
+  take.mark("The second heading", "12.13 Adjusting the chain tension — the 3D focus follows the heading");
+  await dwell(1300);
   await tapHit(page, 0);
-  await dwell(2400);
+  await dwell(1900);
 
   await tap(page, ".open");
   await page.waitForFunction(() => location.hash.startsWith("#book"), { timeout: 60000 });
@@ -243,29 +289,13 @@ async function takeOne(page, take) {
       timeout: 120000,
     })
     .catch(() => {});
-  await dwell(1800);
-  take.mark("Page 77 of KTM's manual", "the printed page, orange markers on the answering lines");
-  await dwell(3000);
+  await dwell(1300);
+  take.mark("Page 77 of KTM's manual", "the printed page, orange markers on the two answering lines");
+  await dwell(2400);
 
   // one pinch step onto the two lines that answer, then centre them
-  await page.evaluate(() => {
-    const v = document.querySelector(".page-view");
-    const ms = [...document.querySelectorAll('.page-sheet[data-page="77"] .mark')];
-    const m = ms[ms.length - 1] || ms[0];
-    if (!v || !m) return;
-    const b = m.getBoundingClientRect();
-    v.dispatchEvent(
-      new WheelEvent("wheel", {
-        deltaY: -260,
-        ctrlKey: true,
-        bubbles: true,
-        cancelable: true,
-        clientX: b.x + b.width / 2,
-        clientY: b.y + b.height / 2,
-      }),
-    );
-  });
-  await dwell(1100);
+  await pinch(page, -260);
+  await dwell(900);
   await page.evaluate(() => {
     const v = document.querySelector(".page-view");
     const ms = [...document.querySelectorAll('.page-sheet[data-page="77"] .mark')];
@@ -276,43 +306,31 @@ async function takeOne(page, take) {
     v.scrollTop += (a.y + b.y + b.height) / 2 - (box.y + box.height / 2);
     v.scrollLeft += (a.x + a.width / 2 + b.x + b.width / 2) / 2 - (box.x + box.width / 2);
   });
-  await dwell(1400);
+  await dwell(1100);
   take.mark("The marked lines", "measure the chain tension · Chain tension 7 … 10 mm (0.28 … 0.39 in)");
-  await dwell(3600);
+  await dwell(3000);
 
-  await page.evaluate(() => {
-    const v = document.querySelector(".page-view");
-    const b = v.getBoundingClientRect();
-    v.dispatchEvent(
-      new MouseEvent("dblclick", {
-        bubbles: true,
-        cancelable: true,
-        detail: 2,
-        clientX: b.x + b.width / 2,
-        clientY: b.y + b.height / 3,
-      }),
-    );
-  });
-  await dwell(1600);
+  await pinch(page, 260);
+  await dwell(1200);
 
   await tap(page, ".book-all");
-  await page.waitForFunction(() => document.querySelectorAll(".page-sheet").length > 20, { timeout: 40000 }).catch(() => {});
-  await dwell(1800);
+  await page.waitForFunction(() => document.querySelectorAll(".page-sheet").length > 20, { timeout: 20000 }).catch(() => {});
+  await dwell(1300);
   take.mark("All pages", "143 sheets — the whole book, when he wants it");
-  await glide(page, ".page-view", 1100, 1500);
-  await dwell(1800);
+  await glide(page, ".page-view", 1100, 1400);
+  await dwell(1400);
 
   await tap(page, ".book-parts");
   await page.waitForFunction(() => document.querySelectorAll(".pv-tile").length > 10, { timeout: 60000 });
-  await dwell(2000);
+  await dwell(1600);
   take.mark("Parts", "135 parts, each one on the list because the manual prints a spec for it");
-  await glide(page, ".pv-tiles", 420, 1100);
-  await dwell(1400);
-  await glide(page, ".pv-tiles", -420, 900);
+  await glide(page, ".pv-tiles", 420, 1000);
+  await dwell(1000);
+  await glide(page, ".pv-tiles", -420, 800);
 
   await tap(page, ".pv-q");
   await type(page, "chain", 130);
-  await dwell(1600);
+  await dwell(1200);
   const tile = await page.evaluate(() => {
     const tiles = [...document.querySelectorAll(".pv-tile")];
     const exact = tiles.find((n) => (n.querySelector(".pv-name")?.textContent || "").trim().toLowerCase() === "chain");
@@ -328,17 +346,16 @@ async function takeOne(page, take) {
     await page.mouse.click(tile.x, tile.y);
   }
   await page.waitForFunction(() => document.querySelectorAll(".pv-offer").length > 0, { timeout: 60000 }).catch(() => {});
-  await dwell(2200);
+  await dwell(1800);
   take.mark("Drive chain", `${tile ? tile.name : "Chain"} · 5/8 x 1/4" (520) X-ring · p.126 · live USD offers`);
-  await glide(page, ".pv-offers", 260, 900);
+  await glide(page, ".pv-detail", 190, 900);
   await dwell(2600);
 
   // out of Parts, out of the book, back to the bike
   await page.evaluate(() => document.querySelector(".pv-x")?.click());
+  await dwell(1000);
+  await backTo(page, "#pick");
   await dwell(1200);
-  await tap(page, ".bar-back");
-  await page.waitForFunction(() => location.hash === "#pick", { timeout: 30000 }).catch(() => {});
-  await dwell(1600);
 
   await tap(page, ".chat-pill");
   await page.waitForFunction(
@@ -355,11 +372,11 @@ async function takeOne(page, take) {
     },
     { timeout: 40000 },
   );
-  await dwell(1600);
+  await dwell(1200);
   take.mark("Chat", "the one place it may write a sentence — and only with page numbers in it");
   await tap(page, "#text-input", { deep: true });
-  await type(page, "what's the torque on the rear axle nut", 82);
-  await dwell(700);
+  await type(page, "what's the torque on the rear axle nut", 80);
+  await dwell(600);
   await page.keyboard.press("Enter");
   await page
     .waitForFunction(
@@ -377,27 +394,22 @@ async function takeOne(page, take) {
       { timeout: 90000 },
     )
     .catch(() => {});
-  await dwell(1800);
+  await dwell(1500);
   take.mark("The answer, with its page", "Rear wheel spindle nut: 100 Nm (73.8 lbf ft) [p. 130] + the p.130 chip");
-  await dwell(3600);
+  await dwell(3000);
 
   await page.evaluate(() => document.querySelector(".cv-x")?.click());
-  await dwell(1600);
+  await dwell(1300);
 
   for (let i = 0; i < 2; i++) {
     await tap(page, "[data-theme-button]");
-    await dwell(2200);
+    await dwell(1700);
     const id = await page.evaluate(() => document.documentElement.getAttribute("data-theme"));
     take.mark(`Theme · ${id}`, "a theme is colours and nothing else; every screen keeps working");
-    await dwell(1300);
+    await dwell(900);
   }
 
-  for (let i = 0; i < 4; i++) {
-    const hash = await page.evaluate(() => location.hash);
-    if (hash === "#identify" || hash === "") break;
-    await tap(page, "[data-back]");
-    await dwell(1300);
-  }
+  await backTo(page, "#identify");
   await page.evaluate(() => {
     const q = document.querySelector(".id-q");
     if (q && q.value) {
@@ -406,9 +418,9 @@ async function takeOne(page, take) {
       q.dispatchEvent(new Event("input", { bubbles: true }));
     }
   });
-  await dwell(1600);
+  await dwell(1200);
   take.mark("Back to the search field", "one field, and the next bike");
-  await dwell(2200);
+  await dwell(1800);
 }
 
 /* ------------------------------------------------------------------ take 2: the cold manual */

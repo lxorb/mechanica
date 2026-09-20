@@ -29,6 +29,8 @@ import { createReadStream, existsSync, mkdirSync, readFileSync, statSync, writeF
 import { createServer } from "node:http";
 import { gzipSync } from "node:zlib";
 import { createHash } from "node:crypto";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import { dirname, extname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -62,11 +64,39 @@ const TYPES = {
 
 const GZIP = /^(text\/|application\/(javascript|json|manifest\+json)|image\/svg)/;
 
-/** web/ over http, gzipped and ETagged like the edge serves it, so local bytes mean something. */
-function serve() {
+const PUBLIC_API = "https://ttm-api.victoriousground-5b684586.eastus.azurecontainerapps.io";
+
+/**
+ * web/ over http, gzipped and ETagged like the edge serves it, and /api proxied to the same
+ * container the Worker puts behind /api, so a local run boots down the same REMOTE path the
+ * phone on the conference wifi will. `--noapi` answers /api with 503 instead: that is the
+ * offline / LOCAL store path.
+ */
+function serve({ api = PUBLIC_API } = {}) {
   const etags = new Map();
   return new Promise((done) => {
-    const server = createServer((req, res) => {
+    const server = createServer(async (req, res) => {
+      if ((req.url || "").startsWith("/api")) {
+        if (!api) {
+          res.writeHead(503, { "Content-Type": "text/plain" }).end("no api");
+          return;
+        }
+        const target = `${api}${req.url === "/api" ? "/" : req.url.slice(4)}`;
+        try {
+          const upstream = await fetch(target, { headers: { Accept: "application/json" } });
+          res.writeHead(upstream.status, {
+            "Content-Type": upstream.headers.get("content-type") || "application/json",
+            "Access-Control-Allow-Origin": "*",
+          });
+          if (upstream.body) await pipeline(Readable.fromWeb(upstream.body), res);
+          else res.end();
+        } catch (err) {
+          // A page that navigated away mid-proxy aborts the socket: that is not a failure.
+          if (!res.headersSent) res.writeHead(502, { "Content-Type": "text/plain" });
+          res.end();
+        }
+        return;
+      }
       let path = decodeURIComponent((req.url || "/").split("?")[0]);
       if (path.endsWith("/")) path += "index.html";
       const file = normalize(join(WEB, path));
@@ -186,10 +216,17 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
     row.cache = true;
     wire.set(e.requestId, row);
   });
+  client.on("Network.requestWillBeSent", (e) => {
+    const row = wire.get(e.requestId) || {};
+    row.start = e.timestamp;
+    row.url = row.url || e.request.url;
+    wire.set(e.requestId, row);
+  });
   client.on("Network.loadingFinished", (e) => {
     const row = wire.get(e.requestId);
     if (!row) return;
     row.bytes = e.encodedDataLength || 0;
+    row.end = e.timestamp;
   });
   client.on("Network.loadingFailed", (e) => {
     const row = wire.get(e.requestId);
@@ -226,6 +263,10 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
       cards: document.querySelectorAll(".id-card").length,
       store: document.documentElement.dataset.store || "",
       sw: Boolean(navigator.serviceWorker && navigator.serviceWorker.controller),
+      // User Timing the app writes itself: boot phases, named "ttm:<phase>".
+      phases: performance.getEntriesByType("measure")
+        .filter((m) => m.name.startsWith("ttm:"))
+        .map((m) => ({ name: m.name.slice(4), start: Math.round(m.startTime), dur: Math.round(m.duration) })),
     };
   }).catch(() => ({ marks: {}, long: [] }));
 
@@ -238,6 +279,12 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
     if (row.cache) out.cached += 1;
     if (row.sw) out.sw += 1;
   }
+  const first = Math.min(...[...wire.values()].map((r) => r.start ?? Infinity));
+  out.slow = [...wire.values()]
+    .filter((r) => r.start && r.end)
+    .map((r) => ({ url: String(r.url).replace(/^https?:\/\/[^/]+/, "").slice(-58), at: Math.round((r.start - first) * 1000), ms: Math.round((r.end - r.start) * 1000), kb: Math.round((r.bytes || 0) / 1024) }))
+    .sort((a, z) => z.ms - a.ms)
+    .slice(0, 10);
   out.wall = Date.now() - started;
   out.fcp = Math.round(perf.marks.fcp ?? 0);
   out.lcp = Math.round(perf.marks.lcp ?? 0);
@@ -252,6 +299,7 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
   out.long = (perf.long || []).sort((a, z) => z.dur - a.dur).slice(0, 12);
   out.longTotal = (perf.long || []).reduce((sum, e) => sum + e.dur, 0);
   out.longCount = (perf.long || []).length;
+  out.phases = perf.phases || [];
   await page.close();
   return out;
 }
@@ -269,7 +317,9 @@ function line(row) {
     `field ${String(row.field).padStart(6)} card ${String(row.card).padStart(6)} ` +
     `| ${String(row.requests).padStart(3)} req ${kb(row.bytes).padStart(8)} | long ${row.longCount}/${row.longTotal}ms | cards ${row.cards} store ${row.store}${row.controlled ? " sw" : ""}`,
     `      ${types}`,
-    row.long.length ? `      top task ${row.long[0].dur}ms @${row.long[0].start}ms ${row.long[0].attr.join(",").slice(0, 70)}` : "",
+    row.long.length ? `      long: ${row.long.slice(0, 4).map((t) => `${t.dur}ms@${t.start}`).join(" ")}` : "",
+    row.phases && row.phases.length ? `      phases: ${row.phases.map((p) => `${p.name} ${p.start}+${p.dur}`).join(" · ")}` : "",
+    row.slow && row.slow.length ? `      slowest: ${row.slow.slice(0, 4).map((r) => `${r.url.split("/").pop()} ${r.ms}ms/${r.kb}KB@${r.at}`).join(" · ")}` : "",
     row.errors.length ? `      !! ${row.errors.slice(0, 2).join(" | ")}` : "",
     row.failed.length ? `      !! failed ${row.failed.slice(0, 2).join(" | ")}` : "",
   ].filter(Boolean).join("\n");
@@ -289,13 +339,15 @@ async function main() {
   const only = value("only", "");
   const outPath = value("out", "");
   const cpu = Number(value("cpu", 4));
+  const timeout = Number(value("timeout", 120000));
+  const noapi = flag("noapi");
 
   let server = null;
   let origin;
   if (live) {
     origin = LIVE;
   } else {
-    const started = await serve();
+    const started = await serve({ api: noapi ? null : PUBLIC_API });
     server = started.server;
     origin = `http://127.0.0.1:${started.port}/counter/`;
   }
@@ -324,7 +376,7 @@ async function main() {
         await new Promise((r) => setTimeout(r, 6000));
         await first.close();
       }
-      const res = await measure(browser, { url: origin, net: row.net, cpu: row.cpu, label: `${live ? "live" : "local"} ${row.id}` });
+      const res = await measure(browser, { url: origin, net: row.net, cpu: row.cpu, timeout, label: `${live ? "live" : "local"} ${row.id}` });
       rows.push(res);
       console.log(line(res));
 

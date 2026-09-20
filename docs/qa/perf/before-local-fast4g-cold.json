@@ -1,0 +1,181 @@
+{
+  "origin": "http://127.0.0.1:60891/counter/",
+  "when": "2026-09-20T10:45:08.795Z",
+  "rows": [
+    {
+      "label": "local fast4g-cold",
+      "requests": 61,
+      "bytes": 315163,
+      "byType": {
+        "html": 1877,
+        "css": 31875,
+        "js": 37689,
+        "manifest": 609,
+        "font": 35468,
+        "api": 378,
+        "other": 22924,
+        "json": 184343,
+        "cache": 0,
+        "img": 0
+      },
+      "cached": 1,
+      "sw": 32,
+      "failed": [],
+      "errors": [],
+      "slow": [],
+      "wall": 31964,
+      "fcp": 2026,
+      "lcp": 30992,
+      "field": 28389,
+      "card": 30172,
+      "ttfb": 96,
+      "dcl": 1776,
+      "load": 1815,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 6106,
+          "dur": 6318,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 17745,
+          "dur": 6191,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 15625,
+          "dur": 2105,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 28671,
+          "dur": 1613,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 4892,
+          "dur": 1205,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 3124,
+          "dur": 1016,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 14522,
+          "dur": 596,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 15165,
+          "dur": 455,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 28389,
+          "dur": 278,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 4799,
+          "dur": 90,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 25332,
+          "dur": 86,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1313,
+          "dur": 81,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 20105,
+      "longCount": 13,
+      "phases": [
+        {
+          "name": "health",
+          "start": 1758,
+          "dur": 513
+        },
+        {
+          "name": "bundle",
+          "start": 2272,
+          "dur": 1576
+        },
+        {
+          "name": "merge",
+          "start": 3848,
+          "dur": 283
+        },
+        {
+          "name": "images",
+          "start": 4132,
+          "dur": 1735
+        },
+        {
+          "name": "index-ids",
+          "start": 5866,
+          "dur": 205
+        },
+        {
+          "name": "refresh-fetch",
+          "start": 6074,
+          "dur": 9552
+        },
+        {
+          "name": "refresh-merge",
+          "start": 15626,
+          "dur": 895
+        },
+        {
+          "name": "refresh-images",
+          "start": 16595,
+          "dur": 869
+        }
+      ]
+    }
+  ]
+}
