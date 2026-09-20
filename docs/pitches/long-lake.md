@@ -165,45 +165,24 @@ Rendered: [`long-lake/second-deployment.png`](long-lake/second-deployment.png) �
 The only thing you need them to read is the four zone labels.
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontFamily":"system-ui, -apple-system, Segoe UI, sans-serif","clusterBkg":"#fbfaf8","clusterBorder":"#8a8177","lineColor":"#475569"}}}%%
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
 flowchart TB
-  subgraph ONCE["BUILT ONCE — every deployment inherits this, forever"]
+  subgraph R1[" "]
     direction LR
-    AD["<b>84 publisher hosts, none with an API</b><br/>34 adapters + 26 crawl fragments<br/>Ducati: headful CDP — Akamai 403s httpx AND headless<br/>Kawasaki: 401s on Accept: application/json<br/>Honda: Googlebot UA + CSRF; 4 of 41 codes<br/>found by trying 479 candidates<br/><b>17 makes documented UNREACHABLE</b>"]
-    DOC["<b>doctype.py</b><br/>8 document kinds from URL + title alone,<br/><b>never by downloading</b><br/>brochure · warranty · quickstart rejected"]
-    GRD["<b>ground.py — the reliability layer</b><br/>a quote not found character-for-character<br/>in the PDF text layer is <b>DROPPED</b>"]
-    EVAL["<b>the evals</b><br/>150 rider queries · 100% top-1<br/>20 off-topic negative controls · 0 answered<br/>25 chat answers, every digit checked"]
-    AD --> DOC --> GRD --> EVAL
+    MECH("Mechanic"):::ends --> ANY("Any vehicle"):::ours --> REG("Registry"):::them --> ING("On-demand ingest"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    IDX("Index"):::them --> PAGE("Manual page"):::ends --> NEXT("Next vehicle"):::ours
   end
 
-  subgraph PERV["PER VEHICLE — automatic, nobody in the loop, $0.096, 40 s"]
-    direction LR
-    F["fetch the OEM PDF<br/>SHA-256 dedupe"] --> T["PyMuPDF text layer<br/>+ per-block coordinates<br/><b>zero LLM</b>"] --> S["one structuring pass<br/>5-page windows · 32 workers<br/>units · specs · parts · quotes"] --> G2["grounding gate"] --> M["<b>a searchable manual</b><br/>readable in <b>1.3 s</b><br/>searchable in <b>40.4 s</b>"]
-  end
+  R1 --> R2
 
-  subgraph PERS["PER SHOP — zero engineering, zero migration, zero data to import"]
-    direction LR
-    U["open the URL"] --> Q["type what is wrong,<br/>in the words a mechanic uses"] --> R["<b>the OEM page,<br/>answering lines marked</b><br/>3.9 s cold · 0.09 s repeat · <b>$0.0006</b><br/>replaces: read the 775-page manual<br/>to a model per question, <b>$12.40</b>"]
-  end
-
-  subgraph NOW["WHERE THAT LEAVES US — measured 2026-09-20  "]
-    direction LR
-    C1["<b>the corpus</b><br/>535 manuals · 95,914 pages<br/>91,388 grounded sections<br/><b>$51 spent, once</b>"]
-    C2["<b>the catalog</b><br/>27,751 vehicles<br/>13,537 with a free official manual<br/><b>23,140 motorcycles AND 4,611 cars,<br/>identical code path</b>"]
-    C3["<b>the marginal deployment</b><br/>a new vehicle: $0.096, 40 s, no human<br/>a new shop: no engineering at all<br/><b>every shop inherits<br/>every other shop's ingest</b>"]
-    C1 ~~~ C2 ~~~ C3
-  end
-
-  ONCE ==> PERV ==> PERS ==> NOW
-
-  classDef once fill:#eef2f7,stroke:#475569,stroke-width:2px,color:#0f172a
-  classDef perv fill:#e85d04,stroke:#5c2200,stroke-width:3px,color:#ffffff
-  classDef pers fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ffffff
-  classDef corp fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#053e2c
-  class AD,DOC,GRD,EVAL once
-  class F,T,S,G2,M perv
-  class U,Q,R pers
-  class C1,C2,C3 corp
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
 ```
 
 **The one line to say over it:** *"Grey is what took us the whole hackathon and is never paid for

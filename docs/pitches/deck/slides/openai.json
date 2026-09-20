@@ -97,162 +97,66 @@
       "kind": "diagram",
       "at": "0:30",
       "title": "Every lane has the same shape",
-      "caption": "The API does the part only a model can do. Our code decides whether the answer is allowed out.",
+      "caption": "Schema for shape, allowlist for truth: the API does the part only a model can do, our code decides whether it is allowed out.",
       "flow": {
-        "legend": [
-          {
-            "tone": "orange",
-            "label": "an OpenAI API call — all through app/llm.py"
-          },
-          {
-            "tone": "white",
-            "label": "our deterministic backend — no model, no tokens"
-          },
-          {
-            "tone": "green",
-            "label": "the guardrail that verifies what the model said"
-          },
-          {
-            "tone": "ink",
-            "label": "what the mechanic gets"
-          }
-        ],
         "bands": [
           {
             "rows": [
               {
-                "gap": 28,
                 "items": [
                   {
-                    "tone": "paper",
-                    "t": "PHOTO of the bike"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "400 catalog names|injected into the prompt",
-                    "sub": "zero LLM"
+                    "tone": "ink",
+                    "t": "Mechanic"
                   },
                   {
                     "tone": "orange",
-                    "t": "identify.photo · VISION",
-                    "sub": "luna · strict json_schema · $0.00053 a photo"
+                    "t": "Vision"
                   },
                   {
-                    "tone": "green",
-                    "t": "match back to a real|catalog row",
-                    "sub": "floor 0.80 · kind-locked: a bike we hold no manual for cannot win"
+                    "tone": "orange",
+                    "t": "gpt-5.6-luna"
                   },
                   {
-                    "tone": "ink",
-                    "t": "THE EXACT BIKE"
+                    "tone": "paper",
+                    "t": "BM25 index"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "gpt-5.6-terra"
                   }
                 ]
               },
               {
-                "gap": 28,
                 "items": [
                   {
-                    "tone": "paper",
-                    "t": "A BIKE NOBODY|HAS ASKED FOR YET"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "OEM PDF · PyMuPDF text layer|+ per-block coordinates",
-                    "sub": "zero LLM"
-                  },
-                  {
                     "tone": "orange",
-                    "t": "ingest.struct",
-                    "sub": "luna · 5-page windows · 32 workers · 47% of 70.4M input tokens served from cache"
+                    "t": "Structured Outputs"
                   },
                   {
-                    "tone": "green",
-                    "t": "ground.py",
-                    "sub": "every quote is searched for in the PDF text layer. Not found = DROPPED"
+                    "tone": "paper",
+                    "t": "Grounding gate"
                   },
                   {
                     "tone": "ink",
-                    "t": "A SEARCHABLE MANUAL",
-                    "sub": "readable 1.3 s · indexed 40.4 s · $0.095, once, forever"
-                  }
-                ]
-              },
-              {
-                "gap": 28,
-                "items": [
-                  {
-                    "tone": "paper",
-                    "t": "ONE SENTENCE|\"chain is baggy\""
+                    "t": "Manual page"
                   },
                   {
                     "tone": "orange",
-                    "t": "ask.router",
-                    "sub": "luna · slang, typos, DE/ES/FR → manual English · 99.5% prompt-cache hit · $0.00013"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "SPEC PATH · BM25",
-                    "sub": "parsed spec rows, or BM25 over the manual's own headings — zero LLM, and 85% of asks stop here"
-                  },
-                  {
-                    "tone": "orange",
-                    "t": "ask.picker",
-                    "sub": "terra · RETURNS PAGE IDs ONLY, never a word of prose"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "id allowlist",
-                    "sub": "an id that was not in the candidate list is dropped"
-                  },
-                  {
-                    "tone": "ink",
-                    "t": "THE OEM PAGE,|LINES MARKED",
-                    "sub": "top-1 100% of 130 · p95 3.33 s · $0.00038"
+                    "t": "Responses API"
                   }
-                ]
-              },
-              {
-                "gap": 28,
-                "items": [
-                  {
-                    "tone": "paper",
-                    "t": "TAPS CHAT"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "at most 6 printed pages",
-                    "sub": "dealer boilerplate stripped · one compression call, −31.2%"
-                  },
-                  {
-                    "tone": "orange",
-                    "t": "chat.answer",
-                    "sub": "terra · RESPONSES API STREAMING · the model may only emit [p. N] · first token p50 2.64 s"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "the SERVER slices the quote|out of the ORIGINAL page",
-                    "sub": "100% of 43 citations verbatim"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "every digit must be printed|on a page it was given",
-                    "sub": "0 invented numbers in 25 answers"
-                  },
-                  {
-                    "tone": "ink",
-                    "t": "EVERY SENTENCE|CARRIES A [p. N]"
-                  }
-                ]
+                ],
+                "down": true
               }
             ]
           }
         ]
       },
       "notes": [
-        "*Ninety seconds on this one slide.* Rehearse the pointing. White in, grey next, orange in the middle, green after it, black out — every lane has the same shape, and that shape IS the pitch.",
-        "\"Nine OpenAI call sites, all through one file. And behind every one of them, code that can throw its answer away. *The model never gets to be the answer — it only gets to point.*\"",
-        "Two grey boxes sit between the two orange boxes in the ask lane. That is the whole cost story: the router is $0.00013 and cached 99.5%; the expensive call only happens when our own retrieval is genuinely ambiguous.",
-        "Green is never optional. Ingest is a different clock: $0.095 once per manual, then every question on that manual forever is four hundredths of a cent."
+        "*Ninety seconds on this one slide.* Rehearse the pointing: orange is an OpenAI call, cream is our code, and the two black boxes are the man and the page.",
+        "\"Nine OpenAI capabilities carry this product, all through one file. And behind every one of them, code that can throw the answer away. *The model never gets to be the answer — it only gets to point.*\"",
+        "~Schema for shape, allowlist for truth.~ Structured Outputs fixes the shape; the grounding gate decides whether it is allowed out — a quote not found in the PDF text layer is dropped, an id that was not in the candidate list is dropped, and the SERVER, not the model, slices every citation.",
+        "The model decides exactly three things: which vehicle is in the photo, which page ids answer this sentence, and how to phrase what those pages already print. Everything else on this line is deterministic — BM25 in process, no embeddings, no vector database.",
+        "85% of asks never reach the picker at all: BM25 was decisive, or it was a spec question answered off parsed rows with zero LLM calls. Ingest is a different clock — $0.095 once per manual, then every question on it forever is four hundredths of a cent."
       ],
       "defs": [
         {
@@ -405,127 +309,6 @@
           "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)."
         }
       ]
-    },
-    {
-      "kind": "diagram",
-      "at": "2:00",
-      "title": "Not a wrapper",
-      "caption": "The model decides exactly three things — and every one of them has code behind it that can throw the answer away.",
-      "flow": {
-        "w": 1320,
-        "bands": [
-          {
-            "label": "Deterministic — no model, no tokens",
-            "tone": "ghost",
-            "rows": [
-              {
-                "gap": 22,
-                "link": "none",
-                "items": [
-                  {
-                    "tone": "white",
-                    "t": "PDF text layer|+ coordinates"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "BM25 over the manual's|own printed headings"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "the spec path"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "295-entry parts taxonomy"
-                  }
-                ]
-              },
-              {
-                "gap": 22,
-                "link": "none",
-                "items": [
-                  {
-                    "tone": "white",
-                    "t": "answer cache"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "currency conversion"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "URL liveness check"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "highlight geometry"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "label": "The model decides exactly three things",
-            "tone": "orange",
-            "labelColor": "#e85d04",
-            "rows": [
-              {
-                "gap": 30,
-                "link": "none",
-                "items": [
-                  {
-                    "tone": "orange",
-                    "t": "which vehicle|is in the photo"
-                  },
-                  {
-                    "tone": "orange",
-                    "t": "which page ids|answer this sentence"
-                  },
-                  {
-                    "tone": "orange",
-                    "t": "how to phrase what|those pages already print"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "label": "Verified in code before anything renders",
-            "tone": "green",
-            "labelColor": "#1b7a55",
-            "rows": [
-              {
-                "gap": 22,
-                "link": "none",
-                "items": [
-                  {
-                    "tone": "green",
-                    "t": "quote found in the PDF|text layer, or dropped"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "id in the candidate|list, or dropped"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "citation sliced by the|SERVER out of the page"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "every number printed|on a page it was shown"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "notes": [
-        "One sentence over this: ~everything that requires judgement is OpenAI, and nothing that requires being right about a number.~",
-        "\"Schema for shape, allowlist for truth.\" Across every logged call in the cost log (tens of thousands, a count that grows hourly, so quote the date if asked) there is not one parse failure.",
-        "85% of asks never reach a second model call at all — BM25 was already decisive, or it was a spec question answered off parsed rows with zero LLM calls."
-      ],
-      "defs": []
     },
     {
       "kind": "quote",

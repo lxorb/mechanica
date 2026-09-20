@@ -128,9 +128,10 @@ function fontFaces() {
 
 /* --------------------------------------------------------------- diagram */
 
+/** The same three classes the mermaid sources use: ink ends, paper for ours, accent for theirs. */
 const TONES = {
-  paper: { fill: "#ece7dc", stroke: "#b3a996", text: "#141414", sub: "#4a453d" },
-  white: { fill: "#ffffff", stroke: "#b3a996", text: "#141414", sub: "#4a453d" },
+  paper: { fill: "#ece7dc", stroke: "#141414", text: "#141414", sub: "#4a453d" },
+  white: { fill: "#ffffff", stroke: "#141414", text: "#141414", sub: "#4a453d" },
   grey: { fill: "#ffffff", stroke: "#b3a996", text: "#141414", sub: "#4a453d" },
   orange: { fill: "#e85d04", stroke: "#8f3a02", text: "#ffffff", sub: "#ffe0cb" },
   green: { fill: "#d8f1e3", stroke: "#1b7a55", text: "#0d3b2a", sub: "#215f47" },
@@ -139,7 +140,7 @@ const TONES = {
   ghost: { fill: "none", stroke: "#b3a996", text: "#4a453d", sub: "#6b6357" },
 };
 
-const TITLE_SIZE = 23, TITLE_LH = 29, SUB_SIZE = 17.5, SUB_LH = 23;
+const TITLE_SIZE = 30, TITLE_LH = 37, SUB_SIZE = 17.5, SUB_LH = 23;
 
 function wrap(text, width, size, ratio) {
   const max = Math.max(6, Math.floor((width - 30) / (size * ratio)));
@@ -162,8 +163,8 @@ function itemLayout(item, width) {
   const ts = TITLE_SIZE * k, ss = SUB_SIZE * k, tlh = TITLE_LH * k, slh = SUB_LH * k;
   const t = wrap(item.t || "", width, ts, 0.53);
   const s = item.sub ? wrap(item.sub, width, ss, 0.50) : [];
-  const h = 16 + t.length * tlh + (s.length ? 8 + s.length * slh : 0) + 16;
-  return { t, s, ts, ss, tlh, slh, h: Math.max(62, h) };
+  const h = 20 + t.length * tlh + (s.length ? 8 + s.length * slh : 0) + 20;
+  return { t, s, ts, ss, tlh, slh, h: Math.max(84, h) };
 }
 
 function drawItem(item, x, y, w, h, lay) {
@@ -184,18 +185,18 @@ function drawItem(item, x, y, w, h, lay) {
     }
   }
   const dash = item.tone === "ghost" ? ' stroke-dasharray="7 6"' : "";
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="11" fill="${tone.fill}" stroke="${tone.stroke}" stroke-width="2"${dash}/>` + body.join("");
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${tone.fill}" stroke="${tone.stroke}" stroke-width="3"${dash}/>` + body.join("");
 }
 
 function arrow(x, y, len) {
   const x2 = x + len;
-  return `<path d="M${x} ${y} H${x2 - 9}" stroke="#141414" stroke-width="2.5" opacity=".55"/>`
-    + `<path d="M${x2} ${y} l-11 -6 v12 z" fill="#141414" opacity=".55"/>`;
+  return `<path d="M${x} ${y} H${x2 - 9}" stroke="#141414" stroke-width="2.5"/>`
+    + `<path d="M${x2} ${y} l-11 -6 v12 z" fill="#141414"/>`;
 }
 
 function down(x, y, h) {
-  return `<path d="M${x} ${y} V${y + h - 12}" stroke="#141414" stroke-width="2.5" opacity=".55"/>`
-    + `<path d="M${x} ${y + h} l-7 -13 h14 z" fill="#141414" opacity=".55"/>`;
+  return `<path d="M${x} ${y} V${y + h - 12}" stroke="#141414" stroke-width="2.5"/>`
+    + `<path d="M${x} ${y + h} l-7 -13 h14 z" fill="#141414"/>`;
 }
 
 function flowSvg(flow) {
@@ -817,29 +818,26 @@ ${CSS}</style>
  */
 const DIAGRAMS = {
   general: [["general/user-path.svg",
-    "The whole product in one line: name the bike, say what is wrong in your own words, get the printed page — parts, chat and voice all lead back to it."]],
+    "The whole product in one line: name the bike, say what is wrong in your own words, get the printed page — parts and chat both hang off it."]],
   "long-lake": [["long-lake/second-deployment.svg",
-    "Built once, deployed N times. Grey took the whole hackathon and is never paid for again; orange is what one new vehicle costs; black is what a new shop costs, which is nothing."]],
-  openai: [
-    ["openai/architecture.svg",
-      "Every lane has the same shape: orange is an OpenAI call, green is the code that can throw its answer away, black is what the mechanic actually gets."],
-    ["openai/not-a-wrapper.svg",
-      "What is deterministic, the three things the model is allowed to decide, and what is verified in code before anything renders."]],
+    "A vehicle nobody has asked for yet becomes a searchable manual on its own, and the next shop inherits it."]],
+  openai: [["openai/architecture.svg",
+    "Orange is an OpenAI service, cream is our code, black is the man and the page. Schema for shape, allowlist for truth."]],
   "token-company": [["token-company/token-path.svg",
-    "Where the tokens go: the router, the spec path that costs nothing past it, the picker gate — and compression sitting between the PDF text and every model call, as a cost lever only."]],
+    "Three orange boxes are the entire bill, and bear-2 is the first of them — a cost lever between the pages and the model, never a correctness lever."]],
   ramp: [["ramp/cost-path.svg",
-    "Why the bill is small: retrieval is free, most asks never pay for a picker, and the manual is never in the prompt."]],
+    "The time he loses is the cost. The page is the product. The hours come back."]],
   deepgram: [["deepgram/architecture.svg",
-    "One socket. The Cloudflare Worker holds the key, Deepgram calls our API server-to-server, and the browser tab only ever learns a sentence and a page number."]],
+    "One socket: listen, think, speak. The agent's only vocabulary is our four grounded tools, and the manual's text never enters the tab."]],
   elevenlabs: [["elevenlabs/agent.svg",
-    "Everything black is ElevenLabs, everything cream is ours, and every arrow into the model comes out of a PDF."]],
+    "Everything orange is ElevenLabs, everything cream is ours, and every arrow into the model comes out of a PDF."]],
   dropbox: [
     ["dropbox/rows-per-portal.svg", "One registry, 84 publisher portals, every one of them a different shape."],
     ["dropbox/chaos-to-order.svg", "53,557 rows down to 14,770 fetchable PDFs and 13,537 vehicles that open on the right page."],
     ["dropbox/folder-sync.svg",
-      "One poller, one webhook, one ingest. A path that does not parse to make, model and year comes back unmatched instead of being guessed at."]],
+      "One poller, one webhook, one ingest — the manual he already bought takes the same path as a factory PDF."]],
   voloridge: [["voloridge/pipeline.svg",
-    "The noisy half on the left, 600 GB of NOAA reduced in-stream to a 4 MB table on the right, and a verdict that costs zero tokens."]],
+    "The manual's own printed rules on one side, public weather reduced in-stream on the other, and a verdict that costs zero tokens."]],
 };
 
 function diagramStrip(pitch) {

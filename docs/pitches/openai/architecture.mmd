@@ -1,88 +1,18 @@
----
-title: "Mechanica — every OpenAI call, and the guardrail that catches it"
----
-flowchart LR
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> VIS("Vision"):::them --> LUNA("gpt-5.6-luna"):::them --> BM("BM25 index"):::ours --> TERRA("gpt-5.6-terra"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    SO("Structured Outputs"):::them --> GATE("Grounding gate"):::ours --> PAGE("Manual page"):::ends --> RESP("Responses API"):::them
+  end
 
-%% ---------------- legend ----------------
-LG1["ORANGE = an OpenAI API call<br/>all of them through app/llm.py"]:::ai
-LG2["GREY = our deterministic backend<br/>no model, no tokens"]:::det
-LG3["GREEN = the guardrail that<br/>verifies what the model said"]:::guard
-LG4["BLACK = what the mechanic<br/>actually gets"]:::ship
-LG1 ~~~ LG2 ~~~ LG3 ~~~ LG4
+  R1 --> R2
 
-%% ================= 1. IDENTIFY =================
-S1["PHOTO of the bike"]:::ui
-S2["VIN"]:::ui
-D0["400 catalog names —<br/>half cars, half bikes —<br/>injected into the prompt"]:::det
-A1["<b>identify.photo</b> · VISION<br/>gpt-5.6-luna · strict json_schema<br/>make · model · generation · kind<br/>cues · alternatives<br/><b>$0.00046 per photo</b>"]:::ai
-G1["match back to a real catalog row,<br/>floor 0.80 · kind-locked<br/><b>a bike we hold no manual for<br/>cannot win</b>"]:::guard
-D1["NHTSA vPIC decode<br/><b>zero LLM</b>"]:::det
-R1["THE EXACT BIKE"]:::ship
-
-S1 --> D0 --> A1 --> G1 --> R1
-S2 --> D1 --> R1
-
-%% ================= 2. INGEST, ONCE =================
-S3["A BIKE NOBODY<br/>HAS ASKED FOR YET"]:::ui
-D2["OEM PDF from the registry<br/>PyMuPDF text layer<br/>+ per-block coordinates<br/><b>zero LLM</b>"]:::det
-A2["<b>ingest.struct</b><br/>gpt-5.6-luna · strict json_schema<br/>5-page windows · 32 parallel workers<br/>units · specs · parts · verbatim quotes<br/><b>47% of 70.4M input tokens<br/>served from the prompt cache</b>"]:::ai
-A3["<b>ingest.keywords</b><br/>gpt-5.6-luna · strict json_schema<br/>the slang a rider would actually say<br/>for every printed heading"]:::ai
-G2["<b>ground.py</b> — every quote is searched<br/>for in the PDF text layer.<br/><b>Not found = DROPPED.</b><br/>A marker can only sit on ink<br/>the manufacturer printed."]:::guard
-R2["A SEARCHABLE MANUAL<br/>readable in 7 s · indexed in 50 s<br/><b>$0.10, once, forever</b>"]:::ship
-
-S3 --> D2 --> A2 --> G2 --> R2
-D2 --> A3 --> R2
-
-%% ================= 3. QUESTION TO PRINTED PAGE =================
-S4["ONE SENTENCE<br/>typed or spoken:<br/>chain is baggy"]:::ui
-A4["<b>ask.router</b><br/>gpt-5.6-luna · strict json_schema<br/>intent · components · queries · specName<br/>slang, typos, DE/ES/FR to manual English<br/><b>99.5% prompt-cache hit<br/>on 3.45M tokens · $0.00013</b>"]:::ai
-D4["<b>SPEC PATH — ZERO LLM</b><br/>parsed spec rows, each checked<br/>verbatim against its page<br/><b>$0.00013 · 1.5 s · no second call</b>"]:::det
-D3["BM25 over the manual's own<br/>printed headings · 6 candidates<br/><b>zero LLM</b>"]:::det
-A5["<b>ask.picker</b><br/>gpt-5.6-terra · strict json_schema<br/><b>RETURNS PAGE IDs ONLY —<br/>never a word of prose</b><br/>35% cached · $0.0022"]:::ai
-G3["id allowlist: an id that was not in<br/>the candidate list is dropped<br/>before the response is built.<br/><b>A hallucinated section<br/>never reaches the screen.</b>"]:::guard
-R3["THE OEM PAGE, LINES MARKED<br/>3D model explodes on the part<br/>top-1 100% of 150 queries<br/><b>p95 3.33 s · $0.00038</b>"]:::ship
-
-S4 --> A4
-A4 -- "intent = spec" --> D4 --> R3
-A4 -- "else" --> D3
-D3 -- "top-2 margin decisive:<br/>skip the model entirely" --> R3
-D3 -- "ambiguous" --> A5 --> G3 --> R3
-
-%% ================= 4. GROUNDED CHAT =================
-D5["the printed text behind those<br/>sections · at most 6 pages<br/>dealer boilerplate stripped<br/>one bear-2 compression call, -31%"]:::det
-A6["<b>chat.answer</b><br/>gpt-5.6-terra · <b>RESPONSES API STREAMING</b><br/>prompt_cache_key pinned per route+model<br/>the model may only emit [p. N]<br/><b>43% cached · first token p50 2.6 s</b>"]:::ai
-G4["the MODEL names a page,<br/>the SERVER slices the quote out of<br/>the ORIGINAL page text.<br/><b>Verbatim by construction —<br/>100% of 43 citations.</b>"]:::guard
-G5["every digit in the answer must be<br/>printed on a page it was given<br/>(step numbers and [p. N] excluded)<br/><b>0 invented numbers in 25 answers</b>"]:::guard
-R4["AN ANSWER WHERE EVERY SENTENCE<br/>CARRIES A [p. N] CHIP<br/>that jumps to that page"]:::ship
-
-D3 --> D5 --> A6 --> G4 --> G5 --> R4
-
-%% ================= 5. EXACT-FIT PARTS =================
-S5["TAPS A PART"]:::ui
-D6["query built from what the manual<br/>PRINTED for THIS bike: the OEM number,<br/>else the printed spec, + make/model/year<br/><b>zero LLM</b>"]:::det
-A7["<b>offers</b> · gpt-5.6-terra<br/><b>BUILT-IN web_search TOOL</b><br/>search_context_size low · max_tool_calls 2<br/>one pipe-delimited line per offer"]:::ai
-G6["a price no regex can find in the model's<br/>own text never reaches the UI;<br/>every URL is HEAD-fetched in parallel,<br/>404/410/5xx dropped; FX done in Python"]:::guard
-R5["EXACT-FIT PARTS, LIVE PRICES,<br/>CHEAPEST FIRST<br/>~7 cents cold, free cached"]:::ship
-
-S5 --> D6 --> A7 --> G6 --> R5
-
-%% ================= 6. THE ART, GENERATED =================
-S6["BUILD TIME"]:::ui
-A8["<b>gpt-image-1</b><br/>97 part illustrations + the shipped logo<br/>one style prompt, one camera, one scale<br/>1024px transparent · <b>$0.042 each</b>"]:::ai
-A9["<b>images.score</b> · <b>VISION AS A JUDGE</b><br/>gpt-5.6-luna · strict json_schema rubric<br/>single bike · whole bike · sharpness ·<br/>view angle · is it really the model<br/><b>4,136 calls · $2.04</b>"]:::ai
-R6["THE ART IN THE APP<br/>a part set that reads as a set;<br/>a catalog with no bad photo in it"]:::ship
-
-S6 --> A8 --> R6
-S6 --> A9 --> R6
-
-%% ================= voice + honesty =================
-VO["<b>VOICE</b> — the agent thinks with an OpenAI model through Deepgram,<br/>and may ONLY call our grounded tools: find_procedure · read_page · get_spec · list_parts.<br/>Deepgram calls this API directly, so the manual text never passes through the browser. First audio 0.7-2.0 s."]:::ai
-NO["<b>HONEST ABOUT WHAT WE DO NOT USE:</b> no fine-tuning · no Batch API · no Assistants API ·<br/>no embeddings and no vector store in the live path. Retrieval is BM25 over a book we already structured."]:::none
-VO ~~~ NO
-
-classDef ai fill:#e85d04,stroke:#5c2200,stroke-width:3px,color:#ffffff
-classDef guard fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#053e2c
-classDef det fill:#eef2f7,stroke:#475569,stroke-width:2px,color:#0f172a
-classDef ui fill:#ffffff,stroke:#8a8177,stroke-width:2px,color:#141414
-classDef ship fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ffffff
-classDef none fill:#ffffff,stroke:#b91c1c,stroke-width:2px,color:#7f1d1d,stroke-dasharray: 6 4
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none

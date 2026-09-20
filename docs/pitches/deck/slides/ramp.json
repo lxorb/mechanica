@@ -354,77 +354,32 @@
       "kind": "diagram",
       "at": "3:15",
       "title": "Why the bill is small",
-      "caption": "The manual is never in the prompt. His four dollars was four hundred thousand tokens of PDF, every single question. We read the six pages that matter.",
+      "caption": "The time he loses is the cost. The page is the product. The hours come back.",
       "flow": {
-        "w": 1380,
         "bands": [
           {
             "rows": [
               {
-                "gap": 34,
                 "items": [
+                  {
+                    "tone": "ink",
+                    "t": "Mechanic"
+                  },
                   {
                     "tone": "paper",
-                    "t": "question,|plain words"
+                    "t": "Search time"
                   },
                   {
                     "tone": "orange",
-                    "t": "router",
-                    "sub": "cheap model · 99.5% cached · $0.00013"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "spec question",
-                    "sub": "parsed spec rows + BM25 · $0 — no model call · 24 of the 150 eval queries"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "BM25 over the|PDF text layer",
-                    "sub": "$0 — in process, no embeddings, no vector DB"
-                  }
-                ]
-              },
-              {
-                "down": true,
-                "gap": 34,
-                "items": [
-                  {
-                    "tone": "white",
-                    "t": "one clear winner|→ no picker",
-                    "sub": "$0 · 85.3% of asks"
-                  },
-                  {
-                    "tone": "orange",
-                    "t": "close call|→ picker",
-                    "sub": "$0.0022 · the other 15%"
+                    "t": "Mechanica"
                   },
                   {
                     "tone": "ink",
-                    "t": "THE PRINTED PAGE",
-                    "sub": "marker on the answering lines · mean $0.00038 an ask"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "asked again|→ answer cache",
-                    "sub": "0.13 s · $0"
-                  }
-                ]
-              },
-              {
-                "down": true,
-                "gap": 34,
-                "items": [
-                  {
-                    "tone": "paper",
-                    "t": "a manual nobody|has opened yet"
+                    "t": "Manual page"
                   },
                   {
                     "tone": "orange",
-                    "t": "once, $0.0951"
-                  },
-                  {
-                    "tone": "ink",
-                    "t": "indexed forever,|shared by every shop"
+                    "t": "Hours back"
                   }
                 ]
               }

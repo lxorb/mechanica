@@ -7,14 +7,38 @@
   "angle": "Owner's manuals are free, the service manual a shop needs is metered — so we index the copy the shop already bought.",
   "endline": "Trust the manual — including the one you already paid for.",
   "marks": [
-    { "t": "0:00", "do": "The chaos. Start the PDF drop underneath it." },
-    { "t": "0:45", "do": "Order. 14,770 fetchable PDFs, 13,537 vehicles." },
-    { "t": "1:00", "do": "\"And it is still the wrong document.\" Go quiet on nine euros an hour." },
-    { "t": "1:30", "do": "He already owns it. It is a PDF in a folder." },
-    { "t": "2:15", "do": "LIVE — drop the file, then ask the service manual a question." },
-    { "t": "3:15", "do": "How it is done. Three sentences, do not read the diagram." },
-    { "t": "4:00", "do": "What the model is allowed to do." },
-    { "t": "4:15", "do": "The last mile is a folder." }
+    {
+      "t": "0:00",
+      "do": "The chaos. Start the PDF drop underneath it."
+    },
+    {
+      "t": "0:45",
+      "do": "Order. 14,770 fetchable PDFs, 13,537 vehicles."
+    },
+    {
+      "t": "1:00",
+      "do": "\"And it is still the wrong document.\" Go quiet on nine euros an hour."
+    },
+    {
+      "t": "1:30",
+      "do": "He already owns it. It is a PDF in a folder."
+    },
+    {
+      "t": "2:15",
+      "do": "LIVE — drop the file, then ask the service manual a question."
+    },
+    {
+      "t": "3:15",
+      "do": "How it is done. Three sentences, do not read the diagram."
+    },
+    {
+      "t": "4:00",
+      "do": "What the model is allowed to do."
+    },
+    {
+      "t": "4:15",
+      "do": "The last mile is a folder."
+    }
   ],
   "slides": [
     {
@@ -41,9 +65,18 @@
         "*Do not say \"53,557 manuals\"* — they are rows, and 25,357 of them are the same file under another year. Say rows, then say 14,770 distinct PDFs. The honesty is the pitch."
       ],
       "defs": [
-        { "n": "53,557", "d": "registry rows — len(registry.json), one row per (make, model, year, market, document) (measured)." },
-        { "n": "84", "d": "portals — distinct row.site (measured)." },
-        { "n": "25,357", "d": "rows naming a file another row already names — 53,557 − 28,200 distinct URLs (computed)." }
+        {
+          "n": "53,557",
+          "d": "registry rows — len(registry.json), one row per (make, model, year, market, document) (measured)."
+        },
+        {
+          "n": "84",
+          "d": "portals — distinct row.site (measured)."
+        },
+        {
+          "n": "25,357",
+          "d": "rows naming a file another row already names — 53,557 − 28,200 distinct URLs (computed)."
+        }
       ]
     },
     {
@@ -52,15 +85,42 @@
       "dense": true,
       "title": "What a portal calls a handbook",
       "line": "4,081 rows arrive typed *owner* and are a brochure, a warranty insert, or the infotainment guide — counted over *every* row, in every language and access level.",
-      "head": ["what it actually is", "rows"],
-      "align": ["l", "r"],
+      "head": [
+        "what it actually is",
+        "rows"
+      ],
+      "align": [
+        "l",
+        "r"
+      ],
       "rows": [
-        ["infotainment guide", "2,793"],
-        ["supplement", "578"],
-        ["quickstart", "479"],
-        ["spec sheet", "159"],
-        { "emph": true, "cells": ["*from Triumph's portal alone*", "*3,030*"] },
-        ["…and 17 manufacturers we walked to the end and wrote off", "CFMOTO TLS-resets from outside its region · Beta needs a VIN"]
+        [
+          "infotainment guide",
+          "2,793"
+        ],
+        [
+          "supplement",
+          "578"
+        ],
+        [
+          "quickstart",
+          "479"
+        ],
+        [
+          "spec sheet",
+          "159"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "*from Triumph's portal alone*",
+            "*3,030*"
+          ]
+        },
+        [
+          "…and 17 manufacturers we walked to the end and wrote off",
+          "CFMOTO TLS-resets from outside its region · Beta needs a VIN"
+        ]
       ],
       "note": "The free-English subset — the rows we would actually fetch — is *1,489*. *Say which one you mean.* `doctype.py` classifies 8 document kinds from the URL and title alone, never by downloading.",
       "notes": [
@@ -69,14 +129,39 @@
         "Piaggio calls the owner's manual a \"use and maintenance booklet\", so any classifier that greps *maintenance* drags every Piaggio handbook into the service bucket."
       ],
       "defs": [
-        { "n": "4,081", "d": "mislabelled rows, owner-typed — row.type=='owner' and doctype.classify_doc(url, title) != 'owner', over ALL rows in every language and access level (measured)." },
-        { "n": "1,489", "d": "mislabelled rows, free-English — the same test restricted to rows we would actually fetch. A SUBSET question (measured)." },
-        { "n": "2,793", "d": "…of which infotainment (measured)." },
-        { "n": "578", "d": "…of which supplement (measured)." },
-        { "n": "479", "d": "…of which quickstart (measured)." },
-        { "n": "159", "d": "…of which spec (measured)." },
-        { "n": "3,030", "d": "of the 4,081, the rows from Triumph's portal alone.", "src": "dropbox.md" },
-        { "n": "17", "d": "portals walked to the end and written off — docs/MANUALS.md 'Checked and genuinely unreachable' (measured)." }
+        {
+          "n": "4,081",
+          "d": "mislabelled rows, owner-typed — row.type=='owner' and doctype.classify_doc(url, title) != 'owner', over ALL rows in every language and access level (measured)."
+        },
+        {
+          "n": "1,489",
+          "d": "mislabelled rows, free-English — the same test restricted to rows we would actually fetch. A SUBSET question (measured)."
+        },
+        {
+          "n": "2,793",
+          "d": "…of which infotainment (measured)."
+        },
+        {
+          "n": "578",
+          "d": "…of which supplement (measured)."
+        },
+        {
+          "n": "479",
+          "d": "…of which quickstart (measured)."
+        },
+        {
+          "n": "159",
+          "d": "…of which spec (measured)."
+        },
+        {
+          "n": "3,030",
+          "d": "of the 4,081, the rows from Triumph's portal alone.",
+          "src": "dropbox.md"
+        },
+        {
+          "n": "17",
+          "d": "portals walked to the end and written off — docs/MANUALS.md 'Checked and genuinely unreachable' (measured)."
+        }
       ]
     },
     {
@@ -91,9 +176,18 @@
         "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual."
       ],
       "defs": [
-        { "n": "14,770", "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable rows (computed)." },
-        { "n": "13,537", "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs." },
-        { "n": "27,751", "d": "vehicles you can pick (measured)." }
+        {
+          "n": "14,770",
+          "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable rows (computed)."
+        },
+        {
+          "n": "13,537",
+          "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs."
+        },
+        {
+          "n": "27,751",
+          "d": "vehicles you can pick (measured)."
+        }
       ]
     },
     {
@@ -101,8 +195,16 @@
       "at": "1:00",
       "kicker": "And it is still the wrong document",
       "items": [
-        { "value": "182", "label": "service-manual rows in the whole registry", "sub": "167 free · 7 paid · 5 dealer-only · 3 subscription" },
-        { "value": "15", "label": "of them are not free", "sub": "BMW meters its at *EUR 9 / hour*. Triumph, *GBP 5.99 / month per bike*. Ducati, Piaggio, Moto Guzzi, Aprilia and Royal Enfield: dealers only." }
+        {
+          "value": "182",
+          "label": "service-manual rows in the whole registry",
+          "sub": "167 free · 7 paid · 5 dealer-only · 3 subscription"
+        },
+        {
+          "value": "15",
+          "label": "of them are not free",
+          "sub": "BMW meters its at *EUR 9 / hour*. Triumph, *GBP 5.99 / month per bike*. Ducati, Piaggio, Moto Guzzi, Aprilia and Royal Enfield: dealers only."
+        }
       ],
       "sub": "We fetch *zero* of those. Not because we can't — because we won't. The registry stores locations, never documents.",
       "notes": [
@@ -111,10 +213,24 @@
         "Do not say \"none of our service manuals are free\" — 182 rows, 15 of them metered."
       ],
       "defs": [
-        { "n": "182", "d": "service-manual rows — row.type=='service' in registry.json (measured)." },
-        { "n": "15", "d": "…of those, not free — {'paid': 7, 'subscription': 3, 'dealer': 5, 'free': 167} (computed)." },
-        { "n": "EUR 9 / hour", "d": "what BMW charges to read its service manual (aos.bmwgroup.com), per docs/MANUALS.md.", "src": "dropbox.md" },
-        { "n": "GBP 5.99 / month per bike", "d": "what Triumph charges for its service manual, per docs/MANUALS.md.", "src": "dropbox.md" }
+        {
+          "n": "182",
+          "d": "service-manual rows — row.type=='service' in registry.json (measured)."
+        },
+        {
+          "n": "15",
+          "d": "…of those, not free — {'paid': 7, 'subscription': 3, 'dealer': 5, 'free': 167} (computed)."
+        },
+        {
+          "n": "EUR 9 / hour",
+          "d": "what BMW charges to read its service manual (aos.bmwgroup.com), per docs/MANUALS.md.",
+          "src": "dropbox.md"
+        },
+        {
+          "n": "GBP 5.99 / month per bike",
+          "d": "what Triumph charges for its service manual, per docs/MANUALS.md.",
+          "src": "dropbox.md"
+        }
       ]
     },
     {
@@ -135,11 +251,26 @@
       "title": "Live — connect the folder",
       "line": "Before you go on: the folder is empty and `GET /api/dropbox/status` shows `counts: {}`.",
       "rows": [
-        { "do": "From the phone, drop `MV Agusta Brutale 1000 RR 2024 service manual.pdf` into the shop folder", "see": "Dropbox's own upload toast. \"That's the whole setup. It's a folder.\"" },
-        { "do": "In the app, type `brutale` → tap MV AGUSTA BRUTALE 1000 RR → 2024", "see": "the bike. \"He never told us which bike. The folder is the filing cabinet, so the file name is the metadata.\"" },
-        { "do": "Show `/api/dropbox/status` on the second screen", "see": "`state: done`, `manualId: mv-agusta-brutale-1000-rr-2024-shop`. \"Longpoll came back in about a second, we pulled it, same ingest as a KTM manual. Forty seconds, ten cents.\"" },
-        { "do": "Type `valve clearance`", "see": "the service manual's own heading, then the printed page, marker on the lines. *\"That figure is not in any owner's manual on earth. It's in his.\"*" },
-        { "do": "Tap CHAT, ask `what is the valve clearance`", "see": "every sentence ends in a [p. N] chip; tap it. \"Same rule on his document as on the factory's: it may only emit page numbers.\"" }
+        {
+          "do": "From the phone, drop `MV Agusta Brutale 1000 RR 2024 service manual.pdf` into the shop folder",
+          "see": "Dropbox's own upload toast. \"That's the whole setup. It's a folder.\""
+        },
+        {
+          "do": "In the app, type `brutale` → tap MV AGUSTA BRUTALE 1000 RR → 2024",
+          "see": "the bike. \"He never told us which bike. The folder is the filing cabinet, so the file name is the metadata.\""
+        },
+        {
+          "do": "Show `/api/dropbox/status` on the second screen",
+          "see": "`state: done`, `manualId: mv-agusta-brutale-1000-rr-2024-shop`. \"Longpoll came back in about a second, we pulled it, same ingest as a KTM manual. Forty seconds, ten cents.\""
+        },
+        {
+          "do": "Type `valve clearance`",
+          "see": "the service manual's own heading, then the printed page, marker on the lines. *\"That figure is not in any owner's manual on earth. It's in his.\"*"
+        },
+        {
+          "do": "Tap CHAT, ask `what is the valve clearance`",
+          "see": "every sentence ends in a [p. N] chip; tap it. \"Same rule on his document as on the factory's: it may only emit page numbers.\""
+        }
       ],
       "notes": [
         "*If there is no token on the day*, do the same demo through the button that is already live: on a bike with no free manual, PDF → pick the file → progress bar → the same page-exact answers. Then say, honestly: \"the folder version is in the repo, thirty-two tests green — it needs a token and I didn't want to fake one on stage.\"",
@@ -152,29 +283,47 @@
       "kind": "diagram",
       "at": "3:15",
       "title": "One poller, one webhook, one ingest",
-      "caption": "The moment the bytes are on disk it is literally the same function that ingests a factory PDF — which is why a shop's scanned manual gets the grounding guarantees and not a watered-down version of them.",
+      "caption": "The manual he already bought takes the same path as a factory PDF. A file that does not parse comes back unmatched.",
       "flow": {
         "bands": [
           {
             "rows": [
               {
-                "gap": 30,
                 "items": [
-                  { "tone": "paper", "t": "/Mechanica", "sub": "service manuals · bulletins · scans" },
-                  { "tone": "white", "t": "files/list_folder/longpoll", "sub": "notify host · auth = noauth · up to 480 s · THE CURSOR IS THE CREDENTIAL" },
-                  { "tone": "white", "t": "POST /api/dropbox/webhook", "sub": "HMAC-SHA256 of the raw body · names the account, never the file" },
-                  { "tone": "white", "t": "files/list_folder|(/continue)", "sub": "cursor · recursive · 2000/page" }
+                  {
+                    "tone": "ink",
+                    "t": "Mechanic"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Shop folder"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Webhook"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Dropbox API"
+                  }
                 ]
               },
               {
-                "down": true,
-                "gap": 30,
                 "items": [
-                  { "tone": "green", "t": "path parses to|make · model · year?", "sub": "no → state: unmatched, shown in /dropbox/status, NEVER guessed into the catalog" },
-                  { "tone": "green", "t": "%PDF magic|+ sha256 seen before?", "sub": "duplicate → state: duplicate, of the manual we already built" },
-                  { "tone": "orange", "t": "ingest.run()", "sub": "the SAME path as an OEM URL and as /ingest/upload" },
-                  { "tone": "ink", "t": "the printed page,|marked", "sub": "manualId ends -shop, so the free -om row survives underneath it" }
-                ]
+                  {
+                    "tone": "paper",
+                    "t": "Mechanica ingest"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "Blob store"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "Manual page"
+                  }
+                ],
+                "down": true
               }
             ]
           }
@@ -186,8 +335,14 @@
         "Honest gaps: cross-tenant dedupe is *not* built — the content hash is stored, the dedupe is not. And there is no per-shop tenancy boundary yet; the manual id already ends -shop precisely so the free -om row survives underneath it."
       ],
       "defs": [
-        { "n": "$0.0972", "d": "our median $ to ingest one manual — mass_report.jsonl, median over 648 real ingests, median 170 pages (measured)." },
-        { "n": "$0.00038", "d": "our $ per question after that (measured)." }
+        {
+          "n": "$0.0972",
+          "d": "our median $ to ingest one manual — mass_report.jsonl, median over 648 real ingests, median 170 pages (measured)."
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per question after that (measured)."
+        }
       ]
     },
     {
@@ -208,9 +363,18 @@
         "The registry stores *locations, not documents* — RegistryEntry has no field that could hold manual content. This path only ever ingests a document the user already holds, into the user's own index."
       ],
       "defs": [
-        { "n": "100% of 48", "d": "chat claim sentences carrying a page number (measured)." },
-        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name (measured)." },
-        { "n": "0 · 0", "d": "invented numbers · dealer referrals, of 25 answers (measured)." }
+        {
+          "n": "100% of 48",
+          "d": "chat claim sentences carrying a page number (measured)."
+        },
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name (measured)."
+        },
+        {
+          "n": "0 · 0",
+          "d": "invented numbers · dealer referrals, of 25 answers (measured)."
+        }
       ]
     },
     {
@@ -225,7 +389,10 @@
         "Two lines in existing files: one router include, one settings line. Nothing else was touched."
       ],
       "defs": [
-        { "n": "53,557", "d": "registry rows (measured). Say *rows*, never manuals." }
+        {
+          "n": "53,557",
+          "d": "registry rows (measured). Say *rows*, never manuals."
+        }
       ]
     },
     {
@@ -257,7 +424,9 @@
           ]
         }
       ],
-      "notes": ["Presenter-only. The audience sees the end card."]
+      "notes": [
+        "Presenter-only. The audience sees the end card."
+      ]
     }
   ]
 }

@@ -171,26 +171,24 @@ then answers every question about that bike forever. The 535 manuals in the depl
 ## The token path
 
 ```mermaid
-flowchart TD
-  Q["Rider question<br/>~12 tokens"] --> R["<b>Router</b> · gpt-5.6-luna<br/>3,102 tok in · <b>99.5% cached</b><br/><b>$0.000132</b>"]
-  R --> I{"intent?"}
-  I -->|"unknown · 13%"| STOP["Empty answer<br/><b>$0</b>"]
-  I -->|"spec · 16%"| SPEC["Parsed spec rows + BM25<br/>quote verified verbatim<br/><b>0 LLM calls · $0</b>"]
-  I -->|"procedure / part"| BM["<b>BM25</b> over the manual's sections<br/>in process · no embeddings · no vector DB<br/><b>$0</b>"]
-  BM --> G{"2nd hit below<br/>PICK_MARGIN?"}
-  G -->|"yes · 85% of asks"| PAGES
-  G -->|"no · 15%"| T1["<b>bear-2</b>, aggressiveness 0.3<br/>1,092 → 797 tok<br/><b>−27.0%</b>"]
-  T1 --> P["<b>Picker</b> · gpt-5.6-terra<br/>returns ids only, server-validated<br/><b>$0.00222</b>"]
-  P --> PAGES
-  SPEC --> PAGES["<b>The printed pages.</b><br/>This is the answer.<br/>Most riders stop here."]
-  PAGES -->|"rider taps Chat"| STRIP["Strip dealer referrals<br/><b>−2.8% KTM / −5.7% BMW</b><br/>368/368 figures intact"]
-  STRIP --> T2["<b>bear-2</b>, ONE call for the whole prompt<br/>PAGE-N fences · 60 req/min limit<br/>46,501 → 31,977 tok · <b>−31.2%</b>"]
-  T2 --> F{"every PAGE fence<br/>survived?"}
-  F -->|"no"| RAW["Throw the compression away.<br/>Use the original text.<br/>Pay full price, stay correct."]
-  F -->|"yes"| CHAT
-  RAW --> CHAT["<b>Chat</b> · gpt-5.6-terra<br/>2,314 tok in · 42.7% cached<br/>emits <b>&#91;p. N&#93;</b> only<br/><b>$0.00420</b>"]
-  CHAT --> CITE["<b>Server</b> slices every quote<br/>out of the <b>ORIGINAL</b> page.<br/>43/43 verbatim · 0 invented numbers"]
-  CITE --> CACHE["Answer cache<br/>repeat = <b>$0</b>, 0.2–0.4 s"]
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> QN("Question"):::ours --> BM("BM25 pages"):::ours --> BEAR("bear-2 compression"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    CACHE("Prompt cache"):::them --> TERRA("gpt-5.6-terra"):::them --> CITE("Cited answer"):::ours --> PAGE("Manual page"):::ends
+  end
+
+  R1 --> R2
+
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
 ```
 
 **The one line to say over this diagram:** *compression sits between the PDF text layer and every model

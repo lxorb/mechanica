@@ -79,61 +79,55 @@
       "kind": "diagram",
       "at": "1:00",
       "title": "Four functions, one book",
-      "caption": "Deepgram calls our API. The manual's text never enters the browser, and the manual id rides in the endpoint's query string — not in the model's arguments.",
+      "caption": "One socket — listen, think, speak. The agent's whole vocabulary is our four grounded tools, and the manual's text never enters the tab.",
       "flow": {
         "bands": [
           {
             "rows": [
               {
-                "gap": 32,
                 "items": [
                   {
+                    "tone": "ink",
+                    "t": "Mechanic"
+                  },
+                  {
                     "tone": "paper",
-                    "t": "mic · AudioWorklet",
-                    "sub": "24 kHz linear16 · 1,024-sample frames"
+                    "t": "Mic"
                   },
                   {
-                    "tone": "white",
-                    "t": "Cloudflare Worker",
-                    "sub": "/ws/deepgram/agent · HOLDS THE KEY · a browser WebSocket cannot set headers"
+                    "tone": "orange",
+                    "t": "Voice Agent API"
                   },
                   {
-                    "tone": "green",
-                    "t": "listen · flux-general-en v2",
-                    "sub": "end of turn decided inside the model · eager EOT 0.4 · keyterms built per manual"
+                    "tone": "orange",
+                    "t": "Flux STT"
                   },
                   {
-                    "tone": "green",
-                    "t": "think · open_ai",
-                    "sub": "prompt and tools built by OUR server, per manual"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "speak · aura-2-asteria-en",
-                    "sub": "\"clear, confident, knowledgeable\""
+                    "tone": "orange",
+                    "t": "OpenAI think"
                   }
                 ]
               },
               {
-                "down": true,
-                "gap": 32,
                 "items": [
                   {
                     "tone": "orange",
-                    "t": "our API · /voice/tools/*",
-                    "sub": "find_procedure · read_page · get_spec · list_parts — the agent's entire vocabulary"
+                    "t": "Function calls"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "Mechanica tools"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Aura-2 TTS"
                   },
                   {
                     "tone": "ink",
-                    "t": "the manufacturer's PDF|+ its page index",
-                    "sub": "the manual's own words, and the page they are printed on"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "the reader",
-                    "sub": "the page number in the agent's own transcript moves it — same millisecond as the first byte of audio"
+                    "t": "Manual page"
                   }
-                ]
+                ],
+                "down": true
               }
             ]
           }

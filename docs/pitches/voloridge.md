@@ -120,38 +120,29 @@ The manual knows the rule. It has no idea whether it applies to you. **NOAA does
 > **Feel:** this is a real data system, not a notebook.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
 flowchart TB
-  subgraph noisy["the noisy half — 84 OEM publisher hosts"]
-    P["34 adapters · 84 hosts"] --> R["registry: 53,557 rows<br/>28,200 distinct URLs"]
-    R -->|"docKind from url+title<br/>8 kinds, no download"| C{"is it a handbook?"}
-    C -->|brochure / warranty / flyer| X["rejected, reason logged"]
-    C -->|handbook| H["SHA-256 dedupe<br/>498 hashes · 24 dupes caught"]
+  subgraph R1[" "]
+    direction LR
+    MAN("Manuals"):::ours ~~~ ISD("NOAA ISD"):::them ~~~ AQ("OpenAQ"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    RULE("Rule extractor"):::ours ~~~ CLIM("Climatology"):::them
+  end
+  subgraph R3[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> FIT("Fit verdict"):::ours --> PAGE("Manual page"):::ends
   end
 
-  H --> ING["ingest: PyMuPDF text layer<br/>+ per-block coords"]
-  ING --> GR["grounding gate<br/>quote must exist in the page"]
-  GR --> CORP["535 manuals · 95,914 pages<br/>137,379 specs · 431,292 highlights"]
+  R1 --> R2 --> R3
 
-  subgraph rb["rule extraction — the new dataset"]
-    CORP --> A["Pass A: deterministic regex<br/>8 rule types, zero cost"]
-    A --> B["Pass B: one cheap structured call<br/>per candidate window (~$0.90 total)"]
-    B --> G2["Pass C: same grounding gate<br/>drop any ungrounded threshold"]
-    G2 --> RULES["ClimateRule[]<br/>per manual, per page"]
-  end
-
-  subgraph ext["curated public datasets"]
-    ISD["NOAA ISD · s3://noaa-isd-pds<br/>~600 GB · 29,661 stations"] -->|"stream .gz,<br/>chars 88–92, drop quality 2/3/6/7/9"| RED["reduce in-stream"]
-    RED --> CLIM["climatology.json<br/>12,776 active stations · ~4 MB"]
-    AQ["OpenAQ · s3://openaq-data-archive<br/>hive: locationid/year/month"] --> AIR["air.json<br/>pm10 p90 · dusty days"]
-    CLIM -->|"haversine ≤ 25 km"| AIR
-  end
-
-  RULES --> FIT{"/climate/fit<br/>0 tokens · ~30 ms"}
-  CLIM --> FIT
-  AIR --> FIT
-  LOC["user lat/lon → nearest station<br/>haversine over 12,776"] --> FIT
-  FIT --> UI["Conditions strip →<br/>the manual's own page, highlighted"]
-  RULES --> AN["anomalies.json<br/>cross-OEM · model-year drift"]
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
+  style R3 fill:none,stroke:none
 ```
 
 Three things worth a sentence each:

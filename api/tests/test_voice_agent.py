@@ -349,6 +349,29 @@ def test_show_page_is_client_side_so_the_browser_moves_the_reader(agent):
     assert show["parameters"]["properties"]["page"]["type"] == "integer"
 
 
+def test_show_page_carries_the_highlight_and_the_printed_steps(agent):
+    """The browser never sees a tool result - Deepgram fetches the manual's text, not the tab.
+
+    So the only way the manual's printed steps can be WRITTEN on the mechanic's screen is if the
+    agent hands them over in the call that turns the page. Both are optional; the page is not.
+    """
+    props = by_name(agent)["show_page"]["parameters"]["properties"]
+    assert props["highlight"]["type"] == "string"
+    assert props["steps"]["type"] == "array"
+    assert props["steps"]["items"]["type"] == "string"
+    assert "word for word" in props["steps"]["description"]
+    assert "highlight" not in by_name(agent)["show_page"]["parameters"]["required"]
+    assert "steps" not in by_name(agent)["show_page"]["parameters"]["required"]
+
+
+def test_the_prompt_turns_the_page_before_it_speaks(agent):
+    """A page named after the fact is a page he has to go and find himself."""
+    prompt = agent["think"]["prompt"]
+    assert "TURN THE PAGE FOR THE MECHANIC, THEN SPEAK" in prompt
+    # and the steps licence is bounded to what a result actually printed
+    assert "Never write a step the result did not print" in prompt
+
+
 @pytest.mark.parametrize("name", [*SERVER_TOOLS, "show_page"])
 def test_every_function_is_a_usable_json_schema(agent, name):
     fn = by_name(agent)[name]

@@ -178,6 +178,10 @@ async function liveAcrossScreens(page, width, height) {
     // here is the shell it draws and the session that has to survive arriving at it.
     const bus = await import("/counter/js/bus.js");
     await import("/counter/js/screens/book.js");
+    // The reader refuses to open on nothing and bounces back to Pick: a job and a page are what
+    // it needs, and reviveJob() builds a synthetic one out of exactly these two, which is the
+    // same path a reload on #book takes. Without them this check measures Pick.
+    bus.set({ jobId: "ktm-390-duke-2024/harness", page: 85 });
     let went = "";
     const section = document.querySelector('[data-screen="book"]');
     // Pick is still settling its own chat overlay when the first go() lands, and the history
@@ -189,6 +193,7 @@ async function liveAcrossScreens(page, width, height) {
       } catch (err) {
         went = String((err && err.message) || err);
       }
+      went += ` [${tries}:${location.hash}/${section.hidden ? "hidden" : "shown"}]`;
       await new Promise((r) => setTimeout(r, 300));
     }
     await new Promise((r) => setTimeout(r, 300));
@@ -605,6 +610,88 @@ async function run() {
     }
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "workshop"));
 
+    // 4b. the column above the orb: a whole conversation, written, while it is spoken
+    const column = await page.evaluate(async () => {
+      const orb = window.__orb;
+      orb.setDock("full");
+      orb.setState("listening");
+      orb.clear();
+      orb.say("user", "how do I change the brake fluid");
+      orb.setState("thinking");
+      orb.working(true);
+      const working = Boolean(document.querySelector(".vo-working"));
+      await new Promise((r) => setTimeout(r, 200));
+      orb.setState("speaking");
+      orb.say("assistant", "Page 85, DOT four or DOT five point one.");
+      orb.say("assistant", "The manual prints the steps.", true);
+      orb.steps(85, [
+        "Park the motorcycle on a level surface.",
+        "Remove the cover of the front brake fluid reservoir.",
+        "Fill up with brake fluid to level A.",
+        "Mount the cover of the front brake fluid reservoir.",
+      ], "brake fluid DOT 4");
+      orb.setLine("Page 85, DOT four or DOT five point one.");
+      await new Promise((r) => setTimeout(r, 260));
+      const feed = document.querySelector(".vo-feed");
+      const disc = document.querySelector(".vo-orb").getBoundingClientRect();
+      const box = feed.getBoundingClientRect();
+      const turns = [...feed.querySelectorAll(".vo-turn")];
+      const lis = [...feed.querySelectorAll(".vo-steps li")].map((li) => li.textContent);
+      let jumped = 0;
+      window.addEventListener("mechanica:voice-page-test", () => {});
+      return {
+        workingShown: working,
+        workingGone: !document.querySelector(".vo-working"),
+        turns: turns.length,
+        user: turns.filter((t) => t.classList.contains("is-user")).length,
+        agent: turns.filter((t) => t.classList.contains("is-agent")).length,
+        // Two sentences of one breath are one turn, not two.
+        joined: turns[1] && turns[1].querySelector(".vo-said").textContent,
+        steps: lis.length,
+        verbatim: lis[2],
+        chip: (feed.querySelector(".vo-page") || {}).textContent || "",
+        aboveOrb: Math.round(box.bottom) <= Math.round(disc.top),
+        where: [Math.round(box.top), Math.round(box.bottom), Math.round(disc.top)],
+        inside: box.left >= 0 && box.right <= window.innerWidth + 1 && box.top >= 0,
+        scrolls: getComputedStyle(feed).overflowY,
+        newestLast: turns[turns.length - 1].classList.contains("is-agent"),
+        jumped,
+      };
+    });
+    say(column.workingShown && column.workingGone, "a lookup shows one quiet line, and the answer replaces it");
+    say(column.turns === 2 && column.user === 1 && column.agent === 1,
+      `his words and the answer are two turns (${column.user} + ${column.agent})`);
+    say(/DOT four or DOT five point one\. The manual prints the steps\./.test(column.joined || ""),
+      "two sentences of one breath are one turn");
+    say(column.steps === 4, `the manual's steps are a numbered list (${column.steps})`);
+    say(column.verbatim === "Fill up with brake fluid to level A.", `printed word for word (${column.verbatim})`);
+    say(/^p\. 85/.test(column.chip), `and the page chip follows the block (${column.chip})`);
+    say(column.aboveOrb, `the column sits above the orb ${JSON.stringify(column.where)}`);
+    say(column.inside && column.scrolls === "auto", `it is inside the screen and scrolls (${column.scrolls})`);
+    say(column.newestLast, "newest at the bottom, nearest the orb");
+    await page.screenshot({ path: join(SHOTS, `column-${label}.png`) });
+
+    const folded = await page.evaluate(async () => {
+      window.__orb.setDock("compact");
+      await new Promise((r) => setTimeout(r, 320));
+      const feed = document.querySelector(".vo-feed");
+      const line = document.querySelector(".vo-line");
+      return {
+        feedGone: getComputedStyle(feed).opacity === "0",
+        lineOn: getComputedStyle(line).opacity === "1",
+        text: line.textContent,
+      };
+    });
+    say(folded.feedGone && folded.lineOn, "docked, the column folds to the last answer");
+    say(/Page 85/.test(folded.text), `and that is what it says (${folded.text})`);
+    await page.screenshot({ path: join(SHOTS, `folded-${label}.png`) });
+    const unfolded = await page.evaluate(async () => {
+      document.querySelector(".vo-line").click();
+      await new Promise((r) => setTimeout(r, 320));
+      return !window.__orb.isCompact();
+    });
+    say(unfolded, "and tapping it opens the column again");
+
     // Everything above drove a hand-mounted orb with no socket behind it, because motion and
     // colour are worth measuring on their own. Take it away before the real session starts, so
     // "how many orbs are on this page" keeps having an answer.
@@ -617,7 +704,7 @@ async function run() {
     const across = await liveAcrossScreens(page, width, height);
     say(across.host === 1, `a session makes exactly one fixed host (${across.host})`);
     say(across.startedFull, "opened from the chat it is full screen");
-    say(across.shown, `the reader is on screen${across.went ? ` (${across.went})` : ""}`);
+    say(across.shown, `the reader is on screen${across.shown ? "" : ` (${across.went})`}`);
     say(across.dockedOnBook, "and the moment the manual is up it docks itself");
     say(across.stillLive, "the session survived the screen change");
     say(across.turned === 85, `the answer turned the reader to the page it named (p. ${across.turned})`);

@@ -646,6 +646,12 @@ export function mountChat(host, opts = {}) {
       transcribe(d.role, d.text, d.part);
       return;
     }
+    if (d.kind === "steps") {
+      // One conversation, not two: the steps the orb wrote above itself are the same steps that
+      // are here when he closes voice mode, in the manual's own order and wording.
+      transcribe("assistant", d.steps.map((s, i) => `${i + 1}. ${s}`).join("\n"), true);
+      return;
+    }
     if (d.kind === "page") {
       // The reader is not the screen on show, so getting to the page is a navigation and this is
       // the only module that knows the way. (When it IS on show the session skips this entirely.)

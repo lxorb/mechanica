@@ -402,71 +402,51 @@
       "kind": "diagram",
       "at": "3:05",
       "title": "The token path",
-      "caption": "Compression sits between the PDF text layer and every model call — and it is a cost lever, never a correctness lever. The worst case is that we pay full price for a correct answer.",
+      "caption": "Three orange boxes are the whole bill, and bear-2 is the first of them — a cost lever between the pages and the model, never a correctness lever.",
       "flow": {
         "bands": [
           {
             "rows": [
               {
-                "gap": 30,
                 "items": [
                   {
+                    "tone": "ink",
+                    "t": "Mechanic"
+                  },
+                  {
                     "tone": "paper",
-                    "t": "Rider question",
-                    "sub": "~12 tokens"
+                    "t": "Question"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "BM25 pages"
                   },
                   {
                     "tone": "orange",
-                    "t": "Router",
-                    "sub": "3,102 tok in · 99.5% cached · $0.000132"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "spec · 16%",
-                    "sub": "parsed spec rows + BM25, quote verified verbatim · 0 LLM calls · $0"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "BM25 over the|manual's sections",
-                    "sub": "in process · no embeddings · no vector DB · $0"
-                  },
-                  {
-                    "tone": "ink",
-                    "t": "THE PRINTED PAGES",
-                    "sub": "this is the answer. Most riders stop here — 85% of asks never pay for a picker"
+                    "t": "bear-2 compression"
                   }
                 ]
               },
               {
-                "down": true,
-                "gap": 30,
                 "items": [
                   {
-                    "tone": "white",
-                    "t": "Strip dealer referrals",
-                    "sub": "−2.8% KTM / −5.7% BMW · 368/368 figures intact"
-                  },
-                  {
-                    "tone": "yellow",
-                    "t": "one compression call|for the whole prompt",
-                    "sub": "PAGE-N fences · 46,501 → 31,977 tok · −31.2%"
-                  },
-                  {
-                    "tone": "green",
-                    "t": "every PAGE fence|survived?",
-                    "sub": "no → throw the compression away, use the original text, pay full price, stay correct"
+                    "tone": "orange",
+                    "t": "Prompt cache"
                   },
                   {
                     "tone": "orange",
-                    "t": "Chat",
-                    "sub": "2,314 tok in · 42.7% cached · emits [p. N] only · $0.00420"
+                    "t": "gpt-5.6-terra"
                   },
                   {
-                    "tone": "green",
-                    "t": "the SERVER slices every|quote out of the ORIGINAL page",
-                    "sub": "43/43 verbatim · 0 invented numbers"
+                    "tone": "paper",
+                    "t": "Cited answer"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "Manual page"
                   }
-                ]
+                ],
+                "down": true
               }
             ]
           }

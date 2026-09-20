@@ -10,9 +10,8 @@ one of them is followed by a line of our code that can throw its answer away.* T
 the hard part, a deterministic verifier standing behind it — is the architecture, and it is why a liable
 mechanic can use it.
 
-Diagrams: [`openai/architecture.png`](openai/architecture.png) · [`.svg`](openai/architecture.svg) ·
-[`openai/not-a-wrapper.png`](openai/not-a-wrapper.png) · [`.svg`](openai/not-a-wrapper.svg)
-(sources `.mmd` beside them, rendered with `@mermaid-js/mermaid-cli@11`).
+Diagram: [`openai/architecture.png`](openai/architecture.png) · [`.svg`](openai/architecture.svg)
+(source `openai/architecture.mmd`, rendered by `docs/pitches/deck/mermaid.mjs`).
 
 ---
 
@@ -81,71 +80,24 @@ say which — and the answer is a PDF page instead of a paragraph.**
 ![architecture](openai/architecture.png)
 
 ```mermaid
-flowchart LR
-    LG1["ORANGE = an OpenAI API call<br/>all of them through app/llm.py"]:::ai
-    LG2["GREY = our deterministic backend<br/>no model, no tokens"]:::det
-    LG3["GREEN = the guardrail that<br/>verifies what the model said"]:::guard
-    LG4["BLACK = what the mechanic<br/>actually gets"]:::ship
-    LG1 ~~~ LG2 ~~~ LG3 ~~~ LG4
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> VIS("Vision"):::them --> LUNA("gpt-5.6-luna"):::them --> BM("BM25 index"):::ours --> TERRA("gpt-5.6-terra"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    SO("Structured Outputs"):::them --> GATE("Grounding gate"):::ours --> PAGE("Manual page"):::ends --> RESP("Responses API"):::them
+  end
 
-    S1["PHOTO of the bike"]:::ui
-    S2["VIN"]:::ui
-    D0["400 catalog names —<br/>half cars, half bikes —<br/>injected into the prompt"]:::det
-    A1["<b>identify.photo</b> · VISION<br/>gpt-5.6-luna · strict json_schema<br/>make · model · generation · kind<br/>cues · alternatives<br/><b>$0.00053 per photo</b>"]:::ai
-    G1["match back to a real catalog row,<br/>floor 0.80 · kind-locked<br/><b>a bike we hold no manual for<br/>cannot win</b>"]:::guard
-    D1["NHTSA vPIC decode<br/><b>zero LLM</b>"]:::det
-    R1["THE EXACT BIKE"]:::ship
-    S1 --> D0 --> A1 --> G1 --> R1
-    S2 --> D1 --> R1
+  R1 --> R2
 
-    S3["A BIKE NOBODY<br/>HAS ASKED FOR YET"]:::ui
-    D2["OEM PDF from the registry<br/>PyMuPDF text layer<br/>+ per-block coordinates<br/><b>zero LLM</b>"]:::det
-    A2["<b>ingest.struct</b><br/>gpt-5.6-luna · strict json_schema<br/>5-page windows · 32 parallel workers<br/>units · specs · parts · verbatim quotes<br/><b>47% of 70.4M input tokens<br/>served from the prompt cache</b>"]:::ai
-    A3["<b>ingest.keywords</b><br/>gpt-5.6-luna · strict json_schema<br/>the slang a rider would actually say<br/>for every printed heading"]:::ai
-    G2["<b>ground.py</b> — every quote is searched<br/>for in the PDF text layer.<br/><b>Not found = DROPPED.</b>"]:::guard
-    R2["A SEARCHABLE MANUAL<br/>readable in 1.3 s · indexed in 40 s<br/><b>$0.095, once, forever</b>"]:::ship
-    S3 --> D2 --> A2 --> G2 --> R2
-    D2 --> A3 --> R2
-
-    S4["ONE SENTENCE<br/>typed or spoken:<br/>chain is baggy"]:::ui
-    A4["<b>ask.router</b><br/>gpt-5.6-luna · strict json_schema<br/>intent · components · queries · specName<br/>slang, typos, DE/ES/FR to manual English<br/><b>99.5% prompt-cache hit · $0.00013</b>"]:::ai
-    D4["<b>SPEC PATH — ZERO LLM</b><br/>parsed spec rows, each checked<br/>verbatim against its page<br/><b>$0.00013 · 1.5 s · no second call</b>"]:::det
-    D3["BM25 over the manual's own<br/>printed headings · 6 candidates<br/><b>zero LLM</b>"]:::det
-    A5["<b>ask.picker</b><br/>gpt-5.6-terra · strict json_schema<br/><b>RETURNS PAGE IDs ONLY —<br/>never a word of prose</b>"]:::ai
-    G3["id allowlist: an id that was not in<br/>the candidate list is dropped.<br/><b>A hallucinated section<br/>never reaches the screen.</b>"]:::guard
-    R3["THE OEM PAGE, LINES MARKED<br/>top-1 100% of 150 queries<br/><b>p95 3.33 s · $0.00038</b>"]:::ship
-    S4 --> A4
-    A4 -- "intent = spec" --> D4 --> R3
-    A4 -- "else" --> D3
-    D3 -- "top-2 margin decisive:<br/>skip the model entirely" --> R3
-    D3 -- "ambiguous" --> A5 --> G3 --> R3
-
-    D5["at most 6 printed pages<br/>dealer boilerplate stripped<br/>one bear-2 compression call, -31%"]:::det
-    A6["<b>chat.answer</b><br/>gpt-5.6-terra · <b>RESPONSES API STREAMING</b><br/>prompt_cache_key pinned per route+model<br/>the model may only emit [p. N]<br/><b>43% cached · first token p50 2.6 s</b>"]:::ai
-    G4["the MODEL names a page,<br/>the SERVER slices the quote out of<br/>the ORIGINAL page text.<br/><b>100% of 43 citations verbatim</b>"]:::guard
-    G5["every digit must be printed on a page<br/>it was given<br/><b>0 invented numbers in 25 answers</b>"]:::guard
-    R4["EVERY SENTENCE CARRIES A [p. N]<br/>CHIP that jumps to that page"]:::ship
-    D3 --> D5 --> A6 --> G4 --> G5 --> R4
-
-    S5["TAPS A PART"]:::ui
-    D6["query from what the manual PRINTED:<br/>OEM number, else printed spec,<br/>+ make/model/year · <b>zero LLM</b>"]:::det
-    A7["<b>offers</b> · gpt-5.6-terra<br/><b>BUILT-IN web_search TOOL</b><br/>context low · max_tool_calls 2"]:::ai
-    G6["a price no regex finds in the model's own<br/>text never ships; every URL is HEAD-fetched;<br/>FX done in Python"]:::guard
-    R5["EXACT-FIT PARTS, LIVE PRICES"]:::ship
-    S5 --> D6 --> A7 --> G6 --> R5
-
-    S6["BUILD TIME"]:::ui
-    A8["<b>gpt-image-1</b><br/>97 part illustrations + the logo<br/>one style prompt, one camera<br/><b>$0.042 each</b>"]:::ai
-    A9["<b>images.score</b> · <b>VISION AS A JUDGE</b><br/>strict rubric grades every catalog photo<br/><b>7,561 calls · $3.60</b>"]:::ai
-    R6["THE ART IN THE APP"]:::ship
-    S6 --> A8 --> R6
-    S6 --> A9 --> R6
-
-    classDef ai fill:#e85d04,stroke:#5c2200,stroke-width:3px,color:#ffffff
-    classDef guard fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#053e2c
-    classDef det fill:#eef2f7,stroke:#475569,stroke-width:2px,color:#0f172a
-    classDef ui fill:#ffffff,stroke:#8a8177,stroke-width:2px,color:#141414
-    classDef ship fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ffffff
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
 ```
 
 ### Read it left to right, five times
@@ -163,9 +115,7 @@ flowchart LR
 5. **Ingest is a different clock.** $0.095 once per manual, then every question on that manual forever is
    four hundredths of a cent.
 
-### Second diagram — the "not a wrapper" argument
-
-![not a wrapper](openai/not-a-wrapper.png)
+### The "not a wrapper" argument — say it over the same diagram
 
 | | |
 |---|---|
@@ -290,15 +240,14 @@ Do these in order. Every one is verified live on 2026-09-20. Do not improvise a 
 it; 23,140 motorcycles". BMW R 12 G/S is shaft drive, so never ask it a chain question. If the network dies, keep
 going: the service worker serves the shell and any page already opened.
 
-### Slide outline (6 slides, no more)
+### Slide outline (5 slides, no more)
 
 1. **The mechanic.** One photo, one number: *400 hours a year looking for a page.* And: *$4 a question.*
-2. **The flowchart.** `openai/architecture.png`, full bleed. You talk for 90 seconds over this one slide.
+2. **The flowchart.** `openai/architecture.png`, full bleed. You talk for 90 seconds over this one slide — the "not a wrapper" argument is spoken here, not given a second chart.
 3. **The capability table.** The 10 rows of §1, trimmed to: capability · route · measured number.
-4. **Not a wrapper.** `openai/not-a-wrapper.png`.
-5. **Codex.** The failing test, the FLOOR line, and the one-line diagnosis. Plus the honest "it tried to
+4. **Codex.** The failing test, the FLOOR line, and the one-line diagnosis. Plus the honest "it tried to
    swap my queries" line.
-6. **The ledger.** $0.095 / $0.0004 / $12.40 · 100% top-1 · 100% valid citations · 0 invented numbers.
+5. **The ledger.** $0.095 / $0.0004 / $12.40 · 100% top-1 · 100% valid citations · 0 invented numbers.
    Then the URL. (No running total on the slide — the live ledger moves every hour.)
 
 ---

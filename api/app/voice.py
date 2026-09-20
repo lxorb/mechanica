@@ -571,7 +571,14 @@ YOUR FUNCTIONS
   ran out or the page you want is a different one.
 - get_spec(name): the printed figures - torques, capacities, pressures, clearances, intervals.
 - list_parts(sectionId): the parts this manual names, with the page they are printed on.
-- show_page(page): put a page on the rider's screen. Call it whenever you name a page worth reading."""
+- show_page(page, highlight, steps): TURN THE PAGE FOR THE MECHANIC, THEN SPEAK. Call it before
+  you say the page number, every single time you are about to name one, so the sheet is already
+  in front of him while he hears about it. `highlight` is the few printed words it is about.
+  `steps` is for a procedure and only for a procedure: copy the manual's steps out of the result
+  word for word, one step per entry, in the manual's own order, and they are written under your
+  answer on his screen - which is the only way he can read them, because your own sentence is
+  gone the moment you have said it. Never write a step the result did not print, never renumber
+  them, never tidy the wording, and still say your one sentence out loud afterwards."""
 
 
 def _endpoint(name: str, manual_id: str) -> dict:
@@ -637,12 +644,34 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
             "endpoint": _endpoint("list_parts", manual_id),
         },
         {
-            # No endpoint: this one comes back to the browser as client_side true and moves the reader.
+            # No endpoint: this one comes back to the browser as client_side true and moves the
+            # reader. `steps` and `highlight` ride with the page because the browser never sees a
+            # tool result - Deepgram fetches the manual's text, not the tab - so the only way the
+            # printed lines can be WRITTEN on his screen is if the agent hands them over here,
+            # word for word, in the same call that turns the page.
             "name": "show_page",
-            "description": "Open a printed page of this manual on the rider's screen.",
+            "description": (
+                "Turn the rider's screen to a printed page of this manual, and optionally write the "
+                "manual's own steps under your answer. Call this BEFORE you speak, every time you are "
+                "about to name a page: he should be looking at it while he hears about it."
+            ),
             "parameters": {
                 "type": "object",
-                "properties": {"page": {"type": "integer", "description": f"Printed page number, 1 to {pages}."}},
+                "properties": {
+                    "page": {"type": "integer", "description": f"Printed page number, 1 to {pages}."},
+                    "highlight": {
+                        "type": "string",
+                        "description": "The few words on that page this is about, copied from the printed text.",
+                    },
+                    "steps": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": (
+                            "The procedure's steps copied from the printed text word for word, one step per "
+                            "entry, in the manual's own order. Only when a result printed steps."
+                        ),
+                    },
+                },
                 "required": ["page"],
             },
         },

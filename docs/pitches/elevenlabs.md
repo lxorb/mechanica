@@ -92,49 +92,24 @@ after the turn ends. One field, and it is the difference between a voice assista
 ### The flowchart
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
 flowchart TB
-  subgraph shop["the workshop"]
-    M["mechanic<br/>dirty hands, engine running"]
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> PHOT("Photo"):::ours --> AP("Agents Platform"):::them --> ST("Server tools"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    API("Mechanica API"):::ours --> SHOW("Client tool show_page"):::them --> PAGE("Manual page"):::ends
   end
 
-  subgraph tab["the browser tab"]
-    JS["voice-elevenlabs.js<br/>@elevenlabs/client"]
-    RD["the reader<br/>PDF page + orange line marks"]
-    CAM["camera<br/>photo of a part"]
-  end
+  R1 --> R2
 
-  subgraph el["ElevenLabs Agents Platform"]
-    ASR["Scribe v2 realtime<br/>~150 ms partials"]
-    LLM["agent LLM · temperature 0<br/>5 tools, 0 free answers"]
-    TTS["eleven_flash_v2_5<br/>~75 ms to first audio"]
-  end
-
-  subgraph api["mechanica.emilvinu.ch/api"]
-    SESS["GET /voice/elevenlabs/session<br/>WebRTC token + dynamic variables"]
-    T1["POST …/tools/find_procedure"]
-    T2["POST …/tools/read_page"]
-    T3["POST …/tools/get_spec"]
-    T4["POST …/tools/list_parts"]
-    IDP["POST /identify/part"]
-    PDF[("the OEM PDF<br/>+ its index")]
-  end
-
-  M -- "speaks" --> JS
-  JS -- "1. credential, never the key" --> SESS
-  JS == "audio (WebRTC)" ==> ASR --> LLM
-  LLM == "audio" ==> TTS == "audio" ==> M
-
-  LLM -. "server tools — ElevenLabs calls the API directly,<br/>the manual's text never enters the tab" .-> T1 & T2 & T3 & T4
-  T1 & T2 & T3 & T4 --> PDF
-  PDF -- "printed words + the page they are on" --> LLM
-
-  LLM -- "client tool show_page(n)<br/>execution_mode: immediate" --> JS --> RD
-  CAM --> IDP -- "labels" --> JS -- "sendContextualUpdate" --> LLM
-
-  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:2px,color:#141414
-  classDef them fill:#141414,stroke:#141414,color:#ece7dc
-  class SESS,T1,T2,T3,T4,IDP,PDF,JS,RD ours
-  class ASR,LLM,TTS them
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
 ```
 
 Read it once on camera as: **everything black is ElevenLabs, everything cream is ours, and every arrow into

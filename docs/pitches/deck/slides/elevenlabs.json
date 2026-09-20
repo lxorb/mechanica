@@ -7,16 +7,46 @@
   "angle": "Agentic depth, latency, multimodal. Four server tools are the agent's only route to a fact, and a fifth turns the page while it is still speaking. Built — one key away.",
   "endline": "He gets the page. He stays liable, and he stays right.",
   "marks": [
-    { "t": "0:00", "do": "The workshop. The bike on the lift, the phone face down." },
-    { "t": "0:18", "do": "Open the KTM. Tap VOICE. \"Nothing is loaded until I press that button.\"" },
-    { "t": "1:05", "do": "\"How much engine oil does it take?\" — watch the page turn mid-sentence." },
-    { "t": "1:35", "do": "\"Walk me through changing the oil filter.\" It is reading the book out loud." },
-    { "t": "2:05", "do": "\"What's the valve clearance?\" — the refusal. THE moment." },
-    { "t": "2:30", "do": "Hold a chain to the camera. Contextual update, not an answer." },
-    { "t": "3:05", "do": "\"Und wie viel Öl?\" — its own words translate, the manual's do not." },
-    { "t": "3:30", "do": "Latency: theirs published, ours measured. Say which is which." },
-    { "t": "4:35", "do": "One policy, two engines — the test that fails if they drift." },
-    { "t": "4:50", "do": "Back to the bike. Close." }
+    {
+      "t": "0:00",
+      "do": "The workshop. The bike on the lift, the phone face down."
+    },
+    {
+      "t": "0:18",
+      "do": "Open the KTM. Tap VOICE. \"Nothing is loaded until I press that button.\""
+    },
+    {
+      "t": "1:05",
+      "do": "\"How much engine oil does it take?\" — watch the page turn mid-sentence."
+    },
+    {
+      "t": "1:35",
+      "do": "\"Walk me through changing the oil filter.\" It is reading the book out loud."
+    },
+    {
+      "t": "2:05",
+      "do": "\"What's the valve clearance?\" — the refusal. THE moment."
+    },
+    {
+      "t": "2:30",
+      "do": "Hold a chain to the camera. Contextual update, not an answer."
+    },
+    {
+      "t": "3:05",
+      "do": "\"Und wie viel Öl?\" — its own words translate, the manual's do not."
+    },
+    {
+      "t": "3:30",
+      "do": "Latency: theirs published, ours measured. Say which is which."
+    },
+    {
+      "t": "4:35",
+      "do": "One policy, two engines — the test that fails if they drift."
+    },
+    {
+      "t": "4:50",
+      "do": "Back to the bike. Close."
+    }
   ],
   "slides": [
     {
@@ -31,7 +61,11 @@
         "Do not imply any of §2 has run. elevenlabs/chat-ui.patch is *not applied*."
       ],
       "defs": [
-        { "n": "29 tests", "d": "api/tests/test_voice_elevenlabs.py, ElevenLabs HTTP mocked. 617 passed / 20 skipped across api/tests.", "src": "elevenlabs.md" }
+        {
+          "n": "29 tests",
+          "d": "api/tests/test_voice_elevenlabs.py, ElevenLabs HTTP mocked. 617 passed / 20 skipped across api/tests.",
+          "src": "elevenlabs.md"
+        }
       ]
     },
     {
@@ -49,31 +83,48 @@
     {
       "kind": "diagram",
       "at": "1:00",
-      "title": "Everything black is theirs. Every arrow into the model comes out of a PDF.",
-      "caption": "ElevenLabs calls our API directly, so the manual's text never passes through the browser and cannot be edited on the way. One client tool, and it doesn't speak — it turns the page.",
+      "title": "Everything orange is theirs. Every arrow into the model comes out of a PDF.",
+      "caption": "Server tools are called by ElevenLabs, not by the tab. The one client tool turns the page.",
       "flow": {
         "bands": [
           {
             "rows": [
               {
-                "gap": 32,
                 "items": [
-                  { "tone": "paper", "t": "mechanic", "sub": "dirty hands, engine running" },
-                  { "tone": "white", "t": "voice-elevenlabs.js", "sub": "@elevenlabs/client · WebRTC, because a workshop's wifi is the worst network in the building" },
-                  { "tone": "ink", "t": "Scribe v2 realtime", "sub": "~150 ms partials — THEIR published figure" },
-                  { "tone": "ink", "t": "agent LLM", "sub": "temperature 0 · 5 tools · 0 free answers" },
-                  { "tone": "ink", "t": "eleven_flash_v2_5", "sub": "~75 ms to first audio — THEIR published figure" }
+                  {
+                    "tone": "ink",
+                    "t": "Mechanic"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "Photo"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Agents Platform"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Server tools"
+                  }
                 ]
               },
               {
-                "down": true,
-                "gap": 32,
                 "items": [
-                  { "tone": "orange", "t": "server tools", "sub": "find_procedure · read_page · get_spec · list_parts — ElevenLabs calls our API directly" },
-                  { "tone": "ink", "t": "the OEM PDF|+ its index", "sub": "printed words, and the page they are on" },
-                  { "tone": "green", "t": "show_page(n)|execution_mode: immediate", "sub": "the reader moves DURING the sentence that names the page" },
-                  { "tone": "white", "t": "camera → /identify/part", "sub": "labels enter as a contextual update — context, never an answer" }
-                ]
+                  {
+                    "tone": "paper",
+                    "t": "Mechanica API"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Client tool show_page"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "Manual page"
+                  }
+                ],
+                "down": true
               }
             ]
           }
@@ -96,8 +147,14 @@
         "The same four tools already serve the typed chat path, which is evaluated: 100% of 43 quotes verbatim, 0 invented numbers, 0 dealer referrals over 25 questions."
       ],
       "defs": [
-        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name — api/eval/chat-report.md (measured)." },
-        { "n": "0 · 0", "d": "invented numbers · dealer referrals, of 25 answers (measured)." }
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name — api/eval/chat-report.md (measured)."
+        },
+        {
+          "n": "0 · 0",
+          "d": "invented numbers · dealer referrals, of 25 answers (measured)."
+        }
       ]
     },
     {
@@ -112,8 +169,14 @@
         "Why not their knowledge base / RAG: a RAG answer is a paraphrase with a citation stapled on, and this mechanic is liable for the number. Also — 14,770 distinct free English PDFs. Uploading them into a knowledge base is a copy we have no right to make."
       ],
       "defs": [
-        { "n": "14,770", "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable registry rows (computed)." },
-        { "n": "27,751", "d": "vehicles you can pick — rows in live GET /api/catalog (measured)." }
+        {
+          "n": "14,770",
+          "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable registry rows (computed)."
+        },
+        {
+          "n": "27,751",
+          "d": "vehicles you can pick — rows in live GET /api/catalog (measured)."
+        }
       ]
     },
     {
@@ -121,9 +184,21 @@
       "at": "3:30",
       "kicker": "Latency — say which half is whose",
       "items": [
-        { "value": "~150 ms", "label": "to a partial transcript", "sub": "Scribe v2 realtime — *their published figure, not ours*" },
-        { "value": "~75 ms", "label": "to the first byte of audio", "sub": "eleven_flash_v2_5 — *their published figure, not ours*" },
-        { "value": "2.08 s", "label": "our comparable live engine, end of speech → first audio", "sub": "*measured*: 5 spec turns, 4 sessions, range 1.73–4.01 s. A procedure question is 9.9 s." }
+        {
+          "value": "~150 ms",
+          "label": "to a partial transcript",
+          "sub": "Scribe v2 realtime — *their published figure, not ours*"
+        },
+        {
+          "value": "~75 ms",
+          "label": "to the first byte of audio",
+          "sub": "eleven_flash_v2_5 — *their published figure, not ours*"
+        },
+        {
+          "value": "2.08 s",
+          "label": "our comparable live engine, end of speech → first audio",
+          "sub": "*measured*: 5 spec turns, 4 sessions, range 1.73–4.01 s. A procedure question is 9.9 s."
+        }
       ],
       "sub": "And the leg we own: `GET /api/voice/elevenlabs/timings` returns every tool call this process has served, with p50 and p95.",
       "notes": [
@@ -132,10 +207,24 @@
         "9.9 s on a procedure question is the number I would not leave out."
       ],
       "defs": [
-        { "n": "2.08 s", "d": "voice (Deepgram Agent): end of speech → first audio, median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)." },
-        { "n": "9.9 s", "d": "the same measurement for a procedure question (measured)." },
-        { "n": "~150 ms", "d": "ElevenLabs' published partial-transcript figure for Scribe v2 realtime — theirs, not measured by us.", "src": "elevenlabs.md" },
-        { "n": "~75 ms", "d": "ElevenLabs' published first-audio figure for eleven_flash_v2_5 — theirs, not measured by us.", "src": "elevenlabs.md" }
+        {
+          "n": "2.08 s",
+          "d": "voice (Deepgram Agent): end of speech → first audio, median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)."
+        },
+        {
+          "n": "9.9 s",
+          "d": "the same measurement for a procedure question (measured)."
+        },
+        {
+          "n": "~150 ms",
+          "d": "ElevenLabs' published partial-transcript figure for Scribe v2 realtime — theirs, not measured by us.",
+          "src": "elevenlabs.md"
+        },
+        {
+          "n": "~75 ms",
+          "d": "ElevenLabs' published first-audio figure for eleven_flash_v2_5 — theirs, not measured by us.",
+          "src": "elevenlabs.md"
+        }
       ]
     },
     {
@@ -150,9 +239,19 @@
         "Cost: not measurable for ElevenLabs yet — that is a key away too. The comparable voice engine bills $0.075 per connected minute of socket time, which exists only between two taps of one button."
       ],
       "defs": [
-        { "n": "$0.075 per connected minute", "d": "the comparable live engine's hosted tier — STT, LLM and TTS bundled, billed on socket time.", "src": "deepgram.md" },
-        { "n": "$0.00038", "d": "our $ per ask — the typed path the same four tools serve (measured)." },
-        { "n": "$0.0041", "d": "our $ per written chat answer (measured)." }
+        {
+          "n": "$0.075 per connected minute",
+          "d": "the comparable live engine's hosted tier — STT, LLM and TTS bundled, billed on socket time.",
+          "src": "deepgram.md"
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask — the typed path the same four tools serve (measured)."
+        },
+        {
+          "n": "$0.0041",
+          "d": "our $ per written chat answer (measured)."
+        }
       ]
     },
     {

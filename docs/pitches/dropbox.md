@@ -134,23 +134,24 @@ to fake one on stage."
 ## 1:00 — how it is done
 
 ```mermaid
-flowchart TD
-  subgraph shop["the workshop's Dropbox"]
-    F["/Mechanica<br/>service manuals · bulletins · scans"]
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> FLD("Shop folder"):::them --> WH("Webhook"):::them --> API("Dropbox API"):::them
   end
-  F -- "change" --> LP["files/list_folder/longpoll<br/>notify host · auth=noauth · 480 s<br/>the cursor is the credential"]
-  F -. "or" .-> WH["POST /api/dropbox/webhook<br/>HMAC-SHA256 of the raw body<br/>names the account, never the file"]
-  LP --> LF["files/list_folder(/continue)<br/>cursor · recursive · 2000/page"]
-  WH --> LF
-  LF --> P{"path parses to<br/>make · model · year?"}
-  P -- no --> U["state: unmatched<br/>shown in /dropbox/status<br/>never guessed into the catalog"]
-  P -- yes --> D["files/download<br/>Dropbox-API-Arg · content host"]
-  D --> M{"%PDF magic<br/>+ sha256 seen before?"}
-  M -- "duplicate" --> DUP["state: duplicate<br/>of the manual we already built"]
-  M -- "new" --> ING["ingest.run() — the SAME path<br/>as an OEM URL and as /ingest/upload"]
-  ING --> T["PyMuPDF text layer · per-block coords<br/>one cheap LLM pass → sections, specs, parts<br/>ground.py drops any quote not in the PDF"]
-  T --> S["bike → manualId …-shop<br/>never overwrites the free …-om row"]
-  S --> A["the printed page, marked"]
+  subgraph R2[" "]
+    direction LR
+    ING("Mechanica ingest"):::ours --> BLOB("Blob store"):::ours --> PAGE("Manual page"):::ends
+  end
+
+  R1 --> R2
+
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
 ```
 
 Three sentences for the room: **one poller, one webhook, one ingest.** The Dropbox side is four

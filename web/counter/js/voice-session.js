@@ -154,6 +154,7 @@ function ensureOrb() {
       applyDock(userDock);
     },
     onMute: (on) => mute(on),
+    onPage: (n) => turn(n),
     onLeave: stop,
   });
   return orb;
@@ -229,7 +230,12 @@ function heard(event) {
       shut();
       return;
     }
-    if (orb) orb.setState(event.value);
+    if (orb) {
+      orb.setState(event.value);
+      // A lookup is running and nothing has been said yet: one quiet line, which the answer
+      // replaces rather than sits under.
+      orb.working(event.value === "thinking");
+    }
     shout({ kind: "status", status: event.value });
     return;
   }
@@ -238,7 +244,12 @@ function heard(event) {
     const text = String(event.text || "").trim();
     if (!text) return;
     remember(event.role, text, event.part);
-    if (orb) orb.setLine(text);
+    if (orb) {
+      // Written as well as spoken: the column above the orb keeps it, the folded line beside the
+      // docked orb shows the last of it.
+      orb.say(event.role, text, event.part);
+      if (event.role !== "user") orb.setLine(text);
+    }
     shout({ kind: "text", role: event.role, text, part: Boolean(event.part) });
     if (event.role === "user") {
       // Said to the reader, answered by the reader. No model, no socket, no wait.
@@ -253,6 +264,14 @@ function heard(event) {
   }
 
   if (event.type === "page") {
+    // show_page may hand over the manual's own printed steps with the page. When it does they
+    // are written under the answer verbatim, in the manual's order, with the page as a chip.
+    const rows = Array.isArray(event.steps) ? event.steps : [];
+    if (orb && (rows.length || event.highlight)) orb.steps(event.page, rows, event.highlight);
+    if (rows.length) {
+      remember("assistant", rows.map((s, i) => `${i + 1}. ${s}`).join("\n"), true);
+      shout({ kind: "steps", page: event.page, steps: rows, highlight: event.highlight || "" });
+    }
     turn(event.page);
     return;
   }

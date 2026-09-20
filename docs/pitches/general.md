@@ -31,14 +31,29 @@ than ours. Then the product isn't an idea — it's what we built for him.
 ## The user path
 
 ```mermaid
-flowchart LR
-  A["Type the name<br/>Snap a photo<br/>Scan the VIN"] --> B["Confirm the<br/>exact year"]
-  B --> C["Say what's wrong,<br/>in your own words"]
-  C --> D["The manual's own headings,<br/>the part lit on a 3D bike"]
-  D --> E["THE PRINTED PAGE<br/>answering lines marked"]
-  E --> F["Parts the manual specs,<br/>live prices"]
-  E --> G["Chat or voice — every<br/>sentence ends in a page number"]
-  G --> E
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends ~~~ SRCH("Search"):::ours ~~~ PHOT("Photo"):::ours ~~~ VIN("VIN"):::ours
+  end
+  subgraph R2[" "]
+    direction LR
+    VEH("Vehicle"):::them --> QN("Question"):::ours --> PAGE("Manual page"):::ends
+  end
+  subgraph R3[" "]
+    direction LR
+    PRTS("Parts"):::them ~~~ CHAT("Chat"):::them
+  end
+
+  R1 --> R2 --> R3
+
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
+  style R3 fill:none,stroke:none
 ```
 
 ---

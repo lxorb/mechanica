@@ -1,42 +1,18 @@
----
-title: "Mechanica voice — the manual never enters the browser, and neither does the key"
----
-flowchart LR
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> MIC("Mic"):::ours --> VA("Voice Agent API"):::them --> FLUX("Flux STT"):::them --> THINK("OpenAI think"):::them
+  end
+  subgraph R2[" "]
+    direction LR
+    CALL("Function calls"):::them --> TOOLS("Mechanica tools"):::ours --> AURA("Aura-2 TTS"):::them --> PAGE("Manual page"):::ends
+  end
 
-%% ---------------- legend ----------------
-LG1["GREEN = Deepgram Voice Agent<br/>one socket: listen · think · speak"]:::dg
-LG2["WHITE = our code"]:::ours
-LG3["ORANGE = the manufacturer's book"]:::book
-LG1 ~~~ LG2 ~~~ LG3
+  R1 --> R2
 
-MIC["mic · AudioWorklet<br/>24 kHz linear16<br/>1,024-sample frames (~43 ms)"]:::ours
-WK["Cloudflare Worker<br/>/ws/deepgram/agent<br/><b>holds DEEPGRAM_API_KEY</b><br/>no credential in the tab"]:::ours
-
-subgraph DG["Deepgram Voice Agent — ONE socket"]
-  L["<b>listen</b> · flux-general-en v2<br/>eager EOT 0.4 · EOT 0.7 · timeout 2 s<br/>keyterms = this bike's vocabulary"]:::dg
-  T["<b>think</b> · open_ai gpt-4.1<br/>prompt, digest and tool wiring<br/>built by OUR server per manual"]:::dg
-  S["<b>speak</b> · aura-2-asteria-en"]:::dg
-end
-
-SET["GET /api/voice/agent-settings<br/>?manualId=&amp;bikeId=<br/>the whole Settings message"]:::ours
-API["our API · POST /voice/tools/*<br/>find_procedure · read_page<br/>get_spec · list_parts<br/><i>manualId is in the URL,<br/>not in the model's arguments</i>"]:::ours
-PDF[("the manufacturer's PDF<br/>+ per-page text layer<br/>+ spec index with quotes")]:::book
-UI["the reader<br/>printed page + orange highlights"]:::ours
-
-SET -.->|"settings, forwarded unread"| MIC
-MIC -->|"PCM up"| WK
-WK -->|"Authorization: Token<br/>added at the edge"| L
-L -->|"transcript · StartOfTurn"| T
-T ==>|"function call<br/><b>server to server</b>"| API
-API --> PDF
-PDF -->|"the manual's own words<br/>+ the page they are printed on"| API
-API ==>|"function result"| T
-T -->|"one or two sentences,<br/>spoken numbers only"| S
-S -->|"PCM down"| WK
-WK -->|"80 ms jitter buffer"| MIC
-T -.->|"ConversationText<br/><i>'page 115 says…'</i>"| UI
-T -.->|"show_page (client_side)"| UI
-
-classDef dg fill:#13ef93,stroke:#0b8855,color:#063322
-classDef ours fill:#ffffff,stroke:#333333,color:#111111
-classDef book fill:#ffb020,stroke:#aa6600,color:#331100
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none

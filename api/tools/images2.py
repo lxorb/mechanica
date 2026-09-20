@@ -1129,7 +1129,7 @@ def render(raw: bytes, dest: Path, q: tuple) -> tuple:
         written = 0
         hero = im.width >= 900
         if hero:
-            written += fit(im, 1280, hero_p, hero_q, 130_000)
+            written += fit(im, 1280, hero_p, hero_q, 90_000)
         written += fit(im, 640, full_p, full_q, 45_000)
         written += fit(im, 160, thumb_p, thumb_q, 8_000)
     return written, hero

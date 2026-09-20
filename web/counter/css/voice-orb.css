@@ -70,29 +70,152 @@
   display: none !important;
 }
 
-/* ---------- the live transcript line ---------- */
+/* ---------- the column ----------
+ *
+ * Every turn, written, above the orb. It is ABSOLUTELY placed rather than a flex child on
+ * purpose: the orb stays exactly in the middle of the viewport whatever the column is holding,
+ * which is what keeps the dock a pure `translate` and keeps a long answer from pushing the one
+ * thing he aims at down the screen. Newest at the bottom, nearest the orb and nearest his eye. */
+
+.vo-feed {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100% - 24px, 560px);
+  top: calc(60px + env(safe-area-inset-top));
+  /* Stop clear of the disc: half the viewport, plus half the orb, plus a gap. */
+  bottom: calc(50% + var(--orb-size) / 2 + 18px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 0;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.18s ease;
+}
+
+.vo-feed::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.vo-turn {
+  flex: 0 0 auto;
+  font-family: Barlow, system-ui, sans-serif;
+  line-height: 1.35;
+}
+
+.vo-said {
+  margin: 0;
+}
+
+/* His own words: quiet, indented from the right, the way a question looks when it is already
+   answered. The agent's: full weight, on the ink the rest of the app prints in. */
+.vo-turn.is-user {
+  align-self: flex-end;
+  max-width: 88%;
+  padding-right: 2px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-align: right;
+  color: var(--muted-2, #6c665a);
+}
+
+.vo-turn.is-agent {
+  align-self: flex-start;
+  max-width: 96%;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent, var(--orange, #e85d04));
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--fg, var(--ink, #141414));
+}
+
+/* The manual's own steps, in its own order, one to a line. Never reflowed into a paragraph:
+   a step you have to find inside a sentence is a step you will do in the wrong order. */
+.vo-steps {
+  margin: 8px 0 0;
+  padding-left: 1.35em;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.vo-steps li {
+  margin: 0 0 5px;
+}
+
+.vo-steps li::marker {
+  font-weight: 800;
+  color: var(--accent, var(--orange, #e85d04));
+}
+
+/* The page those steps are printed on. A chip, not a sentence: one tap and the sheet is up. */
+.vo-page {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border: 3px solid var(--line, var(--ink, #141414));
+  background: var(--accent-2, var(--yellow, #ffe600));
+  color: var(--accent-2-ink, #141414);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  appearance: none;
+  pointer-events: auto;
+}
+
+.vo-page:active {
+  background: var(--accent, var(--orange, #e85d04));
+  color: var(--accent-ink, #fff);
+}
+
+/* A lookup is running. One line, in the words the agent would use, replaced by the answer
+   rather than left sitting above it. */
+.vo-working {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin: 0;
+  padding-left: 10px;
+  font-family: Barlow, system-ui, sans-serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--muted, #8a8375);
+}
+
+/* ---------- the folded line, beside the docked orb ---------- */
 
 .vo-line {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 520px;
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc(var(--dock-gap) + 14px + env(safe-area-inset-bottom));
+  width: auto;
   min-height: 1.3em;
-  margin-bottom: 26px;
+  padding: 7px 12px;
+  border: 3px solid var(--line, var(--ink, #141414));
+  background: var(--card, #fff);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.78rem;
   line-height: 1.3;
-  text-align: center;
+  text-align: left;
   color: var(--fg, var(--ink, #141414));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.18s ease;
-}
-
-.vo-line.is-on {
-  opacity: 0.85;
 }
 
 /* ---------- the orb ---------- */
@@ -187,9 +310,15 @@
 
 /* ---------- the state word ---------- */
 
+/* Absolutely placed, like everything else here except the disc. The orb has to be centred on the
+   VIEWPORT and not on "the orb plus whatever is written under it": the dock translate is
+   measured from the viewport's middle, and a word in the flow under the disc pushed it 25 px up
+   and put the docked orb 25 px off the corner it was aiming at. One in-flow child, no arithmetic. */
 .vo-state {
-  flex: 0 0 auto;
-  margin-top: 26px;
+  position: absolute;
+  left: 50%;
+  top: calc(50% + var(--orb-size) / 2 + 22px);
+  transform: translateX(-50%);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
@@ -405,22 +534,21 @@
     scale(var(--dock-scale));
 }
 
-/* The transcript beside the orb, not over it: a strip along the bottom, ending where the orb
-   begins. It is the only text on the reader's screen that is not the manual, so it is small,
-   quiet, and one line. */
+/* The column folds down to its last answer, beside the orb and clear of it. It is the only text
+   on the reader's screen that is not the manual, so it is small, quiet, and one line — and
+   tapping it opens the column back up. */
+.vo.is-compact .vo-feed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vo.is-compact .vo-line.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .vo.is-compact .vo-line {
-  position: absolute;
-  left: 12px;
   right: calc(28px + var(--dock-size) + env(safe-area-inset-right));
-  bottom: calc(var(--dock-gap) + 14px + env(safe-area-inset-bottom));
-  width: auto;
-  max-width: none;
-  margin: 0;
-  padding: 7px 12px;
-  border: 3px solid var(--line, var(--ink, #141414));
-  background: var(--card, #fff);
-  text-align: left;
-  font-size: 0.78rem;
 }
 
 .vo.is-compact .vo-chip {
@@ -444,13 +572,14 @@
     --dock-scale: 0.46;
   }
 
-  .vo-line {
-    margin-bottom: 18px;
+  .vo-state {
+    font-size: 1.25rem;
   }
 
-  .vo-state {
-    margin-top: 18px;
-    font-size: 1.25rem;
+  /* Less room above the disc, so the column gives some of it back. */
+  .vo-feed {
+    top: calc(54px + env(safe-area-inset-top));
+    gap: 8px;
   }
 }
 

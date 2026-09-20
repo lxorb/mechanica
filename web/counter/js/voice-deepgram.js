@@ -789,13 +789,17 @@ function handle(session, ws, msg, say) {
  * Move the reader to a printed page, once. Out-of-range pages are dropped rather than jumping the
  * reader somewhere the manual does not have, and the page already on screen is not re-sent.
  */
-function turnTo(session, page, say) {
+function turnTo(session, page, say, extra) {
   const n = Math.floor(Number(page));
   if (!Number.isFinite(n) || n < 1) return false;
   if (session.pages && n > session.pages) return false;
-  if (session.page === n) return true;
+  const steps = (extra && extra.steps) || [];
+  const highlight = (extra && extra.highlight) || "";
+  // The page already on screen is not re-sent - except when this call is carrying the printed
+  // steps or a highlight, which are worth writing down even though the sheet does not move.
+  if (session.page === n && !steps.length && !highlight) return true;
   session.page = n;
-  say({ type: "page", page: n });
+  say({ type: "page", page: n, steps, highlight });
   return true;
 }
 
@@ -814,7 +818,16 @@ function run_function(session, ws, call, say) {
   let content = "unknown function";
   if (call.name === "show_page") {
     const page = Math.floor(Number(args.page));
-    content = turnTo(session, page, say) ? `Page ${page} is on the rider's screen.` : "No such page.";
+    // `steps` and `highlight` ride along with the page: the agent hands over the manual's own
+    // printed lines rather than the browser guessing where a spoken sentence breaks, and they
+    // are written under the answer verbatim. Both optional; the page is the only required half.
+    const steps = Array.isArray(args.steps)
+      ? args.steps.map((s) => String(s || "").trim()).filter(Boolean).slice(0, 24)
+      : [];
+    const highlight = String(args.highlight || "").trim().slice(0, 80);
+    content = turnTo(session, page, say, { steps, highlight })
+      ? `Page ${page} is on the rider's screen.`
+      : "No such page.";
   }
   if (ws.readyState !== WebSocket.OPEN) return;
   ws.send(JSON.stringify({ type: "FunctionCallResponse", id: call.id, name: call.name, content }));

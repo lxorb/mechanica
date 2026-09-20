@@ -134,18 +134,13 @@ Never type a question that is not in this file.
 ### The architecture slice that makes the bill small
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
 flowchart LR
-  Q["question, plain words"] --> R["router<br/>cheap model<br/><b>$0.00013</b> · 99.5% cached"]
-  R -->|"spec question — 24 of the 150 eval queries"| S["parsed spec rows + BM25<br/><b>$0</b> — no model call"]
-  R -->|"procedure question"| B["BM25 over the PDF text layer<br/><b>$0</b> — in process, no vector DB"]
-  B -->|"one clear winner"| P0["no picker<br/><b>$0</b>"]
-  B -->|"close call"| P["picker<br/><b>$0.0022</b>"]
-  S --> PAGE["THE PRINTED PAGE<br/>marker on the answering lines<br/><b>mean $0.00038 an ask</b>"]
-  P0 --> PAGE
-  P --> PAGE
-  PAGE --> C["asked again → answer cache<br/>0.13 s · <b>$0</b>"]
-  M["a manual nobody has opened yet"] -->|"once, <b>$0.0951</b>"| IDX["indexed forever,<br/>shared by every shop"]
-  IDX --> B
+  MECH("Mechanic"):::ends --> TIME("Search time"):::ours --> MECA("Mechanica"):::them --> PAGE("Manual page"):::ends --> HRS("Hours back"):::them
+
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
 ```
 
 **85.3% of asks never pay for a picker at all** — the spec path and the decisive-BM25 path both skip it

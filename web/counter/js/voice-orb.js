@@ -38,12 +38,22 @@
  * next one still arrives. Three signals say so at once — the icon grows a slash, the word under
  * the orb becomes MUTED, and the disc stops moving, because it is no longer being told anything.
  *
- * mountOrb(host, {levels, onInterrupt, onLeave, onToggle, onMute})
- *   -> {setState, setLine, setDock, setMuted, chip, isCompact, isMuted, el, destroy}
+ * IT IS ALSO WRITTEN. Voice is not audio-only. A torque you heard once and a torque you can read
+ * are not the same fact, and a procedure spoken aloud is gone the moment it is said — so every
+ * turn is written into a column ABOVE the orb, newest at the bottom where his eye already is:
+ * his own words in one hand, the agent's in another, the manual's printed steps as a numbered
+ * list with the page they came off as a chip that opens it. A lookup shows as one quiet line
+ * that the answer replaces. Docked, the column folds down to the last answer beside the orb, and
+ * tapping that opens it again.
+ *
+ * mountOrb(host, {levels, onInterrupt, onLeave, onToggle, onMute, onPage})
+ *   -> {setState, setLine, setDock, setMuted, say, steps, working, clear, chip,
+ *       isCompact, isMuted, el, destroy}
  *   levels()      -> {mic, out} in 0..1, pulled once a frame; the session owns the meters
  *   onInterrupt() tapped while the agent was talking - stop it
- *   onToggle()    tapped while it was not - the other size
+ *   onToggle()    tapped while it was not, or the folded line - the other size
  *   onMute(on)    the mute toggle, or M
+ *   onPage(n)     a page chip under a step block
  *   onLeave()     the x, or a long press on the orb - leave voice mode
  */
 
@@ -506,6 +516,10 @@ export function mountOrb(host, opts = {}) {
     setLine,
     setDock,
     setMuted,
+    say,
+    steps,
+    working,
+    clear,
     chip,
     isCompact: () => compact,
     isMuted: () => muted,

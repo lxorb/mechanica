@@ -128,35 +128,24 @@ you volunteer your own slowest path believes the rest of your numbers.
 ## 1:00 — Architecture, and where every millisecond goes
 
 ```mermaid
-flowchart LR
-  MIC["mic · AudioWorklet<br/>24 kHz linear16<br/>1,024-sample frames"]
-  WK["Cloudflare Worker<br/>/ws/deepgram/agent<br/><b>holds the key</b>"]
-  subgraph DG["Deepgram Voice Agent — ONE socket"]
-    L["listen · <b>flux-general-en</b> v2<br/>eager EOT 0.4 / EOT 0.7<br/>keyterms: this bike's vocabulary"]
-    T["think · open_ai gpt-4.1<br/>prompt + tools built by OUR server"]
-    S["speak · <b>aura-2-asteria-en</b>"]
+%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+flowchart TB
+  subgraph R1[" "]
+    direction LR
+    MECH("Mechanic"):::ends --> MIC("Mic"):::ours --> VA("Voice Agent API"):::them --> FLUX("Flux STT"):::them --> THINK("OpenAI think"):::them
   end
-  API["our API · /voice/tools/*<br/>find_procedure · read_page<br/>get_spec · list_parts"]
-  PDF[("the manufacturer's PDF<br/>+ its page index")]
-  UI["the reader<br/>page + orange highlights"]
+  subgraph R2[" "]
+    direction LR
+    CALL("Function calls"):::them --> TOOLS("Mechanica tools"):::ours --> AURA("Aura-2 TTS"):::them --> PAGE("Manual page"):::ends
+  end
 
-  MIC -->|"PCM up"| WK --> L
-  L -->|"transcript"| T
-  T -->|"function call"| API
-  API --> PDF
-  PDF -->|"the manual's own words<br/>+ the page it is printed on"| API
-  API -->|"function result"| T
-  T -->|"one or two sentences"| S
-  S -->|"PCM down"| WK -->|"80 ms jitter buffer"| MIC
-  T -.->|"ConversationText<br/><i>'page 115 says…'</i>"| UI
-  T -.->|"show_page (client_side)"| UI
+  R1 --> R2
 
-  classDef dg fill:#13ef93,stroke:#0b8,color:#062
-  classDef ours fill:#fff,stroke:#333,color:#111
-  classDef book fill:#ffb020,stroke:#a60,color:#311
-  class L,T,S dg
-  class MIC,WK,API,UI ours
-  class PDF book
+  classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
+  classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
+  classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff
+  style R1 fill:none,stroke:none
+  style R2 fill:none,stroke:none
 ```
 
 **The manual's text never passes through the browser.** The dotted lines are the only thing the tab

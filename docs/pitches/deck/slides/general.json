@@ -155,43 +155,53 @@
           {
             "rows": [
               {
+                "link": "none",
                 "items": [
                   {
-                    "tone": "paper",
-                    "t": "Type the name|Snap a photo|Scan the VIN"
+                    "tone": "ink",
+                    "t": "Mechanic"
                   },
                   {
                     "tone": "paper",
-                    "t": "Confirm the|exact year",
-                    "sub": "a 2021 and a 2024 are different machines"
+                    "t": "Search"
                   },
                   {
                     "tone": "paper",
-                    "t": "Say what's wrong,|in your own words",
-                    "sub": "slang, typos, German"
+                    "t": "Photo"
                   },
                   {
-                    "tone": "white",
-                    "t": "The manual's own headings,|the part lit on a 3D bike",
-                    "sub": "those aren't our words"
+                    "tone": "paper",
+                    "t": "VIN"
                   }
                 ]
               },
               {
-                "gap": 60,
                 "items": [
                   {
+                    "tone": "orange",
+                    "t": "Vehicle"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "Question"
+                  },
+                  {
                     "tone": "ink",
-                    "t": "THE PRINTED PAGE|answering lines marked",
-                    "sub": "the marker is only there because we found that exact text in the PDF"
+                    "t": "Manual page"
+                  }
+                ],
+                "down": true
+              },
+              {
+                "link": "none",
+                "items": [
+                  {
+                    "tone": "orange",
+                    "t": "Parts"
                   },
                   {
-                    "tone": "white",
-                    "t": "Parts the manual specs,|live prices"
-                  },
-                  {
-                    "tone": "white",
-                    "t": "Chat or voice — every|sentence ends in a page number"
+                    "tone": "orange",
+                    "t": "Chat"
                   }
                 ],
                 "down": true

@@ -2271,6 +2271,18 @@
     "via": "alias",
     "aliasOf": "can-am|2014-spyder-rt"
   },
+  "can-am|can-am-origin": {
+    "image": "store/img/bikes2/can-am-can-am-origin.webp",
+    "thumb": "store/img/bikes2/can-am-can-am-origin.thumb.webp",
+    "title": "Can-Am, IAA Open Space 2025, Ludwigstrasse, Munich (20250909-P1050596).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Can-Am,_IAA_Open_Space_2025,_Ludwigstrasse,_Munich_(20250909-P1050596).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/can-am-can-am-origin.hero.webp"
+  },
   "can-am|can-am-pulse": {
     "image": "store/img/bikes2/can-am-can-am-pulse.webp",
     "thumb": "store/img/bikes2/can-am-can-am-pulse.thumb.webp",
@@ -6347,6 +6359,18 @@
     "view": "three_quarter",
     "score": 8.5,
     "hero": "store/img/bikes2/honda-beat-beat-street.hero.webp"
+  },
+  "honda|beat-pop-esp": {
+    "image": "store/img/bikes2/honda-beat-pop-esp.webp",
+    "thumb": "store/img/bikes2/honda-beat-pop-esp.thumb.webp",
+    "title": "2015 Honda BeAT POP.jpg",
+    "author": "Firzafp",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Honda_BeAT_POP.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-beat-pop-esp.hero.webp"
   },
   "honda|benly-110-pro": {
     "image": "store/img/bikes/honda-benly-110.webp",
@@ -10630,6 +10654,18 @@
     "via": "alias",
     "aliasOf": "honda|sh-150i"
   },
+  "honda|sh-350": {
+    "image": "store/img/bikes2/honda-sh-350.webp",
+    "thumb": "store/img/bikes2/honda-sh-350.thumb.webp",
+    "title": "Honda SH 350 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_SH_350_2026.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-sh-350.hero.webp"
+  },
   "honda|sh125i-special": {
     "image": "store/img/bikes/honda-sh125i.webp",
     "thumb": "store/img/bikes/honda-sh125i-thumb.webp",
@@ -11106,6 +11142,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_XL_125_V_Varadero_125_red.JPG",
     "via": "alias",
     "aliasOf": "honda|varadero-125"
+  },
+  "honda|vario-110": {
+    "image": "store/img/bikes2/honda-vario-110.webp",
+    "thumb": "store/img/bikes2/honda-vario-110.thumb.webp",
+    "title": "2014 Honda Vario FI 110 (20220214).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Honda_Vario_FI_110_(20220214).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-vario-110.hero.webp"
   },
   "honda|vario-125": {
     "image": "store/img/bikes2/honda-vario-125.webp",
@@ -13890,6 +13938,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_650_2017.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|ninja-650"
+  },
+  "kawasaki|ninja-7-hybrid": {
+    "image": "store/img/bikes2/kawasaki-ninja-7-hybrid.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-7-hybrid.thumb.webp",
+    "title": "Japan-Mobility-Show-2023-RuinDig 772.jpg",
+    "author": "RuinDig/Yuki Uchida",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Japan-Mobility-Show-2023-RuinDig_772.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-7-hybrid.hero.webp"
   },
   "kawasaki|ninja-h2-r": {
     "image": "store/img/bikes/kawasaki-ninja-h2.webp",
@@ -18994,6 +19054,18 @@
     "via": "alias",
     "aliasOf": "royal-enfield|bullet-electra"
   },
+  "royal-enfield|bullet-es": {
+    "image": "store/img/bikes2/royal-enfield-bullet-es.webp",
+    "thumb": "store/img/bikes2/royal-enfield-bullet-es.thumb.webp",
+    "title": "Bullet model Manufactured by Royal Enfield.jpg",
+    "author": "deadrat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bullet_model_Manufactured_by_Royal_Enfield.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/royal-enfield-bullet-es.hero.webp"
+  },
   "royal-enfield|classic-350-efi": {
     "image": "store/img/bikes/royal-enfield-classic-350.webp",
     "thumb": "store/img/bikes/royal-enfield-classic-350-thumb.webp",
@@ -22970,6 +23042,18 @@
     "via": "alias",
     "aliasOf": "triumph|rocket-3-r"
   },
+  "triumph|rocket-3-tfc": {
+    "image": "store/img/bikes2/triumph-rocket-3-tfc.webp",
+    "thumb": "store/img/bikes2/triumph-rocket-3-tfc.thumb.webp",
+    "title": "Triumph Rocket 3R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Rocket_3R_(1).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/triumph-rocket-3-tfc.hero.webp"
+  },
   "triumph|rocket-iii-classic": {
     "image": "store/img/bikes/triumph-rocket-iii.webp",
     "thumb": "store/img/bikes/triumph-rocket-iii-thumb.webp",
@@ -24367,6 +24451,18 @@
     "score": 8.5,
     "hero": "store/img/bikes2/victory-judge.hero.webp"
   },
+  "victory|ness-sig": {
+    "image": "store/img/bikes2/victory-ness-sig.webp",
+    "thumb": "store/img/bikes2/victory-ness-sig.thumb.webp",
+    "title": "Victory Arlen Ness Vision (6390771483).jpg",
+    "author": "Tony Hisgett from Birmingham, UK",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Victory_Arlen_Ness_Vision_(6390771483).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/victory-ness-sig.hero.webp"
+  },
   "victory|tour": {
     "image": "store/img/bikes2/victory-tour.webp",
     "thumb": "store/img/bikes2/victory-tour.thumb.webp",
@@ -25059,6 +25155,66 @@
     "score": 8.5,
     "hero": "store/img/bikes2/yamaha-fazzio-neo.hero.webp"
   },
+  "yamaha|fino": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp"
+  },
+  "yamaha|fino-fashion": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino"
+  },
+  "yamaha|fino-fi": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino"
+  },
+  "yamaha|fino-fi-premium": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino-fi"
+  },
+  "yamaha|fino-fi-sport": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino-fi"
+  },
   "yamaha|fino-grande": {
     "image": "store/img/bikes2/yamaha-fino-grande.webp",
     "thumb": "store/img/bikes2/yamaha-fino-grande.thumb.webp",
@@ -25070,6 +25226,54 @@
     "view": "side",
     "score": 9.5,
     "hero": "store/img/bikes2/yamaha-fino-grande.hero.webp"
+  },
+  "yamaha|fino-limited": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino"
+  },
+  "yamaha|fino-premium": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino"
+  },
+  "yamaha|fino-s": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino"
+  },
+  "yamaha|fino-sporty": {
+    "image": "store/img/bikes2/yamaha-fino.webp",
+    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
+    "title": "Fino Yamaha 125 ultrawide.jpg",
+    "author": "Fadlullah Baso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fino"
   },
   "yamaha|fjr-1300-a": {
     "image": "store/img/bikes/yamaha-fjr-1300.webp",
@@ -26935,6 +27139,18 @@
     "via": "alias",
     "aliasOf": "yamaha|nmax-neo"
   },
+  "yamaha|nouvo": {
+    "image": "store/img/bikes2/yamaha-nouvo.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo.thumb.webp",
+    "title": "Yamaha Nouvo 115cc Thailand Spokes.jpg",
+    "author": "Khaosaming",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Spokes.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-nouvo.hero.webp"
+  },
   "yamaha|nouvo-elegance": {
     "image": "store/img/bikes2/yamaha-nouvo-elegance.webp",
     "thumb": "store/img/bikes2/yamaha-nouvo-elegance.thumb.webp",
@@ -26945,6 +27161,30 @@
     "via": "category",
     "view": "side",
     "score": 9.5
+  },
+  "yamaha|nouvo-gp": {
+    "image": "store/img/bikes2/yamaha-nouvo.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-nouvo.hero.webp",
+    "title": "Yamaha Nouvo 115cc Thailand Spokes.jpg",
+    "author": "Khaosaming",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Spokes.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|nouvo"
+  },
+  "yamaha|nouvo-lmt": {
+    "image": "store/img/bikes2/yamaha-nouvo.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-nouvo.hero.webp",
+    "title": "Yamaha Nouvo 115cc Thailand Spokes.jpg",
+    "author": "Khaosaming",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Spokes.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|nouvo"
   },
   "yamaha|nouvo-mx": {
     "image": "store/img/bikes2/yamaha-nouvo-mx.webp",
@@ -26968,6 +27208,18 @@
     "view": "side",
     "score": 9.5,
     "hero": "store/img/bikes2/yamaha-nouvo-rc.hero.webp"
+  },
+  "yamaha|nouvo-std": {
+    "image": "store/img/bikes2/yamaha-nouvo.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-nouvo.hero.webp",
+    "title": "Yamaha Nouvo 115cc Thailand Spokes.jpg",
+    "author": "Khaosaming",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Spokes.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|nouvo"
   },
   "yamaha|nouvo-sx": {
     "image": "store/img/bikes2/yamaha-nouvo-sx.webp",
@@ -27904,6 +28156,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_SR400_2014.JPG",
     "via": "alias",
     "aliasOf": "yamaha|sr400"
+  },
+  "yamaha|ss125": {
+    "image": "store/img/bikes2/yamaha-ss125.webp",
+    "thumb": "store/img/bikes2/yamaha-ss125.thumb.webp",
+    "title": "YamahaSS125.jpeg",
+    "author": "Tubeen",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:YamahaSS125.jpeg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-ss125.hero.webp"
   },
   "yamaha|star-bolt": {
     "image": "store/img/bikes2/yamaha-star-bolt.webp",
