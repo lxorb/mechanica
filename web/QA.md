@@ -1,4 +1,5 @@
 # QA — Mechanica
+> Update: the flow is now 4 steps (Identify · Confirm · Pick · Book). Follow was retired and Invoice became the Parts sheet inside Book; step 3 carries the 3D model + chapter search. Lines below describe the earlier 6-step pass.
 
 Live: https://mechanica.emilvinu.ch/counter/ and https://trustthemanual.cloudflare-disjoin783.workers.dev/counter/ (`/` 302s to it on both). Headless Chrome, 390x844 + 1280x800, screenshots in `docs-shots/qa-*.png`.
 
