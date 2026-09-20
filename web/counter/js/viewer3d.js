@@ -2132,8 +2132,11 @@ function createScene(THREE, host, initialModel, opts) {
   const onDown = (event) => {
     cameraTween = null;
     touch();
-    down = event.button === 0 ? { x: event.clientX, y: event.clientY, id: event.pointerId } : null;
+    down = event.button === 0 ? { x: event.clientX, y: event.clientY, id: event.pointerId, t: performance.now() } : null;
   };
+  // A touch that turns into a page scroll ends in pointercancel, and a mouse released off the
+  // canvas never sends pointerup here: either way the press is over and the idle spin may resume.
+  const onCancel = () => { down = null; touch(); };
   const onUp = (event) => {
     const start = down;
     down = null;
@@ -2150,6 +2153,8 @@ function createScene(THREE, host, initialModel, opts) {
   };
   renderer.domElement.addEventListener("pointerdown", onDown);
   renderer.domElement.addEventListener("pointerup", onUp);
+  renderer.domElement.addEventListener("pointercancel", onCancel);
+  window.addEventListener("pointerup", onCancel);
   renderer.domElement.addEventListener("wheel", touch, { passive: true });
   renderer.domElement.addEventListener("touchstart", touch, { passive: true });
 
@@ -2199,7 +2204,9 @@ function createScene(THREE, host, initialModel, opts) {
     }
 
     idle += dt * 1000;
-    if (controls && !cameraTween && !reduced.matches && idle > IDLE_MS && !down) controls.autoRotate = true;
+    // a press older than 8 s is a rest, not a drag: it must not hold the idle spin off
+    const held = down && performance.now() - down.t < 8000;
+    if (controls && !cameraTween && !reduced.matches && idle > IDLE_MS && !held) controls.autoRotate = true;
     if (controls) controls.update();
     renderer.render(scene, camera);
 
@@ -2224,6 +2231,8 @@ function createScene(THREE, host, initialModel, opts) {
     intersectionObserver.disconnect();
     document.removeEventListener("visibilitychange", onVisibility);
     renderer.domElement.removeEventListener("pointerdown", onDown);
+    renderer.domElement.removeEventListener("pointercancel", onCancel);
+    window.removeEventListener("pointerup", onCancel);
     renderer.domElement.removeEventListener("pointerup", onUp);
     renderer.domElement.removeEventListener("wheel", touch);
     renderer.domElement.removeEventListener("touchstart", touch);
