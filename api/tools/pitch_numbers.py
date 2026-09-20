@@ -516,13 +516,28 @@ CHECKS: tuple[Check, ...] = (
 PITCH_FILES = ("general.md", "openai.md", "token-company.md", "voloridge.md", "elevenlabs.md",
                "ramp.md", "dropbox.md", "deepgram.md", "long-lake.md")
 
+# The nine pitches were not the only documents quoting these figures, and for a while they were the
+# only ones checked - so the same stale $6.096 survived in the architecture doc and in a Codex
+# transcript while every pitch was clean. Anything a judge or a teammate might read and quote from
+# belongs here, repo-relative.
+ALSO_SCANNED = (
+    "docs/pitches/BRIEF.md",
+    "docs/pitches/README.md",
+    "docs/PITCH.md",
+    "docs/DEMO.md",
+    "docs/SUBMISSION.md",
+    "docs/ARCHITECTURE.md",
+    "docs/MANUALS.md",
+    "docs/codex/run-3.md",
+)
+
 
 def discrepancies(book: Book) -> list[tuple[str, int, str, str, str]]:
     """Grep the pitches for figures this file contradicts. Returns (file, line, says, correct, note)."""
     import re
 
     out: list[tuple[str, int, str, str, str]] = []
-    targets = [PITCHES / name for name in PITCH_FILES] + [PITCHES / "BRIEF.md"]
+    targets = [PITCHES / name for name in PITCH_FILES] + [REPO / rel for rel in ALSO_SCANNED]
     for path in targets:
         if not path.exists():
             continue

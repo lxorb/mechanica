@@ -17,3 +17,5 @@ tests
 # data/ and api/tools/sync_blob.py pushes it up.
 data/*
 !data/parts-taxonomy.json
+!data/climate
+!data/climate/**

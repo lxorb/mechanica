@@ -1093,6 +1093,7 @@ function makeRing() {
       if (!Number.isFinite(fraction)) return this.spin();
       wrap.classList.add("is-known");
       wrap.classList.remove("is-failed");
+      if (ringHost) ringHost.classList.remove("is-stalled");
       retry = null;
       const value = Math.max(0, Math.min(1, fraction));
       arc.setAttribute("stroke-dashoffset", (RING_C * (1 - value)).toFixed(1));
@@ -1105,6 +1106,7 @@ function makeRing() {
       wrap.removeAttribute("aria-valuenow");
       arc.setAttribute("stroke-dashoffset", (RING_C * 0.75).toFixed(1));
       pct.textContent = "";
+      if (ringHost) ringHost.classList.remove("is-stalled");
     },
     fail(again) {
       retry = typeof again === "function" ? again : null;
@@ -1113,6 +1115,8 @@ function makeRing() {
       wrap.removeAttribute("aria-valuenow");
       arc.setAttribute("stroke-dashoffset", "0");
       pct.textContent = "";
+      // Nothing is coming: the sheet stops pretending it is still loading.
+      if (ringHost) ringHost.classList.add("is-stalled");
     },
     failed() {
       return wrap.classList.contains("is-failed");
@@ -1148,6 +1152,7 @@ function ringSheet() {
 function showRing(host) {
   if (!ring) ring = makeRing();
   if (ringHost !== host) {
+    if (ringHost) ringHost.classList.remove("is-stalled");
     ringHost = host;
     host.append(ring.el);
   }
@@ -1155,6 +1160,7 @@ function showRing(host) {
 
 function hideRing() {
   if (ring && ring.el.parentNode) ring.el.remove();
+  if (ringHost) ringHost.classList.remove("is-stalled");
   ringHost = null;
   if (stallTimer) {
     window.clearTimeout(stallTimer);

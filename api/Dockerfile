@@ -13,6 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 COPY tools ./tools
 COPY data/parts-taxonomy.json ./data/parts-taxonomy.json
+# Climate Fit reads its reduced artefacts (12 MB) from disk: 0 tokens, tens of ms per verdict
+COPY data/climate ./data/climate
 # No data/ in the image: Azure Blob is the system of record (app/store_blob.py). DATA_DIR is only a
 # scratch area here (uploads), and config.py creates it on boot.
 
