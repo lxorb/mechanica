@@ -69,10 +69,12 @@ _record_lock = threading.Lock()
 # ingest lease (BUG-13) and the ingest-failure markers (BUG-16) are exactly that kind of state.
 #
 # BlobStore is the only store that spans replicas and its ETag compare-and-set is the only atomic
-# primitive it has, so that is what a lease is built on; it is reached by name so that a store
-# without one - FileStore in dev and in the tests - falls back to a file under DATA_DIR, which is
-# all a single-process deployment needs. A store we cannot reach at all never blocks an ingest:
-# the lease simply stops being a lease and we are back to the old, duplicate-work behaviour.
+# primitive it has, so that is what a lease is built on. Its `_cas`/`_read_json`/`_write_json` are
+# looked up by name on purpose, not imported: a store that does not have them - FileStore in dev and
+# in the tests - falls back to a file under DATA_DIR, which is all a single-process deployment needs,
+# and a store that grows them gets the cross-replica lease for free. A store we cannot reach at all
+# never blocks an ingest: the lease simply stops being a lease and we are back to the old,
+# duplicate-work behaviour.
 
 
 def _shared():

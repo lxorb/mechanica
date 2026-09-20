@@ -118,6 +118,9 @@ class Progress:
         self.written = now
         self.job.done = int(self.value)
         self.job.pages = int(self.total)
+        # Every write of the job is also its heartbeat: a job that has not been written for
+        # ondemand.STALE_AFTER seconds belongs to a replica that is gone (docs/qa/BUGS.md BUG-13).
+        self.job.updatedAt = time.time()
         self.store.put_job(self.job)
 
     def stage(self, name: str) -> None:
@@ -177,10 +180,12 @@ def run(
     if not _slots.acquire(timeout=QUEUE_WAIT):
         job.status = "error"
         job.error = f"{MAX_CONCURRENT} ingests already running; waited {QUEUE_WAIT:.0f}s"
+        job.updatedAt = time.time()
         store.put_job(job)
         raise RuntimeError(job.error)
     job.status = "running"
     job.error = None
+    job.updatedAt = time.time()
     store.put_job(job)
 
     bar = Progress(store, job)
@@ -290,11 +295,13 @@ def run(
         job.done = doc.page_count
         job.error = None
         job.stage = "done"
+        job.updatedAt = time.time()
         store.put_job(job)
         return manual
     except Exception as exc:
         job.status = "error"
         job.error = f"{type(exc).__name__}: {exc}"[:500]
+        job.updatedAt = time.time()
         store.put_job(job)
         raise
     finally:

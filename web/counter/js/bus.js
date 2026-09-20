@@ -170,8 +170,16 @@ function onlyReplace(params) {
  * then landed on an entry that no longer said "+invoice", so one press closed nothing and
  * the next did nothing at all.
  */
-function hashFor(id) {
-  return overlayId ? `#${id}+${overlayId}` : `#${id}`;
+function hashFor(id, replace) {
+  if (overlayId) return `#${id}+${overlayId}`;
+  // A hash that is not a step belongs to another module (#cost). Replacing the entry the
+  // app is standing on must not take the address bar off it — onPop already leaves such a
+  // hash alone, and a boot at #cost used to lose it to the very first replaceState.
+  if (replace) {
+    const here = splitHash(location.hash).screen;
+    if (here && !FLOW.includes(here)) return location.hash;
+  }
+  return `#${id}`;
 }
 
 function histFor(id) {
@@ -215,7 +223,7 @@ export function go(id, params) {
   if (id === currentId && !(next && next.replace)) return;
 
   if (id === currentId && onlyReplace(next)) {
-    history.replaceState(histFor(id), "", hashFor(id));
+    history.replaceState(histFor(id), "", hashFor(id, true));
     return;
   }
 
@@ -241,7 +249,7 @@ export function go(id, params) {
   currentId = id;
 
   const hist = histFor(id);
-  const url = hashFor(id);
+  const url = hashFor(id, Boolean(next && next.replace));
   if (next && next.replace) history.replaceState(hist, "", url);
   else history.pushState(hist, "", url);
 

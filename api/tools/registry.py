@@ -252,13 +252,18 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     incoming: dict[str, RegistryEntry] = {}
     fragments: dict[str, dict[str, RegistryEntry]] = {}
     rejected: list[tuple[str, str, str, list[object], bool]] = []
+    absent: dict[str, set[tuple[str, str]]] = {}  # skipped fragment -> the scopes it would have covered
     skip = {s.strip().lower().removesuffix(".json") for s in (args.skip or [])}
     replace = {s.strip().lower().removesuffix(".json") for s in (args.replace or [])}
     for path in sorted(FRAGMENTS.glob("*.json")):
         if path.name.startswith(".") or path.name.endswith(".drop.json"):
             continue
         if path.stem.lower() in skip:
-            print(f"  {path.name:<28} skipped")
+            # Read it anyway, and merge nothing: what it covers decides whether another fragment is
+            # allowed to replace a scope they share. A skipped co-owner makes that scope unsafe.
+            absent_rows, _bad, _off = _read_fragment(path)
+            absent[path.stem.lower()] = {(e.site, kind_of(e)) for e in absent_rows.values()}
+            print(f"  {path.name:<28} skipped ({len(absent_rows)} rows, {len(absent[path.stem.lower()])} scope(s) held back)")
             continue
         rows, bad, refused = _read_fragment(path)
         fresh = sum(1 for eid in rows if eid not in before and eid not in incoming)
@@ -268,13 +273,33 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         rejected += [(path.name, *r) for r in refused]
 
     known_rows = store.registry()
+    # Which fragments write into each (site, kind) scope. Two adapters can share one site - triumph.py
+    # and triumph_pdf.py both write triumphtechnicalinformation.com - and then one fragment does NOT
+    # own the scope: replacing it would delete the other's rows. Merged together nothing is lost,
+    # merged apart everything the absent one holds is. So a shared scope is only ever replaced with
+    # every co-owner present, and what it keeps is the union of all of them.
+    scopes_of = {name: {(e.site, kind_of(e)) for e in rows.values()} for name, rows in fragments.items()}
+    owners: dict[tuple[str, str], set[str]] = {}
+    for name, scopes in scopes_of.items():
+        for one in scopes:
+            owners.setdefault(one, set()).add(name)
+    held: dict[tuple[str, str], set[str]] = {}
+    for name, scopes in absent.items():
+        for one in scopes:
+            held.setdefault(one, set()).add(name)
+
     for name, rows in sorted(fragments.items()):  # a wholesale re-key reads as an addition otherwise
         if name in replace or not rows:
             continue
         fresh_ids = sum(1 for eid in rows if eid not in before)
         if fresh_ids <= len(rows) // 10:
             continue
-        scope = {(e.site, kind_of(e)) for e in rows.values()}
+        scope = scopes_of[name]
+        shared = {s: owners[s] | held.get(s, set()) for s in scope if len(owners[s] | held.get(s, set())) > 1}
+        if shared:
+            where = "; ".join(f"{s[0]} with {', '.join(sorted(o - {name}))}" for s, o in sorted(shared.items()))
+            print(f"  {name}: {fresh_ids}/{len(rows)} ids new but no new files - NOT replacing, it shares a scope ({where})")
+            continue  # the heuristic is a guess; it must never be the thing that deletes a sibling
         indexed = {e.url for e in known_rows if (e.site, kind_of(e)) in scope}
         if indexed and not ({e.url for e in rows.values()} - indexed):
             replace.add(name)  # new ids, no new files: the fragment re-keyed what it already had
@@ -286,9 +311,25 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         if not rows:
             print(f"  --replace {name}: no such fragment, nothing retracted", file=sys.stderr)
             continue
-        scope = {(e.site, kind_of(e)) for e in rows.values()}
-        stale = {e.id for e in store.registry() if (e.site, kind_of(e)) in scope and e.id not in rows}
-        print(f"  --replace {name}: {len(rows)} rows own {len(scope)} site/kind scope(s), {len(stale)} superseded")
+        scope = set()
+        for one in scopes_of[name]:
+            missing = held.get(one, set())
+            if missing:  # a co-owner of this scope was held back, so its rows are not in `keep`
+                print(
+                    f"  --replace {name}: refusing scope {one[0]} ({one[1]}) - also written by "
+                    f"{', '.join(sorted(missing))}, which this merge skipped",
+                    file=sys.stderr,
+                )
+                continue
+            scope.add(one)
+        # Every present fragment that writes into these scopes is part of the truth for them.
+        keep = {eid for other in sorted({n for s in scope for n in owners[s]}) for eid in fragments[other]}
+        stale = {e.id for e in store.registry() if (e.site, kind_of(e)) in scope and e.id not in keep}
+        co = sorted({n for s in scope for n in owners[s]} - {name})
+        print(
+            f"  --replace {name}: {len(keep)} row(s) own {len(scope)} site/kind scope(s), {len(stale)} superseded"
+            + (f" (scope shared with {', '.join(co)}, all present)" if co else "")
+        )
         drop |= stale
     for path in sorted(FRAGMENTS.glob("*.drop.json")):
         try:

@@ -1,6 +1,7 @@
 import re
 import secrets
 import threading
+import time
 import uuid
 from collections import defaultdict
 
@@ -306,13 +307,23 @@ def _start_job(tasks: BackgroundTasks, source: str, make: str, model: str, year:
     store = get_store()
     bike_id = slug(make, model, year)
     manual_id = f"{bike_id}-om"
-    job = IngestJob(id=uuid.uuid4().hex[:12], manualId=manual_id, status="queued")
+    job = IngestJob(id=uuid.uuid4().hex[:12], manualId=manual_id, status="queued", updatedAt=time.time())
     store.put_job(job)
     bike = store.bike(bike_id) or Bike(id=bike_id, make=make, model=model, year=year, market=market)
     store.put_bikes([bike])
 
     def run_and_link() -> None:
-        ingest_mod.run(job.id, source, manual_id, [bike_id], make, model, year)
+        # The same heartbeat an on-demand ingest gets: ingest.run() stamps the job on every write,
+        # but the wait for one of the three ingest slots is silent for up to ten minutes, and a
+        # client polling this job must not be told its replica died (docs/qa/BUGS.md BUG-13).
+        beat = ondemand.Beat(job.id, manual_id).start()
+        try:
+            ingest_mod.run(job.id, source, manual_id, [bike_id], make, model, year)
+            beat.stop()
+            ondemand.settle(job.id)  # the beat must not be the last writer; see ondemand.settle
+        finally:
+            beat.stop()
+            ondemand.release_lease(manual_id, job.id)
         if (done := store.job(job.id)) and done.status == "done":
             store.put_bikes([bike.model_copy(update={"manualId": manual_id})])
 

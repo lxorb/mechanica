@@ -6338,6 +6338,18 @@
     "via": "alias",
     "aliasOf": "honda|cr-v"
   },
+  "honda|crf-50-f": {
+    "image": "store/img/bikes2/honda-crf-50-f.webp",
+    "thumb": "store/img/bikes2/honda-crf-50-f.thumb.webp",
+    "title": "Honda CRF50 mod.jpg",
+    "author": "Christian Eiden",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CRF50_mod.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-crf-50-f.hero.webp"
+  },
   "honda|crf1000l-adventure-sports": {
     "image": "store/img/bikes/honda-crf1000l.webp",
     "thumb": "store/img/bikes/honda-crf1000l-thumb.webp",
