@@ -318,10 +318,16 @@ class FakeResponse:
 
 
 class FakeClient:
-    """Stands in for httpx.Client so nothing leaves the machine; records what was asked of it."""
+    """Stands in for httpx.Client so nothing leaves the machine; records what was asked of it.
+
+    `deny` is the set of paths this fake account has no scope for, which is the whole point:
+    the seeded Deepgram key on this project can mint NEITHER a project key nor a grant, and the
+    endpoint has to walk both doors before it gives up.
+    """
 
     calls: list[tuple[str, str, dict | None]] = []
     headers: dict = {}
+    deny: tuple[str, ...] = ()
 
     def __init__(self, base_url, headers, timeout):
         FakeClient.headers = dict(headers)
@@ -333,12 +339,21 @@ class FakeClient:
     def __exit__(self, *exc):
         return False
 
+    def _blocked(self, path):
+        return any(mark in path for mark in FakeClient.deny)
+
     def get(self, path):
         FakeClient.calls.append(("GET", path, None))
+        if self._blocked(path):
+            return FakeResponse({"err_msg": "Insufficient permissions."}, 403)
         return FakeResponse({"projects": [{"project_id": "proj-1"}]})
 
     def post(self, path, json=None):
         FakeClient.calls.append(("POST", path, json))
+        if self._blocked(path):
+            return FakeResponse({"err_msg": "Insufficient permissions."}, 403)
+        if path.endswith("/auth/grant"):
+            return FakeResponse({"access_token": "dg-jwt", "expires_in": 30})
         return FakeResponse({"key": "dg-temp-key"})
 
 
@@ -349,6 +364,7 @@ def fake_deepgram(monkeypatch):
     monkeypatch.setattr(settings, "deepgram_api_key", "dg-master-key")
     monkeypatch.setattr("app.voice._project", None)
     FakeClient.calls = []
+    FakeClient.deny = ()
     monkeypatch.setattr("app.voice.httpx.Client", FakeClient)
     return FakeClient
 
@@ -366,6 +382,26 @@ def test_the_browser_key_is_short_lived_scoped_and_carries_its_subprotocol(clien
     assert payload["scopes"] == ["usage:write"]
     assert payload["time_to_live_in_seconds"] == body["expiresIn"]
     assert fake_deepgram.headers["Authorization"] == "Token dg-master-key"
+
+
+def test_a_key_without_keys_write_falls_back_to_a_grant_and_says_which_subprotocol(client, fake_deepgram):
+    fake_deepgram.deny = ("/keys",)
+    body = client.post("/voice/deepgram-token").json()
+    assert body == {"key": "dg-jwt", "expiresIn": 30, "scheme": "bearer"}
+    assert ("POST", "/v1/auth/grant", {"ttl_seconds": 30}) in fake_deepgram.calls
+
+
+def test_a_key_that_cannot_list_projects_still_tries_the_grant(client, fake_deepgram):
+    fake_deepgram.deny = ("/v1/projects",)
+    body = client.post("/voice/deepgram-token").json()
+    assert body["scheme"] == "bearer"
+
+
+def test_both_doors_shut_is_a_502_that_names_the_missing_scope(client, fake_deepgram):
+    fake_deepgram.deny = ("/keys", "/auth/grant")
+    r = client.post("/voice/deepgram-token")
+    assert r.status_code == 502
+    assert "keys:write" in r.json()["detail"]
 
 
 def test_the_master_key_never_reaches_the_browser(client, fake_deepgram):

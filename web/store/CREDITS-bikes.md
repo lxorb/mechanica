@@ -7,310 +7,311 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 
 | file | title | author | source | licence | bikez |
 |---|---|---|---|---|---|
+| `store/img/bikes/aprilia-atlantic-250-hero.webp` | Aprilia Atlantic Sprint 250 rear.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Atlantic_Sprint_250_rear.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-atlantic-250.webp` | Aprilia Atlantic Sprint 250 rear.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Atlantic_Sprint_250_rear.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-atlantic-250-thumb.webp` | Aprilia Atlantic Sprint 250 rear.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Atlantic_Sprint_250_rear.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-caponord-1200.webp` | Aprilia Caponord 1200 HMT 2015.jpeg | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_HMT_2015.jpeg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-caponord-1200-thumb.webp` | Aprilia Caponord 1200 HMT 2015.jpeg | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_HMT_2015.jpeg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-caponord-1200-abs.webp` | Aprilia Caponord 1200 ABS (2014).png | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_ABS_(2014).png | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-caponord-1200-abs-thumb.webp` | Aprilia Caponord 1200 ABS (2014).png | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_ABS_(2014).png | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-caponord-etv-1000.webp` | Aprilia ETV 1000 Caponord 2009 (9104353972).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_ETV_1000_Caponord_2009_(9104353972).jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/aprilia-caponord-etv-1000-thumb.webp` | Aprilia ETV 1000 Caponord 2009 (9104353972).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_ETV_1000_Caponord_2009_(9104353972).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-classic-50-hero.webp` | Aprilia Classic 50.jpg | Marcusz97 | https://commons.wikimedia.org/wiki/File:Aprilia_Classic_50.jpg | Public domain |  |
 | `store/img/bikes/aprilia-classic-50.webp` | Aprilia Classic 50.jpg | Marcusz97 | https://commons.wikimedia.org/wiki/File:Aprilia_Classic_50.jpg | Public domain |  |
 | `store/img/bikes/aprilia-classic-50-thumb.webp` | Aprilia Classic 50.jpg | Marcusz97 | https://commons.wikimedia.org/wiki/File:Aprilia_Classic_50.jpg | Public domain |  |
-| `store/img/bikes/aprilia-dorsoduro-1200.webp` | Paris - Salon de la moto 2011 - Aprilia - Dorsoduro 1200 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Dorsoduro_1200_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-dorsoduro-1200-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Dorsoduro 1200 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Dorsoduro_1200_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-dorsoduro-750.webp` | Aprilia Dorsoduro 750 01.jpg | m.caimary | https://commons.wikimedia.org/wiki/File:Aprilia_Dorsoduro_750_01.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-dorsoduro-750-thumb.webp` | Aprilia Dorsoduro 750 01.jpg | m.caimary | https://commons.wikimedia.org/wiki/File:Aprilia_Dorsoduro_750_01.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-etv-1000-caponord.webp` | Aprilia ETV 1000 CAPONORD 01.jpg | alfonsobenayas | https://commons.wikimedia.org/wiki/File:Aprilia_ETV_1000_CAPONORD_01.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-etv-1000-caponord-thumb.webp` | Aprilia ETV 1000 CAPONORD 01.jpg | alfonsobenayas | https://commons.wikimedia.org/wiki/File:Aprilia_ETV_1000_CAPONORD_01.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-mana-850.webp` | Aprilia Mana 850 in Athens on 10-25-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_Mana_850_in_Athens_on_10-25-2023.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-mana-850-thumb.webp` | Aprilia Mana 850 in Athens on 10-25-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_Mana_850_in_Athens_on_10-25-2023.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-mana-850-gt.webp` | Aprilia Mana 850 GT in Athens on 0-27-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_Mana_850_GT_in_Athens_on_0-27-2023.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-mana-850-gt-thumb.webp` | Aprilia Mana 850 GT in Athens on 0-27-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_Mana_850_GT_in_Athens_on_0-27-2023.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-mojito-125-hero.webp` | Aprilia Mojito Custom 125.jpg | https://www.pexels.com/@readymade/ | https://commons.wikimedia.org/wiki/File:Aprilia_Mojito_Custom_125.jpg | CC0 |  |
 | `store/img/bikes/aprilia-mojito-125.webp` | Aprilia Mojito Custom 125.jpg | https://www.pexels.com/@readymade/ | https://commons.wikimedia.org/wiki/File:Aprilia_Mojito_Custom_125.jpg | CC0 |  |
 | `store/img/bikes/aprilia-mojito-125-thumb.webp` | Aprilia Mojito Custom 125.jpg | https://www.pexels.com/@readymade/ | https://commons.wikimedia.org/wiki/File:Aprilia_Mojito_Custom_125.jpg | CC0 |  |
-| `store/img/bikes/aprilia-moto-6-5.webp` | Paris - Salon de la moto 2011 - Aprilia - Moto' 6.5. - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Moto'_6.5._-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-moto-6-5-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Moto' 6.5. - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Moto'_6.5._-_001.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-pegaso-650-hero.webp` | Aprilia Pegaso 650 Trail 2008 (14595674397).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Trail_2008_(14595674397).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-pegaso-650.webp` | Aprilia Pegaso 650 Trail 2008 (14595674397).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Trail_2008_(14595674397).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-pegaso-650-thumb.webp` | Aprilia Pegaso 650 Trail 2008 (14595674397).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Trail_2008_(14595674397).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-pegaso-650-factory-hero.webp` | Aprilia Pegaso 650 Factory.jpg | Daragath at de.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Factory.jpg | Public domain |  |
 | `store/img/bikes/aprilia-pegaso-650-factory.webp` | Aprilia Pegaso 650 Factory.jpg | Daragath at de.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Factory.jpg | Public domain |  |
 | `store/img/bikes/aprilia-pegaso-650-factory-thumb.webp` | Aprilia Pegaso 650 Factory.jpg | Daragath at de.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Factory.jpg | Public domain |  |
+| `store/img/bikes/aprilia-pegaso-650-i-e-hero.webp` | APRILIA PEGASO I.E. 650 2003 rok.jpg | Kajet897 | https://commons.wikimedia.org/wiki/File:APRILIA_PEGASO_I.E._650_2003_rok.jpg | CC0 |  |
 | `store/img/bikes/aprilia-pegaso-650-i-e.webp` | APRILIA PEGASO I.E. 650 2003 rok.jpg | Kajet897 | https://commons.wikimedia.org/wiki/File:APRILIA_PEGASO_I.E._650_2003_rok.jpg | CC0 |  |
 | `store/img/bikes/aprilia-pegaso-650-i-e-thumb.webp` | APRILIA PEGASO I.E. 650 2003 rok.jpg | Kajet897 | https://commons.wikimedia.org/wiki/File:APRILIA_PEGASO_I.E._650_2003_rok.jpg | CC0 |  |
+| `store/img/bikes/aprilia-rs-125-hero.webp` | Aprilia RS 125 2001.jpg | Spieltrieb2 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_125_2001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs-125.webp` | Aprilia RS 125 2001.jpg | Spieltrieb2 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_125_2001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs-125-thumb.webp` | Aprilia RS 125 2001.jpg | Spieltrieb2 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_125_2001.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-rs-125-tuono-hero.webp` | RS125Tuono.jpg | Hardstylus at German Wikipedia ( Original text: Dawid S. ( de:Benutzer:Hardstylus ) ) | https://commons.wikimedia.org/wiki/File:RS125Tuono.jpg | Public domain |  |
 | `store/img/bikes/aprilia-rs-125-tuono.webp` | RS125Tuono.jpg | Hardstylus at German Wikipedia ( Original text: Dawid S. ( de:Benutzer:Hardstylus ) ) | https://commons.wikimedia.org/wiki/File:RS125Tuono.jpg | Public domain |  |
 | `store/img/bikes/aprilia-rs-125-tuono-thumb.webp` | RS125Tuono.jpg | Hardstylus at German Wikipedia ( Original text: Dawid S. ( de:Benutzer:Hardstylus ) ) | https://commons.wikimedia.org/wiki/File:RS125Tuono.jpg | Public domain |  |
-| `store/img/bikes/aprilia-rs-250.webp` | Aprilia RS250 reggiani campion model.JPG | Shohei ninomiya | https://commons.wikimedia.org/wiki/File:Aprilia_RS250_reggiani_campion_model.JPG | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rs-250-thumb.webp` | Aprilia RS250 reggiani campion model.JPG | Shohei ninomiya | https://commons.wikimedia.org/wiki/File:Aprilia_RS250_reggiani_campion_model.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-rs-250-hero.webp` | Aprilia RS250 2007-11.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Aprilia_RS250_2007-11.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-rs-250.webp` | Aprilia RS250 2007-11.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Aprilia_RS250_2007-11.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-rs-250-thumb.webp` | Aprilia RS250 2007-11.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Aprilia_RS250_2007-11.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-rs-50-hero.webp` | Aprilia RS 50 Tetsuya.jpg | Momko2610 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_50_Tetsuya.jpg | Public domain |  |
 | `store/img/bikes/aprilia-rs-50.webp` | Aprilia RS 50 Tetsuya.jpg | Momko2610 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_50_Tetsuya.jpg | Public domain |  |
 | `store/img/bikes/aprilia-rs-50-thumb.webp` | Aprilia RS 50 Tetsuya.jpg | Momko2610 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_50_Tetsuya.jpg | Public domain |  |
+| `store/img/bikes/aprilia-rs-660-hero.webp` | 2022 Aprilia RS 660 in Athens on 10-30-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:2022_Aprilia_RS_660_in_Athens_on_10-30-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs-660.webp` | 2022 Aprilia RS 660 in Athens on 10-30-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:2022_Aprilia_RS_660_in_Athens_on_10-30-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs-660-thumb.webp` | 2022 Aprilia RS 660 in Athens on 10-30-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:2022_Aprilia_RS_660_in_Athens_on_10-30-2023.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rs4-125.webp` | Paris - Salon de la moto 2011 - Aprilia - RS4 125 - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RS4_125_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rs4-125-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RS4 125 - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RS4_125_-_002.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-rs4-125-hero.webp` | Aprilia rs4 125.jpg | PrzemoSS | https://commons.wikimedia.org/wiki/File:Aprilia_rs4_125.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-rs4-125.webp` | Aprilia rs4 125.jpg | PrzemoSS | https://commons.wikimedia.org/wiki/File:Aprilia_rs4_125.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-rs4-125-thumb.webp` | Aprilia rs4 125.jpg | PrzemoSS | https://commons.wikimedia.org/wiki/File:Aprilia_rs4_125.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-rs4-50-hero.webp` | Aprilia rs4 50 sbk.jpg | IS-alcott | https://commons.wikimedia.org/wiki/File:Aprilia_rs4_50_sbk.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs4-50.webp` | Aprilia rs4 50 sbk.jpg | IS-alcott | https://commons.wikimedia.org/wiki/File:Aprilia_rs4_50_sbk.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs4-50-thumb.webp` | Aprilia rs4 50 sbk.jpg | IS-alcott | https://commons.wikimedia.org/wiki/File:Aprilia_rs4_50_sbk.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rsv-1000-r.webp` | Aprilia RSV 1000 R (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000_R_(1).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rsv-1000-r-thumb.webp` | Aprilia RSV 1000 R (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000_R_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-rsv-1000-r-hero.webp` | APRILIA RSV 1000 R BOL DOR.jpg | Original uploader was Flone at it.wikipedia | https://commons.wikimedia.org/wiki/File:APRILIA_RSV_1000_R_BOL_DOR.jpg | Public domain |  |
+| `store/img/bikes/aprilia-rsv-1000-r.webp` | APRILIA RSV 1000 R BOL DOR.jpg | Original uploader was Flone at it.wikipedia | https://commons.wikimedia.org/wiki/File:APRILIA_RSV_1000_R_BOL_DOR.jpg | Public domain |  |
+| `store/img/bikes/aprilia-rsv-1000-r-thumb.webp` | APRILIA RSV 1000 R BOL DOR.jpg | Original uploader was Flone at it.wikipedia | https://commons.wikimedia.org/wiki/File:APRILIA_RSV_1000_R_BOL_DOR.jpg | Public domain |  |
+| `store/img/bikes/aprilia-rsv-1000-r-factory-hero.webp` | Aprilia RSV 1000 R Factory.jpg | Felix Kaiser | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000_R_Factory.jpg | CC BY 3.0 |  |
 | `store/img/bikes/aprilia-rsv-1000-r-factory.webp` | Aprilia RSV 1000 R Factory.jpg | Felix Kaiser | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000_R_Factory.jpg | CC BY 3.0 |  |
 | `store/img/bikes/aprilia-rsv-1000-r-factory-thumb.webp` | Aprilia RSV 1000 R Factory.jpg | Felix Kaiser | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000_R_Factory.jpg | CC BY 3.0 |  |
-| `store/img/bikes/aprilia-rsv-1000r.webp` | Aprilia RSV 1000R red.jpg | Brian Snelson | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000R_red.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-rsv-1000r-thumb.webp` | Aprilia RSV 1000R red.jpg | Brian Snelson | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000R_red.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-rsv-mille.webp` | 2001 Aprilia RSV 1000 Mille.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille.jpg | CC0 |  |
-| `store/img/bikes/aprilia-rsv-mille-thumb.webp` | 2001 Aprilia RSV 1000 Mille.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille.jpg | CC0 |  |
-| `store/img/bikes/aprilia-rsv-mille-1000.webp` | 2001 Aprilia RSV 1000 Mille 1.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille_1.jpg | CC0 |  |
-| `store/img/bikes/aprilia-rsv-mille-1000-thumb.webp` | 2001 Aprilia RSV 1000 Mille 1.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille_1.jpg | CC0 |  |
+| `store/img/bikes/aprilia-rsv-mille-r-hero.webp` | Aprilia RSV Mille R 2000.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_Mille_R_2000.jpg | Public domain |  |
 | `store/img/bikes/aprilia-rsv-mille-r.webp` | Aprilia RSV Mille R 2000.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_Mille_R_2000.jpg | Public domain |  |
 | `store/img/bikes/aprilia-rsv-mille-r-thumb.webp` | Aprilia RSV Mille R 2000.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Aprilia_RSV_Mille_R_2000.jpg | Public domain |  |
-| `store/img/bikes/aprilia-rsv4.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rsv4-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rsv4-factory.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rsv4-factory-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rsv4-factory-aprc.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rsv4-factory-aprc-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-rsv4-rf.webp` | Aprilia RSV4 RF.jpg | 志遠 古 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RF.jpg | Public domain |  |
-| `store/img/bikes/aprilia-rsv4-rf-thumb.webp` | Aprilia RSV4 RF.jpg | 志遠 古 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RF.jpg | Public domain |  |
-| `store/img/bikes/aprilia-rsv4-rr.webp` | Aprilia RSV4 RR (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RR_(1).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rsv4-rr-thumb.webp` | Aprilia RSV4 RR (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RR_(1).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rx-50.webp` | 2017-09-14 (134) Aprilia RX 50 at Bahnhof Loosdorf, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-14_(134)_Aprilia_RX_50_at_Bahnhof_Loosdorf,_Austria.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rx-50-thumb.webp` | 2017-09-14 (134) Aprilia RX 50 at Bahnhof Loosdorf, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-14_(134)_Aprilia_RX_50_at_Bahnhof_Loosdorf,_Austria.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-rxv-4-5.webp` | 257 Alex BUSQUETS APRILIA RXV 450.jpg | "S de Santi" from Madrid, SPAIN | https://commons.wikimedia.org/wiki/File:257_Alex_BUSQUETS_APRILIA_RXV_450.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-rxv-4-5-thumb.webp` | 257 Alex BUSQUETS APRILIA RXV 450.jpg | "S de Santi" from Madrid, SPAIN | https://commons.wikimedia.org/wiki/File:257_Alex_BUSQUETS_APRILIA_RXV_450.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-scarabeo-300.webp` | Aprilia Scarabeo 300.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_300.jpg | CC BY 4.0 |  |
-| `store/img/bikes/aprilia-scarabeo-300-thumb.webp` | Aprilia Scarabeo 300.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_300.jpg | CC BY 4.0 |  |
-| `store/img/bikes/aprilia-scarabeo-300s.webp` | Aprilia Scarabeo 300S.jpg | Laura Buononome | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_300S.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/aprilia-scarabeo-300s-thumb.webp` | Aprilia Scarabeo 300S.jpg | Laura Buononome | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_300S.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-rsv4-hero.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 |  |
+| `store/img/bikes/aprilia-rsv4.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 |  |
+| `store/img/bikes/aprilia-rsv4-thumb.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 |  |
+| `store/img/bikes/aprilia-rx-50-hero.webp` | Aprilia RX 50 (first series).jpg | Original uploader was Jonny 1988 at it.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_RX_50_(first_series).jpg | Public domain |  |
+| `store/img/bikes/aprilia-rx-50.webp` | Aprilia RX 50 (first series).jpg | Original uploader was Jonny 1988 at it.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_RX_50_(first_series).jpg | Public domain |  |
+| `store/img/bikes/aprilia-rx-50-thumb.webp` | Aprilia RX 50 (first series).jpg | Original uploader was Jonny 1988 at it.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_RX_50_(first_series).jpg | Public domain |  |
+| `store/img/bikes/aprilia-scarabeo-400-hero.webp` | Aprilia Scarabeo 400 IE Light.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_400_IE_Light.jpg | CC BY 4.0 |  |
 | `store/img/bikes/aprilia-scarabeo-400.webp` | Aprilia Scarabeo 400 IE Light.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_400_IE_Light.jpg | CC BY 4.0 |  |
 | `store/img/bikes/aprilia-scarabeo-400-thumb.webp` | Aprilia Scarabeo 400 IE Light.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_400_IE_Light.jpg | CC BY 4.0 |  |
+| `store/img/bikes/aprilia-scarabeo-50-hero.webp` | Aprilia Scarabeo 50 Beige.jpg | Ryan Dickey | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_Beige.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50.webp` | Aprilia Scarabeo 50 Beige.jpg | Ryan Dickey | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_Beige.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-thumb.webp` | Aprilia Scarabeo 50 Beige.jpg | Ryan Dickey | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_Beige.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-scarabeo-50-2t-hero.webp` | Scarabeo 50 2T.jpg | Franco Vannini | https://commons.wikimedia.org/wiki/File:Scarabeo_50_2T.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-2t.webp` | Scarabeo 50 2T.jpg | Franco Vannini | https://commons.wikimedia.org/wiki/File:Scarabeo_50_2T.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-2t-thumb.webp` | Scarabeo 50 2T.jpg | Franco Vannini | https://commons.wikimedia.org/wiki/File:Scarabeo_50_2T.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-scarabeo-50-ditech-hero.webp` | Aprilia Scarabeo 50 I.E Ditech.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_I.E_Ditech.jpg | CC BY 4.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-ditech.webp` | Aprilia Scarabeo 50 I.E Ditech.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_I.E_Ditech.jpg | CC BY 4.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-ditech-thumb.webp` | Aprilia Scarabeo 50 I.E Ditech.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_I.E_Ditech.jpg | CC BY 4.0 |  |
-| `store/img/bikes/aprilia-scarabeo-500.webp` | Aprilia Scarabeo 500 cc.jpg | Stephan Ridgway | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500_cc.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-scarabeo-500-thumb.webp` | Aprilia Scarabeo 500 cc.jpg | Stephan Ridgway | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500_cc.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-shiver-750.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-shiver-750-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-shiver-750-abs.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-shiver-750-abs-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_002.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-scarabeo-500-hero.webp` | Aprilia Scarabeo 500.jpg | Laura Buononome | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-scarabeo-500.webp` | Aprilia Scarabeo 500.jpg | Laura Buononome | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-scarabeo-500-thumb.webp` | Aprilia Scarabeo 500.jpg | Laura Buononome | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-shiver-750-hero.webp` | Aprilia Shiver 750.jpg | Lepidlizard ( talk ) | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg | Public domain |  |
+| `store/img/bikes/aprilia-shiver-750.webp` | Aprilia Shiver 750.jpg | Lepidlizard ( talk ) | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg | Public domain |  |
+| `store/img/bikes/aprilia-shiver-750-thumb.webp` | Aprilia Shiver 750.jpg | Lepidlizard ( talk ) | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg | Public domain |  |
+| `store/img/bikes/aprilia-shiver-900-hero.webp` | Aprilia Shiver 900.jpg | Felfu | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_900.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-shiver-900.webp` | Aprilia Shiver 900.jpg | Felfu | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_900.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-shiver-900-thumb.webp` | Aprilia Shiver 900.jpg | Felfu | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_900.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-sl-750-shiver-hero.webp` | Aprilia SL 750 Shiver in Athens on 10-30-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_SL_750_Shiver_in_Athens_on_10-30-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sl-750-shiver.webp` | Aprilia SL 750 Shiver in Athens on 10-30-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_SL_750_Shiver_in_Athens_on_10-30-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sl-750-shiver-thumb.webp` | Aprilia SL 750 Shiver in Athens on 10-30-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Aprilia_SL_750_Shiver_in_Athens_on_10-30-2023.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-sonic-50.webp` | Aprilia Sonic 50.jpg | Andreas Wieser | https://commons.wikimedia.org/wiki/File:Aprilia_Sonic_50.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-sonic-50-thumb.webp` | Aprilia Sonic 50.jpg | Andreas Wieser | https://commons.wikimedia.org/wiki/File:Aprilia_Sonic_50.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-sportcity-50-hero.webp` | Aprilia sportcity 50 in Croatia 2014-02-09 21-31.jpg | User:Ladrun | https://commons.wikimedia.org/wiki/File:Aprilia_sportcity_50_in_Croatia_2014-02-09_21-31.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sportcity-50.webp` | Aprilia sportcity 50 in Croatia 2014-02-09 21-31.jpg | User:Ladrun | https://commons.wikimedia.org/wiki/File:Aprilia_sportcity_50_in_Croatia_2014-02-09_21-31.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sportcity-50-thumb.webp` | Aprilia sportcity 50 in Croatia 2014-02-09 21-31.jpg | User:Ladrun | https://commons.wikimedia.org/wiki/File:Aprilia_sportcity_50_in_Croatia_2014-02-09_21-31.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-sr-50-hero.webp` | 2017-09-21 (100) Aprilia SR 50 at Bahnhof Waidhofen an der Ybbs, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(100)_Aprilia_SR_50_at_Bahnhof_Waidhofen_an_der_Ybbs,_Austria.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sr-50.webp` | 2017-09-21 (100) Aprilia SR 50 at Bahnhof Waidhofen an der Ybbs, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(100)_Aprilia_SR_50_at_Bahnhof_Waidhofen_an_der_Ybbs,_Austria.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sr-50-thumb.webp` | 2017-09-21 (100) Aprilia SR 50 at Bahnhof Waidhofen an der Ybbs, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(100)_Aprilia_SR_50_at_Bahnhof_Waidhofen_an_der_Ybbs,_Austria.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-sr-50-ditech-hero.webp` | 2003 Aprilia SR50 Ditech DRL.JPG | Chalkocat | https://commons.wikimedia.org/wiki/File:2003_Aprilia_SR50_Ditech_DRL.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-50-ditech.webp` | 2003 Aprilia SR50 Ditech DRL.JPG | Chalkocat | https://commons.wikimedia.org/wiki/File:2003_Aprilia_SR50_Ditech_DRL.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-50-ditech-thumb.webp` | 2003 Aprilia SR50 Ditech DRL.JPG | Chalkocat | https://commons.wikimedia.org/wiki/File:2003_Aprilia_SR50_Ditech_DRL.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-sr-50-factory-hero.webp` | Aprilia SR50 Factory.jpg | Nprefontaine at en.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_SR50_Factory.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-50-factory.webp` | Aprilia SR50 Factory.jpg | Nprefontaine at en.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_SR50_Factory.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-50-factory-thumb.webp` | Aprilia SR50 Factory.jpg | Nprefontaine at en.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_SR50_Factory.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-sr-gt-125.webp` | Aprilia SR GT 125.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_SR_GT_125.jpg | CC BY 4.0 |  |
-| `store/img/bikes/aprilia-sr-gt-125-thumb.webp` | Aprilia SR GT 125.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_SR_GT_125.jpg | CC BY 4.0 |  |
-| `store/img/bikes/aprilia-sr-gt-200.webp` | Aprilia SR GT 200 EICMA 2024.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Aprilia_SR_GT_200_EICMA_2024.jpg | CC0 |  |
-| `store/img/bikes/aprilia-sr-gt-200-thumb.webp` | Aprilia SR GT 200 EICMA 2024.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Aprilia_SR_GT_200_EICMA_2024.jpg | CC0 |  |
-| `store/img/bikes/aprilia-sr-max-300.webp` | Aprilia SR Max 300.jpg | 建偉 甘 | https://commons.wikimedia.org/wiki/File:Aprilia_SR_Max_300.jpg | Public domain |  |
-| `store/img/bikes/aprilia-sr-max-300-thumb.webp` | Aprilia SR Max 300.jpg | 建偉 甘 | https://commons.wikimedia.org/wiki/File:Aprilia_SR_Max_300.jpg | Public domain |  |
-| `store/img/bikes/aprilia-srv-850.webp` | Paris - Salon de la moto 2011 - Aprilia - SRV 850 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_SRV_850_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-srv-850-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - SRV 850 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_SRV_850_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-sx-125.webp` | Aprilia SX 125 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Aprilia_SX_125_2026.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-sx-125-thumb.webp` | Aprilia SX 125 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Aprilia_SX_125_2026.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-srv-850-hero.webp` | Aprilia SRV 850.jpg | Sporty76 | https://commons.wikimedia.org/wiki/File:Aprilia_SRV_850.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-srv-850.webp` | Aprilia SRV 850.jpg | Sporty76 | https://commons.wikimedia.org/wiki/File:Aprilia_SRV_850.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-srv-850-thumb.webp` | Aprilia SRV 850.jpg | Sporty76 | https://commons.wikimedia.org/wiki/File:Aprilia_SRV_850.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-sx-50-hero.webp` | 2018-01-04 (120) Aprilia SX 50 at Bahnhof Kirchstetten, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2018-01-04_(120)_Aprilia_SX_50_at_Bahnhof_Kirchstetten,_Austria.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sx-50.webp` | 2018-01-04 (120) Aprilia SX 50 at Bahnhof Kirchstetten, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2018-01-04_(120)_Aprilia_SX_50_at_Bahnhof_Kirchstetten,_Austria.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sx-50-thumb.webp` | 2018-01-04 (120) Aprilia SX 50 at Bahnhof Kirchstetten, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2018-01-04_(120)_Aprilia_SX_50_at_Bahnhof_Kirchstetten,_Austria.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-sxr-50-hero.webp` | Aprilia SXR 50 2023.jpg | Sporty76 | https://commons.wikimedia.org/wiki/File:Aprilia_SXR_50_2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sxr-50.webp` | Aprilia SXR 50 2023.jpg | Sporty76 | https://commons.wikimedia.org/wiki/File:Aprilia_SXR_50_2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-sxr-50-thumb.webp` | Aprilia SXR 50 2023.jpg | Sporty76 | https://commons.wikimedia.org/wiki/File:Aprilia_SXR_50_2023.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-sxv-550.webp` | US Navy 091211-M-5041C-034 Staff Sgt. Kyle Graves, right, assigned to the 3rd Marine Regiment, takes his Aprilia SXV 550 through a turn on a motorcycle course during Track Day at Marine Corps Base Hawaii.jpg | U.S. Marine Corps photo by Lance Cpl. Geoffrey T. Campbell | https://commons.wikimedia.org/wiki/File:US_Navy_091211-M-5041C-034_Staff_Sgt._Kyle_Graves,_right,_assigned_to_the_3rd_Marine_Regiment,_takes_his_Aprilia_SXV_550_through_a_turn_on_a_motorcycle_course_during_Track_Day_at_Marine_Corps_Base_Hawaii.jpg | Public domain |  |
-| `store/img/bikes/aprilia-sxv-550-thumb.webp` | US Navy 091211-M-5041C-034 Staff Sgt. Kyle Graves, right, assigned to the 3rd Marine Regiment, takes his Aprilia SXV 550 through a turn on a motorcycle course during Track Day at Marine Corps Base Hawaii.jpg | U.S. Marine Corps photo by Lance Cpl. Geoffrey T. Campbell | https://commons.wikimedia.org/wiki/File:US_Navy_091211-M-5041C-034_Staff_Sgt._Kyle_Graves,_right,_assigned_to_the_3rd_Marine_Regiment,_takes_his_Aprilia_SXV_550_through_a_turn_on_a_motorcycle_course_during_Track_Day_at_Marine_Corps_Base_Hawaii.jpg | Public domain |  |
-| `store/img/bikes/aprilia-tuareg-660.webp` | Aprilia Tuareg 660.jpg | Makoia | https://commons.wikimedia.org/wiki/File:Aprilia_Tuareg_660.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuareg-660-thumb.webp` | Aprilia Tuareg 660.jpg | Makoia | https://commons.wikimedia.org/wiki/File:Aprilia_Tuareg_660.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-1000-r.webp` | Aprilia Tuono 1000 R.jpeg | Banan van Dyk | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000_R.jpeg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-1000-r-thumb.webp` | Aprilia Tuono 1000 R.jpeg | Banan van Dyk | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000_R.jpeg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuareg-660-hero.webp` | Aprilia Tuareg 660 (bearb Sp).jpg | Makoia | https://commons.wikimedia.org/wiki/File:Aprilia_Tuareg_660_(bearb_Sp).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuareg-660.webp` | Aprilia Tuareg 660 (bearb Sp).jpg | Makoia | https://commons.wikimedia.org/wiki/File:Aprilia_Tuareg_660_(bearb_Sp).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuareg-660-thumb.webp` | Aprilia Tuareg 660 (bearb Sp).jpg | Makoia | https://commons.wikimedia.org/wiki/File:Aprilia_Tuareg_660_(bearb_Sp).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-1000-r-factory-hero.webp` | 2008-tuono-1000r-factory.jpg | Hwithaar | https://commons.wikimedia.org/wiki/File:2008-tuono-1000r-factory.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-tuono-1000-r-factory.webp` | 2008-tuono-1000r-factory.jpg | Hwithaar | https://commons.wikimedia.org/wiki/File:2008-tuono-1000r-factory.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-tuono-1000-r-factory-thumb.webp` | 2008-tuono-1000r-factory.jpg | Hwithaar | https://commons.wikimedia.org/wiki/File:2008-tuono-1000r-factory.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-tuono-1000r.webp` | Aprilia Tuono 1000R black.jpg | Brian Snelson | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R_black.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-tuono-1000r-thumb.webp` | Aprilia Tuono 1000R black.jpg | Brian Snelson | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R_black.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-tuono-1000r-factory.webp` | Aprilia Tuono 1000R Factory.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R_Factory.jpg | CC BY 2.0 |  |
-| `store/img/bikes/aprilia-tuono-1000r-factory-thumb.webp` | Aprilia Tuono 1000R Factory.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R_Factory.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-tuono-1000r-hero.webp` | Aprilia Tuono 1000R.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-tuono-1000r.webp` | Aprilia Tuono 1000R.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-tuono-1000r-thumb.webp` | Aprilia Tuono 1000R.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-tuono-125-hero.webp` | Aprilia-tuono-125-motorrad-euro5-2024er.JPG | Wiki-observer | https://commons.wikimedia.org/wiki/File:Aprilia-tuono-125-motorrad-euro5-2024er.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-125.webp` | Aprilia-tuono-125-motorrad-euro5-2024er.JPG | Wiki-observer | https://commons.wikimedia.org/wiki/File:Aprilia-tuono-125-motorrad-euro5-2024er.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-125-thumb.webp` | Aprilia-tuono-125-motorrad-euro5-2024er.JPG | Wiki-observer | https://commons.wikimedia.org/wiki/File:Aprilia-tuono-125-motorrad-euro5-2024er.JPG | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-50.webp` | Aprilia Tuono 50.jpg | Banan van Dyk | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_50.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-50-thumb.webp` | Aprilia Tuono 50.jpg | Banan van Dyk | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_50.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-660.webp` | Aprilia Tuono 660 2019.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_2019.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-660-thumb.webp` | Aprilia Tuono 660 2019.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_2019.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-660-factory.webp` | Aprilia Tuono 660 Factory.jpg | BRNO1991 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_Factory.jpg | CC BY 4.0 |  |
-| `store/img/bikes/aprilia-tuono-660-factory-thumb.webp` | Aprilia Tuono 660 Factory.jpg | BRNO1991 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_Factory.jpg | CC BY 4.0 |  |
+| `store/img/bikes/aprilia-tuono-r-hero.webp` | Aprilia Tuono R Front wheels.jpg | MAbbey | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_R_Front_wheels.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-r.webp` | Aprilia Tuono R Front wheels.jpg | MAbbey | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_R_Front_wheels.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-r-thumb.webp` | Aprilia Tuono R Front wheels.jpg | MAbbey | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_R_Front_wheels.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-v4.webp` | Paris - Salon de la moto 2011 - Aprilia - Tuono V4 R APRC - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Tuono_V4_R_APRC_-_003.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/aprilia-tuono-v4-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Tuono V4 R APRC - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Tuono_V4_R_APRC_-_003.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-hero.webp` | Aprilia Tuono V4 X.jpg | O-Lionel-O | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_X.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4.webp` | Aprilia Tuono V4 X.jpg | O-Lionel-O | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_X.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-thumb.webp` | Aprilia Tuono V4 X.jpg | O-Lionel-O | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_X.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-1100-factory-hero.webp` | Aprilia Tuono V4 1100 Factory (2018).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_1100_Factory_(2018).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-v4-1100-factory.webp` | Aprilia Tuono V4 1100 Factory (2018).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_1100_Factory_(2018).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-v4-1100-factory-thumb.webp` | Aprilia Tuono V4 1100 Factory (2018).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_1100_Factory_(2018).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-v4-factory.webp` | Aprilia Tuono V4 Factory (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_Factory_(2).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/aprilia-tuono-v4-factory-thumb.webp` | Aprilia Tuono V4 Factory (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_Factory_(2).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-factory-hero.webp` | Aprilia Tuono v4 1100 Factory 2025.jpg | O-Lionel-O | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_v4_1100_Factory_2025.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-factory.webp` | Aprilia Tuono v4 1100 Factory 2025.jpg | O-Lionel-O | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_v4_1100_Factory_2025.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-factory-thumb.webp` | Aprilia Tuono v4 1100 Factory 2025.jpg | O-Lionel-O | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_v4_1100_Factory_2025.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-r-hero.webp` | Aprilia Tuono V4 R (2014).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_R_(2014).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-v4-r.webp` | Aprilia Tuono V4 R (2014).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_R_(2014).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-v4-r-thumb.webp` | Aprilia Tuono V4 R (2014).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_R_(2014).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-v4-r-aprc-hero.webp` | Tuono V4 R APRC.jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Tuono_V4_R_APRC.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-v4-r-aprc.webp` | Tuono V4 R APRC.jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Tuono_V4_R_APRC.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-v4-r-aprc-thumb.webp` | Tuono V4 R APRC.jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Tuono_V4_R_APRC.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bajaj-dominar-400.webp` | Moscow, Bajaj Dominar 400 green, Aug 2026 04.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Bajaj_Dominar_400_green,_Aug_2026_04.jpg | CC0 |  |
-| `store/img/bikes/bajaj-dominar-400-thumb.webp` | Moscow, Bajaj Dominar 400 green, Aug 2026 04.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Bajaj_Dominar_400_green,_Aug_2026_04.jpg | CC0 |  |
+| `store/img/bikes/bajaj-dominar-400-hero.webp` | Dominar 400.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Dominar_400.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bajaj-dominar-400.webp` | Dominar 400.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Dominar_400.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bajaj-dominar-400-thumb.webp` | Dominar 400.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Dominar_400.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-1-hero.webp` | BMW C1 c 2006-09-30.jpg | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_C1_c_2006-09-30.jpg | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-c-1.webp` | BMW C1 c 2006-09-30.jpg | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_C1_c_2006-09-30.jpg | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-c-1-thumb.webp` | BMW C1 c 2006-09-30.jpg | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_C1_c_2006-09-30.jpg | CC BY-SA 3.0 de |  |
+| `store/img/bikes/bmw-c-400-gt-hero.webp` | BMW C 400 GT - Javagrün metallic.jpg | Kaule79 | https://commons.wikimedia.org/wiki/File:BMW_C_400_GT_-_Javagr%C3%BCn_metallic.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-c-400-gt.webp` | BMW C 400 GT - Javagrün metallic.jpg | Kaule79 | https://commons.wikimedia.org/wiki/File:BMW_C_400_GT_-_Javagr%C3%BCn_metallic.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-c-400-gt-thumb.webp` | BMW C 400 GT - Javagrün metallic.jpg | Kaule79 | https://commons.wikimedia.org/wiki/File:BMW_C_400_GT_-_Javagr%C3%BCn_metallic.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-c-400-x.webp` | BMW C400X 2025.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:BMW_C400X_2025.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-c-400-x-thumb.webp` | BMW C400X 2025.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:BMW_C400X_2025.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-400-x-hero.webp` | Bmw c400x grey.jpg | Bayahusa | https://commons.wikimedia.org/wiki/File:Bmw_c400x_grey.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-400-x.webp` | Bmw c400x grey.jpg | Bayahusa | https://commons.wikimedia.org/wiki/File:Bmw_c400x_grey.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-400-x-thumb.webp` | Bmw c400x grey.jpg | Bayahusa | https://commons.wikimedia.org/wiki/File:Bmw_c400x_grey.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-600-sport-hero.webp` | Motorroller BMW C600 Sport P2RM0105.jpg | Ermell | https://commons.wikimedia.org/wiki/File:Motorroller_BMW_C600_Sport_P2RM0105.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-c-600-sport.webp` | Motorroller BMW C600 Sport P2RM0105.jpg | Ermell | https://commons.wikimedia.org/wiki/File:Motorroller_BMW_C600_Sport_P2RM0105.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-c-600-sport-thumb.webp` | Motorroller BMW C600 Sport P2RM0105.jpg | Ermell | https://commons.wikimedia.org/wiki/File:Motorroller_BMW_C600_Sport_P2RM0105.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-c-650-gt.webp` | Paris - Salon de la moto 2011 - BMW - C 650 GT et hôtesses - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_C_650_GT_et_h%C3%B4tesses_-_003.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-c-650-gt-thumb.webp` | Paris - Salon de la moto 2011 - BMW - C 650 GT et hôtesses - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_C_650_GT_et_h%C3%B4tesses_-_003.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-c-650-gt-hero.webp` | BMW C 650 GT, left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_C_650_GT,_left_view.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-650-gt.webp` | BMW C 650 GT, left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_C_650_GT,_left_view.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-c-650-gt-thumb.webp` | BMW C 650 GT, left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_C_650_GT,_left_view.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-c-evolution.webp` | BMW C Evolution 2014-05-25.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_C_Evolution_2014-05-25.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-c-evolution-thumb.webp` | BMW C Evolution 2014-05-25.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_C_Evolution_2014-05-25.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-c1-125-hero.webp` | BMW C1 125 (16262701158).jpg | Dennis Elzinga | https://commons.wikimedia.org/wiki/File:BMW_C1_125_(16262701158).jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-c1-125.webp` | BMW C1 125 (16262701158).jpg | Dennis Elzinga | https://commons.wikimedia.org/wiki/File:BMW_C1_125_(16262701158).jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-c1-125-thumb.webp` | BMW C1 125 (16262701158).jpg | Dennis Elzinga | https://commons.wikimedia.org/wiki/File:BMW_C1_125_(16262701158).jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-c1-200.webp` | Wuppertal, Gartenstr. östl. Querung Elisenstr., BMW C1 200, Bild 3.jpg | Im Fokus | https://commons.wikimedia.org/wiki/File:Wuppertal,_Gartenstr._%C3%B6stl._Querung_Elisenstr.,_BMW_C1_200,_Bild_3.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-c1-200-thumb.webp` | Wuppertal, Gartenstr. östl. Querung Elisenstr., BMW C1 200, Bild 3.jpg | Im Fokus | https://commons.wikimedia.org/wiki/File:Wuppertal,_Gartenstr._%C3%B6stl._Querung_Elisenstr.,_BMW_C1_200,_Bild_3.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-ce-02.webp` | BMW CE 02 side-rear 2024-06-07.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:BMW_CE_02_side-rear_2024-06-07.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-ce-02-thumb.webp` | BMW CE 02 side-rear 2024-06-07.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:BMW_CE_02_side-rear_2024-06-07.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-ce-04.webp` | 2024-06 BMW CE 04.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:2024-06_BMW_CE_04.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-ce-04-thumb.webp` | 2024-06 BMW CE 04.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:2024-06_BMW_CE_04.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-concept-lac-rose.webp` | BMW concept Lac Rose - Mondial de l'Automobile de Paris 2016 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:BMW_concept_Lac_Rose_-_Mondial_de_l'Automobile_de_Paris_2016_-_001.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-concept-lac-rose-thumb.webp` | BMW concept Lac Rose - Mondial de l'Automobile de Paris 2016 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:BMW_concept_Lac_Rose_-_Mondial_de_l'Automobile_de_Paris_2016_-_001.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-concept-link.webp` | BMW Motorrad Concept Link, IAA 2017, Frankfurt (1Y7A1806).jpg | Matti Blume | https://commons.wikimedia.org/wiki/File:BMW_Motorrad_Concept_Link,_IAA_2017,_Frankfurt_(1Y7A1806).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-concept-link-thumb.webp` | BMW Motorrad Concept Link, IAA 2017, Frankfurt (1Y7A1806).jpg | Matti Blume | https://commons.wikimedia.org/wiki/File:BMW_Motorrad_Concept_Link,_IAA_2017,_Frankfurt_(1Y7A1806).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-definition-ce-04.webp` | BMW MOTORRAD Definition CE 04, 49th Tokyo Motorcycle Show (2022).png | Mj-bird | https://commons.wikimedia.org/wiki/File:BMW_MOTORRAD_Definition_CE_04,_49th_Tokyo_Motorcycle_Show_(2022).png | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-definition-ce-04-thumb.webp` | BMW MOTORRAD Definition CE 04, 49th Tokyo Motorcycle Show (2022).png | Mj-bird | https://commons.wikimedia.org/wiki/File:BMW_MOTORRAD_Definition_CE_04,_49th_Tokyo_Motorcycle_Show_(2022).png | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-450-gs.webp` | BMW F 450 GS (1b).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_F_450_GS_(1b).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-450-gs-thumb.webp` | BMW F 450 GS (1b).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_F_450_GS_(1b).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-650-cs.webp` | Tandriem BMW F 650 CS02.JPG | Piero | https://commons.wikimedia.org/wiki/File:Tandriem_BMW_F_650_CS02.JPG | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-650-cs-thumb.webp` | Tandriem BMW F 650 CS02.JPG | Piero | https://commons.wikimedia.org/wiki/File:Tandriem_BMW_F_650_CS02.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-ce-02-hero.webp` | BMW CE 02 IAA 2023 1X7A0423.jpg | Alexander-93 | https://commons.wikimedia.org/wiki/File:BMW_CE_02_IAA_2023_1X7A0423.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-ce-02.webp` | BMW CE 02 IAA 2023 1X7A0423.jpg | Alexander-93 | https://commons.wikimedia.org/wiki/File:BMW_CE_02_IAA_2023_1X7A0423.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-ce-02-thumb.webp` | BMW CE 02 IAA 2023 1X7A0423.jpg | Alexander-93 | https://commons.wikimedia.org/wiki/File:BMW_CE_02_IAA_2023_1X7A0423.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-ce-04-hero.webp` | BMW CE 04 in Munich.jpg | AuHaidhausen | https://commons.wikimedia.org/wiki/File:BMW_CE_04_in_Munich.jpg | CC BY 4.0 |  |
+| `store/img/bikes/bmw-ce-04.webp` | BMW CE 04 in Munich.jpg | AuHaidhausen | https://commons.wikimedia.org/wiki/File:BMW_CE_04_in_Munich.jpg | CC BY 4.0 |  |
+| `store/img/bikes/bmw-ce-04-thumb.webp` | BMW CE 04 in Munich.jpg | AuHaidhausen | https://commons.wikimedia.org/wiki/File:BMW_CE_04_in_Munich.jpg | CC BY 4.0 |  |
+| `store/img/bikes/bmw-f-650-cs-hero.webp` | 2002 BMW F650CS 3-4 view.jpg | DaSchick at English Wikipedia | https://commons.wikimedia.org/wiki/File:2002_BMW_F650CS_3-4_view.jpg | CC BY 3.0 |  |
+| `store/img/bikes/bmw-f-650-cs.webp` | 2002 BMW F650CS 3-4 view.jpg | DaSchick at English Wikipedia | https://commons.wikimedia.org/wiki/File:2002_BMW_F650CS_3-4_view.jpg | CC BY 3.0 |  |
+| `store/img/bikes/bmw-f-650-cs-thumb.webp` | 2002 BMW F650CS 3-4 view.jpg | DaSchick at English Wikipedia | https://commons.wikimedia.org/wiki/File:2002_BMW_F650CS_3-4_view.jpg | CC BY 3.0 |  |
+| `store/img/bikes/bmw-f-650-cs-scarver-hero.webp` | BMW F650CS scarver.jpg | John Wright | https://commons.wikimedia.org/wiki/File:BMW_F650CS_scarver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-f-650-cs-scarver.webp` | BMW F650CS scarver.jpg | John Wright | https://commons.wikimedia.org/wiki/File:BMW_F650CS_scarver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-f-650-cs-scarver-thumb.webp` | BMW F650CS scarver.jpg | John Wright | https://commons.wikimedia.org/wiki/File:BMW_F650CS_scarver.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-f-650-gs-hero.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-650-gs.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-650-gs-thumb.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-650-gs-dakar.webp` | BMW F 650 GS Dakar 2004 (14558100221).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_650_GS_Dakar_2004_(14558100221).jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-f-650-gs-dakar-thumb.webp` | BMW F 650 GS Dakar 2004 (14558100221).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_650_GS_Dakar_2004_(14558100221).jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-f-700-gs.webp` | BMW F 700 GS.jpg | Armin Vogel | https://commons.wikimedia.org/wiki/File:BMW_F_700_GS.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-f-700-gs-thumb.webp` | BMW F 700 GS.jpg | Armin Vogel | https://commons.wikimedia.org/wiki/File:BMW_F_700_GS.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-f-700-gs-hero.webp` | BMW F700 GS Centrepoint Church 240 Hamilton Rd Chermside L1020346a.jpg | John Robert McPherson | https://commons.wikimedia.org/wiki/File:BMW_F700_GS_Centrepoint_Church_240_Hamilton_Rd_Chermside_L1020346a.jpg | CC0 |  |
+| `store/img/bikes/bmw-f-700-gs.webp` | BMW F700 GS Centrepoint Church 240 Hamilton Rd Chermside L1020346a.jpg | John Robert McPherson | https://commons.wikimedia.org/wiki/File:BMW_F700_GS_Centrepoint_Church_240_Hamilton_Rd_Chermside_L1020346a.jpg | CC0 |  |
+| `store/img/bikes/bmw-f-700-gs-thumb.webp` | BMW F700 GS Centrepoint Church 240 Hamilton Rd Chermside L1020346a.jpg | John Robert McPherson | https://commons.wikimedia.org/wiki/File:BMW_F700_GS_Centrepoint_Church_240_Hamilton_Rd_Chermside_L1020346a.jpg | CC0 |  |
+| `store/img/bikes/bmw-f-750-gs-hero.webp` | BMW F 750 GS, Baujahr 2018, Farbe Austin Yellow metallic (2019-04-21).JPG | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-750-gs.webp` | BMW F 750 GS, Baujahr 2018, Farbe Austin Yellow metallic (2019-04-21).JPG | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-750-gs-thumb.webp` | BMW F 750 GS, Baujahr 2018, Farbe Austin Yellow metallic (2019-04-21).JPG | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-800-gs.webp` | Paris - Salon de la moto 2011 - BMW - F 800 GS Trophy - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_GS_Trophy_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-gs-thumb.webp` | Paris - Salon de la moto 2011 - BMW - F 800 GS Trophy - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_GS_Trophy_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-gs-adventure.webp` | BMW F 800 GS Adventure 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-gs-adventure-thumb.webp` | BMW F 800 GS Adventure 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-gt.webp` | BMW F 800 GT 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GT_2013.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-gt-thumb.webp` | BMW F 800 GT 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GT_2013.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-r.webp` | Paris - Salon de la moto 2011 - BMW - F 800 R - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_R_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-r-thumb.webp` | Paris - Salon de la moto 2011 - BMW - F 800 R - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_R_-_001.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-f-800-gs-hero.webp` | BMW F 800 GS 2013 (10546845423).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f-800-gs.webp` | BMW F 800 GS 2013 (10546845423).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f-800-gs-thumb.webp` | BMW F 800 GS 2013 (10546845423).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f-800-gt-hero.webp` | BMW F800GT white.JPG | Wesalius | https://commons.wikimedia.org/wiki/File:BMW_F800GT_white.JPG | CC BY 4.0 |  |
+| `store/img/bikes/bmw-f-800-gt.webp` | BMW F800GT white.JPG | Wesalius | https://commons.wikimedia.org/wiki/File:BMW_F800GT_white.JPG | CC BY 4.0 |  |
+| `store/img/bikes/bmw-f-800-gt-thumb.webp` | BMW F800GT white.JPG | Wesalius | https://commons.wikimedia.org/wiki/File:BMW_F800GT_white.JPG | CC BY 4.0 |  |
+| `store/img/bikes/bmw-f-800-s-hero.webp` | BMW F 800 S 01.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_F_800_S_01.JPG | Public domain |  |
 | `store/img/bikes/bmw-f-800-s.webp` | BMW F 800 S 01.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_F_800_S_01.JPG | Public domain |  |
 | `store/img/bikes/bmw-f-800-s-thumb.webp` | BMW F 800 S 01.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_F_800_S_01.JPG | Public domain |  |
-| `store/img/bikes/bmw-f-800-st.webp` | Paris - Salon de la moto 2011 - BMW - F 800 ST - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_ST_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-800-st-thumb.webp` | Paris - Salon de la moto 2011 - BMW - F 800 ST - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_ST_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-f-850-gs.webp` | BMW F850GS Adventure Rallye 2020.jpg | Franken-Guzzista | https://commons.wikimedia.org/wiki/File:BMW_F850GS_Adventure_Rallye_2020.jpg | CC0 |  |
-| `store/img/bikes/bmw-f-850-gs-thumb.webp` | BMW F850GS Adventure Rallye 2020.jpg | Franken-Guzzista | https://commons.wikimedia.org/wiki/File:BMW_F850GS_Adventure_Rallye_2020.jpg | CC0 |  |
-| `store/img/bikes/bmw-f-900-gs.webp` | BMW F900 GS left 2024-06.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:BMW_F900_GS_left_2024-06.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-900-gs-thumb.webp` | BMW F900 GS left 2024-06.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:BMW_F900_GS_left_2024-06.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-900-r.webp` | BMW F900R (3).jpg | Wiki LIC | https://commons.wikimedia.org/wiki/File:BMW_F900R_(3).jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-f-900-r-thumb.webp` | BMW F900R (3).jpg | Wiki LIC | https://commons.wikimedia.org/wiki/File:BMW_F900R_(3).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-800-st-hero.webp` | 2007 BMW F800ST motorcycle photograph by Lake.jpg | Stillhere140 | https://commons.wikimedia.org/wiki/File:2007_BMW_F800ST_motorcycle_photograph_by_Lake.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-800-st.webp` | 2007 BMW F800ST motorcycle photograph by Lake.jpg | Stillhere140 | https://commons.wikimedia.org/wiki/File:2007_BMW_F800ST_motorcycle_photograph_by_Lake.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-800-st-thumb.webp` | 2007 BMW F800ST motorcycle photograph by Lake.jpg | Stillhere140 | https://commons.wikimedia.org/wiki/File:2007_BMW_F800ST_motorcycle_photograph_by_Lake.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-850-gs-hero.webp` | BMW F 850 GS, Baujahr 2018 (2019-04-14).jpg | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_850_GS,_Baujahr_2018_(2019-04-14).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-850-gs.webp` | BMW F 850 GS, Baujahr 2018 (2019-04-14).jpg | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_850_GS,_Baujahr_2018_(2019-04-14).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-850-gs-thumb.webp` | BMW F 850 GS, Baujahr 2018 (2019-04-14).jpg | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_850_GS,_Baujahr_2018_(2019-04-14).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-900-r-hero.webp` | BMW F900R (12) JDL.jpg | Wiki LIC | https://commons.wikimedia.org/wiki/File:BMW_F900R_(12)_JDL.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-900-r.webp` | BMW F900R (12) JDL.jpg | Wiki LIC | https://commons.wikimedia.org/wiki/File:BMW_F900R_(12)_JDL.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-900-r-thumb.webp` | BMW F900R (12) JDL.jpg | Wiki LIC | https://commons.wikimedia.org/wiki/File:BMW_F900R_(12)_JDL.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-f-900-xr-hero.webp` | BMW F 900 XR, Heck (2024-05-04 Sp ret).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_F_900_XR,_Heck_(2024-05-04_Sp_ret).JPG | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-f-900-xr.webp` | BMW F 900 XR, Heck (2024-05-04 Sp ret).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_F_900_XR,_Heck_(2024-05-04_Sp_ret).JPG | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-f-900-xr-thumb.webp` | BMW F 900 XR, Heck (2024-05-04 Sp ret).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_F_900_XR,_Heck_(2024-05-04_Sp_ret).JPG | CC BY-SA 3.0 de |  |
-| `store/img/bikes/bmw-f650gs.webp` | BMW F650GS 2008.jpg | Stephen Burns from Los Gatos, CA, USA | https://commons.wikimedia.org/wiki/File:BMW_F650GS_2008.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-f650gs-thumb.webp` | BMW F650GS 2008.jpg | Stephen Burns from Los Gatos, CA, USA | https://commons.wikimedia.org/wiki/File:BMW_F650GS_2008.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-f650gs-hero.webp` | BMW F650GS panniers.jpg | J Brew | https://commons.wikimedia.org/wiki/File:BMW_F650GS_panniers.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f650gs.webp` | BMW F650GS panniers.jpg | J Brew | https://commons.wikimedia.org/wiki/File:BMW_F650GS_panniers.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f650gs-thumb.webp` | BMW F650GS panniers.jpg | J Brew | https://commons.wikimedia.org/wiki/File:BMW_F650GS_panniers.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f650gs-dakar-hero.webp` | F 650 gs dakar.jpg | knoerz | https://commons.wikimedia.org/wiki/File:F_650_gs_dakar.jpg | Public domain |  |
 | `store/img/bikes/bmw-f650gs-dakar.webp` | F 650 gs dakar.jpg | knoerz | https://commons.wikimedia.org/wiki/File:F_650_gs_dakar.jpg | Public domain |  |
 | `store/img/bikes/bmw-f650gs-dakar-thumb.webp` | F 650 gs dakar.jpg | knoerz | https://commons.wikimedia.org/wiki/File:F_650_gs_dakar.jpg | Public domain |  |
-| `store/img/bikes/bmw-f800-s.webp` | BMW F 800 S.jpg | Benedikt Schnur | https://commons.wikimedia.org/wiki/File:BMW_F_800_S.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-f800-s-thumb.webp` | BMW F 800 S.jpg | Benedikt Schnur | https://commons.wikimedia.org/wiki/File:BMW_F_800_S.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-f800-st-hero.webp` | 2007 BMW F800ST motorcycle at sunset.jpg | Stillhere140 | https://commons.wikimedia.org/wiki/File:2007_BMW_F800ST_motorcycle_at_sunset.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f800-st.webp` | 2007 BMW F800ST motorcycle at sunset.jpg | Stillhere140 | https://commons.wikimedia.org/wiki/File:2007_BMW_F800ST_motorcycle_at_sunset.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f800-st-thumb.webp` | 2007 BMW F800ST motorcycle at sunset.jpg | Stillhere140 | https://commons.wikimedia.org/wiki/File:2007_BMW_F800ST_motorcycle_at_sunset.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-g-310-gs.webp` | BMW G310 GS 2023-04.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:BMW_G310_GS_2023-04.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-g-310-gs-thumb.webp` | BMW G310 GS 2023-04.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:BMW_G310_GS_2023-04.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-g-310-gs-hero.webp` | Bmw g310gs blau.jpg | Bayahusa | https://commons.wikimedia.org/wiki/File:Bmw_g310gs_blau.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-g-310-gs.webp` | Bmw g310gs blau.jpg | Bayahusa | https://commons.wikimedia.org/wiki/File:Bmw_g310gs_blau.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-g-310-gs-thumb.webp` | Bmw g310gs blau.jpg | Bayahusa | https://commons.wikimedia.org/wiki/File:Bmw_g310gs_blau.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-g-310-r-hero.webp` | BMW G 310 R.jpg | Erluw | https://commons.wikimedia.org/wiki/File:BMW_G_310_R.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-g-310-r.webp` | BMW G 310 R.jpg | Erluw | https://commons.wikimedia.org/wiki/File:BMW_G_310_R.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-g-310-r-thumb.webp` | BMW G 310 R.jpg | Erluw | https://commons.wikimedia.org/wiki/File:BMW_G_310_R.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-g-450-x.webp` | BMW G450X.jpg | https://www.flickr.com/photos/63019370@N06/ | https://commons.wikimedia.org/wiki/File:BMW_G450X.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-g-450-x-thumb.webp` | BMW G450X.jpg | https://www.flickr.com/photos/63019370@N06/ | https://commons.wikimedia.org/wiki/File:BMW_G450X.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-g-650-gs.webp` | BMW G 650 GS Modell 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_G_650_GS_Modell_2013.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-g-650-gs-thumb.webp` | BMW G 650 GS Modell 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_G_650_GS_Modell_2013.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-g-650-xchallenge.webp` | BMW G650 Xchallenge - dirty.jpg | Stephen Burns | https://commons.wikimedia.org/wiki/File:BMW_G650_Xchallenge_-_dirty.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-g-650-xchallenge-thumb.webp` | BMW G650 Xchallenge - dirty.jpg | Stephen Burns | https://commons.wikimedia.org/wiki/File:BMW_G650_Xchallenge_-_dirty.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-g650x-challenge.webp` | BMW G650X Challenge.jpg | R. Hilger | https://commons.wikimedia.org/wiki/File:BMW_G650X_Challenge.jpg | Public domain |  |
-| `store/img/bikes/bmw-g650x-challenge-thumb.webp` | BMW G650X Challenge.jpg | R. Hilger | https://commons.wikimedia.org/wiki/File:BMW_G650X_Challenge.jpg | Public domain |  |
-| `store/img/bikes/bmw-hp2-megamoto.webp` | BMW HP2 Megamoto.jpg | Reg Mckenna from UK | https://commons.wikimedia.org/wiki/File:BMW_HP2_Megamoto.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-hp2-megamoto-thumb.webp` | BMW HP2 Megamoto.jpg | Reg Mckenna from UK | https://commons.wikimedia.org/wiki/File:BMW_HP2_Megamoto.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-g-650-gs-hero.webp` | G 650 GS - 2012 01 - Marcelorts.JPG | Marcelorts | https://commons.wikimedia.org/wiki/File:G_650_GS_-_2012_01_-_Marcelorts.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-g-650-gs.webp` | G 650 GS - 2012 01 - Marcelorts.JPG | Marcelorts | https://commons.wikimedia.org/wiki/File:G_650_GS_-_2012_01_-_Marcelorts.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-g-650-gs-thumb.webp` | G 650 GS - 2012 01 - Marcelorts.JPG | Marcelorts | https://commons.wikimedia.org/wiki/File:G_650_GS_-_2012_01_-_Marcelorts.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-g-650-xchallenge-hero.webp` | BMW G 650 Xchallenge.jpg | Massimiliano Lincetto | https://commons.wikimedia.org/wiki/File:BMW_G_650_Xchallenge.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-g-650-xchallenge.webp` | BMW G 650 Xchallenge.jpg | Massimiliano Lincetto | https://commons.wikimedia.org/wiki/File:BMW_G_650_Xchallenge.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-g-650-xchallenge-thumb.webp` | BMW G 650 Xchallenge.jpg | Massimiliano Lincetto | https://commons.wikimedia.org/wiki/File:BMW_G_650_Xchallenge.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-hp2-sport-hero.webp` | BMW HP2 Sport (2011-08-13 Sp).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_HP2_Sport_(2011-08-13_Sp).JPG | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-hp2-sport.webp` | BMW HP2 Sport (2011-08-13 Sp).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_HP2_Sport_(2011-08-13_Sp).JPG | CC BY-SA 3.0 de |  |
 | `store/img/bikes/bmw-hp2-sport-thumb.webp` | BMW HP2 Sport (2011-08-13 Sp).JPG | Lothar Spurzem | https://commons.wikimedia.org/wiki/File:BMW_HP2_Sport_(2011-08-13_Sp).JPG | CC BY-SA 3.0 de |  |
+| `store/img/bikes/bmw-hp4-hero.webp` | BMW S 1000 RR HP4 (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_S_1000_RR_HP4_(2).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-hp4.webp` | BMW S 1000 RR HP4 (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_S_1000_RR_HP4_(2).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-hp4-thumb.webp` | BMW S 1000 RR HP4 (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_S_1000_RR_HP4_(2).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-hp4-race-hero.webp` | HP4-Race-AlexK.jpg | Alexk64 | https://commons.wikimedia.org/wiki/File:HP4-Race-AlexK.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-hp4-race.webp` | HP4-Race-AlexK.jpg | Alexk64 | https://commons.wikimedia.org/wiki/File:HP4-Race-AlexK.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-hp4-race-thumb.webp` | HP4-Race-AlexK.jpg | Alexk64 | https://commons.wikimedia.org/wiki/File:HP4-Race-AlexK.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-k-1200-gt-hero.webp` | BMW K1200GT grey.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_grey.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-k-1200-gt.webp` | BMW K1200GT grey.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_grey.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-k-1200-gt-thumb.webp` | BMW K1200GT grey.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_grey.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-k-1200-lt.webp` | BMW K 1200 LT - 14048885653.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K_1200_LT_-_14048885653.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-k-1200-lt-thumb.webp` | BMW K 1200 LT - 14048885653.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K_1200_LT_-_14048885653.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-k-1200-r.webp` | BMW K 1200 R DSCF0393.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:BMW_K_1200_R_DSCF0393.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-k-1200-r-thumb.webp` | BMW K 1200 R DSCF0393.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:BMW_K_1200_R_DSCF0393.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-k-1200-r-sport.webp` | BMW K 1200 R Sport blue r TCE.jpg | Stahlkocher | https://commons.wikimedia.org/wiki/File:BMW_K_1200_R_Sport_blue_r_TCE.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1200-r-sport-thumb.webp` | BMW K 1200 R Sport blue r TCE.jpg | Stahlkocher | https://commons.wikimedia.org/wiki/File:BMW_K_1200_R_Sport_blue_r_TCE.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1200-rs.webp` | 2001 BMW K1200RS 1.2 Rear.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2001_BMW_K1200RS_1.2_Rear.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-k-1200-rs-thumb.webp` | 2001 BMW K1200RS 1.2 Rear.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2001_BMW_K1200RS_1.2_Rear.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-k-1200-lt-hero.webp` | BMW K 1200 LT - 15062278736.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K_1200_LT_-_15062278736.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-k-1200-lt.webp` | BMW K 1200 LT - 15062278736.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K_1200_LT_-_15062278736.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-k-1200-lt-thumb.webp` | BMW K 1200 LT - 15062278736.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K_1200_LT_-_15062278736.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-k-1200-rs-hero.webp` | BMW K1200RS Facelift 1.JPG | Pierre Scheidegger | https://commons.wikimedia.org/wiki/File:BMW_K1200RS_Facelift_1.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k-1200-rs.webp` | BMW K1200RS Facelift 1.JPG | Pierre Scheidegger | https://commons.wikimedia.org/wiki/File:BMW_K1200RS_Facelift_1.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k-1200-rs-thumb.webp` | BMW K1200RS Facelift 1.JPG | Pierre Scheidegger | https://commons.wikimedia.org/wiki/File:BMW_K1200RS_Facelift_1.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k-1200-s-hero.webp` | BMW K1200S, right view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K1200S,_right_view.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-k-1200-s.webp` | BMW K1200S, right view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K1200S,_right_view.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-k-1200-s-thumb.webp` | BMW K1200S, right view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K1200S,_right_view.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-k-1300-gt-hero.webp` | BMW K1300GT - Left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K1300GT_-_Left_view.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-k-1300-gt.webp` | BMW K1300GT - Left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K1300GT_-_Left_view.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-k-1300-gt-thumb.webp` | BMW K1300GT - Left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K1300GT_-_Left_view.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-k-1300-r.webp` | 2012 BMW K1300R Carbon in Cornwall, England.jpg | LWKH | https://commons.wikimedia.org/wiki/File:2012_BMW_K1300R_Carbon_in_Cornwall,_England.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-k-1300-r-thumb.webp` | 2012 BMW K1300R Carbon in Cornwall, England.jpg | LWKH | https://commons.wikimedia.org/wiki/File:2012_BMW_K1300R_Carbon_in_Cornwall,_England.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-k-1300-s.webp` | Paris - Salon de la moto 2011 - BMW - K 1300 S HP - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1300_S_HP_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1300-s-thumb.webp` | Paris - Salon de la moto 2011 - BMW - K 1300 S HP - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1300_S_HP_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1300-s-hp.webp` | Paris - Salon de la moto 2011 - BMW - K 1300 S HP - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1300_S_HP_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1300-s-hp-thumb.webp` | Paris - Salon de la moto 2011 - BMW - K 1300 S HP - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1300_S_HP_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1600-gt.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GT - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GT_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1600-gt-thumb.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GT - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GT_-_001.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1600-gtl.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k-1600-gtl-thumb.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-k1200-gt.webp` | BMW K1200GT 2006.JPG | User:Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_2006.JPG | CC BY-SA 2.5 |  |
-| `store/img/bikes/bmw-k1200-gt-thumb.webp` | BMW K1200GT 2006.JPG | User:Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_2006.JPG | CC BY-SA 2.5 |  |
+| `store/img/bikes/bmw-k-1300-r-hero.webp` | BMW K 1300 R (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K_1300_R_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-k-1300-r.webp` | BMW K 1300 R (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K_1300_R_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-k-1300-r-thumb.webp` | BMW K 1300 R (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_K_1300_R_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-k-1300-s-hero.webp` | BMW K 1300 S Lupinblau metallic Alpinweiss uni Saphirschwarz metallic.jpg | BMW Group PressClub | https://commons.wikimedia.org/wiki/File:BMW_K_1300_S_Lupinblau_metallic_Alpinweiss_uni_Saphirschwarz_metallic.jpg | CC0 |  |
+| `store/img/bikes/bmw-k-1300-s.webp` | BMW K 1300 S Lupinblau metallic Alpinweiss uni Saphirschwarz metallic.jpg | BMW Group PressClub | https://commons.wikimedia.org/wiki/File:BMW_K_1300_S_Lupinblau_metallic_Alpinweiss_uni_Saphirschwarz_metallic.jpg | CC0 |  |
+| `store/img/bikes/bmw-k-1300-s-thumb.webp` | BMW K 1300 S Lupinblau metallic Alpinweiss uni Saphirschwarz metallic.jpg | BMW Group PressClub | https://commons.wikimedia.org/wiki/File:BMW_K_1300_S_Lupinblau_metallic_Alpinweiss_uni_Saphirschwarz_metallic.jpg | CC0 |  |
+| `store/img/bikes/bmw-k-1600-gt-hero.webp` | BMW K 1600 GT 02.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_K_1600_GT_02.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k-1600-gt.webp` | BMW K 1600 GT 02.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_K_1600_GT_02.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k-1600-gt-thumb.webp` | BMW K 1600 GT 02.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_K_1600_GT_02.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k1200-gt-hero.webp` | BMW K1200GT.jpg | Theo at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_K1200GT.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k1200-gt.webp` | BMW K1200GT.jpg | Theo at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_K1200GT.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k1200-gt-thumb.webp` | BMW K1200GT.jpg | Theo at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_K1200GT.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k1200gt-hero.webp` | BMW K1200GT silver.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_silver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-k1200gt.webp` | BMW K1200GT silver.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_silver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-k1200gt-thumb.webp` | BMW K1200GT silver.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_silver.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-k1200lt-hero.webp` | BMW K1200LT - 14048874193.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K1200LT_-_14048874193.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/bmw-k1200lt.webp` | BMW K1200LT - 14048874193.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K1200LT_-_14048874193.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/bmw-k1200lt-thumb.webp` | BMW K1200LT - 14048874193.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K1200LT_-_14048874193.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-k1200r.webp` | BMW K1200R NAIAS 2007.jpg | Scott Smith | https://commons.wikimedia.org/wiki/File:BMW_K1200R_NAIAS_2007.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-k1200r-thumb.webp` | BMW K1200R NAIAS 2007.jpg | Scott Smith | https://commons.wikimedia.org/wiki/File:BMW_K1200R_NAIAS_2007.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-k1200s.webp` | BMW K1200S closeup.jpg | David Dawson from Addlestone, UK | https://commons.wikimedia.org/wiki/File:BMW_K1200S_closeup.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-k1200s-thumb.webp` | BMW K1200S closeup.jpg | David Dawson from Addlestone, UK | https://commons.wikimedia.org/wiki/File:BMW_K1200S_closeup.jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-m-1000-rr.webp` | BMW S 1000 RR - BMW M 1000 RR 50 Years M (22121615413).jpg | 先従隗始 | https://commons.wikimedia.org/wiki/File:BMW_S_1000_RR_-_BMW_M_1000_RR_50_Years_M_(22121615413).jpg | CC0 |  |
-| `store/img/bikes/bmw-m-1000-rr-thumb.webp` | BMW S 1000 RR - BMW M 1000 RR 50 Years M (22121615413).jpg | 先従隗始 | https://commons.wikimedia.org/wiki/File:BMW_S_1000_RR_-_BMW_M_1000_RR_50_Years_M_(22121615413).jpg | CC0 |  |
-| `store/img/bikes/bmw-r-1100-s.webp` | 2001 BMW R1100S.JPG | Malber | https://commons.wikimedia.org/wiki/File:2001_BMW_R1100S.JPG | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-r-1100-s-thumb.webp` | 2001 BMW R1100S.JPG | Malber | https://commons.wikimedia.org/wiki/File:2001_BMW_R1100S.JPG | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-r-1100-s-boxercup-replica.webp` | BMW R 1100 S Boxer Cup Replica.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_R_1100_S_Boxer_Cup_Replica.JPG | Public domain |  |
-| `store/img/bikes/bmw-r-1100-s-boxercup-replica-thumb.webp` | BMW R 1100 S Boxer Cup Replica.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_R_1100_S_Boxer_Cup_Replica.JPG | Public domain |  |
+| `store/img/bikes/bmw-k1200r-hero.webp` | BMW K1200R dark grey.jpg | Jean-Pierre | https://commons.wikimedia.org/wiki/File:BMW_K1200R_dark_grey.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-k1200r.webp` | BMW K1200R dark grey.jpg | Jean-Pierre | https://commons.wikimedia.org/wiki/File:BMW_K1200R_dark_grey.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-k1200r-thumb.webp` | BMW K1200R dark grey.jpg | Jean-Pierre | https://commons.wikimedia.org/wiki/File:BMW_K1200R_dark_grey.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/bmw-k1200s-hero.webp` | BMW K1200S front-left.jpg | David Dawson from Addlestone, UK | https://commons.wikimedia.org/wiki/File:BMW_K1200S_front-left.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-k1200s.webp` | BMW K1200S front-left.jpg | David Dawson from Addlestone, UK | https://commons.wikimedia.org/wiki/File:BMW_K1200S_front-left.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-k1200s-thumb.webp` | BMW K1200S front-left.jpg | David Dawson from Addlestone, UK | https://commons.wikimedia.org/wiki/File:BMW_K1200S_front-left.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1100-s-hero.webp` | 2023-08-02 Barcelona BMW R1100S rear-side.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:2023-08-02_Barcelona_BMW_R1100S_rear-side.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-r-1100-s.webp` | 2023-08-02 Barcelona BMW R1100S rear-side.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:2023-08-02_Barcelona_BMW_R1100S_rear-side.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-r-1100-s-thumb.webp` | 2023-08-02 Barcelona BMW R1100S rear-side.jpg | Wikisympathisant | https://commons.wikimedia.org/wiki/File:2023-08-02_Barcelona_BMW_R1100S_rear-side.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-r-1150-gs-hero.webp` | BMW R1150GS Charley Boorman Long Way Round.jpg | Phil Guest | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Charley_Boorman_Long_Way_Round.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/bmw-r-1150-gs.webp` | BMW R1150GS Charley Boorman Long Way Round.jpg | Phil Guest | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Charley_Boorman_Long_Way_Round.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/bmw-r-1150-gs-thumb.webp` | BMW R1150GS Charley Boorman Long Way Round.jpg | Phil Guest | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Charley_Boorman_Long_Way_Round.jpg | CC BY-SA 2.0 |  |
-| `store/img/bikes/bmw-r-1150-gs-adventure.webp` | BMW R1150GS Adventure.JPG | Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Adventure.JPG | CC BY 2.5 |  |
-| `store/img/bikes/bmw-r-1150-gs-adventure-thumb.webp` | BMW R1150GS Adventure.JPG | Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Adventure.JPG | CC BY 2.5 |  |
-| `store/img/bikes/bmw-r-1150-r.webp` | BMW R1150R DSCF4650.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:BMW_R1150R_DSCF4650.jpg | CC BY-SA 4.0 |  |
-| `store/img/bikes/bmw-r-1150-r-thumb.webp` | BMW R1150R DSCF4650.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:BMW_R1150R_DSCF4650.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-r-1150-gs-adventure-hero.webp` | BMW R1150GS Adventure with system panniers.jpg | FrenchSelfCatering.com | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Adventure_with_system_panniers.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1150-gs-adventure.webp` | BMW R1150GS Adventure with system panniers.jpg | FrenchSelfCatering.com | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Adventure_with_system_panniers.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1150-gs-adventure-thumb.webp` | BMW R1150GS Adventure with system panniers.jpg | FrenchSelfCatering.com | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Adventure_with_system_panniers.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1150-r-hero.webp` | BMW R1150R.jpg | Muddy250 | https://commons.wikimedia.org/wiki/File:BMW_R1150R.jpg | Public domain |  |
+| `store/img/bikes/bmw-r-1150-r.webp` | BMW R1150R.jpg | Muddy250 | https://commons.wikimedia.org/wiki/File:BMW_R1150R.jpg | Public domain |  |
+| `store/img/bikes/bmw-r-1150-r-thumb.webp` | BMW R1150R.jpg | Muddy250 | https://commons.wikimedia.org/wiki/File:BMW_R1150R.jpg | Public domain |  |
+| `store/img/bikes/bmw-r-1150-r-rockster-hero.webp` | BMW R1150R Rockster Ed80.JPG | Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_R1150R_Rockster_Ed80.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1150-r-rockster.webp` | BMW R1150R Rockster Ed80.JPG | Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_R1150R_Rockster_Ed80.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1150-r-rockster-thumb.webp` | BMW R1150R Rockster Ed80.JPG | Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_R1150R_Rockster_Ed80.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1150-rs-hero.webp` | BMW R 1150 RS.jpg | ArnoDisser | https://commons.wikimedia.org/wiki/File:BMW_R_1150_RS.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1150-rs.webp` | BMW R 1150 RS.jpg | ArnoDisser | https://commons.wikimedia.org/wiki/File:BMW_R_1150_RS.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1150-rs-thumb.webp` | BMW R 1150 RS.jpg | ArnoDisser | https://commons.wikimedia.org/wiki/File:BMW_R_1150_RS.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-r-1150-rt.webp` | 2004 BMW R1150RT ambulance motorcycle (5350426970).jpg | sv1ambo | https://commons.wikimedia.org/wiki/File:2004_BMW_R1150RT_ambulance_motorcycle_(5350426970).jpg | CC BY 2.0 |  |
-| `store/img/bikes/bmw-r-1150-rt-thumb.webp` | 2004 BMW R1150RT ambulance motorcycle (5350426970).jpg | sv1ambo | https://commons.wikimedia.org/wiki/File:2004_BMW_R1150RT_ambulance_motorcycle_(5350426970).jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1150-rt-hero.webp` | 2004 BMW R1150RT ambulance motorcycle (5349803617).jpg | sv1ambo | https://commons.wikimedia.org/wiki/File:2004_BMW_R1150RT_ambulance_motorcycle_(5349803617).jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1150-rt.webp` | 2004 BMW R1150RT ambulance motorcycle (5349803617).jpg | sv1ambo | https://commons.wikimedia.org/wiki/File:2004_BMW_R1150RT_ambulance_motorcycle_(5349803617).jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-r-1150-rt-thumb.webp` | 2004 BMW R1150RT ambulance motorcycle (5349803617).jpg | sv1ambo | https://commons.wikimedia.org/wiki/File:2004_BMW_R1150RT_ambulance_motorcycle_(5349803617).jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-r-12.webp` | BMW R 1200 RT.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_R_1200_RT.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-r-12-thumb.webp` | BMW R 1200 RT.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_R_1200_RT.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-r-1200-c-hero.webp` | BMW R1200C-pjt.jpg | Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page | https://commons.wikimedia.org/wiki/File:BMW_R1200C-pjt.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-r-1200-c.webp` | BMW R1200C-pjt.jpg | Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page | https://commons.wikimedia.org/wiki/File:BMW_R1200C-pjt.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-r-1200-c-thumb.webp` | BMW R1200C-pjt.jpg | Pjt56 --- If you use the picture outside Wikipedia I would appreciate a short e-mail to pjt56@gmx.net or a message on my discussion page | https://commons.wikimedia.org/wiki/File:BMW_R1200C-pjt.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/bmw-r-1200-c-independent-hero.webp` | BMW R 1200 C Independent with extra broad wheels.jpg | Bmwtroll | https://commons.wikimedia.org/wiki/File:BMW_R_1200_C_Independent_with_extra_broad_wheels.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-c-independent.webp` | BMW R 1200 C Independent with extra broad wheels.jpg | Bmwtroll | https://commons.wikimedia.org/wiki/File:BMW_R_1200_C_Independent_with_extra_broad_wheels.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-c-independent-thumb.webp` | BMW R 1200 C Independent with extra broad wheels.jpg | Bmwtroll | https://commons.wikimedia.org/wiki/File:BMW_R_1200_C_Independent_with_extra_broad_wheels.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-r-1200-gs.webp` | BMW R 1200 GS 30 Years GS Edition 2010.JPG | Pierotreruote | https://commons.wikimedia.org/wiki/File:BMW_R_1200_GS_30_Years_GS_Edition_2010.JPG | CC BY-SA 3.0 |  |
-| `store/img/bikes/bmw-r-1200-gs-thumb.webp` | BMW R 1200 GS 30 Years GS Edition 2010.JPG | Pierotreruote | https://commons.wikimedia.org/wiki/File:BMW_R_1200_GS_30_Years_GS_Edition_2010.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1200-gs-hero.webp` | BMW R 1200 GS K50 2016.jpg | Michael Kramer | https://commons.wikimedia.org/wiki/File:BMW_R_1200_GS_K50_2016.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1200-gs.webp` | BMW R 1200 GS K50 2016.jpg | Michael Kramer | https://commons.wikimedia.org/wiki/File:BMW_R_1200_GS_K50_2016.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1200-gs-thumb.webp` | BMW R 1200 GS K50 2016.jpg | Michael Kramer | https://commons.wikimedia.org/wiki/File:BMW_R_1200_GS_K50_2016.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-gs-adventure.webp` | Paris - Salon de la moto 2011 - BMW - R 1200 GS Adventure - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_R_1200_GS_Adventure_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-gs-adventure-thumb.webp` | Paris - Salon de la moto 2011 - BMW - R 1200 GS Adventure - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_R_1200_GS_Adventure_-_001.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1200-gs-triple-black-hero.webp` | R 1200 GS Tü Triple Black 2011.jpg | FanaticTRX | https://commons.wikimedia.org/wiki/File:R_1200_GS_T%C3%BC_Triple_Black_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-gs-triple-black.webp` | R 1200 GS Tü Triple Black 2011.jpg | FanaticTRX | https://commons.wikimedia.org/wiki/File:R_1200_GS_T%C3%BC_Triple_Black_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-gs-triple-black-thumb.webp` | R 1200 GS Tü Triple Black 2011.jpg | FanaticTRX | https://commons.wikimedia.org/wiki/File:R_1200_GS_T%C3%BC_Triple_Black_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-r.webp` | Paris - Salon de la moto 2011 - BMW - R 1200 R - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_R_1200_R_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1200-r-thumb.webp` | Paris - Salon de la moto 2011 - BMW - R 1200 R - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_R_1200_R_-_001.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1200-rs-hero.webp` | BMW R 1200 RS (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_R_1200_RS_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-r-1200-rs.webp` | BMW R 1200 RS (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_R_1200_RS_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-r-1200-rs-thumb.webp` | BMW R 1200 RS (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_R_1200_RS_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-r-1200-rt.webp` | Paris - Salon de la moto 2011 - BMW - R 1200 RT - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_R_1200_RT_-_001.jpg | CC BY-SA 3.0 |  |
@@ -2027,8 +2028,6 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ktm-350-sx-f-thumb.webp` | Paris - Salon de la moto 2011 - KTM - 350 SX-F LTD Edition Tony Cairoli - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_KTM_-_350_SX-F_LTD_Edition_Tony_Cairoli_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ktm-350-sx-f-cairoli-edition.webp` | Paris - Salon de la moto 2011 - KTM - 350 SX-F LTD Edition Tony Cairoli - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_KTM_-_350_SX-F_LTD_Edition_Tony_Cairoli_-_002.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ktm-350-sx-f-cairoli-edition-thumb.webp` | Paris - Salon de la moto 2011 - KTM - 350 SX-F LTD Edition Tony Cairoli - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_KTM_-_350_SX-F_LTD_Edition_Tony_Cairoli_-_002.jpg | CC BY-SA 3.0 |  |
-| `store/img/bikes/ktm-390-adventure.webp` | Ktm-390-adventure-2024.png | KTM AG | https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png | CC BY-SA 4.0 |  |
-| `store/img/bikes/ktm-390-adventure-thumb.webp` | Ktm-390-adventure-2024.png | KTM AG | https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-390-duke.webp` | KTM All New Duke 390 2018 Rama 5.jpg | Chakkapong Charnfun | https://commons.wikimedia.org/wiki/File:KTM_All_New_Duke_390_2018_Rama_5.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-390-duke-thumb.webp` | KTM All New Duke 390 2018 Rama 5.jpg | Chakkapong Charnfun | https://commons.wikimedia.org/wiki/File:KTM_All_New_Duke_390_2018_Rama_5.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-400-ls-e-mil.webp` | KTM LC 4 400 LS-E mil.jpg | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:KTM_LC_4_400_LS-E_mil.jpg | Public domain |  |
@@ -2725,6 +2724,7 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/triumph-daytona-600-thumb.webp` | 1983 Prototype Triumph Daytona 600.jpg | meriden.triumph | https://commons.wikimedia.org/wiki/File:1983_Prototype_Triumph_Daytona_600.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/triumph-daytona-650.webp` | Triumph Daytona 650.jpg | Richard Bogle from Edinburgh, Scotland | https://commons.wikimedia.org/wiki/File:Triumph_Daytona_650.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/triumph-daytona-650-thumb.webp` | Triumph Daytona 650.jpg | Richard Bogle from Edinburgh, Scotland | https://commons.wikimedia.org/wiki/File:Triumph_Daytona_650.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/triumph-daytona-660-hero.webp` | Triumph Daytona 660.jpg | Kidfly182 | https://commons.wikimedia.org/wiki/File:Triumph_Daytona_660.jpg | CC BY 4.0 |  |
 | `store/img/bikes/triumph-daytona-660.webp` | Triumph Daytona 660.jpg | Kidfly182 | https://commons.wikimedia.org/wiki/File:Triumph_Daytona_660.jpg | CC BY 4.0 |  |
 | `store/img/bikes/triumph-daytona-660-thumb.webp` | Triumph Daytona 660.jpg | Kidfly182 | https://commons.wikimedia.org/wiki/File:Triumph_Daytona_660.jpg | CC BY 4.0 |  |
 | `store/img/bikes/triumph-daytona-675.webp` | Flickr - ronsaunders47 - TRIUMPH DAYTONA. 675 TRIPLE. UK 2010. (2).jpg | Ronald Saunders from Warrington, UK | https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_TRIUMPH_DAYTONA._675_TRIPLE._UK_2010._(2).jpg | CC BY-SA 2.0 |  |

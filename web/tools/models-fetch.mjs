@@ -311,6 +311,40 @@ async function stripScenery(file, out) {
   return out;
 }
 
+/**
+ * Which way is up, computed rather than typed.
+ *
+ * Sketchfab takes uploads from Blender, 3ds Max, Maya and half a dozen exporters, and they do not
+ * agree on an up axis — the Yamaha YZ450F came in Z-up and rendered as a plan view of a
+ * motocrosser. But a vehicle's proportions give the answer away: a motorcycle is much longer than
+ * it is tall and much taller than it is wide, and a car is longer than it is wide and wider than
+ * it is tall. So sort the bounding box and map the axes onto the viewer's convention
+ * (x = length, y = up, z = width).
+ *
+ * Returns the Euler XYZ rotation in degrees, or null when the model is already right. What it
+ * cannot tell you is which END is the front — from a bounding box a bike is symmetric — so that
+ * stays the hand-set `orient` in model-shortlist.json.
+ */
+function uprightRotation(span, kind) {
+  const order = [0, 1, 2].sort((a, b) => span[b] - span[a]);   // longest .. shortest
+  const [long, mid, short] = order;
+  // motorcycle: length > height > width. car: length > width > height.
+  const wanted = kind === "car"
+    ? { [long]: "x", [mid]: "z", [short]: "y" }
+    : { [long]: "x", [mid]: "y", [short]: "z" };
+  const axis = [wanted[0], wanted[1], wanted[2]].join("");
+  // the handful of permutations an exporter actually produces, as a rotation the viewer can apply
+  const ROTATIONS = {
+    xyz: null,                  // already ours
+    xzy: [-90, 0, 0],           // Z-up (Blender, 3ds Max): z is height
+    yxz: [0, 0, 90],            // Y is length
+    zyx: [0, 90, 0],            // Z is length
+    yzx: [0, 90, 90],
+    zxy: [90, 90, 0],
+  };
+  return ROTATIONS[axis] === undefined ? null : ROTATIONS[axis];
+}
+
 let readerIOPromise = null;
 function readerIO() {
   if (!readerIOPromise) {
@@ -514,11 +548,15 @@ async function main() {
         await convert(scene, glb, work);
       }
       const info = await inspect(glb, { bounds: true });
+      const upright = uprightRotation(info.span, row.kind);
+      if (upright) console.log(`      upright: span ${info.span.join("x")} -> rotate ${upright.join(", ")}°`);
       parts[row.name] = {
         kind: row.kind || "bike",
-        // absolute Y rotation, in degrees, that puts this model's nose at +x. Set by eye in the
-        // shortlist after `node web/tools/viewer-shots.mjs --orient`; there is no reliable way to
-        // tell the front of a bike from the back out of a bounding box.
+        // Euler XYZ in degrees that stands the model up the viewer's way (x = length, y = up).
+        // Computed from the bounding box — see uprightRotation().
+        rotate: upright,
+        // and then the Y flip that decides which end is the front, which a bounding box cannot
+        // tell you. Set by eye in model-shortlist.json.
         orient: row.orient || 0,
         paint: row.paint || (row.kind === "car" ? ["fairing"] : ["fuel-tank", "fairing", "frame"]),
         paintMaterials: paintMaterialsIn(info),

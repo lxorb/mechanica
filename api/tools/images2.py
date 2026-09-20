@@ -85,7 +85,7 @@ UA = (
 )
 
 # Ordered by how many motorcycle-model articles each wiki actually carries.
-WIKIS = ["en", "de", "fr", "es", "it", "nl", "ja", "pl", "sv", "cs"]
+WIKIS = ["en", "de", "fr", "es", "it", "nl"]
 
 # Words that mean "this is not a photograph of a whole motorcycle".
 REJECT_WORDS = (
@@ -208,6 +208,28 @@ def strip_html(value: str) -> str:
     return WS.sub(" ", html.unescape(TAG.sub(" ", str(value or "")))).strip()
 
 
+def covers(title: str, m: Model) -> str | None:
+    """How does a page title relate to this model? "exact", "family", or None.
+
+    Commons and Wikipedia file things one level broader than a catalogue does:
+    the home of a Suzuki Van Van 200 is `Category:Suzuki Van Van`, and a
+    Yamaha YZ250F lives under `Category:Yamaha YZ`. "family" means the title
+    names a strict ancestor -- make plus a leading run of the model's tokens --
+    which is worth opening, but only on stricter terms than an exact hit.
+    """
+    if not mentions(title, m.make):
+        return None
+    if tight(title, m.model):
+        return "exact"
+    rest = norm(title)
+    for token in norm(m.make).split():
+        rest = re.sub(rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])", " ", rest)
+    rest = WS.sub(" ", rest).strip()
+    if len(squash(rest)) >= 2 and any(c.isalpha() for c in rest) and tight(m.model, rest):
+        return "family"
+    return None
+
+
 CODE = re.compile(r"^([a-z]{1,4})[\s-]?(\d{2,4})([a-z]{0,4})$", re.I)
 
 
@@ -224,14 +246,19 @@ def name_variants(model: str, cap: int = 4) -> list:
     out: list = []
     seen: set = set()
 
-    def add(value: str) -> None:
+    def add(value: str, *, root: bool = False) -> None:
         v = " ".join(str(value or "").split())
         k = squash(v)
+        # A bare number is not a model: shortening "350 XC-F" to "350" is how a
+        # 350 EXC-F ends up standing in for a 350 XC-F. The full name is exempt --
+        # some models really are called "1200".
+        if not root and not any(c.isalpha() for c in k):
+            return
         if v and len(k) >= 2 and k not in seen:
             seen.add(k)
             out.append(v)
 
-    add(model)
+    add(model, root=True)
     tokens = model.split()
     numbered = any(ch.isdigit() for ch in model)
     for n in range(len(tokens) - 1, 0, -1):
@@ -534,8 +561,11 @@ def from_wikis(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis:
         )
         for page in (data.get("query") or {}).get("pages") or []:
             title = str(page.get("title", ""))
-            # The article title must name make AND model, tightly.
-            if not (tight(title, m.model) and mentions(title, m.make)):
+            # The article title must name make AND model, exactly or as the
+            # family the model belongs to ("Suzuki Van Van" for a Van Van 200).
+            # A family article's lead image is still a photo of that family; the
+            # vision pass is what decides whether it is close enough.
+            if not covers(title, m):
                 continue
             src = (page.get("original") or {}).get("source") or ""
             if "/commons/" not in src:
@@ -544,8 +574,8 @@ def from_wikis(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis:
             if fname and fname not in seen:
                 seen.add(fname)
                 files.append(f"File:{fname}")
-        if len(files) >= 3:
-            break
+        if files:
+            break  # the first wiki that has an article on this bike is enough
     if not files:
         return []
     return [
@@ -574,15 +604,17 @@ def from_category(client: httpx.Client, bucket: Bucket, m: Model, used: set, wan
     cats = []
     for s in (data.get("query") or {}).get("search") or []:
         name = str(s.get("title", "")).removeprefix("Category:")
-        if not (tight(name, m.model) and mentions(name, m.make)):
+        kind = covers(name, m)
+        if not kind:
             continue
         extra = set(norm(name).split()) - set(norm(m.model).split())
         if any(w in extra for w in REJECT_CAT_WORDS):
             continue
-        cats.append(s["title"])
+        cats.append((s["title"], kind))
+    cats.sort(key=lambda t: t[1] != "exact")  # exact categories first
 
     out = []
-    for cat in cats[:2]:
+    for cat, kind in cats[:2]:
         members = api_json(
             client,
             COMMONS,
@@ -600,8 +632,17 @@ def from_category(client: httpx.Client, bucket: Bucket, m: Model, used: set, wan
             },
         )
         for page in (members.get("query") or {}).get("pages") or []:
-            # The filename need not name the model: the category already did.
-            c = to_cand(page, m, used, via="category", base=3.0, need_name=False)
+            # An exact category has already vouched for the bike, so the filename
+            # is free to be DSC_0431.jpg. A family category has not: there the
+            # filename has to name the model itself.
+            c = to_cand(
+                page,
+                m,
+                used,
+                via="category" if kind == "exact" else "family",
+                base=3.0 if kind == "exact" else 2.0,
+                need_name=kind != "exact",
+            )
             if c:
                 out.append(c)
         if len(out) >= want:
@@ -611,7 +652,7 @@ def from_category(client: httpx.Client, bucket: Bucket, m: Model, used: set, wan
 
 def from_search(client: httpx.Client, bucket: Bucket, m: Model, used: set, want: int) -> list:
     """Relaxed file search, for models with neither an article nor a category."""
-    queries = [f'"{m.make}" "{m.model}" motorcycle', f"{m.make} {m.model} motorcycle"]
+    queries = [f"{m.make} {m.model} motorcycle"]
     nodash = m.model.replace("-", " ")
     if nodash != m.model:
         queries.append(f"{m.make} {nodash} motorcycle")
@@ -652,11 +693,21 @@ def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: lis
     found: dict = {}
     for depth, name in enumerate(name_variants(m.model)):
         probe = Model(m.make, name, m.years, m.manual_id, m.manual_url)
-        for source in (
-            lambda: from_wikis(client, bucket, probe, used, wikis),
+        # Commons first: one category search and one file search answer most
+        # models in three or four requests. The wiki sweep is six requests per
+        # name variant and is worth spending only when Commons came up short --
+        # over 3,900 models that ordering is the difference between a 50-minute
+        # run and a five-hour one. The vision pass ranks whatever arrives, so a
+        # skipped sweep costs quality only when Commons already found plenty.
+        sources = [
             lambda: from_category(client, bucket, probe, used, want),
             lambda: from_search(client, bucket, probe, used, want),
-        ):
+        ]
+        if depth == 0:
+            sources.append(lambda: from_wikis(client, bucket, probe, used, wikis))
+        for source in sources:
+            if len(found) >= 3:
+                break
             try:
                 for c in source():
                     c.depth = depth
@@ -664,8 +715,6 @@ def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: lis
                     found.setdefault(c.title, c)
             except Exception as exc:  # noqa: BLE001
                 print(f"  ! {m.key} gather: {exc!r}"[:150], flush=True)
-            if len(found) >= want:
-                break
         if found:
             break
     return sorted(found.values(), key=lambda c: -c.pre)[:want]
@@ -884,12 +933,23 @@ def write_outputs(entries: dict) -> None:
 ALIAS_FIELDS = ("image", "thumb", "hero", "title", "author", "license", "source", "view")
 
 
+def on_disk(entry: dict) -> bool:
+    """Does the file this entry points at actually exist?
+
+    images.py rewrites its whole map at every checkpoint and does drop keys when
+    it re-picks a model, taking the rendered file with them. An alias into that
+    directory is therefore a claim that has to be re-checked, not a fact.
+    """
+    image = entry.get("image")
+    return bool(image) and (ROOT / "web" / image).exists()
+
+
 def alias_pass(models: list, entries: dict, filled: dict) -> int:
     """Point variant keys at the family photo that is already on disk.
 
     "Aprilia RSV4 1100 Factory" has no Commons photo of its own and never will,
-    but "Aprilia RSV4 1100" does, and it is the same motorcycle to anyone looking
-    at a 160-px tile. Reusing the rendered file costs no bytes, no request and no
+    but "Aprilia RSV4 1100" does, and to anyone looking at a 160-px tile it is the
+    same motorcycle. Reusing the rendered file costs no bytes, no request and no
     tokens, and the credit is unchanged because it is literally the same
     photograph. Returns how many keys were filled.
     """
@@ -900,7 +960,7 @@ def alias_pass(models: list, entries: dict, filled: dict) -> int:
         for name in name_variants(m.model, cap=5)[1:]:
             parent = image_key(m.make, name)
             src = filled.get(parent) or entries.get(parent)
-            if not src or not src.get("image"):
+            if not src or not on_disk(src):
                 continue
             entry = {k: src[k] for k in ALIAS_FIELDS if src.get(k)}
             entry["via"] = "alias"
@@ -909,6 +969,14 @@ def alias_pass(models: list, entries: dict, filled: dict) -> int:
             added += 1
             break
     return added
+
+
+def verify(entries: dict) -> int:
+    """Drop every entry whose image has gone missing. Returns how many went."""
+    stale = [k for k, e in entries.items() if not on_disk(e)]
+    for k in stale:
+        entries.pop(k, None)
+    return len(stale)
 
 
 def first_pass() -> tuple:
@@ -939,10 +1007,25 @@ def main() -> int:
     ap.add_argument("--tier", type=int, default=2, help="highest tier to attempt (0/1/2)")
     ap.add_argument("--wikis", default=",".join(WIKIS))
     ap.add_argument("--no-alias", action="store_true", help="skip the variant-key alias pass")
+    ap.add_argument(
+        "--verify",
+        action="store_true",
+        help="re-check every entry against the filesystem, re-alias, and exit",
+    )
     args = ap.parse_args()
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     wikis = [w for w in args.wikis.split(",") if w]
+
+    if args.verify:
+        entries = json.loads(OUT_JSON.read_text(encoding="utf-8")) if OUT_JSON.exists() else {}
+        before = len(entries)
+        gone = verify(entries)
+        filled, _ = first_pass()
+        added = alias_pass(build_models(), entries, filled)
+        write_outputs(entries)
+        print(f"verify: {before} -> {len(entries)} entries ({gone} stale dropped, {added} re-aliased)")
+        return 0
     quality = tuple(int(x) for x in args.quality.split(","))
 
     entries = {}
@@ -1140,6 +1223,10 @@ def main() -> int:
             stats[f"tier{m.tier}:done"] += 1
             due = stats["done"] % args.checkpoint == 0
         if due:
+            with lock:
+                gone = verify(entries)
+            if gone:
+                print(f"  - {gone} entries dropped: the photo they pointed at is gone", flush=True)
             write_outputs(entries)
             _, titles = first_pass()  # the other agent is still claiming files
             with lock:
@@ -1177,7 +1264,7 @@ def main() -> int:
         k.split(":", 1)[1]: v for k, v in sorted(stats.items()) if k.startswith(prefix)
     }
     pass_rate = {}
-    for src in ("wikipedia", "category", "search"):
+    for src in ("wikipedia", "category", "family", "search"):
         seen = stats.get(f"scored:{src}", 0)
         if seen:
             pass_rate[src] = f"{stats.get(f'passed:{src}', 0)}/{seen}"

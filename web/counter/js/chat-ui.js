@@ -1,7 +1,15 @@
 /**
  * Chat over the selected motorcycle's manual. Owner: chat-ui agent.
  * Files: this, ../css/chat-ui.css, ../../vendor/deep-chat/ (the forked component),
- * ttm.chat() (the only backend call), web/docs/CHAT-UI.md (why deep-chat).
+ * ttm.chat() + ttm.voiceSettings() (the only backend calls), ./voice-deepgram.js (voice mode),
+ * web/docs/CHAT-UI.md (why deep-chat), web/docs/VOICE.md (how voice mode works).
+ *
+ * A FULL-SCREEN VIEW, NOT A DRAWER. Chat is a bus overlay on Pick — the same mechanics Parts
+ * uses over Book: `registerOverlay("chat")`, `openOverlay("chat")` and the `#pick+chat` history
+ * entry, so the header Back, Escape and the hardware Back button all close the chat and hand
+ * Pick back with its 3D stage still standing. The overlay element is created here rather than
+ * in index.html (another agent's file) and lives at body level, because a fixed sheet inside a
+ * hidden <section> is a hidden sheet.
  *
  * THE FORK. deep-chat 2.5.1 (OvidijusParsiunas/deep-chat, MIT, 3.7k stars) is vendored under
  * web/vendor/deep-chat/ and imported lazily — 387 KB that must not sit in front of Identify.
@@ -19,17 +27,28 @@
  *                                     inside it; AUX below is injected through it instead.
  *   introMessage                      deliberately never set: the first bubble is empty.
  *
- * mountChat(host, {manualId, bike, onPage}) -> {open, close, toggle, isOpen, setContext, destroy}
- * `onPage(N)` is called with a printed page number when a citation chip is tapped; the screen
- * that mounted us decides what that means (pick.js: a synthetic job, then go("book")).
+ * VOICE. The header's VOICE toggle opens a Deepgram Voice Agent session (./voice-deepgram.js).
+ * Every finished turn it reports lands in the same `sessions` history as a typed one, so the
+ * conversation is one conversation whichever way the question was asked, and `show_page` from
+ * the agent takes the same jump() a citation chip takes. Hidden unless /voice/config says the
+ * backend has a Deepgram key.
+ *
+ * mountChat(host, {manualId, bike, bikeId, onPage}) -> {open, close, toggle, isOpen, setContext, destroy}
+ * `onPage(N)` is called with a printed page number when a citation chip is tapped or the agent
+ * calls show_page; the screen that mounted us decides what that means (pick.js: a synthetic job,
+ * then go("book")). It is always called AFTER the overlay has closed itself, so the screen's own
+ * navigation starts from a settled history.
  *
  * History lives in `sessions`, keyed by manual, in memory for the session only: closing the
- * drawer keeps the conversation, changing bike starts a new one, a reload forgets it.
+ * view keeps the conversation, changing bike starts a new one, a reload forgets it.
  */
 
 import * as T from "./ttm.js";
+import { registerOverlay, openOverlay, closeOverlay, overlayOpen } from "./bus.js";
+import * as agent from "./voice-deepgram.js";
 
 const BUNDLE = "../../vendor/deep-chat/deepChat.bundle.js";
+const OVERLAY = "chat";
 
 const INK = "#141414";
 const PAPER = "#ece7dc";
@@ -40,6 +59,15 @@ const SANS = "Barlow, system-ui, sans-serif";
 const DISPLAY = '"Big Shoulders Display", sans-serif';
 
 const NO_ANSWER = "No answer.";
+const BARS = 5;
+
+const SAY = {
+  connecting: "Connecting…",
+  listening: "Listening",
+  thinking: "Thinking…",
+  speaking: "Speaking",
+  closed: "",
+};
 
 /** Raw CSS handed to the component's shadow root — the only way in. */
 const AUX = `
@@ -59,7 +87,7 @@ const AUX = `
     letter-spacing: 0.06em; text-transform: uppercase; background: ${INK} !important;
     color: ${YELLOW} !important; border-radius: 0 !important; border: 0 !important; }
   /* the component ships #text-input-container at width:80% with 0.8em margins — a phone
-     cannot spare 20% of the field, and the drawer already frames it */
+     cannot spare 20% of the field, and the view already frames it */
   #input { box-sizing: border-box; }
   #text-input-container { box-sizing: border-box; width: 100%; margin-top: 0; margin-bottom: 0; }
   #text-input { font-family: ${SANS}; font-weight: 600; font-size: 1rem; }
@@ -168,6 +196,7 @@ export function mountChat(host, opts = {}) {
   if (!host) return null;
 
   let manualId = String(opts.manualId || "");
+  let bikeId = String(opts.bikeId || "");
   let label = String(opts.bike || "");
   const onPage = typeof opts.onPage === "function" ? opts.onPage : () => {};
 
@@ -175,37 +204,66 @@ export function mountChat(host, opts = {}) {
   let building = null;
   let shown = false;
 
-  host.classList.add("chat-wrap");
+  /* ---------------------------------------------------------- the shell */
+
+  // Body level, not inside `host`: an overlay under a hidden <section> is a hidden overlay.
+  // `host` stays the screen's marker that this view belongs to it.
   host.replaceChildren();
   host.hidden = true;
 
-  const veil = node("div", { class: "chat-veil" });
+  const wrap = node("aside", { class: "ov cv", "data-overlay": OVERLAY, hidden: "" });
   const sheet = node("div", {
-    class: "chat-sheet",
+    class: "ov-sheet cv-sheet",
     role: "dialog",
     "aria-modal": "true",
     "aria-label": "Chat",
+    "data-root": "",
   });
-  const head = node("div", { class: "chat-head" });
-  const who = node("span", { class: "chat-who", text: label });
-  const shut = node("button", { type: "button", class: "chat-x", "aria-label": "Close", text: "✕" });
-  head.append(node("b", { text: "Chat" }), who, shut);
 
-  const body = node("div", { class: "chat-body" });
-  const foot = node("div", { class: "chat-foot", hidden: "" });
+  const head = node("div", { class: "ov-head cv-head" });
+  const title = node("div", { class: "cv-title" });
+  const who = node("span", { class: "cv-bike", text: label });
+  title.append(node("b", { text: "Chat" }), who);
 
-  sheet.append(head, body, foot);
-  host.append(veil, sheet);
+  const voiceBtn = node("button", {
+    type: "button",
+    class: "cv-voice",
+    "aria-pressed": "false",
+    hidden: "",
+  });
+  const voiceDot = node("i", { class: "cv-dot", "aria-hidden": "true" });
+  voiceBtn.append(voiceDot, node("span", { text: "Voice" }));
+  const shut = node("button", {
+    type: "button",
+    class: "ov-x cv-x",
+    "data-ov-close": "",
+    "aria-label": "Close",
+    text: "✕",
+  });
+  head.append(title, voiceBtn, shut);
 
-  veil.addEventListener("click", close);
-  shut.addEventListener("click", close);
-
-  function onKey(e) {
-    if (e.key !== "Escape" || !shown) return;
-    e.preventDefault();
-    e.stopPropagation();
-    close();
+  // The live voice strip: level meter + what the session is doing + the last thing said.
+  const strip = node("div", { class: "cv-mic", hidden: "", role: "status", "aria-live": "polite" });
+  const meter = node("div", { class: "cv-meter", "aria-hidden": "true" });
+  const bars = [];
+  for (let i = 0; i < BARS; i++) {
+    const bar = node("i");
+    bars.push(bar);
+    meter.append(bar);
   }
+  const said = node("span", { class: "cv-said" });
+  strip.append(meter, said);
+
+  const body = node("div", { class: "cv-body" });
+  const foot = node("div", { class: "cv-foot", hidden: "" });
+
+  sheet.append(head, strip, body, foot);
+  wrap.append(sheet);
+  document.body.append(wrap);
+
+  voiceBtn.addEventListener("click", toggleVoice);
+
+  registerOverlay(OVERLAY, { mount: () => {}, open: opened, close: closed });
 
   /* ---------------------------------------------------------- the stat */
 
@@ -213,6 +271,23 @@ export function mountChat(host, opts = {}) {
     const n = Number(saved) || 0;
     foot.hidden = n <= 0;
     foot.textContent = n > 0 ? `${n.toLocaleString("en-US")} tokens saved` : "";
+  }
+
+  /* ---------------------------------------------------------- pages */
+
+  /**
+   * A citation chip or the agent's show_page. The overlay closes ITSELF first and the screen is
+   * told on the far side of that history step, so Pick -> Book is one clean push either way.
+   */
+  function jump(page) {
+    const n = Math.floor(Number(page) || 0);
+    if (n <= 0) return;
+    if (overlayOpen() === OVERLAY) {
+      closeOverlay();
+      window.setTimeout(() => onPage(n), 0);
+      return;
+    }
+    onPage(n);
   }
 
   /* ---------------------------------------------------------- the transport */
@@ -353,7 +428,7 @@ export function mountChat(host, opts = {}) {
           click: (event) => {
             const hit = event.target && event.target.closest ? event.target.closest(".cite-chip") : event.target;
             const page = Number(hit && hit.dataset && hit.dataset.page);
-            if (page) onPage(page);
+            if (page) jump(page);
           },
         },
         styles: {
@@ -404,14 +479,151 @@ export function mountChat(host, opts = {}) {
     return building;
   }
 
-  /* ---------------------------------------------------------- the drawer */
+  /* ---------------------------------------------------------- voice mode */
 
-  function open() {
-    if (shown) return;
+  let voice = null; // the live session handle
+  let voiceBusy = false;
+  let raf = 0;
+  let offered = null; // the /voice/config probe, once
+
+  function paintVoice(status) {
+    const on = Boolean(voice) || voiceBusy;
+    voiceBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    voiceBtn.classList.toggle("is-on", on);
+    const text = status == null ? "" : SAY[status] ?? "";
+    strip.hidden = !on;
+    sheet.classList.toggle("is-voice", on);
+    if (text) said.textContent = text;
+    if (!on) {
+      said.textContent = "";
+      for (const bar of bars) bar.style.transform = "scaleY(0.12)";
+    }
+  }
+
+  function tick() {
+    raf = 0;
+    if (!voice) return;
+    const level = Math.min(1, voice.level() * 2.2);
+    for (let i = 0; i < bars.length; i++) {
+      // Middle bars lead, outer bars trail: a voice, not an equaliser demo.
+      const weight = 1 - Math.abs(i - (bars.length - 1) / 2) / bars.length;
+      bars[i].style.transform = `scaleY(${(0.12 + level * weight).toFixed(3)})`;
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function startMeter() {
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function stopMeter() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+
+  /** Every finished turn joins the typed conversation, so the history is one history. */
+  function transcribe(role, text) {
+    const clean = String(text || "").trim();
+    if (!clean) return;
+    remember(manualId, role === "user" ? { role: "user", content: clean } : { role: "assistant", content: clean, citations: [], saved: 0 });
+    said.textContent = clean;
+    if (!chat) return;
+    try {
+      chat.addMessage({ text: clean, role: role === "user" ? "user" : "ai" });
+    } catch {
+      /* the strip already showed it */
+    }
+  }
+
+  function stopVoice() {
+    const live = voice;
+    voice = null;
+    voiceBusy = false;
+    stopMeter();
+    if (live) {
+      try {
+        live.stop();
+      } catch {
+        /* already gone */
+      }
+    }
+    paintVoice(null);
+  }
+
+  async function startVoice() {
+    if (voice || voiceBusy || !manualId) return;
+    voiceBusy = true;
+    paintVoice("connecting");
+    await ensure();
+    try {
+      voice = await agent.start({
+        manualId,
+        bikeId,
+        on: (event) => {
+          if (event.type === "status") {
+            if (event.value === "closed") {
+              stopVoice();
+              return;
+            }
+            paintVoice(event.value);
+            return;
+          }
+          if (event.type === "text") {
+            transcribe(event.role, event.text);
+            return;
+          }
+          if (event.type === "page") {
+            jump(event.page);
+            return;
+          }
+          if (event.type === "error") {
+            said.textContent = event.message || "Voice failed.";
+            stopMeter();
+          }
+        },
+      });
+      voiceBusy = false;
+      paintVoice("listening");
+      startMeter();
+    } catch {
+      voiceBusy = false;
+      voice = null;
+      paintVoice(null);
+      strip.hidden = false;
+      said.textContent = "Voice unavailable.";
+      window.setTimeout(() => {
+        if (!voice) strip.hidden = true;
+      }, 2600);
+    }
+  }
+
+  function toggleVoice() {
+    if (voice || voiceBusy) stopVoice();
+    else startVoice();
+  }
+
+  /** The toggle only exists when the backend has a Deepgram key and this browser can capture. */
+  function offerVoice() {
+    if (offered) return offered;
+    offered = (agent.supported ? T.voiceConfig() : Promise.resolve(null))
+      .then((cfg) => {
+        const ok = Boolean(cfg && cfg.deepgram);
+        voiceBtn.hidden = !ok;
+        return ok;
+      })
+      .catch(() => {
+        voiceBtn.hidden = true;
+        return false;
+      });
+    return offered;
+  }
+
+  /* ---------------------------------------------------------- the view */
+
+  /** bus opened the overlay. */
+  function opened() {
     shown = true;
-    host.hidden = false;
-    requestAnimationFrame(() => host.classList.add("is-open"));
-    document.addEventListener("keydown", onKey, true);
+    offerVoice();
     ensure().then((el) => {
       if (!el || !shown) return;
       try {
@@ -422,14 +634,21 @@ export function mountChat(host, opts = {}) {
     });
   }
 
+  /** bus closed the overlay — by ✕, Escape, Back, or a screen change. */
+  function closed() {
+    shown = false;
+    stopVoice();
+  }
+
+  function open() {
+    if (shown) return;
+    openOverlay(OVERLAY);
+  }
+
   function close() {
     if (!shown) return false;
-    shown = false;
-    host.classList.remove("is-open");
-    document.removeEventListener("keydown", onKey, true);
-    window.setTimeout(() => {
-      if (!shown) host.hidden = true;
-    }, 200);
+    if (overlayOpen() === OVERLAY) closeOverlay();
+    else closed();
     return true;
   }
 
@@ -442,10 +661,12 @@ export function mountChat(host, opts = {}) {
       label = String(next.bike || "");
       who.textContent = label;
     }
+    if (next.bikeId !== undefined) bikeId = String(next.bikeId || "");
     if (next.manualId === undefined) return;
     const id = String(next.manualId || "");
     if (id === manualId) return;
     manualId = id;
+    stopVoice();
     if (chat) {
       chat.remove();
       chat = null;
@@ -457,9 +678,10 @@ export function mountChat(host, opts = {}) {
 
   function destroy() {
     close();
-    document.removeEventListener("keydown", onKey, true);
+    stopVoice();
     if (chat) chat.remove();
     chat = null;
+    wrap.remove();
     host.replaceChildren();
     host.hidden = true;
   }

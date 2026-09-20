@@ -252,11 +252,15 @@ export function exactModelFor(bike) {
 }
 
 /**
- * Generic models, per type. The value is the ordered list of keys that stand for that type;
- * `make` picks among them when a brand-matched one exists (a KTM motocrosser for a KTM), because
- * "an orange KTM-shaped bike" reads as the right bike far more than a colour swap does.
- * Filled in by web/tools/models-fetch.mjs — it rewrites GENERIC and parts.json together, so the
- * table here and the files on disk can never drift apart.
+ * Generic models, per type. The value is the ordered list of model names under
+ * ../../store/models/generic/ that may stand for that type, best first.
+ *
+ * Two types have no model of their own and borrow the nearest silhouette, on purpose:
+ *   trial    -> enduro    a trials bike is an enduro with no seat; nothing CC-licensed and
+ *                         downloadable on Sketchfab is a trials bike (0.7% of the roster)
+ *   minibike -> naked     a Grom is a small naked bike, and it reads as one at viewer scale
+ * Both are listed in web/tools/model-sources.md under "known gaps". When a real model for either
+ * lands, add it here and to web/tools/model-shortlist.json — nothing else changes.
  */
 export const GENERIC = {
   motocross: ["motocross"],
@@ -269,13 +273,28 @@ export const GENERIC = {
   cruiser: ["cruiser"],
   scooter: ["scooter"],
   classic: ["classic"],
-  trial: ["trial"],
-  minibike: ["minibike"],
+  trial: ["enduro"],
+  minibike: ["naked"],
   car: ["car"],
 };
 
-/** Which shipped generic belongs to which make, when one of them clearly does. */
-export const GENERIC_MAKES = {};
+/**
+ * Which makes each generic is a good stand-in for. Only consulted when a type has more than one
+ * model, which none does yet — it is the hook for "a KTM-looking motocrosser for a KTM" once a
+ * second model per type exists. Kept in sync with the `makes` field of model-shortlist.json.
+ */
+export const GENERIC_MAKES = {
+  motocross: ["yamaha", "ktm", "honda", "kawasaki", "suzuki", "husqvarna", "gasgas"],
+  enduro: ["honda", "ktm", "husqvarna", "yamaha", "beta", "sherco", "gasgas"],
+  supermoto: ["husqvarna", "ktm", "yamaha", "honda", "suzuki", "aprilia", "ducati"],
+  sportbike: ["kawasaki", "suzuki", "honda", "aprilia", "mv-agusta"],
+  naked: ["ducati", "ktm", "yamaha", "triumph", "bmw", "kawasaki", "suzuki", "honda"],
+  adventure: ["bmw", "honda", "yamaha", "ktm", "triumph", "suzuki", "royal-enfield", "aprilia"],
+  touring: ["bmw", "honda", "yamaha", "kawasaki", "harley-davidson", "indian"],
+  cruiser: ["harley-davidson", "indian", "victory", "suzuki", "kawasaki", "yamaha", "honda"],
+  scooter: ["vespa", "piaggio", "kymco", "sym", "lambretta", "honda", "yamaha", "suzuki", "aprilia"],
+  classic: ["triumph", "royal-enfield", "moto-guzzi", "bmw", "honda", "yamaha", "kawasaki"],
+};
 
 /**
  * genericModelFor(type, bike?) -> "generic/<name>"

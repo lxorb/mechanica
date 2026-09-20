@@ -45,10 +45,15 @@ AGENT_WS = "wss://agent.deepgram.com/v1/agent/converse"
 AGENT_RATE = 24000
 LISTEN_MODEL = "nova-3"
 SPEAK_MODEL = "aura-2-thalia-en"
-# One of the models Deepgram lists for think.provider.type "open_ai". The small one on purpose:
-# every answer here is one or two sentences read back out of a function result, and a voice turn
-# is judged on the silence before it.
-THINK_MODEL = os.getenv("MODEL_VOICE", "gpt-5.6-luna")
+# One of the models Deepgram lists for think.provider.type "open_ai", and NOT a reasoning one.
+# Deepgram drives think through /v1/chat/completions with reasoning_effort set, which OpenAI
+# rejects outright the moment function tools are attached ("Function tools with reasoning_effort
+# are not supported ... use /v1/responses or set reasoning_effort to 'none'") - so the app's own
+# gpt-5.6-* models close the socket with FAILED_TO_THINK here. Verified live: gpt-4.1-mini calls
+# find_procedure then read_page and answers off page 114. Small on purpose too: every answer is
+# one or two sentences read back out of a function result, and a voice turn is judged on the
+# silence before it.
+THINK_MODEL = os.getenv("MODEL_VOICE", "gpt-4.1-mini")
 DIGEST_CHARS = 1500
 
 
@@ -157,40 +162,50 @@ _project: str | None = None
 
 @router.post("/deepgram-token")
 def deepgram_token():
-    """Short-lived usage:write key.
+    """A short-lived credential the browser may hold, and the subprotocol to send it with.
 
-    The browser sends it as the `token` Sec-WebSocket-Protocol pair, the only documented
-    browser auth for wss://api.deepgram.com/v2/listen. The JWT from /v1/auth/grant is not
-    accepted in that subprotocol, so a scoped project key is minted instead.
+    A browser WebSocket has no headers, so Deepgram is authenticated with the
+    Sec-WebSocket-Protocol pair `[scheme, credential]` — `new WebSocket(url, [scheme, key])`,
+    which is what Deepgram's own browser-agent component does, for wss://api.deepgram.com/v2/listen
+    and wss://agent.deepgram.com/v1/agent/converse alike. `scheme` travels with the credential so
+    the browser never has to guess which kind it got.
 
-    The same pair authenticates the Voice Agent socket: `new WebSocket(url, [scheme, key])` is
-    what Deepgram's own browser-agent component does, so `scheme` travels with the key and the
-    browser never has to guess it. An Authorization header is impossible from a browser.
+    Two ways to mint one, and which of them an account can use depends on its key's scopes:
+      token   a project key scoped to usage:write, ten minutes (needs keys:write)
+      bearer  the JWT from /v1/auth/grant, thirty seconds, long enough for the handshake
+    The project key is tried first because it is what this app already ships to the browser; the
+    grant is the fallback. A 502 here means the account key can do NEITHER, and the fix is on the
+    Deepgram console, not in this file: give the key keys:write on the project.
     """
     global _project
     key = settings.deepgram_api_key
     if not key:
         raise HTTPException(501, "no deepgram key")
     with httpx.Client(base_url=DEEPGRAM, headers={"Authorization": f"Token {key}"}, timeout=15) as http:
-        if not _project:
+        if _project is None:
             projects = http.get("/v1/projects")
-            if projects.status_code >= 400:
-                raise HTTPException(502, "deepgram projects failed")
-            listed = projects.json().get("projects") or []
-            if not listed:
-                raise HTTPException(502, "no deepgram project")
-            _project = listed[0]["project_id"]
-        made = http.post(
-            f"/v1/projects/{_project}/keys",
-            json={
-                "comment": "trustthemanual browser",
-                "scopes": ["usage:write"],
-                "time_to_live_in_seconds": TOKEN_TTL,
-            },
-        )
-        if made.status_code >= 400:
-            raise HTTPException(502, "deepgram key failed")
-        return {"key": made.json()["key"], "expiresIn": TOKEN_TTL, "scheme": "token"}
+            listed = (projects.json().get("projects") or []) if projects.status_code < 400 else []
+            _project = listed[0]["project_id"] if listed else ""
+        if _project:
+            made = http.post(
+                f"/v1/projects/{_project}/keys",
+                json={
+                    "comment": "trustthemanual browser",
+                    "scopes": ["usage:write"],
+                    "time_to_live_in_seconds": TOKEN_TTL,
+                },
+            )
+            if made.status_code < 400:
+                return {"key": made.json()["key"], "expiresIn": TOKEN_TTL, "scheme": "token"}
+        granted = http.post("/v1/auth/grant", json={"ttl_seconds": 30})
+        if granted.status_code < 400:
+            body = granted.json()
+            return {
+                "key": body["access_token"],
+                "expiresIn": int(body.get("expires_in") or 30),
+                "scheme": "bearer",
+            }
+        raise HTTPException(502, "deepgram key failed: the account key needs keys:write on the project")
 
 
 # ---------------------------------------------------------------- the voice agent

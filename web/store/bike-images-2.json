@@ -339,6 +339,17 @@
     "via": "alias",
     "aliasOf": "aprilia|rsv4"
   },
+  "aprilia|rsv4-factory": {
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
+    "via": "alias",
+    "aliasOf": "aprilia|rsv4"
+  },
   "aprilia|rsv4-factory-abs": {
     "image": "store/img/bikes/aprilia-rsv4-factory.webp",
     "thumb": "store/img/bikes/aprilia-rsv4-factory-thumb.webp",
@@ -346,6 +357,17 @@
     "author": "Thesupermat",
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_002.jpg",
+    "via": "alias",
+    "aliasOf": "aprilia|rsv4-factory"
+  },
+  "aprilia|rsv4-factory-aprc": {
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rsv4-factory"
   },
@@ -428,6 +450,28 @@
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rsv4-r"
+  },
+  "aprilia|rsv4-rf": {
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
+    "via": "alias",
+    "aliasOf": "aprilia|rsv4"
+  },
+  "aprilia|rsv4-rr": {
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
+    "via": "alias",
+    "aliasOf": "aprilia|rsv4"
   },
   "aprilia|rsv4-rr-1000": {
     "image": "store/img/bikes/aprilia-rsv4-rr.webp",
@@ -589,6 +633,17 @@
     "via": "alias",
     "aliasOf": "aprilia|scarabeo-500"
   },
+  "aprilia|shiver-750-abs": {
+    "image": "store/img/bikes/aprilia-shiver-750.webp",
+    "thumb": "store/img/bikes/aprilia-shiver-750-thumb.webp",
+    "hero": "store/img/bikes/aprilia-shiver-750-hero.webp",
+    "title": "Aprilia Shiver 750.jpg",
+    "author": "Lepidlizard ( talk )",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg",
+    "via": "alias",
+    "aliasOf": "aprilia|shiver-750"
+  },
   "aprilia|shiver-750-gt": {
     "image": "store/img/bikes/aprilia-shiver-750.webp",
     "thumb": "store/img/bikes/aprilia-shiver-750-thumb.webp",
@@ -749,6 +804,17 @@
     "via": "alias",
     "aliasOf": "aprilia|sx-50"
   },
+  "aprilia|tuono-1000r-factory": {
+    "image": "store/img/bikes/aprilia-tuono-1000r.webp",
+    "thumb": "store/img/bikes/aprilia-tuono-1000r-thumb.webp",
+    "hero": "store/img/bikes/aprilia-tuono-1000r-hero.webp",
+    "title": "Aprilia Tuono 1000R.jpg",
+    "author": "Reg Mckenna",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg",
+    "via": "alias",
+    "aliasOf": "aprilia|tuono-1000r"
+  },
   "aprilia|tuono-v4-1100-rr": {
     "image": "store/img/bikes/aprilia-tuono-v4.webp",
     "thumb": "store/img/bikes/aprilia-tuono-v4-thumb.webp",
@@ -809,6 +875,17 @@
     "via": "alias",
     "aliasOf": "bmw|c-evolution"
   },
+  "bmw|f-650-gs-dakar": {
+    "image": "store/img/bikes/bmw-f-650-gs.webp",
+    "thumb": "store/img/bikes/bmw-f-650-gs-thumb.webp",
+    "hero": "store/img/bikes/bmw-f-650-gs-hero.webp",
+    "title": "BMW motorbike F 650 GS in Gdansk.jpg",
+    "author": "Łukasz Katlewicz",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg",
+    "via": "alias",
+    "aliasOf": "bmw|f-650-gs"
+  },
   "bmw|f-650-gs-se": {
     "image": "store/img/bikes/bmw-f-650-gs.webp",
     "thumb": "store/img/bikes/bmw-f-650-gs-thumb.webp",
@@ -858,6 +935,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG",
     "via": "alias",
     "aliasOf": "bmw|f-750-gs"
+  },
+  "bmw|f-800-gs-adventure": {
+    "image": "store/img/bikes/bmw-f-800-gs.webp",
+    "thumb": "store/img/bikes/bmw-f-800-gs-thumb.webp",
+    "hero": "store/img/bikes/bmw-f-800-gs-hero.webp",
+    "title": "BMW F 800 GS 2013 (10546845423).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg",
+    "via": "alias",
+    "aliasOf": "bmw|f-800-gs"
   },
   "bmw|f-800-gs-adventure-te": {
     "image": "store/img/bikes/bmw-f-800-gs-adventure.webp",
@@ -6929,6 +7017,16 @@
     "via": "alias",
     "aliasOf": "indian|pursuit-limited"
   },
+  "indian|pursuit-limited-with-powerband-audio-package": {
+    "image": "store/img/bikes/indian-pursuit.webp",
+    "thumb": "store/img/bikes/indian-pursuit-thumb.webp",
+    "title": "Indian Pursuit parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg",
+    "author": "Chris Woodrich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_Pursuit_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
+    "via": "alias",
+    "aliasOf": "indian|pursuit-limited"
+  },
   "indian|pursuit-limited-with-premium-package": {
     "image": "store/img/bikes/indian-pursuit.webp",
     "thumb": "store/img/bikes/indian-pursuit-thumb.webp",
@@ -10068,6 +10166,54 @@
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_KTM_-_350_SX-F_LTD_Edition_Tony_Cairoli_-_001.jpg",
     "via": "alias",
     "aliasOf": "ktm|350-sx-f"
+  },
+  "ktm|350-xc-f": {
+    "image": "store/img/bikes2/ktm-350-xc-f.webp",
+    "thumb": "store/img/bikes2/ktm-350-xc-f.thumb.webp",
+    "title": "KTM 350 EXC-F.JPG",
+    "author": "Y Sekiai",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/ktm-350-xc-f.hero.webp"
+  },
+  "ktm|350-xc-f-factory-edition": {
+    "image": "store/img/bikes2/ktm-350-xc-f.webp",
+    "thumb": "store/img/bikes2/ktm-350-xc-f.thumb.webp",
+    "hero": "store/img/bikes2/ktm-350-xc-f.hero.webp",
+    "title": "KTM 350 EXC-F.JPG",
+    "author": "Y Sekiai",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ktm|350-xc-f"
+  },
+  "ktm|350-xc-f-kailub-russel": {
+    "image": "store/img/bikes2/ktm-350-xc-f.webp",
+    "thumb": "store/img/bikes2/ktm-350-xc-f.thumb.webp",
+    "hero": "store/img/bikes2/ktm-350-xc-f.hero.webp",
+    "title": "KTM 350 EXC-F.JPG",
+    "author": "Y Sekiai",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ktm|350-xc-f"
+  },
+  "ktm|350-xc-f-kailub-russell": {
+    "image": "store/img/bikes2/ktm-350-xc-f.webp",
+    "thumb": "store/img/bikes2/ktm-350-xc-f.thumb.webp",
+    "hero": "store/img/bikes2/ktm-350-xc-f.hero.webp",
+    "title": "KTM 350 EXC-F.JPG",
+    "author": "Y Sekiai",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ktm|350-xc-f"
   },
   "ktm|390-adventure-r": {
     "image": "store/img/bikes/ktm-390-adventure.webp",
@@ -15599,6 +15745,16 @@
     "via": "alias",
     "aliasOf": "yamaha|grizzly-700-fi-auto-4x4"
   },
+  "yamaha|grizzly-700-fi-auto-4x4-eps-se": {
+    "image": "store/img/bikes/yamaha-grizzly-700.webp",
+    "thumb": "store/img/bikes/yamaha-grizzly-700-thumb.webp",
+    "title": "Yamaha Grizzly 700.jpg",
+    "author": "Максим Леньга",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg",
+    "via": "alias",
+    "aliasOf": "yamaha|grizzly-700-fi-auto-4x4-eps"
+  },
   "yamaha|grizzly-700-fi-auto-4x4-eps-special-edition": {
     "image": "store/img/bikes/yamaha-grizzly-700.webp",
     "thumb": "store/img/bikes/yamaha-grizzly-700-thumb.webp",
@@ -15819,6 +15975,54 @@
     "via": "alias",
     "aliasOf": "yamaha|mt-07-y-amt"
   },
+  "yamaha|mt-07ho": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt07"
+  },
+  "yamaha|mt-07la": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt07"
+  },
+  "yamaha|mt-07s": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt07"
+  },
+  "yamaha|mt-07tr": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt07"
+  },
   "yamaha|mt-09-35kw": {
     "image": "store/img/bikes/yamaha-mt-09.webp",
     "thumb": "store/img/bikes/yamaha-mt-09-thumb.webp",
@@ -15968,6 +16172,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_M-Slaz_150_(MT-15).jpg",
     "via": "alias",
     "aliasOf": "yamaha|mt-15"
+  },
+  "yamaha|mt07": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "via": "wikipedia",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp"
+  },
+  "yamaha|mt07-y-amt": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt07"
+  },
+  "yamaha|mt07tr": {
+    "image": "store/img/bikes2/yamaha-mt07.webp",
+    "thumb": "store/img/bikes2/yamaha-mt07.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt07.hero.webp",
+    "title": "Yamaha MT-07.jpg",
+    "author": "Na-Thur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt07"
   },
   "yamaha|mt09-sp": {
     "image": "store/img/bikes/yamaha-mt09.webp",

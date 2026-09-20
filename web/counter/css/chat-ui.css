@@ -1,10 +1,14 @@
 /**
- * Chat drawer. Owner: chat-ui agent. Pairs with js/chat-ui.js.
+ * Chat — the full-screen view over Pick. Owner: chat-ui agent. Pairs with js/chat-ui.js.
  *
- * Only the chrome around the component lives here: <deep-chat> renders into a shadow root,
- * so every rule inside the transcript is handed to it as `auxiliaryStyle` / `messageStyles`
- * from js/chat-ui.js instead. Pulled in by css/screens/pick.css (which mounts the drawer),
- * so index.html — another agent's file — needs no line.
+ * The .ov shell (fixed, veil, sheet, head, ✕) lives in css/counter.css, exactly as Parts uses
+ * it over Book; .cv takes it from "sheet on the bottom" to "the whole viewport" and paints the
+ * Mechanica surface behind the conversation.
+ *
+ * Only the chrome around the component lives here: <deep-chat> renders into a shadow root, so
+ * every rule inside the transcript is handed to it as `auxiliaryStyle` / `messageStyles` from
+ * js/chat-ui.js instead. Pulled in by css/screens/pick.css (which mounts the view), so
+ * index.html — another agent's file — needs no line.
  */
 
 /* ------------------------------------------------------------------ the pill */
@@ -42,104 +46,175 @@
   color: #fff;
 }
 
-/* ------------------------------------------------------------------ the drawer */
+/* ------------------------------------------------------------------ the view */
 
-.chat-wrap {
-  position: fixed;
-  inset: 0;
+.cv {
+  justify-content: stretch;
   z-index: 60;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
-.chat-veil {
-  position: absolute;
-  inset: 0;
-  background: rgba(20, 20, 20, 0.34);
-  opacity: 0;
-  transition: opacity 0.18s ease-out;
-}
-
-.chat-wrap.is-open .chat-veil {
-  opacity: 1;
-}
-
-.chat-sheet {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+/* The whole viewport. Nothing scrolls here: the conversation scrolls inside the component,
+   so the header, the voice strip and the footer stay put (min-height:0 is what lets it shrink). */
+.cv-sheet {
+  flex: 1 1 auto;
   width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  /* 66dvh leaves the 3D stage standing above the drawer on a phone */
-  height: 66dvh;
-  min-height: 320px;
+  height: 100%;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: hidden;
+  border-top: 0;
   background: var(--paper);
-  border-top: 3px solid var(--ink);
-  transform: translateY(100%);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.chat-wrap.is-open .chat-sheet {
-  transform: translateY(0);
-}
+/* ---------- header ---------- */
 
-.chat-head {
-  display: flex;
+.cv-head {
   align-items: center;
-  gap: 10px;
-  flex: 0 0 auto;
-  padding: 6px 6px 6px 14px;
-  background: var(--orange);
-  color: #fff;
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  gap: 8px;
+  padding: 8px 6px 8px 14px;
+  padding-top: calc(8px + env(safe-area-inset-top));
 }
 
-.chat-who {
+.cv-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cv-title b {
+  flex: 0 0 auto;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.cv-bike {
   flex: 1 1 auto;
   min-width: 0;
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.78rem;
   letter-spacing: 0.06em;
-  text-align: right;
+  line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
-.chat-x {
+.cv-x {
   flex: 0 0 auto;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 8px 4px;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  font-size: 1.9rem;
+}
+
+/* ---------- the voice toggle ---------- */
+
+.cv-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   line-height: 1;
   cursor: pointer;
   appearance: none;
 }
 
-.chat-x:active {
+.cv-voice .cv-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  display: block;
+}
+
+.cv-voice.is-on {
+  background: var(--ink);
   color: var(--yellow);
 }
 
-.chat-body {
+.cv-voice.is-on .cv-dot {
+  background: #ff4d4d;
+  animation: cv-pulse 1.1s ease-in-out infinite;
+}
+
+.cv-voice:active {
+  background: var(--orange);
+  color: #fff;
+}
+
+@keyframes cv-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ---------- the live voice strip ---------- */
+
+.cv-mic {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 6px 12px;
+  background: var(--ink);
+  color: var(--yellow);
+  border-bottom: 3px solid var(--ink);
+}
+
+.cv-meter {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 0 0 auto;
+  height: 22px;
+}
+
+.cv-meter i {
+  display: block;
+  width: 4px;
+  height: 22px;
+  background: var(--yellow);
+  transform: scaleY(0.12);
+  transform-origin: center;
+  transition: transform 0.06s linear;
+}
+
+.cv-said {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- the conversation ---------- */
+
+.cv-body {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
+  width: 100%;
 }
 
-.chat-body deep-chat {
+.cv-body deep-chat {
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -155,7 +230,9 @@
   opacity: 0.55;
 }
 
-.chat-foot {
+/* ---------- the footer ---------- */
+
+.cv-foot {
   flex: 0 0 auto;
   padding: 5px 12px calc(5px + env(safe-area-inset-bottom));
   border-top: 3px solid var(--ink);
@@ -170,37 +247,41 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ------------------------------------------------------------------ side panel */
+/* ------------------------------------------------------------------ desktop */
 
-@media (min-width: 1024px) {
-  .chat-wrap {
-    justify-content: flex-start;
-    align-items: stretch;
-    flex-direction: row-reverse;
-    /* a panel, not a modal: Pick stays readable and clickable beside it */
-    pointer-events: none;
+@media (min-width: 980px) {
+  .cv-head {
+    padding-left: 20px;
   }
 
-  .chat-veil {
-    display: none;
-  }
-
-  .chat-sheet {
-    pointer-events: auto;
-  }
-
-  .chat-sheet {
-    width: min(420px, 38vw);
-    max-width: none;
-    height: 100dvh;
-    min-height: 0;
-    margin: 0;
-    border-top: 0;
+  /* One column of conversation on the full-screen paper, ruled on both sides so the
+     surface behind it still reads as the Mechanica sheet rather than dead margin. */
+  .cv-body {
+    max-width: 766px;
+    margin: 0 auto;
     border-left: 3px solid var(--ink);
-    transform: translateX(100%);
+    border-right: 3px solid var(--ink);
   }
 
-  .chat-wrap.is-open .chat-sheet {
-    transform: translateX(0);
+  .cv-mic,
+  .cv-foot {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .cv-said {
+    font-size: 0.88rem;
+  }
+}
+
+@media (hover: hover) {
+  .cv-voice:hover {
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .cv-voice.is-on:hover {
+    background: var(--orange);
+    color: #fff;
   }
 }

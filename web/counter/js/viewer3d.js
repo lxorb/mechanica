@@ -56,7 +56,7 @@ const IMPORTS = { three: `${CDN}build/three.module.js`, "three/addons/": `${CDN}
 const ORANGE = 0xe85d04;
 const DIM_OPACITY = 0.35;
 const EXPLODE_MS = 400;
-const FOCUS_MS = 500;
+const FOCUS_MS = 600;
 const IDLE_MS = 3000;
 const EXPLODE_SCALE = 0.8;   // how far the per-part vectors actually throw parts apart
 
@@ -243,6 +243,7 @@ export function registerGenericParts(table) {
       table: withExtra(base, extra),
       paint: Array.isArray(row.paint) && row.paint.length ? row.paint : DEFAULT_PAINT,
       paintMaterials: Array.isArray(row.paintMaterials) ? row.paintMaterials : [],
+      rotate: Array.isArray(row.rotate) && row.rotate.length === 3 ? row.rotate : null,
       orient: Number.isFinite(row.orient) ? row.orient : 0,
       kind: row.kind === "car" ? "car" : "bike",
     });
@@ -274,15 +275,28 @@ function paintMaterialsFor(modelKey) {
 }
 
 /**
- * Y rotation, in radians, that puts this model's nose at +x.
- * The three Sketchfab vehicles the app started with all face -x, hence the -90° default. Every
- * generic is someone else's upload pointing somewhere else, so parts.json carries its own
- * absolute value, set by eye with `node web/tools/viewer-shots.mjs --orient`.
+ * The matrix that stands a model up the viewer's way: x = length with the nose at +x, y = up,
+ * z = width. Two parts, and they are separate because only one of them can be computed:
+ *
+ *   rotate  which axis is up. Derived from the model's own proportions by
+ *           web/tools/models-fetch.mjs — a motorcycle is longer than it is tall and taller than
+ *           it is wide, so the sorted bounding box says which exporter convention it came from.
+ *           The Yamaha YZ450F arrives Z-up and would otherwise render as a plan view.
+ *   orient  which END is the front. A bounding box cannot tell you, so it is set by eye in
+ *           web/tools/model-shortlist.json.
+ *
+ * The three Sketchfab vehicles the app started with are all Y-up facing -x, hence the -90°.
  */
-function orientFor(modelKey) {
+function orientMatrix(THREE, modelKey) {
   const generic = GENERIC_PARTS.get(modelKey);
-  if (generic) return (generic.orient * Math.PI) / 180;
-  return -Math.PI / 2;
+  if (!generic) return new THREE.Matrix4().makeRotationY(-Math.PI / 2);
+  const rad = (deg) => (deg * Math.PI) / 180;
+  const matrix = new THREE.Matrix4().makeRotationY(rad(generic.orient || 0));
+  if (generic.rotate) {
+    const [rx, ry, rz] = generic.rotate;
+    matrix.multiply(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(rad(rx), rad(ry), rad(rz), "XYZ")));
+  }
+  return matrix;
 }
 
 /**
@@ -572,11 +586,80 @@ async function loadGlb(THREE, modelKey, url, onProgress) {
   skeletons.forEach((skeleton) => skeleton.dispose());
   if (!meshes.length) throw new Error("empty model");
 
-  // turn the model so its front is +x, like the schematic and like every other model. See
-  // orientFor(): the three exact vehicles face -x, the generics each carry their own value.
-  const orient = new THREE.Matrix4().makeRotationY(orientFor(modelKey));
+  const orient = orientMatrix(THREE, modelKey);
   meshes.forEach((mesh) => mesh.geometry.applyMatrix4(orient));
+
+  // unlit materials are swapped for standard ones, so the meshes have to be pointed at the swaps
+  const swaps = fixShading(THREE, materials);
+  if (swaps.size) {
+    const swap = (material) => swaps.get(material) || material;
+    for (const mesh of meshes) {
+      mesh.material = Array.isArray(mesh.material) ? mesh.material.map(swap) : swap(mesh.material);
+    }
+  }
   return finishModel(THREE, { root, groups, meshes, materials, modelKey });
+}
+
+/* ------------------------------------------------------------------ shading
+ * Raw Sketchfab exports are not consistent, and three renders exactly what they say. Three
+ * failure modes turned models black or flat in this app:
+ *
+ *   metalness 1 + roughness 0   a mirror with nothing to reflect. Correct in the author's
+ *                               renderer, and pure black here for the first frames while the
+ *                               PMREM is still building — and permanently if the env map never
+ *                               lands. A chrome exhaust genuinely is metal, so the fix is to cap
+ *                               the combination rather than to stop believing the material.
+ *   KHR_materials_unlit         MeshBasicMaterial: ignores every light and every env map, so it
+ *                               cannot be lit at all and reads as a flat sticker next to a lit one.
+ *   envMapIntensity 0 / unset   nothing from the HDRI reaches the surface.
+ *
+ * None of this touches the geometry or the textures. It only makes the materials answer to the
+ * lighting the scene actually has.
+ */
+function fixShading(THREE, materials) {
+  const replaced = new Map();
+  for (const material of [...materials]) {
+    if (!material) continue;
+    let fixed = material;
+
+    // unlit -> standard, keeping the map so the model looks the same but can now be lit
+    if (material.isMeshBasicMaterial) {
+      fixed = new THREE.MeshStandardMaterial({
+        name: material.name,
+        map: material.map || null,
+        color: material.color ? material.color.clone() : undefined,
+        transparent: material.transparent,
+        opacity: material.opacity,
+        alphaMap: material.alphaMap || null,
+        side: material.side,
+        metalness: 0,
+        roughness: 0.75,
+      });
+      replaced.set(material, fixed);
+      materials.delete(material);
+      materials.add(fixed);
+      material.dispose();
+    }
+
+    if (!fixed.isMeshStandardMaterial && !fixed.isMeshPhysicalMaterial) continue;
+
+    // a perfect mirror has nothing to show until the PMREM is ready, and goes black without one
+    if (fixed.metalness > 0.9 && fixed.roughness < 0.08) {
+      fixed.metalness = 0.9;
+      fixed.roughness = 0.12;
+    }
+    fixed.envMapIntensity = 1.15;
+    if (fixed.emissive && fixed.emissiveIntensity > 0 && fixed.emissive.getHex() === 0) {
+      fixed.emissiveIntensity = 0;       // a black emissive is a no-op that still costs a branch
+    }
+    // three needs to be told a colour texture is sRGB; a linear one renders dark and desaturated
+    for (const slot of ["map", "emissiveMap", "specularColorMap", "sheenColorMap"]) {
+      const texture = fixed[slot];
+      if (texture && texture.colorSpace !== THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
+    }
+    fixed.needsUpdate = true;
+  }
+  return replaced;
 }
 
 /**
@@ -653,14 +736,33 @@ function finishModel(THREE, model) {
   });
   model.root.updateMatrixWorld(true);
 
+  /**
+   * Where each part flies to when the assembly comes apart.
+   *
+   * The hand-tuned vectors in BIKE_PARTS / CAR_PARTS are right for the three models they were
+   * measured on. A generic is somebody else's mesh split by regex, so a part called "fairing"
+   * there may be half the bike — sending it along the table's vector can push it across another
+   * part or straight out of frame. So: take the table direction, but make sure it actually points
+   * away from the model centre (flip it if it points inward), and cap every vector at 1.2, which
+   * is 1.2 x the normalised model radius. Nothing travels further than the bike is long.
+   */
   const table = partsFor(model.modelKey);
   const order = new Map(table.map((part, i) => [part.key, i]));
+  const MAX_TRAVEL = 1.2;
   for (const part of model.groups.values()) {
     const entry = table.find((row) => row.key === part.key);
-    part.explode.set(...(entry ? entry.explode : [0, 0, 0]));
     part.bounds = new THREE.Box3().setFromObject(part.node);
     part.center = part.bounds.getCenter(new THREE.Vector3());
-    if (!entry && part.center.lengthSq() > 0) part.explode.copy(part.center).multiplyScalar(1.4);
+    part.explode.set(...(entry ? entry.explode : [0, 0, 0]));
+    const outward = part.center.lengthSq() > 1e-6 ? part.center.clone().normalize() : null;
+    if (!entry || part.explode.lengthSq() < 1e-6) {
+      // no vector for this key: straight out from the centre of the vehicle
+      if (outward) part.explode.copy(outward).multiplyScalar(0.9 + part.center.length() * 0.5);
+    } else if (outward && part.explode.dot(outward) < 0) {
+      // the table wants it one way and the geometry sits the other way — geometry wins
+      part.explode.reflect(outward).negate();
+    }
+    if (part.explode.length() > MAX_TRAVEL) part.explode.setLength(MAX_TRAVEL);
     part.order = order.has(part.key) ? order.get(part.key) : 99;
   }
   const bounds = new THREE.Box3().setFromObject(model.root);
@@ -712,6 +814,89 @@ function disposeModel(model) {
  * ever see blurred. 1k/2k on phones, 2k/4k on desktop. Both are cached per name, so switching
  * models re-uses them; opts.environment: false keeps the transparent studio look instead.
  */
+
+/* ------------------------------------------------------------------ technical backdrop
+ * What you look at once the vehicle comes apart. The garage panorama is right for a bike standing
+ * in a garage and wrong for one floating in pieces — it competes with the parts and it stops
+ * reading as a place. So exploding cross-fades to this: ink, a faint grid on the ground plane in
+ * true perspective, a thin orange horizon, and a vignette.
+ *
+ * It is an inverted sphere drawn before everything else with depthWrite off, not a change to
+ * scene.background, because that is what makes a 400 ms cross-fade possible — the panorama stays
+ * exactly where it is and this fades in over the top of it. The environment map is untouched, so
+ * the parts keep the garage's lighting and reflections while they float in the grid.
+ */
+
+const GRID_VERT = `
+varying vec3 vDir;
+void main() {
+  vDir = position;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}`;
+
+const GRID_FRAG = `
+varying vec3 vDir;
+uniform float uOpacity;
+uniform vec3 uInk;
+uniform vec3 uLine;
+uniform vec3 uAccent;
+
+// one grid line, antialiased against how fast the coordinate changes on screen
+float grid(vec2 uv, float width) {
+  vec2 d = fwidth(uv);
+  vec2 g = abs(fract(uv - 0.5) - 0.5) / max(d, vec2(1e-5));
+  return 1.0 - min(min(g.x, g.y) / width, 1.0);
+}
+
+void main() {
+  vec3 dir = normalize(vDir);
+  vec3 color = uInk;
+
+  // the floor: intersect the view ray with y = -1 and draw a grid on it, so the lines converge
+  // at the horizon the way a real floor does
+  if (dir.y < -0.002) {
+    float t = -1.0 / dir.y;
+    vec2 floorUv = vec2(dir.x, dir.z) * t;
+    float fade = 1.0 / (1.0 + t * t * 0.02);          // distance fog, or it aliases into moire
+    color = mix(color, uLine, grid(floorUv * 0.5, 1.4) * 0.30 * fade);
+    color = mix(color, uAccent, grid(floorUv * 2.0, 1.1) * 0.10 * fade);
+  } else {
+    // above the horizon: a much fainter lat/long grid, just enough to say "technical"
+    vec2 sky = vec2(atan(dir.z, dir.x) * 2.5, asin(clamp(dir.y, -1.0, 1.0)) * 4.0);
+    color = mix(color, uLine, grid(sky, 1.2) * 0.07);
+  }
+
+  // the horizon itself, thin and orange
+  float horizon = 1.0 - smoothstep(0.0, 0.012, abs(dir.y));
+  color = mix(color, uAccent, horizon * 0.55);
+
+  // vignette towards the poles so the frame edges settle down
+  color *= 1.0 - smoothstep(0.35, 1.0, abs(dir.y)) * 0.35;
+
+  gl_FragColor = vec4(color, uOpacity);
+}`;
+
+function technicalBackdrop(THREE) {
+  const material = new THREE.ShaderMaterial({
+    vertexShader: GRID_VERT,
+    fragmentShader: GRID_FRAG,
+    uniforms: {
+      uOpacity: { value: 0 },
+      uInk: { value: new THREE.Color(0x14110f) },
+      uLine: { value: new THREE.Color(0x8d8a85) },
+      uAccent: { value: new THREE.Color(ORANGE) },
+    },
+    side: THREE.BackSide,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(40, 48, 32), material);
+  mesh.renderOrder = -1;       // behind the vehicle, in front of scene.background
+  mesh.frustumCulled = false;
+  mesh.visible = false;
+  return mesh;
+}
 
 export const DEFAULT_ENV = "auto_service";
 
@@ -1108,7 +1293,8 @@ function createScene(THREE, host, initialModel, opts) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setClearAlpha(0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.1;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.className = "viewer3d-canvas";
   host.append(renderer.domElement);
 
@@ -1120,6 +1306,13 @@ function createScene(THREE, host, initialModel, opts) {
   scene.environment = environment.texture;
   scene.environmentIntensity = 0.75;
 
+  /**
+   * Three lights that never switch off, even once the HDRI is doing the real work. They used to
+   * drop to almost nothing when the environment arrived, and any material that does not answer
+   * to an env map — an unlit export, a mirror-metal with roughness 0 — went black. These are the
+   * floor: a key from the upper front-left, a fill opposite it, and a hemisphere so the shadow
+   * side of a tank is still readable.
+   */
   const hemi = new THREE.HemisphereLight(0xffffff, 0x6b6257, 1.5);
   scene.add(hemi);
   const keyLight = new THREE.DirectionalLight(0xfff4e6, 2.6);
@@ -1135,6 +1328,37 @@ function createScene(THREE, host, initialModel, opts) {
   const shadow = contactShadow(THREE, model.floor, model.radius);
   scene.add(shadow);
 
+  // the grid the panorama cross-fades to when the vehicle comes apart
+  const gridBackdrop = technicalBackdrop(THREE);
+  scene.add(gridBackdrop);
+  let gridNow = 0;
+  let gridTarget = 0;
+
+  /**
+   * The panorama. backgroundBlurriness stays at 0 — the founder's note was that it looked like
+   * "blurry pixelated stuff", and it was: a 2k JPEG blurred by the renderer. A sharp, properly
+   * sampled panorama is the point, so this asks for mipmaps and the highest anisotropy the GPU
+   * offers, which is what keeps it crisp while the camera swings.
+   */
+  function setBackdrop(texture) {
+    if (!texture) return;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = Math.min(16, renderer.capabilities.getMaxAnisotropy());
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = true;
+    texture.needsUpdate = true;
+    scene.background = texture;
+    scene.backgroundBlurriness = 0;
+  }
+
+  /** A new scene.environment only reaches materials that are told to recompile. */
+  function applyEnvironment() {
+    for (const material of model.materials) material.needsUpdate = true;
+    hlMaterials.forEach((material) => { material.needsUpdate = true; });
+    dimMaterials.forEach((material) => { material.needsUpdate = true; });
+  }
+
   if (opts.environment !== false) {
     const name = typeof opts.environment === "string" ? opts.environment : DEFAULT_ENV;
     const big = Math.max(window.innerWidth || 0, 1) >= 900;
@@ -1143,16 +1367,17 @@ function createScene(THREE, host, initialModel, opts) {
       // the HDRI takes over the lighting; the hand-placed lights drop back to shaping the form
       scene.environment = loaded.environment.texture;
       scene.environmentIntensity = 1;
-      scene.background = loaded.background;
-      scene.backgroundBlurriness = 0.15;
+      setBackdrop(loaded.background);
       scene.backgroundIntensity = 1;
-      hemi.intensity = 0.3;
-      keyLight.intensity = 1.1;
-      rim.intensity = 0.5;
-      fill.intensity = 0.25;
+      // the HDRI leads, but the hand lights stay up: see the block where they are created
+      hemi.intensity = 0.4;
+      keyLight.intensity = 2.0;
+      rim.intensity = 0.8;
+      fill.intensity = 0.6;
       shadow.material.opacity = 1;
-      renderer.toneMappingExposure = 0.95;
+      renderer.toneMappingExposure = 1.1;
       host.setAttribute("data-env", name);
+      applyEnvironment();
       run();
     }).catch(() => { /* no HDRI: the procedural studio stays, which is the old transparent look */ });
   }
@@ -1192,6 +1417,30 @@ function createScene(THREE, host, initialModel, opts) {
     }
   }
   cloneMaterials();
+
+  /**
+   * Compile the highlight and dim shader variants up front.
+   *
+   * Cloning a material is cheap; the first frame that RENDERS the clone is not, because that is
+   * when three compiles a new program for it. On a 100-mesh model that landed as one long frame
+   * the moment a part was first tapped — the camera tween kept running underneath it, so the view
+   * appeared to hang and then jump to the end. Pre-warming moves that cost to load time, where a
+   * few milliseconds behind the progress ring cost nothing.
+   */
+  function warmMaterials() {
+    if (!model.meshes.length) return;
+    const originals = model.meshes.map((mesh) => mesh.material);
+    for (const variants of [hlMaterials, dimMaterials]) {
+      let swapped = false;
+      model.meshes.forEach((mesh, i) => {
+        const clone = variants.get(originals[i]);
+        if (clone) { mesh.material = clone; swapped = true; }
+      });
+      if (swapped) renderer.compile(scene, camera);
+      model.meshes.forEach((mesh, i) => { mesh.material = originals[i]; });
+    }
+  }
+
   const xrayMaterial = new THREE.MeshBasicMaterial({
     color: 0x6f7885, transparent: true, opacity: 0.12, depthWrite: false,
     side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
@@ -1240,17 +1489,28 @@ function createScene(THREE, host, initialModel, opts) {
    * The box the assembly will occupy once it has finished spreading, so the camera can pull back
    * in the same 400 ms rather than letting parts sail out of frame and then chasing them.
    */
+  /**
+   * The box the assembly occupies at a given explode spacing, without touching the scene graph.
+   *
+   * This used to move every part node, call Box3.setFromObject on the whole tree and move them
+   * all back — three full world-matrix updates per call, and it is called on every focus, every
+   * explode and every resize. Each part's own bounds are already computed once at load
+   * (finishModel), and exploding only ever translates a part, so the answer is just those boxes
+   * shifted by their vectors. That is the difference between a click costing milliseconds and a
+   * click costing a dropped frame.
+   */
   function boxAtSpacing(value, group) {
-    const saved = [];
+    const box = new THREE.Box3();
+    const offset = new THREE.Vector3();
+    const shifted = new THREE.Box3();
     for (const part of model.groups.values()) {
-      saved.push(part.node.position.clone());
-      part.node.position.copy(part.explode).multiplyScalar(value * EXPLODE_SCALE);
+      if (group && part !== group) continue;
+      if (!part.bounds || part.bounds.isEmpty()) continue;
+      offset.copy(part.explode).multiplyScalar(value * EXPLODE_SCALE);
+      shifted.copy(part.bounds).translate(offset);
+      box.union(shifted);
     }
-    const box = boxFor(group);
-    let i = 0;
-    for (const part of model.groups.values()) part.node.position.copy(saved[i++]);
-    model.root.updateMatrixWorld(true);
-    return box;
+    return box.isEmpty() ? boxFor(group) : box;
   }
 
   /**
@@ -1323,6 +1583,8 @@ function createScene(THREE, host, initialModel, opts) {
       model.root.visible = true;
       shadow.visible = true;
       shadow.position.y = model.floor - model.radius * 0.01;
+      warmMaterials();
+      applyEnvironment();
       applySpacing();
       selected = pickGroup(key);
       dimTarget = selected ? 1 : 0;
@@ -1339,14 +1601,26 @@ function createScene(THREE, host, initialModel, opts) {
       const to = on ? amount : 0;
       target = to;
       host.setAttribute("data-exploded", on ? "on" : "off");
+      gridTarget = on ? 1 : 0;              // cross-fade the panorama to the technical grid
+      gridBackdrop.visible = true;
       if (instant || reduced.matches) {
         spacing = to;
         spacingTween = null;
+        gridNow = gridTarget;
+        gridBackdrop.material.uniforms.uOpacity.value = gridNow;
+        gridBackdrop.visible = gridNow > 0.001;
         applySpacing();
       } else {
         spacingTween = { start: performance.now(), from: spacing, to, duration: EXPLODE_MS };
       }
-      fit(boxAtSpacing(to, null), { instant: instant || reduced.matches, duration: EXPLODE_MS, zoom: to ? 1.03 : 1.08 });
+      // 1.12 rather than 1.03: the camera tween and the parts move at the same time, so a frame
+      // mid-flight has parts further out than the final box. The padding is what stops them
+      // being clipped on the way, and the refit when the tween lands tightens it back up.
+      fit(boxAtSpacing(to, null), {
+        instant: instant || reduced.matches,
+        duration: EXPLODE_MS,
+        zoom: to ? 1.12 : 1.08,
+      });
     },
     highlight(partKey) {
       selected = pickGroup(partKey);
@@ -1455,12 +1729,30 @@ function createScene(THREE, host, initialModel, opts) {
     if (spacingTween) {
       const t = clamp01((now - spacingTween.start) / spacingTween.duration);
       spacing = spacingTween.from + (spacingTween.to - spacingTween.from) * easeOut(t);
-      if (t === 1) spacingTween = null;
       applySpacing();
+      if (t === 1) {
+        spacingTween = null;
+        // the parts have landed: frame what is actually there now, rather than the padded box
+        // the camera was aimed at while they were still moving
+        if (!cameraTween) {
+          fit(boxAtSpacing(target, selected), { duration: 260, zoom: selected ? 1.06 : target ? 1.06 : 1.08 });
+        }
+      }
+    }
+
+    // panorama <-> technical grid, on the same clock as the explode
+    if (Math.abs(gridNow - gridTarget) > 0.002) {
+      const step = dt * (1000 / EXPLODE_MS);
+      gridNow += Math.sign(gridTarget - gridNow) * Math.min(Math.abs(gridTarget - gridNow), step);
+      gridBackdrop.material.uniforms.uOpacity.value = easeInOut(clamp01(gridNow));
+      gridBackdrop.visible = gridNow > 0.002;
     }
     if (cameraTween && controls) {
+      // cubic ease-out: leaves immediately and settles, which reads as the camera moving rather
+      // than as the view being repositioned. easeInOut spends the first third barely moving,
+      // which on a 600 ms move is indistinguishable from a stall followed by a jump.
       const t = clamp01((now - cameraTween.start) / cameraTween.duration);
-      const eased = easeInOut(t);
+      const eased = easeOut(t);
       camera.position.lerpVectors(cameraTween.from, cameraTween.to, eased);
       controls.target.lerpVectors(cameraTween.targetFrom, cameraTween.targetTo, eased);
       if (t === 1) cameraTween = null;

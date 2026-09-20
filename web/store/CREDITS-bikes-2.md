@@ -77,8 +77,14 @@ the source link for the full terms.
 | `store/img/bikes/aprilia-rsv-mille-thumb.webp` | 2001 Aprilia RSV 1000 Mille.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille.jpg | CC0 | alias |  |
 | `store/img/bikes/aprilia-rsv4.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-hero.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-thumb.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-factory.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_002.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-factory-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_002.jpg | CC BY-SA 3.0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-hero.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-thumb.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-factory-aprc.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-factory-aprc-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-factory-aprc.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg | CC BY-SA 3.0 | alias |  |
@@ -95,6 +101,12 @@ the source link for the full terms.
 | `store/img/bikes/aprilia-rsv4-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - RSV4 Max Biaggi - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Max_Biaggi_-_001.jpg | CC BY-SA 3.0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-hero.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-thumb.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-hero.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
+| `store/img/bikes/aprilia-rsv4-thumb.webp` | Moscow, Aprilia RSV4, June 2025 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg | CC0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-rr.webp` | Aprilia RSV4 RR (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RR_(1).jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/aprilia-rsv4-rr-thumb.webp` | Aprilia RSV4 RR (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RR_(1).jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/aprilia-rx-50.webp` | 2017-09-14 (134) Aprilia RX 50 at Bahnhof Loosdorf, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-14_(134)_Aprilia_RX_50_at_Bahnhof_Loosdorf,_Austria.jpg | CC BY-SA 4.0 | alias |  |
@@ -127,6 +139,9 @@ the source link for the full terms.
 | `store/img/bikes/aprilia-scarabeo-50-thumb.webp` | Aprilia Scarabeo 50 Beige.jpg | Ryan Dickey | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_Beige.jpg | CC BY-SA 2.0 | alias |  |
 | `store/img/bikes/aprilia-scarabeo-500.webp` | Aprilia Scarabeo 500 cc.jpg | Stephan Ridgway | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500_cc.jpg | CC BY 2.0 | alias |  |
 | `store/img/bikes/aprilia-scarabeo-500-thumb.webp` | Aprilia Scarabeo 500 cc.jpg | Stephan Ridgway | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500_cc.jpg | CC BY 2.0 | alias |  |
+| `store/img/bikes/aprilia-shiver-750-hero.webp` | Aprilia Shiver 750.jpg | Lepidlizard ( talk ) | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg | Public domain | alias |  |
+| `store/img/bikes/aprilia-shiver-750.webp` | Aprilia Shiver 750.jpg | Lepidlizard ( talk ) | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg | Public domain | alias |  |
+| `store/img/bikes/aprilia-shiver-750-thumb.webp` | Aprilia Shiver 750.jpg | Lepidlizard ( talk ) | https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_750.jpg | Public domain | alias |  |
 | `store/img/bikes/aprilia-shiver-750.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-shiver-750-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-shiver-750.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_001.jpg | CC BY-SA 3.0 | alias |  |
@@ -159,6 +174,9 @@ the source link for the full terms.
 | `store/img/bikes/aprilia-srv-850-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - SRV 850 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_SRV_850_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-sx-50.webp` | 2018-01-04 (120) Aprilia SX 50 at Bahnhof Kirchstetten, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2018-01-04_(120)_Aprilia_SX_50_at_Bahnhof_Kirchstetten,_Austria.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/aprilia-sx-50-thumb.webp` | 2018-01-04 (120) Aprilia SX 50 at Bahnhof Kirchstetten, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2018-01-04_(120)_Aprilia_SX_50_at_Bahnhof_Kirchstetten,_Austria.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/aprilia-tuono-1000r-hero.webp` | Aprilia Tuono 1000R.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg | CC BY 2.0 | alias |  |
+| `store/img/bikes/aprilia-tuono-1000r.webp` | Aprilia Tuono 1000R.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg | CC BY 2.0 | alias |  |
+| `store/img/bikes/aprilia-tuono-1000r-thumb.webp` | Aprilia Tuono 1000R.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R.jpg | CC BY 2.0 | alias |  |
 | `store/img/bikes/aprilia-tuono-v4.webp` | Paris - Salon de la moto 2011 - Aprilia - Tuono V4 R APRC - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Tuono_V4_R_APRC_-_003.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-tuono-v4-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Tuono V4 R APRC - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Tuono_V4_R_APRC_-_003.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/aprilia-tuono-v4-r.webp` | Aprilia Tuono V4 R (2014).jpg | DesmoV4 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_V4_R_(2014).jpg | CC BY-SA 4.0 | alias |  |
@@ -171,6 +189,9 @@ the source link for the full terms.
 | `store/img/bikes/bmw-c-650-gt-thumb.webp` | Paris - Salon de la moto 2011 - BMW - C 650 GT et hôtesses - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_C_650_GT_et_h%C3%B4tesses_-_003.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/bmw-c-evolution.webp` | BMW C Evolution 2014-05-25.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_C_Evolution_2014-05-25.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/bmw-c-evolution-thumb.webp` | BMW C Evolution 2014-05-25.jpg | Bergfalke2 | https://commons.wikimedia.org/wiki/File:BMW_C_Evolution_2014-05-25.jpg | CC BY-SA 3.0 | alias |  |
+| `store/img/bikes/bmw-f-650-gs-hero.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/bmw-f-650-gs.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/bmw-f-650-gs-thumb.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/bmw-f-650-gs.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/bmw-f-650-gs-thumb.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/bmw-f-700-gs.webp` | BMW F 700 GS.jpg | Armin Vogel | https://commons.wikimedia.org/wiki/File:BMW_F_700_GS.jpg | CC BY 2.0 | alias |  |
@@ -181,6 +202,9 @@ the source link for the full terms.
 | `store/img/bikes/bmw-f-750-gs-thumb.webp` | BMW F 750 GS, Baujahr 2018, Farbe Austin Yellow metallic (2019-04-21).JPG | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/bmw-f-750-gs.webp` | BMW F 750 GS, Baujahr 2018, Farbe Austin Yellow metallic (2019-04-21).JPG | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/bmw-f-750-gs-thumb.webp` | BMW F 750 GS, Baujahr 2018, Farbe Austin Yellow metallic (2019-04-21).JPG | Stuetze9 | https://commons.wikimedia.org/wiki/File:BMW_F_750_GS,_Baujahr_2018,_Farbe_Austin_Yellow_metallic_(2019-04-21).JPG | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/bmw-f-800-gs-hero.webp` | BMW F 800 GS 2013 (10546845423).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg | CC BY-SA 2.0 | alias |  |
+| `store/img/bikes/bmw-f-800-gs.webp` | BMW F 800 GS 2013 (10546845423).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg | CC BY-SA 2.0 | alias |  |
+| `store/img/bikes/bmw-f-800-gs-thumb.webp` | BMW F 800 GS 2013 (10546845423).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg | CC BY-SA 2.0 | alias |  |
 | `store/img/bikes/bmw-f-800-gs-adventure.webp` | BMW F 800 GS Adventure 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/bmw-f-800-gs-adventure-thumb.webp` | BMW F 800 GS Adventure 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/bmw-f-800-gs-adventure.webp` | BMW F 800 GS Adventure 2013.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg | CC BY-SA 3.0 | alias |  |
@@ -1399,6 +1423,8 @@ the source link for the full terms.
 | `store/img/bikes/indian-pursuit-thumb.webp` | Indian Pursuit parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Indian_Pursuit_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/indian-pursuit.webp` | Indian Pursuit parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Indian_Pursuit_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/indian-pursuit-thumb.webp` | Indian Pursuit parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Indian_Pursuit_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/indian-pursuit.webp` | Indian Pursuit parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Indian_Pursuit_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/indian-pursuit-thumb.webp` | Indian Pursuit parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Indian_Pursuit_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/indian-roadmaster.webp` | Indian Roadmaster@Motodays 2017 07.jpg | Nicholas Gemini | https://commons.wikimedia.org/wiki/File:Indian_Roadmaster%40Motodays_2017_07.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/indian-roadmaster-thumb.webp` | Indian Roadmaster@Motodays 2017 07.jpg | Nicholas Gemini | https://commons.wikimedia.org/wiki/File:Indian_Roadmaster%40Motodays_2017_07.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/indian-roadmaster.webp` | Indian Roadmaster@Motodays 2017 07.jpg | Nicholas Gemini | https://commons.wikimedia.org/wiki/File:Indian_Roadmaster%40Motodays_2017_07.jpg | CC BY-SA 4.0 | alias |  |
@@ -2023,6 +2049,18 @@ the source link for the full terms.
 | `store/img/bikes/ktm-350-exc-f-thumb.webp` | KTM 350 EXC-F SIXDAYS.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F_SIXDAYS.JPG | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/ktm-350-sx-f.webp` | Paris - Salon de la moto 2011 - KTM - 350 SX-F LTD Edition Tony Cairoli - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_KTM_-_350_SX-F_LTD_Edition_Tony_Cairoli_-_001.jpg | CC BY-SA 3.0 | alias |  |
 | `store/img/bikes/ktm-350-sx-f-thumb.webp` | Paris - Salon de la moto 2011 - KTM - 350 SX-F LTD Edition Tony Cairoli - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_KTM_-_350_SX-F_LTD_Edition_Tony_Cairoli_-_001.jpg | CC BY-SA 3.0 | alias |  |
+| `store/img/bikes2/ktm-350-xc-f.hero.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.thumb.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.hero.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.thumb.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.hero.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.thumb.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.hero.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/ktm-350-xc-f.thumb.webp` | KTM 350 EXC-F.JPG | Y Sekiai | https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F.JPG | CC BY-SA 4.0 | alias | three_quarter |
 | `store/img/bikes/ktm-390-adventure.webp` | Ktm-390-adventure-2024.png | KTM AG | https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/ktm-390-adventure-thumb.webp` | Ktm-390-adventure-2024.png | KTM AG | https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/ktm-390-adventure.webp` | Ktm-390-adventure-2024.png | KTM AG | https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png | CC BY-SA 4.0 | alias |  |
@@ -3135,6 +3173,8 @@ the source link for the full terms.
 | `store/img/bikes/yamaha-grizzly-700-thumb.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-grizzly-700.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-grizzly-700-thumb.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/yamaha-grizzly-700.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes/yamaha-grizzly-700-thumb.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-jog.webp` | Yamaha Jog 50cc 1989 Barcelona Olimpic Games Volonteers.jpg | Peprovira | https://commons.wikimedia.org/wiki/File:Yamaha_Jog_50cc_1989_Barcelona_Olimpic_Games_Volonteers.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-jog-thumb.webp` | Yamaha Jog 50cc 1989 Barcelona Olimpic Games Volonteers.jpg | Peprovira | https://commons.wikimedia.org/wiki/File:Yamaha_Jog_50cc_1989_Barcelona_Olimpic_Games_Volonteers.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-jog.webp` | Yamaha Jog 50cc 1989 Barcelona Olimpic Games Volonteers.jpg | Peprovira | https://commons.wikimedia.org/wiki/File:Yamaha_Jog_50cc_1989_Barcelona_Olimpic_Games_Volonteers.jpg | CC BY-SA 4.0 | alias |  |
@@ -3173,6 +3213,18 @@ the source link for the full terms.
 | `store/img/bikes/yamaha-mt-07-thumb.webp` | 2025 Yamaha MT-07 Y-AMT.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Yamaha_MT-07_Y-AMT.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt-07.webp` | 2025 Yamaha MT-07 Y-AMT.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Yamaha_MT-07_Y-AMT.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt-07-thumb.webp` | 2025 Yamaha MT-07 Y-AMT.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Yamaha_MT-07_Y-AMT.jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
 | `store/img/bikes/yamaha-mt-09.webp` | 2024 Yamaha MT-09.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt-09-thumb.webp` | 2024 Yamaha MT-09.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt-09.webp` | 2024 Yamaha MT-09.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09.jpg | CC BY-SA 4.0 | alias |  |
@@ -3203,6 +3255,15 @@ the source link for the full terms.
 | `store/img/bikes/yamaha-mt-125-thumb.webp` | Yamaha MT-125 (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Yamaha_MT-125_(1).jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt-15.webp` | Yamaha M-Slaz 150 (MT-15).jpg | M.rJirapat | https://commons.wikimedia.org/wiki/File:Yamaha_M-Slaz_150_(MT-15).jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt-15-thumb.webp` | Yamaha M-Slaz 150 (MT-15).jpg | M.rJirapat | https://commons.wikimedia.org/wiki/File:Yamaha_M-Slaz_150_(MT-15).jpg | CC BY-SA 4.0 | alias |  |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | wikipedia | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | wikipedia | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | wikipedia | three_quarter |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.hero.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
+| `store/img/bikes2/yamaha-mt07.thumb.webp` | Yamaha MT-07.jpg | Na-Thur | https://commons.wikimedia.org/wiki/File:Yamaha_MT-07.jpg | CC BY-SA 3.0 | alias | three_quarter |
 | `store/img/bikes/yamaha-mt09.webp` | Yamaha MT-09 - Mondial de l'Automobile de Paris 2018 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Yamaha_MT-09_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt09-thumb.webp` | Yamaha MT-09 - Mondial de l'Automobile de Paris 2018 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Yamaha_MT-09_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg | CC BY-SA 4.0 | alias |  |
 | `store/img/bikes/yamaha-mt09.webp` | Yamaha MT-09 - Mondial de l'Automobile de Paris 2018 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Yamaha_MT-09_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg | CC BY-SA 4.0 | alias |  |

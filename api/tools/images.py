@@ -39,6 +39,11 @@ from urllib.parse import quote
 
 import httpx
 from PIL import Image, ImageChops
+from pydantic import BaseModel
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from app import llm  # noqa: E402
 
 # Commons titles are full Unicode; a redirected stdout on Windows is cp1252.
 for _stream in (sys.stdout, sys.stderr):
@@ -418,7 +423,7 @@ def debordered(im: Image.Image, min_frac: float = 0.04) -> Image.Image:
     left, top, right, bottom = borders(im)
     if max(left, right) < min_frac * w and max(top, bottom) < min_frac * h:
         return im
-    pad = max(2, round(0.015 * max(w, h)))
+    pad = max(3, round(0.025 * max(w, h)))  # breathing room; a mirror must not touch the edge
     box = (
         max(0, left - pad),
         max(0, top - pad),
@@ -485,7 +490,7 @@ def write_outputs(entries: dict) -> None:
     for key in sorted(ordered):
         e = ordered[key]
         cell = lambda v: str(v or "").replace("|", "\\|")  # noqa: E731
-        for path in (e["image"], e["thumb"]):
+        for path in (p for p in (e.get("hero"), e["image"], e["thumb"]) if p):
             lines.append(
                 f"| `{path}` | {cell(e['title'])} | {cell(e['author'])} | "
                 f"{e['source']} | {cell(e['license'])} |  |"
@@ -508,8 +513,8 @@ def banded(path: Path, min_frac: float = 0.04) -> bool:
         return False
 
 
-def source_url(client: httpx.Client, bucket: Bucket, title: str) -> str:
-    """The 640-px rendition of one Commons file, by title."""
+def source_url(client: httpx.Client, bucket: Bucket, title: str, width: int = 1280) -> str:
+    """One Commons file's rendition at `width`, by title."""
     r = get(
         client,
         API,
@@ -521,9 +526,9 @@ def source_url(client: httpx.Client, bucket: Bucket, title: str) -> str:
             "titles": f"File:{title}",
             "prop": "imageinfo",
             "iiprop": "url|size|mime",
-            # Wider than the tile: cropping the bands off a 640-px rendition
-            # would leave less than 640 px of bike.
-            "iiurlwidth": "1000",
+            # Wider than the 640 tile: the hero is 1280, and cropping bands off
+            # a 640-px rendition would leave less than 640 px of bike.
+            "iiurlwidth": str(width),
         },
     )
     for page in (r.json().get("query") or {}).get("pages") or []:
@@ -567,6 +572,302 @@ def fix_bands(rps: float) -> int:
     return fixed
 
 
+# --------------------------------------------------------------------- the gate
+
+SCORE_MODEL = "gpt-5.6-luna"
+VIEWS = {"side": 2.0, "three_quarter": 1.8, "front": 0.6, "rear": 0.3, "other": 0.0}
+
+RUBRIC = (
+    "You grade photographs for a motorcycle manual catalogue. Each tile is one bike, "
+    "shown whole, on a clean background, sharp enough to enlarge. Grade strictly; most "
+    "snapshots are not good enough.\n"
+    "single_bike: exactly one motorcycle is the subject. false if a second bike is "
+    "parked in frame, even partly, even blurred.\n"
+    "whole_bike_visible: the entire motorcycle is in frame, wheel to wheel, nothing "
+    "cropped or hidden behind an object. false for close-ups of any part.\n"
+    "clean_background: 3 studio white or plain sky/wall; 2 tidy street or paddock; "
+    "1 busy street, show stand, garage clutter; 0 crowd, showroom aisle, dense clutter.\n"
+    "sharpness: 3 crisp and well lit; 2 acceptable; 1 soft, dim, noisy or small; "
+    "0 blurred or heavily compressed.\n"
+    "view: side (straight profile), three_quarter, front, rear, other.\n"
+    "people_or_other_bikes: any person, or any other motorcycle, visible anywhere.\n"
+    "is_the_model: could this be the make and model named? false only when it is "
+    "plainly a different make, a different model family, or not a motorcycle.\n"
+    "note: at most eight words on the worst flaw."
+)
+
+
+class Shot(BaseModel):
+    single_bike: bool
+    whole_bike_visible: bool
+    clean_background: int
+    sharpness: int
+    view: str
+    people_or_other_bikes: bool
+    is_the_model: bool
+    note: str
+
+
+def shot_score(s: Shot) -> float:
+    """0-10 from the rubric: quality first, then how the bike is turned."""
+    quality = 1.4 * (max(0, min(3, s.clean_background)) + max(0, min(3, s.sharpness)))
+    return round(min(10.0, quality + VIEWS.get(s.view, 0.0)), 2)
+
+
+def passes(s: Shot, threshold: float) -> bool:
+    return (
+        s.single_bike
+        and s.whole_bike_visible
+        and not s.people_or_other_bikes
+        and s.is_the_model
+        and shot_score(s) >= threshold
+    )
+
+
+def as_jpeg(raw: bytes, width: int = 640) -> bytes:
+    """A modest JPEG for the vision call: webp on disk, anything from Commons."""
+    with Image.open(io.BytesIO(raw)) as src:
+        im = flatten(src)
+        im.thumbnail((width, width), Image.LANCZOS)
+        buf = io.BytesIO()
+        im.save(buf, "JPEG", quality=85)
+        return buf.getvalue()
+
+
+def grade(raw: bytes, m: Model) -> Shot:
+    years = f" ({m.years[0]}-{m.years[-1]})" if m.years else ""
+    return llm.structured(
+        "images.score",
+        SCORE_MODEL,
+        Shot,
+        RUBRIC,
+        [
+            llm.text_part(f"Catalogue tile for a {m.make} {m.model}{years}. Grade it."),
+            llm.image_part(as_jpeg(raw), "image/jpeg", "auto"),
+        ],
+    )
+
+
+def spent() -> float:
+    """USD logged against this route so far, ours and any earlier run's."""
+    path = ROOT / "api" / "data" / "costs.jsonl"
+    if not path.exists():
+        return 0.0
+    total = 0.0
+    with path.open(encoding="utf-8") as fh:
+        for line in fh:
+            if '"images.score"' in line:
+                try:
+                    total += float(json.loads(line).get("usd") or 0.0)
+                except Exception:  # noqa: BLE001
+                    pass
+    return total
+
+
+def renditions(raw: bytes, key_slug: str) -> tuple:
+    """hero 1280/q82, tile 640/q80, thumb 160/q75. Returns (paths, bytes)."""
+    hero = IMG_DIR / f"{key_slug}-hero.webp"
+    dest = IMG_DIR / f"{key_slug}.webp"
+    thumb = IMG_DIR / f"{key_slug}-thumb.webp"
+    with Image.open(io.BytesIO(raw)) as src:
+        im = debordered(flatten(src))
+        big = im.copy()
+        big.thumbnail((1280, 1280), Image.LANCZOS)
+        big.save(hero, "WEBP", quality=82, method=6)
+    size = convert(raw, dest, thumb)
+    return (hero, dest, thumb), hero.stat().st_size + size[0] + size[1]
+
+
+def model_for(key: str, roster: dict) -> Model:
+    """The Model behind a bike-images key, even if bikes.json has moved on."""
+    got = roster.get(key)
+    if got:
+        return got
+    make, _, name = key.partition("|")
+    return Model(make.replace("-", " ").title(), name.replace("-", " "), [], False)
+
+
+def best_candidate(client, bucket, m, used, tried, limit, threshold):
+    """Search Commons, grade up to `limit` candidates, return the best that passes."""
+    plain = f"{m.make} {m.model}"
+    nodash = f"{m.make} {m.model.replace('-', ' ')}"
+    queries = [f"{plain} filetype:bitmap"]
+    if nodash != plain:
+        queries.append(f"{nodash} filetype:bitmap")
+    queries.append(f"{plain} motorcycle filetype:bitmap")
+
+    rows, seen = [], set()
+    for q in queries:
+        r = get(
+            client,
+            API,
+            bucket,
+            params={
+                "action": "query",
+                "format": "json",
+                "formatversion": "2",
+                "generator": "search",
+                "gsrsearch": q,
+                "gsrnamespace": "6",
+                "gsrlimit": "20",
+                "prop": "imageinfo",
+                "iiprop": "url|extmetadata|size|mime",
+                "iiurlwidth": "640",
+            },
+        )
+        for row in rank((r.json().get("query") or {}).get("pages") or [], m, used):
+            if row[3] in seen or row[3] in tried:
+                continue
+            seen.add(row[3])
+            rows.append(row)
+        if len(rows) >= limit:
+            break
+
+    best = None
+    for _heuristic, page, info, title, meta in sorted(rows, key=lambda row: -row[0])[:limit]:
+        raw = get(client, info.get("thumburl") or info.get("url"), bucket).content
+        shot = grade(raw, m)
+        sc = shot_score(shot)
+        if not passes(shot, threshold):
+            continue
+        if best is None or sc > best[0]:
+            best = (sc, page, info, title, meta, shot)
+        if sc >= 8.0 and shot.view in ("side", "three_quarter"):
+            break
+    return best
+
+
+def run_gate(args) -> int:
+    entries = json.loads(OUT_JSON.read_text(encoding="utf-8"))
+    roster = {m.key: m for m in build_models()}
+    keys = sorted(entries)
+    used = {e.get("title") for e in entries.values()}
+    bucket = Bucket(args.rps)
+    lock = threading.Lock()
+    stats = {
+        "kept": 0,
+        "kept_weak": 0,
+        "replaced": 0,
+        "dropped": 0,
+        "graded": 0,
+        "errors": 0,
+        "done": 0,
+    }
+    swapped, start = [], spent()
+    stop = threading.Event()
+
+    def budget_left() -> bool:
+        return (spent() - start) < args.usd
+
+    def one(key: str) -> None:
+        entry = entries[key]
+        m = model_for(key, roster)
+        name = Path(entry["image"]).stem
+        if name in PROTECTED or stop.is_set():
+            with lock:
+                stats["kept"] += 1
+                stats["done"] += 1
+            return
+        old = dict(entry)
+        try:
+            tile = (ROOT / "web" / entry["image"]).read_bytes()
+            shot = grade(tile, m)
+            with lock:
+                stats["graded"] += 1
+            if passes(shot, args.threshold):
+                raw = get(client, source_url(client, bucket, entry["title"]), bucket).content
+                renditions(raw, name)
+                entry["hero"] = f"store/img/bikes/{name}-hero.webp"
+                with lock:
+                    stats["kept"] += 1
+                return
+
+            found = None
+            if budget_left():
+                found = best_candidate(client, bucket, m, used, {entry["title"]},
+                                        args.candidates, args.threshold)
+            if not found:
+                # Nothing better exists. Drop only what is badly wrong -- the wrong
+                # bike, a crowd, a second machine in frame. A single harsh call on
+                # framing or a background is not worth leaving the model blank, and
+                # the grader does make them.
+                severe = (
+                    not shot.is_the_model
+                    or shot.people_or_other_bikes
+                    or not shot.single_bike
+                    or shot_score(shot) < args.threshold - 2.0
+                )
+                if severe:
+                    for rel in (entry.get("hero"), entry["image"], entry["thumb"]):
+                        if rel:
+                            (ROOT / "web" / rel).unlink(missing_ok=True)
+                    with lock:
+                        entries.pop(key, None)
+                        stats["dropped"] += 1
+                        swapped.append((key, old["title"], None, shot.note))
+                    print(f"  - {key}: dropped ({shot.note})", flush=True)
+                    return
+                raw = get(client, source_url(client, bucket, entry["title"]), bucket).content
+                renditions(raw, name)
+                entry["hero"] = f"store/img/bikes/{name}-hero.webp"
+                with lock:
+                    stats["kept_weak"] += 1
+                return
+
+            _s, page, info, title, meta, _newshot = found
+            # Re-fetch wide: the graded preview was only 640 px, the hero is 1280.
+            raw = get(client, source_url(client, bucket, title) or info["url"], bucket).content
+            renditions(raw, name)
+            with lock:
+                used.discard(old["title"])
+                used.add(title)
+            entry.update(
+                hero=f"store/img/bikes/{name}-hero.webp",
+                title=title,
+                author=strip_html((meta.get("Artist") or {}).get("value", "")) or "Unknown",
+                license=strip_html((meta.get("LicenseShortName") or {}).get("value", "")),
+                source="https://commons.wikimedia.org/wiki/"
+                + quote(str(page.get("title", "")).replace(" ", "_"), safe=":/_(),.!'-"),
+            )
+            with lock:
+                stats["replaced"] += 1
+                swapped.append((key, old["title"], title, shot.note))
+            print(f"  ~ {key}: {old['title']} -> {title} ({shot.note})", flush=True)
+        except Exception as exc:  # noqa: BLE001
+            with lock:
+                stats["errors"] += 1
+            print(f"  ! {key}: {exc!r}", flush=True)
+        finally:
+            with lock:
+                stats["done"] += 1
+                if stats["done"] % args.checkpoint == 0:
+                    write_outputs(entries)
+                    used_usd = spent() - start
+                    print(
+                        f"  .. {stats['done']}/{len(keys)} graded, kept {stats['kept']}, "
+                        f"replaced {stats['replaced']}, dropped {stats['dropped']}, "
+                        f"${used_usd:.2f}",
+                        flush=True,
+                    )
+                    if used_usd >= args.usd:
+                        stop.set()
+
+    print(f"grading {len(keys)} tiles, threshold {args.threshold}, budget ${args.usd}", flush=True)
+    with httpx.Client(
+        headers={"User-Agent": UA, "Accept-Encoding": "gzip"},
+        timeout=httpx.Timeout(60.0, connect=15.0),
+        follow_redirects=True,
+    ) as client:
+        with ThreadPoolExecutor(max_workers=args.workers) as pool:
+            list(pool.map(one, keys))
+
+    write_outputs(entries)
+    print(json.dumps({**stats, "entries_after": len(entries), "usd": round(spent() - start, 3)}, indent=2))
+    for row in swapped[:5]:
+        print("sample:", row)
+    return 0
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -583,11 +884,21 @@ def main() -> int:
         action="store_true",
         help="re-render stored tiles that have flat stripes down an edge, then exit",
     )
+    ap.add_argument(
+        "--gate",
+        action="store_true",
+        help="grade every stored tile with the vision model, replace what fails, then exit",
+    )
+    ap.add_argument("--threshold", type=float, default=6.0, help="--gate: lowest score kept, 0-10")
+    ap.add_argument("--candidates", type=int, default=8, help="--gate: photos graded per model")
+    ap.add_argument("--usd", type=float, default=10.0, help="--gate: spend ceiling for grading")
     args = ap.parse_args()
 
     if args.fix_bands:
         fix_bands(args.rps)
         return 0
+    if args.gate:
+        return run_gate(args)
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     models = build_models(args.limit)
