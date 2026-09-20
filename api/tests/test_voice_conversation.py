@@ -163,6 +163,15 @@ def test_the_grounding_rule_survived_the_rewrite(prompt):
     assert "NEVER tell anyone to visit, consult or contact a dealer" in prompt
 
 
+def test_it_stops_looking_once_it_has_the_answer(prompt):
+    """Live, with the look-twice rule in and improvement #4 not yet deployed, one brake-fluid
+    question ran to THIRTY-FIVE lookups - twenty-five of them re-reading the same offset of the
+    same page after the answer was already in hand - and the turn did not finish for 38 s. With
+    this rule the same question is 9 lookups and 13 s."""
+    assert "STOP WHEN YOU HAVE IT" in prompt
+    assert "never call a function twice with the same arguments" in prompt
+
+
 # ---------------------------------------------------------------- being interrupted
 
 

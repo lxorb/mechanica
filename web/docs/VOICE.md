@@ -61,23 +61,26 @@ bytes** — two seconds — of the abandoned answer kept arriving.
 
 ### After
 
+Five runs of the six turns, medians in bold.
+
 | turn | first audio | what it said |
 |---|---|---|
-| greeting | 211 ms | "KTM 390 Duke 2024. Go ahead." |
-| "what's the torque on the rear axle nut" | **1,441 ms** (median of 3 runs 1,764) | "Page 78, one hundred newton metres." |
-| "and the front one?" | **1,558 ms** (median 1,647) | "Page 130, forty five newton metres." |
-| **interrupt mid-sentence** — "wait, the brake fluid" | **ack at 2,636 ms**, answer at 5,191 ms | "One sec, checking the manual." → "Page 85, brake fluid DOT four or DOT five point one." |
-| "which page was that" | **836 ms** (median 836; **no function call at all**) | "Page 85, brake fluid DOT four or DOT five point one." |
-| "thanks" | 1,262 ms | "You're welcome." |
+| greeting | **213 ms** (211–251) | "KTM 390 Duke 2024. Go ahead." |
+| "what's the torque on the rear axle nut" | **1,775 ms** (1,441–1,850) | "Page 78, one hundred newton metres." |
+| "and the front one?" | **1,588 ms** (1,538–1,668) | "Page 130, forty five newton metres." |
+| **interrupt mid-sentence** — "wait, the brake fluid" | **ack heard at 2,643 ms** (sent 2,502), answer 5.2 s | "One sec, checking the manual." → "Page 85, brake fluid DOT four or DOT five point one." |
+| "which page was that" | **833 ms** (689–962; **no function call at all**) | "Page 85, brake fluid DOT four or DOT five point one." |
+| "thanks" | **1,222 ms** (871–1,262) | "You're welcome." |
 
 One sentence a turn, the page first so his eye moves before the number lands, no trailing question,
 no punctuation a mouth cannot say, and the brake-fluid answer is **right** — because the prompt now
 makes it look twice before it says the manual is silent. `UserStartedSpeaking` came back in
 **1,191 ms** and only **8,640 bytes** of the old answer arrived after the interruption started.
 
-### The two turns that got worse before they got better
+### The three turns that got worse before they got better
 
-Both are recorded, because they are the reason the rules are worded the way they are.
+All three are recorded, because they are the reason the rules are worded the way they are, and
+because a prompt rewrite that only reports its wins is a prompt rewrite nobody should trust.
 
 - A draft said *"a result you received earlier in this conversation still counts"* — meant for
   "which page was that?". gpt-4.1 read it as a licence and answered **"and the front one?"** out of
@@ -87,6 +90,12 @@ Both are recorded, because they are the reason the rules are worded the way they
 - With the general-steps licence written as "steps and order only", the same draft said **"The usual
   way is DOT four for KTM but this manual does not say"** and then **"Check page 82 or 83."** A fluid
   grade is a specification, and a page is a figure. Both are now named in the licence's exclusions.
+- And the one that only showed up once the look-twice rule was in: the brake-fluid turn answered
+  correctly at 2.6 s and then **kept going for thirty-five lookups**, twenty-five of them re-reading
+  *the same offset of the same page*, and the turn did not finish for **38 seconds**. A model with a
+  licence to look again will look again forever. **STOP WHEN YOU HAVE IT** — say it the moment a
+  result printed it, and never call a function twice with the same arguments — took the same
+  question to **9 lookups and 13 s**. Improvement #4 below is the other half of that fix.
 
 Every rule in `_prompt` is now attached to a turn that broke it, and every one has a test in
 `api/tests/test_voice_conversation.py` carrying the reason in its docstring.
@@ -247,6 +256,13 @@ protects the proper nouns — but a real claim needs real mechanics in a real sh
 
 **Limits.** `PUBLIC_BASE` must be https or the endpoints are refused (503 here, not a dead socket).
 English only. No mic, no toggle.
+
+**Probing it from node.** Since 2026-09-20 the Worker refuses a WebSocket handshake that carries no
+`Origin` (BUG-10: everything that is not a browser also sends none, so the old "no Origin means one
+of our own scripts" exemption was an open door to `DEEPGRAM_API_KEY`). That is the right call and it
+locks out every node probe, because the WHATWG `WebSocket` in node cannot set a header. Use the `ws`
+package, which can: `new WebSocket(url, { origin: "https://mechanica.emilvinu.ch" })`. Headless-Chrome
+harnesses (`web/tools/voice-shots.mjs`, `web/tools/orb-shots.mjs`) are unaffected.
 
 **Where the milliseconds go** (live, through the Worker proxy; KTM 390 Duke; the settings above):
 
