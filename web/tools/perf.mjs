@@ -209,7 +209,9 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
 
   await client.send("Network.enable");
   client.on("Network.responseReceived", (e) => {
-    wire.set(e.requestId, { url: e.response.url, kind: kind(e.type, e.response.url), cache: e.response.fromDiskCache, sw: e.response.fromServiceWorker, status: e.response.status });
+    const row = wire.get(e.requestId) || {};
+    Object.assign(row, { url: e.response.url, kind: kind(e.type, e.response.url), cache: e.response.fromDiskCache, sw: e.response.fromServiceWorker, status: e.response.status });
+    wire.set(e.requestId, row);
   });
   client.on("Network.requestServedFromCache", (e) => {
     const row = wire.get(e.requestId) || {};

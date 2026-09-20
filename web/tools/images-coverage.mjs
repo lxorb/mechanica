@@ -7,6 +7,7 @@
  *   node web/tools/images-coverage.mjs --top 200       # how many gaps to list (default 30)
  *   node web/tools/images-coverage.mjs --keys --top 200  # print "Make|Model" lines instead, for
  *                                                        # api/tools/images2.py --only
+ *   node web/tools/images-coverage.mjs --kind bike     # motorcycles only (or --kind car)
  *
  * Reads the same two files the counter reads (web/store/bike-images.json wins every key it shares
  * with bike-images-2.json) and the same catalog the bundled roster is built from
@@ -32,6 +33,17 @@ const argOf = (flag, fallback) => {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
 };
 const TOP_GAPS = argOf("--top", 30);
+
+/** --kind bike | car. Catalog rows carry `kind: "car"`; motorcycles carry nothing, so
+ *  "bike" is the absence of "car". Cars hold more rows per model than motorcycles do, so
+ *  a mixed gap list is a car list near the top; this is how a cycle spends its hour on
+ *  motorcycles instead. */
+const KIND = (() => {
+  const at = process.argv.indexOf("--kind");
+  const value = at >= 0 ? String(process.argv[at + 1] || "").toLowerCase() : "";
+  return value === "bike" || value === "car" ? value : "";
+})();
+const ofKind = (b) => !KIND || (KIND === "car" ? b.kind === "car" : b.kind !== "car");
 
 const json = (path) => JSON.parse(readFileSync(resolve(ROOT, path), "utf8"));
 
@@ -92,14 +104,17 @@ function line(label, m) {
 }
 
 const { map, sizes } = imageMap();
-const rows = json("api/data/bikes.json");
+const rows = json("api/data/bikes.json").filter(ofKind);
 // --keys is meant to be piped straight into `images2.py --only`, so it prints the
 // keys and nothing else.
 const KEYS = process.argv.includes("--keys");
 const say = (...parts) => {
   if (!KEYS) console.log(...parts);
 };
-say(`images: ${sizes[0]} + ${sizes[1]} -> ${Object.keys(map).length} merged keys`);
+say(
+  `images: ${sizes[0]} + ${sizes[1]} -> ${Object.keys(map).length} merged keys` +
+    (KIND ? `  (${KIND} rows only: ${rows.length})` : "")
+);
 
 if (process.argv.includes("--before")) {
   say(line("before", measure(rows, map, oldLookup)));
@@ -171,7 +186,8 @@ if (process.argv.includes("--write")) {
       `**${after.hitModels}/${after.models}** distinct models (${pct(after.hitModels, after.models)}) ` +
       `resolve to a photo through \`lookupImage\` in web/counter/js/ttm.js.`,
     "",
-    `Still uncovered: ${gaps.length} models over ${gapRows} rows. The ${TOP_GAPS} worth shooting first,`,
+    `Still uncovered: ${gaps.length} models over ${gapRows} rows${KIND ? ` (${KIND} only)` : ""}. ` +
+      `The ${TOP_GAPS} worth shooting first,`,
     "by how many catalog rows go without a picture:",
     "",
     "| rows | make | model |",

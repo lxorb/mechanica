@@ -357,22 +357,51 @@ function announce() {
   globalThis.dispatchEvent?.(new CustomEvent("ttm:catalog", { detail: { bikes: roster.length } }));
 }
 
-/** Build the search index when the thread is free, and say so in the performance timeline. */
+/**
+ * search.js indexes 27.4k vehicles into trigram sets: 1.2 s on a laptop, and 4.9 s of blocked
+ * main thread on a mid-range phone (measured, fast 4G + 4x CPU). It runs on the first idle slot
+ * after the roster lands and repaints the screen when it is there; findBikes() decides whether
+ * a keystroke that beat it has to wait for it.
+ */
+let indexed = false;
+
 function indexLater() {
   const bikes = roster;
+  indexed = false; // a roster that was replaced is a roster that has to be indexed again
   const run = () => {
-    if (roster !== bikes) return;
+    if (roster !== bikes || indexed) return;
     phase("index", () => forceIndex(bikes));
+    indexed = true;
+    announce();
   };
   if (typeof requestIdleCallback === "function") requestIdleCallback(run, { timeout: 2500 });
   else setTimeout(run, 250);
 }
 
+/**
+ * The bundle is 682 KB of JSON that expands into 27.4k objects. Parsing it is one task we
+ * cannot split, but expanding it is 3.5k independent model rows — so it goes in slices with a
+ * yield between them, and the search field, the first paint and the API's own answer are not
+ * held behind it. expandBundle dedupes within a call; the cross-slice case is the same
+ * make+model+year twice, which mergeDuplicates folds anyway.
+ *
+ * No Accept header: index.html preloads this file, and a preload only answers a request that
+ * asks for it the same way.
+ */
 async function loadBundle() {
   try {
-    const res = await fetch(BUNDLE_URL, { headers: { Accept: "application/json" } });
+    const res = await fetch(BUNDLE_URL);
     if (!res.ok) return [];
-    return expandBundle(await res.json());
+    const raw = await res.json();
+    const rows = raw && Array.isArray(raw.rows) ? raw.rows : [];
+    if (rows.length <= 600) return expandBundle(raw);
+    const out = [];
+    for (let i = 0; i < rows.length; i += 600) {
+      const slice = expandBundle({ ...raw, rows: rows.slice(i, i + 600) });
+      for (const bike of slice) out.push(bike);
+      if (i + 600 < rows.length) await sliceYield();
+    }
+    return out;
   } catch {
     return [];
   }
@@ -614,7 +643,11 @@ function repaintArt() {
 async function bootRemote() {
   const bundled = globalThis.TTM_CATALOG === "api" ? [] : await phase("bundle", () => bundleRows());
   if (bundled.length) {
-    phase("index-ids", () => indexBikes(phase("merge", () => mergeDuplicates(bundled))));
+    // A yield between the two: they are half a second of work each on a throttled phone, and
+    // gluing them into one task is how a page stops answering the key that was just pressed.
+    const merged = phase("merge", () => mergeDuplicates(bundled));
+    await sliceYield();
+    phase("index-ids", () => indexBikes(merged));
   } else {
     const bikes = (await quiet("/catalog", { ms: CATALOG_MS }, [])) ?? [];
     phase("index-ids", () => indexBikes(mergeDuplicates(decorate(bikes))));
@@ -713,8 +746,9 @@ function bundleRows() {
 
 export function loadCatalog(url, collectionUrl) {
   if (bootPromise) return bootPromise;
+  // The bundle only, not the photo index: 160 KB of photo index downloading next to it would
+  // be 160 KB the roster is waiting for. That one starts when the roster is on the glass.
   if (globalThis.TTM_CATALOG !== "api") bundleRows();
-  startImages();
   bootPromise = (async () => {
     const found = await phase("health", () => pickBase());
     if (found) {
@@ -782,7 +816,15 @@ export function manualState(input) {
 
 /** Forces the idle-scheduled index if the first keystroke beat it. Sync, like query.js. */
 export function findBikes(text, opts) {
-  forceIndex(roster);
+  // Online, a keystroke that beats the index is not made to wait for it: Identify asks
+  // /catalog/suggest whenever the local list is thin and the API answers in a few hundred
+  // milliseconds, where building the index here would freeze the page for five seconds and
+  // then answer. The idle build is at most 2.5 s behind and repaints when it lands. Offline
+  // there is nothing else to ask, so the keystroke pays for the index.
+  if (!indexed && !healthy) {
+    phase("index-force", () => forceIndex(roster));
+    indexed = true;
+  }
   // The photo index lands next to the roster, not inside it, so the rows this hands back are
   // painted here: the first search gets its pictures even if the full pass has not run yet.
   return paintArt(searchIndex(text, opts));

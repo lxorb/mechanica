@@ -786,7 +786,8 @@ call**. Two tests are now at the edge of the 120 s per-test timeout in `pytest.i
     61.33s  test_bughunt_ingest_guard.py::test_known_pdf_hosts_reads_the_registry_and_the_verified_list
     55.07s  test_bughunt_api.py::test_parts_catalog_route_still_answers
 
-`python -m pytest api/tests -q` **times out** at the default 120 s; with `--timeout=300` it passes.
+`python -m pytest api/tests -q` **times out** at the committed 120 s; with `--timeout=300` the
+suite is green — **849 passed, 20 skipped in 15 min 02 s**.
 This is mine in the sense that my growth caused it, but the fix is not in anything I own: it is
 either a memoised `FileStore.registry()` (`app/store.py`) or a trimmed fixture in `api/tests/conftest.py`.
 **Please route it** — every future cycle makes it worse, and the next agent to run the suite with the

@@ -44,7 +44,8 @@ serving the single line that carried the bug as it was, so each pair differs onl
 | UI-H4 | low | registry (not mine) | six Harley "Universal … Quick Start Guide (…)" rows render as six identical cards at 390 px | handoff |
 
 **13 fixed · 0 open · 4 handoff.** By severity: 6 med, 7 low fixed; 1 med, 3 low handed off.
-No console error and no failed request on any online step of any run, at any viewport, in any theme.
+Zero console errors and zero page errors on every online step of every run, at every viewport, in
+every theme. The only failed requests anywhere in the walk are UI-H2's two aborted model loads.
 
 ---
 
@@ -85,8 +86,9 @@ address bar still says `#cost` while the meter is up.
 
 ### UI-03 — an open sheet lost its own history entry · med
 **Repro** Book → Parts → tap a part (detail) → Back. Before: the URL reads `#book` although Parts
-is still open; Back again closes Parts; a third Back does **nothing at all** (two entries now carry
-the same `#book`).
+is still open — the entry that named the sheet has been overwritten with the screen's own, so the
+stack now holds `#book` twice and the extra press is dead: measured at 1280×800, two Backs in a row
+both ended at `#book` with nothing on screen changing.
 **Root cause** `go()` wrote `"#" + id` unconditionally. Parts is an overlay entry (`#book+invoice`)
 over the same screen, so every `replaceState` from Book — and `onPop` calls one on every step —
 overwrote the entry that named the sheet.

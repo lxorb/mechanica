@@ -269,10 +269,11 @@ async function takeOne(page, take) {
 
   await tap(page, 'section[data-screen="confirm"] button[aria-label="Yes"]');
   await page.waitForFunction(() => location.hash === "#pick", { timeout: 60000 });
+  // Capped, not patient: past this the ring is more honest than a video that misses its ceiling.
   await waited(
     "3D stage",
     page.waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
-      timeout: 90000,
+      timeout: 40000,
     }),
   );
   await dwell(3600);
@@ -304,7 +305,7 @@ async function takeOne(page, take) {
   await waited(
     "page 77 + marks",
     page.waitForFunction(() => document.querySelectorAll('.page-sheet[data-page="77"] .mark').length >= 2, {
-      timeout: 120000,
+      timeout: 45000,
     }),
   );
   await dwell(1300);
@@ -647,11 +648,11 @@ async function contactSheet(video, beats, duration, out) {
 /* ------------------------------------------------------------------ run */
 
 /**
- * A throwaway tab that walks the same path once, so the recorded tab loads the 4 MB GLB, the
- * manual's pages and the parts catalogue out of the HTTP cache instead of making the video sit
- * on a progress ring for twenty seconds. It is the same live site and the same second visit a
- * mechanic gets; nothing about the answers changes. Take 2 is never warmed — the cold fetch is
- * the whole point of it.
+ * A throwaway tab that opens the manual and the parts list once, so the recorded tab gets the
+ * PDF and the parts catalogue out of the HTTP cache instead of making the video sit on a
+ * progress ring. It deliberately never touches Pick: a second WebGL context on this box makes
+ * the recorded one take three times longer to come up, or hang the tab outright — which is
+ * worse than the ring it was meant to save. Take 2 is never warmed; the cold fetch is its point.
  */
 async function warm(browser) {
   const page = await browser.newPage();
@@ -660,35 +661,25 @@ async function warm(browser) {
     await page.goto(APP, { waitUntil: "load", timeout: 90000 });
     await page.waitForSelector(".id-q", { timeout: 90000 });
     await page.evaluate(async () => {
-      await import("/counter/js/screens/pick.js");
-      const bus = await import("/counter/js/bus.js");
-      bus.set({ bikeId: "ktm-390-duke-2024" });
-      bus.go("pick");
-    });
-    await page
-      .waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
-        timeout: 120000,
-      })
-      .catch(() => {});
-    await page.evaluate(async () => {
       await import("/counter/js/screens/book.js");
       await import("/counter/js/screens/invoice.js");
       const bus = await import("/counter/js/bus.js");
-      bus.set({ jobId: "ktm-390-duke-2024/chain-tension-check" });
+      bus.set({ bikeId: "ktm-390-duke-2024", jobId: "ktm-390-duke-2024/chain-tension-check" });
       bus.go("book");
     });
     await page
-      .waitForFunction(() => document.querySelectorAll(".page-sheet.is-ready").length > 0, { timeout: 120000 })
+      .waitForFunction(() => document.querySelectorAll('.page-sheet[data-page="77"] .mark').length >= 2, {
+        timeout: 120000,
+      })
       .catch(() => {});
-    await page.evaluate(() => document.querySelector(".book-all")?.click());
-    await sleep(2500);
     await page.evaluate(() => document.querySelector(".book-parts")?.click());
     await page.waitForFunction(() => document.querySelectorAll(".pv-tile").length > 10, { timeout: 60000 }).catch(() => {});
-    await sleep(1500);
+    await sleep(1200);
   } catch {
     /* a cold cache only costs the video a few seconds of ring */
   }
   await page.close();
+  await sleep(1500);
 }
 
 async function record(which, fn) {
@@ -696,6 +687,7 @@ async function record(which, fn) {
   const browser = await puppeteer.launch({
     executablePath: CHROME,
     headless: "new",
+    protocolTimeout: 240000,
     args: [
       "--no-sandbox",
       "--hide-scrollbars",
