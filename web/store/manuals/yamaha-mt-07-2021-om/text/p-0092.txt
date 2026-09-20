@@ -1,0 +1,55 @@
+Specifications
+9-2
+9
+Front tire:
+Type:
+Tubeless
+Size:
+120/70 ZR 17M/C(58W)
+Manufacturer/model:
+MICHELIN/ROAD 5
+Rear tire:
+Type:
+Tubeless
+Size:
+180/55 ZR 17M/C(73W)
+Manufacturer/model:
+MICHELIN/ROAD 5
+Loading:
+Maximum load:
+171 kg (377 lb)
+(Total weight of rider, passenger, cargo and 
+accessories)
+Front brake:
+Type:
+Hydraulic dual disc brake
+Rear brake:
+Type:
+Hydraulic single disc brake
+Front suspension:
+Type:
+Telescopic fork
+Rear suspension:
+Type:
+Swingarm (link suspension)
+Electrical system:
+System voltage:
+12 V
+Battery:
+Model:
+YTZ10S
+Voltage, capacity:
+12 V, 8.6 Ah (10 HR)
+Bulb wattage:
+Headlight:
+LED
+Brake/tail light:
+LED
+Front turn signal/position light:
+LED
+Rear turn signal light:
+LED
+Auxiliary light:
+LED
+License plate light:
+5.0 W

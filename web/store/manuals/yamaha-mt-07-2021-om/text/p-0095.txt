@@ -1,0 +1,50 @@
+Consumer information
+10-3
+10
+EAU69910
+Diagnostic connector
+The diagnostic connector is located as
+shown.
+EAU90250
+Vehicle data recording
+This model’s ECU stores certain vehi-
+cle data to assist in the diagnosis of
+malfunctions and for research, statisti-
+cal analysis and development purpos-
+es.
+Although the sensors and recorded
+data will vary by model, the main data
+points are:
+Vehicle status and engine perfor-
+mance data
+Fuel-injection and emission-relat-
+ed data
+This data will be uploaded only when a
+special Yamaha diagnostic tool is at-
+tached to the vehicle, such as when
+maintenance checks or service proce-
+dures are performed.
+Vehicle data uploaded will be handled
+appropriately according to the follow-
+ing Privacy Policy.
+Privacy Policy
+Yamaha will not disclose this data to a
+third party except in the following cas-
+es. In addition, Yamaha may provide
+vehicle data to a contractor in order to
+outsource services related to the han-
+dling of vehicle data. Even in this case,
+Yamaha will require the contractor to
+properly handle the vehicle data we
+provided and Yamaha will appropriate-
+ly manage the data.
+With the consent of the vehicle
+owner
+Where obligated by law
+For use by Yamaha in litigation
+When the data is not related to an
+individual vehicle nor owner
+1. Diagnostic connector
+1
+https://yamaha-motor.com/
+privacy-policy

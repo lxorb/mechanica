@@ -1,0 +1,81 @@
+Instrument and control functions
+4-15
+4
+EAU13222
+Fuel
+Make sure there is sufficient gasoline in
+the tank.
+WARNING
+EWA10882
+Gasoline and gasoline vapors are
+extremely flammable. To avoid fires
+and explosions and to reduce the
+risk of injury when refueling, follow
+these instructions.
+1. Before refueling, turn off the en-
+gine and be sure that no one is sit-
+ting on the vehicle. Never refuel
+while smoking, or while in the vi-
+cinity of sparks, open flames, or
+other sources of ignition such as
+the pilot lights of water heaters
+and clothes dryers.
+2. Do not overfill the fuel tank. When
+refueling, be sure to insert the
+pump nozzle into the fuel tank filler
+hole. Stop filling when the fuel
+reaches the bottom of the filler
+tube. Because fuel expands when
+it heats up, heat from the engine or
+the sun can cause fuel to spill out
+of the fuel tank.
+3. Wipe up any spilled fuel immedi-
+ately. 
+NOTICE: 
+Immediately
+wipe off spilled fuel with a clean,
+dry, soft cloth, since fuel may
+deteriorate painted surfaces or
+plastic parts. [ECA10072]
+4. Be sure to securely close the fuel
+tank cap.
+WARNING
+EWA15152
+Gasoline is poisonous and can
+cause injury or death. Handle gaso-
+line with care. Never siphon gasoline
+by mouth. If you should swallow
+some gasoline or inhale a lot of gas-
+oline vapor, or get some gasoline in
+your eyes, see your doctor immedi-
+ately. If gasoline spills on your skin,
+wash with soap and water. If gaso-
+line spills on your clothing, change
+your clothes.
+EAU86100
+Your Yamaha engine was designed to
+use regular unleaded gasoline. Con-
+firm the pump octane number [(R+M)/2
+method] is 86 or higher, or the research
+octane number (RON) is 91 or higher. If
+engine knocking or pinging occurs, use
+a gasoline of a different brand or higher
+octane rating.
+Gasohol
+There are two types of gasohol: gaso-
+hol containing ethanol and that con-
+taining methanol. Gasohol containing
+ethanol can be used if the ethanol con-
+tent does not exceed 10% (E10). Gas-
+1. Fuel tank filler tube
+2. Maximum fuel level
+2
+1
+Recommended fuel:
+Unleaded gasoline (E10 acceptable)
+Octane number (R+M)/2:
+86 or higher
+Fuel tank capacity:
+13 L (3.4 US gal, 2.9 Imp.gal)
+Fuel reserve amount:
+2.5 L (0.66 US gal, 0.55 Imp.gal)

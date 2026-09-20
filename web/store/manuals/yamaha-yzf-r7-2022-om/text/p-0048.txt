@@ -1,0 +1,70 @@
+Operation and important riding points
+6-2
+6
+EAU93120
+Starting the engine
+The ignition circuit cut-off system will
+enable starting when:
+the transmission is in the neutral
+position or
+the transmission is in gear, the
+sidestand is up, and the clutch le-
+ver is pulled.
+To start the engine
+1. Turn the main switch on and set
+the engine stop switch to the run
+position.
+2. Confirm the indicator and warning
+light(s) come on for a few sec-
+onds, and then go off. (See page
+4-2.)
+TIP
+Do not start the engine if the en-
+gine trouble warning light remains
+on.
+The oil pressure warning light
+should come on and stay on until
+the engine is started.
+The ABS warning light should
+come on and stay on until the ve-
+hicle reaches a speed of 5 km/h (3
+mi/h).
+NOTICE
+ECA24110
+If a warning or indicator light does
+not work as described above, have a
+Yamaha dealer check the vehicle.
+3. Shift the transmission into the
+neutral position.
+4. Start the engine by pushing the
+start switch.
+5. Release the start switch when the
+engine starts, or after 5 seconds.
+Wait 10 seconds before pressing
+the switch again to allow battery
+voltage to restore.
+NOTICE
+ECA11043
+For maximum engine life, never ac-
+celerate hard when the engine is
+cold!
+EAUM3632
+TIP
+This model is equipped with:
+a lean angle sensor. This sensor
+stops the engine in case of a vehi-
+cle turnover. If this happens, the
+engine trouble warning light will
+come on, but this is not a malfunc-
+tion. Turn the vehicle power off
+and then back on again to cancel
+the warning light. Failing to do so
+will prevent the engine from start-
+ing even though the engine will
+crank when pushing the start
+switch.
+an engine auto-stop system. The
+engine stops automatically if left
+idling for 20 minutes. If the engine
+stops, simply push the start
+switch to restart the engine.

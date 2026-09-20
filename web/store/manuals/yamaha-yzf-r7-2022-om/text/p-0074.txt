@@ -1,0 +1,62 @@
+Periodic maintenance and adjustment
+7-24
+7
+EAU22762
+Drive chain slack
+The drive chain slack should be
+checked before each ride and adjusted
+if necessary.
+EAU60046
+To check the drive chain slack
+1. Place the motorcycle on the side-
+stand.
+TIP
+When checking and adjusting the drive
+chain slack, there should be no weight
+on the motorcycle.
+2. Shift the transmission into the
+neutral position.
+3. Push down on the drive chain un-
+der the end of the drive chain
+guard.
+4. Measure distance A between the
+drive chain guard and the center
+of the chain as shown.
+5. If distance A is incorrect, adjust it
+as follows. NOTICE: Improper
+drive chain slack will overload
+the engine as well as other vital
+parts of the motorcycle and can
+lead to chain slippage or break-
+age. If distance A is more than
+55.0 mm (2.17 in), the chain can
+damage the frame, swingarm,
+and other parts. To prevent this
+from occurring, keep the drive
+chain slack within the specified
+limits. [ECA23070]
+EAU59921
+To adjust the drive chain slack
+Consult a Yamaha dealer before ad-
+justing the drive chain slack.
+1. Loosen the locknut at each end of
+the swingarm, and then loosen the
+axle nut.
+2. To tighten the drive chain, turn the
+drive chain slack adjusting nut at
+each end of the swingarm in direc-
+tion (a). To loosen the drive chain,
+turn the adjusting nut at each end
+of the swingarm in direction (b),
+and then push the rear wheel for-
+ward.
+1. Drive chain guard
+2. Distance A
+Distance A:
+45.0–50.0 mm (1.77–1.97 in)
+2
+1
+1. Axle nut
+2. Locknut
+1
+2

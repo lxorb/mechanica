@@ -1,0 +1,35 @@
+7-3
+IGNITION SYSTEM CHECK
+1. Remove the spark plugs and reat-
+tach them to the spark plug caps.
+2. While holding the spark plug firmly
+against the crank case of the
+engine, push the starter switch
+with the ignition switch in the “ON”
+position, the engine stop switch in
+the “” position, the transmission
+in neutral, and the clutch disen-
+gaged. If the ignition system is
+operating properly, a blue spark
+should jump across the spark plug
+gap.
+3. If there is no spark, clean the
+spark plug. Replace it if neces-
+sary. Retry the above procedure
+with the cleaned spark plug or a
+new one.
+4. If there is still no spark, consult
+your Suzuki dealer for repairs.
+WARNING
+Performing the spark test improp-
+erly can be hazardous. You could
+get a high voltage electrical shock
+if you are not familiar with this
+procedure.
+Do not perform this check if you
+are not familiar with the proce-
+dure. Do not point the spark plug
+near the spark plug hole during
+this test. Do not perform this test
+if you have a heart condition or
+wear a pacemaker.

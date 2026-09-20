@@ -1,0 +1,41 @@
+For your safety – pre-operation checks
+5-1
+5
+EAU1559B
+Inspect your vehicle each time you use it to make sure the vehicle is in safe operating condition. Always follow the inspection
+and maintenance procedures and schedules described in the Owner’s Manual.
+WARNING
+EWA11152
+Failure to inspect or maintain the vehicle properly increases the possibility of an accident or equipment damage.
+Do not operate the vehicle if you find any problem. If a problem cannot be corrected by the procedures provided in
+this manual, have the vehicle inspected by a Yamaha dealer.
+Before using this vehicle, check the following points:
+ITEM
+CHECKS
+PAGE
+Fuel
+• Check fuel level in fuel tank.
+• Refuel if necessary.
+• Check fuel line for leakage.
+• Check fuel tank breather hose and overflow hose for obstructions, cracks or 
+damage, and check hose connections.
+4-15, 4-16
+Engine oil
+• Check oil level in engine.
+• If necessary, add recommended oil to specified level.
+• Check vehicle for oil leakage.
+7-11
+Coolant
+• Check coolant level in reservoir.
+• If necessary, add recommended coolant to specified level.
+• Check cooling system for leakage.
+7-14
+Front brake
+• Check operation.
+• If soft or spongy, have Yamaha dealer bleed hydraulic system.
+• Check brake pads for wear.
+• Replace if necessary.
+• Check fluid level in reservoir.
+• If necessary, add specified brake fluid to specified level.
+• Check hydraulic system for leakage.
+7-21, 7-22

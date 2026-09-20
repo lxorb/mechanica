@@ -1,0 +1,42 @@
+Instrument and control functions
+4-23
+4
+TIP
+When turning the damping force ad-
+juster in direction (b), it may turn be-
+yond 
+the 
+stated 
+specifications,
+however such adjustments are ineffec-
+tive and may damage the suspension.
+WARNING
+EWA10222
+This shock absorber assembly con-
+tains highly pressurized nitrogen
+gas. Read and understand the fol-
+lowing information before handling
+the shock absorber assembly.
+Do not tamper with or attempt
+to open the cylinder assembly.
+Do not subject the shock ab-
+sorber assembly to an open
+flame or other high heat source.
+This may cause the unit to ex-
+plode due to excessive gas
+pressure.
+Do not deform or damage the
+cylinder in any way. Cylinder
+damage will result in poor
+damping performance.
+Do not dispose of a damaged or
+worn-out shock absorber as-
+sembly yourself. Take the shock
+absorber assembly to a Yamaha
+dealer for any service.
+EAU70641
+Auxiliary DC connector
+This vehicle is equipped with an auxil-
+iary DC connector. Consult your
+Yamaha dealer before installing any
+accessories.

@@ -1,0 +1,29 @@
+Throttle
+Checking the Throttle
+With the engine off, check that the throttle
+rotates smoothly from fully closed to fully
+open in all steering positions and throttle
+freeplay is correct. If the throttle does not
+move smoothly, close automatically, or if the
+cable is damaged, have the vehicle inspected
+by your dealer.
+Freeplay at the throttle grip flange:
+1/16 - 1/4 in (2 - 6 mm)
+Adjusting the Throttle Freeplay
+1. Slide the cable boot.
+2. Loosen the lock nut.
+3. Turn the adjuster until the freeplay is
+1/16 - 1/4 in (2 - 6 mm).
+4. Tighten the lock nut and return the cable
+boot, then inspect the throttle action
+again.
+Maintenance
+95
+Freeplay
+Flange
+Lock nut
+Cable boot
+Throttle grip
+Adjuster
+–
++

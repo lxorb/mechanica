@@ -1,0 +1,19 @@
+Description
+3-2
+3
+EAU10421
+Right view
+1
+7
+8
+2
+3,4 3,5
+6
+1. Tool kit (page 7-2)
+2. Fuel tank cap (page 4-14)
+3. Spring preload adjuster (page 4-19)
+4. Compression damping force adjuster (page 4-19)
+5. Rebound damping force adjuster (page 4-19)
+6. Front brake fluid reservoir (page 7-22)
+7. Brake pedal (page 4-13)
+8. Rear brake fluid reservoir (page 7-22)

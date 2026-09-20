@@ -1,0 +1,69 @@
+Periodic maintenance and adjustment
+7-10
+7
+EAU19653
+Checking the spark plugs
+The spark plugs are important engine
+components, 
+which 
+should 
+be
+checked periodically, preferably by a
+Yamaha dealer. Since heat and depos-
+its will cause any spark plug to slowly
+erode, they should be removed and
+checked in accordance with the peri-
+odic maintenance and lubrication
+chart. In addition, the condition of the
+spark plugs can reveal the condition of
+the engine.
+The porcelain insulator around the
+center electrode of each spark plug
+should be a medium-to-light tan (the
+ideal color when the vehicle is ridden
+normally), and all spark plugs installed
+in the engine should have the same
+color. If any spark plug shows a dis-
+tinctly different color, the engine could
+be operating improperly. Do not at-
+tempt to diagnose such problems
+yourself. Instead, have a Yamaha deal-
+er check the vehicle.
+If a spark plug shows signs of elec-
+trode erosion and excessive carbon or
+other deposits, it should be replaced.
+Before installing a spark plug, the
+spark plug gap should be measured
+with a wire thickness gauge and, if
+necessary, adjusted to specification.
+Clean the surface of the spark plug
+gasket and its mating surface, and
+then wipe off any grime from the spark
+plug threads.
+TIP
+If a torque wrench is not available
+when installing a spark plug, a good
+estimate of the correct torque is 1/4–
+1/2 turn past finger tight. However, the
+spark plug should be tightened to the
+specified torque as soon as possible.
+NOTICE
+ECA10841
+Do not use any tools to remove or in-
+stall the spark plug cap, otherwise
+the ignition coil coupler may get
+damaged. The spark plug cap may
+be difficult to remove because the
+rubber seal on the end of the cap fits
+tightly. To remove the spark plug
+cap, simply twist it back and forth
+while pulling it out; to install it, twist
+it back and forth while pushing it in.
+Specified spark plug:
+NGK/LMAR8A-9
+1. Spark plug gap
+Spark plug gap:
+0.8–0.9 mm (0.031–0.035 in)
+Tightening torque:
+Spark plug:
+13 N·m (1.3 kgf·m, 9.6 lb·ft)

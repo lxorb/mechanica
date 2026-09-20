@@ -1,0 +1,39 @@
+Instrument and control functions
+4-22
+4
+EAU70641
+Auxiliary DC connector
+This vehicle is equipped with an auxil-
+iary DC connector. Consult your
+Yamaha dealer before installing any
+accessories.
+EAU15306
+Sidestand
+The sidestand is located on the left
+side of the frame. Raise the sidestand
+or lower it with your foot while holding
+the vehicle upright.
+TIP
+The built-in sidestand switch is part of
+the ignition circuit cut-off system,
+which cuts the ignition in certain situa-
+tions. (See the following section for an
+explanation of the ignition circuit cut-
+off system.)
+WARNING
+EWA10242
+The vehicle must not be ridden with
+the sidestand down, or if the side-
+stand cannot be properly moved up
+(or does not stay up), otherwise the
+sidestand could contact the ground
+and distract the operator, resulting
+in a possible loss of control.
+Yamaha’s ignition circuit cut-off
+system has been designed to assist
+the operator in fulfilling the respon-
+sibility of raising the sidestand be-
+fore starting off. Therefore, check
+this system regularly and have a
+Yamaha dealer repair it if it does not
+function properly.

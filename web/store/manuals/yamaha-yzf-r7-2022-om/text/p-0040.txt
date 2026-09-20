@@ -1,0 +1,73 @@
+Instrument and control functions
+4-22
+4
+EAU91870
+Adjusting the shock absorber 
+assembly
+This shock absorber assembly is
+equipped with a spring preload adjust-
+ing ring and a rebound damping force
+adjusting screw.
+NOTICE
+ECA10102
+To avoid damaging the mechanism,
+do not attempt to turn beyond the
+maximum or minimum settings.
+Spring preload
+Turn the adjusting ring in direction (a)
+to increase the spring preload.
+Turn the adjusting ring in direction (b)
+to decrease the spring preload.
+Align the appropriate notch in the ad-
+justing ring with the position indicator
+on the shock absorber.
+TIP
+Use the special wrench and extension
+bar in the additional tool kit to make
+this adjustment.
+Rebound damping force
+Turn the adjusting screw in direction (a)
+to increase the rebound damping
+force.
+Turn the adjusting screw in direction (b)
+to decrease the rebound damping
+force.
+To set the rebound damping force, turn
+the adjuster in direction (a) until it
+stops, and then count the turns in di-
+rection (b).
+1. Spring preload adjusting ring
+2. Special wrench
+3. Extension bar
+4. Position indicator
+Spring preload setting:
+Minimum (soft):
+1
+Standard:
+5
+Maximum (hard):
+7
+7 6 5 4 3 2 1
+3
+2
+1
+3
+2
+1
+4
+(b)
+(b)
+(a)
+(a)
+(b)
+(a)
+1. Rebound damping force adjusting screw
+Rebound damping setting:
+Minimum (soft):
+2+1/2 turn(s) in direction (b)
+Standard:
+1+1/2 turn(s) in direction (b)
+Maximum (hard):
+0 turn(s) in direction (b)
+1 (a)
+(b)

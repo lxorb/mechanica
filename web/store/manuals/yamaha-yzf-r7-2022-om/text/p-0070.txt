@@ -1,0 +1,53 @@
+Periodic maintenance and adjustment
+7-20
+7
+EAU22083
+Adjusting the clutch lever free 
+play
+Measure the clutch lever free play as
+shown.
+Periodically check the clutch lever free
+play and, if necessary, adjust it as fol-
+lows.
+To increase the clutch lever free play,
+turn the clutch lever free play adjusting
+bolt in direction (a). To decrease the
+clutch lever free play, turn the adjusting
+bolt in direction (b).
+TIP
+If the specified free play cannot be ob-
+tained as described above or if the
+clutch does not operate correctly, have
+a Yamaha dealer check the internal
+clutch mechanism.
+EAU37914
+Checking the brake lever free 
+play
+There should be no free play at the
+brake lever end. If there is free play,
+have a Yamaha dealer inspect the
+brake system.
+WARNING
+EWA14212
+A soft or spongy feeling in the brake
+lever can indicate the presence of
+air in the hydraulic system. If there is
+air in the hydraulic system, have a
+Yamaha dealer bleed the system be-
+fore operating the vehicle. Air in the
+hydraulic system will diminish the
+1. Clutch lever free play adjusting bolt
+2. Clutch lever free play
+Clutch lever free play:
+5.0–10.0 mm (0.20–0.39 in)
+2
+(a)
+(a)
+1
+(a)
+(b)
+(b)
+(b)
+1
+1. No brake lever free play
+1

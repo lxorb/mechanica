@@ -1,0 +1,66 @@
+Instrument and control functions
+4-13
+4
+EAU12944
+Brake pedal
+The brake pedal is located on the right
+side of the motorcycle. To apply the
+rear brake, press down on the brake
+pedal.
+EAU93090
+ABS
+The Yamaha ABS (Anti-lock Brake
+System) features a dual electronic con-
+trol system, which acts on the front and
+rear brakes independently.
+Operate the brakes with ABS as you
+would conventional brakes. If the ABS
+is activated, a pulsating sensation may
+be felt at the brake lever or brake ped-
+al. In this situation, continue to apply
+the brakes and let the ABS work; do
+not “pump” the brakes as this will re-
+duce braking effectiveness.
+WARNING
+EWA16051
+Always keep a sufficient distance
+from the vehicle ahead to match the
+riding speed even with ABS.
+The ABS performs best with
+long braking distances.
+On certain surfaces, such as
+rough or gravel roads, the brak-
+ing distance may be longer with
+the ABS than without.
+The ABS is monitored by an ECU,
+which will revert the system to conven-
+tional braking if a malfunction occurs.
+TIP
+The ABS performs a self-diagnos-
+tic test each time the vehicle first
+starts off after the key is turned to
+“ON” and the vehicle has traveled
+at a speed of 5 km/h (3 mi/h) or
+higher. During this test, a “click-
+ing” noise can be heard from the
+hydraulic control unit, and if the
+brake lever or brake pedal is even
+slightly applied, a vibration can be
+felt at the lever and pedal, but
+these do not indicate a malfunc-
+tion.
+This ABS has a test mode which
+allows the owner to experience
+the pulsation at the brake lever or
+brake pedal when the ABS is op-
+erating. However, special tools are
+required, so please consult your
+Yamaha dealer.
+NOTICE
+ECA20100
+Be careful not to damage the wheel
+sensor or wheel sensor rotor; other-
+wise, improper performance of the
+ABS will result.
+1. Brake pedal
+1

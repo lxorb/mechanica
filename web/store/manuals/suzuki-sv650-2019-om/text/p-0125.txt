@@ -1,0 +1,16 @@
+7-4
+ENGINE STALLING
+1. Make sure there is enough fuel in
+the fuel tank.
+2. If the odometer displays “FI” and
+malfunction indicator light comes
+on, trouble in the fuel injection
+system, take your machine to an
+authorized Suzuki dealer. Refer to
+the “INSTRUMENT PANEL” sec-
+tion for an explanation of the mal-
+function indicator light.
+3. Check the ignition system for
+intermittent spark.
+4. Check the idle speed. The correct
+idle speed is 1200 – 1400 r/min.

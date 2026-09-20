@@ -1,0 +1,66 @@
+Instrument and control functions
+4-10
+4
+Shift timing indicator light bright-
+ness
+The shift timing indicator light will
+come on and stay on until the setting is
+confirmed. The brightness level of the
+light will change as the level is adjust-
+ed.
+ Use the “RES” switch to select the de-
+sired brightness level and push the
+“SEL” to confirm it.
+EAU1234R
+Handlebar switches
+Left 
+Right 
+EAU12352
+Pass switch “
+”
+Press this switch to flash the headlight.
+TIP
+When the dimmer switch is set
+to “
+”, the passing switch has no ef-
+fect.
+EAU12402
+Dimmer switch “
+/
+”
+Set this switch to “
+” for the high
+beam and to “
+” for the low beam.
+1. Pass switch “
+”
+2. “SEL/RES” switch
+3. Dimmer switch “
+/
+”
+4. Turn signal switch “
+/
+”
+5. Horn switch “
+”
+1
+2
+4
+5
+3
+2
+4
+5
+3
+1. Engine stop switch “
+/
+”
+2. Hazard switch “OFF/
+”
+3. Start switch “
+”
+1
+2
+3
+2
+3

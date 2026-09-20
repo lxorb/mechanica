@@ -1,0 +1,144 @@
+[data-screen="pick"] .root,
+[data-screen="pick"] [data-root] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-screen="pick"] .strip {
+  display: flex;
+  align-items: stretch;
+  min-height: 52px;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+}
+
+[data-screen="pick"] .who {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 52px;
+  padding: 4px 10px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  appearance: none;
+}
+
+[data-screen="pick"] .who img {
+  box-sizing: content-box;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  object-fit: cover;
+  display: block;
+  border: 3px solid var(--ink);
+  background: var(--card);
+}
+
+[data-screen="pick"] .who-name {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-screen="pick"] .cam {
+  flex-shrink: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+}
+
+[data-screen="pick"] .cam svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+[data-screen="pick"] .meter {
+  height: 3px;
+  background: var(--ink);
+}
+
+[data-screen="pick"] .meter i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--orange);
+}
+
+[data-screen="pick"] .bins {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+[data-screen="pick"] .systems {
+  grid-template-columns: 1fr 1fr;
+}
+
+[data-screen="pick"] .parts:empty {
+  display: none;
+}
+
+[data-screen="pick"] .tile {
+  display: block;
+  width: 100%;
+  padding: 0;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+[data-screen="pick"] .tile .cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  line-height: 1.15;
+}
+
+[data-screen="pick"] .tile .stamp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+[data-screen="pick"] .tile.is-on {
+  border-color: var(--orange);
+  outline: 3px solid var(--orange);
+  outline-offset: -3px;
+  z-index: 1;
+}
+
+[data-screen="pick"] .tile.is-on .cap {
+  background: var(--orange);
+  color: #fff;
+}
+
+@media (min-width: 900px) {
+  [data-screen="pick"] .systems {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

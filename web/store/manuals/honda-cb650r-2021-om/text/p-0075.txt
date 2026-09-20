@@ -1,0 +1,33 @@
+Engine Oil
+Engine oil consumption varies and oil quality
+deteriorates according to riding conditions and
+time elapsed.
+Check the engine oil level regularly, and add the
+recommended engine oil if necessary. Dirty oil or
+old oil should be changed as soon as possible.
+# Selecting the Engine Oil
+For recommended engine oil, see
+“Specifications.” 2 P. 135
+If you use non-Honda engine oil, check the
+label to make sure that the oil satisfies all of the
+following standards:
+●JASO T 903 standard*1: MA
+●SAE standard*2: 10W-30
+●API classification*3: SG or higher
+*1. The JASO T 903 standard is an index for engine
+oils for 4-stroke motorcycle engines. There are
+two classes: MA and MB. For example, the
+following label shows the MA classification.
+*2. The SAE standard grades oils by their viscosity.
+*3. The API classification specifies the quality and
+performance rating of engine oils. Use SG or
+higher oils, excluding oils marked as “Energy
+Conserving” or “Resource Conserving” on the
+circular API service symbol.
+Maintenance Fundamentals
+Maintenance
+73
+Oil code
+Oil classification
+Not recommended
+Recommended

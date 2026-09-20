@@ -1,0 +1,29 @@
+Engine Will Not Start 
+Starter Motor Operates But
+Engine Does Not Start
+Check the following items:
+●Check the correct engine starting
+sequence. 2 P. 54
+●Check that there is gasoline in the fuel
+tank.
+●Check if the PGM-FI malfunction indicator
+lamp (MIL) is on.
+u If the indicator lamp is on, contact
+your dealer as soon as possible.
+Starter Motor Does Not
+Operate
+Check the following items:
+●Check the correct engine starting
+sequence. 2 P. 54
+●Make sure engine stop switch is in the 
+(Run) position. 2 P. 50
+●Check for a blown fuse. 2 P. 108
+●Check for a loose battery connection
+(2 P. 80) or battery terminal corrosion
+(2 P. 70).
+●Check the condition of the battery.
+2 P. 107
+If the problem continues, have your vehicle
+inspected by your dealer.
+Troubleshooting
+99

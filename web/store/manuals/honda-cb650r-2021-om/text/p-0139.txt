@@ -1,0 +1,14 @@
+Information Record
+VIN
+Engine No.
+Color Label & Code
+Owner's Name
+Address
+City/State
+Phone
+Dealer's Name
+Address
+City/State
+Phone
+Service Manager
+137

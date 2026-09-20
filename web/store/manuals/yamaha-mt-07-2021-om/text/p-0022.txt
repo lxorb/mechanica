@@ -1,0 +1,63 @@
+Instrument and control functions
+4-4
+4
+EAU92181
+Multi-function meter unit
+The multi-function meter unit is also
+equipped with a brightness control
+mode.
+WARNING
+EWA12423
+Be sure to stop the vehicle before
+making any setting changes to the
+multi-function meter unit. Changing
+settings while riding can distract the
+operator and increase the risk of an
+accident.
+EAU92550
+TIP
+The multi-function meter functions are
+controlled using the “TRIP/INFO”
+switch. 4-10 for more information.
+EAU92191
+Switching the display units
+The display units can be switched be-
+tween kilometers and miles.
+To switch the display units
+1. Set the multi-function display to
+the odometer, and then turn the
+vehicle off.
+2. While pushing the “TRIP” switch,
+turn the vehicle on.
+3. Continue to push the “TRIP”
+switch until the display units
+change.
+EAU86831
+Speedometer
+The speedometer shows the vehicle’s
+traveling speed.
+EAU87170
+Tachometer
+The tachometer allows the rider to
+monitor the engine speed and keep it
+within the ideal power range.
+1. Eco indicator “ECO”
+2. Speedometer
+3. Tachometer
+4. Transmission gear display
+5. Clock
+6. Fuel meter
+7. Multi-function display
+1. “TRIP/INFO” switch
+2
+1
+3
+6
+7
+5
+4
+1
+1. Tachometer
+2. Tachometer red zone
+1
+2

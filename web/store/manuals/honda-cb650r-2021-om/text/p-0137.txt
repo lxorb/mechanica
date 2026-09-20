@@ -1,0 +1,84 @@
+■Service Data
+Tire size
+Front
+120/70ZR17M/C(58W)
+Rear
+180/55ZR17M/C(73W)
+Tire type
+Radial, tubeless
+Recommended
+Tires
+Front
+DUNLOP D214F Z
+Rear
+DUNLOP D214 Q
+Tire air pressure
+Front
+36 psi (250 kPa, 2.50 kgf/cm2)
+Rear
+42 psi (290 kPa, 2.90 kgf/cm2)
+Minimum tread
+depth
+Front
+0.06 in (1.5 mm)
+Rear
+0.08 in (2.0 mm)
+Spark plug
+(standard)
+IMR9E-9HES (NGK) or
+VUH27ES (DENSO)
+Spark plug gap
+(non-
+adjustable)
+0.03 - 0.04 in (0.8 - 0.9 mm)
+Idle speed
+(non-
+adjustable)
+1,250 ± 100 rpm
+Recommended
+engine oil
+API Service Classification SG or higher
+except oils labeled as energy conserving or
+resource conserving on the circular API
+service label, SAE 10W-30, JASO T 903
+standard MA, Pro Honda GN4 4-stroke oil
+(USA & Canada) or Honda 4-stroke oil, or
+an equivalent motorcycle oil
+Engine oil capacity
+After draining 2.4 US qt (2.3 L)
+After draining
+& engine oil
+filter change
+2.7 US qt (2.6 L)
+After
+disassembly
+3.2 US qt (3.0 L)
+Recommended
+brake fluid
+Honda DOT 4 Brake Fluid
+Recommended
+coolant
+Pro Honda HP Coolant
+Cooling system
+capacity
+2.64 US qt (2.50 L)
+Recommended
+drive chain
+lubricant
+Pro Honda HP Chain Lube or equivalent
+Drive chain slack
+1 - 1 3/8 in (25 - 35 mm)
+Standard drive
+chain
+DID 525V11 or RK 525KRW
+No. of links
+118
+Standard sprocket
+sizes
+Drive sprocket
+15T
+Driven sprocket
+42T
+Specifications
+Specifications
+135

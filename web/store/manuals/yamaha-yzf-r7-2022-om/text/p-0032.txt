@@ -1,0 +1,37 @@
+Instrument and control functions
+4-14
+4
+EAU13077
+Fuel tank cap
+To open the fuel tank cap
+Open the fuel tank cap lock cover, in-
+sert the key, and then turn it 1/4 turn
+clockwise. The lock will be released
+and the fuel tank cap can be opened.
+To close the fuel tank cap
+With the key still inserted, push down
+the fuel tank cap. Turn the key 1/4 turn
+counterclockwise, remove it, and then
+close the lock cover.
+TIP
+The fuel tank cap cannot be closed un-
+less the key is in the lock. In addition,
+the key cannot be removed if the cap is
+not properly closed and locked.
+WARNING
+EWA11092
+Make sure that the fuel tank cap is
+properly closed after filling fuel.
+Leaking fuel is a fire hazard.
+1. Front wheel sensor
+2. Front wheel sensor rotor
+1. Rear wheel sensor
+2. Rear wheel sensor rotor
+1
+2
+1
+2
+1. Fuel tank cap lock cover
+2. Unlock.
+1
+2

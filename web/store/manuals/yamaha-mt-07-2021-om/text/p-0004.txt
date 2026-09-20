@@ -1,0 +1,15 @@
+Important manual information
+EAU10134
+Particularly important information is distinguished in this manual by the following notations:
+*Product and specifications are subject to change without notice.
+This is the safety alert symbol. It is used to alert you to potential personal injury 
+hazards. Obey all safety messages that follow this symbol to avoid possible injury 
+or death.
+A WARNING indicates a hazardous situation which, if not avoided, could result in 
+death or serious injury.
+A NOTICE indicates special precautions that must be taken to avoid damage to the 
+vehicle or other property.
+A TIP provides key information to make procedures easier or clearer.
+WARNING
+NOTICE
+TIP

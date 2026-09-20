@@ -1,0 +1,124 @@
+Periodic maintenance and adjustment
+7-4
+7
+EAU67562
+General maintenance and lubrication chart
+No.
+ITEM
+ROUTINE
+INITIAL
+ODOMETER READINGS
+1000 km 
+(600 mi) 
+or 
+1 month
+7000 km 
+(4000 mi) 
+or 
+6 months
+13000 km 
+(8000 mi) 
+or 
+12 months
+19000 km 
+(12000 mi) 
+or 
+18 months
+25000 km 
+(16000 mi) 
+or 
+24 months
+31000 km 
+(20000 mi) 
+or 
+30 months
+1
+*
+Diagnostic system 
+check
+• Perform dynamic inspection us-
+ing Yamaha diagnostic tool.
+• Check the error codes.
+√
+√
+√
+√
+√
+√
+2
+*
+Air filter element
+• Replace.
+Every 37000 km (24000 mi)
+3
+Air filter check hose
+• Clean.
+√
+√
+√
+√
+√
+√
+4
+*
+Clutch
+• Check operation.
+• Adjust or replace cable.
+√
+√
+√
+√
+√
+√
+5
+*
+Front brake
+• Check operation, fluid level, and 
+for fluid leakage.
+• Replace brake pads if necessary.
+√
+√
+√
+√
+√
+√
+6
+*
+Rear brake
+• Check operation, fluid level, and 
+for fluid leakage.
+• Replace brake pads if necessary.
+√
+√
+√
+√
+√
+√
+7
+*
+Brake hoses
+• Check for cracks or damage.
+• Check for correct routing and 
+clamping.
+√
+√
+√
+√
+√
+• Replace.
+Every 4 years
+8
+*
+Brake fluid
+• Change.
+Every 2 years
+9
+*
+Wheels
+• Check runout and for damage.
+• Replace if necessary.
+√
+√
+√
+√
+√

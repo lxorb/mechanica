@@ -1,0 +1,31 @@
+ELECTRICAL
+Ignition type.....................................................Electronic ignition (Transistorized)
+Spark plug .......................................................NGK MR8E-9 (Except for EU, UK)
+NGK CR8EIA-9 (EU, UK)
+DENSO IU24D (EU, UK)
+Battery.............................................................12V 36 kC(10 Ah)/10 HR
+Generator ........................................................Three-phase A.C. generator
+Fuse ................................................................30/10/10/15/15/10/15/10A
+ABS fuse .........................................................20/15A
+Headlight .........................................................12V 60/55W (H4)
+Position light (if equipped) ...............................12V 5W
+Brake light/Taillight...........................................LED
+License plate light............................................12V 5W
+Turn signal light ...............................................12V 21W
+Speedometer light ...........................................LED
+Tachometer light..............................................LED
+Turn signal indicator light.................................LED
+Neutral indicator light.......................................LED
+High beam indicator light.................................LED
+Engine coolant temperature /
+Oil pressure warning indicator light .................LED (Except for EU, UK)
+Engine coolant temperature / oil pressure / 
+battery charge malfunction 
+warning indicator light......................................LED (EU, UK)
+Malfunction indicator light................................LED
+ABS indicator light...........................................LED
+CAPACITIES
+Fuel tank.......................................................... 14.5 L (3.8/3.2 US/Imp. gal)
+Engine oil, without filter change.......................2400 ml (2.5/2.1 US/Imp. qt)
+With filter change ...........................2750 ml (2.9/2.4 US/Imp. qt)
+Engine coolant.................................................1850 ml (2.0/1.6 US/Imp. qt)

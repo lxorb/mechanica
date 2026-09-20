@@ -1,0 +1,75 @@
+/* Structural only. Color and type come from each prototype. */
+screen { display: none; }
+screen.on { display: block; }
+.flow-steps {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  margin: 0 0 16px;
+}
+.flow-steps span {
+  opacity: 0.45;
+}
+.flow-steps span.done { opacity: 0.75; }
+.flow-steps span.now { opacity: 1; font-weight: 600; }
+.hint { opacity: 0.72; margin: 8px 0 12px; }
+.sysgrid, .partgrid, .buygrid {
+  display: grid;
+  gap: 8px;
+}
+.sysgrid {
+  grid-template-columns: 1fr 1fr;
+}
+.sys, .partcard, .buygrid button {
+  width: 100%;
+  text-align: left;
+}
+.sys { display: grid; gap: 2px; }
+.sys em { justify-self: end; font-style: normal; opacity: 0.6; }
+.partcard { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; }
+.partcard span { grid-column: 1; font-size: 0.8rem; opacity: 0.7; }
+.verbatim {
+  white-space: pre-wrap;
+  font-family: ui-monospace, monospace;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  padding: 12px;
+  margin: 12px 0;
+  overflow: auto;
+  max-height: 280px;
+}
+.man-crop { margin: 12px 0 16px; }
+.man-crop svg { width: 100%; height: auto; display: block; border: 1px solid currentColor; }
+.man-crop figcaption { font-size: 0.75rem; margin-top: 6px; opacity: 0.7; }
+.lib-log { font-size: 0.85rem; display: grid; gap: 6px; min-height: 6rem; }
+.lib-track { height: 4px; background: currentColor; opacity: 0.15; margin: 10px 0 16px; }
+.lib-bar { height: 4px; width: 0; background: currentColor; }
+.step { margin: 0 0 18px; }
+.step header { display: flex; gap: 10px; align-items: baseline; }
+.step header b { font-size: 1.2rem; }
+.step header span { flex: 1; }
+.step blockquote {
+  margin: 8px 0;
+  padding-left: 10px;
+  border-left: 2px solid currentColor;
+  font-size: 0.95rem;
+}
+.receipt { padding: 12px 0; }
+.receipt h3 { margin-bottom: 8px; }
+.receipt > div { display: flex; justify-content: space-between; padding: 6px 0; }
+.receipt .due { font-weight: 700; border-top: 1px solid currentColor; margin-top: 6px; }
+.used, .alts { list-style: none; display: grid; gap: 8px; margin: 12px 0; }
+.used span { display: block; font-size: 0.8rem; opacity: 0.7; }
+.row { display: grid; gap: 8px; margin-top: 16px; }
+.photo-slot, [data-photo] {
+  background-repeat: no-repeat;
+}
+.sil {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 140'%3E%3Ccircle cx='70' cy='102' r='22' fill='none' stroke='%23998870' stroke-width='6'/%3E%3Ccircle cx='178' cy='102' r='22' fill='none' stroke='%23998870' stroke-width='6'/%3E%3Cpath fill='%23998870' d='M88 96h70l8-22 22 6 10-18h-28l-14-18H92l-10 22H54l8 14 10-2z'/%3E%3C/svg%3E")
+    center/78% no-repeat;
+}
+@media (min-width: 640px) {
+  .buygrid { grid-template-columns: 1fr 1fr; }
+}

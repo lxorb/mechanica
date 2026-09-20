@@ -1,0 +1,64 @@
+Instrument and control functions
+4-4
+4
+EAU92981
+Multi-function meter unit
+The multi-function meter unit is also
+equipped with a display brightness and
+shift timing indicator light settings
+mode.
+WARNING
+EWA12423
+Be sure to stop the vehicle before
+making any setting changes to the
+multi-function meter unit. Changing
+settings while riding can distract the
+operator and increase the risk of an
+accident.
+EAU92991
+TIP
+The multi-function meter is controlled
+using the “SEL/RES” switch. 4-11 for
+more information.
+EAU93001
+Switching the display units
+The display units can be switched be-
+tween kilometers and miles. To switch
+the display units, set the multi-funtion
+display to the odometer or a tripmeter,
+and then hold the “SEL” switch until
+the display units change.
+EAU86831
+Speedometer
+The speedometer shows the vehicle’s
+traveling speed.
+EAU87170
+Tachometer
+The tachometer allows the rider to
+monitor the engine speed and keep it
+within the ideal power range.
+NOTICE
+ECA10032
+Do not operate the engine in the ta-
+chometer red zone.
+Red zone: 10000 r/min and above
+1. Transmission gear display
+2. Speedometer
+3. Tachometer
+4. Fuel meter
+5. Clock
+6. Multi-function display
+7. Quick shift indicator “QS” (if equipped)
+1. “SEL/RES” switch
+1
+2
+3
+4
+5
+6
+7
+1
+1. Tachometer
+2. Tachometer red zone
+1
+2

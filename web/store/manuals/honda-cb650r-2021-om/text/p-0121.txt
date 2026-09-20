@@ -1,0 +1,14 @@
+Vehicle Identification
+Number
+The VIN and engine serial number uniquely
+identify your vehicle and are required in order
+to register your vehicle. They may also be
+required when ordering replacement parts.
+You should record these numbers and keep
+them in a safe place.
+Vehicle Identification Number
+Information
+119
+VIN
+VIN
+Engine number

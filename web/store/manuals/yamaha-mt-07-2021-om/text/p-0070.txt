@@ -1,0 +1,34 @@
+Periodic maintenance and adjustment
+7-21
+7
+EAU37914
+Checking the brake lever free 
+play
+There should be no free play at the
+brake lever end. If there is free play,
+have a Yamaha dealer inspect the
+brake system.
+WARNING
+EWA14212
+A soft or spongy feeling in the brake
+lever can indicate the presence of
+air in the hydraulic system. If there is
+air in the hydraulic system, have a
+Yamaha dealer bleed the system be-
+fore operating the vehicle. Air in the
+hydraulic system will diminish the
+braking performance, which may re-
+sult in loss of control and an acci-
+dent.
+EAU36505
+Brake light switches
+The brake light should come on just
+before braking takes effect. The brake
+light is activated by switches connect-
+ed to the brake lever and brake pedal.
+Since the brake light switches are
+components of the anti-lock brake sys-
+tem, they should only be serviced by a
+Yamaha dealer.
+1. No brake lever free play
+1

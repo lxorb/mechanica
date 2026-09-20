@@ -1,0 +1,103 @@
+Specifications
+9-1
+9
+Dimensions:
+Overall length:
+2085 mm (82.1 in)
+Overall width:
+780 mm (30.7 in)
+Overall height:
+1105 mm (43.5 in)
+Seat height:
+805 mm (31.7 in)
+Wheelbase:
+1400 mm (55.1 in)
+Ground clearance:
+140 mm (5.51 in)
+Minimum turning radius:
+2.7 m (8.86 ft)
+Weight:
+Curb weight:
+184 kg (406 lb)
+Engine:
+Combustion cycle:
+4-stroke
+Cooling system:
+Liquid cooled
+Valve train:
+DOHC
+Cylinder arrangement:
+Inline
+Number of cylinders:
+2-cylinder
+Displacement:
+689 cm³
+Bore × stroke:
+80.0 × 68.6 mm (3.15 × 2.70 in)
+Starting system:
+Electric starter
+Engine oil:
+Recommended brand:
+SAE viscosity grades:
+10W-40, 10W-50, 15W-40, 20W-40 or 
+20W-50
+Recommended engine oil grade:
+API service SG type or higher, JASO 
+standard MA
+Engine oil quantity:
+Oil change:
+2.30 L (2.43 US qt, 2.02 Imp.qt)
+With oil filter removal:
+2.60 L (2.75 US qt, 2.29 Imp.qt)
+Coolant quantity:
+Coolant reservoir (up to the maximum level 
+mark):
+0.25 L (0.26 US qt, 0.22 Imp.qt)
+Radiator (including all routes):
+1.60 L (1.69 US qt, 1.41 Imp.qt)
+Fuel:
+Recommended fuel:
+Unleaded gasoline (E10 acceptable)
+Octane number (RON):
+90
+Fuel tank capacity:
+14 L (3.7 US gal, 3.1 Imp.gal)
+Fuel reserve amount:
+2.7 L (0.71 US gal, 0.59 Imp.gal)
+Fuel injection:
+Throttle body:
+ID mark:
+1WS1
+Drivetrain:
+Gear ratio:
+1st:
+2.846 (37/13)
+2nd:
+2.125 (34/16)
+3rd:
+1.632 (31/19)
+4th:
+1.300 (26/20)
+5th:
+1.091 (24/22)
+6th:
+0.964 (27/28)
+–20 –10
+0
+10
+20
+30
+40
+50 ˚C
+10
+30
+50
+70
+90 110
+0
+130 ˚F
+SAE 20W-50
+SAE 20W-40
+SAE 15W-40
+SAE 10W-40
+SAE 10W-50

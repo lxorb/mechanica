@@ -1,0 +1,31 @@
+Removing & Installing Body Components
+Battery
+# Removal
+Make sure the ignition switch is in the OFF
+position.
+1. Remove the front seat. 2 P. 81
+2. Remove the rubber strap.
+3. Disconnect the negative - terminal from
+the battery.
+4. Disconnect the positive + terminal from
+the battery.
+5. Remove the battery taking care not to
+drop the terminal nuts.
+# Installation
+Install the parts in the reverse order of removal.
+Always connect the positive + terminal first.
+Make sure that bolts and nuts are tight.
+Make sure the clock information is correct
+after the battery is reconnected. 2 P. 31
+For proper handling of the battery, see
+“Maintenance Fundamentals.” 2 P. 70
+“Battery Goes Dead.” 2 P. 107
+Maintenance
+80
+Rubber
+strap
+Positive
+terminal
+Negative
+terminal
+Battery

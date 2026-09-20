@@ -1,0 +1,53 @@
+Periodic maintenance and adjustment
+7-25
+7
+EAU59921
+To adjust the drive chain slack
+Consult a Yamaha dealer before ad-
+justing the drive chain slack.
+1. Loosen the locknut at each end of
+the swingarm, and then loosen the
+axle nut.
+2. To tighten the drive chain, turn the
+drive chain slack adjusting nut at
+each end of the swingarm in direc-
+tion (a). To loosen the drive chain,
+turn the adjusting nut at each end
+of the swingarm in direction (b),
+and then push the rear wheel for-
+ward.
+TIP
+Using the alignment marks on each
+side of the swingarm, make sure that
+both drive chain slack adjusting plates
+are in the same position for proper
+wheel alignment.
+3. Tighten the axle nut, and then
+tighten the locknuts to the speci-
+fied torques.
+4. Make sure that the drive chain
+slack adjusting plates are in the
+same position, the drive chain
+slack is correct, and the drive
+chain moves smoothly.
+1. Axle nut
+2. Locknut
+1
+2
+1. Drive chain slack adjusting nut
+1. Alignment marks
+2. Drive chain slack adjusting plate
+1
+(a)
+(a)
+(a)
+(b)
+(b)
+(b)
+1
+2
+Tightening torques:
+Axle nut:
+105 N·m (10.5 kgf·m, 77 lb·ft)
+Locknut:
+16 N·m (1.6 kgf·m, 12 lb·ft)

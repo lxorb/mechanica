@@ -1,0 +1,53 @@
+6-51
+The main fuse is located under the
+seat. To access the fuse, remove the
+seat by referring to the SEAT LOCK
+section. One 30A spare fuse is
+located in the starter relay box.
+The fuses are located under the seat.
+Three spare fuses (one 10A, one 15A
+and one 20A) are provided inside the
+fuse box cover.
+FUSE LIST
+•
+30A MAIN fuse protects all electri-
+cal circuits.
+•
+10A HEAD-HI fuse protects the
+headlight high beam and speed-
+ometer.
+•
+10A HEAD-LO fuse protects the
+headlight low beam.
+•
+15A IGNITION fuse protects the
+cooling fan relay, oxygen sensor,
+ECM, solenoid, fuel pump relay,
+starter relay, side stand relay, igni-
+tion coils and canister purge sole-
+noid (if equipped).
+•
+15A SIGNAL fuse protects the
+speedometer, brake light and
+horn.
+•
+10A FUEL fuse protects the ECM,
+speedometer, 
+fuel 
+pump 
+and
+injectors.
+•
+15A FAN fuse protects the cooling
+fan motor.
+•
+10A PARK fuse protects the turn
+signal light, position lights (if
+equipped), taillight and license
+light.
+•
+20A ABS MOTOR fuse protects
+ABS system.
+•
+15A ABS VALVE use protects
+ABS system.

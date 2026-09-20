@@ -1,0 +1,167 @@
+{
+  "bikes": [
+    {
+      "id": "ducati-50-mini2-1970",
+      "make": "Ducati",
+      "model": "50 Mini2",
+      "year": 1970,
+      "years": [
+        1970
+      ],
+      "cc": 50,
+      "category": "Motorcycle",
+      "aliases": [
+        "50 mini2",
+        "50mini2",
+        "50-mini2",
+        "ducati 50 mini2",
+        "ducati 50mini2"
+      ],
+      "thumb": "store/img/collection/ducati-50-mini2-1970-thumb.webp",
+      "image": "store/img/collection/ducati-50-mini2-1970.webp",
+      "bikez": null,
+      "manualId": null
+    },
+    {
+      "id": "ducati-mototrans-2012",
+      "make": "Ducati",
+      "model": "Mototrans",
+      "year": 2012,
+      "years": [
+        2012
+      ],
+      "cc": 250,
+      "category": "Motorcycle",
+      "aliases": [
+        "mototrans",
+        "ducati mototrans"
+      ],
+      "thumb": "store/img/collection/ducati-mototrans-2012-thumb.webp",
+      "image": "store/img/collection/ducati-mototrans-2012.webp",
+      "bikez": null,
+      "manualId": null
+    },
+    {
+      "id": "honda-cb650r-2021",
+      "make": "Honda",
+      "model": "CB650R",
+      "year": 2021,
+      "years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "cc": 649,
+      "category": "Naked bike",
+      "aliases": [
+        "cb650r",
+        "cb 650 r",
+        "cb650",
+        "honda cb650r"
+      ],
+      "thumb": "store/img/collection/honda-cb650r-2021-thumb.webp",
+      "image": "store/img/collection/honda-cb650r-2021.webp",
+      "bikez": "https://bikez.com/motorcycles/honda_cb650r_2021.php",
+      "manualId": "honda-cb650r-2021-om"
+    },
+    {
+      "id": "kawasaki-z650-2020",
+      "make": "Kawasaki",
+      "model": "Z650",
+      "year": 2020,
+      "years": [
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "cc": 649,
+      "category": "Naked bike",
+      "aliases": [
+        "z650",
+        "z 650",
+        "kawasaki z650"
+      ],
+      "thumb": "store/img/collection/kawasaki-z650-2020-thumb.webp",
+      "image": "store/img/collection/kawasaki-z650-2020.webp",
+      "bikez": "https://bikez.com/motorcycles/kawasaki_z650_2020.php",
+      "manualId": "kawasaki-z650-2020-om"
+    },
+    {
+      "id": "suzuki-sv650-2019",
+      "make": "Suzuki",
+      "model": "SV650",
+      "year": 2019,
+      "years": [
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "cc": 645,
+      "category": "Naked bike",
+      "aliases": [
+        "sv650",
+        "sv 650",
+        "suzuki sv650"
+      ],
+      "thumb": "store/img/collection/suzuki-sv650-2019-thumb.webp",
+      "image": "store/img/collection/suzuki-sv650-2019.webp",
+      "bikez": "https://bikez.com/motorcycles/suzuki_sv650_2019.php",
+      "manualId": "suzuki-sv650-2019-om"
+    },
+    {
+      "id": "yamaha-mt-07-2021",
+      "make": "Yamaha",
+      "model": "MT-07",
+      "year": 2021,
+      "years": [
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "cc": 689,
+      "category": "Naked bike",
+      "aliases": [
+        "mt-07",
+        "mt07",
+        "mt 07",
+        "yamaha mt-07",
+        "fz-07"
+      ],
+      "thumb": "store/img/collection/yamaha-mt-07-2021-thumb.webp",
+      "image": "store/img/collection/yamaha-mt-07-2021.webp",
+      "bikez": "https://bikez.com/motorcycles/yamaha_mt-07_2021.php",
+      "manualId": "yamaha-mt-07-2021-om"
+    },
+    {
+      "id": "yamaha-yzf-r7-2022",
+      "make": "Yamaha",
+      "model": "YZF-R7",
+      "year": 2022,
+      "years": [
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "cc": 689,
+      "category": "Sport",
+      "aliases": [
+        "yzf-r7",
+        "yzf r7",
+        "r7",
+        "yamaha r7"
+      ],
+      "thumb": "store/img/collection/yamaha-yzf-r7-2022-thumb.webp",
+      "image": "store/img/collection/yamaha-yzf-r7-2022.webp",
+      "bikez": "https://bikez.com/motorcycles/yamaha_yzf-r7_2022.php",
+      "manualId": "yamaha-yzf-r7-2022-om"
+    }
+  ]
+}

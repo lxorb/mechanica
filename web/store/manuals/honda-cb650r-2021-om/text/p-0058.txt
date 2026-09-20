@@ -1,0 +1,38 @@
+Shifting Gears
+Your vehicle transmission has 6 forward
+gears in a one-down, five-up shift pattern.
+If you put the vehicle in gear with the side
+stand down, the engine will shut off.
+# Recommended Shift Points
+Shifting Up
+From 1st to 2nd
+12 mph (20 km/h)
+From 2nd to 3rd
+19 mph (30 km/h)
+From 3rd to 4th
+25 mph (40 km/h)
+From 4th to 5th
+31 mph (50 km/h)
+From 5th to 6th
+37 mph (60 km/h)
+Shifting Down
+From 6th to 5th
+28 mph (45 km/h)
+From 5th to 4th
+22 mph (35 km/h)
+From 4th to 3rd
+16 mph (25 km/h)
+NOTICE
+Improper shifting can damage the engine,
+transmission, and drive train. Also, coasting or
+towing the vehicle for long distances with the
+engine off can damage the transmission.
+Operation Guide
+56
+2
+3
+4
+5
+6
+1
+N

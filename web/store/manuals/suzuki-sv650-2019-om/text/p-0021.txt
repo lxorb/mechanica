@@ -1,0 +1,26 @@
+2-8
+INSTRUMENT PANEL
+1 SEL button
+2 ADJ button
+3 Tachometer ( 2-9)
+4 Speedometer ( 2-9)
+5 Gear position indicator ( 2-10)
+6 Oil pressure warning indicator symbol ( 2-10)
+7 Turn signal indicator light ( 2-10)
+8 Malfunction indicator light ( 2-11)
+9 High beam indicator light ( 2-13)
+0 Clock ( 2-13)
+A Odometer / trip meter / instrument panel light brightness ( 2-14)
+B Fuel level indicator ( 2-16)
+C Instantaneous fuel consumption meter / average fuel consumption meter /
+driving range meter ( 2-17)
+D Engine coolant temperature indicator ( 2-22)
+E Engine coolant temperature warning indicator symbol ( 2-22)
+F Neutral indicator light ( 2-22)
+G Engine coolant temperature / oil pressure warning indicator light 
+(Except for EU, UK)
+Engine coolant temperature / oil pressure / battery charge malfunction
+warning indicator light (EU, UK)
+H ABS indicator light ( 2-23)
+I Battery charge malfunction warning indicator symbol (EU, UK) ( 2-23)
+J Master warning indicator light (EU, UK) ( 2-12)

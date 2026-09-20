@@ -1,0 +1,220 @@
+:root {
+  --orange: #e85d04;
+  --yellow: #ffe600;
+  --ink: #141414;
+  --paper: #ece7dc;
+  --rule: #e4dfd2;
+  --card: #fff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100dvh;
+}
+
+body {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: repeating-linear-gradient(0deg, var(--paper) 0 24px, var(--rule) 24px 25px), var(--paper);
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.ticket {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--orange);
+  color: #fff;
+  padding: 10px 16px;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ticket b,
+.ticket [data-ticket] {
+  font-size: 1.6rem;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.rail {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  list-style: none;
+  width: 100%;
+  border: 3px solid var(--ink);
+  border-left: 0;
+}
+
+.rail li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  min-height: 44px;
+  border-left: 3px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.rail li.now {
+  background: var(--orange);
+  color: #fff;
+}
+
+.rail li.done {
+  background: var(--ink);
+  color: #fff;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 12px 32px;
+}
+
+@media (min-width: 900px) {
+  .ticket,
+  .rail {
+    width: 100%;
+    max-width: none;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 3px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 0;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #fff;
+}
+
+.btn-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
+  padding: 0;
+}
+
+.card {
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: 0;
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  margin: 0;
+  border: 3px solid var(--ink);
+  background: var(--card);
+  border-radius: 0;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tile figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+}
+
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orange);
+  color: #fff;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 0;
+}
+
+.sheet {
+  width: 100%;
+  background: var(--card);
+  border: 0;
+  border-top: 3px solid var(--ink);
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

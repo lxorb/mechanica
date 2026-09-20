@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#e85d04">
+  <title>Handy Book</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/counter.css">
+  <link rel="stylesheet" href="css/screens/identify.css">
+  <link rel="stylesheet" href="css/screens/confirm.css">
+  <link rel="stylesheet" href="css/screens/pick.css">
+  <link rel="stylesheet" href="css/screens/book.css">
+  <link rel="stylesheet" href="css/screens/follow.css">
+  <link rel="stylesheet" href="css/screens/invoice.css">
+</head>
+<body>
+  <header class="ticket">
+    <span>HANDY BOOK</span>
+    <b data-ticket>A-17</b>
+  </header>
+  <ol class="rail">
+    <li data-step="identify" class="now" aria-label="Identify" aria-current="step">1</li>
+    <li data-step="confirm" aria-label="Confirm">2</li>
+    <li data-step="pick" aria-label="Pick">3</li>
+    <li data-step="book" aria-label="Book">4</li>
+    <li data-step="follow" aria-label="Follow">5</li>
+    <li data-step="invoice" aria-label="Invoice">6</li>
+  </ol>
+  <main>
+    <section data-screen="identify" hidden><div data-root></div></section>
+    <section data-screen="confirm" hidden><div data-root></div></section>
+    <section data-screen="pick" hidden><div data-root></div></section>
+    <section data-screen="book" hidden><div data-root></div></section>
+    <section data-screen="follow" hidden><div data-root></div></section>
+    <section data-screen="invoice" hidden><div data-root></div></section>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

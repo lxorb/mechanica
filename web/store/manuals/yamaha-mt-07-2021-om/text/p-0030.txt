@@ -1,0 +1,62 @@
+Instrument and control functions
+4-12
+4
+EAU26827
+Brake lever
+The brake lever is located on the right
+side of the handlebar. To apply the
+front brake, pull the lever toward the
+throttle grip.
+The brake lever is equipped with a
+brake lever position adjusting dial. To
+adjust the distance between the brake
+lever and the throttle grip, push the
+brake lever away from the throttle grip
+and rotate the adjusting dial. Make
+sure the setting number on the adjust-
+ing dial aligns with the match mark on
+the brake lever.
+EAU12944
+Brake pedal
+The brake pedal is located on the right
+side of the motorcycle. To apply the
+rear brake, press down on the brake
+pedal.
+EAU63041
+ABS
+The Yamaha ABS (Anti-lock Brake
+System) features a dual electronic con-
+trol system, which acts on the front and
+rear brakes independently.
+Operate the brakes with ABS as you
+would conventional brakes. If the ABS
+is activated, a pulsating sensation may
+be felt at the brake lever or brake ped-
+al. In this situation, continue to apply
+the brakes and let the ABS work; do
+not “pump” the brakes as this will re-
+duce braking effectiveness.
+WARNING
+EWA16051
+Always keep a sufficient distance
+from the vehicle ahead to match the
+riding speed even with ABS.
+The ABS performs best with
+long braking distances.
+On certain surfaces, such as
+rough or gravel roads, the brak-
+ing distance may be longer with
+the ABS than without.
+The ABS is monitored by an ECU,
+which will revert the system to conven-
+tional braking if a malfunction occurs.
+1. Brake lever
+2. Distance
+3. Brake lever position adjusting dial
+4. Match mark
+1
+2
+4
+3
+1. Brake pedal
+1

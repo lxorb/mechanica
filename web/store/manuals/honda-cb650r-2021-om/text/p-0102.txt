@@ -1,0 +1,39 @@
+Overheating (Segment H flashes in coolant temperature gauge)
+The engine is overheating when the following
+occurs:
+●The segment H flashes in the coolant
+temperature gauge.
+●Acceleration becomes sluggish.
+If this occurs, pull safely to the side of the
+road and perform the following procedure.
+Extended fast idling may cause the segment
+H to flash.
+NOTICE
+Continuing to ride with an overheated engine
+can cause serious damage to the engine.
+1. Stop the engine using the ignition switch,
+and then turn the ignition switch to the
+ON position.
+2. Check that the radiator fan is operating,
+and then turn the ignition switch to the
+OFF position.
+If the fan is not operating:
+Suspect a fault. Do not start the engine.
+Transport your vehicle to your dealer.
+If the fan is operating:
+Allow the engine to cool with the ignition
+switch in the OFF position.
+3. After the engine has cooled, inspect the
+radiator hose and check if there is a leak.
+2 P. 85
+If there is a leak:
+Do not start the engine. Transport your
+vehicle to your dealer.
+4. Check the coolant level in the reserve
+tank. 2 P. 85
+u Add coolant as necessary.
+5. If 1-4 check normal, you may continue
+riding, but closely monitor the
+temperature gauge.
+Troubleshooting
+100

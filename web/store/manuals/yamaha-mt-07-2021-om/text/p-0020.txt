@@ -1,0 +1,71 @@
+Instrument and control functions
+4-2
+4
+To unlock the steering
+Push the key in and turn it to “OFF”.
+EAU4939P
+Indicator lights and warning 
+lights
+EAU88900
+Turn signal indicator lights “
+” 
+and “
+”
+Each indicator light will flash when its
+corresponding turn signal lights are
+flashing.
+EAU91820
+Neutral indicator light “
+”
+This indicator light comes on when the
+transmission is in the neutral position.
+EAU88910
+High beam indicator light “
+”
+This indicator light comes on when the
+high beam of the headlight is switched
+on.
+EAU91830
+Oil pressure warning light “
+”
+This warning light comes on if the en-
+gine oil pressure is low.
+TIP
+When the vehicle is turned on, the light
+should come on, go off briefly, and
+then remain on until the engine is start-
+ed. Otherwise, have a Yamaha dealer
+check the vehicle.
+NOTICE
+ECA21211
+If the warning light comes on when
+the engine is running, stop the en-
+gine and check the oil level. If the oil
+level is low, add sufficient oil of the
+recommended type. If the warning
+1. Push.
+2. Turn.
+1
+2
+1. Engine trouble warning light “
+”
+2. ABS warning light “
+”
+3. High beam indicator light “
+”
+4. Oil pressure warning light “
+”
+5. Left turn signal indicator light “
+”
+6. Right turn signal indicator light “
+”
+7. Coolant temperature warning light “
+”
+8. Neutral indicator light “
+”
+5
+678
+4
+3
+2
+1

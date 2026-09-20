@@ -1,0 +1,102 @@
+Periodic maintenance and adjustment
+7-3
+7
+EAU48491
+TIP
+From 24000 mi (37000 km) or 36 months, repeat the maintenance intervals starting from 8000 mi (13000 km) or 12
+months.
+Items marked with an asterisk require special tools, data and technical skills, have a Yamaha dealer perform the ser-
+vice.
+EAU17602
+Periodic maintenance chart for the emission control system
+No.
+ITEM
+ROUTINE
+INITIAL
+ODOMETER READINGS
+600 mi 
+(1000 km) 
+or 
+1 month
+4000 mi 
+(7000 km) 
+or 
+6 months
+8000 mi 
+(13000 km) 
+or 
+12 months
+12000 mi 
+(19000 km) 
+or 
+18 months
+16000 mi 
+(25000 km) 
+or 
+24 months
+20000 mi 
+(31000 km) 
+or 
+30 months
+1
+*
+Fuel line
+• Check fuel hoses for cracks or 
+damage.
+• Replace if necessary.
+√
+√
+√
+√
+√
+2
+*
+Spark plugs
+• Check condition.
+• Adjust gap and clean.
+√
+√
+√
+• Replace.
+√
+√
+3
+*
+Valve clearance
+• Check and adjust valve clearance 
+when engine is cold.
+Every 26600 mi (42000 km)
+4
+*
+Crankcase breath-
+er system
+• Check breather hose for cracks 
+or damage.
+• Replace if necessary.
+√
+√
+√
+√
+√
+5
+*
+Fuel injection
+• Adjust synchronization.
+√
+√
+√
+√
+√
+√
+6
+*
+Exhaust system
+• Check for leakage.
+• Tighten if necessary.
+• Replace gasket(s) if necessary.
+√
+√
+√
+√
+√
+√

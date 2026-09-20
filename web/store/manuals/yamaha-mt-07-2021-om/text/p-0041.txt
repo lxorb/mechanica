@@ -1,0 +1,18 @@
+Instrument and control functions
+4-23
+4
+EAU44895
+Ignition circuit cut-off system
+This system prevents in-gear engine
+starts unless the clutch lever is pulled
+and the sidestand is up. Also, it will
+stop the running engine should the
+sidestand be lowered while the trans-
+mission is in gear.
+Periodically check the system via the
+following procedure.
+TIP
+This check is most reliable if per-
+formed with a warmed-up engine.
+See pages 4-1 and 4-9 for switch
+operation information.

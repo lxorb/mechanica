@@ -1,0 +1,62 @@
+Periodic maintenance and adjustment
+7-25
+7
+TIP
+Using the alignment marks on each
+side of the swingarm, make sure that
+both drive chain slack adjusting plates
+are in the same position for proper
+wheel alignment.
+3. Tighten the axle nut, and then
+tighten the locknuts to the speci-
+fied torques.
+4. Make sure that the drive chain
+slack adjusting plates are in the
+same position, the drive chain
+slack is correct, and the drive
+chain moves smoothly.
+EAU23027
+Cleaning and lubricating the 
+drive chain
+The drive chain must be cleaned and
+lubricated at the intervals specified in
+the periodic maintenance and lubrica-
+tion chart, otherwise it will quickly wear
+out, especially when riding in dusty or
+wet areas. Service the drive chain as
+follows.
+NOTICE
+ECA10584
+The drive chain must be lubricated
+after washing the motorcycle, riding
+in the rain or riding in wet areas.
+1. Clean the drive chain with a drive
+chain cleaner and a small soft
+brush. NOTICE: To prevent dam-
+aging the O-rings, do not clean
+the drive chain with steam
+cleaners, high-pressure wash-
+ers or inappropriate solvents.
+[ECA11122]
+2. Wipe the drive chain dry.
+3. Thoroughly lubricate the drive
+chain with a special O-ring chain
+lubricant. NOTICE: Do not use
+engine oil or any other lubri-
+1. Drive chain slack adjusting nut
+1. Alignment marks
+2. Drive chain slack adjusting plate
+1
+(a)
+(a)
+(a)
+(b)
+(b)
+(b)
+1
+2
+Tightening torques:
+Axle nut:
+105 N·m (10.5 kgf·m, 77 lb·ft)
+Locknut:
+16 N·m (1.6 kgf·m, 12 lb·ft)

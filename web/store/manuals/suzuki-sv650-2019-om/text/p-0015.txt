@@ -1,0 +1,14 @@
+2-2
+CONTROLS
+LOCATION OF PARTS
+SV650
+1 Clutch lever
+2 Left handlebar switches
+3 Instrument panel
+4 Front brake fluid reservoir
+5 Right handlebar switches
+6 Throttle grip
+7 Front brake lever
+8 Ignition switch
+9 Fuel tank cap
+SV650X

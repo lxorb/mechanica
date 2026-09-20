@@ -1,0 +1,78 @@
+Periodic maintenance and adjustment
+7-20
+7
+EAU21963
+Cast wheels
+To maximize the performance, durabil-
+ity, and safe operation of your vehicle,
+note the following points regarding the
+specified wheels.
+The 
+wheel 
+rims 
+should 
+be
+checked for cracks, bends, warp-
+age or other damage before each
+ride. If any damage is found, have
+a Yamaha dealer replace the
+wheel. Do not attempt even the
+smallest repair to the wheel. A de-
+formed or cracked wheel must be
+replaced.
+The wheel should be balanced
+whenever either the tire or wheel
+has been changed or replaced. An
+unbalanced wheel can result in
+poor performance, adverse han-
+dling characteristics, and a short-
+ened tire life.
+EAU33893
+Adjusting the clutch lever free 
+play
+Measure the clutch lever free play as
+shown.
+Periodically check the clutch lever free
+play and, if necessary, adjust it as fol-
+lows.
+To increase the clutch lever free play,
+turn the clutch lever free play adjusting
+bolt at the clutch lever in direction (a).
+To decrease the clutch lever free play,
+turn the adjusting bolt in direction (b).
+TIP
+If the specified clutch lever free play
+cannot be obtained as described
+above, proceed as follows.
+1. Fully turn the adjusting bolt at the
+clutch lever in direction (a) to loos-
+en the clutch cable.
+2. Loosen the locknut at the crank-
+case.
+3. To increase the clutch lever free
+play, turn the clutch lever free play
+adjusting nut in direction (a). To
+decrease the clutch lever free
+play, turn the adjusting nut in di-
+rection (b).
+4. Tighten the locknut.
+1. Clutch lever free play adjusting bolt
+2. Clutch lever free play
+Clutch lever free play:
+5.0–10.0 mm (0.20–0.39 in)
+2
+(a)
+(b)
+(b)
+(b)
+1
+1. Locknut
+2. Clutch lever free play adjusting nut
+1
+2
+(b)
+(b)
+(b)
+(a)
+(a)
+(a)

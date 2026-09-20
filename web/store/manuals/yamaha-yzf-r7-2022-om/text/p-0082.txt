@@ -1,0 +1,59 @@
+Periodic maintenance and adjustment
+7-32
+7
+EAU59876
+Replacing the fuses
+The main fuse and the fuse boxes,
+which contain the fuses for the individ-
+ual circuits, are located under the rider
+seat. (See page 4-17.)
+TIP
+To access the main fuse, remove the
+starter relay cover as shown.
+If a fuse is blown, replace it as follows.
+1. Turn the key to “OFF” and turn off
+the electrical circuit in question.
+2. Remove the blown fuse, and then
+install a new fuse of the specified
+amperage. WARNING! Do not
+use a fuse of a higher amperage
+rating than recommended to
+avoid causing extensive dam-
+age to the electrical system and
+possibly a fire. [EWA15132]
+1. Starter relay cover
+2. Main fuse
+3. Spare main fuse
+4. Fuse box
+4
+1
+2
+3
+1
+2
+3
+1. ABS solenoid fuse
+2. ABS motor fuse
+3. Accessory fuse
+4. ABS ECU fuse
+5. Terminal fuse 1
+6. Spare fuse
+7. Ignition fuse
+8. Signaling system fuse
+9. Headlight fuse
+10.Fuel injection system fuse
+11.Backup fuse
+12.Radiator fan motor fuse
+5
+7
+8
+9
+10
+11
+12
+6
+6
+4
+3
+2
+1

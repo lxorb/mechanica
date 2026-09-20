@@ -1,0 +1,53 @@
+Periodic maintenance and adjustment
+7-23
+7
+Rear brake
+WARNING
+EWA16011
+Improper maintenance can result in
+loss of braking ability. Observe
+these precautions:
+Insufficient brake fluid may al-
+low air to enter the brake sys-
+tem, 
+reducing 
+braking
+performance.
+Clean the filler cap before re-
+moving. Use only DOT 4 brake
+fluid from a sealed container.
+Use only the specified brake flu-
+id; otherwise, the rubber seals
+may deteriorate, causing leak-
+age.
+Refill with the same type of
+brake fluid. Adding a brake fluid
+other than DOT 4 may result in a
+harmful chemical reaction.
+Be careful that water or dust
+does not enter the brake fluid
+reservoir when refilling. Water
+will significantly lower the boil-
+ing point of the fluid and may re-
+sult in vapor lock, and dirt may
+clog the ABS hydraulic unit
+valves.
+NOTICE
+ECA17641
+Brake fluid may damage painted
+surfaces or plastic parts. Always
+clean up spilled fluid immediately.
+As the brake pads wear, it is normal for
+the brake fluid level to gradually go
+down. A low brake fluid level may indi-
+cate worn brake pads and/or brake
+system leakage; therefore, be sure to
+check the brake pads for wear and the
+brake system for leakage. If the brake
+fluid level goes down suddenly, have a
+Yamaha dealer check the cause before
+further riding.
+1. Minimum level mark
+Specified brake fluid:
+DOT 4
+1

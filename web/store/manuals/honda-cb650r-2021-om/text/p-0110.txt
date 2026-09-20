@@ -1,0 +1,30 @@
+Blown Fuse
+Before handling fuses, see “Inspecting and
+Replacing Fuses.” 2 P. 72
+# Fuse Box Fuses
+1. Remove the front seat. 2 P. 81
+2. Remove the fuse box cover.
+3. Pull the main fuse and other fuses out
+one by one with the fuse puller provided
+in underside of the fuse box cover and
+check for a blown fuse. Always replace a
+blown fuse with a spare fuse of the same
+rating.
+u Spare fuses are provided in underside
+of the fuse box cover.
+4. Reinstall the parts in the reverse order of
+removal.
+NOTICE
+If a fuse fails repeatedly, you likely have an
+electrical problem. Have your vehicle inspected
+by your dealer.
+Electrical Trouble u Blown Fuse
+Troubleshooting
+108
+Spare fuses
+Spare
+fuse
+Fuse box
+cover
+Fuse puller
+Main fuse

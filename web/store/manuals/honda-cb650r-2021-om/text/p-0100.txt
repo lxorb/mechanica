@@ -1,0 +1,19 @@
+Engine Will Not Start........................................P. 99
+Overheating (Segment H flashes in coolant
+temperature gauge) .....................................P. 100
+Warning Indicators On or Flashing.............P. 101
+Low Oil Pressure Indicator..............................P. 101
+PGM-FI (Programmed Fuel Injection)
+Malfunction Indicator Lamp (MIL)...............P. 101
+ABS (Anti-lock Brake System) Indicator.......P. 102
+Torque Control Indicator.................................P. 103
+Other Warning Indications ...........................P. 104
+Fuel Gauge Failure Indication.........................P. 104
+Coolant Temperature Gauge Failure 
+Indication ..........................................................P. 105
+Tire Puncture....................................................P. 106
+Electrical Trouble.............................................P. 107
+Battery Goes Dead............................................P. 107
+Burned-out Light Bulb .....................................P. 107
+Blown Fuse..........................................................P. 108
+Troubleshooting

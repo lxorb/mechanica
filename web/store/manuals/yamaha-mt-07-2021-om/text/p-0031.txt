@@ -1,0 +1,54 @@
+Instrument and control functions
+4-13
+4
+TIP
+The ABS performs a self-diagnos-
+tic test each time the vehicle first
+starts off after the key is turned to
+“ON” and the vehicle has traveled
+at a speed of 10 km/h (6 mi/h) or
+higher. During this test, a “click-
+ing” noise can be heard from the
+hydraulic control unit, and if the
+brake lever or brake pedal is even
+slightly applied, a vibration can be
+felt at the lever and pedal, but
+these do not indicate a malfunc-
+tion.
+This ABS has a test mode which
+allows the owner to experience
+the pulsation at the brake lever or
+brake pedal when the ABS is op-
+erating. However, special tools are
+required, so please consult your
+Yamaha dealer.
+NOTICE
+ECA20100
+Be careful not to damage the wheel
+sensor or wheel sensor rotor; other-
+wise, improper performance of the
+ABS will result.
+EAU13077
+Fuel tank cap
+To open the fuel tank cap
+Open the fuel tank cap lock cover, in-
+sert the key, and then turn it 1/4 turn
+clockwise. The lock will be released
+and the fuel tank cap can be opened.
+To close the fuel tank cap
+With the key still inserted, push down
+the fuel tank cap. Turn the key 1/4 turn
+counterclockwise, remove it, and then
+close the lock cover.
+1. Front wheel sensor
+2. Front wheel sensor rotor
+1. Rear wheel sensor
+2. Rear wheel sensor rotor
+1
+2
+1
+2
+1. Fuel tank cap lock cover
+2. Unlock.
+1
+2

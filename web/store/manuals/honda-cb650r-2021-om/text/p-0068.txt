@@ -1,0 +1,26 @@
+Maintenance Record
+Distance
+Odometer
+Date
+Performed By:
+Notes
+600 miles (1,000 km)
+4,000 miles (6,400 km)
+8,000 miles (12,800 km)
+12,000 miles (19,200 km)
+16,000 miles (25,600 km)
+20,000 miles (32,000 km)
+24,000 miles (38,400 km)
+28,000 miles (44,800 km)
+32,000 miles (51,200 km)
+36,000 miles (57,600 km)
+40,000 miles (64,000 km)
+44,000 miles (70,400 km)
+48,000 miles (76,800 km)
+52,000 miles (83,200 km)
+56,000 miles (89,600 km)
+60,000 miles (96,000 km)
+64,000 miles (102,400 km)
+68,000 miles (108,800 km)
+Maintenance
+66

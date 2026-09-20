@@ -1,0 +1,55 @@
+Instrument and control functions
+4-1
+4
+EAU10462
+Main switch/steering lock
+The main switch/steering lock controls
+the ignition and lighting systems, and is
+used to lock the steering. The various
+positions are described below.
+EAU84031
+ON
+All electrical circuits are supplied with
+power and the vehicle lights are turned
+on. The engine can be started. The key
+cannot be removed.
+TIP
+The headlight(s) will turn on when
+the engine is started.
+To prevent battery drain, do not
+leave the key in the on position
+without the engine running.
+EAU10662
+OFF
+All electrical systems are off. The key
+can be removed.
+WARNING
+EWA10062
+Never turn the key to “OFF” or
+“LOCK” while the vehicle is moving.
+Otherwise the electrical systems will
+be switched off, which may result in
+loss of control or an accident.
+EAU73800
+LOCK
+The steering is locked and all electrical
+systems are off. The key can be re-
+moved.
+To lock the steering
+1. Turn the handlebars all the way to
+the left.
+2. With the key in the “OFF” position,
+push the key in and turn it to
+“LOCK”.
+3. Remove the key.
+TIP
+If the steering will not lock, try turning
+the handlebars back to the right slight-
+ly.
+ON
+OFF
+LOCK
+1. Push.
+2. Turn.
+1
+2

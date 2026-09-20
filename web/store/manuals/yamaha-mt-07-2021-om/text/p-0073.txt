@@ -1,0 +1,54 @@
+Periodic maintenance and adjustment
+7-24
+7
+EAU22734
+Changing the brake fluid
+Have a Yamaha dealer change the
+brake fluid every 2 years. In addition,
+have the seals of the master cylinders
+and brake calipers, as well as the brake
+hoses replaced at the intervals listed
+below or sooner if they are damaged or
+leaking.
+Brake seals: every 2 years
+Brake hoses: every 4 years
+EAU22762
+Drive chain slack
+The drive chain slack should be
+checked before each ride and adjusted
+if necessary.
+EAU60046
+To check the drive chain slack
+1. Place the motorcycle on the side-
+stand.
+TIP
+When checking and adjusting the drive
+chain slack, there should be no weight
+on the motorcycle.
+2. Shift the transmission into the
+neutral position.
+3. Push down on the drive chain un-
+der the end of the drive chain
+guard.
+4. Measure distance A between the
+drive chain guard and the center
+of the chain as shown.
+5. If distance A is incorrect, adjust it
+as follows. NOTICE: Improper
+drive chain slack will overload
+the engine as well as other vital
+parts of the motorcycle and can
+lead to chain slippage or break-
+age. If distance A is more than
+58.0 mm (2.28 in), the chain can
+damage the frame, swingarm,
+and other parts. To prevent this
+from occurring, keep the drive
+chain slack within the specified
+limits. [ECA23070]
+1. Drive chain guard
+2. Distance A
+Distance A:
+51.0–56.0 mm (2.01–2.20 in)
+2
+1

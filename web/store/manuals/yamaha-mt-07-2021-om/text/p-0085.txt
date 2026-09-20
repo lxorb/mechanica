@@ -1,0 +1,43 @@
+Periodic maintenance and adjustment
+7-36
+7
+EAU86350
+Troubleshooting chart
+Check the fuel level in
+the fuel tank.
+1. Fuel
+There is enough fuel.
+There is no fuel.
+Check the battery.
+Supply fuel.
+The engine does not start. 
+Check the battery.
+Try starting the engine.
+4. Compression
+There is compression.
+There is no compression.
+The engine does not start.
+Have a Yamaha dealer check the vehicle.
+Have a Yamaha dealer check the vehicle.
+Remove the spark plug
+and check the electrodes.
+3. Ignition
+Wipe off with a dry cloth and correct the
+spark plug gap, or replace the spark plug(s).
+Have a Yamaha dealer check the vehicle.
+The engine does not start.
+Check the compression.
+Operate the electric starter.
+2. Battery
+The engine turns over 
+quickly.
+The engine turns over 
+slowly.
+The battery is good.
+Dry
+Wet
+Try starting the engine.
+Check the battery lead connections,
+and charge the battery if necessary.
+The engine does not start.
+Check the ignition.
