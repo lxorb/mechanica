@@ -63,12 +63,17 @@
     let viewer = null;
     let started = 0;
     let readyAt = 0;
+    let upgradedAt = 0;
     let usePlaceholder = false;
+    // ?src=gltf loads the uncompressed Sketchfab source instead of model.glb (dev only)
+    const src = new URLSearchParams(location.search).get("src");
+    // ?env=<polyhaven name> picks the HDRI, ?env=off drops back to the transparent studio look
+    const envParam = new URLSearchParams(location.search).get("env");
 
     function log(extra = "") {
       const state = viewer ? viewer.state() : {};
       out.textContent =
-        `model ${state.model || "-"} · ${state.placeholder ? "placeholder" : "glb"} · ready in ${readyAt ? readyAt + " ms" : "…"}\n` +
+        `model ${state.model || "-"} · ${state.placeholder ? "placeholder" : "glb"} · first paint ${readyAt ? readyAt + " ms" : "…"} · glb ${upgradedAt ? upgradedAt + " ms" : "…"}\n` +
         `meshes ${state.meshes ?? "-"} · part ${state.part || "none"} · spacing ${(state.spacing ?? 0).toFixed(2)}\n` +
         `groups ${(state.parts || []).join(" ")}\n` +
         `errors ${errors.length ? errors.join(" | ") : "none"}${extra ? "\n" + extra : ""}`;
@@ -78,11 +83,15 @@
       if (viewer) viewer.dispose();
       errors.length = 0;
       readyAt = 0;
+      upgradedAt = 0;
       started = performance.now();
       viewer = mount(host, key, {
         placeholder: usePlaceholder,
         debug: true,
+        url: src ? (src === "gltf" ? `../store/models/${key}/scene.gltf` : `../store/models/${key}/_${src}.glb`) : undefined,
+        environment: envParam === "off" ? false : envParam || undefined,
         onReady: () => { readyAt = Math.round(performance.now() - started); log(); },
+        onUpgrade: () => { upgradedAt = Math.round(performance.now() - started); log(); },
         onSelect: (part) => log(`clicked ${part || "nothing"}`),
         onError: (error) => { errors.push(String(error && error.message || error)); log(); },
       });

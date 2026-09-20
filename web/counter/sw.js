@@ -1,17 +1,18 @@
-const VERSION = "v5";
-const SHELL = `handy-book-shell-${VERSION}`;
-const RUNTIME = `handy-book-runtime-${VERSION}`;
-const DATA = `handy-book-data-${VERSION}`;
-const FONTS = `handy-book-fonts-${VERSION}`;
-const CDN = `handy-book-cdn-${VERSION}`;
-const PDFS = `handy-book-pdfs-${VERSION}`;
+const VERSION = "v7";
+const SHELL = `mechanica-shell-${VERSION}`;
+const RUNTIME = `mechanica-runtime-${VERSION}`;
+const DATA = `mechanica-data-${VERSION}`;
+const FONTS = `mechanica-fonts-${VERSION}`;
+const CDN = `mechanica-cdn-${VERSION}`;
+const PDFS = `mechanica-pdfs-${VERSION}`;
 const RUNTIME_MAX = 300;
-const SCREENS = ["identify", "confirm", "pick", "book", "follow", "invoice"];
+const SCREENS = ["identify", "confirm", "pick", "book", "invoice"];
 
 const PRECACHE = [
   "./",
   "index.html",
   "css/counter.css",
+  "css/particons.css",
   ...SCREENS.map((id) => `css/screens/${id}.css`),
   "js/app.js",
   "js/bus.js",
@@ -25,6 +26,7 @@ const PRECACHE = [
   "js/deepgram.js",
   "js/voice.js",
   "js/vision.js",
+  "js/particons.js",
   ...SCREENS.map((id) => `js/screens/${id}.js`),
   "js/screens/cost.js",
   "css/screens/cost.css",
@@ -94,7 +96,7 @@ function isCdn(url) {
 function isImmutableStore(url) {
   if (!sameOrigin(url)) return false;
   const path = url.pathname;
-  if (path.includes("/store/img/")) return true;
+  if (path.includes("/store/img/") || path.includes("/store/icons-parts/")) return true;
   return /\/store\/manuals\/.+\/pages\//.test(path);
 }
 

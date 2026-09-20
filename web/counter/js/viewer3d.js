@@ -5,8 +5,13 @@
  * Models live in ../store/models/<modelKey>/model.glb (Sketchfab, see ../store/models/CREDITS.md):
  *   yzf-2021 (Yamaha YZF, generic motorcycle fallback), honda-cbr650r, corvette-c8.
  * modelFor(bike) picks the key: Honda CBR650R -> honda-cbr650r, Chevrolet Corvette -> corvette-c8,
- * everything else -> yzf-2021. Until the real GLBs are dropped in, a procedural placeholder assembly
- * (grouped primitives with the same part keys) renders so the screen can be built and tested.
+ * everything else -> yzf-2021.
+ *
+ * First paint is always a procedural placeholder assembly — grouped primitives carrying the same
+ * part keys — so the panel is alive in well under a second; the real 1.5-4 MB GLB loads behind it
+ * and is swapped in when it lands (opts.onUpgrade). If it never lands, the schematic stays and
+ * explode/highlight/focus keep working, so there is no blank state and no failure state.
+ * opts.placeholder: true keeps the schematic and skips the download entirely.
  *
  * Part keys (stable, used by the Pick screen to map manual sections -> 3D parts):
  *   front-wheel, rear-wheel, front-brake, rear-brake, front-fork, rear-shock, swingarm, chain,
@@ -42,6 +47,7 @@ const DIM_OPACITY = 0.35;
 const EXPLODE_MS = 400;
 const FOCUS_MS = 500;
 const IDLE_MS = 3000;
+const EXPLODE_SCALE = 0.8;   // how far the per-part vectors actually throw parts apart
 
 /* ------------------------------------------------------------------ part vocabulary */
 
@@ -511,13 +517,24 @@ function bakeRigid(THREE, mesh) {
   return geometry;
 }
 
+let dracoLoader = null;
+
 async function loadGlb(THREE, modelKey, url, onProgress) {
-  const [{ GLTFLoader }, meshopt] = await Promise.all([
+  const [{ GLTFLoader }, meshopt, dracoModule] = await Promise.all([
     loadAddon("loaders/GLTFLoader.js"),
     loadAddon("libs/meshopt_decoder.module.js").catch(() => null),
+    loadAddon("loaders/DRACOLoader.js").catch(() => null),
   ]);
   const loader = new GLTFLoader();
   if (meshopt && meshopt.MeshoptDecoder) loader.setMeshoptDecoder(meshopt.MeshoptDecoder);
+  // the shipped GLBs are Draco-compressed (see ../store/models/CREDITS.md); meshopt is wired up
+  // too so an older or re-encoded model.glb still opens.
+  if (!dracoLoader && dracoModule && dracoModule.DRACOLoader) {
+    dracoLoader = new dracoModule.DRACOLoader();
+    dracoLoader.setDecoderPath(`${IMPORTS["three/addons/"]}libs/draco/`);
+  }
+  // kept across model switches: disposing it would re-fetch and re-compile the wasm every time
+  if (dracoLoader) loader.setDRACOLoader(dracoLoader);
   const gltf = await loader.loadAsync(url, onProgress);
 
   const root = new THREE.Group();
@@ -571,9 +588,6 @@ async function loadGlb(THREE, modelKey, url, onProgress) {
 
 /** Normalise to a unit bounding sphere at the origin and attach explode vectors + bounds. */
 function finishModel(THREE, model) {
-  const { THREE: _ignored, ...rest } = model;
-  void _ignored;
-  void rest;
   model.root.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(model.root);
   const center = box.getCenter(new THREE.Vector3());
@@ -620,6 +634,45 @@ function disposeModel(model) {
 }
 
 /* ------------------------------------------------------------------ environment + shadow */
+
+/* ------------------------------------------------------------------ real environment
+ * A Poly Haven HDRI (CC0, see ../store/models/CREDITS.md) does two jobs: the .hdr drives
+ * image-based lighting and the metal reflections through PMREM, and a tonemapped .jpg of the same
+ * shot is the visible background — far sharper per byte than sampling the HDR for pixels you only
+ * ever see blurred. 1k/2k on phones, 2k/4k on desktop. Both are cached per name, so switching
+ * models re-uses them; opts.environment: false keeps the transparent studio look instead.
+ */
+
+export const DEFAULT_ENV = "autoshop_01";
+
+const envCache = new Map();
+
+function loadEnvironment(THREE, renderer, name, big) {
+  const id = `${name}:${big ? "big" : "small"}`;
+  if (envCache.has(id)) return envCache.get(id);
+  const base = new URL("../../store/models/env/", import.meta.url).href;
+  const job = (async () => {
+    const { RGBELoader } = await loadAddon("loaders/RGBELoader.js");
+    const hdr = await new RGBELoader().loadAsync(`${base}${name}-${big ? "2k" : "1k"}.hdr`);
+    hdr.mapping = THREE.EquirectangularReflectionMapping;
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const environment = pmrem.fromEquirectangular(hdr);
+    pmrem.dispose();
+    const background = await new THREE.TextureLoader()
+      .loadAsync(`${base}${name}-${big ? "4k" : "2k"}.jpg`)
+      .then((texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        return texture;
+      })
+      .catch(() => hdr);   // no tonemapped jpg on disk: the hdr itself still reads fine
+    if (background !== hdr) hdr.dispose();
+    return { environment, background };
+  })();
+  envCache.set(id, job);
+  job.catch(() => envCache.delete(id));
+  return job;
+}
 
 function studioEnvironment(THREE, renderer) {
   const canvas = document.createElement("canvas");
@@ -758,7 +811,15 @@ function miniOrbit(THREE, camera, dom) {
 /**
  * mount(host, modelKey, opts) -> viewer
  *   host: an element the canvas fills (absolute/sticky positioning is the screen's job)
- *   opts: { onReady(), onSelect(partKey), placeholder: boolean }
+ *   opts: { onReady(viewer),      // first paint, on the placeholder — usually < 1 s
+ *           onUpgrade(viewer),    // the real GLB arrived and replaced it
+ *           onSelect(partKey),    // a tap landed on a part (null = background)
+ *           onError(error),       // the GLB could not be loaded; the schematic stays
+ *           placeholder: boolean, // keep the schematic, never fetch the GLB
+ *           url: string,          // override the GLB url (dev)
+ *           xray: boolean, debug: boolean }
+ *   The viewer is returned synchronously and every call is safe immediately: anything asked for
+ *   before the scene exists is replayed once it does.
  * viewer:
  *   explode(on: boolean, spacing = 1)  // exploded view, animated 400 ms
  *   highlight(partKey | null)          // emissive highlight on that part, others dimmed
@@ -792,17 +853,28 @@ export function mount(host, modelKey, opts = {}) {
     else console.warn("viewer3d: could not start", error);
   });
 
+  /**
+   * First paint is the procedural placeholder, which costs nothing and is on screen in one frame;
+   * the real GLB (4 MB, and a slow line is a slow line) is fetched behind it and swapped in when
+   * it arrives. Nobody waits on a blank panel, and if the model 404s or the network dies the
+   * schematic simply stays — there is no failure state to design for.
+   */
   async function boot() {
     const THREE = await loadThree();
-    let model = null;
+    const placeholder = buildPlaceholder(THREE, key);
+    if (dead) { disposeModel(placeholder); throw new Error("disposed"); }
+    const scene = createScene(THREE, host, placeholder, opts);
     if (!opts.placeholder) {
-      try {
-        model = await loadGlb(THREE, key, opts.url || new URL(`../../store/models/${key}/model.glb`, import.meta.url).href);
-      } catch { model = null; }
+      const url = opts.url || new URL(`../../store/models/${key}/model.glb`, import.meta.url).href;
+      loadGlb(THREE, key, url).then((real) => {
+        if (dead || !scene.adopt(real)) { disposeModel(real); return; }
+        host.setAttribute("data-viewer3d", "ready");
+        if (typeof opts.onUpgrade === "function") opts.onUpgrade(api);
+      }).catch((error) => {
+        if (typeof opts.onError === "function") opts.onError(error);
+      });
     }
-    if (!model) model = buildPlaceholder(THREE, key);
-    if (dead) { disposeModel(model); throw new Error("disposed"); }
-    return createScene(THREE, host, model, opts);
+    return scene;
   }
 
   const api = {
@@ -857,7 +929,8 @@ export function mount(host, modelKey, opts = {}) {
 
 /* ------------------------------------------------------------------ the scene itself */
 
-function createScene(THREE, host, model, opts) {
+function createScene(THREE, host, initialModel, opts) {
+  let model = initialModel;
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -870,6 +943,7 @@ function createScene(THREE, host, model, opts) {
   const camera = new THREE.PerspectiveCamera(34, 1, 0.01, 100);
   scene.add(model.root);
 
+  // procedural studio light, up instantly; the HDRI replaces it when it arrives
   const environment = studioEnvironment(THREE, renderer);
   scene.environment = environment.texture;
   scene.environmentIntensity = 0.75;
@@ -889,31 +963,35 @@ function createScene(THREE, host, model, opts) {
   const shadow = contactShadow(THREE, model.floor, model.radius);
   scene.add(shadow);
 
+  if (opts.environment !== false) {
+    const name = typeof opts.environment === "string" ? opts.environment : DEFAULT_ENV;
+    const big = Math.max(window.innerWidth || 0, 1) >= 900;
+    loadEnvironment(THREE, renderer, name, big).then((loaded) => {
+      if (disposed) return;
+      // the HDRI takes over the lighting; the hand-placed lights drop back to shaping the form
+      scene.environment = loaded.environment.texture;
+      scene.environmentIntensity = 1;
+      scene.background = loaded.background;
+      scene.backgroundBlurriness = 0.15;
+      scene.backgroundIntensity = 1;
+      hemi.intensity = 0.3;
+      keyLight.intensity = 1.1;
+      rim.intensity = 0.5;
+      fill.intensity = 0.25;
+      shadow.material.opacity = 1;
+      renderer.toneMappingExposure = 0.95;
+      host.setAttribute("data-env", name);
+      run();
+    }).catch(() => { /* no HDRI: the procedural studio stays, which is the old transparent look */ });
+  }
+
   let controls = null;
   let controlsDispose = null;
-
-  // materials: one highlight clone and one dim clone per source material
-  const hlMaterials = new Map();
-  const dimMaterials = new Map();
-  for (const material of model.materials) {
-    const hl = material.clone();
-    if (hl.emissive) { hl.emissive.setHex(ORANGE); hl.emissiveIntensity = 0.55; }
-    if (hl.color) hl.color.lerp(new THREE.Color(ORANGE), 0.18);
-    hlMaterials.set(material, hl);
-    const dim = material.clone();
-    dim.transparent = true;
-    dim.opacity = DIM_OPACITY;
-    dim.depthWrite = false;
-    dimMaterials.set(material, dim);
-  }
-  const xrayMaterial = new THREE.MeshBasicMaterial({
-    color: 0x6f7885, transparent: true, opacity: 0.12, depthWrite: false,
-    side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
-  });
 
   let selected = null;
   let xrayOn = false;
   let spacing = 0;
+  let target = 0;
   let spacingTween = null;
   let cameraTween = null;
   let dimTarget = 0;
@@ -925,9 +1003,30 @@ function createScene(THREE, host, model, opts) {
   let disposed = false;
   let lastTime = performance.now();
 
+  // materials: one highlight clone and one dim clone per source material
+  const hlMaterials = new Map();
+  const dimMaterials = new Map();
+  function cloneMaterials() {
+    for (const material of model.materials) {
+      const hl = material.clone();
+      if (hl.emissive) { hl.emissive.setHex(ORANGE); hl.emissiveIntensity = 0.55; }
+      if (hl.color) hl.color.lerp(new THREE.Color(ORANGE), 0.18);
+      hlMaterials.set(material, hl);
+      const dim = material.clone();
+      dim.transparent = true;
+      dim.opacity = 1 - (1 - DIM_OPACITY) * dimNow;
+      dim.depthWrite = false;
+      dimMaterials.set(material, dim);
+    }
+  }
+  cloneMaterials();
+  const xrayMaterial = new THREE.MeshBasicMaterial({
+    color: 0x6f7885, transparent: true, opacity: 0.12, depthWrite: false,
+    side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+  });
+
   const reduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   const tmpBox = new THREE.Box3();
-  const tmpSphere = new THREE.Sphere();
   const tmpVec = new THREE.Vector3();
   const HOME = new THREE.Vector3(1.35, 0.72, 2.1).normalize();
 
@@ -966,16 +1065,34 @@ function createScene(THREE, host, model, opts) {
   }
 
   /**
+   * The box the assembly will occupy once it has finished spreading, so the camera can pull back
+   * in the same 400 ms rather than letting parts sail out of frame and then chasing them.
+   */
+  function boxAtSpacing(value, group) {
+    const saved = [];
+    for (const part of model.groups.values()) {
+      saved.push(part.node.position.clone());
+      part.node.position.copy(part.explode).multiplyScalar(value * EXPLODE_SCALE);
+    }
+    const box = boxFor(group);
+    let i = 0;
+    for (const part of model.groups.values()) part.node.position.copy(saved[i++]);
+    model.root.updateMatrixWorld(true);
+    return box;
+  }
+
+  /**
    * Frame a box exactly: every corner is pushed against the frustum walls rather than fitting the
    * bounding sphere, which on something as long and thin as a motorcycle would leave the model at
    * a third of the frame. Works for any orbit direction and any aspect, so 390x844 and 1280x800
    * both come out filled.
    */
-  function fit(box, { instant = false, zoom = 1.08, duration = FOCUS_MS } = {}) {
+  function fit(box, { instant = false, zoom = 1.08, duration = FOCUS_MS, direction = null } = {}) {
     const center = box.getCenter(new THREE.Vector3());
-    const forward = (controls && camera.position.distanceToSquared(controls.target) > 1e-6
-      ? camera.position.clone().sub(controls.target)
-      : HOME.clone()).normalize();
+    const forward = (direction ? direction.clone()
+      : controls && camera.position.distanceToSquared(controls.target) > 1e-6
+        ? camera.position.clone().sub(controls.target)
+        : HOME.clone()).normalize();
     const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), forward);
     if (right.lengthSq() < 1e-8) right.set(1, 0, 0);
     right.normalize();
@@ -1004,12 +1121,45 @@ function createScene(THREE, host, model, opts) {
   }
 
   const scene3d = {
-    model,
+    get model() { return model; },
+    /** Swap the placeholder for the real model, keeping the current explode/highlight state. */
+    adopt(next) {
+      if (disposed || !next || !next.meshes.length) return false;
+      const key = selected ? selected.key : null;
+      scene.remove(model.root);
+      disposeModel(model);
+      hlMaterials.forEach((material) => material.dispose());
+      hlMaterials.clear();
+      dimMaterials.forEach((material) => material.dispose());
+      dimMaterials.clear();
+      model = next;
+      cloneMaterials();
+      scene.add(model.root);
+      shadow.position.y = model.floor - model.radius * 0.01;
+      applySpacing();
+      selected = pickGroup(key);
+      dimTarget = selected ? 1 : 0;
+      paint();
+      if (controls) {
+        controls.minDistance = model.radius * 0.6;
+        controls.maxDistance = model.radius * 12;
+      }
+      fit(boxAtSpacing(target, selected), { instant: true, zoom: selected ? 1.02 : target ? 1.03 : 1.08 });
+      run();
+      return true;
+    },
     explode(on, amount = 1, instant = false) {
       const to = on ? amount : 0;
-      if (instant || reduced.matches) { spacing = to; spacingTween = null; applySpacing(); host.setAttribute("data-exploded", on ? "on" : "off"); return; }
-      spacingTween = { start: performance.now(), from: spacing, to, duration: EXPLODE_MS };
+      target = to;
       host.setAttribute("data-exploded", on ? "on" : "off");
+      if (instant || reduced.matches) {
+        spacing = to;
+        spacingTween = null;
+        applySpacing();
+      } else {
+        spacingTween = { start: performance.now(), from: spacing, to, duration: EXPLODE_MS };
+      }
+      fit(boxAtSpacing(to, null), { instant: instant || reduced.matches, duration: EXPLODE_MS, zoom: to ? 1.03 : 1.08 });
     },
     highlight(partKey) {
       selected = pickGroup(partKey);
@@ -1018,7 +1168,7 @@ function createScene(THREE, host, model, opts) {
     },
     focus(partKey) {
       scene3d.highlight(partKey);
-      fit(selected ? boxFor(selected) : boxFor(null), { zoom: selected ? 1.02 : 1.08 });
+      fit(boxAtSpacing(target, selected), { zoom: selected ? 1.02 : 1.08 });
       touch();
     },
     xray(on) { xrayOn = !!on; paint(); },
@@ -1026,12 +1176,12 @@ function createScene(THREE, host, model, opts) {
       selected = null;
       dimTarget = 0;
       xrayOn = false;
-      scene3d.explode(false);
+      target = 0;
       paint();
       host.setAttribute("data-exploded", "off");
-      camera.position.copy(HOME);
-      if (controls) controls.target.set(0, 0, 0);
-      fit(boxFor(null), { duration: FOCUS_MS });
+      if (reduced.matches) { spacing = 0; spacingTween = null; applySpacing(); }
+      else spacingTween = { start: performance.now(), from: spacing, to: 0, duration: EXPLODE_MS };
+      fit(boxAtSpacing(0, null), { duration: FOCUS_MS, direction: HOME });
     },
     resize,
     capture() { renderer.render(scene, camera); return renderer.domElement.toDataURL("image/png"); },
@@ -1046,7 +1196,7 @@ function createScene(THREE, host, model, opts) {
   };
 
   function applySpacing() {
-    for (const part of model.groups.values()) part.node.position.copy(part.explode).multiplyScalar(spacing);
+    for (const part of model.groups.values()) part.node.position.copy(part.explode).multiplyScalar(spacing * EXPLODE_SCALE);
   }
 
   /* ---- sizing */
@@ -1062,7 +1212,7 @@ function createScene(THREE, host, model, opts) {
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
-    if (!cameraTween) fit(selected ? boxFor(selected) : boxFor(null), { instant: true, zoom: selected ? 1.02 : 1.08 });
+    if (!cameraTween) fit(boxAtSpacing(target, null), { instant: true });
   }
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(host);
@@ -1194,7 +1344,7 @@ function createScene(THREE, host, model, opts) {
     made.target.set(0, 0, 0);
     controls = made;
     controlsDispose = () => made.dispose();
-    fit(boxFor(null), { instant: true });
+    fit(boxAtSpacing(target, selected), { instant: true });
   }).catch(() => {
     if (disposed) return;
     const made = miniOrbit(THREE, camera, renderer.domElement);
@@ -1203,10 +1353,10 @@ function createScene(THREE, host, model, opts) {
     made.addEventListener("start", touch);
     controls = made;
     controlsDispose = () => made.dispose();
-    fit(boxFor(null), { instant: true });
+    fit(boxAtSpacing(target, selected), { instant: true });
   });
 
-  if (opts.debug && typeof window !== "undefined") window.__viewer3d = { scene, camera, renderer, model, get controls() { return controls; } };
+  if (opts.debug && typeof window !== "undefined") window.__viewer3d = { scene, camera, renderer, get model() { return model; }, get controls() { return controls; } };
 
   return scene3d;
 }

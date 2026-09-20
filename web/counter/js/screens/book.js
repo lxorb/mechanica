@@ -1,34 +1,48 @@
-import { state, set, go, emit, registerScreen } from "../bus.js";
+import { state, set, emit, go, back as popBack, openOverlay, registerScreen } from "../bus.js";
 import * as Q from "../ttm.js";
 import { loadAsk, ask, fetchJobPages, contextWindow } from "../ask.js";
-import { cachedRatio, pageRatio, preloadPage, renderPage, releaseCanvas } from "../pdf.js";
+import {
+  cachedRatio,
+  pageCount,
+  pageRatio,
+  preloadPage,
+  renderPage,
+  releaseCanvas,
+} from "../pdf.js";
 import { agentId as voiceAgent, start as voiceStart } from "../voice.js";
 
 const STAGGER = 60;
-const MAX_W = 720;
+const MAX_W = 900;
 const ZOOM_MIN = 1;
 const ZOOM_MAX = 3;
 const ZOOM_DOUBLE = 2;
 const TAP_MS = 320;
 const TAP_PX = 28;
+const TAP_HOLD = 500;
 const NEAR = "120% 0px";
 const SVG = "http://www.w3.org/2000/svg";
+const DRAW_MS = 70;
+/** Above this many sheets the column is virtualised: far canvases are handed back. */
+const VIRTUAL_MIN = 12;
+const MODE_KEY = "hb.pages.";
 
 /* ---------- module state ---------- */
 
+let rootEl = null;
 let coverEl = null;
 let titleEl = null;
-let trailEl = null;
 let stampEl = null;
-let toolsEl = null;
+let backBtn = null;
+let modeBtn = null;
+let partsBtn = null;
 let micBtn = null;
 let askBtn = null;
+let barEl = null;
 let viewEl = null;
 let padEl = null;
 let colEl = null;
 let stripEl = null;
 let outlineEl = null;
-let followEl = null;
 let askSheet = null;
 let askInput = null;
 let askBar = null;
@@ -41,6 +55,9 @@ let hasThumb = false;
 let fileUrl = "";
 let outline = [];
 let marks = new Map();
+let readList = [];
+let totalPages = 0;
+let mode = "relevant";
 let pages = [];
 let sheets = new Map();
 let chips = new Map();
@@ -54,6 +71,7 @@ let nearIo = null;
 let seenIo = null;
 let ro = null;
 let seenAmount = new Map();
+let drawTimer = 0;
 
 let zoom = ZOOM_MIN;
 let zoomW = 0;
@@ -62,6 +80,12 @@ let pinchBase = ZOOM_MIN;
 let tapAt = 0;
 let tapX = 0;
 let tapY = 0;
+let downX = 0;
+let downY = 0;
+let downAt = 0;
+let touchAt = 0;
+let tapTimer = 0;
+let immersive = false;
 
 let voiceId = null;
 let session = null;
@@ -89,8 +113,8 @@ function el(tag, attrs) {
 function glyph(width, ...ds) {
   const svg = document.createElementNS(SVG, "svg");
   svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("width", "22");
-  svg.setAttribute("height", "22");
+  svg.setAttribute("width", "20");
+  svg.setAttribute("height", "20");
   svg.setAttribute("aria-hidden", "true");
   svg.setAttribute("focusable", "false");
   for (const d of ds) {
@@ -180,21 +204,27 @@ function ratioOf(n) {
 /* ---------- build ---------- */
 
 function build(root) {
+  rootEl = root;
   root.replaceChildren();
 
-  const head = el("header", { class: "sheet book-head" });
-  coverEl = el("button", { class: "book-cover", type: "button", "aria-label": "Contents" });
-  coverEl.append(
-    el("img", { width: "44", height: "62", alt: "", loading: "lazy", decoding: "async" }),
-  );
-  const id = el("div", { class: "book-id" });
-  titleEl = el("p", { class: "book-title" });
-  trailEl = el("p", { class: "book-trail" });
-  id.append(titleEl, trailEl);
+  barEl = el("header", { class: "book-bar" });
 
-  stampEl = el("span", { class: "stamp book-stamp" });
+  backBtn = el("button", { class: "bar-btn bar-back", type: "button", "aria-label": "Back", text: "←" });
+  coverEl = el("button", { class: "bar-btn book-cover", type: "button", "aria-label": "Contents" });
+  coverEl.append(el("img", { width: "24", height: "30", alt: "", loading: "lazy", decoding: "async" }));
+  titleEl = el("p", { class: "book-title" });
+  stampEl = el("span", { class: "book-stamp" });
+
+  modeBtn = el("button", {
+    class: "bar-btn bar-word book-all",
+    type: "button",
+    "aria-pressed": "false",
+    "aria-label": "All pages",
+    text: "All",
+    hidden: true,
+  });
   micBtn = el("button", {
-    class: "btn btn-icon book-mic",
+    class: "bar-btn book-mic",
     type: "button",
     "aria-label": "Voice",
     "aria-pressed": "false",
@@ -203,12 +233,7 @@ function build(root) {
   micBtn.append(
     glyph(2.4, "M9 4.5a3 3 0 0 1 6 0V11a3 3 0 0 1-6 0Z", "M5 11a7 7 0 0 0 14 0", "M12 18v2.5"),
   );
-  askBtn = el("button", {
-    class: "btn btn-icon book-ask",
-    type: "button",
-    "aria-label": "Ask",
-    hidden: true,
-  });
+  askBtn = el("button", { class: "bar-btn book-ask", type: "button", "aria-label": "Ask", hidden: true });
   askBtn.append(
     glyph(2.4, "M15 15 20 20", "M8.4 8.6c0-1.1.9-1.9 1.8-1.9s1.8.8 1.8 1.8c0 1.1-1.8 1.3-1.8 2.6", "M10.2 14.6v.2"),
   );
@@ -221,9 +246,14 @@ function build(root) {
   lens.setAttribute("stroke-width", "2.4");
   askBtn.querySelector("svg").append(lens);
 
-  toolsEl = el("div", { class: "book-tools" });
-  toolsEl.append(micBtn, askBtn, stampEl);
-  head.append(coverEl, id, toolsEl);
+  partsBtn = el("button", {
+    class: "bar-btn bar-word book-parts",
+    type: "button",
+    "aria-label": "Parts",
+    text: "Parts",
+  });
+
+  barEl.append(backBtn, coverEl, titleEl, stampEl, modeBtn, micBtn, askBtn, partsBtn);
 
   viewEl = el("div", { class: "page-view" });
   padEl = el("div", { class: "page-pad" });
@@ -233,7 +263,6 @@ function build(root) {
 
   stripEl = el("nav", { class: "page-strip", "aria-label": "Pages" });
   outlineEl = el("div", { class: "book-outline", hidden: true });
-  followEl = el("button", { class: "btn btn-primary book-follow", type: "button", text: "Follow" });
 
   askSheet = el("div", { class: "sheet ask-sheet", hidden: true, role: "dialog", "aria-label": "Ask" });
   askInput = el("input", {
@@ -249,14 +278,12 @@ function build(root) {
   askHits = el("div", { class: "ask-hits" });
   askSheet.append(askInput, askBar, askHits);
 
-  root.append(head, viewEl, stripEl, outlineEl, followEl, askSheet);
+  root.append(barEl, viewEl, stripEl, outlineEl, askSheet);
 
-  coverEl.addEventListener("click", () => {
-    if (!outline.length) return;
-    if (pages.length) openOutline();
-    else setPages(readingPages(jobRec));
-  });
-  followEl.addEventListener("click", () => go("follow"));
+  backBtn.addEventListener("click", onBack);
+  coverEl.addEventListener("click", onContents);
+  modeBtn.addEventListener("click", toggleMode);
+  partsBtn.addEventListener("click", () => openOverlay("invoice"));
   micBtn.addEventListener("click", onMic);
   askBtn.addEventListener("click", onAskToggle);
   askInput.addEventListener("keydown", onAskKey);
@@ -268,19 +295,112 @@ function build(root) {
   viewEl.addEventListener("touchend", onTouchEnd, { passive: false });
   viewEl.addEventListener("wheel", onWheel, { passive: false });
   viewEl.addEventListener("dblclick", onDouble);
+  viewEl.addEventListener("click", onClick);
 
   ro = new ResizeObserver(() => measure());
   ro.observe(viewEl);
 }
 
+/** Same step as the shell's header Back: this screen's own layers first, then history. */
+function onBack() {
+  popBack();
+}
+
+/* ---------- immersive ---------- */
+
+function setImmersive(on) {
+  immersive = Boolean(on);
+  if (rootEl) rootEl.classList.toggle("immersive", immersive);
+  emit("substate", { screen: "book", on: immersive });
+  measure();
+}
+
+function toggleImmersive() {
+  if (askSheet && !askSheet.hidden) {
+    closeAsk();
+    return;
+  }
+  setImmersive(!immersive);
+}
+
+function armTap() {
+  if (tapTimer) window.clearTimeout(tapTimer);
+  tapTimer = window.setTimeout(() => {
+    tapTimer = 0;
+    toggleImmersive();
+  }, TAP_MS + 40);
+}
+
+function cancelTap() {
+  if (!tapTimer) return;
+  window.clearTimeout(tapTimer);
+  tapTimer = 0;
+}
+
+/* ---------- page mode ---------- */
+
+function readMode(manualId) {
+  try {
+    return window.localStorage.getItem(MODE_KEY + manualId) === "all" ? "all" : "relevant";
+  } catch {
+    return "relevant";
+  }
+}
+
+function writeMode(manualId, value) {
+  try {
+    window.localStorage.setItem(MODE_KEY + manualId, value);
+  } catch {
+    /* private mode: the toggle still works, it just does not stick */
+  }
+}
+
+function allList() {
+  const n = Number(totalPages) || 0;
+  if (n <= 0) return readList.slice();
+  const out = [];
+  for (let p = 1; p <= n; p++) out.push(p);
+  return out;
+}
+
+function nearestRelevant(n) {
+  if (!readList.length) return null;
+  if (n == null) return readList[0];
+  let best = readList[0];
+  for (const p of readList) if (Math.abs(p - n) < Math.abs(best - n)) best = p;
+  return best;
+}
+
+function paintModeBtn() {
+  const on = mode === "all";
+  modeBtn.hidden = !(totalPages > 1 && readList.length > 0);
+  modeBtn.setAttribute("aria-pressed", on ? "true" : "false");
+  modeBtn.classList.toggle("is-on", on);
+}
+
+function toggleMode() {
+  if (!(totalPages > 1)) return;
+  const at = current;
+  mode = mode === "all" ? "relevant" : "all";
+  writeMode(jobRec && jobRec.manualId, mode);
+  paintModeBtn();
+  if (mode === "all") setPages(allList(), { strip: readList, at: at || readList[0] });
+  else setPages(readList.slice(), { strip: readList, at: nearestRelevant(at) });
+}
+
 /* ---------- paint ---------- */
 
 async function paint(job) {
+  const my = enterGen;
   jobRec = job;
   manualRec = (await Q.manual(job.manualId)) || {};
+  if (my !== enterGen) return;
   fileUrl = manualRec.file ? Q.asset(manualRec.file) : "";
   outline = flatten(outlineNodes(manualRec), 0, []);
   marks = markMap(job);
+  readList = readingPages(job);
+  totalPages = Number(manualRec.pages) || 0;
+  mode = totalPages > 1 ? readMode(job.manualId) : "relevant";
 
   titleEl.textContent = manualRec.title || "";
   const cover = coverEl.firstElementChild;
@@ -290,14 +410,33 @@ async function paint(job) {
   if (thumb) cover.src = thumb;
   cover.alt = manualRec.title || "";
 
-  setPages(readingPages(job));
+  paintModeBtn();
+  setPages(mode === "all" ? allList() : readList.slice(), {
+    strip: readList,
+    at: readList[0],
+  });
   syncVoice(job);
   syncAsk(job);
+
+  // A manual that never carried a page count still gets the all-pages toggle.
+  if (!(totalPages > 0) && fileUrl) {
+    pageCount(fileUrl)
+      .then((n) => {
+        if (my !== enterGen || !(n > 0)) return;
+        totalPages = n;
+        paintModeBtn();
+        setCurrent(current || readList[0]);
+      })
+      .catch(() => {});
+  }
 }
 
-function setPages(list) {
+function setPages(list, opts) {
   releaseSheets();
   pages = list;
+  const stripSrc = (opts && opts.strip) || list;
+  const own = new Set(list);
+  const strip = stripSrc.filter((n) => own.has(n));
   visited = new Set();
   seenAmount = new Map();
   current = null;
@@ -306,24 +445,29 @@ function setPages(list) {
   const empty = pages.length === 0;
   outlineEl.hidden = !empty;
   viewEl.hidden = empty;
-  stripEl.hidden = empty;
-  followEl.hidden = empty;
+  stripEl.hidden = empty || strip.length === 0;
   coverEl.classList.toggle("is-back", outline.length > 0);
   coverEl.hidden = !hasThumb && outline.length === 0;
   if (empty) {
     paintOutline();
     stampEl.hidden = true;
-    trailEl.textContent = "";
+    titleEl.textContent = manualRec.title || "";
+    titleEl.setAttribute("title", manualRec.title || "");
     return;
   }
 
   baseRatio = fileUrl ? cachedRatio(fileUrl, pages[0]) : 1.4142;
   ratios = new Map();
   paintSheets();
-  paintStrip();
+  paintStrip(strip);
   measure();
   observe();
-  setCurrent(pages[0]);
+  const at = opts && opts.at != null && own.has(opts.at) ? opts.at : pages[0];
+  setCurrent(at);
+  if (at !== pages[0]) {
+    const rec = sheets.get(at);
+    if (rec) rec.host.scrollIntoView({ block: "start" });
+  }
   if (fileUrl) {
     pageRatio(fileUrl, pages[0])
       .then((r) => {
@@ -355,6 +499,10 @@ function paintOutline() {
 function openChapter(i) {
   const here = outline[i];
   const start = here.page;
+  if (mode === "all") {
+    setPages(allList(), { strip: readList, at: start });
+    return;
+  }
   // A parent entry owns its children: the chapter ends at the next entry of the same rank.
   const after = outline
     .slice(i + 1)
@@ -363,16 +511,22 @@ function openChapter(i) {
   const last = Math.max(start, Math.min(total, (after ? after.page : total + 1) - 1));
   const list = [];
   for (let p = start; p <= last; p++) list.push(p);
-  setPages(list);
+  setPages(list, { strip: list });
 }
 
-function openOutline() {
-  setPages([]);
+function onContents() {
+  if (!outline.length) return;
+  if (pages.length) setPages([]);
+  else setPages(mode === "all" ? allList() : readList.slice(), { strip: readList, at: readList[0] });
 }
 
 function releaseSheets() {
   if (nearIo) nearIo.disconnect();
   if (seenIo) seenIo.disconnect();
+  if (drawTimer) {
+    window.clearTimeout(drawTimer);
+    drawTimer = 0;
+  }
   for (const rec of sheets.values()) releaseCanvas(rec.canvas);
   sheets = new Map();
   chips = new Map();
@@ -409,9 +563,9 @@ function paintSheets() {
   colEl.append(frag);
 }
 
-function paintStrip() {
+function paintStrip(list) {
   const frag = document.createDocumentFragment();
-  for (const n of pages) {
+  for (const n of list) {
     const chip = el("button", {
       class: "strip-chip",
       type: "button",
@@ -433,8 +587,9 @@ function observe() {
         const rec = sheets.get(Number(entry.target.getAttribute("data-page")));
         if (!rec) continue;
         rec.near = entry.isIntersecting;
-        if (rec.near) draw(rec);
+        if (!rec.near) drop(rec);
       }
+      queueDraw();
     },
     { root: viewEl, rootMargin: NEAR },
   );
@@ -470,6 +625,18 @@ function webpFor(n) {
   return url ? url : "";
 }
 
+/**
+ * One deferred pass over whatever is near. A fast flick through a 366-page manual fires
+ * hundreds of intersections; only the sheets still near when the pass runs are rasterised.
+ */
+function queueDraw() {
+  if (drawTimer) return;
+  drawTimer = window.setTimeout(() => {
+    drawTimer = 0;
+    for (const rec of sheets.values()) if (rec.near) draw(rec);
+  }, DRAW_MS);
+}
+
 function draw(rec) {
   if (!rec.near || !(sheetW > 0)) return;
   const url = rec.failed ? "" : webpFor(rec.page);
@@ -481,6 +648,24 @@ function draw(rec) {
   rec.src = url;
   rec.img.hidden = false;
   rec.img.src = url;
+}
+
+/** Hand back a sheet that scrolled far away; the aspect-ratio box keeps the scroll height. */
+function drop(rec) {
+  if (pages.length <= VIRTUAL_MIN) return;
+  if (!rec.drawn && !rec.src && !rec.inked) return;
+  releaseCanvas(rec.canvas);
+  rec.drawn = 0;
+  rec.host.classList.remove("is-ready");
+  if (rec.src) {
+    rec.img.hidden = true;
+    rec.img.removeAttribute("src");
+    rec.src = "";
+  }
+  if (rec.inked) {
+    rec.box.replaceChildren();
+    rec.inked = false;
+  }
 }
 
 async function drawPdf(rec) {
@@ -496,8 +681,16 @@ async function drawPdf(rec) {
       ratios.set(rec.page, r);
       rec.host.style.aspectRatio = `1 / ${r}`;
     }
+    if (!rec.near) {
+      rec.drawn = 0;
+      return;
+    }
     const ok = await renderPage(fileUrl, rec.page, want, rec.canvas);
     if (my !== enterGen || !ok) return;
+    if (!rec.near) {
+      drop(rec);
+      return;
+    }
     rec.host.classList.add("is-ready");
     ink(rec);
   } catch {
@@ -554,7 +747,7 @@ function measure() {
   if (boxW <= 0) return;
   const next = Math.max(
     120,
-    Math.min(boxW - 24, Math.floor((boxH - 28) / baseRatio) || MAX_W, MAX_W),
+    Math.min(boxW - 8, Math.floor((boxH - 12) / baseRatio) || MAX_W, MAX_W),
   );
   if (next === sheetW) return;
   sheetW = next;
@@ -565,6 +758,7 @@ function measure() {
 /* ---------- current page ---------- */
 
 function setCurrent(n) {
+  if (n == null) return;
   current = n;
   visited.add(n);
   for (const [page, chip] of chips) {
@@ -586,9 +780,12 @@ function setCurrent(n) {
   stampEl.replaceChildren(
     el("span", { class: "p", text: "p." }),
     el("b", { text: String(n) }),
-    el("span", { class: "m", text: `/${manualRec.pages || pages[pages.length - 1]}` }),
+    el("span", { class: "m", text: `/${totalPages || pages[pages.length - 1]}` }),
   );
-  trailEl.textContent = trailFor(outlineNodes(manualRec), n).join(" · ");
+
+  const trail = trailFor(outlineNodes(manualRec), n);
+  titleEl.textContent = trail.length ? trail[trail.length - 1] : manualRec.title || "";
+  titleEl.setAttribute("title", trail.length ? trail.join(" · ") : manualRec.title || "");
 
   set({ page: n });
   emit("page", { n });
@@ -653,6 +850,14 @@ function gap(a, b) {
 }
 
 function onTouchStart(e) {
+  touchAt = Date.now();
+  if (e.touches.length === 1) {
+    downX = e.touches[0].clientX;
+    downY = e.touches[0].clientY;
+    downAt = touchAt;
+    return;
+  }
+  cancelTap();
   if (e.touches.length !== 2) return;
   pinch0 = gap(e.touches[0], e.touches[1]);
   pinchBase = zoom;
@@ -661,6 +866,7 @@ function onTouchStart(e) {
 function onTouchMove(e) {
   if (e.touches.length !== 2 || pinch0 <= 0) return;
   e.preventDefault();
+  cancelTap();
   const now = gap(e.touches[0], e.touches[1]);
   applyZoom(
     (pinchBase * now) / pinch0,
@@ -670,12 +876,21 @@ function onTouchMove(e) {
 }
 
 function onTouchEnd(e) {
+  touchAt = Date.now();
   if (e.touches.length < 2) pinch0 = 0;
   if (e.touches.length > 0 || e.changedTouches.length !== 1) return;
   const touch = e.changedTouches[0];
   const at = Date.now();
+  const still =
+    Math.hypot(touch.clientX - downX, touch.clientY - downY) < TAP_PX && at - downAt < TAP_HOLD;
+  if (!still) {
+    cancelTap();
+    tapAt = 0;
+    return;
+  }
   if (at - tapAt < TAP_MS && Math.hypot(touch.clientX - tapX, touch.clientY - tapY) < TAP_PX) {
     e.preventDefault();
+    cancelTap();
     applyZoom(zoom > ZOOM_MIN ? ZOOM_MIN : ZOOM_DOUBLE, touch.clientX, touch.clientY);
     tapAt = 0;
     return;
@@ -683,15 +898,30 @@ function onTouchEnd(e) {
   tapAt = at;
   tapX = touch.clientX;
   tapY = touch.clientY;
+  armTap();
+}
+
+/** Mouse only: a touch tap already ran through onTouchEnd. */
+function onClick(e) {
+  if (Date.now() - touchAt < 700) return;
+  if (e.detail > 1) {
+    cancelTap();
+    return;
+  }
+  armTap();
 }
 
 function onWheel(e) {
   if (!e.ctrlKey) return;
   e.preventDefault();
+  cancelTap();
   applyZoom(zoom * (1 - e.deltaY / 240), e.clientX, e.clientY);
 }
 
+/** Mouse only: a double tap is already zoomed by onTouchEnd, and dblclick follows it. */
 function onDouble(e) {
+  cancelTap();
+  if (Date.now() - touchAt < 700) return;
   applyZoom(zoom > ZOOM_MIN ? ZOOM_MIN : ZOOM_DOUBLE, e.clientX, e.clientY);
 }
 
@@ -777,6 +1007,7 @@ async function syncAsk(job) {
 
 function openAsk() {
   if (askBtn.hidden) return;
+  if (immersive) setImmersive(false);
   askSheet.hidden = false;
   askSheet.classList.add("open");
   askSheet.dataset.state = "idle";
@@ -815,8 +1046,12 @@ function onAskToggle() {
 }
 
 function onEsc(e) {
-  if (e.key !== "Escape" || askSheet.hidden) return;
-  closeAsk();
+  if (e.key !== "Escape") return;
+  if (!askSheet.hidden) {
+    closeAsk();
+    return;
+  }
+  if (immersive) setImmersive(false);
 }
 
 function onAskKey(e) {
@@ -855,12 +1090,26 @@ function paintAskHits(rows) {
     if (after) ctx.append(document.createTextNode(after));
     btn.append(ctx, el("span", { class: "stamp", text: `p.${row.page}` }));
     btn.addEventListener("click", () => {
-      jump(row.page);
-      flash(row.page);
+      goToPage(row.page);
       closeAsk();
     });
     askHits.append(btn);
   }
+}
+
+/** An answer can sit on a page the reading list never carried: fall back to all pages. */
+function goToPage(n) {
+  if (sheets.has(n)) {
+    jump(n);
+    flash(n);
+    return;
+  }
+  if (!(totalPages > 1)) return;
+  mode = "all";
+  writeMode(jobRec && jobRec.manualId, mode);
+  paintModeBtn();
+  setPages(allList(), { strip: readList, at: n });
+  flash(n);
 }
 
 async function runAsk() {
@@ -908,6 +1157,7 @@ registerScreen("book", {
       return;
     }
     const my = ++enterGen;
+    setImmersive(false);
     const job = await Q.jobById(state.jobId);
     if (my !== enterGen) return;
     if (!job) {
@@ -917,10 +1167,25 @@ registerScreen("book", {
     await paint(job);
   },
 
+  /** Back pops the reader's own layers first, so no tap can strand the Back affordance. */
+  back() {
+    if (!askSheet.hidden) {
+      closeAsk();
+      return true;
+    }
+    if (immersive) {
+      setImmersive(false);
+      return true;
+    }
+    return false;
+  },
+
   leave() {
     enterGen += 1;
+    cancelTap();
     endVoice();
     closeAsk();
+    setImmersive(false);
     resetZoom();
   },
 });

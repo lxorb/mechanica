@@ -1,77 +1,93 @@
-[data-screen="invoice"] .inv {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* Parts: the optional sheet over Book. The overlay shell itself is .ov in counter.css. */
 
-[data-screen="invoice"] .inv-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px 12px;
-  align-items: start;
-  min-height: 52px;
-  padding: 10px 12px;
-  border-bottom: 3px solid var(--ink);
-}
-
-[data-screen="invoice"] .inv-meta {
-  min-width: 0;
-}
-
-[data-screen="invoice"] .inv-name {
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 1.1rem;
-  line-height: 1.2;
-}
-
-[data-screen="invoice"] .inv-bike {
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.2;
-  margin-top: 2px;
-}
-
-[data-screen="invoice"] .inv-head .stamp {
-  justify-self: end;
-  white-space: nowrap;
-}
-
-[data-screen="invoice"] .inv-list {
+[data-overlay="invoice"] .inv {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-[data-screen="invoice"] .inv-part {
+[data-overlay="invoice"] .inv-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  align-items: center;
+  padding: 0 2px 8px;
+  border-bottom: 3px solid var(--ink);
+}
+
+[data-overlay="invoice"] .inv-meta {
+  min-width: 0;
+}
+
+[data-overlay="invoice"] .inv-name {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+[data-overlay="invoice"] .inv-bike {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+[data-overlay="invoice"] .inv-head .stamp {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+[data-overlay="invoice"] .inv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-overlay="invoice"] .inv-part {
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 10px 12px;
 }
 
-[data-screen="invoice"] .inv-listing {
+[data-overlay="invoice"] .inv-top {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px 10px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
   align-items: center;
 }
 
-[data-screen="invoice"] .inv-pname {
+[data-overlay="invoice"] .inv-listing {
+  min-width: 0;
+}
+
+[data-overlay="invoice"] .inv-pname {
+  display: block;
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1rem;
   line-height: 1.2;
 }
 
-[data-screen="invoice"] .inv-listing .stamp {
+[data-overlay="invoice"] .inv-oem {
+  display: block;
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  word-break: break-word;
+  opacity: 0.75;
+}
+
+[data-overlay="invoice"] .inv-top .stamp {
   white-space: nowrap;
 }
 
-[data-screen="invoice"] .inv-prov {
+[data-overlay="invoice"] .inv-prov {
   font-family: ui-monospace, monospace;
   font-weight: 400;
   font-size: 0.75rem;
@@ -79,144 +95,39 @@
   font-variant-numeric: tabular-nums;
 }
 
-[data-screen="invoice"] .inv-oem {
-  font-family: ui-monospace, monospace;
-  font-size: 0.8rem;
-  font-variant-numeric: tabular-nums;
-  word-break: break-word;
-}
-
-[data-screen="invoice"] .inv-shops {
+[data-overlay="invoice"] .inv-shops {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 2px;
 }
 
-[data-screen="invoice"] .inv-shop {
+[data-overlay="invoice"] .inv-shop {
   gap: 6px;
-  min-height: 44px;
-  padding: 8px 10px;
-  font-size: 0.78rem;
+  min-height: 40px;
+  padding: 6px 10px;
+  font-size: 0.74rem;
   letter-spacing: 0.04em;
   text-decoration: none;
 }
 
-[data-screen="invoice"] .inv-shop svg {
+[data-overlay="invoice"] .inv-shop svg {
   width: 14px;
   height: 14px;
   display: block;
 }
 
-[data-screen="invoice"] .inv-tix-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-}
-
-[data-screen="invoice"] .inv-ticket {
-  border-top: 3px dashed var(--ink);
-  padding: 12px;
-  font-family: ui-monospace, monospace;
-  font-variant-numeric: tabular-nums;
-}
-
-[data-screen="invoice"] .inv-tix-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-[data-screen="invoice"] .inv-tix-bike {
+[data-overlay="invoice"] .inv-empty {
   font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 0.95rem;
-}
-
-[data-screen="invoice"] .inv-tix-no {
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
-  font-size: 1.6rem;
-  letter-spacing: 0;
-  line-height: 1;
-}
-
-[data-screen="invoice"] .inv-tix-row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 8px 12px;
-  align-items: start;
-  min-height: 28px;
-  padding-top: 8px;
-  border-top: 2px solid var(--rule);
-}
-
-[data-screen="invoice"] .inv-tix-row:first-child {
-  border-top: 0;
-}
-
-[data-screen="invoice"] .inv-tix-lab {
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-[data-screen="invoice"] .inv-tix-detail {
-  min-width: 0;
-}
-
-[data-screen="invoice"] .inv-tix-part {
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-}
-
-[data-screen="invoice"] .inv-tix-spec {
-  font-size: 0.75rem;
-  line-height: 1.35;
-  margin-top: 2px;
-}
-
-[data-screen="invoice"] .inv-amt {
-  font-family: ui-monospace, monospace;
-  font-variant-numeric: tabular-nums;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-[data-screen="invoice"] .inv-foot {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-[data-screen="invoice"] .inv-foot:not(:has(a.btn-primary:not([hidden]))) {
-  grid-template-columns: 1fr;
-}
-
-[data-screen="invoice"] .inv-foot .btn + .btn,
-[data-screen="invoice"] .inv-foot a:not([hidden]) + .btn {
-  border-left-width: 0;
-}
-
-[data-screen="invoice"] .inv-foot .btn,
-[data-screen="invoice"] .inv-foot a.btn {
-  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  padding: 12px 2px;
 }
 
 @media (min-width: 720px) {
-  [data-screen="invoice"] .inv {
+  [data-overlay="invoice"] .inv-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: start;
-  }
-
-  [data-screen="invoice"] .inv-head,
-  [data-screen="invoice"] .inv-foot {
-    grid-column: 1 / -1;
-  }
-
-  [data-screen="invoice"] .inv-tix-wrap {
-    grid-column: 2;
   }
 }

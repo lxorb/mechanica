@@ -94,7 +94,7 @@ body {
 
 .rail {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   list-style: none;
   width: 100%;
   border: 3px solid var(--ink);
@@ -105,8 +105,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   height: 44px;
   min-height: 44px;
+  padding: 0 4px;
   border-left: 3px solid var(--ink);
   background: var(--card);
   color: var(--ink);
@@ -115,6 +117,19 @@ body {
   font-size: 1.35rem;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+}
+
+.rail li b {
+  font-weight: 800;
+}
+
+.rail li span {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .rail li.now {
@@ -131,6 +146,18 @@ main {
   max-width: 720px;
   margin: 0 auto;
   padding: 12px 12px 32px;
+}
+
+/* Book reads fullscreen: the ticket bar and the rail fold into the reader's own 34 px bar. */
+body[data-here="book"] .ticket,
+body[data-here="book"] .rail {
+  display: none;
+}
+
+body[data-here="book"] main {
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 900px) {
@@ -237,6 +264,89 @@ main {
   border: 0;
   border-top: 3px solid var(--ink);
   border-radius: 0;
+}
+
+/* ---------- overlay sheet (Parts) ---------- */
+
+.ov {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.ov-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.5);
+  opacity: 0;
+  transition: opacity 0.18s ease-out;
+}
+
+.ov.open .ov-veil {
+  opacity: 1;
+}
+
+.ov-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  max-height: min(86dvh, 860px);
+  background: var(--paper);
+  border-top: 3px solid var(--ink);
+  transform: translateY(100%);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ov.open .ov-sheet {
+  transform: translateY(0);
+}
+
+.ov-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 0 auto;
+  padding: 8px 8px 8px 14px;
+  background: var(--orange);
+  color: #fff;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ov-x {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 8px 4px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+}
+
+.ov-x:active {
+  color: var(--yellow);
+}
+
+.ov-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 12px 12px calc(16px + env(safe-area-inset-bottom));
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,8 @@
 const listeners = Object.create(null);
 const screens = new Map();
+const overlays = new Map();
 let currentId = null;
+let overlayId = null;
 let booted = false;
 
 export const state = {
@@ -16,7 +18,8 @@ export const state = {
   ticket: "A-17",
 };
 
-export const FLOW = ["identify", "confirm", "pick", "book", "follow", "invoice"];
+/** Four steps. Parts (invoice) is an overlay on Book, not a step of its own. */
+export const FLOW = ["identify", "confirm", "pick", "book"];
 
 export function on(event, handler) {
   if (!listeners[event]) listeners[event] = [];
@@ -56,12 +59,94 @@ export function registerScreen(id, api) {
   bootFromHash();
 }
 
+/* ---------------------------------------------------------------- overlays */
+
 /**
- * One step back. A screen with an open sub-state (Identify's VIN / photo / query) pops
- * that first by returning true from its own back(); everything else is the browser's own
- * history step, so the header button and the hardware Back button agree.
+ * An overlay is a sheet over the screen that opened it: its own history entry
+ * (#book+invoice), so the header Back, back() and the browser's own Back all close it
+ * before they leave the screen underneath. The screen never leaves or re-enters.
+ */
+export function registerOverlay(id, api) {
+  overlays.set(id, {
+    mount: api && api.mount,
+    open: api && api.open,
+    close: api && api.close,
+    mounted: false,
+  });
+}
+
+function overlayNode(id) {
+  return document.querySelector(`[data-overlay="${id}"]`);
+}
+
+function overlayRoot(id) {
+  const node = overlayNode(id);
+  if (!node) return null;
+  return node.querySelector("[data-root]") || node;
+}
+
+function paintOverlay(id, on) {
+  const node = overlayNode(id);
+  if (!node) return;
+  if (on) {
+    node.hidden = false;
+    requestAnimationFrame(() => node.classList.add("open"));
+  } else {
+    node.classList.remove("open");
+    node.hidden = true;
+  }
+}
+
+/** Open / close with no history of its own; onPop and openOverlay own the entries. */
+function syncOverlay(id) {
+  if (id === overlayId) return;
+  if (overlayId) {
+    const prev = overlays.get(overlayId);
+    paintOverlay(overlayId, false);
+    if (prev && typeof prev.close === "function") prev.close();
+    emit("overlay", { id: overlayId, on: false });
+    overlayId = null;
+  }
+  if (!id) return;
+  const rec = overlays.get(id);
+  if (!rec) return;
+  overlayId = id;
+  if (!rec.mounted) {
+    if (typeof rec.mount === "function") rec.mount(overlayRoot(id));
+    rec.mounted = true;
+  }
+  paintOverlay(id, true);
+  if (typeof rec.open === "function") rec.open();
+  emit("overlay", { id, on: true });
+}
+
+export function openOverlay(id) {
+  if (!overlays.has(id) || overlayId === id) return;
+  syncOverlay(id);
+  history.pushState({ screen: currentId, overlay: id }, "", `#${currentId || "identify"}+${id}`);
+}
+
+export function closeOverlay() {
+  if (!overlayId) return false;
+  history.back();
+  return true;
+}
+
+export function overlayOpen() {
+  return overlayId;
+}
+
+/**
+ * One step back. An open overlay goes first, then a screen with an open sub-state
+ * (Identify's VIN / photo / query, Book's immersive mode) pops that by returning true from
+ * its own back(); everything else is the browser's own history step, so the header button
+ * and the hardware Back button agree.
  */
 export function back() {
+  if (overlayId) {
+    history.back();
+    return;
+  }
   const rec = currentId && screens.get(currentId);
   if (rec && typeof rec.back === "function" && rec.back() === true) return;
   history.back();
@@ -120,6 +205,8 @@ export function go(id, params) {
     return;
   }
 
+  if (overlayId) syncOverlay(null);
+
   showSection(id);
   updateRail(id);
 
@@ -147,8 +234,16 @@ export function go(id, params) {
   emit("screen", { id });
 }
 
+/** "#book+invoice" -> screen "book", overlay "invoice". */
+export function splitHash(raw) {
+  const value = String(raw || "").replace(/^#/, "");
+  const cut = value.indexOf("+");
+  if (cut < 0) return { screen: value, overlay: "" };
+  return { screen: value.slice(0, cut), overlay: value.slice(cut + 1) };
+}
+
 const initialHash =
-  typeof location !== "undefined" ? location.hash.replace(/^#/, "") : "";
+  typeof location !== "undefined" ? splitHash(location.hash).screen : "";
 
 function bootFromHash() {
   if (booted || !initialHash) return;
@@ -160,10 +255,11 @@ function bootFromHash() {
 }
 
 function onPop(event) {
-  const hash = location.hash.replace(/^#/, "");
+  const { screen: hash, overlay } = splitHash(location.hash);
   const fromState = event.state && event.state.screen;
   const id = hash || fromState;
   if (!id) {
+    syncOverlay(null);
     if (currentId) {
       const prev = screens.get(currentId);
       if (prev && typeof prev.leave === "function") prev.leave();
@@ -173,12 +269,30 @@ function onPop(event) {
     currentId = null;
     return;
   }
-  go(FLOW.includes(id) ? id : "identify", { replace: true });
+  syncOverlay(overlays.has(overlay) ? overlay : null);
+  // A hash that is not a step (#cost) belongs to something else: the screen underneath
+  // keeps its place instead of being thrown back to Identify.
+  if (!FLOW.includes(id)) {
+    if (!currentId) go("identify", { replace: true });
+    return;
+  }
+  go(id, { replace: true });
+}
+
+function onKey(e) {
+  if (e.key !== "Escape" || !overlayId) return;
+  e.preventDefault();
+  closeOverlay();
 }
 
 if (typeof window !== "undefined") {
-  window.HandyBus = { state, go, back };
+  window.HandyBus = { state, go, back, openOverlay, closeOverlay };
   window.addEventListener("popstate", onPop);
+  window.addEventListener("keydown", onKey);
+  document.addEventListener("click", (e) => {
+    const hit = e.target.closest && e.target.closest("[data-ov-close]");
+    if (hit) closeOverlay();
+  });
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bootFromHash, { once: true });
   }

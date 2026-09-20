@@ -1,47 +1,101 @@
+/* The reader runs fullscreen: counter.css folds the ticket bar and the rail away for
+   [data-here="book"], and everything the reader needs sits in its own 34 px bar. */
+
 [data-screen="book"] [data-root] {
   --mark: rgba(232, 93, 4, 0.34);
+  --bar-h: 34px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  height: calc(100dvh - 9rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  max-height: calc(100dvh - 9rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   min-height: 0;
   overflow: hidden;
+  background: var(--ink);
 }
 
-@media (min-width: 900px) {
-  [data-screen="book"] [data-root] {
-    height: calc(100dvh - 9rem);
-    max-height: calc(100dvh - 9rem);
-  }
-}
+/* ---------- thin bar ---------- */
 
-/* ---------- head ---------- */
-
-[data-screen="book"] .book-head {
+[data-screen="book"] .book-bar {
   display: flex;
-  gap: 12px;
   align-items: center;
-  padding: 8px 0 10px;
+  gap: 3px;
   flex: 0 0 auto;
+  height: var(--bar-h);
+  min-height: var(--bar-h);
+  padding: 0 4px;
+  background: var(--ink);
+  color: #fff;
 }
 
-[data-screen="book"] .book-cover {
-  width: 44px;
-  height: 62px;
+/* Immersive: one tap takes the bar and the strip away, the next brings them back. */
+[data-screen="book"] [data-root].immersive .book-bar,
+[data-screen="book"] [data-root].immersive .page-strip {
+  display: none;
+}
+
+[data-screen="book"] .bar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 28px;
   padding: 0;
-  border: 2px solid var(--ink);
-  background: var(--card);
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
   appearance: none;
   border-radius: 0;
-  cursor: default;
+}
+
+[data-screen="book"] .bar-btn svg {
   display: block;
 }
 
-[data-screen="book"] .book-cover.is-back {
-  cursor: pointer;
+[data-screen="book"] .bar-btn:active {
+  color: var(--yellow);
+}
+
+[data-screen="book"] .bar-back {
+  width: 34px;
+  font-size: 1.5rem;
+  padding-bottom: 3px;
+}
+
+[data-screen="book"] .bar-word {
+  width: auto;
+  min-width: 40px;
+  padding: 0 8px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-screen="book"] .bar-word.is-on,
+[data-screen="book"] .book-mic[aria-pressed="true"] {
+  background: var(--orange);
   border-color: var(--orange);
-  outline: 2px solid var(--orange);
+  color: #fff;
+}
+
+[data-screen="book"] .book-cover {
+  width: 24px;
+  height: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: transparent;
+  overflow: hidden;
+}
+
+[data-screen="book"] .book-cover.is-back {
+  border-color: var(--yellow);
 }
 
 [data-screen="book"] .book-cover.is-plain img {
@@ -51,10 +105,9 @@
 /* No page thumbnails (PDF-only manual): the cover reads as a contents mark. */
 [data-screen="book"] .book-cover.is-plain {
   background:
-    linear-gradient(var(--ink) 0 0) 50% 28% / 58% 3px no-repeat,
-    linear-gradient(var(--ink) 0 0) 50% 50% / 58% 3px no-repeat,
-    linear-gradient(var(--ink) 0 0) 50% 72% / 40% 3px no-repeat,
-    var(--card);
+    linear-gradient(#fff 0 0) 50% 26% / 62% 2px no-repeat,
+    linear-gradient(#fff 0 0) 50% 50% / 62% 2px no-repeat,
+    linear-gradient(#fff 0 0) 50% 74% / 42% 2px no-repeat;
 }
 
 [data-screen="book"] .book-cover img {
@@ -64,74 +117,34 @@
   display: block;
 }
 
-[data-screen="book"] .book-id {
+[data-screen="book"] .book-title {
   flex: 1 1 auto;
   min-width: 0;
-}
-
-[data-screen="book"] .book-title {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1.15;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-[data-screen="book"] .book-trail {
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 400;
   font-size: 0.78rem;
-  line-height: 1.25;
-  opacity: 0.62;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-[data-screen="book"] .book-trail:empty {
-  display: none;
-}
-
-[data-screen="book"] .book-tools {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 auto;
-}
-
-[data-screen="book"] .book-mic,
-[data-screen="book"] .book-ask {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0;
-}
-
-[data-screen="book"] .book-mic svg,
-[data-screen="book"] .book-ask svg {
-  display: block;
-}
-
-[data-screen="book"] .book-mic[aria-pressed="true"] {
-  background: var(--orange);
-  color: #fff;
+  padding-left: 4px;
 }
 
 [data-screen="book"] .book-stamp {
+  display: inline-flex;
   align-items: baseline;
   gap: 1px;
+  flex: 0 0 auto;
+  padding: 0 4px;
   white-space: nowrap;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 0.82rem;
   font-variant-numeric: tabular-nums;
 }
 
 [data-screen="book"] .book-stamp b {
-  font-family: "Big Shoulders Display", sans-serif;
-  font-weight: 800;
   font-size: 1.15rem;
   line-height: 1;
   letter-spacing: 0;
@@ -139,7 +152,7 @@
 
 [data-screen="book"] .book-stamp .p,
 [data-screen="book"] .book-stamp .m {
-  opacity: 0.75;
+  opacity: 0.68;
 }
 
 /* ---------- reader ---------- */
@@ -150,7 +163,6 @@
   overflow: auto;
   overscroll-behavior: contain;
   scroll-snap-type: y proximity;
-  border: 3px solid var(--ink);
   background: var(--ink);
   scrollbar-width: none;
   touch-action: pan-x pan-y;
@@ -175,10 +187,9 @@
   position: relative;
   flex: 0 0 auto;
   width: var(--sheet-w, 100%);
-  margin: 10px 0;
+  margin: 4px 0;
   scroll-snap-align: start;
   background: var(--card);
-  border: 2px solid #000;
   overflow: hidden;
 }
 
@@ -230,9 +241,12 @@
 [data-screen="book"] .page-strip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex: 0 0 auto;
+  height: 44px;
   min-height: 44px;
+  padding: 0 6px;
+  background: var(--ink);
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
@@ -247,15 +261,15 @@
 
 [data-screen="book"] .strip-chip {
   flex: 0 0 auto;
-  min-width: 44px;
-  height: 44px;
+  min-width: 40px;
+  height: 32px;
   padding: 0 8px;
-  border: 3px solid var(--ink);
-  background: var(--card);
-  color: var(--ink);
+  border: 2px solid var(--card);
+  background: transparent;
+  color: #fff;
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   cursor: pointer;
@@ -265,19 +279,14 @@
 }
 
 [data-screen="book"] .strip-chip.seen {
-  background: var(--ink);
-  color: #fff;
+  background: var(--card);
+  color: var(--ink);
 }
 
 [data-screen="book"] .strip-chip.now {
   background: var(--orange);
   border-color: var(--orange);
   color: #fff;
-}
-
-[data-screen="book"] .book-follow {
-  width: 100%;
-  flex: 0 0 auto;
 }
 
 /* ---------- outline fallback ---------- */
@@ -287,7 +296,6 @@
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  border: 3px solid var(--ink);
   background: var(--card);
   scrollbar-width: none;
 }
@@ -353,6 +361,8 @@
   right: 0;
   bottom: 0;
   z-index: 30;
+  max-width: 720px;
+  margin: 0 auto;
   max-height: min(70dvh, 560px);
   overflow: auto;
   padding: 12px 12px calc(16px + env(safe-area-inset-bottom));

@@ -1,7 +1,7 @@
 /**
  * pdf.js — pdf.js from a CDN, rendered to canvas at devicePixelRatio (capped at 2),
  * with an LRU of rasterised sheets so a page that scrolls back into view is instant.
- * Owner: reader agent (book / follow).
+ * Owner: reader agent (book).
  */
 
 const PDFJS_SRC = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4/build/pdf.min.mjs";
