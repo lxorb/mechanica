@@ -241,9 +241,38 @@ function heal() {
   go(here, { replace: true });
 }
 
+/**
+ * "Mechanica." The wake word lives here because it belongs to the app and not to a screen: it has
+ * to work on Identify, before a vehicle exists, which is the whole point of it — "Mechanica, I'm
+ * working on a YZF R1" is the first thing anyone should be able to say to this phone.
+ *
+ * Both modules are loaded lazily and only when the browser has a continuous recogniser, so a
+ * Safari on iOS pays nothing for a toggle it cannot honour. The wake listener hands the REST of
+ * the sentence straight into the session as its first user turn, so the bike is never said twice.
+ */
+function armWake() {
+  import("./voice-wake.js")
+    .then((wake) => {
+      if (!wake.supported) return;
+      wake.mountToggle(async (hit) => {
+        const voice = await import("./voice-session.js");
+        if (voice.isLive()) return;
+        voice.start({
+          manualId: state.manualId || "",
+          bikeId: state.bikeId || "",
+          first: hit.rest,
+        });
+      });
+    })
+    .catch(() => {
+      /* no wake word is a missing convenience, never a broken app */
+    });
+}
+
 async function boot() {
   paintTicket();
   armBack();
+  armWake();
   on("state", (patch) => {
     if (patch && Object.prototype.hasOwnProperty.call(patch, "ticket")) paintTicket();
     stash();

@@ -385,22 +385,40 @@
 .pv-shops {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--gap);
 }
 
 .pv-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0 14px;
   border: var(--hair) solid var(--edge);
-  border-radius: var(--r);
+  border-radius: var(--r-pill);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   letter-spacing: 0.01em;
   cursor: pointer;
   appearance: none;
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+/* One price button carrying its own direction: the arrow turns over on the second tap. */
+.pv-arrow {
+  width: 15px;
+  height: 15px;
+  display: block;
+  flex: none;
+  transition: transform var(--t-mid) var(--ease);
+}
+
+.pv-arrow.is-up {
+  transform: rotate(180deg);
 }
 
 .pv-sorts .pv-pill[aria-pressed="true"] {
@@ -416,16 +434,16 @@
 .pv-rows {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--gap);
 }
 
 .pv-offer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2px 10px;
+  gap: 4px 12px;
   align-items: center;
-  min-height: 44px;
-  padding: 9px 10px;
+  min-height: 52px;
+  padding: 12px 14px;
   border: var(--hair) solid var(--edge);
   background: var(--card);
   color: inherit;
@@ -479,13 +497,16 @@
   margin-top: 1px;
 }
 
+/* A badge states a fact; it is not a control, so it carries no edge of its own. */
 .pv-tag {
   font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 0.64rem;
+  font-weight: 700;
+  font-size: 0.68rem;
   letter-spacing: 0.01em;
-  padding: 2px 5px;
-  box-shadow: inset 0 0 0 2px var(--line);
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  background: var(--shim);
+  color: var(--muted-2);
 }
 
 .pv-tag.is-in {

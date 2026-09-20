@@ -174,6 +174,28 @@ function proxy(path) {
   return `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}${path}`;
 }
 
+/**
+ * The Settings message for a session that starts with no vehicle. ttm.js's voiceSettings() needs
+ * a manual id by contract and returns null without one, and that contract is right for every
+ * other caller — so this one call is made here rather than widening it.
+ */
+async function openSettings() {
+  const res = await fetch(`${T.apiBase()}/voice/agent-settings`, { headers: { Accept: "application/json" } });
+  if (!res.ok) throw new Error(`agent settings ${res.status}`);
+  return res.json();
+}
+
+/** Bind a running session's tool URLs to the manual that has just been chosen. */
+export async function bindSession(sessionId, manualId) {
+  const sid = String(sessionId || "").trim();
+  const mid = String(manualId || "").trim();
+  if (!sid || !mid) return null;
+  const url = `${T.apiBase()}/voice/session/${encodeURIComponent(sid)}/manual?manualId=${encodeURIComponent(mid)}`;
+  const res = await fetch(url, { method: "POST", headers: { Accept: "application/json" } });
+  if (!res.ok) throw new Error(`bind ${res.status}`);
+  return res.json();
+}
+
 /* ------------------------------------------------------------------ pcm */
 
 /** Float32 [-1,1] at `from` Hz -> Int16 little-endian at `to` Hz. Nearest-sample: the mic is
@@ -463,6 +485,8 @@ export async function start(opts = {}) {
     sent: 0, // frames that did go up
     settings: null, // what getUserMedia actually applied
     muted: false, // the rider shut the mic himself; the track is disabled, not a flag we consult
+    session: "", // the id the tool URLs carry when this socket opened with no manual
+    first: "", // the rest of the wake utterance, injected once the settings are applied
   };
   current = session;
 
@@ -525,6 +549,28 @@ export async function start(opts = {}) {
     level: () => (session.muted ? 0 : session.level),
     out: () => (session.play ? session.play.level() : 0),
     status: () => session.status,
+    /** The session id the tool URLs carry when this socket opened with no vehicle chosen. */
+    session: () => session.session,
+    /**
+     * A vehicle has been chosen mid-conversation. The tool URLs already point at this session, so
+     * the API side is already right the moment it is bound; this hands the model the new book's
+     * grounding rules down the SAME socket. No reconnect, no lost conversation, no second greeting.
+     */
+    rebind(info) {
+      if (session.dead || !session.ws || session.ws.readyState !== WebSocket.OPEN) return false;
+      session.pages = Number(info && info.pages) || session.pages;
+      session.page = 0;
+      const prompt = info && info.prompt;
+      if (prompt) session.ws.send(JSON.stringify({ type: "UpdatePrompt", prompt: String(prompt) }));
+      return true;
+    },
+    /** Type a turn in, the same path a spoken one takes. The wake word's utterance arrives here. */
+    inject(text) {
+      const said = String(text || "").trim();
+      if (session.dead || !session.ws || session.ws.readyState !== WebSocket.OPEN || !said) return false;
+      session.ws.send(JSON.stringify({ type: "InjectUserMessage", content: said }));
+      return true;
+    },
     /** Everything the echo harness and VOICE.md quote. Not used by the UI. */
     audio: () => ({
       constraints: session.settings,
@@ -598,12 +644,17 @@ async function run(session, opts, say) {
   const [config, token] = tuning.settings
     ? [tuning.settings, { scheme: "token", key: "harness" }]
     : await Promise.all([
-        T.voiceSettings(opts.manualId, opts.bikeId),
+        // No manual id means no vehicle has been chosen yet, which is now a real way to start:
+        // the API answers with the open session's Settings, every tool registered and the
+        // manual-bound ones answering "no_manual_yet" until select_vehicle binds one.
+        opts.manualId ? T.voiceSettings(opts.manualId, opts.bikeId) : openSettings(),
         relay ? null : T.deepgramToken(),
       ]);
   if (session.dead) return;
   if (!config || !config.settings) throw new Error("no agent settings");
   session.pages = Number(config.pages) || 0;
+  session.session = String(config.session || "");
+  session.first = String(opts.first || "").trim();
   let url = relay;
   let protocols;
   if (!relay) {
@@ -671,7 +722,7 @@ async function run(session, opts, say) {
     } catch {
       return;
     }
-    handle(session, ws, msg, say);
+    handle(session, ws, msg, say, opts);
   };
 
   ws.onerror = () => say({ type: "error", message: "voice connection failed" });
@@ -686,12 +737,21 @@ async function run(session, opts, say) {
 }
 
 /** One server event. Everything the drawer shows comes through here. */
-function handle(session, ws, msg, say) {
+function handle(session, ws, msg, say, opts) {
   switch (msg.type) {
     case "Welcome":
       break;
     case "SettingsApplied":
       status(session, "listening", say);
+      // "Mechanica, I'm working on a YZF R1" is ONE sentence. The wake word opened the socket and
+      // the rest of it is the first question - it goes in as a real user turn the moment the
+      // agent is ready, so he never has to say the bike twice.
+      if (session.first) {
+        const said = session.first;
+        session.first = "";
+        say({ type: "text", role: "user", text: said });
+        ws.send(JSON.stringify({ type: "InjectUserMessage", content: said }));
+      }
       break;
     // Barge-in. Flux (listen v2) announces a turn with StartOfTurn; nova-3 sends
     // UserStartedSpeaking. Whichever arrives, the buffered answer dies on the spot - and so does
@@ -761,7 +821,7 @@ function handle(session, ws, msg, say) {
       // that a lookup is running at all - the one thing it needs to know to cover the silence.
       for (const call of msg.functions || []) {
         if (call && call.client_side === false) session.lookups += 1;
-        run_function(session, ws, call, say);
+        run_function(session, ws, call, say, opts);
       }
       status(session, "thinking", say);
       // Only if the turn began before this client was listening (a reconnect mid-turn).
@@ -804,10 +864,19 @@ function turnTo(session, page, say, extra) {
 }
 
 /**
- * The only function this browser runs. Everything grounded is server-side — Deepgram calls the
- * API's own /voice/tools/* endpoints — so `client_side` should only ever be show_page.
+ * The functions this browser runs.
+ *
+ * Everything GROUNDED is server-side — Deepgram calls the API's own /voice/tools/* endpoints, so
+ * the manual's text never passes through the tab. What is left here is the two things the tab is
+ * the only place to do: move the reader (show_page), and drive the app (find_vehicle,
+ * select_vehicle, open_manual, open_parts, go_back). The roster of 27k vehicles is already in
+ * this tab and already indexed for fuzzy search, and the navigation is the bus's; an API round
+ * trip for either would be slower and would not work offline.
+ *
+ * ASYNC, because select_vehicle downloads and indexes a manual. The response goes back when the
+ * work is done, which is what keeps the agent from announcing a page before there is a book.
  */
-function run_function(session, ws, call, say) {
+async function run_function(session, ws, call, say, opts) {
   if (!call || call.client_side === false) return;
   let args = {};
   try {
@@ -828,8 +897,18 @@ function run_function(session, ws, call, say) {
     content = turnTo(session, page, say, { steps, highlight })
       ? `Page ${page} is on the rider's screen.`
       : "No such page.";
+  } else if (typeof opts.onCall === "function") {
+    // The app's own tools. voice-session.js owns them, because it is the only module that knows
+    // the bus and the catalogue; this file only carries them across the socket.
+    try {
+      const out = await opts.onCall(call.name, args);
+      content = typeof out === "string" ? out : JSON.stringify(out ?? {});
+    } catch (err) {
+      // A failed tool is a thing the agent should say, not a thing that ends the turn.
+      content = JSON.stringify({ error: String((err && err.message) || err) });
+    }
   }
-  if (ws.readyState !== WebSocket.OPEN) return;
+  if (session.dead || !ws || ws.readyState !== WebSocket.OPEN) return;
   ws.send(JSON.stringify({ type: "FunctionCallResponse", id: call.id, name: call.name, content }));
 }
 

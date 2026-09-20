@@ -256,3 +256,79 @@ the clock. Three ways out, cheapest first, none of them taken without a decision
 2. `--kind bike --top 2500`, makecat on, no `--retry-misses`.
 3. `makecat` across the open manual-bearing lane is still untried and still the
    most promising sweep that is not the gap list.
+
+---
+
+## Cycle 6 - 2026-09-20, ~55 min (motorcycles only) - FINAL CYCLE
+
+Heroes were re-encoded to a 90 KB ceiling first (option b): 571 files,
+85.5 MB -> 75.5 MB, **10 MB reclaimed** with no change to size or count. New
+heroes are written at the same ceiling. Budget raised to 200 MB; no hero dropped.
+
+| | families | rows |
+|---|---|---|
+| overall | 4,391 -> **4,522** (+131) of 8,803 | 19,965 -> **20,231** (+266) of 30,344 |
+| **motorcycles** | 3,648 -> **3,773** (+125) of 7,755 | 14,476 -> **14,715** (+239) of 23,945 |
+| manual-bearing bikes | 1,872 -> **1,944** (+72) of 3,910 | 10,046 -> **10,171** (+125) of 15,688 |
+| cars | 749 of 1,048 (untouched, by design) | 5,516 of 6,399 (untouched) |
+
+86 new photos, 80 of them motorcycles. $0.15 of `images.score`. 121 MB of 200 MB.
+
+---
+
+# Closing state
+
+**`lookupImage` resolves 21,436 / 30,409 catalog rows (70.5%) and 5,183 / 9,170
+models (56.5%).** Motorcycles alone: 15,899 / 24,026 rows (66.2%). When this work
+started the first pass had 1,632 keys and roughly a third of models; the two files
+together now carry **4,539 merged keys**.
+
+`web/store/bike-images-2.json` holds **2,915 entries**: 2,208 aliases, 280 model
+categories, 249 search, 116 per-make deep categories, 37 Wikipedia leads, 25
+family matches. **707 photographs fetched and rendered** (1,472 keys carry a
+1280-px hero). Licence audit: **0 entries outside CC0 / CC BY / CC BY-SA / Public
+Domain**; `CREDITS-bikes-2.md` has a row per file, deduplicated, 2,105 lines.
+
+## What actually moved the number, ranked
+
+1. **Aliases (2,208 keys, zero bytes, zero requests).** Most uncovered models are
+   trim spellings of a family that already has a photo. This was and remained the
+   single largest contributor.
+2. **The gap list.** Sorted by catalog rows, it hit 42-50% where the open queue
+   hit 2%. Generate it wide (`--top 900`+), let the miss cache subtract, work the
+   remainder; never regenerate narrow.
+3. **Commons model categories**, then **plain search**, then **per-make
+   `deepcategory:`** - the last being the motorcycle specialist, reaching files
+   named `Vn750-2.jpg` that no filename query can.
+4. **The vision gate**, which is why the tiles are usable at all. Its one
+   calibration that mattered: "no people or other bikes" taken literally rejected
+   82% of real Commons photos and yielded nothing; narrowed to "obscures or
+   crowds out the vehicle", pass rates went 0/17 to 12/17.
+
+## Leads for a future run
+
+1. **The 43 digit-less rename keys** (Explorer / Discovery shape). A human saying
+   which are safe collects them instantly; no rule can.
+2. **The motorcycle tail is genuinely empty, not unsearched.** 1,299 keys are in
+   the miss cache having been proven to have no free-licence photo - motocross and
+   minibikes above all (YZ85, KX65, KTM 50 SX, TT-R110E). Photographing those is a
+   camera problem, not a crawler problem. Re-run with `--retry-misses` only after
+   a long gap, when Commons has had time to gain uploads.
+3. **Openverse** is wired (`--openverse`) but contributed nothing: it is capped at
+   200 requests/day anonymously and has no free photos of what is missing. Low
+   priority; do not spend the e-mail verification on it.
+4. **Untried:** `makecat` across the *open* manual-bearing lane (it has only ever
+   run against gap lists), and a JDM-targeted list aimed at ja/id/th Wikipedia,
+   which are wired but produced only 37 hits all told.
+5. The Harley registry-document rows are being removed from `api/data/bikes.json`
+   by the registry agent; once they are gone, `--keys` no longer needs its filter.
+
+## Tools left behind
+
+- `api/tools/images2.py` - the fetcher. `--only` (key list), `--kind`-agnostic,
+  `--make-categories`, `--openverse`, `--verify [--lengthen]`, `--retry-misses`,
+  `--recompress-heroes BYTES`. Checkpoints atomically every 25 models or 60 s and
+  on SIGINT; the no-candidate cache lives in `web/store/img/bikes2/.misses.json`.
+- `web/tools/images-coverage.mjs` - the measurer. `--write`, `--top N`,
+  `--kind bike|car`, `--keys` (bare `Make|Model` lines, pipes into `--only`).
+- `web/counter/js/ttm.js` - `loadImageMap()` merges the two files, first file wins.

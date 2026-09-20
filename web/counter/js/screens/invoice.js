@@ -42,12 +42,50 @@ const RECHECK_MS = 10000; // the backend keeps fetching in the background; look 
 const DEAD_MS = 2000; // an answer this fast and this empty is a missing route, not a search
 const MENTION_CAP = 12;
 
+/**
+ * Three controls, not four. Price is one button that carries its own direction: it starts
+ * descending and every tap on it turns the arrow over. Retailer and Condition are plain.
+ */
 const SORTS = [
-  { id: "price-asc", label: "Price ↑" },
-  { id: "price-desc", label: "Price ↓" },
+  { id: "price", label: "Price" },
   { id: "retailer", label: "Retailer" },
   { id: "condition", label: "Condition" },
 ];
+
+/** Retailer strings that arrive SHOUTING, put back into the case a person would write. */
+const KEEP_CAPS = new Set([
+  "OEM", "ATV", "UTV", "LED", "ABS", "PSI", "HP", "USA", "EU", "UK", "JP", "DOT", "CV", "CVT",
+  "ECU", "EFI", "GPS", "TPS", "MX", "SAE", "ISO", "NGK", "KTM", "BMW", "OE", "XL", "XXL", "ATC",
+]);
+/** ...and the words that stay lowercase inside such a title, unless they open it. */
+const LOWER_WORDS = new Set([
+  "a", "an", "and", "as", "at", "by", "each", "for", "full", "gallon", "in", "kit", "liter",
+  "litre", "of", "or", "pack", "per", "piece", "pieces", "plus", "quart", "quarts", "set",
+  "semi", "shipping", "stock", "synthetic", "the", "to", "with", "x",
+  "business", "day", "days", "delivery", "returns",
+]);
+
+/**
+ * Sentence case for a string that came in as capitals. A string that already carries any
+ * lowercase letter is left exactly as its retailer wrote it: guessing at a mixed-case name
+ * is how "iPhone" becomes "Iphone".
+ */
+function sentence(text) {
+  const raw = String(text || "");
+  if (!raw || /[a-z]/.test(raw)) return raw;
+  let first = true;
+  return raw.replace(/[^\s]+/g, (word) => {
+    const core = word.replace(/[^A-Za-z0-9]/g, "");
+    const lead = first;
+    first = false;
+    if (!core) return word;
+    if (/\d/.test(core)) return word;                       // 10W40, 5W-30, 2.5
+    if (KEEP_CAPS.has(core)) return word;                    // OEM, HP
+    const lowered = word.toLowerCase();
+    if (!lead && LOWER_WORDS.has(core.toLowerCase())) return lowered;
+    return lowered.replace(/[a-z]/, (c) => c.toUpperCase());
+  });
+}
 
 const KNOWN_ICON = new Set(PART_ICONS);
 
@@ -63,7 +101,9 @@ let query = "";
 let view = "grid";
 let current = null; // the row the detail is showing
 let head = { bike: "", manual: "", manualId: "" };
-let sort = "price-asc";
+let sort = "price";
+/** The founder's default: most expensive first, one tap to turn it over. */
+let priceDesc = true;
 let shopFilter = "";
 let allMentions = false;
 
@@ -635,20 +675,25 @@ function paintOffers(list) {
 
   const sorts = h("div", { class: "pv-sorts", role: "group", "aria-label": "Sort" });
   for (const opt of SORTS) {
-    sorts.append(
-      h("button", {
-        class: "pv-pill",
-        type: "button",
-        text: opt.label,
-        "aria-pressed": sort === opt.id ? "true" : "false",
-        on: {
-          click: () => {
-            sort = opt.id;
-            paintOffers(list);
-          },
+    const on = sort === opt.id;
+    const isPrice = opt.id === "price";
+    const btn = h("button", {
+      class: isPrice ? "pv-pill pv-sort-price" : "pv-pill",
+      type: "button",
+      "aria-pressed": on ? "true" : "false",
+      "aria-label": isPrice ? (priceDesc ? "Price, high to low" : "Price, low to high") : opt.label,
+      on: {
+        click: () => {
+          // A second tap on Price turns the arrow over; on the others it is just a choice.
+          if (isPrice && on) priceDesc = !priceDesc;
+          sort = opt.id;
+          paintOffers(list);
         },
-      })
-    );
+      },
+    });
+    btn.append(h("span", { text: opt.label }));
+    if (isPrice) btn.append(arrowGlyph(priceDesc));
+    sorts.append(btn);
   }
   box.append(sorts);
 
@@ -705,10 +750,10 @@ function condRank(value) {
 
 function sortOffers(list) {
   const out = list.slice();
-  if (sort === "price-desc") out.sort((a, z) => usd(z) - usd(a));
-  else if (sort === "retailer")
+  if (sort === "retailer")
     out.sort((a, z) => String(a.retailer || "").localeCompare(String(z.retailer || "")) || usd(a) - usd(z));
   else if (sort === "condition") out.sort((a, z) => condRank(a.condition) - condRank(z.condition) || usd(a) - usd(z));
+  else if (priceDesc) out.sort((a, z) => usd(z) - usd(a));
   else out.sort((a, z) => usd(a) - usd(z));
   return out;
 }
@@ -724,6 +769,24 @@ function money(value, currency) {
   }
 }
 
+/** The direction arrow inside the Price button: down is descending, up is ascending. */
+function arrowGlyph(down) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("class", down ? "pv-arrow" : "pv-arrow is-up");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", "M12 5v14M5 12l7 7 7-7");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "currentColor");
+  path.setAttribute("stroke-width", "2.2");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+  svg.append(path);
+  return svg;
+}
+
 /** One row per offer — several from the same seller is normal, they are different products. */
 function offerRow(offer) {
   const a = h("a", {
@@ -732,15 +795,15 @@ function offerRow(offer) {
     target: "_blank",
     rel: "noopener",
   });
-  a.append(h("span", { class: "pv-o-shop", text: String(offer.retailer || "") }));
+  a.append(h("span", { class: "pv-o-shop", text: sentence(offer.retailer) }));
 
   const mid = h("span", { class: "pv-o-mid" });
-  mid.append(h("span", { class: "pv-o-title", text: String(offer.title || "") }));
-  if (offer.variant) mid.append(h("span", { class: "pv-o-var", text: String(offer.variant) }));
+  mid.append(h("span", { class: "pv-o-title", text: sentence(offer.title) }));
+  if (offer.variant) mid.append(h("span", { class: "pv-o-var", text: sentence(offer.variant) }));
 
   const meta = h("span", { class: "pv-o-meta" });
-  if (offer.condition) meta.append(h("span", { class: "pv-tag", text: String(offer.condition) }));
-  if (offer.shipping) meta.append(h("span", { class: "pv-tag", text: String(offer.shipping) }));
+  if (offer.condition) meta.append(h("span", { class: "pv-tag", text: sentence(offer.condition) }));
+  if (offer.shipping) meta.append(h("span", { class: "pv-tag", text: sentence(offer.shipping) }));
   if (offer.inStock === true) meta.append(h("span", { class: "pv-tag is-in", text: "In stock" }));
   else if (offer.inStock === false) meta.append(h("span", { class: "pv-tag is-out", text: "Out" }));
   if (meta.childElementCount) mid.append(meta);

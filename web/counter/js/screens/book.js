@@ -13,6 +13,8 @@ import {
   releaseCanvas,
 } from "../pdf.js";
 import * as voice from "../voice-session.js";
+import { openConditions } from "../climate.js";
+import { mount as mountViewer, modelFor, partFor } from "../viewer3d.js";
 
 const STAGGER = 60;
 const MAX_W = 900;
@@ -37,6 +39,8 @@ const ZOOM_SETTLE = 220;
 const STALL_MS = 25000;
 const RING_R = 22;
 const RING_C = 2 * Math.PI * RING_R;
+/** Below this the reader is the whole screen, exactly as it is on a phone. */
+const WIDE = "(min-width: 1100px)";
 
 /* ---------- module state ---------- */
 
@@ -61,6 +65,12 @@ let askInput = null;
 let askBar = null;
 let askBarFill = null;
 let askHits = null;
+let climateBtn = null;
+let stageEl = null;
+let vxEl = null;
+let viewer = null;
+let viewerKey = null;
+let wideQ = null;
 
 let jobRec = null;
 let manualRec = null;
@@ -273,6 +283,17 @@ function build(root) {
     text: "Parts",
   });
 
+  // Climate Fit: the manual's own environment-conditional rules, resolved against the
+  // measured climate where the vehicle lives. It came off this row on 2026-09-20 as "COND",
+  // a word nobody could read; the founder's newer instruction is to spell it out, so it is
+  // back, as "Conditions".
+  climateBtn = el("button", {
+    class: "bar-btn bar-word book-climate",
+    type: "button",
+    "aria-label": "Conditions",
+    text: "Conditions",
+  });
+
   // The bar carries only identity and position — which manual, which chapter, which page.
   // It is never hidden, so no gesture can leave the reader without an answer to "where am I".
   barEl.append(backBtn, coverEl, titleEl, stampEl);
@@ -283,7 +304,7 @@ function build(root) {
   // resolves are next to the parts they are about. A button in the reader that opens a sheet
   // nobody can name is a button that costs a tap and teaches nothing.
   actsEl = el("div", { class: "book-acts" });
-  actsEl.append(modeBtn, askBtn, micBtn, partsBtn);
+  actsEl.append(modeBtn, askBtn, micBtn, climateBtn, partsBtn);
 
   viewEl = el("div", { class: "page-view" });
   padEl = el("div", { class: "page-pad" });
@@ -293,6 +314,13 @@ function build(root) {
 
   stripEl = el("nav", { class: "page-strip", "aria-label": "Pages" });
   outlineEl = el("div", { class: "book-outline", hidden: true });
+
+  // Wide desktop only: the bike on the left, compact and sticky, still showing which part
+  // the open section is about. book.css keeps it display:none below 1100 px, so the phone
+  // reader is byte-for-byte the layout it was.
+  stageEl = el("aside", { class: "book-stage" });
+  vxEl = el("div", { class: "book-vx" });
+  stageEl.append(vxEl);
 
   askSheet = el("div", { class: "sheet ask-sheet", hidden: true, role: "dialog", "aria-label": "Ask" });
   askInput = el("input", {
@@ -308,12 +336,13 @@ function build(root) {
   askHits = el("div", { class: "ask-hits" });
   askSheet.append(askInput, askBar, askHits);
 
-  root.append(barEl, viewEl, outlineEl, stripEl, actsEl, askSheet);
+  root.append(barEl, stageEl, viewEl, outlineEl, stripEl, actsEl, askSheet);
 
   backBtn.addEventListener("click", onBack);
   coverEl.addEventListener("click", onContents);
   modeBtn.addEventListener("click", toggleMode);
   partsBtn.addEventListener("click", () => openOverlay("invoice"));
+  climateBtn.addEventListener("click", openConditions);
   micBtn.addEventListener("click", onMic);
   askBtn.addEventListener("click", onAskToggle);
   askInput.addEventListener("keydown", onAskKey);
@@ -1565,6 +1594,62 @@ async function reviveJob() {
   return job;
 }
 
+/* ---------- the desktop bike panel ---------- */
+
+/** The part the open section is about, so the model can point at it. */
+function jobPart(job) {
+  if (!job) return null;
+  try {
+    return partFor(job.title || job.chapter || "", job.keywords || []) || null;
+  } catch {
+    return null;
+  }
+}
+
+function stopStage() {
+  if (!viewer) return;
+  try {
+    viewer.dispose();
+  } catch {
+    /* already gone */
+  }
+  viewer = null;
+  viewerKey = null;
+}
+
+/**
+ * Mounts (or disposes) the left panel. Called on every enter and every repaint, and on the
+ * breakpoint itself, so a window dragged narrow gives its WebGL context straight back.
+ */
+function syncStage() {
+  if (!stageEl) return;
+  const wide = wideQ ? wideQ.matches : false;
+  stageEl.hidden = !wide;
+  if (!wide || !state.bikeId) {
+    stopStage();
+    return;
+  }
+  const key = modelFor(Q.bike(state.bikeId) || state.bikeId);
+  if (!viewer || viewerKey !== key) {
+    stopStage();
+    viewerKey = key;
+    try {
+      viewer = mountViewer(vxEl, key, {
+        onContextLost: () => { stopStage(); syncStage(); },
+      });
+    } catch {
+      viewer = null;
+    }
+  }
+  if (!viewer) return;
+  const part = jobPart(jobRec);
+  try {
+    viewer.highlight(part);
+  } catch {
+    /* the scene is still booting; mount() replays the wish when it lands */
+  }
+}
+
 async function enterScreen() {
   if (!state.bikeId) {
     bounce("identify");
@@ -1594,11 +1679,22 @@ async function enterScreen() {
     return;
   }
   await paint(job);
+  if (my !== enterGen) return;
+  syncStage();
 }
 
 registerScreen("book", {
   mount(root) {
     build(root);
+    if (typeof window.matchMedia === "function") {
+      wideQ = window.matchMedia(WIDE);
+      if (typeof wideQ.addEventListener === "function") {
+        wideQ.addEventListener("change", () => {
+          if (document.body.getAttribute("data-here") === "book") syncStage();
+          else stopStage();
+        });
+      }
+    }
   },
 
   enter: enterScreen,
@@ -1618,6 +1714,7 @@ registerScreen("book", {
 
   leave() {
     enterGen += 1;
+    stopStage();
     cancelTap();
     // The assistant is deliberately NOT ended here. Leaving the manual is a step in the job,
     // not the end of it, and a voice that hangs up when he walks back to the parts list is the

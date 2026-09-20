@@ -27,6 +27,7 @@ import re
 import threading
 from itertools import zip_longest
 from urllib.parse import quote
+from uuid import uuid4
 
 import httpx
 from fastapi import APIRouter, Depends, Header, HTTPException, Query
@@ -631,7 +632,9 @@ YOUR FUNCTIONS
   word for word, one step per entry, in the manual's own order, and they are written under your
   answer on his screen - which is the only way he can read them, because your own sentence is
   gone the moment you have said it. Never write a step the result did not print, never renumber
-  them, never tidy the wording, and still say your one sentence out loud afterwards."""
+  them, never tidy the wording, and still say your one sentence out loud afterwards.
+
+{_vehicle_rules()}"""
 
 
 def _vehicle_rules() -> str:
@@ -855,13 +858,80 @@ def _functions(manual_id: str, pages: int, session: str = "") -> list[dict]:
     ]
 
 
+def _open_settings() -> dict:
+    """A session with no vehicle yet: the same socket, the same tools, nothing to be grounded in.
+
+    It exists because "Mechanica, I'm working on a YZF R1" has to work as the FIRST thing anyone
+    says. The manual-bound tools are registered from the start - Deepgram fixes the function list
+    when Settings is applied and there is no way to add one later without dropping the socket -
+    and they answer "no_manual_yet" until select_vehicle binds this session to a book.
+    """
+    session = uuid4().hex
+    return {
+        "url": AGENT_WS,
+        "sampleRate": AGENT_RATE,
+        "manualId": "",
+        "bike": "",
+        "pages": 0,
+        "keyterms": 0,
+        "session": session,
+        "settings": {
+            "type": "Settings",
+            "audio": {
+                "input": {"encoding": "linear16", "sample_rate": AGENT_RATE},
+                "output": {"encoding": "linear16", "sample_rate": AGENT_RATE, "container": "none"},
+            },
+            "agent": {
+                "language": "en",
+                "listen": {"provider": dict(LISTEN)},
+                "think": {
+                    "provider": {"type": "open_ai", "model": THINK_MODEL},
+                    "prompt": _prompt_open(),
+                    # pages is unknown, so show_page's bound is the client's to enforce once it has
+                    # a manual - it already bounds-checks every page against `pages`.
+                    "functions": _functions("", 0, session),
+                },
+                "speak": {"provider": {"type": "deepgram", "model": SPEAK_MODEL}},
+                "greeting": "Mechanica. Which bike are you on?",
+            },
+        },
+    }
+
+
+@router.post("/session/{session_id}/manual")
+def bind(session_id: str, manualId: str):
+    """The browser binding a running session to the manual select_vehicle just chose.
+
+    This is the whole of the "no reconnect" story: the tool URLs already carry this session id, so
+    the next find_procedure lands on the right book without the socket ever being dropped. The
+    prompt follows separately, as an UpdatePrompt down the same socket.
+    """
+    manual = _manual(manualId)
+    bind_session(session_id, manual.id)
+    rec = _bike(manual, None)
+    bike = _label(manual, rec)
+    threading.Thread(target=ask_mod.warm, args=(manual.id,), daemon=True).start()
+    return {
+        "ok": True,
+        "manualId": manual.id,
+        "bike": bike,
+        "pages": manual.pages,
+        # The new grounding rules for this book, for the client to send as UpdatePrompt.
+        "prompt": _prompt(manual, bike, _digest(manual)),
+    }
+
+
 @router.get("/agent-settings")
-def agent_settings(manualId: str, bikeId: str | None = None):
+def agent_settings(manualId: str | None = None, bikeId: str | None = None):
     """The whole Deepgram `Settings` message for one manual, plus the socket to send it down.
 
     The browser gets no prompt to edit, no model name to swap and no tool URL to forge: it opens the
     socket, forwards `settings` unchanged, and handles exactly one function itself (show_page).
+
+    With no manualId, the mechanic has not chosen a vehicle yet — see _open_settings.
     """
+    if not manualId:
+        return _open_settings()
     manual = _manual(manualId)
     rec = _bike(manual, bikeId)
     bike = _label(manual, rec)

@@ -2,9 +2,9 @@
 
 Generated 2026-09-20 by `node web/tools/images-coverage.mjs --write`. Re-run it after an image pass.
 
-Coverage: **21130/30389** catalog rows (69.5%) and **5035/9155** distinct models (55.0%) resolve to a photo through `lookupImage` in web/counter/js/ttm.js.
+Coverage: **21436/30409** catalog rows (70.5%) and **5183/9170** distinct models (56.5%) resolve to a photo through `lookupImage` in web/counter/js/ttm.js.
 
-Still uncovered: 4120 models over 9259 rows. The 200 worth shooting first,
+Still uncovered: 3987 models over 8973 rows. The 200 worth shooting first,
 by how many catalog rows go without a picture:
 
 | rows | make | model |
@@ -73,7 +73,6 @@ by how many catalog rows go without a picture:
 | 12 | Honda | TRX250X |
 | 12 | Kawasaki | KLX 140 |
 | 12 | Kawasaki | KX 100 |
-| 12 | Yamaha | XT660X |
 | 12 | Zero | S |
 | 12 | Harley-Davidson | FLHXSE |
 | 12 | Yamaha | XMAX 250 |
@@ -190,7 +189,6 @@ by how many catalog rows go without a picture:
 | 8 | Yamaha | NVX155 |
 | 8 | Acura | ILX |
 | 8 | Acura | RDX |
-| 8 | Honda | SHADOW750 |
 | 8 | Honda | ベンリィCD50 |
 | 8 | Toyota | Pixis Joy |
 | 7 | KTM | 150 XC-W |
@@ -209,6 +207,8 @@ by how many catalog rows go without a picture:
 | 7 | Honda | CRF1100 (Africa Twin) |
 | 7 | Kawasaki | KLX140 |
 | 7 | Kawasaki | VULCAN 500 |
+| 7 | Triumph | Speed Triple 1200 RS |
+| 7 | Suzuki | V-Strom 650 & V-Strom 650XT |
 
 ## What this list is and is not
 
@@ -217,7 +217,7 @@ reach - not a spelling the ladder misses, but a photo nobody has taken yet. The 
 crosses a digit run, so a size with no photo of its own stays on this list rather than borrowing
 its sibling's: a YZF-R6 never gets the R1's picture and a CB500F never gets the CB650's.
 
-Of the 4120, **68** do have a photo filed under a *longer* name of the same make and
+Of the 3987, **64** do have a photo filed under a *longer* name of the same make and
 the same displacement - "V-STAR 650" against `yamaha|v-star-650-classic`. The ladder shortens a
 name but never lengthens one, because the same rule would hand Land Rover Discovery the Discovery
 Sport's photo and Ford Explorer the Explorer Sport Trac's. Renaming those keys in the image files

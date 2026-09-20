@@ -36,7 +36,8 @@
  * and a phone that is listening after the app is gone is worse than that.
  */
 
-import { on as busOn, state as busState } from "./bus.js";
+import { on as busOn, state as busState, set as busSet, go, back, openOverlay } from "./bus.js";
+import * as Q from "./ttm.js";
 import * as agent from "./voice-deepgram.js";
 import { mountOrb } from "./voice-orb.js";
 
@@ -215,6 +216,181 @@ function chipFor(text) {
   return tail ? `p. ${named[1]} · ${tail}` : `p. ${named[1]}`;
 }
 
+/* ------------------------------------------------------------------ driving the app */
+
+/**
+ * The app's own tools, run here because this is the only module that knows both the bus and the
+ * catalogue. They are declared in api/app/voice.py and marked client-side there; nothing about
+ * them travels to the API except, for select_vehicle, the one line that binds the session to a
+ * manual so the grounded tools point at the right book.
+ *
+ * Everything they return is JSON the model reads. It is deliberately small and deliberately
+ * spoken-shaped: a year list, a name, a state — never an id the model might read out loud, and
+ * never a sentence for it to repeat, because the prompt owns the wording.
+ */
+const CANDIDATES = 6;
+
+function nameOf(rec) {
+  if (!rec) return "";
+  return [rec.make, rec.model, rec.year].filter(Boolean).join(" ");
+}
+
+/** Every catalogue row that could be the machine he just named, with its years. */
+function findVehicle(args) {
+  const make = String(args.make || "").trim();
+  const model = String(args.model || "").trim();
+  const year = Math.floor(Number(args.year) || 0);
+  const query = [make, model].filter(Boolean).join(" ").trim();
+  if (!query) return { candidates: [], say: "Which machine is it?" };
+
+  const hits = Q.findBikes(query, { limit: 40 }) || [];
+  // Group by make+model so "which year?" is one question about one machine, not six rows that
+  // differ only in a number. The years are what he is actually being asked for.
+  const groups = new Map();
+  for (const rec of hits) {
+    const key = `${rec.make} ${rec.model}`.toLowerCase();
+    let group = groups.get(key);
+    if (!group) {
+      group = { make: rec.make, model: rec.model, rows: [] };
+      groups.set(key, group);
+    }
+    group.rows.push(rec);
+  }
+
+  const out = [];
+  for (const group of [...groups.values()].slice(0, CANDIDATES)) {
+    const rows = group.rows.slice().sort((a, z) => Number(z.year || 0) - Number(a.year || 0));
+    const exact = year ? rows.find((r) => Number(r.year) === year) : null;
+    // With a manual beats without: a year whose manual exists is a year he can actually work in,
+    // and "nearest year that has one" is the answer the prompt is told to give.
+    const withManual = rows.filter((r) => Q.manualState(r) !== "none");
+    const pick = exact || (year ? nearest(withManual.length ? withManual : rows, year) : null) || withManual[0] || rows[0];
+    out.push({
+      id: pick.id,
+      name: nameOf(pick),
+      make: group.make,
+      model: group.model,
+      years: rows.map((r) => Number(r.year)).filter(Boolean),
+      yearsWithManual: withManual.map((r) => Number(r.year)).filter(Boolean),
+      manual: Q.manualState(pick),
+      exactYear: Boolean(exact),
+    });
+  }
+  return { candidates: out, asked: { make, model, year: year || null } };
+}
+
+function nearest(rows, year) {
+  let best = null;
+  let gap = Infinity;
+  for (const rec of rows) {
+    const d = Math.abs(Number(rec.year || 0) - year);
+    if (d < gap) {
+      gap = d;
+      best = rec;
+    }
+  }
+  return best;
+}
+
+/**
+ * Put the app on one vehicle and get its manual. The download and the indexing are the slow part
+ * — seconds, not milliseconds — so the column says "getting the manual…" while it runs and the
+ * function does not answer until there is something to answer about. The prompt knows not to
+ * narrate the wait.
+ */
+async function selectVehicle(args) {
+  const id = String(args.id || "").trim();
+  const rec = Q.bike(id);
+  if (!rec) return { error: "unknown_vehicle", hint: "Call find_vehicle and use one of its ids." };
+
+  const name = nameOf(rec);
+  ctx.bikeId = id;
+  ctx.bike = name;
+  busSet({ bikeId: id, vin: null, systemId: null, partId: null, jobId: null, page: null });
+  go("confirm");
+  shout({ kind: "vehicle", bikeId: id, name });
+  if (orb) orb.say("assistant", `${name}. Getting the manual…`, false);
+
+  let made = null;
+  try {
+    made = await Q.ensureManual(id, (info) => {
+      const total = Number(info && info.pages) || 0;
+      const done = Number(info && info.done) || 0;
+      shout({ kind: "manual-progress", done, total });
+    });
+  } catch {
+    made = null;
+  }
+  const manualId = (made && made.id) || rec.manualId || "";
+  if (!manualId) {
+    go("pick");
+    return { ok: true, name, manual: "none", say: "No manual for that one yet." };
+  }
+
+  ctx.manualId = manualId;
+  busSet({ manualId });
+  go("pick");
+
+  // The socket is not dropped and the conversation is not lost: the tool URLs already carry this
+  // session id, so binding it here points every grounded tool at the new book, and the new
+  // grounding rules go down the same socket as an UpdatePrompt.
+  let bound = null;
+  if (live && live.session()) {
+    try {
+      bound = await agent.bindSession(live.session(), manualId);
+    } catch {
+      bound = null;
+    }
+    if (bound) live.rebind(bound);
+  }
+  shout({ kind: "manual", manualId, name, pages: (bound && bound.pages) || 0 });
+  return {
+    ok: true,
+    name,
+    manual: "ready",
+    pages: (bound && bound.pages) || 0,
+    say: `${name}, manual is up.`,
+  };
+}
+
+function openManual(args) {
+  if (!ctx.bikeId) return dict();
+  const page = Math.floor(Number(args.page) || 0);
+  if (page > 0) {
+    // The same synthetic-job path a reload on #book takes: the reader builds one from these two.
+    busSet({ jobId: `${ctx.bikeId}/voice-p${page}`, page });
+  }
+  go("book");
+  return { ok: true, page: page || null };
+}
+
+function openParts(args) {
+  if (!ctx.bikeId) return dict();
+  const query = String(args.query || "").trim();
+  if (!busState.jobId) busSet({ jobId: `${ctx.bikeId}/voice-parts`, page: busState.page || 1 });
+  go("book");
+  openOverlay("invoice");
+  if (query) shout({ kind: "parts", query });
+  return { ok: true, query: query || null };
+}
+
+function dict() {
+  return { error: "no_manual_yet", say: "Which bike are you on?" };
+}
+
+/** Everything the agent can do to the app, by name. */
+async function call(name, args = {}) {
+  if (name === "find_vehicle") return findVehicle(args);
+  if (name === "select_vehicle") return selectVehicle(args);
+  if (name === "open_manual") return openManual(args);
+  if (name === "open_parts") return openParts(args);
+  if (name === "go_back") {
+    back();
+    return { ok: true };
+  }
+  return { error: "unknown_function" };
+}
+
 /* ------------------------------------------------------------------ the session */
 
 function remember(role, text, part) {
@@ -313,9 +489,14 @@ export function stop() {
   shut();
 }
 
+/**
+ * `first` is the rest of the wake utterance — "Mechanica, I'm working on a YZF R1" opens the
+ * socket and hands over "I'm working on a YZF R1" as the first user turn, so he never says the
+ * bike twice. A session with no manualId is legitimate: that is the whole point of the wake word.
+ */
 export async function start(next = {}) {
   setContext(next);
-  if (!ctx.manualId || isLive()) return isLive();
+  if (isLive()) return true;
   wire();
   starting = true;
   ensureOrb();
@@ -324,7 +505,13 @@ export async function start(next = {}) {
   shout({ kind: "started" });
   shout({ kind: "status", status: "connecting" });
   try {
-    live = await agent.start({ manualId: ctx.manualId, bikeId: ctx.bikeId, on: heard });
+    live = await agent.start({
+      manualId: ctx.manualId,
+      bikeId: ctx.bikeId,
+      first: next.first,
+      on: heard,
+      onCall: call,
+    });
     starting = false;
     orb.setState(live.status() || "listening");
     shout({ kind: "status", status: live.status() || "listening" });

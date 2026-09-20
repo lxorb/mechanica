@@ -20,6 +20,9 @@ from conftest import BMW, KTM
 
 SETTINGS = "/voice/agent-settings"
 SERVER_TOOLS = ["find_procedure", "read_page", "get_spec", "list_parts"]
+# Run in the tab, not here: show_page moves the reader, and the five below drive the app itself -
+# the 27k-vehicle roster and the navigation are already in the browser.
+CLIENT_TOOLS = ["show_page", "find_vehicle", "select_vehicle", "open_manual", "open_parts", "go_back"]
 BASE = "https://ttm.example.test/api"
 
 
@@ -319,7 +322,7 @@ def by_name(agent) -> dict[str, dict]:
 
 def test_every_tool_is_exposed_exactly_once(agent):
     fns = by_name(agent)
-    assert sorted(fns) == sorted([*SERVER_TOOLS, "show_page"])
+    assert sorted(fns) == sorted([*SERVER_TOOLS, *CLIENT_TOOLS])
     assert len(agent["think"]["functions"]) == len(fns)
 
 
@@ -450,8 +453,18 @@ def test_a_body_manual_id_still_wins_so_our_own_callers_are_untouched(client):
     assert r.json() == printed
 
 
-def test_no_manual_anywhere_is_404_rather_than_a_silent_wrong_book(client):
-    assert client.post("/voice/tools/read_page", json={"page": 1}).status_code == 404
+def test_no_manual_anywhere_says_so_rather_than_reading_a_silent_wrong_book(client):
+    """Not a 404 any more, and deliberately.
+
+    A session can now legitimately start with no vehicle chosen - "Mechanica, I'm working on a
+    YZF R1" has to be the first thing anyone can say - so "which book?" is an ordinary answer the
+    model can act on, where an HTTP error closes the turn and makes it apologise for a fault.
+    An unknown manual id is still a 404; only the ABSENCE of one is an answer.
+    """
+    said = client.post("/voice/tools/read_page", json={"page": 1})
+    assert said.status_code == 200
+    assert said.json()["error"] == "no_manual_yet"
+    assert client.post("/voice/tools/read_page?manualId=nope", json={"page": 1}).status_code == 404
 
 
 def test_find_procedure_through_the_deepgram_shape(client, monkeypatch):
@@ -573,3 +586,87 @@ def test_both_doors_shut_is_a_502_that_names_the_missing_scope(client, fake_deep
 
 def test_the_master_key_never_reaches_the_browser(client, fake_deepgram):
     assert "dg-master-key" not in json.dumps(client.post("/voice/deepgram-token").json())
+
+
+# --------------------------------------------------------------- no vehicle yet
+
+
+@pytest.fixture()
+def open_agent(client):
+    """The Settings message for a session opened before any vehicle is chosen."""
+    r = client.get("/voice/agent-settings")
+    assert r.status_code == 200
+    return r.json()
+
+
+def test_a_session_can_start_with_no_vehicle_at_all(open_agent):
+    """"Mechanica, I'm working on a YZF R1" has to be the FIRST thing anyone can say."""
+    assert open_agent["manualId"] == ""
+    assert open_agent["bike"] == ""
+    assert open_agent["session"]
+    assert "Which bike are you on?" in open_agent["settings"]["agent"]["greeting"]
+
+
+def test_the_open_session_registers_every_tool_from_the_start(open_agent):
+    """Deepgram fixes the function list when Settings is applied.
+
+    There is no way to add an endpoint later without dropping the socket, and dropping the socket
+    loses the conversation - so the manual tools are all there from the first second and answer
+    "no_manual_yet" until one is bound.
+    """
+    fns = sorted(f["name"] for f in open_agent["settings"]["agent"]["think"]["functions"])
+    assert fns == sorted([*SERVER_TOOLS, *CLIENT_TOOLS])
+
+
+def test_the_open_session_puts_its_own_id_in_the_tool_urls_where_the_manual_would_be(open_agent):
+    sid = open_agent["session"]
+    for fn in open_agent["settings"]["agent"]["think"]["functions"]:
+        if "endpoint" not in fn:
+            continue
+        assert f"session={sid}" in fn["endpoint"]["url"]
+        assert "manualId=" not in fn["endpoint"]["url"]
+
+
+def test_binding_a_session_points_its_tools_at_a_book_without_reconnecting(client, open_agent):
+    sid = open_agent["session"]
+    before = client.post("/voice/tools/get_spec", params={"session": sid}, json={"name": "torque"})
+    assert before.json()["error"] == "no_manual_yet"
+
+    bound = client.post(f"/voice/session/{sid}/manual", params={"manualId": KTM})
+    assert bound.status_code == 200
+    assert bound.json()["manualId"] == KTM
+    # The new grounding rules travel back with it, for the client to send as UpdatePrompt.
+    assert bound.json()["bike"] in bound.json()["prompt"]
+
+    after = client.post("/voice/tools/get_spec", params={"session": sid}, json={"name": "torque"})
+    assert after.status_code == 200
+    assert "error" not in after.json()
+
+
+def test_an_unknown_manual_cannot_be_bound(client, open_agent):
+    sid = open_agent["session"]
+    assert client.post(f"/voice/session/{sid}/manual", params={"manualId": "nope"}).status_code == 404
+
+
+def test_the_vehicle_tools_run_in_the_browser_not_here(open_agent):
+    """The roster is already in the tab - 27k vehicles, the same fuzzy index the Identify field
+    uses - and the navigation is the bus's. An endpoint for either would be slower and would not
+    work offline."""
+    fns = {f["name"]: f for f in open_agent["settings"]["agent"]["think"]["functions"]}
+    for name in ["find_vehicle", "select_vehicle", "open_manual", "open_parts", "go_back"]:
+        assert "endpoint" not in fns[name], name
+
+
+def test_the_prompt_asks_one_question_and_never_invents_a_vehicle(open_agent):
+    """Every line here replaced a turn that broke: a guessed year, three questions in a row, a
+    Yamaha the catalogue has never heard of, and an id read out loud."""
+    prompt = open_agent["settings"]["agent"]["think"]["prompt"]
+    assert "Which year?" in prompt
+    assert "NEVER invent a vehicle" in prompt
+    assert "Never say an id" in prompt
+    assert "no_manual_yet" in prompt
+
+
+def test_the_vehicle_rules_are_in_the_manual_prompt_too(agent):
+    """He can change machine mid-job, and the agent that has one book open still has to hear it."""
+    assert "RUNNING THE APP FOR HIM" in agent["think"]["prompt"]

@@ -114,13 +114,30 @@
   background: var(--slab);
 }
 
+/* Icons keep their square, words share what is left: "Conditions" spelled out needs the
+   room, and the row's own height (48 px min, 2/6/4 padding) is unchanged - the voice orb
+   docks against it. */
 [data-screen="book"] .book-acts .bar-btn {
   flex: 1 1 0;
   width: auto;
   min-width: 44px;
   height: auto;
   min-height: 44px;
-  border: 2px solid var(--slab-line);
+  padding: 0 4px;
+  border: var(--hair) solid var(--slab-line);
+  border-radius: var(--r-sm);
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+[data-screen="book"] .book-acts .book-ask,
+[data-screen="book"] .book-acts .book-mic {
+  flex: 0 0 52px;
+}
+
+[data-screen="book"] .bar-word {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 [data-screen="book"] .bar-word {
@@ -148,7 +165,8 @@
   content: "";
   position: absolute;
   inset: 5px 8px;
-  border: 2px solid var(--slab-line);
+  border: var(--hair) solid var(--slab-line);
+  border-radius: 3px;
 }
 
 [data-screen="book"] .book-cover.is-back::before {
@@ -249,9 +267,10 @@
   position: relative;
   flex: 0 0 auto;
   width: var(--sheet-w, 100%);
-  margin: 4px 0;
+  margin: 5px 0;
   scroll-snap-align: start;
   background: var(--page);
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -367,8 +386,8 @@
   flex: 0 0 auto;
   min-width: 44px;
   height: 44px;
-  padding: 0 8px;
-  border: 2px solid var(--slab-fg);
+  padding: 0 12px;
+  border: var(--hair) solid var(--slab-fg);
   background: transparent;
   color: var(--slab-fg);
   font-family: "Big Shoulders Display", sans-serif;
@@ -378,8 +397,8 @@
   font-variant-numeric: tabular-nums;
   cursor: pointer;
   appearance: none;
-  border-radius: var(--r);
-  transition: background-color 220ms cubic-bezier(0.2, 0.8, 0.2, 1), color 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: var(--r-pill);
+  transition: background-color var(--t-mid) var(--ease), color var(--t-mid) var(--ease);
 }
 
 [data-screen="book"] .strip-chip.seen {
@@ -411,12 +430,12 @@
 [data-screen="book"] .toc-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  min-height: 48px;
-  padding: 10px 10px 10px 12px;
+  min-height: 56px;
+  padding: 14px 12px 14px 14px;
   border: 0;
-  border-bottom: var(--hair) solid var(--edge);
+  border-bottom: var(--hair) solid var(--edge-soft);
   background: var(--card);
   color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
@@ -457,6 +476,75 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ---------- the desktop bike panel ----------
+ *
+ * "The manual reader on the right and the bike, compact and sticky, on the left." Below
+ * 1100 px this whole panel is display:none and book.js disposes the WebGL context, so the
+ * phone reader is unchanged. Above it the column becomes a two-column grid: the reader,
+ * the page strip and the thumb row keep the right-hand track; the bike owns the left one
+ * and stays put while the pages scroll past it.
+ */
+
+[data-screen="book"] .book-stage {
+  display: none;
+}
+
+[data-screen="book"] .book-vx {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+@media (min-width: 1100px) {
+  [data-screen="book"] [data-root] {
+    display: grid;
+    grid-template-columns: minmax(0, 28fr) minmax(0, 72fr);
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    gap: 0 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  [data-screen="book"] .book-stage {
+    display: block;
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: stretch;
+    min-height: 0;
+    padding: 12px 0;
+  }
+
+  [data-screen="book"] .book-vx {
+    position: sticky;
+    top: 12px;
+    max-width: 460px;
+    height: min(52vh, calc(100dvh - var(--bar-box, 44px) - 180px));
+  }
+
+  [data-screen="book"] .page-view,
+  [data-screen="book"] .book-outline {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  [data-screen="book"] .page-strip {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  [data-screen="book"] .book-acts {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  /* Immersive still hides the two bottom rows; the bike then takes the height back. */
+  [data-screen="book"] [data-root].immersive {
+    grid-template-rows: minmax(0, 1fr);
+  }
+}
+
 /* ---------- ask ---------- */
 
 [data-screen="book"] .ask-sheet {
@@ -469,9 +557,10 @@
   margin: 0 auto;
   max-height: min(70dvh, 560px);
   overflow: auto;
-  padding: 12px 12px calc(16px + env(safe-area-inset-bottom));
+  padding: var(--gutter) var(--gutter) calc(16px + env(safe-area-inset-bottom));
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
   transform: translateY(100%);
-  transition: transform 0.18s ease-out;
+  transition: transform var(--t-mid) var(--ease);
   box-sizing: border-box;
 }
 
@@ -511,6 +600,8 @@
   display: block;
   height: 3px;
   margin-top: 8px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
   background: var(--bg);
 }
 
@@ -534,8 +625,8 @@
   align-items: flex-start;
   gap: 8px;
   width: 100%;
-  min-height: 44px;
-  padding: 12px;
+  min-height: 48px;
+  padding: 14px;
   border: var(--hair) solid var(--edge);
   background: var(--card);
   color: inherit;

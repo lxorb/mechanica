@@ -512,8 +512,10 @@
  * is the thing that has to stay put.
  */
 @media (min-width: 1100px) {
-  body[data-here="pick"] main {
-    max-width: min(1600px, 100vw);
+  /* One content width for the whole screen: the rail measures from the same token as the
+     column under it, so the step rail lines up with the panel edges instead of floating. */
+  body[data-here="pick"] {
+    --column: min(1600px, 100vw);
   }
 
   [data-screen="pick"] [data-root] {
