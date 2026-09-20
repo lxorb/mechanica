@@ -473,13 +473,31 @@ async function runWork(task) {
   else showActions(shownState);
 }
 
+/** The VIN this bike was identified by, so /manuals/ensure can pin the market variant. */
+function vinOpts() {
+  return state.vin ? { vin: state.vin } : undefined;
+}
+
 function onYes() {
   if (working) return;
   if (shownState === "ondemand" && shownBike) {
-    runWork((progress) => Q.ensureManual(shownBike.id, progress));
+    runWork((progress) => Q.ensureManual(shownBike.id, progress, vinOpts()));
     return;
   }
   go("pick");
+}
+
+/**
+ * "none" only means this session has no manual mapped. The API can still find and index a
+ * free official PDF for the bike, so try that first; runWork falls back to showSource().
+ */
+function onAdd() {
+  if (working) return;
+  if (!shownBike) {
+    showSource();
+    return;
+  }
+  runWork((progress) => Q.ensureManual(shownBike.id, progress, vinOpts()));
 }
 
 function onPdf() {
@@ -619,7 +637,7 @@ registerScreen("confirm", {
     add.setAttribute("aria-label", "Manual");
     add.hidden = true;
     add.append(bookGlyph());
-    add.addEventListener("click", showSource);
+    add.addEventListener("click", onAdd);
 
     const yesSlot = document.createElement("div");
     yesSlot.className = "confirm-yes-slot";

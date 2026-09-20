@@ -1,0 +1,6 @@
+docs-shots/
+tools/
+# store/models/*/scene.bin is 26.5 MiB; Workers static assets cap one file at 25 MiB.
+# Nothing imports js/viewer3d.js yet, so the whole directory stays off the deploy until
+# the models are compressed (Draco / meshopt). Owner: 3d agent.
+store/models/

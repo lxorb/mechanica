@@ -80,3 +80,14 @@ checked against Bikez (Bikez images were not downloaded).
 | `store/img/collection/ducati-50-mini2-1970-thumb.webp` | Ducati 50 Mini2 50cc 1970.JPG | Peprovira | https://commons.wikimedia.org/wiki/File:Ducati_50_Mini2_50cc_1970.JPG | CC BY-SA 3.0 |  |
 | `store/img/collection/ducati-mototrans-2012.webp` | Ducati Mototrans 250 Road 2012 416.jpeg | Antramir | https://commons.wikimedia.org/wiki/File:Ducati_Mototrans_250_Road_2012_416.jpeg | CC BY-SA 3.0 |  |
 | `store/img/collection/ducati-mototrans-2012-thumb.webp` | Ducati Mototrans 250 Road 2012 416.jpeg | Antramir | https://commons.wikimedia.org/wiki/File:Ducati_Mototrans_250_Road_2012_416.jpeg | CC BY-SA 3.0 |  |
+
+## App icons
+
+| file | title | author | source | licence | bikez |
+|---|---|---|---|---|---|
+| `counter/icons/favicon.ico` | Chevrolet Corvette Stingray (C8).jpg | Ghostofakina | https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_Stingray_(C8).jpg | CC BY-SA 4.0 |  |
+| `counter/icons/favicon-32.png` | Chevrolet Corvette Stingray (C8).jpg | Ghostofakina | https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_Stingray_(C8).jpg | CC BY-SA 4.0 |  |
+| `counter/icons/icon-192.png` | Chevrolet Corvette Stingray (C8).jpg | Ghostofakina | https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_Stingray_(C8).jpg | CC BY-SA 4.0 |  |
+| `counter/icons/icon-512.png` | Chevrolet Corvette Stingray (C8).jpg | Ghostofakina | https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_Stingray_(C8).jpg | CC BY-SA 4.0 |  |
+| `counter/icons/icon-512-maskable.png` | Chevrolet Corvette Stingray (C8).jpg | Ghostofakina | https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_Stingray_(C8).jpg | CC BY-SA 4.0 |  |
+| `counter/icons/apple-touch-icon-180.png` | Chevrolet Corvette Stingray (C8).jpg | Ghostofakina | https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_Stingray_(C8).jpg | CC BY-SA 4.0 |  |

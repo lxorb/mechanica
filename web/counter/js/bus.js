@@ -5,6 +5,7 @@ let booted = false;
 
 export const state = {
   bikeId: null,
+  vin: null,
   photoUrl: null,
   systemId: null,
   partId: null,
@@ -41,16 +42,29 @@ export function registerScreen(id, api) {
       existing.mount = api && api.mount;
       existing.enter = api && api.enter;
       existing.leave = api && api.leave;
+      existing.back = api && api.back;
     }
   } else {
     screens.set(id, {
       mount: api && api.mount,
       enter: api && api.enter,
       leave: api && api.leave,
+      back: api && api.back,
       mounted: false,
     });
   }
   bootFromHash();
+}
+
+/**
+ * One step back. A screen with an open sub-state (Identify's VIN / photo / query) pops
+ * that first by returning true from its own back(); everything else is the browser's own
+ * history step, so the header button and the hardware Back button agree.
+ */
+export function back() {
+  const rec = currentId && screens.get(currentId);
+  if (rec && typeof rec.back === "function" && rec.back() === true) return;
+  history.back();
 }
 
 function allowed(id) {
@@ -163,7 +177,7 @@ function onPop(event) {
 }
 
 if (typeof window !== "undefined") {
-  window.HandyBus = { state, go };
+  window.HandyBus = { state, go, back };
   window.addEventListener("popstate", onPop);
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bootFromHash, { once: true });

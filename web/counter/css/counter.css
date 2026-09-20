@@ -54,6 +54,37 @@ body {
   text-transform: uppercase;
 }
 
+.ticket span {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ticket-back {
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -10px 0 -10px -16px;
+  padding: 0 10px 2px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1.7rem;
+  line-height: 1;
+  text-align: left;
+  appearance: none;
+  cursor: pointer;
+}
+
+.ticket-back.is-off {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ticket-back:active {
+  color: var(--yellow);
+}
+
 .ticket b,
 .ticket [data-ticket] {
   font-size: 1.6rem;

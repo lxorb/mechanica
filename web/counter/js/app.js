@@ -1,4 +1,4 @@
-import { go, state, on } from "./bus.js";
+import { go, state, on, back } from "./bus.js";
 import * as Q from "./ttm.js";
 
 /**
@@ -14,6 +14,32 @@ function paintTicket() {
   if (el) el.textContent = state.ticket;
 }
 
+/* Header back: every screen past Identify, plus Identify once a sub-state is open. */
+let here = "identify";
+let sub = false;
+
+function paintBack() {
+  const el = document.querySelector("[data-back]");
+  if (el) el.classList.toggle("is-off", here === "identify" && !sub);
+}
+
+function armBack() {
+  const el = document.querySelector("[data-back]");
+  if (el) el.addEventListener("click", back);
+  on("screen", (e) => {
+    if (!e || !e.id) return;
+    here = e.id;
+    sub = false;
+    paintBack();
+  });
+  on("substate", (e) => {
+    if (!e || e.screen !== here) return;
+    sub = Boolean(e.on);
+    paintBack();
+  });
+  paintBack();
+}
+
 function firstGo() {
   const hash = location.hash.slice(1) || "identify";
   if (hash !== "identify" && (state.bikeId == null || state.bikeId === "")) {
@@ -23,11 +49,26 @@ function firstGo() {
   go(hash, { replace: true });
 }
 
+/**
+ * First visit: the worker only starts controlling this page part-way through boot, so the
+ * /health answer that keeps ttm.js in REMOTE mode never reaches its cache and a later
+ * offline reload would fall back to the bundled-only store. One 31-byte re-probe once the
+ * worker has claimed the page fixes that, and costs nothing on every later visit.
+ */
 function registerSw() {
   if (!("serviceWorker" in navigator)) return;
+  const controlled = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker.register("sw.js").catch((err) => {
     console.warn("sw register failed", err);
   });
+  if (controlled) return;
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    () => {
+      fetch(`${Q.apiBase()}/health`, { headers: { Accept: "application/json" } }).catch(() => {});
+    },
+    { once: true }
+  );
 }
 
 async function pickStore() {
@@ -45,6 +86,8 @@ async function pickStore() {
 
 async function boot() {
   paintTicket();
+  armBack();
+  registerSw();
   on("state", (patch) => {
     if (patch && Object.prototype.hasOwnProperty.call(patch, "ticket")) paintTicket();
   });
@@ -60,7 +103,6 @@ async function boot() {
   }
 
   firstGo();
-  registerSw();
 }
 
 boot();

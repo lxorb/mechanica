@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Viewer 3D — dev</title>
+  <!-- dev harness for js/viewer3d.js. Not part of the flow, not linked from index.html. -->
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/counter.css">
+  <link rel="stylesheet" href="css/viewer3d.css">
+  <script type="importmap">
+  {"imports":{
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }}
+  </script>
+  <style>
+    body { padding: 0; }
+    .wrap { display: flex; flex-direction: column; gap: 8px; padding: 8px; max-width: 900px; margin: 0 auto; }
+    .viewer3d { aspect-ratio: 1 / 1; }
+    @media (min-width: 700px) { .viewer3d { aspect-ratio: 16 / 9; } }
+    .row { display: flex; gap: 0; border: 3px solid var(--ink); }
+    select { flex: 1; min-height: 44px; border: 0; background: var(--card); color: var(--ink);
+      font-family: "Big Shoulders Display", sans-serif; font-weight: 800; font-size: 1rem;
+      letter-spacing: .06em; text-transform: uppercase; padding: 0 8px; appearance: none; }
+    .out { font-family: Barlow, sans-serif; font-size: .8rem; line-height: 1.5; background: var(--card);
+      border: 3px solid var(--ink); padding: 6px 8px; white-space: pre-wrap; word-break: break-word; }
+    .out b { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <header class="ticket"><span>Viewer 3D</span><b data-ticket id="fps">– fps</b></header>
+  <div class="wrap">
+    <div class="row">
+      <select id="model">
+        <option value="yzf-2021">yzf-2021</option>
+        <option value="honda-cbr650r">honda-cbr650r</option>
+        <option value="corvette-c8">corvette-c8</option>
+      </select>
+      <button type="button" class="viewer3d-btn" id="mode" aria-pressed="false">Placeholder</button>
+    </div>
+    <div id="host"></div>
+    <div class="viewer3d-bar">
+      <button type="button" class="viewer3d-btn" id="explode" aria-pressed="false">Explode</button>
+      <button type="button" class="viewer3d-btn" id="highlight">Front brake</button>
+      <button type="button" class="viewer3d-btn" id="focus">Focus chain</button>
+      <button type="button" class="viewer3d-btn" id="xray" aria-pressed="false">X-ray</button>
+      <button type="button" class="viewer3d-btn" id="reset">Reset</button>
+    </div>
+    <div class="out" id="out">booting…</div>
+  </div>
+
+  <script type="module">
+    import { mount, modelFor, partFor, PART_KEYS } from "./js/viewer3d.js";
+
+    const host = document.getElementById("host");
+    const out = document.getElementById("out");
+    const fpsEl = document.getElementById("fps");
+    const errors = [];
+    window.addEventListener("error", (e) => errors.push(String(e.message)));
+    window.addEventListener("unhandledrejection", (e) => errors.push(String(e.reason)));
+
+    let viewer = null;
+    let started = 0;
+    let readyAt = 0;
+    let usePlaceholder = false;
+
+    function log(extra = "") {
+      const state = viewer ? viewer.state() : {};
+      out.textContent =
+        `model ${state.model || "-"} · ${state.placeholder ? "placeholder" : "glb"} · ready in ${readyAt ? readyAt + " ms" : "…"}\n` +
+        `meshes ${state.meshes ?? "-"} · part ${state.part || "none"} · spacing ${(state.spacing ?? 0).toFixed(2)}\n` +
+        `groups ${(state.parts || []).join(" ")}\n` +
+        `errors ${errors.length ? errors.join(" | ") : "none"}${extra ? "\n" + extra : ""}`;
+    }
+
+    function start(key) {
+      if (viewer) viewer.dispose();
+      errors.length = 0;
+      readyAt = 0;
+      started = performance.now();
+      viewer = mount(host, key, {
+        placeholder: usePlaceholder,
+        debug: true,
+        onReady: () => { readyAt = Math.round(performance.now() - started); log(); },
+        onSelect: (part) => log(`clicked ${part || "nothing"}`),
+        onError: (error) => { errors.push(String(error && error.message || error)); log(); },
+      });
+      window.viewer = viewer;
+      log();
+    }
+
+    document.getElementById("model").addEventListener("change", (e) => start(e.target.value));
+    document.getElementById("mode").addEventListener("click", (e) => {
+      usePlaceholder = !usePlaceholder;
+      e.target.setAttribute("aria-pressed", String(usePlaceholder));
+      start(document.getElementById("model").value);
+    });
+    document.getElementById("explode").addEventListener("click", (e) => {
+      const on = e.target.getAttribute("aria-pressed") !== "true";
+      e.target.setAttribute("aria-pressed", String(on));
+      viewer.explode(on, 1);
+      log();
+    });
+    document.getElementById("highlight").addEventListener("click", () => { viewer.highlight("front-brake"); log(); });
+    document.getElementById("focus").addEventListener("click", () => { viewer.focus("chain"); log(); });
+    document.getElementById("xray").addEventListener("click", (e) => {
+      const on = e.target.getAttribute("aria-pressed") !== "true";
+      e.target.setAttribute("aria-pressed", String(on));
+      viewer.xray(on);
+    });
+    document.getElementById("reset").addEventListener("click", () => {
+      viewer.reset();
+      document.getElementById("explode").setAttribute("aria-pressed", "false");
+      document.getElementById("xray").setAttribute("aria-pressed", "false");
+      log();
+    });
+
+    // fps, measured over one-second windows so it is readable from a screenshot
+    let frames = 0;
+    let since = performance.now();
+    window.fpsSamples = [];
+    (function tick(now) {
+      frames += 1;
+      if (now - since >= 1000) {
+        const fps = Math.round((frames * 1000) / (now - since));
+        window.fpsSamples.push(fps);
+        fpsEl.textContent = `${fps} fps`;
+        frames = 0;
+        since = now;
+      }
+      requestAnimationFrame(tick);
+    })(performance.now());
+
+    // a couple of mapping sanity checks, printed once
+    window.mapping = {
+      model: [modelFor({ make: "Honda", model: "CBR650R" }), modelFor({ make: "Chevrolet", model: "Corvette" }), modelFor({ make: "KTM", model: "790 Duke" })],
+      part: ["Checking the front brake fluid level", "Drive chain slack", "Tyre pressure", "Engine oil change", "Replacing a fuse", "Mirrors"].map((t) => `${t} -> ${partFor(t)}`),
+      keys: PART_KEYS.length,
+    };
+
+    start("yzf-2021");
+  </script>
+</body>
+</html>

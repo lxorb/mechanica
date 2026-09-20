@@ -1,0 +1,152 @@
+/**
+ * 3D viewer. Owner: 3d agent. Pairs with js/viewer3d.js.
+ *
+ * mount(host, ...) adds .viewer3d to the host and appends one <canvas class="viewer3d-canvas">.
+ * It also keeps three attributes on the host, which is all this file styles:
+ *   data-viewer3d="loading" | "ready" | "placeholder" | "error"
+ *   data-model="yzf-2021" | "honda-cbr650r" | "corvette-c8"
+ *   data-part="<part key>" | ""          (empty when nothing is highlighted)
+ *   data-exploded="on" | "off"
+ * Size and placement belong to the screen: give .viewer3d a height (or an aspect-ratio) there.
+ * The optional .viewer3d-bar / .viewer3d-btn below are for the screen's own control strip.
+ */
+
+.viewer3d {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 12%, #fff 0%, #f4f0e6 55%, #e4dfd2 100%);
+  border: 3px solid var(--ink, #141414);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.viewer3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  outline: 0;
+}
+
+/* corner stamp: what you are looking at, in the ticket voice */
+.viewer3d::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 3px 8px 4px;
+  background: var(--ink, #141414);
+  color: #fff;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.viewer3d[data-viewer3d="loading"]::after {
+  content: "Loading 3D";
+  background: var(--orange, #e85d04);
+}
+
+.viewer3d[data-viewer3d="placeholder"]::after {
+  content: "Schematic";
+}
+
+.viewer3d[data-viewer3d="error"]::after {
+  content: "3D unavailable";
+  background: var(--orange, #e85d04);
+}
+
+.viewer3d[data-viewer3d="ready"]::after {
+  content: none;
+}
+
+/* the part name, stamped while something is highlighted */
+.viewer3d[data-part]:not([data-part=""])::before {
+  content: attr(data-part);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 3px 8px 4px;
+  background: var(--orange, #e85d04);
+  color: #fff;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* the sweep only runs while the model is still coming down the wire */
+.viewer3d[data-viewer3d="loading"] {
+  background-image:
+    linear-gradient(100deg, transparent 38%, rgba(232, 93, 4, 0.16) 50%, transparent 62%),
+    radial-gradient(120% 90% at 50% 12%, #fff 0%, #f4f0e6 55%, #e4dfd2 100%);
+  background-size: 260% 100%, 100% 100%;
+  animation: viewer3d-sweep 1.1s linear infinite;
+}
+
+@keyframes viewer3d-sweep {
+  from { background-position: 130% 0, 0 0; }
+  to { background-position: -130% 0, 0 0; }
+}
+
+/* optional control strip for the screen that hosts the viewer */
+.viewer3d-bar {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  border: 3px solid var(--ink, #141414);
+  border-top: 0;
+}
+
+.viewer3d-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 4px 7px;
+  border: 0;
+  border-left: 3px solid var(--ink, #141414);
+  background: var(--card, #fff);
+  color: var(--ink, #141414);
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+}
+
+.viewer3d-btn:first-child {
+  border-left: 0;
+}
+
+.viewer3d-btn[aria-pressed="true"],
+.viewer3d-btn.is-on {
+  background: var(--orange, #e85d04);
+  color: #fff;
+}
+
+.viewer3d-btn:active {
+  background: var(--ink, #141414);
+  color: var(--yellow, #ffe600);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewer3d[data-viewer3d="loading"] {
+    animation: none;
+  }
+}

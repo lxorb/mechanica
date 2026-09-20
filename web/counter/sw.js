@@ -1,8 +1,10 @@
-const VERSION = "v3";
+const VERSION = "v5";
 const SHELL = `handy-book-shell-${VERSION}`;
 const RUNTIME = `handy-book-runtime-${VERSION}`;
 const DATA = `handy-book-data-${VERSION}`;
 const FONTS = `handy-book-fonts-${VERSION}`;
+const CDN = `handy-book-cdn-${VERSION}`;
+const PDFS = `handy-book-pdfs-${VERSION}`;
 const RUNTIME_MAX = 300;
 const SCREENS = ["identify", "confirm", "pick", "book", "follow", "invoice"];
 
@@ -28,22 +30,65 @@ const PRECACHE = [
   "css/screens/cost.css",
   "../store/ttm-catalog.json",
   "../store/bike-images.json",
+  "../store/catalog.json",
   "manifest.webmanifest",
+  "icons/favicon.ico",
+  "icons/favicon-32.png",
+  "icons/apple-touch-icon-180.png",
   "icons/icon-192.png",
   "icons/icon-512.png",
   "icons/icon-512-maskable.png",
 ];
 
+/** Exactly the href in index.html, so the page's own request matches this cache entry. */
+const FONT_CSS =
+  "https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap";
+
 function sameOrigin(url) {
   return url.origin === self.location.origin;
 }
 
-function isPdfOrOnnx(url) {
-  return /\.(?:pdf|onnx)$/i.test(url.pathname) || /\/manuals\/[^/]+\/file$/.test(url.pathname);
+function isPdf(url) {
+  return /\.pdf$/i.test(url.pathname) || /\/manuals\/[^/]+\/file$/.test(url.pathname);
+}
+
+function isOnnx(url) {
+  return /\.onnx$/i.test(url.pathname);
 }
 
 function isCatalog(url) {
   return sameOrigin(url) && url.pathname.endsWith("/store/catalog.json");
+}
+
+/**
+ * The API path, whether the base is the container app's own host or the same-origin
+ * "/api" proxy this Worker puts in front of it. Same-origin paths outside /api belong to
+ * the app itself, so they are not API calls.
+ */
+function apiPath(url) {
+  const path = url.pathname;
+  if (path === "/api") return "/";
+  if (path.startsWith("/api/")) return path.slice(4);
+  return sameOrigin(url) ? "" : path;
+}
+
+/**
+ * /health, /catalog, /catalog/suggest, /manuals, /manuals/{id}, /registry, /cost. Network
+ * first, cache as a fallback, so a manual that was opened once stays readable with no
+ * network — including /health, which is what makes ttm.js stay in REMOTE mode offline
+ * instead of dropping to the bundled-only store.
+ */
+function isApiData(url) {
+  const path = apiPath(url);
+  if (!path) return false;
+  if (path === "/health" || path === "/cost" || path === "/registry") return true;
+  if (path === "/catalog" || path.startsWith("/catalog/")) return true;
+  return path === "/manuals" || /^\/manuals\/[^/]+$/.test(path);
+}
+
+/** pdf.js, its worker, standard fonts and cmaps. Offline the reader needs all four. */
+function isCdn(url) {
+  return url.hostname === "cdn.jsdelivr.net" || url.hostname === "cdnjs.cloudflare.com";
 }
 
 function isImmutableStore(url) {
@@ -72,8 +117,28 @@ async function precache() {
   );
 }
 
+/**
+ * The two display faces are the app's whole visual identity, and the stylesheet is in the
+ * head — it is requested before the worker ever claims this page, so waiting for a second
+ * visit to cache it would leave the first offline load in system-ui. Take the css and the
+ * woff2 files it names at install time instead.
+ */
+async function precacheFonts() {
+  try {
+    const cache = await caches.open(FONTS);
+    const res = await fetch(FONT_CSS);
+    if (!res.ok) return;
+    const css = await res.text();
+    await cache.put(FONT_CSS, new Response(css, { headers: { "Content-Type": "text/css" } }));
+    const files = [...new Set(css.match(/https:\/\/fonts\.gstatic\.com\/[^)"']+/g) || [])];
+    await Promise.all(files.map((url) => cache.add(url).catch(() => {})));
+  } catch (err) {
+    console.warn("font precache skip", err);
+  }
+}
+
 async function dropOldCaches() {
-  const keep = new Set([SHELL, RUNTIME, DATA, FONTS]);
+  const keep = new Set([SHELL, RUNTIME, DATA, FONTS, CDN, PDFS]);
   const keys = await caches.keys();
   await Promise.all(keys.filter((key) => !keep.has(key)).map((key) => caches.delete(key)));
 }
@@ -85,12 +150,12 @@ async function trimRuntime(cache) {
   }
 }
 
-async function putRuntime(request, response) {
+async function putRuntime(cacheName, request, response) {
   if (!response || !response.ok) return;
   if (response.type !== "basic" && response.type !== "cors") return;
-  const cache = await caches.open(RUNTIME);
+  const cache = await caches.open(cacheName);
   await cache.put(request, response.clone());
-  await trimRuntime(cache);
+  if (cacheName === RUNTIME) await trimRuntime(cache);
 }
 
 async function putUncapped(cacheName, request, response) {
@@ -100,27 +165,114 @@ async function putUncapped(cacheName, request, response) {
   await cache.put(request, response.clone());
 }
 
-async function cacheFirst(request) {
-  const cache = await caches.open(RUNTIME);
+async function cacheFirst(request, cacheName = RUNTIME) {
+  const cache = await caches.open(cacheName);
   const hit = await cache.match(request);
   if (hit) {
-    await cache.delete(request);
-    await cache.put(request, hit.clone());
+    if (cacheName === RUNTIME) {
+      await cache.delete(request);
+      await cache.put(request, hit.clone());
+    }
     return hit;
   }
   const response = await fetch(request);
-  await putRuntime(request, response);
+  await putRuntime(cacheName, request, response);
   return response;
 }
 
+/* ---------- manual PDFs ---------- */
+
+const warming = new Set();
+let bytesUrl = "";
+let bytesBuf = null;
+
+async function fullBytes(response, url) {
+  if (bytesUrl === url && bytesBuf) return bytesBuf;
+  const buf = await response.arrayBuffer();
+  bytesUrl = url;
+  bytesBuf = buf;
+  return buf;
+}
+
+/**
+ * pdf.js reads a manual with Range requests, so a cached whole file has to be sliced by
+ * hand: Cache Storage stores the 200, we answer the 206 from it.
+ */
+async function sliceRange(response, url, header) {
+  const buf = await fullBytes(response, url);
+  const total = buf.byteLength;
+  const hit = /^bytes=(\d*)-(\d*)$/.exec(String(header).trim());
+  if (!hit) return new Response(buf.slice(0), { status: 200, headers: response.headers });
+  let start;
+  let end;
+  if (hit[1] === "") {
+    const tail = Number(hit[2]);
+    if (!Number.isFinite(tail) || tail <= 0) return new Response(null, { status: 416 });
+    start = Math.max(0, total - tail);
+    end = total - 1;
+  } else {
+    start = Number(hit[1]);
+    end = hit[2] === "" ? total - 1 : Math.min(Number(hit[2]), total - 1);
+  }
+  if (!Number.isFinite(start) || !Number.isFinite(end) || start > end || start >= total) {
+    return new Response(null, { status: 416, headers: { "Content-Range": `bytes */${total}` } });
+  }
+  const body = buf.slice(start, end + 1);
+  return new Response(body, {
+    status: 206,
+    statusText: "Partial Content",
+    headers: {
+      "Content-Type": response.headers.get("Content-Type") || "application/pdf",
+      "Content-Length": String(body.byteLength),
+      "Content-Range": `bytes ${start}-${end}/${total}`,
+      "Accept-Ranges": "bytes",
+    },
+  });
+}
+
+async function fromPdfCache(cache, url, range) {
+  const hit = await cache.match(url);
+  if (!hit) return null;
+  return range ? sliceRange(hit, url, range) : hit;
+}
+
+function warmPdf(event, cache, url) {
+  if (warming.has(url)) return;
+  warming.add(url);
+  event.waitUntil(
+    fetch(url)
+      .then(async (res) => {
+        if (res && res.ok && res.status === 200) await cache.put(url, res.clone());
+      })
+      .catch(() => {})
+      .finally(() => warming.delete(url))
+  );
+}
+
+async function manualPdf(event, request) {
+  const url = request.url;
+  const range = request.headers.get("range");
+  const cache = await caches.open(PDFS);
+  const hit = await fromPdfCache(cache, url, range);
+  if (hit) return hit;
+  warmPdf(event, cache, url);
+  try {
+    return await fetch(request);
+  } catch (err) {
+    const late = await fromPdfCache(cache, url, range);
+    if (late) return late;
+    throw err;
+  }
+}
+
 async function networkFirstData(request) {
-  const cache = await caches.open(DATA);
   try {
     const response = await fetch(request);
     await putUncapped(DATA, request, response);
     return response;
   } catch (err) {
-    const hit = await cache.match(request);
+    // Any cache: /store/catalog.json is precached into SHELL, API answers land in DATA.
+    const hit = await caches.match(request, { ignoreSearch: false });
     if (hit) return hit;
     throw err;
   }
@@ -149,7 +301,7 @@ function shouldShellCache(request, response) {
   if (!response.ok) return false;
   if (response.type !== "basic" && response.type !== "cors") return false;
   const url = new URL(request.url);
-  if (!sameOrigin(url) || isPdfOrOnnx(url) || isCatalog(url) || isImmutableStore(url)) return false;
+  if (!sameOrigin(url) || isPdf(url) || isOnnx(url) || isCatalog(url) || isImmutableStore(url)) return false;
   return url.pathname === "/counter" || url.pathname.startsWith("/counter/");
 }
 
@@ -174,7 +326,7 @@ async function shellFirst(request) {
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
-  event.waitUntil(precache());
+  event.waitUntil(Promise.all([precache(), precacheFonts()]));
 });
 
 self.addEventListener("activate", (event) => {
@@ -188,12 +340,20 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.protocol !== "http:" && url.protocol !== "https:") return;
 
-  if (isPdfOrOnnx(url)) {
+  if (isOnnx(url)) {
     event.respondWith(fetch(request));
     return;
   }
-  if (isCatalog(url)) {
+  if (isPdf(url)) {
+    event.respondWith(manualPdf(event, request));
+    return;
+  }
+  if (isCatalog(url) || isApiData(url)) {
     event.respondWith(networkFirstData(request));
+    return;
+  }
+  if (isCdn(url)) {
+    event.respondWith(cacheFirst(request, CDN));
     return;
   }
   if (isImmutableStore(url)) {

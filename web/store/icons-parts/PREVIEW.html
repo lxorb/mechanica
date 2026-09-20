@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Part icons — Handy Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../counter/css/particons.css">
+<style>
+  :root { --orange:#e85d04; --yellow:#ffe600; --ink:#141414; --paper:#ece7dc; --rule:#e4dfd2; --card:#fff; }
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Barlow,system-ui,sans-serif; color:var(--ink);
+         background:repeating-linear-gradient(0deg,var(--paper) 0 24px,var(--rule) 24px 25px),var(--paper); }
+  .ticket { display:flex; justify-content:space-between; align-items:center; background:var(--orange); color:#fff;
+            padding:10px 16px; font-family:"Big Shoulders Display",sans-serif; font-weight:800; font-size:1.05rem;
+            letter-spacing:.08em; text-transform:uppercase; }
+  .ticket b { font-size:1.6rem; letter-spacing:0; }
+  main { max-width:1180px; margin:0 auto; padding:16px 16px 48px; }
+  h2 { font-family:"Big Shoulders Display",sans-serif; font-weight:800; font-size:1.5rem; letter-spacing:.06em;
+       text-transform:uppercase; margin:28px 0 4px; }
+  h2 small { font-family:Barlow,sans-serif; font-weight:600; font-size:.72rem; letter-spacing:.08em; opacity:.6; margin-left:10px; }
+  section { border:3px solid var(--ink); background:var(--card); padding:16px; }
+  section.on-ink { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  section.on-paper { background:var(--paper); }
+
+  .grid { display:grid; gap:14px 10px; grid-template-columns:repeat(9,1fr); }
+  .grid.wide { grid-template-columns:repeat(6,1fr); }
+  .cell { display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; }
+  .cap { font-size:.62rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; opacity:.72;
+         word-break:break-word; line-height:1.15; }
+
+  .strip { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+
+  .rows { display:grid; gap:0; }
+  .row { display:flex; align-items:center; gap:12px; padding:10px 12px; border-bottom:2px solid var(--rule); }
+  .row:last-child { border-bottom:0; }
+  .row .name { font-weight:800; font-size:.95rem; flex:1 1 auto; }
+  .row .spec { font-size:.75rem; opacity:.65; }
+  .stamp { background:var(--orange); color:#fff; font-weight:800; font-size:.66rem; letter-spacing:.08em;
+           text-transform:uppercase; padding:4px 8px; }
+
+  /* padding + centre check: dashed box at the 8% safe area, crosshair at centre */
+  .probe { position:relative; }
+  .probe::before { content:""; position:absolute; inset:8px; outline:1px dashed #e85d04; pointer-events:none; }
+  .probe::after { content:""; position:absolute; left:50%; top:8px; bottom:8px; width:1px;
+                  background:rgba(20,20,20,.25); pointer-events:none; }
+  .probe .part-icon { background:none; box-shadow:none; padding:0; }
+</style>
+</head>
+<body>
+<header class="ticket"><span>Part icons · 36 · 96&times;96 · 2.5 ink · #e85d04</span><b>SHEET</b></header>
+<main>
+
+  <h2>96 px on card <small>full family, tiled</small></h2>
+  <section>
+    <div class="grid wide" id="g96"></div>
+  </section>
+
+  <h2>48 px on ink <small>list / grid size against the dark ground</small></h2>
+  <section class="on-ink">
+    <div class="grid" id="g48"></div>
+  </section>
+
+  <h2>32 px on paper <small>the smallest the app uses — does it still read?</small></h2>
+  <section class="on-paper">
+    <div class="strip" id="g32"></div>
+  </section>
+
+  <h2>32 px, no tile, on ink <small>bare strokes — contrast fallback check</small></h2>
+  <section class="on-ink">
+    <div class="strip" id="g32plain"></div>
+  </section>
+
+  <h2>Optical grid <small>dashed = 8&nbsp;% padding · line = centre</small></h2>
+  <section>
+    <div class="grid wide" id="gprobe"></div>
+  </section>
+
+  <h2>In place <small>invoice rows at 32, pick tiles at 48</small></h2>
+  <section>
+    <div class="rows" id="rows"></div>
+  </section>
+
+</main>
+<script type="module">
+const IDS = ["engine-oil","oil-filter","air-filter","spark-plug","brake-pads","brake-disc","brake-fluid",
+  "brake-caliper","brake-lever","clutch-lever","clutch-cable","chain","sprocket","tire","wheel","front-fork",
+  "rear-shock","swingarm","battery","fuse","bulb-headlight","taillight","coolant","radiator","fuel-tank",
+  "fuel-filter","exhaust","mirror","handlebar","seat","footpeg","throttle-cable","bearing","bolt-torque",
+  "tool-kit","generic-part"];
+
+const img = (id, size, extra = "") => {
+  const el = document.createElement("img");
+  el.className = `part-icon ${size}${extra ? " " + extra : ""}`;
+  el.src = `./${id}.svg`;
+  el.alt = "";
+  return el;
+};
+const cell = (id, size, extra) => {
+  const d = document.createElement("div");
+  d.className = "cell";
+  d.append(img(id, size, extra));
+  const c = document.createElement("div");
+  c.className = "cap";
+  c.textContent = id;
+  d.append(c);
+  return d;
+};
+
+for (const id of IDS) document.getElementById("g96").append(cell(id, "lg"));
+for (const id of IDS) document.getElementById("g48").append(cell(id, "md", "on-ink"));
+for (const id of IDS) document.getElementById("g32").append(img(id, "sm"));
+for (const id of IDS) document.getElementById("g32plain").append(img(id, "sm", "plain"));
+
+for (const id of ["chain","sprocket","tire","brake-disc","spark-plug","battery","seat","exhaust","handlebar",
+                  "rear-shock","fuse","generic-part"]) {
+  const d = document.createElement("div");
+  d.className = "cell";
+  const box = document.createElement("div");
+  box.className = "probe";
+  box.style.width = "96px";
+  box.style.height = "96px";
+  box.append(img(id, "lg"));
+  d.append(box);
+  const c = document.createElement("div");
+  c.className = "cap";
+  c.textContent = id;
+  d.append(c);
+  document.getElementById("gprobe").append(d);
+}
+
+const ROWS = [
+  ["engine-oil","Engine oil (SAE 15W/50)","1.5 l · JASO T903 MA2 · MOTOREX Formula 4T","p. 125"],
+  ["brake-fluid","Brake fluid DOT 4 / DOT 5.1","Castrol REACT PERFORMANCE DOT 4","p. 125"],
+  ["tire","Front tire","110/70 R 17 M/C 54 H","p. 128"],
+  ["chain","Street chain spray","MOTOREX Chainlube Road Strong","p. 126"],
+  ["fuse","Fuse","30 A main fuse","p. 118"],
+  ["spark-plug","Spark plug","NGK LKAR8AI-9","p. 124"],
+  ["brake-pads","Brake-pad material, front","min. 1.0 mm","p. 231"],
+  ["bolt-torque","microencapsulated screws","new microencapsulated screws","p. 218"],
+];
+for (const [id, name, spec, page] of ROWS) {
+  const r = document.createElement("div");
+  r.className = "row";
+  r.append(img(id, "sm"));
+  const box = document.createElement("div");
+  box.className = "name";
+  box.textContent = name;
+  const s = document.createElement("div");
+  s.className = "spec";
+  s.textContent = spec;
+  box.append(s);
+  r.append(box);
+  const st = document.createElement("span");
+  st.className = "stamp";
+  st.textContent = page;
+  r.append(st);
+  document.getElementById("rows").append(r);
+}
+</script>
+</body>
+</html>

@@ -42,7 +42,6 @@ let fileUrl = "";
 let outline = [];
 let marks = new Map();
 let pages = [];
-let chapter = null;
 let sheets = new Map();
 let chips = new Map();
 let visited = new Set();
@@ -253,7 +252,9 @@ function build(root) {
   root.append(head, viewEl, stripEl, outlineEl, followEl, askSheet);
 
   coverEl.addEventListener("click", () => {
-    if (chapter) openOutline();
+    if (!outline.length) return;
+    if (pages.length) openOutline();
+    else setPages(readingPages(jobRec));
   });
   followEl.addEventListener("click", () => go("follow"));
   micBtn.addEventListener("click", onMic);
@@ -280,7 +281,6 @@ async function paint(job) {
   fileUrl = manualRec.file ? Q.asset(manualRec.file) : "";
   outline = flatten(outlineNodes(manualRec), 0, []);
   marks = markMap(job);
-  chapter = null;
 
   titleEl.textContent = manualRec.title || "";
   const cover = coverEl.firstElementChild;
@@ -308,8 +308,8 @@ function setPages(list) {
   viewEl.hidden = empty;
   stripEl.hidden = empty;
   followEl.hidden = empty;
-  coverEl.classList.toggle("is-back", Boolean(chapter));
-  coverEl.hidden = !hasThumb && !chapter;
+  coverEl.classList.toggle("is-back", outline.length > 0);
+  coverEl.hidden = !hasThumb && outline.length === 0;
   if (empty) {
     paintOutline();
     stampEl.hidden = true;
@@ -363,12 +363,10 @@ function openChapter(i) {
   const last = Math.max(start, Math.min(total, (after ? after.page : total + 1) - 1));
   const list = [];
   for (let p = start; p <= last; p++) list.push(p);
-  chapter = list;
   setPages(list);
 }
 
 function openOutline() {
-  chapter = null;
   setPages([]);
 }
 

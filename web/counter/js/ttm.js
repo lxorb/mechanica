@@ -1035,12 +1035,14 @@ export async function ingest(fileOrUrl, meta = {}, onProgress) {
 
 /**
  * Index-on-demand for a bike whose official PDF we know but have not processed
- * (manualState === "ondemand"). POST /manuals/ensure {bikeId} ->
- * {status:"ready"|"running"|"none", manualId, jobId?, done?, pages?}. When the endpoint is
- * not deployed yet we fall back to POST /ingest with the bike's manualUrl, which is the
- * same pipeline. Resolves to the mapped manual, or null when nothing can be indexed.
+ * (manualState === "ondemand"). POST /manuals/ensure {bikeId, vin?} ->
+ * {status:"ready"|"running"|"none", manualId, jobId?, done?, pages?}. `opts.vin` is the VIN
+ * the bike was identified by (bus state.vin); it is sent only when present, so the API can
+ * pin the market variant. When the endpoint is not deployed yet we fall back to POST /ingest
+ * with the bike's manualUrl, which is the same pipeline. Resolves to the mapped manual, or
+ * null when nothing can be indexed.
  */
-export async function ensureManual(bikeId, onProgress) {
+export async function ensureManual(bikeId, onProgress, opts) {
   await loadCatalog();
   const hit = bike(bikeId);
   if (!hit) return null;
@@ -1048,10 +1050,12 @@ export async function ensureManual(bikeId, onProgress) {
   if (!hit.manualUrl && mode !== "remote") return null; // nothing to index, and no API anyway
   if (mode !== "remote") throw new Error("indexing a manual needs the API");
   const title = `${hit.make} ${hit.model} ${hit.year}`;
+  const vin = typeof opts?.vin === "string" && opts.vin.trim() ? opts.vin.trim().toUpperCase() : null;
 
   let body = null;
   try {
-    body = await http("/manuals/ensure", { method: "POST", json: { bikeId: hit.id }, ms: 30000 });
+    const json = vin ? { bikeId: hit.id, vin } : { bikeId: hit.id };
+    body = await http("/manuals/ensure", { method: "POST", json, ms: 30000 });
   } catch (err) {
     if (err?.status !== 404 && err?.status !== 405) throw err;
     if (!hit.manualUrl) return null;

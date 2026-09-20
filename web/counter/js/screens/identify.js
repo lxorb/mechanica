@@ -38,7 +38,6 @@ let live = false;
 let shownRows = [];
 let rosterRowsCache = null;
 let rosterIds = null;
-let focused = false;
 
 let textQ = "";
 let vinQ = "";
@@ -475,7 +474,8 @@ function matchingMakes(text) {
 
 function paintChips() {
   const text = textQ.trim();
-  const show = !vinMode && !photoUrl && (focused || text) && roster().length > 0;
+  // Only while the user is typing: an empty box must not preview makes it did not ask for.
+  const show = !vinMode && !photoUrl && text.length > 0 && roster().length > 0;
   const list = show ? matchingMakes(text) : [];
   chipsEl.hidden = list.length === 0;
   if (!list.length) {
@@ -779,14 +779,6 @@ registerScreen("identify", {
     root.replaceChildren(dock, chipsEl, boardEl);
 
     queryEl.addEventListener("input", onQuery);
-    queryEl.addEventListener("focus", () => {
-      focused = true;
-      paintChips();
-    });
-    queryEl.addEventListener("blur", () => {
-      focused = false;
-      setTimeout(paintChips, 140);
-    });
     root.addEventListener("keydown", onRootKey);
     vinBtn.addEventListener("click", () => setVinMode(!vinMode));
     cam.addEventListener("click", () => fileEl.click());
