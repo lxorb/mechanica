@@ -68,6 +68,7 @@ export { highlight, aliasesOf };
 const PUBLIC_API = "https://ttm-api.victoriousground-5b684586.eastus.azurecontainerapps.io";
 const BUNDLE_URL = "../store/ttm-catalog.json";
 const IMAGES_URL = "../store/bike-images.json";
+const IMAGES_URL_2 = "../store/bike-images-2.json";
 const HEALTH_MS = 2500;
 const CATALOG_MS = 25000;
 const MANUAL_MS = 25000;
@@ -324,20 +325,32 @@ function lookupImage(map, make, model) {
 }
 
 /**
- * web/store/bike-images.json (another agent's file): {"make|model": {image, thumb, title,
- * author, license, source}}. Best effort — a missing file just leaves thumb/image null so
- * the roster shows its placeholder tile. Paths stay relative, like store/catalog.json:
+ * Two image files, both {"make|model": {image, thumb, title, author, license, source}}:
+ * bike-images.json is the Commons filename sweep, bike-images-2.json the second pass that
+ * works Wikipedia lead images and Commons categories and carries a 1280-px `hero` as well.
+ * They are merged with the FIRST file winning every conflicting key, so the second pass can
+ * only ever add models. Both are best effort — neither file existing just leaves thumb/image
+ * null so the roster shows its placeholder tile. Paths stay relative, like store/catalog.json:
  * screens must wrap them in Q.asset(). `credit` carries the attribution the licence needs.
  */
+async function loadImageMap() {
+  const one = async (url) => {
+    try {
+      const res = await fetch(url, { headers: { Accept: "application/json" } });
+      return res.ok ? await res.json() : null;
+    } catch {
+      return null;
+    }
+  };
+  const [first, second] = await Promise.all([one(IMAGES_URL), one(IMAGES_URL_2)]);
+  if (!first && !second) return null;
+  return { ...(second ?? {}), ...(first ?? {}) };
+}
+
 async function applyImages(bikes) {
   if (imageMap === undefined) {
     imageMap = null;
-    try {
-      const res = await fetch(IMAGES_URL, { headers: { Accept: "application/json" } });
-      if (res.ok) imageMap = await res.json();
-    } catch {
-      imageMap = null;
-    }
+    imageMap = await loadImageMap();
   }
   const map = imageMap;
   for (const b of bikes) {
@@ -345,6 +358,7 @@ async function applyImages(bikes) {
     const hit = map ? lookupImage(map, b.make, b.model) : null;
     b.image = hit?.image ?? null;
     b.thumb = hit?.thumb ?? null;
+    b.hero = hit?.hero ?? null;
     if (hit) b.credit = { title: hit.title, author: hit.author, license: hit.license, source: hit.source };
   }
   return bikes;
@@ -1112,7 +1126,7 @@ async function pollJob(jobId, onProgress, title) {
     const job = await quiet(`/ingest/${encodeURIComponent(jobId)}`, { ms: 10000 }, null);
     if (job) {
       last = job;
-      report(onProgress, { status: job.status, done: job.done ?? 0, pages: job.pages ?? 0, title });
+      report(onProgress, { status: job.status, done: job.done ?? 0, pages: job.pages ?? 0, stage: job.stage ?? null, title });
       if (job.status === "done") return job;
       if (job.status === "error") throw new Error(job.error || "ingest failed");
     }
