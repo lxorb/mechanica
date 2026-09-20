@@ -110,3 +110,56 @@ The cache is now always carried forward (`skip_misses` vs `misses`).
 4. The registry-document rows (Harley "Parts Listing", "Shop Dope/Service
    Bulletins", "Oper./Maint./Spec. Book" - 113 rows) are not vehicles and should
    be deleted from the catalog, not photographed.
+
+---
+
+## Cycle 3 - 2026-09-20, ~55 min (top-200 gap list x2, + per-make categories)
+
+| | families | rows |
+|---|---|---|
+| overall | 3,897 -> **4,055** (+158) of 8,829 | 17,068 -> **18,577** (+1,509) of 30,513 |
+| motorcycles | 3,325 -> **3,379** (+54) of 7,795 | 13,188 -> **13,469** (+281) of 24,135 |
+| manual-bearing bikes | 1,710 -> **1,752** (+42) of 3,950 | 9,415 -> **9,648** (+233) of 15,878 |
+| cars | 572 -> **676** (+104) of 1,034 | 3,880 -> **5,108** (+1,228) of 6,378 |
+
+**113 new photos** (own tiles 279 -> 378), $0.17 of `images.score`, 68 MB of 150 MB.
+`lookupImage` now resolves **19,639/30,578 rows (64.2%)**, up from 17,129 (61.7%)
+when the gap doc was first written.
+
+**The top-200 list is the whole game.** First pass over it: 199 models, **83
+photos, 42% hit rate**. Compare the open queue in cycle 2: 4,413 models for 3
+photos. That is a ~600x difference in yield per model walked, because the list is
+sorted by catalog rows and because a model with many rows is a model Commons has
+usually heard of. A second regenerated pass added 30 more (199 models, 15%) - the
+list decays as it is worked, so regenerate between passes, which `--top N` now
+does cheaply.
+
+**Per-make `deepcategory:` works.** `deepcategory:"Kawasaki motorcycles" VULCAN
+750` reaches files no filename query can - Commons files the uploader called
+`Vn750-2.jpg`. First pass: **98/123 candidates passed the gate, 23 hits**; second
+pass 10/25, 10 hits. It is now the second-best source after plain search. Guard
+that matters: a deep-category hit proves nothing about *which* model, so the file
+must also name the model in its description or categories - without that a VN700
+walks in as a VN750.
+
+**Tooling.** `web/tools/images-coverage.mjs` gained `--top N` (default 30) and
+`--keys`, which prints bare `Make|Model` lines - and nothing else - so it pipes
+straight into `images2.py --only`. It drops the Harley registry-document rows on
+the way out.
+
+**What is exhausted.** Unchanged from cycle 2, and now measured twice: the
+dirt-bike head of the gap list (Prius aside: YZ85, YZ85LW, KX65, KX85, KX100,
+KTM 50 SX, TT-R230, TT-R110E, 250 XC/XC-F/XC-W, TC 250, KLX300R) is the reason
+the second pass opened with 40 models and zero hits. Those ~40 keys are in the
+miss cache and should simply be **skipped by dropping `--retry-misses` on gap-list
+runs** - using it there was my error this cycle and cost ~8 minutes.
+
+**Next leads.**
+1. Keep the loop: regenerate `--keys --top 200`, run it *without* `--retry-misses`,
+   repeat. It is the only lane above 10% yield.
+2. Cars are now 80.1% of rows and motorcycles 55.8%. The founder wants
+   motorcycles, but the gap list is currently car-heavy because cars have more
+   rows each. A `--kind bike` filter on the coverage tool would let a cycle spend
+   the whole hour on the motorcycle gap list; that is the next thing to build.
+3. `makecat` has only been run against the gap list. Running it across the open
+   manual-bearing lane has not been tried and is the obvious next sweep.

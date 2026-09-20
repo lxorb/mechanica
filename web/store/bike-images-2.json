@@ -3566,6 +3566,18 @@
     "via": "alias",
     "aliasOf": "ducati|xdiavel"
   },
+  "fiat|panda": {
+    "image": "store/img/bikes2/fiat-panda.webp",
+    "thumb": "store/img/bikes2/fiat-panda.thumb.webp",
+    "title": "FIAT Panda 20260503.jpg",
+    "author": "Misei sen",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:FIAT_Panda_20260503.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/fiat-panda.hero.webp"
+  },
   "ford|c-max-hybrid-energi": {
     "image": "store/img/bikes/ford-c-max-hybrid.webp",
     "thumb": "store/img/bikes/ford-c-max-hybrid-thumb.webp",
@@ -4082,6 +4094,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:2024_Genesis_G70_Track_Taxi_Nordschleife.jpg",
     "via": "alias",
     "aliasOf": "genesis|g70"
+  },
+  "genesis|g80": {
+    "image": "store/img/bikes2/genesis-g80.webp",
+    "thumb": "store/img/bikes2/genesis-g80.thumb.webp",
+    "title": "Genesis Electrified G80 Auto Zuerich 2023 1X7A1133.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_Electrified_G80_Auto_Zuerich_2023_1X7A1133.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/genesis-g80.hero.webp"
+  },
+  "genesis|g80-ev": {
+    "image": "store/img/bikes2/genesis-g80.webp",
+    "thumb": "store/img/bikes2/genesis-g80.thumb.webp",
+    "hero": "store/img/bikes2/genesis-g80.hero.webp",
+    "title": "Genesis Electrified G80 Auto Zuerich 2023 1X7A1133.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_Electrified_G80_Auto_Zuerich_2023_1X7A1133.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "genesis|g80"
+  },
+  "genesis|g80-sport": {
+    "image": "store/img/bikes2/genesis-g80.webp",
+    "thumb": "store/img/bikes2/genesis-g80.thumb.webp",
+    "hero": "store/img/bikes2/genesis-g80.hero.webp",
+    "title": "Genesis Electrified G80 Auto Zuerich 2023 1X7A1133.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_Electrified_G80_Auto_Zuerich_2023_1X7A1133.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "genesis|g80"
   },
   "genesis|gv70-ev": {
     "image": "store/img/bikes/genesis-gv70.webp",
@@ -5161,6 +5209,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:New_Honda_Activa_Scooter_at_Kommadi.JPG",
     "via": "alias",
     "aliasOf": "honda|activa"
+  },
+  "honda|acty-street": {
+    "image": "store/img/bikes2/honda-acty-street.webp",
+    "thumb": "store/img/bikes2/honda-acty-street.thumb.webp",
+    "title": "Honda Acty Street VD.jpg",
+    "author": "Ypy31",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Acty_Street_VD.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/honda-acty-street.hero.webp"
   },
   "honda|acty-truck": {
     "image": "store/img/bikes2/honda-acty-truck.webp",
@@ -8500,6 +8560,18 @@
     "via": "alias",
     "aliasOf": "honda|nsr-125"
   },
+  "honda|nsr250r": {
+    "image": "store/img/bikes2/honda-nsr250r.webp",
+    "thumb": "store/img/bikes2/honda-nsr250r.thumb.webp",
+    "title": "1991年式 NSR250R SE.JPG",
+    "author": "Y Sekiai",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1991%E5%B9%B4%E5%BC%8F_NSR250R_SE.JPG",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-nsr250r.hero.webp"
+  },
   "honda|nss300-forza": {
     "image": "store/img/bikes/honda-nss300.webp",
     "thumb": "store/img/bikes/honda-nss300-thumb.webp",
@@ -8675,6 +8747,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_PCX150_2013_Console.JPG",
     "via": "alias",
     "aliasOf": "honda|pcx150"
+  },
+  "honda|prelude": {
+    "image": "store/img/bikes2/honda-prelude.webp",
+    "thumb": "store/img/bikes2/honda-prelude.thumb.webp",
+    "title": "1990 Honda Prelude 4WS Auto.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1990_Honda_Prelude_4WS_Auto.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/honda-prelude.hero.webp"
   },
   "honda|ps-125i-sporty": {
     "image": "store/img/bikes/honda-ps-125i.webp",
@@ -9116,6 +9200,18 @@
     "via": "alias",
     "aliasOf": "honda|stepwgn-spada"
   },
+  "honda|stream": {
+    "image": "store/img/bikes2/honda-stream.webp",
+    "thumb": "store/img/bikes2/honda-stream.thumb.webp",
+    "title": "2002 Honda Stream grey rear.jpg",
+    "author": "Throwawayacc222",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Honda_Stream_grey_rear.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/honda-stream.hero.webp"
+  },
   "honda|super-cub-c125-abs": {
     "image": "store/img/bikes/honda-super-cub-c125.webp",
     "thumb": "store/img/bikes/honda-super-cub-c125-thumb.webp",
@@ -9168,6 +9264,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Valkyrie_parked_in_North_Bend,_WA_(2008-04-26),_01.jpg",
     "via": "alias",
     "aliasOf": "honda|valkyrie"
+  },
+  "honda|vamos": {
+    "image": "store/img/bikes2/honda-vamos.webp",
+    "thumb": "store/img/bikes2/honda-vamos.thumb.webp",
+    "title": "Moscow, Honda Vamos Hobio black July 2026 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Honda_Vamos_Hobio_black_July_2026_01.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 11.0,
+    "hero": "store/img/bikes2/honda-vamos.hero.webp"
+  },
+  "honda|vamos-hobio": {
+    "image": "store/img/bikes2/honda-vamos.webp",
+    "thumb": "store/img/bikes2/honda-vamos.thumb.webp",
+    "hero": "store/img/bikes2/honda-vamos.hero.webp",
+    "title": "Moscow, Honda Vamos Hobio black July 2026 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Honda_Vamos_Hobio_black_July_2026_01.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|vamos"
   },
   "honda|varadero-125-dx": {
     "image": "store/img/bikes/honda-varadero-125.webp",
@@ -14842,6 +14962,18 @@
     "score": 8.0,
     "hero": "store/img/bikes2/lexus-gs.hero.webp"
   },
+  "lexus|hs": {
+    "image": "store/img/bikes2/lexus-hs.webp",
+    "thumb": "store/img/bikes2/lexus-hs.thumb.webp",
+    "title": "2013 Lexus HS 250h (49978531898).jpg",
+    "author": "Jones028 from Hong Kong",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Lexus_HS_250h_(49978531898).jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/lexus-hs.hero.webp"
+  },
   "lexus|is": {
     "image": "store/img/bikes2/lexus-is.webp",
     "thumb": "store/img/bikes2/lexus-is.thumb.webp",
@@ -14865,6 +14997,18 @@
     "view": "three_quarter",
     "score": 10.0,
     "hero": "store/img/bikes2/lexus-ls.hero.webp"
+  },
+  "lexus|nx": {
+    "image": "store/img/bikes2/lexus-nx.webp",
+    "thumb": "store/img/bikes2/lexus-nx.thumb.webp",
+    "title": "Lexus NX 450h+ (AAZH26) Auto Zuerich 2021 IMG 0444.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_NX_450h%2B_(AAZH26)_Auto_Zuerich_2021_IMG_0444.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/lexus-nx.hero.webp"
   },
   "lexus|rc": {
     "image": "store/img/bikes2/lexus-rc.webp",
@@ -15844,6 +15988,18 @@
     "via": "alias",
     "aliasOf": "nissan|rogue"
   },
+  "opel|movano-b": {
+    "image": "store/img/bikes2/opel-movano-b.webp",
+    "thumb": "store/img/bikes2/opel-movano-b.thumb.webp",
+    "title": "Opel Movano Womondo (1) ACC Berlin 2017.JPG",
+    "author": "Travelarz",
+    "license": "CC BY-SA 3.0 pl",
+    "source": "https://commons.wikimedia.org/wiki/File:Opel_Movano_Womondo_(1)_ACC_Berlin_2017.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.0,
+    "hero": "store/img/bikes2/opel-movano-b.hero.webp"
+  },
   "opel|vivaro-b": {
     "image": "store/img/bikes/opel-vivaro.webp",
     "thumb": "store/img/bikes/opel-vivaro-thumb.webp",
@@ -15865,6 +16021,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Opel_Vivaro_C_IMG_3455.jpg",
     "via": "alias",
     "aliasOf": "opel|vivaro"
+  },
+  "pontiac|bonneville": {
+    "image": "store/img/bikes2/pontiac-bonneville.webp",
+    "thumb": "store/img/bikes2/pontiac-bonneville.thumb.webp",
+    "title": "Pontiac Bonneville 1965, XZZ700 in Vrångebäck 1.jpg",
+    "author": "W.carter",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pontiac_Bonneville_1965,_XZZ700_in_Vr%C3%A5ngeb%C3%A4ck_1.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 11.0,
+    "hero": "store/img/bikes2/pontiac-bonneville.hero.webp"
+  },
+  "pontiac|grandprix": {
+    "image": "store/img/bikes2/pontiac-grandprix.webp",
+    "thumb": "store/img/bikes2/pontiac-grandprix.thumb.webp",
+    "title": "1996-2003 Pontiac Grand Prix.jpg",
+    "author": "NZ Car Freak",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1996-2003_Pontiac_Grand_Prix.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/pontiac-grandprix.hero.webp"
   },
   "ram|1500": {
     "image": "store/img/bikes/ram-1500-classic.webp",
@@ -18080,6 +18260,30 @@
     "score": 8.0,
     "hero": "store/img/bikes2/toyota-aqua.hero.webp"
   },
+  "toyota|auris": {
+    "image": "store/img/bikes2/toyota-auris.webp",
+    "thumb": "store/img/bikes2/toyota-auris.thumb.webp",
+    "title": "Policja - Police in Warsaw, Toyota Auris (2019).jpg",
+    "author": "Guillaume.G",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Policja_-_Police_in_Warsaw,_Toyota_Auris_(2019).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/toyota-auris.hero.webp"
+  },
+  "toyota|c-hr": {
+    "image": "store/img/bikes2/toyota-c-hr.webp",
+    "thumb": "store/img/bikes2/toyota-c-hr.thumb.webp",
+    "title": "Moscow, Toyota C-HR, Aug 2025 04.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Toyota_C-HR,_Aug_2025_04.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/toyota-c-hr.hero.webp"
+  },
   "toyota|century": {
     "image": "store/img/bikes2/toyota-century.webp",
     "thumb": "store/img/bikes2/toyota-century.thumb.webp",
@@ -18103,6 +18307,30 @@
     "view": "three_quarter",
     "score": 10.0,
     "hero": "store/img/bikes2/toyota-coaster.hero.webp"
+  },
+  "toyota|comfort": {
+    "image": "store/img/bikes2/toyota-comfort.webp",
+    "thumb": "store/img/bikes2/toyota-comfort.thumb.webp",
+    "title": "Toyota Comfort Driving examination.JPG",
+    "author": "hyolee2",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Comfort_Driving_examination.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/toyota-comfort.hero.webp"
+  },
+  "toyota|copen": {
+    "image": "store/img/bikes2/toyota-copen.webp",
+    "thumb": "store/img/bikes2/toyota-copen.thumb.webp",
+    "title": "Osaka Auto Messe 2019 (313) - Toyota COPEN GR SPORT CONCEPT.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Auto_Messe_2019_(313)_-_Toyota_COPEN_GR_SPORT_CONCEPT.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.0,
+    "hero": "store/img/bikes2/toyota-copen.hero.webp"
   },
   "toyota|corolla": {
     "image": "store/img/bikes2/toyota-corolla.webp",
@@ -18176,6 +18404,18 @@
     "via": "alias",
     "aliasOf": "toyota|corolla"
   },
+  "toyota|crown-comfort": {
+    "image": "store/img/bikes2/toyota-crown-comfort.webp",
+    "thumb": "store/img/bikes2/toyota-crown-comfort.thumb.webp",
+    "title": "Toyota Crown Comfort, Denpasar.JPG",
+    "author": "Sabung.hamster",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Crown_Comfort,_Denpasar.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/toyota-crown-comfort.hero.webp"
+  },
   "toyota|dyna-cargo": {
     "image": "store/img/bikes2/toyota-dyna-cargo.webp",
     "thumb": "store/img/bikes2/toyota-dyna-cargo.thumb.webp",
@@ -18223,6 +18463,18 @@
     "view": "three_quarter",
     "score": 10.0,
     "hero": "store/img/bikes2/toyota-esquire.hero.webp"
+  },
+  "toyota|gr86": {
+    "image": "store/img/bikes2/toyota-gr86.webp",
+    "thumb": "store/img/bikes2/toyota-gr86.thumb.webp",
+    "title": "2022 Toyota GR86.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Toyota_GR86.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/toyota-gr86.hero.webp"
   },
   "toyota|harrier": {
     "image": "store/img/bikes2/toyota-harrier.webp",
@@ -18272,6 +18524,18 @@
     "score": 10.0,
     "hero": "store/img/bikes2/toyota-hiace-wagon.hero.webp"
   },
+  "toyota|hilux": {
+    "image": "store/img/bikes2/toyota-hilux.webp",
+    "thumb": "store/img/bikes2/toyota-hilux.thumb.webp",
+    "title": "IAA Transportation 2026, Hanover (20260914-P1086918).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:IAA_Transportation_2026,_Hanover_(20260914-P1086918).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.0,
+    "hero": "store/img/bikes2/toyota-hilux.hero.webp"
+  },
   "toyota|jpntaxi": {
     "image": "store/img/bikes2/toyota-jpntaxi.webp",
     "thumb": "store/img/bikes2/toyota-jpntaxi.thumb.webp",
@@ -18307,6 +18571,18 @@
     "view": "three_quarter",
     "score": 9.0,
     "hero": "store/img/bikes2/toyota-landcruiser-prado.hero.webp"
+  },
+  "toyota|liteace-truck": {
+    "image": "store/img/bikes2/toyota-liteace-truck.webp",
+    "thumb": "store/img/bikes2/toyota-liteace-truck.thumb.webp",
+    "title": "Toyota Liteace Truck 001.JPG",
+    "author": "Tennen-Gas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Liteace_Truck_001.JPG",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/toyota-liteace-truck.hero.webp"
   },
   "toyota|liteace-van": {
     "image": "store/img/bikes2/toyota-liteace-van.webp",
@@ -18452,6 +18728,18 @@
     "score": 10.0,
     "hero": "store/img/bikes2/toyota-probox.hero.webp"
   },
+  "toyota|raize": {
+    "image": "store/img/bikes2/toyota-raize.webp",
+    "thumb": "store/img/bikes2/toyota-raize.thumb.webp",
+    "title": "2022 Toyota Raize 1.0T G (front), West Surabaya.jpg",
+    "author": "Alex Neman",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Toyota_Raize_1.0T_G_(front),_West_Surabaya.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/toyota-raize.hero.webp"
+  },
   "toyota|rav4-phv": {
     "image": "store/img/bikes/toyota-rav4.webp",
     "thumb": "store/img/bikes/toyota-rav4-thumb.webp",
@@ -18499,6 +18787,18 @@
     "score": 9.0,
     "hero": "store/img/bikes2/toyota-solara.hero.webp"
   },
+  "toyota|spade": {
+    "image": "store/img/bikes2/toyota-spade.webp",
+    "thumb": "store/img/bikes2/toyota-spade.thumb.webp",
+    "title": "2015-2020 Toyota Spade in Black Mica, front right.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015-2020_Toyota_Spade_in_Black_Mica,_front_right.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.0,
+    "hero": "store/img/bikes2/toyota-spade.hero.webp"
+  },
   "toyota|succeed": {
     "image": "store/img/bikes2/toyota-succeed.webp",
     "thumb": "store/img/bikes2/toyota-succeed.thumb.webp",
@@ -18510,6 +18810,18 @@
     "view": "three_quarter",
     "score": 9.0,
     "hero": "store/img/bikes2/toyota-succeed.hero.webp"
+  },
+  "toyota|supra": {
+    "image": "store/img/bikes2/toyota-supra.webp",
+    "thumb": "store/img/bikes2/toyota-supra.thumb.webp",
+    "title": "Dülmen, Auto Bertels, Toyota GR Supra -- 2021 -- 9539.jpg",
+    "author": "Dietmar Rabich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Auto_Bertels,_Toyota_GR_Supra_--_2021_--_9539.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.0,
+    "hero": "store/img/bikes2/toyota-supra.hero.webp"
   },
   "toyota|townace-truck": {
     "image": "store/img/bikes2/toyota-townace-truck.webp",
@@ -18546,6 +18858,18 @@
     "view": "three_quarter",
     "score": 10.0,
     "hero": "store/img/bikes2/toyota-toyoace-cargo.hero.webp"
+  },
+  "toyota|toyoace-dump": {
+    "image": "store/img/bikes2/toyota-toyoace-dump.webp",
+    "thumb": "store/img/bikes2/toyota-toyoace-dump.thumb.webp",
+    "title": "Toyota Toyoace Dump truck 001.JPG",
+    "author": "Tennen-Gas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Toyoace_Dump_truck_001.JPG",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/toyota-toyoace-dump.hero.webp"
   },
   "toyota|toyoace-routevan": {
     "image": "store/img/bikes2/toyota-toyoace-routevan.webp",
@@ -25185,6 +25509,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Xv250.JPG",
     "via": "alias",
     "aliasOf": "yamaha|xv250"
+  },
+  "yamaha|xvs1100": {
+    "image": "store/img/bikes2/yamaha-xvs1100.webp",
+    "thumb": "store/img/bikes2/yamaha-xvs1100.thumb.webp",
+    "title": "Dragstar1100.JPG",
+    "author": "Hjf at English Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dragstar1100.JPG",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-xvs1100.hero.webp"
+  },
+  "yamaha|xvs1100a": {
+    "image": "store/img/bikes2/yamaha-xvs1100.webp",
+    "thumb": "store/img/bikes2/yamaha-xvs1100.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-xvs1100.hero.webp",
+    "title": "Dragstar1100.JPG",
+    "author": "Hjf at English Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dragstar1100.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|xvs1100"
   },
   "yamaha|xvs250": {
     "image": "store/img/bikes2/yamaha-xvs250.webp",
