@@ -23,30 +23,33 @@
   "paintMaterials": [],
   "extra": {
    "fairing": [
-    "^Windshield_Mesh_0$",
-    "^Windshield\\.001_Decal_0$",
-    "^Windshield$",
-    "^Windshield\\.001$"
+    "^Windshield",
+    "^Plate with holes",
+    "^Idk some under plate"
    ],
    "headlight": [
-    "^Front Lights_Mesh_0$",
-    "^Front Lights$"
+    "^Front Lights",
+    "^Lights at front"
    ],
    "handlebar": [
-    "^Dashboard_Mesh_0$",
-    "^Dashboard Holder_Mesh_0$",
-    "^Dashboard\\.001_Decal_0$",
-    "^Dashboard$",
-    "^Dashboard Holder$",
-    "^Dashboard\\.001$"
+    "^Dashboard",
+    "^Ste[a-z]*ing Whee"
    ],
    "engine": [
-    "^Cylinder_Mesh_0$",
-    "^Cylinders_Mesh_0$",
-    "^Cylinder$",
-    "^Cylinders$",
-    "^Damn theres a lot of cylinders$",
-    "^Cylinder\\.014$"
+    "^Cylinder",
+    "^Damn theres a lot of cylinders"
+   ],
+   "front-brake": [
+    "^Brakes",
+    "^Brake Holder",
+    "^Brake Pads"
+   ],
+   "air-filter": [
+    "^Filter_"
+   ],
+   "footpeg": [
+    "^Pedal",
+    "^Leg_"
    ]
   }
  },
@@ -80,7 +83,39 @@
    "MAT_Ducati_StreetFighter_V4S_Carpaint_Red.028",
    "MAT_Ducati_StreetFighter_V4S_Carpaint_Red"
   ],
-  "extra": {}
+  "extra": {
+   "front-brake": [
+    "^Object_36$"
+   ],
+   "rear-brake": [
+    "^Object_6$"
+   ],
+   "chain": [
+    "^Object_7$"
+   ],
+   "radiator": [
+    "^Object_41$"
+   ],
+   "handlebar": [
+    "^Object_37$"
+   ],
+   "mirrors": [
+    "^Object_34$"
+   ],
+   "taillight": [
+    "^Object_20$",
+    "^Object_21$"
+   ],
+   "headlight": [
+    "^SM_FrontKit"
+   ],
+   "seat": [
+    "^SM_RearKit"
+   ],
+   "fuel-tank": [
+    "^SM_Base"
+   ]
+  }
  },
  "classic": {
   "kind": "bike",
@@ -92,7 +127,18 @@
    "frame"
   ],
   "paintMaterials": [],
-  "extra": {}
+  "extra": {
+   "mirrors": [
+    "^Object_18$"
+   ],
+   "taillight": [
+    "^Object_9$"
+   ],
+   "fairing": [
+    "^Object_11$",
+    "^Object_12$"
+   ]
+  }
  },
  "motocross": {
   "kind": "bike",
@@ -140,7 +186,38 @@
    "frame"
   ],
   "paintMaterials": [],
-  "extra": {}
+  "extra": {
+   "front-brake": [
+    "^Object_2$"
+   ],
+   "headlight": [
+    "^Object_7$"
+   ],
+   "front-fork": [
+    "^Object_12$"
+   ],
+   "handlebar": [
+    "^Object_11$",
+    "^Object_4$"
+   ],
+   "engine": [
+    "^Object_6$",
+    "^Object_5$",
+    "^Object_9$"
+   ],
+   "chain": [
+    "^Object_3$"
+   ],
+   "sprocket": [
+    "^Object_8$"
+   ],
+   "taillight": [
+    "^Object_14$"
+   ],
+   "fairing": [
+    "^Object_13$"
+   ]
+  }
  },
  "supermoto": {
   "kind": "bike",
@@ -153,23 +230,51 @@
   ],
   "paintMaterials": [],
   "extra": {
+   "front-wheel": [
+    "^wheel_"
+   ],
+   "front-brake": [
+    "^Etujarru"
+   ],
+   "rear-shock": [
+    "^Takaiskari"
+   ],
    "engine": [
-    "^Cylinder\\.002_black_0$",
-    "^Cylinder\\.002_Metal_0$",
-    "^Cylinder\\.002_Redbull_0$",
-    "^Cylinder\\.006__0$",
-    "^Cylinder\\.007_Metal_0$",
-    "^Cylinder\\.075_Redbull_0$",
-    "^Cylinder\\.077_black_0$",
-    "^Cylinder\\.079_black_0$",
-    "^Cylinder\\.082_Redbull_0$",
-    "^Cylinder\\.002$",
-    "^Cylinder\\.006$",
-    "^Cylinder\\.007$",
-    "^Cylinder\\.075$",
-    "^Cylinder\\.077$",
-    "^Cylinder\\.079$",
-    "^Cylinder\\.082$"
+    "^kone_",
+    "^j.{0,12}rit_Enigne"
+   ],
+   "exhaust": [
+    "^putki_",
+    "^Circle_FMF_0$"
+   ],
+   "clutch": [
+    "^Kytkin"
+   ],
+   "handlebar": [
+    "^NurbsPath_Redbull",
+    "^Tuppi",
+    "^Tupet"
+   ],
+   "fairing": [
+    "^Etulokari",
+    "^suoja_",
+    "^kate_",
+    "^Suoja",
+    "^Cube.005_Redbull"
+   ],
+   "swingarm": [
+    "^Cube.008_Metal"
+   ],
+   "front-fork": [
+    "^Cylinder.075",
+    "^Cylinder.077",
+    "^Cylinder.079",
+    "^Cylinder.082",
+    "^Cylinder.002",
+    "^Cylinder.006"
+   ],
+   "rear-wheel": [
+    "^Cylinder.007"
    ]
   }
  },
@@ -213,6 +318,40 @@
    "fairing"
   ],
   "paintMaterials": [],
-  "extra": {}
+  "extra": {
+   "front-wheel": [
+    "^Object_19$",
+    "^Object_20$",
+    "^Object_27$",
+    "^Object_28$"
+   ],
+   "rear-wheel": [
+    "^Object_24$",
+    "^Object_25$",
+    "^Object_30$",
+    "^Object_31$"
+   ],
+   "glass": [
+    "^Object_6$"
+   ],
+   "seat": [
+    "^Object_8$",
+    "^Object_11$"
+   ],
+   "taillight": [
+    "^Object_17$",
+    "^Object_16$",
+    "^Object_14$"
+   ],
+   "fairing": [
+    "^Object_4$",
+    "^Object_5$",
+    "^Object_7$",
+    "^Object_10$",
+    "^Object_13$",
+    "^Object_15$",
+    "^Object_9$"
+   ]
+  }
  }
 }

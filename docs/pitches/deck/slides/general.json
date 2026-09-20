@@ -1,0 +1,284 @@
+{
+  "pitch": "general",
+  "order": 1,
+  "title": "Mechanica",
+  "target": "Main track",
+  "length": "5:00",
+  "angle": "No tech words: a real mechanic, a real page. The spine — get this one muscle-memory and eight of the nine are 80% rehearsed.",
+  "endline": "Don't trust the AI. Trust the manual.",
+  "marks": [
+    { "t": "0:00", "do": "Phone down. The friend's workshop." },
+    { "t": "0:20", "do": "Type mt-07 → 2018 → ✓. Leave the ingest running." },
+    { "t": "0:35", "do": "20% → 400 hours → EUR 36–48k." },
+    { "t": "1:00", "do": "His two reasons: 95%, and $4 a question." },
+    { "t": "1:20", "do": "\"The opposite of a chatbot.\"" },
+    { "t": "1:35", "do": "Type 390 duke." },
+    { "t": "1:50", "do": "Tap KTM 390 DUKE → 2024." },
+    { "t": "2:00", "do": "Type chain is loose." },
+    { "t": "2:20", "do": "Open the page. STOP TALKING." },
+    { "t": "2:45", "do": "Tap ALL — 143 sheets." },
+    { "t": "2:55", "do": "PARTS → the Chain tile." },
+    { "t": "3:15", "do": "CHAT → chain is loose, what do I do." },
+    { "t": "3:40", "do": "Mic → how much engine oil does it take." },
+    { "t": "3:50", "do": "Back — the MT-07 is ready. Type oil." },
+    { "t": "4:05", "do": "Why now." },
+    { "t": "4:35", "do": "Today, and the close." }
+  ],
+  "slides": [
+    {
+      "kind": "title",
+      "at": "0:00",
+      "title": "Mechanica",
+      "line": "Don't trust the AI. Trust the manual.",
+      "meta": "We just get you to the page",
+      "notes": [
+        "*Don't rush it.* Say the title, then stop talking for two seconds. The whole pitch is a reversal — an AI that refuses to answer — and reversals need a beat.",
+        "Alternative art if you want the product on screen from second one: ~general/01-landing.png~.",
+        "Throughout: no model names, no vendor names, no architecture. If someone wants that they will ask, and the answer lives in Q&A."
+      ]
+    },
+    {
+      "kind": "statement",
+      "at": "0:00",
+      "kicker": "My friend's workshop",
+      "text": "He fixes bikes for a living. About a fifth of his working week he is not fixing bikes — he is looking for a page.",
+      "sub": "*400 hours a year.* At a German shop rate that is *EUR 36–48k* of work he could have billed.",
+      "notes": [
+        "*Name him, don't dramatise him.* \"A friend of mine.\" Not \"a customer\", not \"shops everywhere\". One person is more convincing than a market, and the room knows the difference.",
+        "Say ~he says~ out loud. The 20% is his estimate; the 400 hours and the euros are arithmetic on his number and an assumed 2,000-hour year. Say ~that's arithmetic on his number~.",
+        "While this is on screen the MT-07 2018 ingest you started at 0:20 is running in the background. Do not look at it."
+      ],
+      "defs": [
+        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate, reported by the founder (assumed). Always say \"he says\"." },
+        { "n": "400 h", "d": "20% × 2,000 h — arithmetic on his number and an assumed 2,000-hour year (computed)." },
+        { "n": "EUR 36k-48k", "d": "400 h × EUR 90–120/h (computed). ramp/numbers.md defends EUR 24,640 after recovery and utilisation." }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "1:00",
+      "kicker": "Why he won't use AI",
+      "items": [
+        { "value": "95%", "label": "right — and he signs for the 5%", "sub": "\"95% right isn't enough when I sign for the 5%.\"" },
+        { "value": "$4", "label": "a question, when he tried it", "sub": "The model had to read a 500-page manual. He hit his limit by lunchtime." }
+      ],
+      "sub": "His reasons. Not our argument.",
+      "notes": [
+        "*Let the two numbers sit alone.* No bullets. 95% and $4. Say them as ~his~ reasons, not your argument.",
+        "You are not attacking AI — you are agreeing with a skeptic, which buys you everything you do next.",
+        "His ~$4 is *his* bill on *his* manual. Our own measured naive worst case is $12.40 and our median is $1.37. Three different numbers — never blend them."
+      ],
+      "defs": [
+        { "n": "95%", "d": "his line, quoted: \"95% right isn't enough when I sign for the 5%.\" His number, not ours.", "src": "BRIEF.md" },
+        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed). Not the same measurement as our $12.40." }
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "1:20",
+      "title": "So we built the opposite of a chatbot",
+      "caption": "It never answers. It finds the page in the manufacturer's own manual and puts your finger on the line.",
+      "flow": {
+        "bands": [
+          {
+            "rows": [
+              {
+                "items": [
+                  { "tone": "paper", "t": "Type the name|Snap a photo|Scan the VIN" },
+                  { "tone": "paper", "t": "Confirm the|exact year", "sub": "a 2021 and a 2024 are different machines" },
+                  { "tone": "paper", "t": "Say what's wrong,|in your own words", "sub": "slang, typos, German" },
+                  { "tone": "white", "t": "The manual's own headings,|the part lit on a 3D bike", "sub": "those aren't our words" }
+                ]
+              },
+              {
+                "gap": 60,
+                "items": [
+                  { "tone": "ink", "t": "THE PRINTED PAGE|answering lines marked", "sub": "the marker is only there because we found that exact text in the PDF" },
+                  { "tone": "white", "t": "Parts the manual specs,|live prices" },
+                  { "tone": "white", "t": "Chat or voice — every|sentence ends in a page number" }
+                ],
+                "link": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "\"So we built the opposite of a chatbot. Mechanica never answers. It finds the page in the manufacturer's own manual and puts your finger on the line.\"",
+        "This slide is optional — it is the *user path* diagram from general.md, redrawn. If you are running short, cut it and narrate the path over the demo instead. Never cut the page at 2:20 or the chat at 3:15.",
+        "Do not say the word architecture. Three steps: bike, question, pages."
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "1:35",
+      "title": "Start with the bike",
+      "line": "*27,751 vehicles* — motorcycles and cars. Type it, photograph it, or scan the VIN.",
+      "points": [
+        "23,140 motorcycles · 4,611 cars · 77 makes",
+        "13,537 of them already carry a free official manual",
+        "VIN → the exact bike in 1.3 s"
+      ],
+      "image": "general/02-cards.png",
+      "notes": [
+        "*Narrate the taps, not the screen.* \"Type it. Tap it.\" They should feel how few taps there are.",
+        "Say the words \"or photograph it, or scan the VIN\" and move on. Don't explain either path unless asked.",
+        "Do not say ~17,556 manuals~ or \"seventeen thousand\". Never call 13,537 manuals — it is vehicles carrying a free manual."
+      ],
+      "defs": [
+        { "n": "27,751", "d": "vehicles you can pick — rows in live GET /api/catalog (measured)." },
+        { "n": "23,140", "d": "motorcycles in the catalog — row.kind != 'car' (measured)." },
+        { "n": "4,611", "d": "cars in the catalog — row.kind == 'car' (measured)." },
+        { "n": "77", "d": "makes in the catalog (measured). The registry has 80; a make with no usable row never becomes a vehicle." },
+        { "n": "13,537", "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs — many years share one file." },
+        { "n": "1.3 s", "d": "VIN → the exact bike — live POST /api/identify/vin VBKJSA40XXXXXXXXX → KTM 390 Duke 2024, 2026-09-20 (measured)." }
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "1:50",
+      "title": "The exact one",
+      "line": "Year and market, because a torque figure from the wrong year is how you strip a thread.",
+      "points": ["A 2024 and a 2021 are different machines.", "They care about the boring part — that is the point."],
+      "image": "general/03-chooser.png",
+      "notes": [
+        "Tap the KTM 390 DUKE card, then 2024. Two taps, no explanation.",
+        "This is the slide where a mechanic decides whether you have ever met one. The year gate is the tell."
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "2:00",
+      "title": "Say what's wrong",
+      "line": "Plain words in. The manual's own headings out — and the part lit on the bike.",
+      "points": [
+        "`chain is loose` → *12.12 Checking the chain tension* p. 77–78",
+        "→ *12.13 Adjusting the chain tension* p. 78",
+        "Those aren't our words. That is KTM's own table of contents."
+      ],
+      "image": "general/04-pick-3d.png",
+      "notes": [
+        "*The line that lands is \"those aren't our words.\"* Point at the headings. 12.12 and 12.13 are KTM's own section numbers; that they look like a filing system is the point.",
+        "It didn't write anything. That is what they should feel.",
+        "If the 3D bike doesn't load it never blocks anything — carry on, the headings and the page are the point."
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "2:20",
+      "title": "The answer is a page",
+      "line": "KTM's page 77, marked on the two lines that answer — and *only* where we found that ink.",
+      "points": ["\"If we can't find the ink, we don't draw the marker.\""],
+      "image": "general/05-book.png",
+      "caption": "143 printed pages, a hand-curated 20-section index. Tap ALL and the whole book is there.",
+      "notes": [
+        "*This is the slide. Stop.* Let them read the marked line.",
+        "Then one sentence: \"and the marker is only there because we found that text in KTM's PDF. If we can't find it, we don't draw it.\" That sentence is the entire trust story; everything else is convenience.",
+        "Right section first on *100% of the 130 in-scope* eval questions, and *0 of 20* off-topic questions answered instead of refused. Say it only if asked."
+      ],
+      "defs": [
+        { "n": "143", "d": "printed pages in the demo manual, KTM 390 Duke 2024 (ktm-390-duke-2024-om-en).", "src": "README.md" },
+        { "n": "100%", "d": "right section first, in-scope questions — 100% of 130, api/eval/report.md (measured)." },
+        { "n": "20 of 20", "d": "off-topic questions returned empty instead of guessed at — the oos category, 100% empty (measured)." }
+      ]
+    },
+    {
+      "kind": "two-up",
+      "at": "2:55",
+      "title": "What it needs, and what it costs",
+      "left": { "image": "general/06-parts.png", "label": "135 parts for this bike", "caption": "in 11 groups — each one there because the manual prints a spec for it" },
+      "right": { "image": "general/07-part-detail.png", "label": "Chain · 5/8 × 1/4\" (520) X-ring · p. 126", "caption": "the chain size is KTM's, not a guess — then the live price" },
+      "caption": "*Live prices.* There is no checkout — never say \"buy\".",
+      "notes": [
+        "*Don't oversell the shop.* Say \"live prices\", not \"checkout\". There is no checkout.",
+        "The loop closes here: the next thing after \"it's worn\" is \"what does it cost\".",
+        "If asked about the 3D model: it is a *part locator*, not a manufacturer parts catalogue. Pick the Honda CBR650R 2023 and it is that bike."
+      ],
+      "defs": [
+        { "n": "135", "d": "parts for the demo bike — live GET /api/parts/catalog?manualId=ktm-390-duke-2024-om-en, in 11 groups; 14 carry a spec this manual itself prints (measured)." }
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "3:15",
+      "title": "When you do want a sentence",
+      "line": "It may *only* write page numbers. Every claim is one tap from the ink.",
+      "points": [
+        "100% of 48 claim sentences carry a page",
+        "100% of 43 quotes verbatim on the page they name",
+        "0 invented numbers · 0 dealer referrals"
+      ],
+      "image": "general/08-chat.png",
+      "notes": [
+        "*Say the constraint out loud.* \"It is *only allowed* to write page numbers.\" People hear that as a style choice; make clear it is a hard rule.",
+        "And that the quotes are cut out of the page by *our server*, not written by the model. Verbatim by construction, not by trust.",
+        "Tap a [p. 78] chip live — the page appears. Even the chatty part is leashed."
+      ],
+      "defs": [
+        { "n": "100% of 48", "d": "chat claim sentences carrying a page number — api/eval/chat-report.md (measured)." },
+        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name — the server slices the quote out of the page, the model only names it (measured)." },
+        { "n": "0 · 0", "d": "invented numbers · dealer referrals, of 25 answers — api/eval/chat-report.md (measured)." }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "4:35",
+      "kicker": "Today",
+      "items": [
+        { "value": "14,770", "label": "free official manuals we can reach", "sub": "distinct free English PDFs behind the registry" },
+        { "value": "535", "label": "already indexed and searchable", "sub": "95,914 printed pages · 91,388 sections" },
+        { "value": "40.4 s", "label": "any of the others, brought online", "sub": "readable in 1.3 s · $0.095, once, forever" },
+        { "value": "$0.00038", "label": "a question, after that", "sub": "four hundredths of a cent · reading the whole manual instead is $12.40" }
+      ],
+      "notes": [
+        "*End on him, not on us.* The last sentence is about the mechanic, not the technology.",
+        "\"Every number I gave you is on the live site right now. And there is not one AI-written sentence on this screen. Don't trust the AI. Trust the manual — we just get you to the page.\"",
+        "If you quote a running total say the date with it: the deployed app had spent $8.93 over 1,633 model calls at 2026-09-20 09:55, and it moves every hour. Prefer not quoting it."
+      ],
+      "defs": [
+        { "n": "14,770", "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable registry rows (computed). The honest \"manuals we can reach\" number." },
+        { "n": "535", "d": "manuals indexed and searchable now — live GET /api/manuals (measured)." },
+        { "n": "95,914", "d": "printed pages behind them — sum(manual.pages) (measured)." },
+        { "n": "91,388", "d": "sections indexed — sum(manual.sections) (measured)." },
+        { "n": "40.4 s", "d": "a brand-new manual → fully searchable, /ingest job to status=done; live run, KTM 390 Duke 2014, 182 p, 2026-09-20 (measured)." },
+        { "n": "1.3 s", "d": "a brand-new manual → readable, same run (measured)." },
+        { "n": "$0.095", "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests, mean 177 pages (measured)." },
+        { "n": "$0.00038", "d": "our $ per ask — eval cost-log delta on ask.* over 150 controlled queries / 150 (measured). THE number to quote." },
+        { "n": "$12.40", "d": "naive $/question, largest deployed manual — naive_usd(775) = 775p × 800 tok × $10/M × 2 past the 272k long-context line (measured)." },
+        { "n": "$8.93", "d": "what the DEPLOYED app has spent — live GET /api/cost over 1,633 calls, 2026-09-20. In-replica; moves every hour and resets on redeploy (measured)." }
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "general.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not say 17,556 manuals, or \"seventeen thousand\".",
+            "Do not promise full offline. The app, the vehicle list, the chapters and the pages you already opened work with the network off; fetching a new manual, chat and voice do not.",
+            "Do not say \"none of our service manuals are free\" — 182 service rows, 15 of them paid, subscription or dealer-login only."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — say \"built, one key away\". The live voice is Deepgram, and deepgram: true.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene — there is none.",
+            "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
+            "Never quote a running ledger total without the date beside it. Prefer not quoting it.",
+            "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual. Distinct fetchable PDFs is 14,770.",
+            "Never call 4,081 and 1,489 the same number: owner-typed over every row vs the free-English subset.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": [
+        "This card is presenter-only. The audience sees the end card; you see the list.",
+        "Before any pitch: re-run pitch_numbers.py and read §11 of numbers.md. Three words have two honest counts each."
+      ]
+    }
+  ]
+}

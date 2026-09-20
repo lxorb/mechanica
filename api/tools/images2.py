@@ -53,7 +53,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
-from urllib.parse import quote, unquote
+from urllib.parse import quote, unquote, urlsplit
 
 import httpx
 from PIL import Image, ImageChops, ImageFilter, ImageStat
@@ -77,6 +77,9 @@ FIRST_JSON = ROOT / "web" / "store" / "bike-images.json"  # read-only; another a
 IMG_DIR = ROOT / "web" / "store" / "img" / "bikes2"
 OUT_JSON = ROOT / "web" / "store" / "bike-images-2.json"
 OUT_CREDITS = ROOT / "web" / "store" / "CREDITS-bikes-2.md"
+# Models Commons has nothing for. Deterministic, so re-asking costs a run its time
+# and buys nothing. Lives inside the image directory this tool owns.
+MISS_CACHE = IMG_DIR / ".misses.json"
 
 COMMONS = "https://commons.wikimedia.org/w/api.php"
 FILEPATH = "https://commons.wikimedia.org/wiki/Special:FilePath/"
@@ -87,7 +90,8 @@ UA = (
 )
 
 # Ordered by how many motorcycle-model articles each wiki actually carries.
-WIKIS = ["en", "de", "fr", "es", "it", "nl"]
+# JDM and Asian-market bikes are often documented only on ja/id/th.
+WIKIS = ["en", "de", "ja", "it", "fr", "es", "id", "th", "nl"]
 
 # Words that mean "this is not a photograph of a whole motorcycle".
 REJECT_WORDS = (
@@ -414,16 +418,44 @@ class Bucket:
             self.next = max(self.next, time.monotonic()) + seconds
 
 
-def get(client: httpx.Client, url: str, bucket: Bucket, *, params=None, tries: int = 3):
+class Hosts:
+    """One token bucket per hostname.
+
+    Politeness is a per-server courtesy, not a global one: commons.wikimedia.org
+    and ja.wikipedia.org are different machines and throttling them together only
+    slows the run down without being any kinder to either.
+    """
+
+    def __init__(self, rps: float):
+        self.rps = rps
+        self.lock = threading.Lock()
+        self.buckets: dict = {}
+
+    def of(self, url: str) -> Bucket:
+        host = urlsplit(url).netloc or "?"
+        with self.lock:
+            bucket = self.buckets.get(host)
+            if bucket is None:
+                bucket = self.buckets[host] = Bucket(self.rps)
+        return bucket
+
+    def take(self, url: str) -> None:
+        self.of(url).take()
+
+    def penalise(self, url: str, seconds: float) -> None:
+        self.of(url).penalise(seconds)
+
+
+def get(client: httpx.Client, url: str, bucket: Hosts, *, params=None, tries: int = 3):
     last = None
     for attempt in range(tries):
-        bucket.take()
+        bucket.take(url)
         try:
             r = client.get(url, params=params)
             if r.status_code in (429, 500, 502, 503, 504):
                 last = f"HTTP {r.status_code}"
                 if r.status_code == 429:
-                    bucket.penalise(5.0)
+                    bucket.penalise(url, 5.0)
             else:
                 r.raise_for_status()
                 return r
@@ -1101,6 +1133,17 @@ def verify(entries: dict, known: set | None = None) -> int:
     return len(stale)
 
 
+def load_misses() -> set:
+    try:
+        return set(json.loads(MISS_CACHE.read_text(encoding="utf-8")))
+    except Exception:  # noqa: BLE001
+        return set()
+
+
+def save_misses(keys: set) -> None:
+    save(MISS_CACHE, json.dumps(sorted(keys), indent=0) + "\n")
+
+
 def first_pass() -> tuple:
     """(map, titles) already claimed by images.py. Re-read at every checkpoint."""
     try:
@@ -1118,8 +1161,7 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0, help="0 = every missing model")
     ap.add_argument("--budget-mb", type=float, default=150.0)
     ap.add_argument("--llm-budget", type=float, default=8.0, help="USD cap for images.score")
-    ap.add_argument("--api-rps", type=float, default=8.0)
-    ap.add_argument("--cdn-rps", type=float, default=16.0)
+    ap.add_argument("--rps-per-host", type=float, default=2.0, help="requests per second, per hostname")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--minutes", type=float, default=0.0)
     ap.add_argument("--checkpoint", type=int, default=25)
@@ -1135,6 +1177,8 @@ def main() -> int:
     ap.add_argument("--tier", type=int, default=2, help="highest tier to attempt (0/1/2)")
     ap.add_argument("--wikis", default=",".join(WIKIS))
     ap.add_argument("--wiki-tier", type=int, default=1, help="sweep wikis up to this tier")
+    ap.add_argument("--retry-misses", action="store_true", help="ignore the no-candidate cache")
+    ap.add_argument("--only", default="", help="file of make|model keys to run instead of the queue")
     ap.add_argument("--depths", type=int, default=2, help="how many model-name variants to try")
     ap.add_argument("--no-alias", action="store_true", help="skip the variant-key alias pass")
     ap.add_argument(
@@ -1175,9 +1219,22 @@ def main() -> int:
             write_outputs(entries)
             print(f"alias pass: {aliased} variant keys pointed at an existing photo", flush=True)
 
+    misses = set() if args.retry_misses else load_misses()
     models = [
-        m for m in all_models if m.key not in filled and m.key not in entries and m.tier <= args.tier
+        m
+        for m in all_models
+        if m.key not in filled
+        and m.key not in entries
+        and m.key not in misses
+        and m.tier <= args.tier
     ]
+    if args.only:
+        wanted = {
+            image_key(*line.split("|", 1))
+            for line in Path(args.only).read_text(encoding="utf-8").splitlines()
+            if "|" in line
+        }
+        models = [m for m in all_models if m.key in wanted and m.key not in entries]
     if args.limit:
         models = models[: args.limit]
 
@@ -1191,7 +1248,7 @@ def main() -> int:
 
     budget = args.budget_mb * 1024 * 1024
     deadline = time.monotonic() + args.minutes * 60 if args.minutes else None
-    api_bucket, cdn_bucket = Bucket(args.api_rps), Bucket(args.cdn_rps)
+    api_bucket = cdn_bucket = Hosts(args.rps_per_host)
     lock = threading.Lock()
     stats: dict = defaultdict(int)
     spend = {"usd": 0.0}
@@ -1253,6 +1310,7 @@ def main() -> int:
         if not cands:
             with lock:
                 stats["no_candidate"] += 1
+                misses.add(m.key)
             return False
 
         previews = [p for p in (preview(client, c) for c in cands) if p]
@@ -1398,6 +1456,8 @@ def main() -> int:
             if fresh:
                 print(f"  ~ {fresh} variant keys aliased onto new first-pass photos", flush=True)
             write_outputs(out)
+            with lock:
+                save_misses(set(misses))
             last_save[0] = time.monotonic()
             print(
                 f"  ..{tag} {snapshot[0]}/{len(models)} tried, {len(out)} images, "
@@ -1473,6 +1533,7 @@ def main() -> int:
                 "new_images": stats["hit"],
                 "total_entries": len(entries),
                 "alias_entries": sum(1 for e in entries.values() if e.get("via") == "alias"),
+                "misses_cached": len(misses),
                 "no_candidate": stats["no_candidate"],
                 "rejected_by_rater": stats["rejected"],
                 "errors": stats["error"] + stats["rate_error"] + stats["render_error"],

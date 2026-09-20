@@ -48,6 +48,12 @@ TOP_MODELS = 4  # distinct models in the answer: what the Confirm strip can corr
 YEARS_PER_MODEL = 2
 MAX_CANDIDATES = 8
 BONUS = 0.45  # how far the badge and the displacement may move a name-only score
+# The vision step's own runner-up guesses, by position. Its self-reported confidence on them is
+# often 0.05 and always pessimistic, so position is what ranks them and FLOOR_CONF is the floor:
+# a runner-up that lands on a catalog model exactly has to be able to outrank a loose match on
+# the main answer, which is where the truth sat on half the photos this got wrong.
+RUNNER_UP = (0.78, 0.66, 0.58)
+FLOOR_CONF = 0.55
 VPIC = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/{vin}?format=json"
 
 DIGITS = re.compile(r"\d+")
@@ -71,7 +77,6 @@ class PhotoGuess(BaseModel):
     measured worse - the model named a bike and then invented a tank decal that agreed with it."""
 
     kind: Literal["motorcycle", "car"] = "motorcycle"
-    cues: list[str] = []
     badge: str = ""  # transcribed off the machine, never inferred: "390 DUKE", "GSX-R750"
     cylinders: int = 0  # 0 = could not tell
     displacementCc: int = 0  # 0 = could not tell
@@ -174,23 +179,26 @@ def _kind(b: Bike) -> str:
 # --- what the photo itself says, scored against one catalog model name ----------------------
 
 SYSTEM = (
-    "You identify one vehicle from a photo, for a workshop counter. Fill the fields in order: look "
-    "first, name it after.\n"
+    "You identify one vehicle from a photo, for a workshop counter. The fields are in the order you "
+    "must work: read the machine first, name it last. A name written before the decal has been read "
+    "drags the decal after it - that is how a 390 Duke becomes a 690.\n"
     "kind: 'car' for any car, SUV, pickup or van; 'motorcycle' for any motorcycle, scooter or ATV.\n"
-    "cues: 2-4 short lowercase fragments, no sentences. What is actually visible - headlight shape, "
-    "frame colour, exhaust routing, radiator width, single or twin or four cylinder.\n"
     "badge: the model text printed on the machine itself - tank decal, side panel, fairing, tail unit, "
-    "boot lid, tailgate - transcribed character by character, e.g. '390 DUKE', 'GSX-R750', 'R 1250 GS'. "
-    "Only characters you can actually make out. Too small, blurred or turned away: empty string. An "
-    "invented badge is worse than none, so never write the name you think it is.\n"
-    "cylinders: 1, 2, 3, 4 or 6; 0 when the engine is hidden.\n"
-    "displacementCc: engine size in cc. The badge when the badge states one, otherwise the engine: "
-    "cylinder count and cylinder width against the frame, wheel and disc diameter against the tyre. "
-    "0 when you cannot tell - a wrong number is worse than none.\n"
+    "boot lid, tailgate. Find the largest printed text on the bodywork and transcribe it character by "
+    "character, e.g. '390 DUKE', 'GSX-R750', 'R 1250 GS'. Only characters you can actually make out. "
+    "Too small, blurred, turned away or absent: empty string. An invented badge is worse than none, so "
+    "never write back the name you think it is.\n"
+    "cylinders: 1, 2, 3, 4 or 6, counted off the exhaust headers and the cylinder block; 0 when the "
+    "engine is hidden.\n"
+    "displacementCc: engine size in cc. The badge when the badge states one, otherwise the engine: the "
+    "cylinder count above, cylinder width against the frame, disc diameter against the tyre. 0 when you "
+    "cannot tell - a wrong number is worse than none.\n"
     "family: the model line without the size or the trim - Duke, YZF-R, Ninja, GS, Golf, Corvette.\n"
-    "make / model: the full name the maker writes, e.g. 'KTM' / '390 Duke'.\n"
+    "make / model: the full name the maker writes, e.g. 'KTM' / '390 Duke'. Makes we carry, spelled "
+    "this way:\n"
+    "{makes}\n"
     "generation: the year range that body shape was sold, not the year of the photo.\n"
-    "alternatives: up to 3 other vehicles this could be, most likely first, each with its own "
+    "alternatives: up to 2 other vehicles this could be, most likely first, each with its own "
     "confidence. When two sizes of one model line look alike, the other size belongs here.\n"
     "confidence: 0..1 for the main answer."
 )
@@ -281,9 +289,19 @@ def _make_pool(make: str, pool: list[Bike]) -> list[Bike]:
     return [b for b in pool if _norm(b.make) == best] or pool
 
 
+TRIMS = ("abs", "edition", "special", "limited", "anniversary", "cafe", "pure")
+
+
 def _same_bike(a: str, b: str) -> bool:
     """"390 Duke", "390 Duke ABS" and "390 Duke R2R" are one bike to a mechanic. Offering all three
-    as alternatives is the model-year list QA complained about wearing a different hat."""
+    as alternatives is the model-year list QA complained about wearing a different hat.
+
+    The size never collapses, though: "cbr650r" and "cbr500r" are 0.86 alike as strings and two
+    entirely different motorcycles, so a difference in the digits ends the comparison."""
+    if set(DIGITS.findall(a)) != set(DIGITS.findall(b)):
+        return False
+    for trim in TRIMS:
+        a, b = a.replace(trim, ""), b.replace(trim, "")
     return a in b or b in a or _ratio(a, b) >= 0.85
 
 
@@ -294,23 +312,42 @@ def _rank(guess: PhotoGuess, pool: list[Bike]) -> list[tuple[float, list[Bike]]]
     either way. Scores stay unclamped here: clamping ties every strong match at 1.0 and the winner
     then falls out of dict order."""
     readings = [(guess.make, guess.model, _clamp(guess.confidence), 1.0)]
-    readings += [(a.make, a.model, _clamp(a.confidence), 0.85) for a in guess.alternatives[:3]]
+    readings += [
+        (a.make, a.model, _clamp(a.confidence), w) for a, w in zip(guess.alternatives[:3], RUNNER_UP)
+    ]
     best: dict[tuple[str, str], tuple[float, list[Bike]]] = {}
+    own: list[tuple[str, str]] = []  # the model each reading resolved to, in reading order
     for mk_name, md_name, conf, weight in readings:
         if not (md_name or "").strip():
             continue
+        top_score = 0.0
+        top_key: tuple[str, str] | None = None
+        top_group: list[Bike] = []
         for (mk, md), group in _groups(_make_pool(mk_name, pool)).items():
-            named = _model_ratio(md_name, md) * max(conf, 0.35) * weight
+            named = _model_ratio(md_name, md) * max(conf, FLOOR_CONF) * weight
             score = named * (1.0 + BONUS * _evidence(guess, md))
             if score >= MODEL_FLOOR and score > best.get((mk, md), (0.0,))[0]:
                 best[(mk, md)] = (score, group)
+            # A reading resolves on its name alone. A badge the model invented to agree with its
+            # first answer would otherwise veto its own second answer, and the second answer is
+            # where the truth sat on half the photos this used to get wrong.
+            if named > top_score and named >= MODEL_FLOOR:
+                top_score, top_key, top_group = named, (mk, md), group
+        if top_key is not None:
+            own.append(top_key)
+            best.setdefault(top_key, (top_score, top_group))
+    ranked = sorted(best, key=lambda key: -best[key][0])
+    # Slot 1 is whatever scores highest - that is where the badge and the displacement get to
+    # overrule the name the model wrote. The slots after it go to the other readings' own best
+    # match before the runners-up of slot 1, or the strip fills with near-spellings of one bike
+    # and the second guess that was right never appears.
     out: list[tuple[float, list[Bike]]] = []
     taken: list[str] = []
-    for key, (score, group) in sorted(best.items(), key=lambda row: -row[1][0]):
-        if any(_same_bike(key[1], seen) for seen in taken):
+    for key in [*ranked[:1], *own, *ranked]:
+        if key not in best or any(_same_bike(key[1], seen) for seen in taken):
             continue
         taken.append(key[1])
-        out.append((score, group))
+        out.append(best[key])
         if len(out) == TOP_MODELS:
             break
     return out
@@ -334,7 +371,14 @@ def _spread(ranked: list[tuple[float, list[Bike]]], gen: Generation | None) -> l
     return out[:MAX_CANDIDATES]
 
 
-def read(image: bytes, mime: str) -> PhotoGuess:
+def makes_line(bikes: list[Bike]) -> str:
+    """The 78 makes the catalog carries, sorted so the prompt is byte-stable between calls. Naming
+    them is what keeps `_make_pool` from having to guess at "Harley Davidson" vs "Harley-Davidson";
+    the model names, of which there are 8.5k, are matched here instead of pasted into the prompt."""
+    return ", ".join(sorted({b.make.strip() for b in bikes if b.make})) or "(none)"
+
+
+def read(image: bytes, mime: str, makes: str = "") -> PhotoGuess:
     """The one paid step: what the vision model can see on the machine. Split out so the ranking
     below can be replayed and tuned against saved readings without paying for the photo again."""
     data, m = downscale(image, mime)
@@ -342,9 +386,8 @@ def read(image: bytes, mime: str) -> PhotoGuess:
         "identify.photo",
         settings.model_vision,
         PhotoGuess,
-        SYSTEM,
+        SYSTEM.replace("{makes}", makes or "(any)"),
         [llm.text_part("Which vehicle is this?"), llm.image_part(data, m, "auto")],
-        reasoning="low",
     )
 
 
@@ -356,7 +399,8 @@ def match(guess: PhotoGuess, bikes: list[Bike]) -> IdentifyResponse:
 
 
 def photo(image: bytes, mime: str) -> IdentifyResponse:
-    return match(read(image, mime), get_store().bikes())
+    bikes = get_store().bikes()
+    return match(read(image, mime, makes_line(bikes)), bikes)
 
 
 def normalize_vin(vin: str) -> str:

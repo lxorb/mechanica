@@ -501,6 +501,14 @@ const RULES = [
   [/\bseats?\b|saddle|\bpillion\b/, "seat"],
   [/\bfuel\b|\btank\b|petrol|gasoline|filler|\bfuel cap\b/, "fuel-tank"],
   [/exhaust|muffler|silencer|\bheaders?\b|catalytic|tailpipe/, "exhaust"],
+  // car-only components, above the engine rule because "Door lock cylinder" is a door. A bike has
+  // no group for any of them, so on a bike these keys highlight nothing — the honest answer, and
+  // better than routing "Trunk release" to a motorcycle's bodywork. "Windscreen" deliberately
+  // stays with the fairing: on a bike the screen IS the fairing. "Oil sight glass" stays engine,
+  // because the oil rule above still fires first.
+  [/\bwipers?\b|\bwindows?\b|\bglass\b|\bglazing\b/, "glass"],
+  [/\bdoors?\b/, "door"],
+  [/\bhood\b|\bbonnet\b|\btrunk\b|\bfrunk\b|\bboot lid\b|\btailgate\b/, "hood"],
   [/\bengine\b|\bmotor\b|cylinder|valve clearance|crank|piston|gearbox|transmission|\bidle\b|throttle body|\bcoolant\b/, "engine"],
   [/\bframe\b|chassis|subframe/, "frame"],
   [/fairing|bodywork|\bcowl\b|windscreen|windshield|\bfender\b|mudguard|\bpanels?\b|\bbodywork\b/, "fairing"],
@@ -532,23 +540,37 @@ const EMPTY_WORDS = /^(the|a|an|and|or|of|for|to|in|on|at|your|its|front|rear|le
  * `opts.debug` logs the decision, which is how the regression table in web/tools/partfor-test.mjs
  * gets reviewed.
  */
-export function partFor(title, keywords = [], opts = {}) {
-  const list = Array.isArray(keywords) ? keywords : keywords ? [keywords] : [];
-  const raw = `${String(title || "")} ${list.join(" ")}`;
+function decide(raw) {
   const text = ` ${raw} `.toLowerCase().replace(/[\s_/,.;:()-]+/g, " ");
-
   // nothing here names a component: "Before every ride", "Checking the front", "General notes"
   const meaningful = text.trim().split(" ").filter((word) => word && !EMPTY_WORDS.test(word));
   if (!meaningful.length) return null;
-
   for (const [re, out] of RULES) {
     if (!re.test(text)) continue;
-    const key = typeof out === "function" ? out(text) : out;
-    if (opts.debug) console.info(`viewer3d: partFor(${JSON.stringify(raw)}) -> ${key}`);
-    return key;
+    return typeof out === "function" ? out(text) : out;
   }
-  if (opts.debug) console.info(`viewer3d: partFor(${JSON.stringify(raw)}) -> null`);
   return null;
+}
+
+export function partFor(title, keywords = [], opts = {}) {
+  const list = Array.isArray(keywords) ? keywords : keywords ? [keywords] : [];
+  const raw = `${String(title || "")} ${list.join(" ")}`;
+
+  /**
+   * The heading decides; the keywords only break a tie.
+   *
+   * They used to be concatenated into one blob and matched together, and a search synonym then
+   * outvoted the heading it belongs to. Three real KTM 390 Duke sections came out wrong:
+   * *Checking tire pressure* → REAR wheel (a keyword reads "rear tire pressure"), *Engine
+   * tightening torques* → spark plug ("spark plug torque"), *Chassis tightening torques* →
+   * sprocket ("sprocket nut torque"). Every one of those is the same failure as the founder's
+   * original report — a confident, wrong part — with the loose word coming from the synonym list
+   * instead of the rule. So: run the rules on the title alone first, front/rear included, and
+   * only fall back to title + keywords when the title names no component at all.
+   */
+  const key = decide(String(title || "")) || (list.length ? decide(raw) : null);
+  if (opts.debug) console.info(`viewer3d: partFor(${JSON.stringify(raw)}) -> ${key}`);
+  return key;
 }
 
 /* ------------------------------------------------------------------ three.js loading */

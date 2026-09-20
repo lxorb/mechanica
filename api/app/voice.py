@@ -577,12 +577,7 @@ def agent_settings(manualId: str, bikeId: str | None = None):
     bike = _label(manual, rec)
     digest = _digest(manual)
     keyterms = _keyterms(manual, bike, rec)
-    # The first spoken question is the one that would otherwise pay for this manual's BM25 index and
-    # its page map, because both are built on first use. Build them now, off this request's thread,
-    # while the rider is still hearing the greeting - measured, 724 ms of cover for work that is 61 ms
-    # locally and a whole page document on the blob store. Idempotent, and it cannot fail the session.
-    threading.Thread(target=ask_mod.warm, args=(manual.id,), daemon=True).start()
-    return {
+    settings_message = {
         "url": AGENT_WS,
         "sampleRate": AGENT_RATE,
         "manualId": manual.id,
@@ -611,6 +606,13 @@ def agent_settings(manualId: str, bikeId: str | None = None):
             },
         },
     }
+    # The session is real from here (an http PUBLIC_BASE has already 503'd above), so build what this
+    # manual's FIRST spoken question would otherwise build while the rider waits on it: the BM25 index
+    # and the page map the picker's snippets are sliced out of, both built on first use. Off this
+    # thread, under the 724 ms it takes the greeting to be spoken. Idempotent, and it swallows its own
+    # failures - a warm-up may never break the session it is warming.
+    threading.Thread(target=ask_mod.warm, args=(manual.id,), daemon=True).start()
+    return settings_message
 
 
 @tools.post("/find_procedure")

@@ -29,7 +29,14 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const VIEWER = pathToFileURL(resolve(HERE, "..", "counter", "js", "viewer3d.js")).href;
 const API = process.env.TTM_API || "https://mechanica.emilvinu.ch/api";
 
-/** title -> expected key. `null` means "must not guess". */
+/**
+ * title -> expected key. `null` means "must not guess".
+ *
+ * An optional third element is the section's keyword list, handed to partFor exactly the way
+ * screens/pick.js hands it over. Those rows are the ones that matter most: a keyword list is a
+ * search-synonym bag, and until 2026-09-20 it was concatenated with the heading and matched as one
+ * blob, so a synonym could outvote the heading it belongs to.
+ */
 const TABLE = [
   // the founder's report, and its whole family
   ["Brake fluid level", "front-brake"],
@@ -85,6 +92,56 @@ const TABLE = [
   ["Fuel tank capacity", "fuel-tank"],
   ["Exhaust system", "exhaust"],
   ["Windscreen", "fairing"],
+
+  // cars. A bike has no group for any of these, so on a bike they light nothing — which is right.
+  ["Trunk release", "hood"],
+  ["Opening the hood", "hood"],
+  ["Door lock cylinder", "door"],
+  ["Windshield wipers", "glass"],
+  ["Rear window defogger", "glass"],
+  ["Oil sight glass", "engine"],      // the oil rule fires first — glass must not steal it
+
+  /* The KTM 390 Duke 2024 owner's manual, section by section — the demo bike, and the manual the
+   * Pick screen loads first. Titles verified against
+   * GET /api/manuals/ktm-390-duke-2024-om-en on 2026-09-20; all 20 sections and all 30 outline
+   * rows are covered here or by the rules above. The three marked KEYWORDS are the ones that were
+   * WRONG until partFor stopped letting a search synonym outvote its own heading. */
+  ["Checking the engine oil level", "engine"],
+  ["Changing the engine oil and oil filter, cleaning the oil screens", "engine"],
+  ["Checking the coolant level", "radiator"],
+  ["Cleaning the chain", "chain"],
+  ["Checking the chain tension", "chain"],
+  ["Adjusting the chain tension", "chain"],
+  ["Checking the front brake fluid level", "front-brake"],
+  ["Adding front brake fluid", "front-brake"],
+  ["Checking that the brake linings of the front brake are secured", "front-brake"],
+  ["Checking the rear brake fluid level", "rear-brake"],
+  ["Checking that the brake linings of the rear brake are secured", "rear-brake"],
+  ["Checking the tire condition", "front-wheel"],
+  ["Removing the rear wheel", "rear-wheel"],
+  ["Charging the 12-V battery", "battery"],
+  ["Changing the fuses of individual electrical power consumers", "fuse"],
+  ["Adjusting the headlight range", "headlight"],
+  ["Service work", null],
+  ["COMBINATION INSTRUMENT", "handlebar"],
+  ["TUNING THE CHASSIS", "frame"],
+  ["SERVICE WORK ON THE CHASSIS", "frame"],
+  ["BRAKE SYSTEM", "front-brake"],
+  ["WHEELS, TIRES", "front-wheel"],
+  ["COOLING SYSTEM", "radiator"],
+  ["SERVICE WORK ON THE ENGINE", "engine"],
+  ["MEANS OF REPRESENTATION", null],
+  ["SERIAL NUMBERS", null],
+  ["RIDING INSTRUCTIONS", null],
+  ["SERVICE SCHEDULE", null],
+  ["ELECTRICAL SYSTEM", null],
+  ["TROUBLESHOOTING", null],
+  ["TECHNICAL SPECIFICATIONS", null],
+
+  // KEYWORDS — the heading must outrank its own synonym list
+  ["Checking tire pressure", "front-wheel", ["tire pressure", "psi", "front tire pressure", "rear tire pressure"]],
+  ["Engine tightening torques", "engine", ["engine torque", "oil drain plug torque", "spark plug torque"]],
+  ["Chassis tightening torques", "frame", ["chassis torque", "axle nut torque", "wheel spindle torque", "sprocket nut torque"]],
 
   // and the ones that must NOT guess
   ["Before every ride", null],
@@ -161,8 +218,8 @@ async function live(partFor, showAll) {
 async function main() {
   const { partFor } = await import(VIEWER);
   let bad = 0;
-  for (const [title, want] of TABLE) {
-    const got = partFor(title);
+  for (const [title, want, keywords] of TABLE) {
+    const got = partFor(title, keywords || []);
     if (got !== want) {
       bad += 1;
       console.log(`  FAIL ${title.padEnd(42)} got ${String(got)}  want ${String(want)}`);
