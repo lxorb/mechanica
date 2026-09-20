@@ -1,18 +1,18 @@
 # The manual registry
 
-**53,557 rows, 37 portal adapters, not one PDF copied at crawl time.** A `RegistryEntry` stores where a
+**53,576 rows, 38 portal adapters, not one PDF copied at crawl time.** A `RegistryEntry` stores where a
 manual lives — make, model, years, market, language, type, access, URL — and nothing else.
-Counts measured 2026-09-20 (`cd api && .venv/Scripts/python -m tools.registry stats`, `GET /api/registry`).
+Counts measured 2026-09-20, growth cycle 1 (`cd api && .venv/Scripts/python -m tools.registry stats`, `GET /api/registry`).
 The same counts, with the exact definition behind each one, are generated into `docs/pitches/numbers.md`
 by `api/tools/pitch_numbers.py --live` — re-run it rather than editing a number here by hand.
 
 | | count |
 |---|---|
-| registry rows | **53,557** (53,375 owner, 182 service) across 84 portals, 80 makes |
-| free owner's manuals | 53,375 rows, 43 languages, 59 markets — **27,119 in English** |
-| …English **and** a directly fetchable PDF, so `/ingest` can take it unattended | **24,210** |
-| …distinct PDF files behind those rows (one file often covers several years) | **14,770** |
-| catalog vehicles derived from the registry | **27,751**, of which **13,537** have a free manual |
+| registry rows | **53,576** (53,389 owner, 187 service) across 85 portals, 81 makes |
+| free owner's manuals | 53,389 rows, 43 languages, 59 markets — **27,133 in English** |
+| …English **and** a directly fetchable PDF, so `/ingest` can take it unattended | **24,224** |
+| …distinct PDF files behind those rows (one file often covers several years) | **14,781** |
+| catalog vehicles derived from the registry | **27,765**, of which **13,551** have a free manual |
 | already ingested and warm in Azure Blob | **535 manuals** (`GET /api/manuals`) |
 
 ## Where the free manuals come from
@@ -38,7 +38,7 @@ One adapter per portal in `api/app/registry/`; the docstring of each file record
 | Sherco | 86 | 81 | `sherco.com` | owner's and workshop manuals side by side; the type is read off the file name |
 | Suzuki | 451 | 34 | `www1.suzuki.co.jp`, `motorrad.suzuki.de` | mostly Japanese and German market handbooks, so excluded from unattended English ingest |
 | Harley-Davidson | 5,156 | 9 | `serviceinfo.harley-davidson.com` | the SIP archive lists **5,177 owner's manuals back to the 1980s**; `/api/documents/{id}` hands out a guest `viewToken` per file, so almost none are a static URL |
-| Kove · Sinnis · Cake · Kymco · Vmoto · Voge · NIU · Benelli | 170 | 170 | own sites / Sanity / Dropbox | three run WordPress and answer `wp-json/wp/v2/media?media_type=application` |
+| Kove · Sinnis · Cake · Kymco · Vmoto · Voge · NIU · Benelli · Royal Alloy | 189 | 184 | own sites / Sanity / Dropbox | four run WordPress and answer `wp-json/wp/v2/media?media_type=application` |
 
 **Checked and genuinely unreachable** (written down so nobody re-walks them): CFMOTO — every official
 source TLS-resets or 403s from outside its region, Googlebot included. LiveWire — documents live inside
@@ -51,16 +51,16 @@ CCM, SWM, Fantic — not one owner's-manual PDF between them (every plausible pa
 
 ## Service manuals
 
-`type == "service"`, 182 rows, 18 makes. The surprise is that three makers publish theirs free.
+`type == "service"`, 187 rows, 19 makes. The surprise is that three makers publish theirs free.
 
 | access | rows | who |
 |---|---|---|
-| **free** | **167** | MV Agusta 113, Zero 49, Sherco 5 |
+| **free** | **172** | MV Agusta 113, Zero 49, Sherco 5, Royal Alloy 5 |
 | paid | 7 | Honda (helminc, print $50–125) · Yamaha (eBook $14.99/30 days) · Kawasaki (~$90) · Suzuki (~$90) · KTM · Husqvarna · GasGas (print.ktm.com, PDF ~EUR 25–31) |
 | subscription | 3 | BMW **EUR 9 / hour** (aos.bmwgroup.com) · Triumph GBP 5.99 / month per bike · Harley-Davidson |
 | dealer only | 5 | Ducati · Piaggio · Moto Guzzi · Aprilia · Royal Enfield |
 
-This is the product argument in one table: the manual a *rider* needs is free for 9,421 of our bikes; the
+This is the product argument in one table: the manual a *rider* needs is free for 9,438 of our bikes; the
 manual a *shop* needs is metered by the hour at the brands that matter most. We fetch none of the paid,
 subscription or dealer rows — we let the shop point at the copy it already bought (PDF upload, or the
 Dropbox Chooser once `TTM_DROPBOX_APP_KEY` is set).
