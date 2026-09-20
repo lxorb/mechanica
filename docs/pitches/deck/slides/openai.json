@@ -228,11 +228,10 @@
       },
       "notes": [
         "One sentence over this: ~everything that requires judgement is OpenAI, and nothing that requires being right about a number.~",
-        "\"Schema for shape, allowlist for truth.\" Over 41,962 logged calls there is not one parse failure in the cost log.",
+        "\"Schema for shape, allowlist for truth.\" Across every logged call in the cost log (tens of thousands, a count that grows hourly, so quote the date if asked) there is not one parse failure.",
         "85% of asks never reach a second model call at all — BM25 was already decisive, or it was a spec question answered off parsed rows with zero LLM calls."
       ],
       "defs": [
-        { "n": "41,962", "d": "model calls behind the build ledger — len(costs.jsonl). Grows every time anything runs; quote the date (measured)." }
       ]
     },
     {
