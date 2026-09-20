@@ -1,0 +1,11 @@
+Model Information:
+* title:	Honda CBR650R
+* source:	https://sketchfab.com/3d-models/honda-cbr650r-b9ec190f902d4180aa527659af3f5089
+* author:	VTX (https://sketchfab.com/VTX_car)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Honda CBR650R" (https://sketchfab.com/3d-models/honda-cbr650r-b9ec190f902d4180aa527659af3f5089) by VTX (https://sketchfab.com/VTX_car) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
