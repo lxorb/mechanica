@@ -73,9 +73,13 @@ if ! az containerapp env show -n "$ENV" -g "$RG" -o none 2>/dev/null; then
 fi
 
 OPENAI_KEY="${OPENAI_API_KEY:-}"
-if [ -z "$OPENAI_KEY" ] && [ -f "$SECRETS_DIR/openai.txt" ]; then
-  OPENAI_KEY=$(tr -d '\r\n' < "$SECRETS_DIR/openai.txt")
-fi
+for f in openai-mechanica.txt openai.txt; do
+  [ -z "$OPENAI_KEY" ] && [ -f "$SECRETS_DIR/$f" ] && OPENAI_KEY=$(tr -d '
+' < "$SECRETS_DIR/$f")
+done
+TTC_KEY="${TTC_API_KEY:-}"
+[ -z "$TTC_KEY" ] && [ -f "$SECRETS_DIR/ttc.txt" ] && TTC_KEY=$(tr -d '
+' < "$SECRETS_DIR/ttc.txt")
 if [ -n "$OPENAI_KEY" ]; then
   SECRET_ENV="OPENAI_API_KEY=secretref:openai-key"
   [ -n "$TTC_KEY" ] && SECRET_ENV="$SECRET_ENV TTC_API_KEY=secretref:ttc-key"
