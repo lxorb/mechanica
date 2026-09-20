@@ -24,7 +24,7 @@ from pydantic import ValidationError
 
 from app.config import settings
 from app.models import Bike, IngestJob, RegistryEntry
-from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, discover, free_owner_manuals, kind_of, select, verify
+from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, discover, free_owner_manuals, kind_of, merge_ua, select, verify
 from app.registry._http import client, request, slug
 from app.store import get_store
 
@@ -166,7 +166,11 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         incoming.update(rows)
         merged.append((path.name, len(rows), fresh, bad))
     if incoming:
-        store.put_registry(list(incoming.values()))  # one write for every fragment, not one each
+        store.put_registry(merge_ua(incoming.values()))  # one write for every fragment, not one each
+    stale = [e for e in store.registry() if not e.needsUa and merge_ua([e])[0].needsUa]
+    if stale:  # rows merged before their host was known to need a UA, or left behind by a rewrite
+        store.put_registry(stale)
+        print(f"  stamped {len(stale)} row(s) with a User-Agent hint")
     for name, kept, fresh, bad in merged:
         print(f"  {name:<28} {kept:>6} rows, {fresh:>6} new" + (f", {bad} invalid" if bad else ""))
     if not merged:
