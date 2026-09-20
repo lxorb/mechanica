@@ -1,0 +1,18 @@
+{
+ "witness": {
+  "id": "263240-99999",
+  "year": 2024,
+  "strictMinC": -21.5,
+  "looseMinC": -25.1,
+  "strictObs": 2697,
+  "looseObs": 2705,
+  "note": "with the quality filter ON this station is fine against the -25 C floor; with it OFF a suspect reading breaches it. Keeping the filter is what stops a false 'action needed'."
+ },
+ "stationYears": 400,
+ "readings": 4273895,
+ "flaggedReadings": 5125,
+ "flaggedShare": 0.001199,
+ "minimumMoved": 6,
+ "minimumMovedShare": 0.015,
+ "verdictFlipped": []
+}

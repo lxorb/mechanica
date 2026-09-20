@@ -1,415 +1,421 @@
 {
  "manuals": 529,
- "withRules": 227,
- "rules": 1201,
- "rulesDropped": 0,
+ "withRules": 517,
+ "rules": 3056,
+ "rulesDropped": 26,
  "pages": 93932,
- "candidates": 0,
- "modelRules": 0,
+ "candidates": 2031,
+ "modelCalls": 1881,
+ "modelRules": 1855,
  "byType": {
+  "salt_wash": 607,
+  "cold_start": 360,
+  "heat_limit": 142,
   "antifreeze_floor": 1028,
+  "dust_interval": 299,
+  "wet_interval": 447,
   "altitude": 3,
   "oil_grade_band": 170
  },
- "usd": 0.0,
+ "usd": 0.6743,
  "budget": 15.0,
  "budgetReached": false,
- "model": null,
+ "model": "gpt-5.6-luna",
  "perManual": {
   "bmw-c-400-gt-2024-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-c-400-gt-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-c-400-gt-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-c-400-x-2024-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-c-400-x-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-c-400-x-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-ce-02-2024-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "bmw-ce-02-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "bmw-ce-04-2024-eu-om": {
-   "rules": 1,
+   "rules": 5,
    "dropped": 0
   },
   "bmw-ce-04-2025-eu-om": {
-   "rules": 1,
+   "rules": 5,
    "dropped": 0
   },
   "bmw-f-450-gs-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-450-gs-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-800-gs-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-800-gs-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-800-gs-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-gs-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-gs-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-gs-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-gs-adventure-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-gs-adventure-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-gs-adventure-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-r-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-r-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-r-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-xr-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-xr-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-f-900-xr-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-g-310-gs-2024-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "bmw-k-1600-b-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-k-1600-gt-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-k-1600-gtl-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-m-1000-r-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-m-1000-rr-2026-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "bmw-m-1000-xr-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-m-1000-xr-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-g-s-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-g-s-2025-eu-om-565dcf": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-g-s-2025-eu-om-8ec5bc": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-g-s-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-ninet-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-ninet-2025-eu-om-2c0ffd": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-12-ninet-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-gs-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-gs-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-gs-adventure-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-gs-adventure-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-r-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-r-2025-eu-om-74ae8c": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-r-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-rs-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-rs-2025-eu-om-1e227a": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-rs-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-rt-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-rt-2025-eu-om-62fbbb": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-1300-rt-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-18-b-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r-18-classic-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-r-18-pure-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-r-18-roctane-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "bmw-r-18-transcontinental-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-r12gs-2025-rm-en": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "bmw-s-1000-r-2025-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "bmw-s-1000-r-2026-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "bmw-s-1000-rr-2024-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 3,
+   "dropped": 1
   },
   "bmw-s-1000-rr-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 3,
+   "dropped": 1
   },
   "bmw-s-1000-xr-2025-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "bmw-s-1000-xr-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "gasgas-ec-125-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ec-250-2024-eu-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "gasgas-ec-250f-2024-eu-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "gasgas-ec-250f-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ec-300-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ec-300-gp-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ec-300-gp-2026-rw-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ec-350f-2024-eu-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "gasgas-ec-350f-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ec-350f-2026-eu-om": {
-   "rules": 6,
+   "rules": 11,
    "dropped": 0
   },
   "gasgas-ec-450f-2024-eu-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "gasgas-ec-450f-2025-eu-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "gasgas-ec-500f-2026-eu-om": {
-   "rules": 5,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-es-350-2024-us-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "gasgas-es-350-2025-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-es-500-2024-us-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "gasgas-es-500-2025-us-om": {
-   "rules": 5,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-es-700-2024-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "gasgas-es-700-2024-us-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "gasgas-ex-250-2024-us-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "gasgas-ex-250-2025-us-om": {
-   "rules": 7,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-ex-300-2026-us-om": {
-   "rules": 7,
+   "rules": 11,
    "dropped": 0
   },
   "gasgas-ex-350f-2024-us-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "gasgas-ex-350f-2025-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "gasgas-mc-125-2025-ww-om": {
-   "rules": 7,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-mc-125-2026-ww-om": {
-   "rules": 7,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-mc-250f-2026-ar-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "gasgas-mc-250f-factory-edition-2025-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-mc-450f-2026-ww-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "gasgas-mc-450f-factory-edition-2025-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "gasgas-mc-50-2025-ww-om": {
@@ -437,15 +443,15 @@
    "dropped": 0
   },
   "gasgas-mc-e-2-2025-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "gasgas-mc-e-5-2025-us-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "gasgas-rx-450f-replica-2025-ww-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "gasgas-txt-racing-125-2025-eu-om": {
@@ -453,179 +459,179 @@
    "dropped": 0
   },
   "honda-adv160-2024-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-adv160-2025-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-adv160-2026-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-adv350a-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-adv750-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "honda-africa-twin-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-africa-twin-adventure-sports-es-dct-2024-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-africa-twin-adventure-sports-es-dct-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-africa-twin-adventure-sports-es-dct-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-c125a-super-cub-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb1000-hornet-sp-2025-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cb1000-hornet-sp-2026-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cb1000-sp-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-cb1000f-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb1000f-cb1000s-2026-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cb1000gt-2026-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-cb300r-2024-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb300r-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb300r-abs-2024-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb300r-abs-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb500-hornet-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb500f-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb500fa-2024-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb500fa-2026-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-cb650r-2023-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cb650r-2024-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-cb650rac-2024-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-cb750-hornet-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cb750-hornet-e-clutch-2026-us-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 4,
+   "dropped": 1
   },
   "honda-cb750ac-hornet-2026-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbf125m-2024-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-cbf125na-cb125r-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr1000rr-abs-2024-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr1000rr-abs-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr1000rr-abs-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr1000rr-r-fireblade-sp-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr1000rr-r-fireblade-sp-2026-us-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "honda-cbr500r-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr600rr-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr600rr-abs-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr600rr-abs-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr650r-2022-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cbr650r-2023-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cbr650r-e-clutch-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-cbr650r-e-clutch-2025-us-om-909ceb": {
@@ -633,51 +639,51 @@
    "dropped": 0
   },
   "honda-cbr650r-e-clutch-2026-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-cbr650ra-rac-cb650ra-rac-2026-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-cl500a-2025-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-cmx1100-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "honda-cmx500-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf1100-africa-twin-2026-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf110f-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf110f-2025-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf110f-2026-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf125f-2025-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf125f-big-wheel-2025-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf125f-big-wheel-2026-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf150r-2025-us-om": {
@@ -685,11 +691,11 @@
    "dropped": 0
   },
   "honda-crf150r-2025-us-om-e761e3": {
-   "rules": 0,
+   "rules": 3,
    "dropped": 0
   },
   "honda-crf150r-2026-us-om": {
-   "rules": 0,
+   "rules": 3,
    "dropped": 0
   },
   "honda-crf150r-2026-us-om-6dea40": {
@@ -697,7 +703,7 @@
    "dropped": 0
   },
   "honda-crf150r-expert-2026-us-om": {
-   "rules": 0,
+   "rules": 3,
    "dropped": 0
   },
   "honda-crf150r-expert-2026-us-om-58c42d": {
@@ -705,131 +711,131 @@
    "dropped": 0
   },
   "honda-crf250f-2025-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-crf250la-250lra-300la-300lra-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf250r-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf250r-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf250rwe-2025-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "honda-crf250rwe-2025-us-om-c3e229": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf250rwe-2026-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "honda-crf250rwe-2026-us-om-35dcf0": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf300l-rally-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-crf300l-rally-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-crf450r-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450r-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450rl-2025-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450rl-2025-us-om-d8f239": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf450rl-2026-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450rl-2026-us-om-9f459a": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf450rwe-2025-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "honda-crf450rwe-2025-us-om-4dbf1a": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450rwe-2026-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "honda-crf450rwe-2026-us-om-09d6a4": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450x-2025-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450x-2025-us-om-8d5c4e": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf450x-2026-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-crf450x-2026-us-om-60cffb": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf50f-2025-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-crf50f-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-crf50f-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-dax-125-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-dax-125-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-fury-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-gb350s-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-gold-wing-airbag-2025-us-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "honda-gold-wing-airbag-2025-us-om-b1d5ba": {
@@ -841,7 +847,7 @@
    "dropped": 0
   },
   "honda-gold-wing-tour-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-gold-wing-tour-2026-us-om": {
@@ -853,11 +859,11 @@
    "dropped": 0
   },
   "honda-gold-wing-tour-2026-us-om-a81b46": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-gold-wing-tour-airbag-automatic-dct-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-gold-wing-tour-airbag-automatic-dct-2026-us-om-b7ebb4": {
@@ -865,7 +871,7 @@
    "dropped": 0
   },
   "honda-gold-wing-tour-airbag-dct-50th-anniversary-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-gold-wing-tour-airbag-dct-50th-anniversary-2025-us-om-f18744": {
@@ -873,420 +879,420 @@
    "dropped": 0
   },
   "honda-grom-2022-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-grom-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-grom-abs-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-grom-abs-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-honda-wn7-2026-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-metropolitan-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-metropolitan-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-monkey-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-monkey-abs-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-montesa-cota-301rr-2025-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-montesa-cota-301rr-2026-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-montesa-cota-4rt-260r-2025-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-montesa-cota-4rt-260r-2026-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "honda-msx125a-2026-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-navi-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-navi-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-nc750x-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-nc750x-dct-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-nc750x-dct-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-nsc110-2025-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-nss125ad-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-nss250a-350a-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-nss750-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "honda-nt1100-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-nt1100-dct-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-nt1100-dct-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-pcx-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-pcx-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-rebel-1100-dct-se-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-rebel-1100-dct-se-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-rebel-300-e-clutch-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-rebel-500-2021-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-rebel-500-2025-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-rebel-500-abs-se-2025-us-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 6,
+   "dropped": 1
   },
   "honda-rebel-500-se-2026-us-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "honda-ruckus-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-scl500-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-scl500-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-sh125-sh150-2026-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-sh350a-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "honda-shadow-rs-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-st125a-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-trail125-2025-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-trail125-2026-us-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-transalp-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-ww125-a-pcx-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-ww125s-a-pcx-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-xl750-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-xl750-2026-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-xr150l-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-xr150l-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "honda-xr650l-2025-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "honda-z125ma-2025-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "honda-z125ma-2026-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "husqvarna-701-enduro-2024-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-701-enduro-2024-us-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-701-enduro-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-701-supermoto-2024-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-701-supermoto-2024-us-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-701-supermoto-2026-eu-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "husqvarna-701-supermoto-2026-us-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "husqvarna-ee-2-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "husqvarna-ee-2-2025-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "husqvarna-ee-3-2024-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "husqvarna-ee-5-2025-ww-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "husqvarna-fc-250-factory-edition-2025-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-fc-250-factory-edition-2026-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "husqvarna-fc-250-rockstar-edition-2024-us-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "husqvarna-fc-350-2024-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "husqvarna-fc-350-heritage-2025-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-fc-450-factory-edition-2025-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fc-450-factory-edition-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fc-450-rockstar-edition-2024-us-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "husqvarna-fe-250-2024-eu-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "husqvarna-fe-250-2026-eu-om": {
-   "rules": 6,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-fe-250-heritage-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "husqvarna-fe-350-heritage-2025-eu-om": {
-   "rules": 6,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-fe-350-pro-2026-eu-om": {
-   "rules": 6,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-fe-350s-2026-us-om": {
-   "rules": 6,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-fe-350s-heritage-2025-us-om": {
-   "rules": 6,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-fe-450-2026-eu-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fe-450-heritage-2025-eu-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fe-501s-2026-us-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fe-501s-heritage-2025-us-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fr-450-rally-2025-ww-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-fs-450-2025-ww-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-fs-450-2026-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-fx-350-2026-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-norden-901-expedition-2025-eu-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "husqvarna-norden-901-expedition-2025-us-om": {
-   "rules": 3,
+   "rules": 7,
    "dropped": 0
   },
   "husqvarna-norden-901-expedition-2026-eu-om": {
-   "rules": 3,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-svartpilen-125-2025-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "husqvarna-svartpilen-250-2025-jp-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-svartpilen-250-2025-us-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "husqvarna-svartpilen-401-2025-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-svartpilen-401-2025-us-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-svartpilen-401-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-svartpilen-801-2025-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-svartpilen-801-l-2025-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-svartpilen-801-se-2026-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-tc-125-2026-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-tc-125-heritage-2025-ww-om": {
-   "rules": 7,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-tc-250-2026-ww-om": {
-   "rules": 7,
+   "rules": 9,
    "dropped": 0
   },
   "husqvarna-tc-250-heritage-2025-ww-om": {
-   "rules": 7,
-   "dropped": 0
+   "rules": 8,
+   "dropped": 1
   },
   "husqvarna-tc-50-2025-ww-om": {
    "rules": 2,
@@ -1313,63 +1319,63 @@
    "dropped": 0
   },
   "husqvarna-te-125-2025-eu-om": {
-   "rules": 7,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-te-125-2026-eu-om": {
-   "rules": 7,
+   "rules": 11,
    "dropped": 0
   },
   "husqvarna-te-250-heritage-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "husqvarna-te-300-pro-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "husqvarna-vitpilen-125-2025-eu-om": {
-   "rules": 2,
+   "rules": 6,
    "dropped": 0
   },
   "husqvarna-vitpilen-401-2025-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "husqvarna-vitpilen-401-2025-us-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "husqvarna-vitpilen-401-2026-rw-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "husqvarna-vitpilen-801-2026-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-vitpilen-801-2026-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "husqvarna-vitpilen-801-l-2025-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "kawasaki-ninja-500-2025-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "kawasaki-versys-1100-2026-us-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "kawasaki-vulcan-s-2025-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "kawasaki-z900rs-2025-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-105-sx-2006-eu-om": {
@@ -1385,127 +1391,127 @@
    "dropped": 0
   },
   "ktm-125-duke-2024-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-125-duke-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-125-duke-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-125-enduro-r-2025-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-125-enduro-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-125-smc-r-2025-eu-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-125-smc-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-125-sx-2024-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-125-sx-2025-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-125-sx-2026-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-125-xc-w-2025-eu-om": {
-   "rules": 7,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-125-xc-w-2026-eu-om": {
-   "rules": 7,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-1290-super-adventure-r-2024-eu-om": {
-   "rules": 9,
-   "dropped": 0
+   "rules": 12,
+   "dropped": 1
   },
   "ktm-1290-super-adventure-r-2024-us-om": {
-   "rules": 9,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1290-super-adventure-s-2024-eu-om": {
-   "rules": 9,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1290-super-adventure-s-2024-us-om": {
-   "rules": 9,
+   "rules": 12,
    "dropped": 0
   },
   "ktm-1290-super-duke-gt-2024-eu-om": {
-   "rules": 9,
+   "rules": 11,
    "dropped": 0
   },
   "ktm-1290-super-duke-gt-2024-us-om": {
-   "rules": 9,
+   "rules": 12,
    "dropped": 0
   },
   "ktm-1390-super-adventure-r-2026-eu-om": {
-   "rules": 11,
+   "rules": 16,
    "dropped": 0
   },
   "ktm-1390-super-adventure-r-2026-us-om": {
-   "rules": 11,
+   "rules": 16,
    "dropped": 0
   },
   "ktm-1390-super-adventure-s-2026-eu-om": {
-   "rules": 11,
+   "rules": 14,
    "dropped": 0
   },
   "ktm-1390-super-adventure-s-evo-2026-eu-om": {
-   "rules": 11,
+   "rules": 14,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-2024-eu-om": {
-   "rules": 9,
+   "rules": 11,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-2025-eu-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-2026-eu-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-evo-2024-eu-om": {
-   "rules": 9,
+   "rules": 11,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-evo-2025-eu-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-evo-2025-us-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-evo-2026-eu-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-r-evo-2026-us-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-rr-2026-eu-om": {
-   "rules": 11,
+   "rules": 13,
    "dropped": 0
   },
   "ktm-1390-super-duke-rr-track-2026-eu-om": {
@@ -1513,215 +1519,215 @@
    "dropped": 0
   },
   "ktm-1400-brabus-r-2026-signature-edition-2026-eu-om": {
-   "rules": 11,
+   "rules": 14,
    "dropped": 0
   },
   "ktm-200-duke-2025-ar-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-200-duke-2026-ph-om": {
-   "rules": 8,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-250-duke-2025-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-250-duke-2025-us-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-250-duke-2026-rw-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-250-duke-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-250-exc-f-6days-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-250-exc-f-champion-edition-2025-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-250-sx-2025-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-250-sx-2026-ww-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-250-sx-f-factory-edition-2025-us-om": {
-   "rules": 2,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-250-sx-f-factory-edition-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-300-exc-champion-edition-2026-rw-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-300-xc-w-champion-edition-2025-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-300-xc-w-hardenduro-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-350-exc-f-2026-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-350-exc-f-6days-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-350-exc-f-champion-edition-2025-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-350-exc-f-champion-edition-2025-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-350-xc-f-factory-edition-2025-us-om": {
-   "rules": 2,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-350-xc-f-factory-edition-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-390-adventure-2024-eu-om": {
-   "rules": 2,
+   "rules": 3,
    "dropped": 0
   },
   "ktm-390-adventure-r-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-r-2025-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-r-2026-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-x-2025-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-x-2025-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-x-2026-eu-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-adventure-x-2026-us-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-390-duke-2023-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-390-duke-2024-om-en": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-390-duke-2025-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-390-duke-2025-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-390-duke-2026-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-390-duke-2026-us-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-390-enduro-r-2025-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-390-enduro-r-2025-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-390-enduro-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-390-enduro-r-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-390-smc-r-2025-eu-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-390-smc-r-2025-us-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-390-smc-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-390-smc-r-2026-us-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-450-exc-f-6days-2026-eu-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-450-exc-f-champion-edition-2025-eu-om": {
-   "rules": 5,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-450-rally-replica-2025-ww-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-450-rally-replica-2026-ww-om": {
-   "rules": 6,
+   "rules": 10,
    "dropped": 0
   },
   "ktm-450-smr-2025-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-450-smr-2026-eu-om": {
-   "rules": 6,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-450-sx-f-factory-edition-2025-us-om": {
-   "rules": 2,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-450-sx-f-factory-edition-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-50-sx-factory-edition-2025-ww-om": {
@@ -1733,11 +1739,11 @@
    "dropped": 0
   },
   "ktm-500-exc-f-6days-2026-us-om": {
-   "rules": 5,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-500-exc-f-champion-edition-2025-us-om": {
-   "rules": 5,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-65-sx-2025-cn-om": {
@@ -1749,51 +1755,51 @@
    "dropped": 0
   },
   "ktm-690-enduro-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-690-enduro-r-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-690-smc-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-690-smc-r-2026-us-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-790-adventure-2025-eu-om": {
-   "rules": 1,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-790-adventure-2025-us-om": {
-   "rules": 1,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-790-adventure-2026-eu-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "ktm-790-adventure-2026-us-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "ktm-790-adventure-r-2025-br-om": {
-   "rules": 1,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-790-adventure-r-2026-ar-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "ktm-790-duke-2025-eu-om": {
-   "rules": 2,
+   "rules": 5,
    "dropped": 0
   },
   "ktm-790-duke-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-85-sx-17-14-2025-ww-om": {
@@ -1805,47 +1811,47 @@
    "dropped": 0
   },
   "ktm-890-adventure-r-2025-eu-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "ktm-890-adventure-r-2025-us-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "ktm-890-adventure-r-2026-us-om": {
-   "rules": 3,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-890-adventure-r-rally-2026-eu-om": {
-   "rules": 3,
+   "rules": 8,
    "dropped": 0
   },
   "ktm-890-duke-r-2023-eu-om": {
-   "rules": 2,
+   "rules": 4,
    "dropped": 0
   },
   "ktm-890-smt-2026-eu-om": {
-   "rules": 3,
+   "rules": 6,
    "dropped": 0
   },
   "ktm-990-duke-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-990-duke-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-990-duke-r-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-990-rc-r-2026-eu-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-990-rc-r-2026-us-om": {
-   "rules": 6,
+   "rules": 9,
    "dropped": 0
   },
   "ktm-990-rc-r-track-2026-ww-om": {
@@ -1853,223 +1859,223 @@
    "dropped": 0
   },
   "ktm-sx-e-2-2025-us-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "ktm-sx-e-3-2025-ww-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "ktm-sx-e-5-2026-us-om": {
-   "rules": 6,
+   "rules": 7,
    "dropped": 0
   },
   "royal-enfield-classic-350-2025-us-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "royal-enfield-himalayan-450-2024-us-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "royal-enfield-int-650-2025-us-om": {
-   "rules": 0,
+   "rules": 3,
    "dropped": 0
   },
   "yamaha-mt-03-2025-eu-om": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-mt07-2024-eu-om": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-mt07-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 7,
+   "dropped": 1
   },
   "yamaha-mt07-y-amt-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "yamaha-mt09-2024-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-mt09-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-mt09-sp-2024-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-mt09-y-amt-2024-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-mt09-y-amt-2024-eu-om-ae5028": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-mt09-y-amt-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-mt10-2024-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "yamaha-mt10-sp-2024-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "yamaha-mt125-2024-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 6,
+   "dropped": 1
   },
   "yamaha-mt125-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 6,
+   "dropped": 1
   },
   "yamaha-mt125-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 6,
+   "dropped": 1
   },
   "yamaha-mt25-2024-eu-om": {
-   "rules": 0,
+   "rules": 7,
    "dropped": 0
   },
   "yamaha-pw50-2024-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "yamaha-pw50-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "yamaha-pw50-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "yamaha-r7-2024-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 7,
+   "dropped": 1
   },
   "yamaha-r7-2026-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "yamaha-r9-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-r9-2026-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-tenere-700-2025-eu-om": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-tenere-700-2025-eu-om-463967": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-tenere-700-rally-edition-2025-eu-om": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-tenere-700-world-raid-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 8,
+   "dropped": 1
   },
   "yamaha-tenere-700-world-raid-2026-eu-om": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-tracer-7-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "yamaha-tracer-7-2026-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "yamaha-tracer-7-gt-2025-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "yamaha-tracer-7-gt-2026-eu-om": {
-   "rules": 0,
+   "rules": 8,
    "dropped": 0
   },
   "yamaha-tracer-9-gt-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-tracer-9-gt-2025-eu-om-6f399b": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-tracer-9-gt-2025-eu-om-90739a": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-tracer-9-gt-y-amt-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-tt-r110e-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "yamaha-tt-r110e-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 1,
+   "dropped": 1
   },
   "yamaha-tt-r50e-2025-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "yamaha-tt-r50e-2026-eu-om": {
-   "rules": 0,
+   "rules": 2,
    "dropped": 0
   },
   "yamaha-wr125r-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 7,
+   "dropped": 1
   },
   "yamaha-wr250f-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 1,
+   "dropped": 1
   },
   "yamaha-wr250f-2026-eu-om": {
-   "rules": 0,
+   "rules": 4,
    "dropped": 0
   },
   "yamaha-wr450f-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 1,
+   "dropped": 1
   },
   "yamaha-wr450f-2026-eu-om": {
-   "rules": 0,
+   "rules": 5,
    "dropped": 0
   },
   "yamaha-xsr125-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-xsr125-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-xsr900-gp-2026-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-yz125-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "yamaha-yz125-2026-eu-om": {
@@ -2077,7 +2083,7 @@
    "dropped": 0
   },
   "yamaha-yz250-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "yamaha-yz250-2026-eu-om": {
@@ -2085,53 +2091,53 @@
    "dropped": 0
   },
   "yamaha-yz250f-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 2,
+   "dropped": 1
   },
   "yamaha-yz250f-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 3,
+   "dropped": 1
   },
   "yamaha-yz450f-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 1,
+   "dropped": 1
   },
   "yamaha-yz450f-2026-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 3,
+   "dropped": 1
   },
   "yamaha-yz65-2025-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "yamaha-yz65-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "yamaha-yz85-2025-eu-om": {
-   "rules": 0,
+   "rules": 3,
    "dropped": 0
   },
   "yamaha-yz85-2026-eu-om": {
-   "rules": 0,
+   "rules": 3,
    "dropped": 0
   },
   "yamaha-yzf-r1-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   },
   "yamaha-yzf-r125-2025-eu-om": {
-   "rules": 0,
-   "dropped": 0
+   "rules": 8,
+   "dropped": 1
   },
   "yamaha-yzf-r125-2026-eu-om": {
-   "rules": 0,
+   "rules": 9,
    "dropped": 0
   },
   "yamaha-yzf-r3-2025-eu-om": {
-   "rules": 0,
+   "rules": 6,
    "dropped": 0
   }
  },
- "seconds": 34.2
+ "seconds": 452.6
 }

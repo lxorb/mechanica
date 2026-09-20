@@ -3758,6 +3758,42 @@
     "score": 7.5,
     "hero": "store/img/bikes2/honda-cb1000-hornet-sp.hero.webp"
   },
+  "honda|cb1000f": {
+    "image": "store/img/bikes2/honda-cb1000f.webp",
+    "thumb": "store/img/bikes2/honda-cb1000f.thumb.webp",
+    "title": "Honda CB1000F.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1000F.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cb1000f.hero.webp"
+  },
+  "honda|cb1000f-(cb1000s)": {
+    "image": "store/img/bikes2/honda-cb1000f-cb1000s.webp",
+    "thumb": "store/img/bikes2/honda-cb1000f-cb1000s.thumb.webp",
+    "title": "Honda CB1000F Moriwaki Engineering.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1000F_Moriwaki_Engineering.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-cb1000f-cb1000s.hero.webp"
+  },
+  "honda|cb1000gt": {
+    "image": "store/img/bikes2/honda-cb1000gt.webp",
+    "thumb": "store/img/bikes2/honda-cb1000gt.thumb.webp",
+    "title": "Honda CB1000GT.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB1000GT.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cb1000gt.hero.webp"
+  },
   "honda|cb1000r-5four": {
     "image": "store/img/bikes/honda-cb1000r.webp",
     "thumb": "store/img/bikes/honda-cb1000r-thumb.webp",
@@ -3922,6 +3958,18 @@
     "via": "alias",
     "aliasOf": "honda|cb400"
   },
+  "honda|cb500-hornet": {
+    "image": "store/img/bikes2/honda-cb500-hornet.webp",
+    "thumb": "store/img/bikes2/honda-cb500-hornet.thumb.webp",
+    "title": "Honda CB500 Hornet 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB500_Hornet_2026.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cb500-hornet.hero.webp"
+  },
   "honda|cb500f": {
     "image": "store/img/bikes2/honda-cb500f.webp",
     "thumb": "store/img/bikes2/honda-cb500f.thumb.webp",
@@ -4083,6 +4131,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB650R_Motorcycle_2021.jpg",
     "via": "alias",
     "aliasOf": "honda|cb650r"
+  },
+  "honda|cb750-hornet": {
+    "image": "store/img/bikes2/honda-cb750-hornet.webp",
+    "thumb": "store/img/bikes2/honda-cb750-hornet.thumb.webp",
+    "title": "2025 Honda CB750 Hornet.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cb750-hornet.hero.webp"
+  },
+  "honda|cb750-hornet-e-clutch": {
+    "image": "store/img/bikes2/honda-cb750-hornet-e-clutch.webp",
+    "thumb": "store/img/bikes2/honda-cb750-hornet-e-clutch.thumb.webp",
+    "title": "Honda CB750 Hornet 2023.jpg",
+    "author": "Corvettec6r",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB750_Hornet_2023.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-cb750-hornet-e-clutch.hero.webp"
   },
   "honda|cbf-1000-f-abs": {
     "image": "store/img/bikes/honda-cbf-1000.webp",
@@ -5140,6 +5212,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "honda|fury"
+  },
+  "honda|gb350s": {
+    "image": "store/img/bikes2/honda-gb350s.webp",
+    "thumb": "store/img/bikes2/honda-gb350s.thumb.webp",
+    "title": "Honda GB350S 2025 (cropped).jpg",
+    "author": "AVMOTO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_GB350S_2025_(cropped).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-gb350s.hero.webp"
   },
   "honda|gl1800-gold-wing-dct": {
     "image": "store/img/bikes/honda-gl1800-gold-wing.webp",
@@ -9687,6 +9771,39 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "ktm|350-xc-f"
+  },
+  "ktm|390-adventure-r": {
+    "image": "store/img/bikes/ktm-390-adventure.webp",
+    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
+    "hero": "store/img/bikes/ktm-390-adventure-hero.webp",
+    "title": "Ktm-390-adventure-2024.png",
+    "author": "KTM AG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
+    "via": "alias",
+    "aliasOf": "ktm|390-adventure"
+  },
+  "ktm|390-adventure-spoked-wheels": {
+    "image": "store/img/bikes/ktm-390-adventure.webp",
+    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
+    "hero": "store/img/bikes/ktm-390-adventure-hero.webp",
+    "title": "Ktm-390-adventure-2024.png",
+    "author": "KTM AG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
+    "via": "alias",
+    "aliasOf": "ktm|390-adventure"
+  },
+  "ktm|390-adventure-x": {
+    "image": "store/img/bikes/ktm-390-adventure.webp",
+    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
+    "hero": "store/img/bikes/ktm-390-adventure-hero.webp",
+    "title": "Ktm-390-adventure-2024.png",
+    "author": "KTM AG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
+    "via": "alias",
+    "aliasOf": "ktm|390-adventure"
   },
   "ktm|390-duke-abs": {
     "image": "store/img/bikes/ktm-390-duke.webp",
@@ -15861,6 +15978,42 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "yamaha|r7"
+  },
+  "yamaha|r9": {
+    "image": "store/img/bikes2/yamaha-r9.webp",
+    "thumb": "store/img/bikes2/yamaha-r9.thumb.webp",
+    "title": "2025 Yamaha YZF-R9.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_YZF-R9.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-r9.hero.webp"
+  },
+  "yamaha|r9-35kw": {
+    "image": "store/img/bikes2/yamaha-r9.webp",
+    "thumb": "store/img/bikes2/yamaha-r9.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r9.hero.webp",
+    "title": "2025 Yamaha YZF-R9.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_YZF-R9.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r9"
+  },
+  "yamaha|r9-70th-anniversary": {
+    "image": "store/img/bikes2/yamaha-r9.webp",
+    "thumb": "store/img/bikes2/yamaha-r9.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r9.hero.webp",
+    "title": "2025 Yamaha YZF-R9.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_YZF-R9.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r9"
   },
   "yamaha|royal-star-boulevard": {
     "image": "store/img/bikes/yamaha-royal-star.webp",

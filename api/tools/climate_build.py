@@ -55,6 +55,8 @@ DEMO_CITIES: dict[str, tuple[float, float]] = {
 }
 
 SWEEP_SEED = 11  # the seed behind the sampled breach share; keep it to reproduce
+# The station where the quality filter decides the antifreeze verdict. Named, not sampled.
+WITNESS = ("263240-99999", 2024)
 MIN_OBS = 2000  # a station-year with fewer quality-passed readings is too thin to judge
 
 
@@ -247,7 +249,22 @@ def ablation(limit: int, threads: int) -> None:
             if (loose["minC"] < -25.0) != (strict["minC"] < -25.0):
                 flipped.append({"id": strict["id"], "year": strict["year"],
                                 "strictMinC": strict["minC"], "looseMinC": loose["minC"]})
+    # One named witness, always re-checked: this is the station where the filter decides the verdict.
+    witness = None
+    raw = isd.fetch_year(WITNESS[0], WITNESS[1])
+    if raw is not None:
+        strict, loose = isd.reduce_stream(raw), isd.reduce_stream(raw, drop_bad_quality=False)
+        if strict and loose:
+            witness = {
+                "id": WITNESS[0], "year": WITNESS[1],
+                "strictMinC": strict["minC"], "looseMinC": loose["minC"],
+                "strictObs": strict["obs"], "looseObs": loose["obs"],
+                "note": ("with the quality filter ON this station is fine against the -25 C floor; "
+                         "with it OFF a suspect reading breaches it. Keeping the filter is what "
+                         "stops a false 'action needed'."),
+            }
     report = {
+        "witness": witness,
         "stationYears": len(pairs),
         "readings": readings,
         "flaggedReadings": flagged,
@@ -308,7 +325,8 @@ def main() -> int:
     if args.rules:
         from app.climate import rules as rules_mod
 
-        rules_mod.build(use_model=args.model, only=args.manual, budget=args.budget, log=_log)
+        rules_mod.build(use_model=args.model, only=args.manual, budget=args.budget,
+                        threads=min(args.threads, 16), log=_log)
         did = True
     if args.anomalies:
         from app.climate import anomalies as anomalies_mod

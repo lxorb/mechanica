@@ -438,22 +438,32 @@ def borders(im: Image.Image, tol: int = 12) -> tuple:
     return (box[0], box[1], w - box[2], h - box[3])
 
 
-def debordered(im: Image.Image, min_frac: float = 0.04) -> Image.Image:
-    """Crop uniform edge bands wider than `min_frac` of the picture, with a hair of padding."""
-    w, h = im.size
-    left, top, right, bottom = borders(im)
-    if max(left, right) < min_frac * w and max(top, bottom) < min_frac * h:
-        return im
-    pad = max(3, round(0.025 * max(w, h)))  # breathing room; a mirror must not touch the edge
-    box = (
-        max(0, left - pad),
-        max(0, top - pad),
-        min(w, w - right + pad),
-        min(h, h - bottom + pad),
-    )
-    if box[2] - box[0] < 0.25 * w or box[3] - box[1] < 0.25 * h:
-        return im  # almost everything is background: leave it alone
-    return im.crop(box)
+def debordered(im: Image.Image, min_frac: float = 0.04, rounds: int = 3) -> Image.Image:
+    """Crop uniform edge bands wider than `min_frac` of the picture.
+
+    The padding left behind has to be much smaller than `min_frac`, or it simply
+    replaces the band it just removed. Cropping also changes which colour the
+    corners hold, which can expose a second band underneath the first, so this
+    repeats until the picture is clean or `rounds` is up.
+    """
+    for _ in range(rounds):
+        w, h = im.size
+        left, top, right, bottom = borders(im)
+        if max(left, right) < min_frac * w and max(top, bottom) < min_frac * h:
+            break
+        pad = max(2, round(0.01 * max(w, h)))  # a hair, so nothing touches the edge
+        box = (
+            max(0, left - pad),
+            max(0, top - pad),
+            min(w, w - right + pad),
+            min(h, h - bottom + pad),
+        )
+        if box == (0, 0, w, h):
+            break
+        if box[2] - box[0] < 0.25 * w or box[3] - box[1] < 0.25 * h:
+            break  # almost everything is background: leave it alone
+        im = im.crop(box)
+    return im
 
 
 def convert(raw: bytes, dest: Path, thumb: Path) -> tuple:
@@ -523,13 +533,18 @@ def write_outputs(entries: dict) -> None:
 
 
 def banded(path: Path, min_frac: float = 0.04) -> bool:
-    """Does this tile carry a uniform stripe down an edge?"""
+    """Does this tile carry a flat stripe down its left or right edge?
+
+    Side stripes are the defect: a press render pillarboxed in white reads as a
+    stretched band beside the vehicle. A flat strip along the TOP is usually
+    just sky, and cropping it would be vandalism, so it is not counted here --
+    `debordered` still trims it when it renders.
+    """
     try:
         with Image.open(path) as im:
             im = im.convert("RGB")
-            w, h = im.size
-            left, top, right, bottom = borders(im)
-            return max(left, right) >= min_frac * w or max(top, bottom) >= min_frac * h
+            left, _top, right, _bottom = borders(im)
+            return max(left, right) >= min_frac * im.size[0]
     except Exception:  # noqa: BLE001
         return False
 
@@ -582,7 +597,7 @@ def fix_bands(rps: float) -> int:
                 if not url:
                     print(f"  ! {key}: no source", flush=True)
                     continue
-                convert(get(client, url, bucket).content, dest, thumb)
+                renditions(get(client, url, bucket).content, dest.stem)
             except Exception as exc:  # noqa: BLE001
                 print(f"  ! {key}: {exc!r}", flush=True)
                 continue

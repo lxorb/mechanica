@@ -1,6 +1,7 @@
 [
  {
   "ruleType": "altitude",
+  "deterministic": true,
   "values": [
    [
     "500 m",
@@ -20,6 +21,7 @@
  },
  {
   "ruleType": "antifreeze_floor",
+  "deterministic": true,
   "values": [
    [
     "-25 °C",
@@ -48,14 +50,831 @@
   "spread": 0.0
  },
  {
-  "ruleType": "oil_grade_band",
+  "ruleType": "cold_start",
+  "deterministic": false,
   "values": [
    [
-    "SAE5W/40",
+    "Press the cold start button in all the way to the stop.",
+    53
+   ],
+   [
+    "Press the start button for 5 seconds, and wait 30 seconds be",
+    23
+   ],
+   [
+    "wait for 30 seconds",
+    19
+   ],
+   [
+    "30 seconds",
+    17
+   ],
+   [
+    "Push the cold start button in all the way.",
+    16
+   ],
+   [
+    "low temperatures",
+    14
+   ],
+   [
+    "more starting power",
+    11
+   ],
+   [
+    "charging time may be longer",
+    9
+   ],
+   [
+    "longer",
+    9
+   ],
+   [
+    "cold weather",
+    8
+   ],
+   [
+    "10 °C … 20 °C (50.0 °F … 68.0 °F)",
+    7
+   ],
+   [
+    "20 °C",
+    7
+   ],
+   [
+    "Pull the clutch lever. Press starter button 1 and hold it do",
+    6
+   ],
+   [
+    "wait for 30 seconds between attempts",
+    6
+   ],
+   [
+    "may be longer",
+    6
+   ],
+   [
+    "several attempts at starting may be necessary",
+    6
+   ],
+   [
+    "Pull the clutch lever. Press and hold the starter button 1 u",
+    5
+   ],
+   [
+    "Check that the actuator moves easily before activating the F",
+    5
+   ],
+   [
+    "protected from freezing temperatures and direct sunlight",
+    5
+   ],
+   [
+    "several attempts at starting may be necessary to warm-up the",
+    4
+   ],
+   [
+    "maximum riding distance per full charge becomes shorter",
+    4
+   ],
+   [
+    "Pull the clutch lever",
+    3
+   ],
+   [
+    "Repeated, brief application of load on the battery causes ba",
+    3
+   ],
+   [
+    "cold starts and low temperatures",
+    3
+   ],
+   [
+    "6 months",
+    3
+   ],
+   [
+    "6 °C",
+    3
+   ],
+   [
+    "3 months",
+    3
+   ],
+   [
+    "engine control reduces the power",
+    3
+   ],
+   [
+    "freezing temperatures and direct sunlight",
+    3
+   ],
+   [
+    "freezing temperatures",
+    3
+   ],
+   [
+    "pull the choke knob fully out",
+    3
+   ],
+   [
+    "Hard starting at a low temperature",
+    3
+   ],
+   [
+    "Wait 30 seconds between starting attempts at low temperature",
+    3
+   ],
+   [
+    "enough power to spare for starting at low temperatures",
+    3
+   ],
+   [
+    "0 °C",
+    3
+   ],
+   [
+    "Low temperatures can impact on the starting response.",
+    2
+   ],
+   [
+    "Cold starts and low temperat- ures",
+    2
+   ],
+   [
+    "Wait 30 seconds between start attempts",
+    2
+   ],
+   [
+    "Recharge the 12 V battery regularly when the motorcycle is n",
+    2
+   ],
+   [
+    "reduced power",
+    2
+   ],
+   [
+    "more often",
+    2
+   ],
+   [
+    "ON",
+    2
+   ],
+   [
+    "full vehicle power is restored after the vehicle is restarte",
+    2
+   ],
+   [
+    "do not try again, and check the vehicle for other faults ins",
+    2
+   ],
+   [
+    "more starting power than lead batteries",
+    2
+   ],
+   [
+    "well charged",
+    2
+   ],
+   [
+    "Wait 30 seconds between attempts",
+    2
+   ],
+   [
+    "Do not check the battery",
+    2
+   ],
+   [
+    "charging",
+    2
+   ],
+   [
+    "can cause damage",
+    1
+   ],
+   [
+    "Power output and power draw are adversely affected",
+    1
+   ],
+   [
+    "vehicle can no longer be used",
+    1
+   ],
+   [
+    "extremely low temperatures",
+    1
+   ],
+   [
+    "-20 °C",
+    1
+   ],
+   [
+    "adversely affected",
+    1
+   ],
+   [
+    "Power output and power draw are adversely affected by low te",
+    1
+   ],
+   [
+    "shortens",
+    1
+   ],
+   [
+    "pull clutch",
+    1
+   ],
+   [
+    "starting response may be impacted",
+    1
+   ],
+   [
+    "Pull the clutch lever; press and hold the starter button 1 u",
+    1
+   ],
+   [
+    "Low temperatures",
+    1
+   ],
+   [
+    "Multiple starting attempts may be needed. Press the start bu",
+    1
+   ],
+   [
+    "Press in cold start button all the way to the stop",
+    1
+   ],
+   [
+    "may be longer at low temperatures",
+    1
+   ],
+   [
+    "lithium-ion battery",
+    1
+   ],
+   [
+    "Recharge the 12 V battery",
+    1
+   ],
+   [
+    "when the motorcycle is not being used",
+    1
+   ],
+   [
+    "Press the cold start button",
+    1
+   ],
+   [
+    "charge immediately",
+    1
+   ],
+   [
+    "Push cold start button all the way to the stop. Press electr",
+    1
+   ],
+   [
+    "Every 6 months",
+    1
+   ],
+   [
+    "Wait for 30 seconds between starting attempts",
+    1
+   ],
+   [
+    "Press the cold start button in all the way to the stop, then",
+    1
+   ],
+   [
+    "Warm up the engine until the coolant temperature above 158°F",
+    1
+   ],
+   [
+    "unheated area, free of dampness, away from sunlight, with a ",
+    1
+   ],
+   [
+    "protected from freezing temperatures",
+    1
+   ],
+   [
+    "CR5HSA (NGK) or U16FSR-U (DENSO)",
+    1
+   ],
+   [
+    "freezing",
+    1
+   ],
+   [
+    "charging is not possible",
+    1
+   ],
+   [
+    "charging times will be slower",
+    1
+   ],
+   [
+    "low temperature",
+    1
+   ],
+   [
+    "comes on",
+    1
+   ],
+   [
+    "active ride mode indicator flashes",
+    1
+   ],
+   [
+    "must be charged immediately",
+    1
+   ],
+   [
+    "The charging time may be longer at low temperatures.",
+    1
+   ],
+   [
+    "there is enough power to spare for starting at low temperatu",
+    1
+   ],
+   [
+    "wait 30 seconds between attempts",
+    1
+   ],
+   [
+    "Press the start but- ton for 5 seconds, and wait 30 seconds ",
+    1
+   ],
+   [
+    "when the motorcycle is not being used; every 6 months",
+    1
+   ],
+   [
+    "Pull the cold start button out all the way and turn it by a ",
+    1
+   ],
+   [
+    "Several attempts to start may be required. Press the start b",
+    1
+   ],
+   [
+    "when the motorcycle is not being used 3 months",
+    1
+   ],
+   [
+    "below that of lead batteries",
+    1
+   ],
+   [
+    "Wait for 30 seconds between attempts at low temperatures",
+    1
+   ],
+   [
+    "engine control reduces the power; active ride mode indicator",
+    1
+   ],
+   [
+    "Avoid charging the battery",
+    1
+   ],
+   [
+    "avoid charging the battery",
+    1
+   ],
+   [
+    "-10 °C",
+    1
+   ],
+   [
+    "Do not charge the battery",
+    1
+   ]
+  ],
+  "manuals": 360,
+  "distinct": 99,
+  "markets": {
+   "eu": 172,
+   "us": 144,
+   "ww": 37,
+   "rw": 4,
+   "ar": 3
+  },
+  "makes": {
+   "husqvarna": 95,
+   "gasgas": 93,
+   "ktm": 82,
+   "bmw": 42,
+   "honda": 29,
+   "yamaha": 15,
+   "kawasaki": 4
+  },
+  "spread": 0.8528
+ },
+ {
+  "ruleType": "dust_interval",
+  "deterministic": false,
+  "values": [
+   [
+    "unusually wet or dusty areas",
+    78
+   ],
+   [
+    "more frequently",
+    60
+   ],
+   [
+    "service more frequently",
+    24
+   ],
+   [
+    "Service more frequently",
+    19
+   ],
+   [
+    "check and replace the air filter more frequently, possibly e",
+    17
+   ],
+   [
+    "Check the air filter regularly and replace if necessary.",
+    17
+   ],
+   [
+    "Service more frequently when riding in unusually wet or dust",
+    11
+   ],
+   [
+    "more often",
+    9
+   ],
+   [
+    "dusty",
+    8
+   ],
+   [
+    "possibly even daily",
+    4
+   ],
+   [
+    "wet or dusty conditions",
+    3
+   ],
+   [
+    "very dusty conditions",
+    3
+   ],
+   [
+    "replace more frequently",
+    3
+   ],
+   [
+    "often ride in the rain or dusty areas",
+    3
+   ],
+   [
+    "Service more frequently when ridden in wet or dusty conditio",
+    2
+   ],
+   [
+    "dusty areas",
+    2
+   ],
+   [
+    "dusty operating conditions",
+    2
+   ],
+   [
+    "Clean / Replace more frequently",
+    2
+   ],
+   [
+    "Replace more frequently when riding in unusually wet or dust",
+    2
+   ],
+   [
+    "unusually dusty areas",
+    2
+   ],
+   [
+    "Clean dust seal and lubricate with lithium-soap-based grease",
+    2
+   ],
+   [
+    "service more frequently when riding in unusually wet or dust",
+    1
+   ],
+   [
+    "riding in unusually wet or dusty areas",
+    1
+   ],
+   [
+    "more frequently than specified in the maintenance schedule",
+    1
+   ],
+   [
+    "clean",
+    1
+   ],
+   [
+    "after every moto for dusty riding condition",
+    1
+   ],
+   [
+    "Clean after every moto",
+    1
+   ],
+   [
+    "more frequently when ridden in wet or dusty conditions",
+    1
+   ],
+   [
+    "Service the air cleaner more frequently",
+    1
+   ],
+   [
+    "service the air cleaner more frequently",
+    1
+   ],
+   [
+    "dusty conditions",
+    1
+   ],
+   [
+    "after riding in dusty areas",
+    1
+   ],
+   [
+    "Check the air cleaner",
+    1
+   ],
+   [
+    "Check the air cleaner after riding in dusty area",
+    1
+   ],
+   [
+    "Service more frequently when riding in rain, at full throttl",
+    1
+   ],
+   [
+    "Check and replace the air filter more frequently, possibly e",
+    1
+   ],
+   [
+    "Clean the dust boots of the fork legs.",
+    1
+   ],
+   [
+    "regularly and replace if necessary",
+    1
+   ],
+   [
+    "replace if necessary",
+    1
+   ],
+   [
+    "check regularly and replace if necessary",
+    1
+   ],
+   [
+    "wet/dusty/muddy conditions",
+    1
+   ],
+   [
+    "dusty condition",
+    1
+   ],
+   [
+    "more frequently when riding in unusually wet or dusty areas",
+    1
+   ],
+   [
+    "rain or dusty areas",
+    1
+   ],
+   [
+    "Replace more frequently",
+    1
+   ],
+   [
+    "Every race (about 2.5 hours)",
+    1
+   ]
+  ],
+  "manuals": 298,
+  "distinct": 46,
+  "markets": {
+   "eu": 156,
+   "us": 129,
+   "ww": 12,
+   "rw": 1
+  },
+  "makes": {
+   "honda": 163,
+   "yamaha": 70,
+   "ktm": 44,
+   "husqvarna": 8,
+   "bmw": 5,
+   "kawasaki": 4,
+   "royal": 4
+  },
+  "spread": 0.7383
+ },
+ {
+  "ruleType": "heat_limit",
+  "deterministic": false,
+  "values": [
+   [
+    "Do not touch the combination instrument with bare hands",
     21
    ],
    [
+    "55 °C",
+    19
+   ],
+   [
+    "display gets hot",
+    11
+   ],
+   [
+    "High coolant temperature indicator and warning indicator com",
+    7
+   ],
+   [
+    "High Temp",
+    7
+   ],
+   [
+    "122 °C",
+    6
+   ],
+   [
+    "display can heat up considerably",
+    6
+   ],
+   [
+    "70 °C",
+    4
+   ],
+   [
+    "122°F or 50°C flashes",
+    4
+   ],
+   [
+    "Do not touch the combination instrument with bare hands in t",
+    4
+   ],
+   [
+    "Hi",
+    4
+   ],
+   [
+    "ambient temperature",
+    4
+   ],
+   [
+    "Hi Temp",
+    4
+   ],
+   [
+    "35 °C",
+    3
+   ],
+   [
+    "132 °C",
+    3
+   ],
+   [
+    "display",
+    3
+   ],
+   [
+    "Do not touch the combination instrument with bare hands.",
+    3
+   ],
+   [
+    "below -20 °C or above 45 °C for longer periods of time",
+    2
+   ],
+   [
+    "fan is switched on",
+    2
+   ],
+   [
+    "30 °C",
+    2
+   ],
+   [
+    "122°F (50°C) flashes",
+    2
+   ],
+   [
+    "display heat up considerably",
+    2
+   ],
+   [
+    "damage",
+    1
+   ],
+   [
+    "shorten the service life of the battery cells",
+    1
+   ],
+   [
+    "fan",
+    1
+   ],
+   [
+    "---",
+    1
+   ],
+   [
+    "High coolant temperature indicator lights; “269°F (132°C)” f",
+    1
+   ],
+   [
+    "coolant temperature",
+    1
+   ],
+   [
+    "High coolant temperature indicator lights; “ ” (°F) /“ ” (°C",
+    1
+   ],
+   [
+    "High coolant temperature indicator lights",
+    1
+   ],
+   [
+    "The display will remain and blink ‘‘122°F (50°C)’’",
+    1
+   ],
+   [
+    "3 °C",
+    1
+   ],
+   [
+    "High coolant temperature indicator comes on; “269°F (132°C)”",
+    1
+   ],
+   [
+    "The display can heat up considerably; do not touch the combi",
+    1
+   ],
+   [
+    "heat up considerably",
+    1
+   ],
+   [
+    "display in particular can heat up considerably",
+    1
+   ],
+   [
+    "Hi appears and starts blinking",
+    1
+   ],
+   [
+    "the display in particular can heat up considerably",
+    1
+   ],
+   [
+    "combination instrument",
+    1
+   ],
+   [
+    "60 °C",
+    1
+   ]
+  ],
+  "manuals": 141,
+  "distinct": 40,
+  "markets": {
+   "eu": 81,
+   "us": 51,
+   "ww": 3,
+   "rw": 2,
+   "jp": 1,
+   "br": 1,
+   "ar": 1,
+   "ph": 1
+  },
+  "makes": {
+   "ktm": 59,
+   "honda": 31,
+   "husqvarna": 19,
+   "yamaha": 17,
+   "bmw": 12,
+   "kawasaki": 3
+  },
+  "spread": 0.8511
+ },
+ {
+  "ruleType": "oil_grade_band",
+  "deterministic": true,
+  "values": [
+   [
     "SAE10W/50",
+    21
+   ],
+   [
+    "SAE5W/40",
     21
    ],
    [
@@ -74,5 +893,581 @@
    "ktm": 43
   },
   "spread": 0.5116
+ },
+ {
+  "ruleType": "salt_wash",
+  "deterministic": false,
+  "values": [
+   [
+    "cold water",
+    121
+   ],
+   [
+    "Clean aluminum parts regularly",
+    63
+   ],
+   [
+    "cold water immediately after every trip",
+    54
+   ],
+   [
+    "road salt",
+    31
+   ],
+   [
+    "Clean aluminium parts regularly",
+    30
+   ],
+   [
+    "coastal, treated, muddy, or dusty roads",
+    20
+   ],
+   [
+    "Brake carefully several times to remove salt from the brake ",
+    20
+   ],
+   [
+    "salt water",
+    20
+   ],
+   [
+    "Clean the vehicle thoroughly after driving on salted roads t",
+    20
+   ],
+   [
+    "coastal, treated, muddy or dusty roads",
+    18
+   ],
+   [
+    "wash your vehicle thoroughly",
+    17
+   ],
+   [
+    "Do not use hard water or salt water since it is harmful to t",
+    15
+   ],
+   [
+    "wash your vehicle thoroughly after riding on coastal, treate",
+    13
+   ],
+   [
+    "salted roads",
+    11
+   ],
+   [
+    "wash your vehicle thoroughly after riding on coastal or trea",
+    11
+   ],
+   [
+    "rinse it as soon as possible after the event, dry it, and ap",
+    11
+   ],
+   [
+    "Wash your vehicle thoroughly after riding on coastal, treate",
+    9
+   ],
+   [
+    "thoroughly clean the vehicle with cold water and dry it well",
+    8
+   ],
+   [
+    "more often",
+    7
+   ],
+   [
+    "after riding on coastal or treated roads",
+    5
+   ],
+   [
+    "brake carefully several times to remove salt from the brake ",
+    5
+   ],
+   [
+    "thoroughly wash the brake calipers and brake pads with cold ",
+    4
+   ],
+   [
+    "Do not use hard water or salt water",
+    4
+   ],
+   [
+    "Clean chrome parts with plenty of water and motorcycle clean",
+    3
+   ],
+   [
+    "wash thoroughly after riding on coastal, treated, muddy or d",
+    3
+   ],
+   [
+    "Clean the aluminum frame to remove stains caused by dust, mu",
+    3
+   ],
+   [
+    "clean with cold water",
+    3
+   ],
+   [
+    "used on salted roads",
+    3
+   ],
+   [
+    "Clean the vehicle thoroughly to remove road salt and avoid c",
+    3
+   ],
+   [
+    "clean it with cold water after riding",
+    2
+   ],
+   [
+    "coastal, treated roads, muddy or dusty roads",
+    2
+   ],
+   [
+    "sea air or salt water",
+    2
+   ],
+   [
+    "Clean the frame using a wet sponge and a mild detergent, the",
+    2
+   ],
+   [
+    "coastal or treated roads",
+    2
+   ],
+   [
+    "Thoroughly wash the brake calipers and brake pads with cold ",
+    2
+   ],
+   [
+    "clean the vehicle with cold water and dry it well",
+    2
+   ],
+   [
+    "wash the underside and chassis parts after riding in such ar",
+    2
+   ],
+   [
+    "wash the vehicle after riding in the rain or near the sea",
+    2
+   ],
+   [
+    "clean the vehicle thoroughly to remove road salt and avoid c",
+    2
+   ],
+   [
+    "frequently",
+    1
+   ],
+   [
+    "road salt has been in use",
+    1
+   ],
+   [
+    "immediately after every trip",
+    1
+   ],
+   [
+    "thoroughly wash the brake calipers and the brake pads with c",
+    1
+   ],
+   [
+    "Clean the vehicle with cold water after riding in road salt.",
+    1
+   ],
+   [
+    "wash your motorcycle thoroughly after riding on coastal or t",
+    1
+   ],
+   [
+    "after riding on coastal, treated, muddy, or dusty roads",
+    1
+   ],
+   [
+    "after riding on coastal, treated roads and muddy and dusty r",
+    1
+   ],
+   [
+    "Clean the aluminum frame when exposed to road salt.",
+    1
+   ],
+   [
+    "Remove stains from the aluminium frame using Scotch Brite Ha",
+    1
+   ],
+   [
+    "wash thoroughly after riding on coastal or treated roads",
+    1
+   ],
+   [
+    "Clean the aluminum frame after contact with road salt using ",
+    1
+   ],
+   [
+    "Rinse it as soon as possible after the event, dry it, and ap",
+    1
+   ],
+   [
+    "exposed to sea air or salt water",
+    1
+   ],
+   [
+    "Wash the motorcycle thoroughly after riding on coastal or tr",
+    1
+   ],
+   [
+    "after riding on coastal, treated, muddy or dusty roads",
+    1
+   ],
+   [
+    "Clean the vehicle with cold water and dry it well after ridi",
+    1
+   ],
+   [
+    "cold water and dry them carefully",
+    1
+   ],
+   [
+    "thoroughly clean the motorcycle, and in particular, the brak",
+    1
+   ],
+   [
+    "wash the brake calipers and brake pads with cold water and d",
+    1
+   ],
+   [
+    "Immediately wash the vehicle with cold water, do not use war",
+    1
+   ],
+   [
+    "wash with cold water",
+    1
+   ],
+   [
+    "clean with cold water and dry",
+    1
+   ],
+   [
+    "after every trip on salted roads",
+    1
+   ],
+   [
+    "Clean the brake calipers and brake linings with cold water a",
+    1
+   ],
+   [
+    "use cold water for cleaning after riding",
+    1
+   ],
+   [
+    "Clean with cold water after riding on salted roads",
+    1
+   ],
+   [
+    "Clean the brake calipers, brake linings, and vehicle with co",
+    1
+   ],
+   [
+    "clean with cold water after riding",
+    1
+   ],
+   [
+    "cold water; dry them carefully",
+    1
+   ],
+   [
+    "clean it with cold water",
+    1
+   ],
+   [
+    "After every trip on salted roads, clean the brake calipers a",
+    1
+   ],
+   [
+    "Wash the brake calipers and brake pads with cold water and d",
+    1
+   ],
+   [
+    "wash brake calipers and brake pads with cold water and dry c",
+    1
+   ],
+   [
+    "Once the motorcycle has been ridden in salty condi-\ntions (i",
+    1
+   ],
+   [
+    "wash your motorcycle with cold water after the ride",
+    1
+   ],
+   [
+    "cold water after the ride",
+    1
+   ],
+   [
+    "Do not use salt water",
+    1
+   ]
+  ],
+  "manuals": 593,
+  "distinct": 77,
+  "markets": {
+   "eu": 324,
+   "us": 215,
+   "ww": 42,
+   "rw": 5,
+   "ar": 3,
+   "br": 2,
+   "ph": 1,
+   "jp": 1
+  },
+  "makes": {
+   "honda": 255,
+   "ktm": 116,
+   "bmw": 77,
+   "yamaha": 69,
+   "husqvarna": 48,
+   "gasgas": 21,
+   "kawasaki": 4,
+   "royal": 3
+  },
+  "spread": 0.796
+ },
+ {
+  "ruleType": "wet_interval",
+  "deterministic": false,
+  "values": [
+   [
+    "more frequently",
+    88
+   ],
+   [
+    "unusually wet or dusty areas",
+    74
+   ],
+   [
+    "after washing the motorcycle, riding in the rain or riding i",
+    38
+   ],
+   [
+    "riding in rain, at full throttle, or after the vehicle is wa",
+    31
+   ],
+   [
+    "Service more frequently",
+    21
+   ],
+   [
+    "rain",
+    19
+   ],
+   [
+    "wash the vehicle",
+    19
+   ],
+   [
+    "service more frequently",
+    18
+   ],
+   [
+    "after riding in the rain or near the sea",
+    18
+   ],
+   [
+    "more frequently when riding in rain, at full throttle, or af",
+    11
+   ],
+   [
+    "ridden in the rain or often at full throttle",
+    8
+   ],
+   [
+    "wet or dusty conditions",
+    8
+   ],
+   [
+    "Service more frequently when riding in unusually wet or dust",
+    7
+   ],
+   [
+    "more frequently when riding in unusually wet or dusty areas",
+    7
+   ],
+   [
+    "rain or near the sea",
+    6
+   ],
+   [
+    "apply the brakes while riding at low speed to help them dry",
+    5
+   ],
+   [
+    "Apply the brakes while riding at low speed to help them dry.",
+    4
+   ],
+   [
+    "rain or often at full throttle",
+    4
+   ],
+   [
+    "wet, dusty or dirty conditions",
+    3
+   ],
+   [
+    "more often",
+    3
+   ],
+   [
+    "Service more frequently when riding in rain, at full throttl",
+    3
+   ],
+   [
+    "riding in rain",
+    3
+   ],
+   [
+    "Apply the brakes while riding at low speed to help them dry",
+    2
+   ],
+   [
+    "when riding in rain, at full throttle, or after the vehicle ",
+    2
+   ],
+   [
+    "deposit level can be seen in the transparent section of the ",
+    2
+   ],
+   [
+    "after riding in rain or at full throttle",
+    2
+   ],
+   [
+    "rain or full throttle",
+    2
+   ],
+   [
+    "Worn tires have a negative effect on handling characteristic",
+    2
+   ],
+   [
+    "after washing the mo- torcycle, riding in the rain or riding",
+    2
+   ],
+   [
+    "rain or dusty areas",
+    2
+   ],
+   [
+    "replace more frequently",
+    2
+   ],
+   [
+    "unusually wet areas",
+    2
+   ],
+   [
+    "wash the vehicle after riding in the rain or near the sea",
+    2
+   ],
+   [
+    "rain, at full throttle, or after the vehicle is washed or ov",
+    1
+   ],
+   [
+    "Service more frequently if ridden in the rain or often at fu",
+    1
+   ],
+   [
+    "more frequently if your vehicle is ridden in the rain or oft",
+    1
+   ],
+   [
+    "rain, full throttle, washed or overturned",
+    1
+   ],
+   [
+    "Service the air cleaner more frequently if you ride in unusu",
+    1
+   ],
+   [
+    "if your motorcycle is ridden in the rain or often at full th",
+    1
+   ],
+   [
+    "Service more frequently when riding in rain or at full throt",
+    1
+   ],
+   [
+    "Run in new tires with moderate riding and only gradually inc",
+    1
+   ],
+   [
+    "wet",
+    1
+   ],
+   [
+    "outside temperature sensor gets wet",
+    1
+   ],
+   [
+    "wet surfaces",
+    1
+   ],
+   [
+    "tire tread depth",
+    1
+   ],
+   [
+    "moderate riding and only gradually increase the lean angle",
+    1
+   ],
+   [
+    "wet/dusty/muddy conditions",
+    1
+   ],
+   [
+    "shorten maintenance frequency",
+    1
+   ],
+   [
+    "replace the air filter element more frequently",
+    1
+   ],
+   [
+    "often ride in the rain",
+    1
+   ],
+   [
+    "often ride the rain or dusty areas",
+    1
+   ],
+   [
+    "more frequently if riding in unusually wet or dusty areas",
+    1
+   ],
+   [
+    "replace more frequently in unusually wet or dusty areas",
+    1
+   ],
+   [
+    "cleaned or replaced more frequently",
+    1
+   ]
+  ],
+  "manuals": 441,
+  "distinct": 54,
+  "markets": {
+   "eu": 236,
+   "us": 186,
+   "ww": 19
+  },
+  "makes": {
+   "honda": 271,
+   "yamaha": 151,
+   "bmw": 5,
+   "kawasaki": 5,
+   "husqvarna": 4,
+   "ktm": 3,
+   "royal": 2
+  },
+  "spread": 0.8005
  }
 ]

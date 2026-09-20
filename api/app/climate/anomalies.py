@@ -16,6 +16,7 @@ import re
 from collections.abc import Callable
 
 from .paths import climate_dir, rules_dir
+from .rules import DETERMINISTIC
 from .stations import manuals_with_rules, rules_for
 
 # Trailing tokens that make one model look like three. Stripped for the family key, never for display.
@@ -99,6 +100,9 @@ def build(log: Callable[..., None] = print) -> list[dict]:
                 makes[k] = makes.get(k, 0) + v
         rows.append({
             "ruleType": rule_type,
+            # Only the deterministic types have a comparable spread: for the model-extracted ones
+            # `value` is free text, so some of the variety is label noise, not real disagreement.
+            "deterministic": rule_type in DETERMINISTIC,
             "values": [[s["value"], s["manuals"]] for s in slots],
             "manuals": total,
             "distinct": len(slots),
@@ -123,8 +127,9 @@ def build(log: Callable[..., None] = print) -> list[dict]:
     log(f"anomalies: {len(rows)} rule types over {len(ids)} manuals, {len(clusters)} model families, "
         f"{len(drift)} with a value that moved between model years")
     for r in rows:
-        log(f"  {r['ruleType']:18s} {r['manuals']:4d} manuals  {r['distinct']} distinct value(s)  "
-            f"spread {r['spread']}  markets {len(r['markets'])}  makes {len(r['makes'])}")
+        log(f"  {r['ruleType']:18s} {r['manuals']:4d} manuals  {r['distinct']:3d} distinct value(s)  "
+            f"spread {r['spread']:<7} markets {len(r['markets'])}  makes {len(r['makes'])}  "
+            f"{'regex' if r['deterministic'] else 'model'}")
     return out["rows"]
 
 

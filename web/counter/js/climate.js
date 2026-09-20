@@ -250,6 +250,7 @@ function paint(fit, id) {
     return;
   }
   const st = fit.station || {};
+  // A typed station name has no distance to report; only a coordinate fix does.
   const km = st.km == null ? "" : `${Number(st.km).toFixed(1)} km`;
   els.station.textContent = [st.name, km, `${Number(st.obs || 0).toLocaleString()} obs`]
     .filter(Boolean)

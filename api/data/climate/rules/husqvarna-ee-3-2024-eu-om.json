@@ -1,0 +1,1 @@
+[{"id": "92fe246fae85", "manualId": "husqvarna-ee-3-2024-eu-om", "ruleType": "cold_start", "name": "LV traction battery temperature too low", "comparator": "below", "value": "active ride mode indicator flashes", "page": 13, "quote": "If the temperature of the LV traction battery is too low, the active ride mode indicator flashes.", "source": "model"}]

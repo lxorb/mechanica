@@ -10,14 +10,36 @@ he does not trust it (95% right is not enough when he is liable for the 5%), and
 ~$4 in API usage because the model had to read a 500-page manual, so he hit limits constantly.
 Mechanica makes the manual the answer (never AI prose), finds the page in seconds, and costs a fraction of a cent.
 
-Numbers to reuse (verify in the repo/live before quoting; say "measured" vs "estimated"):
-- 20% of ~2,000 h/year = ~400 h/year searching; at a shop rate of EUR 90-120/h that is EUR 36k-48k/year of billable time per mechanic.
-- naive: ~$4-6 per question (whole manual in the flagship model); ours: $0.0003-0.005 per ask/chat (cost log), ~1,500x cheaper.
-- registry: 52k rows, 13.5k distinct free official manuals, 27k vehicles (cars + motorcycles), 13k fetchable on demand.
-- on-demand manual: readable in ~7 s, fully indexed in ~50 s, ~$0.10.
-- chat: 100% valid citations, 0 invented numbers, 0 dealer referrals, tokens saved ~31% (Token Company bear-2), p50 first token ~2.5 s.
-- voice: first audio ~0.7-2 s through the Deepgram Voice Agent, grounded via manual tools.
-- parts: 135 parts per vehicle, live offers with USD prices, ~7 cents cold, free cached.
+## Numbers to reuse
+
+**Every figure lives in `docs/pitches/numbers.md`** — generated, never typed, by
+`api/.venv/Scripts/python tools/pitch_numbers.py --live --md ../docs/pitches/numbers.md` (run from `api/`).
+Do not quote a number that is not in that file, and do not edit that file by hand: re-run the script.
+It marks each value **measured / computed / assumed**, prints the exact definition next to it, and ends with
+a generated discrepancy list — every figure in every pitch that contradicts it, with `file:line`.
+
+Read its §11 before you write a sentence: three words have two honest counts each, and mixing them is how
+nine pitches ended up with nine answers. *manuals we can reach* (14,770 distinct PDFs) is not *vehicles with
+a manual* (13,537). *mislabelled rows* is 4,081 owner-typed or 1,489 free-English — different questions.
+*naive $/question* is $12.40 (largest deployed manual) or $1.37 (median), and the friend's ~$4 is neither.
+
+**The ten to memorise** (2026-09-20; re-run before you present):
+
+| number | say it as | definition |
+|---|---|---|
+| **27,751** | vehicles you can pick | rows in `GET /api/catalog` |
+| **13,537** | with a free official manual | catalog rows carrying a `manualUrl` |
+| **53,557 / 84** | registry rows, publisher portals | rows in `registry.json`; distinct `site` |
+| **14,770** | distinct free English PDFs | distinct URLs of ingestable rows |
+| **535** | manuals already indexed | rows in `GET /api/manuals` |
+| **40.4 s / $0.095** | a cold manual becomes searchable | timed ingest; mean over 648 ingests |
+| **$0.00038** | our cost per question | eval cost-log delta over 150 |
+| **$12.40** | naive cost per question | `naive_usd(775)`, largest deployed manual |
+| **100% / 0 of 20** | right section first; off-topic refused | eval: 130 in-scope, 20 off-topic |
+| **100% / 0** | chat claims cited; invented numbers | 48 claim sentences, 43 quotes verbatim |
+
+**His numbers, never ours — always say "he says":** ~20% of his working time (≈400 h/year, EUR 36k–48k of
+billable time), ~$4 a question when he tried an LLM, "95% right isn't enough when I sign for the 5%."
 
 Rules for every pitch: 5 minutes total; only mention what is relevant to THAT sponsor; concrete numbers with sources;
 a flowchart (mermaid) of the architecture slice that matters to that sponsor; the demo moments and exact inputs;

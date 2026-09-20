@@ -556,7 +556,8 @@
     "title": "BMW C Evolution 2014-05-25.jpg",
     "author": "Bergfalke2",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_C_Evolution_2014-05-25.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_C_Evolution_2014-05-25.jpg",
+    "hero": "store/img/bikes/bmw-c-evolution-hero.webp"
   },
   "bmw|c1-125": {
     "image": "store/img/bikes/bmw-c1-125.webp",
@@ -573,7 +574,8 @@
     "title": "Wuppertal, Gartenstr. östl. Querung Elisenstr., BMW C1 200, Bild 3.jpg",
     "author": "Im Fokus",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Wuppertal,_Gartenstr._%C3%B6stl._Querung_Elisenstr.,_BMW_C1_200,_Bild_3.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Wuppertal,_Gartenstr._%C3%B6stl._Querung_Elisenstr.,_BMW_C1_200,_Bild_3.jpg",
+    "hero": "store/img/bikes/bmw-c1-200-hero.webp"
   },
   "bmw|ce-02": {
     "image": "store/img/bikes/bmw-ce-02.webp",
@@ -8320,6 +8322,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:KTM_350_EXC-F_SIXDAYS.JPG",
     "hero": "store/img/bikes/ktm-350-exc-f-hero.webp"
   },
+  "ktm|390-adventure": {
+    "image": "store/img/bikes/ktm-390-adventure.webp",
+    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
+    "title": "Ktm-390-adventure-2024.png",
+    "author": "KTM AG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
+    "hero": "store/img/bikes/ktm-390-adventure-hero.webp"
+  },
   "ktm|390-duke": {
     "image": "store/img/bikes/ktm-390-duke.webp",
     "thumb": "store/img/bikes/ktm-390-duke-thumb.webp",
@@ -12419,28 +12430,11 @@
     "image": "store/img/bikes/toyota-bz.webp",
     "thumb": "store/img/bikes/toyota-bz-thumb.webp",
     "kind": "car",
-    "title": "2026 Toyota bZ Woodland au SIAM 2026 -- arrière.JPG",
-    "author": "Bull-Doser",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Toyota_bZ_Woodland_au_SIAM_2026_--_arri%C3%A8re.JPG"
-  },
-  "toyota|bz4x": {
-    "image": "store/img/bikes/toyota-bz4x.webp",
-    "thumb": "store/img/bikes/toyota-bz4x-thumb.webp",
-    "kind": "car",
-    "title": "Toyota bZ4X, Auto 2024, Zurich (PANA0765).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_bZ4X,_Auto_2024,_Zurich_(PANA0765).jpg"
-  },
-  "toyota|c-hr": {
-    "image": "store/img/bikes/toyota-c-hr.webp",
-    "thumb": "store/img/bikes/toyota-c-hr-thumb.webp",
-    "kind": "car",
-    "title": "TOYOTA C-HR China (4).jpg",
-    "author": "Dinkun Chen",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:TOYOTA_C-HR_China_(4).jpg"
+    "title": "Toyota bZ5 front left.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_bZ5_front_left.jpg",
+    "hero": "store/img/bikes/toyota-bz-hero.webp"
   },
   "toyota|camry": {
     "image": "store/img/bikes/toyota-camry.webp",
@@ -12462,15 +12456,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:2003_Toyota_Celica_GT-S_cropped.jpg",
     "hero": "store/img/bikes/toyota-celica-hero.webp"
   },
-  "toyota|corolla": {
-    "image": "store/img/bikes/toyota-corolla.webp",
-    "thumb": "store/img/bikes/toyota-corolla-thumb.webp",
-    "kind": "car",
-    "title": "Toyota Corolla Trek Hybrid Genf 2019 1Y7A5587.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Trek_Hybrid_Genf_2019_1Y7A5587.jpg"
-  },
   "toyota|echo": {
     "image": "store/img/bikes/toyota-echo.webp",
     "thumb": "store/img/bikes/toyota-echo-thumb.webp",
@@ -12481,15 +12466,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Toyota_Echo_Bahrain.jpg",
     "hero": "store/img/bikes/toyota-echo-hero.webp"
   },
-  "toyota|gr86": {
-    "image": "store/img/bikes/toyota-gr86.webp",
-    "thumb": "store/img/bikes/toyota-gr86-thumb.webp",
-    "kind": "car",
-    "title": "2022 Toyota GR86 ZN8 Track Bred.jpg",
-    "author": "Nathan Dimartino",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Toyota_GR86_ZN8_Track_Bred.jpg"
-  },
   "toyota|highlander": {
     "image": "store/img/bikes/toyota-highlander.webp",
     "thumb": "store/img/bikes/toyota-highlander-thumb.webp",
@@ -12497,7 +12473,8 @@
     "title": "Mariposa (CA, USA), Fremont's Fort Historical Marker, Toyota Highlander -- 2022 -- 141813.jpg",
     "author": "Dietmar Rabich",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Mariposa_(CA,_USA),_Fremont's_Fort_Historical_Marker,_Toyota_Highlander_--_2022_--_141813.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Mariposa_(CA,_USA),_Fremont's_Fort_Historical_Marker,_Toyota_Highlander_--_2022_--_141813.jpg",
+    "hero": "store/img/bikes/toyota-highlander-hero.webp"
   },
   "toyota|matrix": {
     "image": "store/img/bikes/toyota-matrix.webp",
@@ -12506,61 +12483,48 @@
     "title": "2009 Toyota Matrix (E140).jpg",
     "author": "Chris",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2009_Toyota_Matrix_(E140).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2009_Toyota_Matrix_(E140).jpg",
+    "hero": "store/img/bikes/toyota-matrix-hero.webp"
   },
   "toyota|mirai": {
     "image": "store/img/bikes/toyota-mirai.webp",
     "thumb": "store/img/bikes/toyota-mirai-thumb.webp",
     "kind": "car",
-    "title": "Toyota Mirai, IAA 2017, Frankfurt (1Y7A1888).jpg",
-    "author": "Matti Blume",
+    "title": "Toyota Mirai (JPD20) Classic-Gala 2021 1X7A0254.jpg",
+    "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Mirai,_IAA_2017,_Frankfurt_(1Y7A1888).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Mirai_(JPD20)_Classic-Gala_2021_1X7A0254.jpg",
+    "hero": "store/img/bikes/toyota-mirai-hero.webp"
   },
   "toyota|paseo": {
     "image": "store/img/bikes/toyota-paseo.webp",
     "thumb": "store/img/bikes/toyota-paseo-thumb.webp",
     "kind": "car",
-    "title": "Toyota Paseo EL44 1.5L Super White 02.jpg",
-    "author": "Ethan Llamas",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Paseo_EL44_1.5L_Super_White_02.jpg"
-  },
-  "toyota|previa": {
-    "image": "store/img/bikes/toyota-previa.webp",
-    "thumb": "store/img/bikes/toyota-previa-thumb.webp",
-    "kind": "car",
-    "title": "TOYOTA PREVIA (XR50) China.jpg",
-    "author": "Dinkun Chen",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:TOYOTA_PREVIA_(XR50)_China.jpg"
-  },
-  "toyota|prius": {
-    "image": "store/img/bikes/toyota-prius.webp",
-    "thumb": "store/img/bikes/toyota-prius-thumb.webp",
-    "kind": "car",
-    "title": "Toyota Prius (XW60) Plug-in Hybrid Automesse Ludwigsburg 2023 1X7A0004.jpg",
-    "author": "Alexander-93",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Prius_(XW60)_Plug-in_Hybrid_Automesse_Ludwigsburg_2023_1X7A0004.jpg"
+    "title": "1996 Toyota Paseo ST (rear).jpg",
+    "author": "Charlie from United Kingdom",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1996_Toyota_Paseo_ST_(rear).jpg",
+    "hero": "store/img/bikes/toyota-paseo-hero.webp"
   },
   "toyota|rav4": {
     "image": "store/img/bikes/toyota-rav4.webp",
     "thumb": "store/img/bikes/toyota-rav4-thumb.webp",
     "kind": "car",
-    "title": "Toyota RAV4 Hybrid, GIMS 2019, Le Grand-Saconnex (GIMS0518).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_RAV4_Hybrid,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0518).jpg"
+    "title": "2021 Toyota RAV4 PHV.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Toyota_RAV4_PHV.jpg",
+    "hero": "store/img/bikes/toyota-rav4-hero.webp"
   },
   "toyota|sequoia": {
     "image": "store/img/bikes/toyota-sequoia.webp",
     "thumb": "store/img/bikes/toyota-sequoia-thumb.webp",
     "kind": "car",
-    "title": "2018+ Toyota Sequoia Limited, Silver Sky Metallic, 6.22.19.jpg",
-    "author": "Syntaxlord",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2018%2B_Toyota_Sequoia_Limited,_Silver_Sky_Metallic,_6.22.19.jpg"
+    "title": "2008 Toyota Sequoia SR5 -- NHTSA.jpg",
+    "author": "U.S. National Highway Traffic Safety Administration",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2008_Toyota_Sequoia_SR5_--_NHTSA.jpg",
+    "hero": "store/img/bikes/toyota-sequoia-hero.webp"
   },
   "toyota|sienna": {
     "image": "store/img/bikes/toyota-sienna.webp",
@@ -12569,43 +12533,28 @@
     "title": "Toyota Sienna -- 07-09-2009.jpg",
     "author": "IFCAR",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Sienna_--_07-09-2009.jpg"
-  },
-  "toyota|solara": {
-    "image": "store/img/bikes/toyota-solara.webp",
-    "thumb": "store/img/bikes/toyota-solara-thumb.webp",
-    "kind": "car",
-    "title": "2006 Toyota Solara SE Coupe, front right, 10-28-2022.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2006_Toyota_Solara_SE_Coupe,_front_right,_10-28-2022.jpg"
-  },
-  "toyota|supra": {
-    "image": "store/img/bikes/toyota-supra.webp",
-    "thumb": "store/img/bikes/toyota-supra-thumb.webp",
-    "kind": "car",
-    "title": "Dülmen, Auto Bertels, Toyota GR Supra -- 2021 -- 9537.jpg",
-    "author": "Dietmar Rabich",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Auto_Bertels,_Toyota_GR_Supra_--_2021_--_9537.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Sienna_--_07-09-2009.jpg",
+    "hero": "store/img/bikes/toyota-sienna-hero.webp"
   },
   "toyota|t100": {
     "image": "store/img/bikes/toyota-t100.webp",
     "thumb": "store/img/bikes/toyota-t100-thumb.webp",
     "kind": "car",
-    "title": "Toyota Corona (T100) in Toyota Automobile Museum.jpg",
-    "author": "M.rJirapat",
+    "title": "1995 Toyota T100 DX 4x4.jpg",
+    "author": "Walldo123",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Corona_(T100)_in_Toyota_Automobile_Museum.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:1995_Toyota_T100_DX_4x4.jpg",
+    "hero": "store/img/bikes/toyota-t100-hero.webp"
   },
   "toyota|tacoma": {
     "image": "store/img/bikes/toyota-tacoma.webp",
     "thumb": "store/img/bikes/toyota-tacoma-thumb.webp",
     "kind": "car",
-    "title": "Second Gen Toyota Tacoma on Snowy Mountain - 2019.jpg",
-    "author": "Noah Wulf",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Second_Gen_Toyota_Tacoma_on_Snowy_Mountain_-_2019.jpg"
+    "title": "2024 Toyota Tacoma TRD Off Road black rear.jpg",
+    "author": "Throwawayacc222",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Toyota_Tacoma_TRD_Off_Road_black_rear.jpg",
+    "hero": "store/img/bikes/toyota-tacoma-hero.webp"
   },
   "toyota|tercel": {
     "image": "store/img/bikes/toyota-tercel.webp",
@@ -12614,16 +12563,18 @@
     "title": "Toyota Tercel SR5 Alltrac Wagon.jpg",
     "author": "Jacob Frey 4A",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Tercel_SR5_Alltrac_Wagon.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Tercel_SR5_Alltrac_Wagon.jpg",
+    "hero": "store/img/bikes/toyota-tercel-hero.webp"
   },
   "toyota|tundra": {
     "image": "store/img/bikes/toyota-tundra.webp",
     "thumb": "store/img/bikes/toyota-tundra-thumb.webp",
     "kind": "car",
-    "title": "Toyota Tundra at 2019 SF Auto Show.jpg",
-    "author": "DestinationFearFan",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Tundra_at_2019_SF_Auto_Show.jpg"
+    "title": "White 2003-6 Toyota Tundra With custom Bumper.jpg",
+    "author": "Noah Wulf",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:White_2003-6_Toyota_Tundra_With_custom_Bumper.jpg",
+    "hero": "store/img/bikes/toyota-tundra-hero.webp"
   },
   "toyota|venza": {
     "image": "store/img/bikes/toyota-venza.webp",
@@ -12632,16 +12583,18 @@
     "title": "2011 Toyota Venza -- NHTSA 2.jpg",
     "author": "U.S. National Highway Traffic Safety Administration",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2011_Toyota_Venza_--_NHTSA_2.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Toyota_Venza_--_NHTSA_2.jpg",
+    "hero": "store/img/bikes/toyota-venza-hero.webp"
   },
   "toyota|yaris": {
     "image": "store/img/bikes/toyota-yaris.webp",
     "thumb": "store/img/bikes/toyota-yaris-thumb.webp",
     "kind": "car",
-    "title": "Toyota Yaris GRMN IMG 0856.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Yaris_GRMN_IMG_0856.jpg"
+    "title": "Toyota GR Yaris GR-DAT prototype.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_GR_Yaris_GR-DAT_prototype.jpg",
+    "hero": "store/img/bikes/toyota-yaris-hero.webp"
   },
   "triumph|america": {
     "image": "store/img/bikes/triumph-america.webp",
@@ -13295,10 +13248,11 @@
     "image": "store/img/bikes/volkswagen-arteon.webp",
     "thumb": "store/img/bikes/volkswagen-arteon-thumb.webp",
     "kind": "car",
-    "title": "Volkswagen Arteon (2020) 1X7A0291.jpg",
-    "author": "Alexander Migl",
+    "title": "VW Volkswagen Arteon.jpg",
+    "author": "JoachimKohler-HB",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Arteon_(2020)_1X7A0291.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:VW_Volkswagen_Arteon.jpg",
+    "hero": "store/img/bikes/volkswagen-arteon-hero.webp"
   },
   "volkswagen|atlas": {
     "image": "store/img/bikes/volkswagen-atlas.webp",
@@ -13307,61 +13261,48 @@
     "title": "2021 Volkswagen Atlas 1X7A0389.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Volkswagen_Atlas_1X7A0389.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Volkswagen_Atlas_1X7A0389.jpg",
+    "hero": "store/img/bikes/volkswagen-atlas-hero.webp"
   },
   "volkswagen|atlas-cross-sport": {
     "image": "store/img/bikes/volkswagen-atlas-cross-sport.webp",
     "thumb": "store/img/bikes/volkswagen-atlas-cross-sport-thumb.webp",
     "kind": "car",
-    "title": "Volkswagen Atlas Cross Sport, Motortreff Bella Italia 2024, Munich (P1190266).jpg",
-    "author": "Matti Blume",
+    "title": "VOLKSWAGEN ATLAS CROSS SPORT TERAMONT X R-LINE China (3).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Atlas_Cross_Sport,_Motortreff_Bella_Italia_2024,_Munich_(P1190266).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:VOLKSWAGEN_ATLAS_CROSS_SPORT_TERAMONT_X_R-LINE_China_(3).jpg",
+    "hero": "store/img/bikes/volkswagen-atlas-cross-sport-hero.webp"
   },
   "volkswagen|e-golf": {
     "image": "store/img/bikes/volkswagen-e-golf.webp",
     "thumb": "store/img/bikes/volkswagen-e-golf-thumb.webp",
     "kind": "car",
-    "title": "2018 Volkswagen e-Golf Front.jpg",
-    "author": "Vauxford",
+    "title": "VOLKSWAGEN e-GOLF (Mk7, Typ 5G) China (3).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2018_Volkswagen_e-Golf_Front.jpg"
-  },
-  "volkswagen|golf-/-golf-gti-/-golf-r": {
-    "image": "store/img/bikes/volkswagen-golf-golf-gti-golf-r.webp",
-    "thumb": "store/img/bikes/volkswagen-golf-golf-gti-golf-r-thumb.webp",
-    "kind": "car",
-    "title": "VPReloaded Golf 7 R ,Audi A3 S-line, Golf 7.5 GTi , Golf 7 Clubsport.jpg",
-    "author": "ZoBuyani",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:VPReloaded_Golf_7_R_,Audi_A3_S-line,_Golf_7.5_GTi_,_Golf_7_Clubsport.jpg"
-  },
-  "volkswagen|golf-gti": {
-    "image": "store/img/bikes/volkswagen-golf-gti.webp",
-    "thumb": "store/img/bikes/volkswagen-golf-gti-thumb.webp",
-    "kind": "car",
-    "title": "Volkswagen Golf GTI G60, 18. ADAC Stormarn Classic, Zarpen (TR257275).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Golf_GTI_G60,_18._ADAC_Stormarn_Classic,_Zarpen_(TR257275).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:VOLKSWAGEN_e-GOLF_(Mk7,_Typ_5G)_China_(3).jpg",
+    "hero": "store/img/bikes/volkswagen-e-golf-hero.webp"
   },
   "volkswagen|id.4": {
     "image": "store/img/bikes/volkswagen-id-4.webp",
     "thumb": "store/img/bikes/volkswagen-id-4-thumb.webp",
     "kind": "car",
-    "title": "2020 Volkswagen ID.4 Pro (Netherlands) front view.jpg",
-    "author": "Dennis Elzinga",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_ID.4_Pro_(Netherlands)_front_view.jpg"
+    "title": "VOLKSWAGEN ID.4 CROZZ China (3).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:VOLKSWAGEN_ID.4_CROZZ_China_(3).jpg",
+    "hero": "store/img/bikes/volkswagen-id-4-hero.webp"
   },
   "volkswagen|id.buzz": {
     "image": "store/img/bikes/volkswagen-id-buzz.webp",
     "thumb": "store/img/bikes/volkswagen-id-buzz-thumb.webp",
     "kind": "car",
-    "title": "Volkswagen ID. Buzz 1X7A6256.jpg",
+    "title": "Volkswagen ID. Buzz 1X7A6263.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_ID._Buzz_1X7A6256.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_ID._Buzz_1X7A6263.jpg",
+    "hero": "store/img/bikes/volkswagen-id-buzz-hero.webp"
   },
   "volkswagen|jetta": {
     "image": "store/img/bikes/volkswagen-jetta.webp",
@@ -13370,7 +13311,8 @@
     "title": "2022 Volkswagen Jetta VII 1X7A0154.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Volkswagen_Jetta_VII_1X7A0154.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Volkswagen_Jetta_VII_1X7A0154.jpg",
+    "hero": "store/img/bikes/volkswagen-jetta-hero.webp"
   },
   "volkswagen|passat": {
     "image": "store/img/bikes/volkswagen-passat.webp",
@@ -13379,25 +13321,18 @@
     "title": "Volkswagen Passat Variant R-Line, GIMS 2019, Le Grand-Saconnex (GIMS0226).jpg",
     "author": "Matti Blume",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Passat_Variant_R-Line,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0226).jpg"
-  },
-  "volkswagen|taos": {
-    "image": "store/img/bikes/volkswagen-taos.webp",
-    "thumb": "store/img/bikes/volkswagen-taos-thumb.webp",
-    "kind": "car",
-    "title": "2022 Volkswagen Taos 1.5T SE in Cornflower Blue, front left.jpg",
-    "author": "Mr.choppers",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Volkswagen_Taos_1.5T_SE_in_Cornflower_Blue,_front_left.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Passat_Variant_R-Line,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0226).jpg",
+    "hero": "store/img/bikes/volkswagen-passat-hero.webp"
   },
   "volkswagen|tiguan": {
     "image": "store/img/bikes/volkswagen-tiguan.webp",
     "thumb": "store/img/bikes/volkswagen-tiguan-thumb.webp",
     "kind": "car",
-    "title": "Volkswagen Tiguan III IAA 2023 1X7A0489.jpg",
+    "title": "Volkswagen Tiguan III 1X7A2497.jpg",
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IAA_2023_1X7A0489.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_1X7A2497.jpg",
+    "hero": "store/img/bikes/volkswagen-tiguan-hero.webp"
   },
   "volvo|ex30": {
     "image": "store/img/bikes/volvo-ex30.webp",
@@ -13406,7 +13341,8 @@
     "title": "Volvo EX30 Auto Zuerich 2023 1X7A0954.jpg",
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX30_Auto_Zuerich_2023_1X7A0954.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX30_Auto_Zuerich_2023_1X7A0954.jpg",
+    "hero": "store/img/bikes/volvo-ex30-hero.webp"
   },
   "volvo|ex40": {
     "image": "store/img/bikes/volvo-ex40.webp",
@@ -13415,7 +13351,8 @@
     "title": "Volvo EX40, Auto 2024, Zurich (PANA0988).jpg",
     "author": "Matti Blume",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX40,_Auto_2024,_Zurich_(PANA0988).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX40,_Auto_2024,_Zurich_(PANA0988).jpg",
+    "hero": "store/img/bikes/volvo-ex40-hero.webp"
   },
   "volvo|ex90": {
     "image": "store/img/bikes/volvo-ex90.webp",
@@ -13424,79 +13361,68 @@
     "title": "Volvo EX90 autoMOBIL Tübingen 2025 DSC 2740.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX90_autoMOBIL_T%C3%BCbingen_2025_DSC_2740.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX90_autoMOBIL_T%C3%BCbingen_2025_DSC_2740.jpg",
+    "hero": "store/img/bikes/volvo-ex90-hero.webp"
   },
   "volvo|s60": {
     "image": "store/img/bikes/volvo-s60.webp",
     "thumb": "store/img/bikes/volvo-s60-thumb.webp",
     "kind": "car",
-    "title": "Volvo S60 2013.jpg",
-    "author": "Arild Vågen",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_S60_2013.jpg"
+    "title": "VOLVO S60 THIRD GENERATION China (3).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:VOLVO_S60_THIRD_GENERATION_China_(3).jpg",
+    "hero": "store/img/bikes/volvo-s60-hero.webp"
   },
   "volvo|s90": {
     "image": "store/img/bikes/volvo-s90.webp",
     "thumb": "store/img/bikes/volvo-s90-thumb.webp",
     "kind": "car",
-    "title": "Volvo S90 - przód (MSP16).jpg",
-    "author": "Jakub \"Flyz1\" Maciejewski",
+    "title": "VOLVO S90 China (7).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_S90_-_prz%C3%B3d_(MSP16).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:VOLVO_S90_China_(7).jpg",
+    "hero": "store/img/bikes/volvo-s90-hero.webp"
   },
   "volvo|v60": {
     "image": "store/img/bikes/volvo-v60.webp",
     "thumb": "store/img/bikes/volvo-v60-thumb.webp",
     "kind": "car",
-    "title": "Volvo V60 Genf 2018.jpg",
-    "author": "Alexander Migl",
+    "title": "Volvo V60 September 2017 01.jpg",
+    "author": "Arild Vågen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V60_Genf_2018.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V60_September_2017_01.jpg",
+    "hero": "store/img/bikes/volvo-v60-hero.webp"
   },
   "volvo|v90": {
     "image": "store/img/bikes/volvo-v90.webp",
     "thumb": "store/img/bikes/volvo-v90-thumb.webp",
     "kind": "car",
-    "title": "Volvo V90 - przód (MSP16).jpg",
-    "author": "Jakub \"Flyz1\" Maciejewski",
+    "title": "Volvo V90 - Leichenwagen (valo139).jpg",
+    "author": "Valo139",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V90_-_prz%C3%B3d_(MSP16).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V90_-_Leichenwagen_(valo139).jpg",
+    "hero": "store/img/bikes/volvo-v90-hero.webp"
   },
   "volvo|v90-cross-country": {
     "image": "store/img/bikes/volvo-v90-cross-country.webp",
     "thumb": "store/img/bikes/volvo-v90-cross-country-thumb.webp",
     "kind": "car",
-    "title": "Volvo V90 Cross Country - prawy przód (MSP17).jpg",
-    "author": "Jakub \"flyz1\" Maciejewski",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V90_Cross_Country_-_prawy_prz%C3%B3d_(MSP17).jpg"
-  },
-  "volvo|xc60": {
-    "image": "store/img/bikes/volvo-xc60.webp",
-    "thumb": "store/img/bikes/volvo-xc60-thumb.webp",
-    "kind": "car",
-    "title": "2026 Volvo XC60 (SPA) DSC 2675.jpg",
-    "author": "Alexander Migl",
+    "title": "VOLVO V90 CROSS COUNTRY China.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Volvo_XC60_(SPA)_DSC_2675.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:VOLVO_V90_CROSS_COUNTRY_China.jpg",
+    "hero": "store/img/bikes/volvo-v90-cross-country-hero.webp"
   },
   "volvo|xc90": {
     "image": "store/img/bikes/volvo-xc90.webp",
     "thumb": "store/img/bikes/volvo-xc90-thumb.webp",
     "kind": "car",
-    "title": "2025 Volvo XC90 II DSC 7420.jpg",
-    "author": "Alexander Migl",
+    "title": "VOLVO XC90 II China.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Volvo_XC90_II_DSC_7420.jpg"
-  },
-  "wagoneer|wagoneer": {
-    "image": "store/img/bikes/wagoneer-wagoneer.webp",
-    "thumb": "store/img/bikes/wagoneer-wagoneer-thumb.webp",
-    "kind": "car",
-    "title": "1964 Jeep Grand Wagoneer (12670036305).jpg",
-    "author": "Sicnag",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1964_Jeep_Grand_Wagoneer_(12670036305).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:VOLVO_XC90_II_China.jpg",
+    "hero": "store/img/bikes/volvo-xc90-hero.webp"
   },
   "yamaha|aerox": {
     "image": "store/img/bikes/yamaha-aerox.webp",

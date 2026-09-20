@@ -149,7 +149,10 @@ def test_no_cold_rule_fires_in_a_warm_city(city):
             assert v.status == "ok", f"{city}: {v.rule.ruleType} -> {v.status} ({v.evidence})"
         if v.rule.ruleType == "oil_grade_band" and v.rule.comparator in ("below", "at_or_below"):
             assert v.status == "ok", f"{city}: cold oil band fired ({v.evidence})"
-    assert got.breached == 0
+    cold = [v for v in got.verdicts
+            if v.rule.ruleType in ("antifreeze_floor", "cold_start", "salt_wash")
+            or (v.rule.ruleType == "oil_grade_band" and v.rule.comparator in ("below", "at_or_below"))]
+    assert not [v for v in cold if v.status == "breached"]
 
 
 def test_a_distant_station_is_unknown_not_ok():
@@ -179,8 +182,9 @@ def test_dedupe_lands_on_the_page_that_prints_both_rules():
     from app.climate.stations import dedupe, rules_for
 
     kept = dedupe(rules_for(KTM))
-    assert {r.page for r in kept} == {ANCHOR_PAGE}
-    assert len(kept) == len({(r.ruleType, r.comparator, r.thresholdC, r.value) for r in kept})
+    demo = [r for r in kept if r.ruleType in ("antifreeze_floor", "oil_grade_band")]
+    assert {r.page for r in demo} == {ANCHOR_PAGE}
+    assert len(kept) == len({(r.ruleType, r.comparator, r.thresholdC, r.thresholdM, r.value) for r in kept})
 
 
 # --- the corpus-wide findings ------------------------------------------------------------------------

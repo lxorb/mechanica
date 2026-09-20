@@ -37,8 +37,10 @@ def station_at(lat: float, lon: float) -> StationClimate | None:
 
 
 def station_named(query: str) -> StationClimate | None:
+    """A typed name resolves to the station itself, so there is no distance to report - `km` stays
+    null rather than claiming 0.0 km, which would read as a measurement it is not."""
     row = by_name(query)
-    return station_model(row, 0.0) if row else None
+    return station_model(row, None) if row else None
 
 
 def fit(manual_id: str, lat: float, lon: float, bike_id: str | None = None) -> ClimateFit | None:

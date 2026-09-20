@@ -1,0 +1,1 @@
+[{"id": "df3ae4c6dcbb", "manualId": "yamaha-yz450f-2025-eu-om", "ruleType": "cold_start", "name": "Avoid charging the battery at low temperatures", "comparator": "below", "thresholdC": 0.0, "value": "charging", "page": 140, "quote": "Avoid charging the battery at high tempera- tures of 65 °C (149 °F) or more or low tem- peratures under 0 °C (32 °F).", "source": "model"}]

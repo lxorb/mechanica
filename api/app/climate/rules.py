@@ -21,8 +21,10 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import threading
 import time
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -319,22 +321,24 @@ class CostMeter:
         return self.refresh() >= self.cap
 
 
-def pass_b(candidate: dict, cache: dict, meter: CostMeter) -> ClimateRule | None:
+def pass_b(candidate: dict, cache: dict, meter: CostMeter, lock=None) -> ClimateRule | None:
     """One cheap structured call per candidate window. Cached by sha256(window) so a rerun is free."""
     from .. import llm
 
     key = hashlib.sha256(f'{candidate["ruleType"]}|{candidate["window"]}'.encode()).hexdigest()
     hit = cache.get(key)
     if hit is None:
-        if meter.exhausted():
-            raise BudgetReached(meter.spent)
         out = llm.structured(
             EXTRACT_ROUTE, EXTRACT_MODEL, ExtractedRule, SYSTEM,
             f'rule type: {candidate["ruleType"]}\npage: {candidate["page"]}\n'
             f'clause:\n{candidate["window"]}',
         )
         hit = out.model_dump()
-        cache[key] = hit
+        if lock is not None:
+            with lock:
+                cache[key] = hit
+        else:
+            cache[key] = hit
     if not hit.get("applies") or not hit.get("quote"):
         return None
     value = hit.get("value") or (f'{hit["thresholdC"]:g} °C' if hit.get("thresholdC") is not None else "more often")
@@ -376,8 +380,13 @@ def cache_path() -> Path:
 
 
 def build(use_model: bool = False, only: str | None = None, budget: float = 15.0,
-          log: Callable[..., None] = print) -> dict:
-    """Write api/data/climate/rules/{manualId}.json and rules_report.json."""
+          threads: int = 12, log: Callable[..., None] = print) -> dict:
+    """Write api/data/climate/rules/{manualId}.json and rules_report.json.
+
+    Phase 1 is pass A over every page, which costs nothing. Phase 2 sends only the candidate
+    windows pass A could not parse to the model, in parallel, under a hard USD cap. Phase 3 grounds
+    everything from either phase and writes the files.
+    """
     store = get_store()
     ids = [only] if only else manual_ids(store)
     types = tuple(LABELS) if use_model else DETERMINISTIC
@@ -388,10 +397,15 @@ def build(use_model: bool = False, only: str | None = None, budget: float = 15.0
     started = time.time()
 
     report = {"manuals": 0, "withRules": 0, "rules": 0, "rulesDropped": 0, "pages": 0,
-              "candidates": 0, "modelRules": 0, "byType": {}, "usd": 0.0, "budget": budget,
-              "budgetReached": False, "model": EXTRACT_MODEL if use_model else None,
-              "perManual": {}}
-    stopped = False
+              "candidates": 0, "modelCalls": 0, "modelRules": 0, "byType": {}, "usd": 0.0,
+              "budget": budget, "budgetReached": False,
+              "model": EXTRACT_MODEL if use_model else None, "perManual": {}}
+
+    per_manual: dict[str, list[ClimateRule]] = {}
+    dropped_by: dict[str, int] = {}
+    text_by: dict[str, dict[int, str]] = {}
+    windows: list[dict] = []
+
     for i, manual_id in enumerate(ids):
         try:
             pages = store.pages(manual_id)
@@ -402,7 +416,6 @@ def build(use_model: bool = False, only: str | None = None, budget: float = 15.0
         report["pages"] += len(pages)
         rules: list[ClimateRule] = []
         dropped = 0
-        windows: list[dict] = []
         for page in pages:
             got, cands = pass_a(manual_id, page.page, page.text or "", types)
             for rule in got:
@@ -411,27 +424,55 @@ def build(use_model: bool = False, only: str | None = None, budget: float = 15.0
                 else:
                     dropped += 1
             windows.extend(cands)
-        report["candidates"] += len(windows)
-        if use_model and not stopped:
-            by_page = {p.page: (p.text or "") for p in pages}
-            for cand in windows:
-                try:
-                    rule = pass_b(cand, cache, meter)
-                except BudgetReached as exc:
-                    log(f"budget cap reached at ${exc.spent:.2f} - stopping pass B")
-                    report["budgetReached"] = True
-                    stopped = True
-                    break
-                except Exception as exc:
-                    log(f"  {manual_id} p.{cand['page']}: {type(exc).__name__}: {exc}")
-                    continue
-                if rule is None:
-                    continue
-                if grounded(rule.quote, by_page.get(rule.page, "")):
-                    rules.append(rule)
-                    report["modelRules"] += 1
-                else:
-                    dropped += 1
+        per_manual[manual_id] = rules
+        dropped_by[manual_id] = dropped
+        if use_model:
+            text_by[manual_id] = {p.page: (p.text or "") for p in pages}
+        if (i + 1) % 100 == 0:
+            log(f"  pass A {i + 1}/{len(ids)} manuals, {sum(len(v) for v in per_manual.values())} rules, "
+                f"{len(windows)} candidate windows")
+
+    report["candidates"] = len(windows)
+
+    if use_model and windows:
+        log(f"pass B: {len(windows)} candidate windows, {threads} threads, cap ${budget:.2f}")
+        lock = threading.Lock()
+        stop = threading.Event()
+
+        def work(cand: dict):
+            if stop.is_set():
+                return None
+            try:
+                with lock:
+                    if meter.exhausted():
+                        stop.set()
+                        return None
+                rule = pass_b(cand, cache, meter, lock=lock)
+            except BudgetReached:
+                stop.set()
+                return None
+            except Exception as exc:
+                log(f"  {cand['manualId']} p.{cand['page']}: {type(exc).__name__}: {exc}")
+                return None
+            return rule
+
+        with ThreadPoolExecutor(max_workers=threads) as pool:
+            produced = list(pool.map(work, windows))
+        report["modelCalls"] = sum(1 for r in produced if r is not None)
+        if stop.is_set():
+            report["budgetReached"] = True
+            log(f"budget cap reached at ${meter.refresh():.2f} - pass B stopped early")
+        for rule in produced:
+            if rule is None:
+                continue
+            if grounded(rule.quote, text_by.get(rule.manualId, {}).get(rule.page, "")):
+                per_manual.setdefault(rule.manualId, []).append(rule)
+                report["modelRules"] += 1
+            else:
+                dropped_by[rule.manualId] = dropped_by.get(rule.manualId, 0) + 1
+        cache_path().write_text(json.dumps(cache), encoding="utf-8")
+
+    for manual_id, rules in per_manual.items():
         seen: set[str] = set()
         unique = [r for r in rules if not (r.id in seen or seen.add(r.id))]
         if unique:
@@ -440,15 +481,11 @@ def build(use_model: bool = False, only: str | None = None, budget: float = 15.0
                 json.dumps([r.model_dump(exclude_none=True) for r in unique], ensure_ascii=False),
                 encoding="utf-8")
         report["rules"] += len(unique)
-        report["rulesDropped"] += dropped
+        report["rulesDropped"] += dropped_by.get(manual_id, 0)
         for r in unique:
             report["byType"][r.ruleType] = report["byType"].get(r.ruleType, 0) + 1
-        report["perManual"][manual_id] = {"rules": len(unique), "dropped": dropped}
-        if (i + 1) % 100 == 0:
-            log(f"  {i + 1}/{len(ids)} manuals, {report['rules']} rules, {report['rulesDropped']} dropped")
+        report["perManual"][manual_id] = {"rules": len(unique), "dropped": dropped_by.get(manual_id, 0)}
 
-    if use_model:
-        cache_path().write_text(json.dumps(cache), encoding="utf-8")
     report["usd"] = round(meter.refresh(), 4)
     report["seconds"] = round(time.time() - started, 1)
     (climate_dir() / "rules_report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")

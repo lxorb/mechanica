@@ -40,6 +40,7 @@ def station(response: Response, lat: float | None = None, lon: float | None = No
 @router.post("/fit", response_model=ClimateFit)
 def climate_fit(req: FitRequest, response: Response):
     lat, lon = req.lat, req.lon
+    named = None
     if req.place:
         named = station_named(req.place)
         if named is None:
@@ -57,7 +58,10 @@ def climate_fit(req: FitRequest, response: Response):
             _fits.clear()
         _fits[key] = hit
     response.headers["Cache-Control"] = CACHE
-    return hit.model_copy(update={"bikeId": req.bikeId or hit.bikeId})
+    out = hit.model_copy(update={"bikeId": req.bikeId or hit.bikeId})
+    if named is not None:  # typed name: the station IS the answer, so report no distance
+        out = out.model_copy(update={"station": out.station.model_copy(update={"km": None})})
+    return out
 
 
 @router.get("/rules/{manual_id}", response_model=list[ClimateRule])
