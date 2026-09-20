@@ -2,14 +2,14 @@
  * Catalog data helpers for ttm.js — bundle expansion, aliases, and the search index schedule.
  * Owner: adapter agent. No network here: ttm.js fetches, this module only shapes.
  *
- * Why a bundle: GET /catalog is 17.8k rows / 2.5 MB. We cannot ship that next to the app,
- * so web/store/ttm-catalog.json ships the *grouped* form (one row per make+model, 312 KB)
- * and we expand it back here. Ids are rebuilt with the same slug the API uses, so an
- * offline bike id is byte-identical to the online one (17801 of 17803 live ids; the 2
- * misses are the API's own duplicate rows for BMW R 12 G/S 2025 and BMW R 12 2024).
+ * Why a bundle: GET /catalog is 27.4k rows / 4.6 MB. We cannot ship that next to the app,
+ * so web/store/ttm-catalog.json ships the *grouped* form (one row per make+model, 593 KB
+ * raw / 84 KB gzip) and we expand it back here. Ids are rebuilt with the same slug the API
+ * uses, so an offline vehicle id is byte-identical to the online one (27421 of 27423; the
+ * 2 misses are the catalog's own duplicate rows for BMW R 12 G/S 2025 and BMW R 12 2024).
  *
- * Why the index is scheduled: search.js buildIndex over 17.8k bikes costs ~250-400 ms and
- * ~90-125 MB (measured in node). Boot must not pay that before first paint, so it runs on
+ * Why the index is scheduled: search.js buildIndex over 27.4k vehicles costs ~400-600 ms
+ * and ~150-200 MB (measured in node). Boot must not pay that before first paint, so it runs on
  * an idle callback and findBikes() forces it if a keystroke arrives first.
  */
 
@@ -59,11 +59,16 @@ export function aliasesOf(make, model) {
   return [...out];
 }
 
-/** Add `aliases` (and nothing else) to API bike rows, in place. */
+/**
+ * Add `aliases` and a normalised `kind` to API rows, in place. The API sends kind null for
+ * motorcycles; screens (viewer3d, vehicle-type) only ever test for "car", but spelling it
+ * out means `bike.kind` reads the same online and offline.
+ */
 export function decorate(bikes) {
   for (const b of bikes) {
     if (!b || typeof b !== "object") continue;
     if (!Array.isArray(b.aliases)) b.aliases = aliasesOf(b.make, b.model);
+    b.kind = b.kind === "car" ? "car" : "motorcycle";
   }
   return bikes;
 }
@@ -87,15 +92,20 @@ function marketOf(packed, year) {
 
 /**
  * web/store/ttm-catalog.json -> Bike[] with aliases.
- * Row: [make, model, years, manuals, market, ids?, urls?] — see web/tools/catalog.mjs.
+ * Row: [make, model, years, manuals, market, extra?] where extra is {i:ids, o:[years], k:1}
+ * — see web/tools/catalog.mjs. `ondemand` is a flag, not a URL: /manuals/ensure resolves the
+ * PDF server-side from the bikeId, and bundling 13k URLs would cost 1.4 MB.
  */
 export function expandBundle(bundle) {
   const rows = bundle && Array.isArray(bundle.rows) ? bundle.rows : [];
   const out = [];
   const seen = new Set();
   for (const row of rows) {
-    const [make, model, years, manuals, market, ids, urls] = row;
+    const [make, model, years, manuals, market, extra] = row;
     const aliases = aliasesOf(make, model);
+    const ids = extra?.i;
+    const ondemand = extra?.o ? new Set(extra.o) : null;
+    const kind = extra?.k ? "car" : "motorcycle";
     for (const year of yearsOf(years)) {
       const id = (ids && ids[year]) || bikeId(make, model, year);
       if (seen.has(id)) continue;
@@ -105,9 +115,11 @@ export function expandBundle(bundle) {
         make,
         model,
         year,
+        kind,
         market: marketOf(market, year),
         manualId: (manuals && manuals[year]) || null,
-        manualUrl: (urls && urls[year]) || null,
+        manualUrl: null,
+        ondemand: ondemand ? ondemand.has(year) : false,
         aliases,
       });
     }

@@ -6,7 +6,7 @@
  * backing at boot — `loadCatalog()` probes `${apiBase()}/health` with a 2.5 s timeout and
  * either (a) runs REMOTE against our FastAPI, or (b) runs LOCAL by delegating every
  * query.js-shaped call to ./query.js and merging the bundled roster on top so Identify
- * still searches 17.8k bikes offline. app.js only awaits `loadCatalog()` and publishes
+ * still searches all 27k vehicles offline. app.js only awaits `loadCatalog()` and publishes
  * `window.Q`; it never branches on which store won. query.js itself is untouched, so
  * ask.js (which imports pageTextUrl from it) keeps working.
  *
@@ -22,16 +22,16 @@
  * (app.js awaits it before importing screens). part(id) in REMOTE mode resolves against
  * whatever manuals this session has loaded, so call partsFor()/manual() first.
  *
- * Roster: the bundled web/store/ttm-catalog.json paints first (312 KB, ~150 ms) and
- * GET /catalog (2.4 MB, 1.5-4 s) refreshes it in the background, firing a window
+ * Roster: the bundled web/store/ttm-catalog.json paints first (593 KB raw / 84 KB gzip,
+ * 27.4k vehicles incl. 4.3k cars) and GET /catalog (4.6 MB) refreshes it in the background, firing a window
  * "ttm:catalog" event if it actually changed anything. window.TTM_CATALOG = "api" waits
  * for the API instead. Duplicate rows (same make+model+year, two ids — the seeded one
  * with the manual and the registry slug without) are merged, keeping the row that has the
  * manual; the other id stays in `idAliases` and resolves through bike().
  *
  * Mapping of our backend (api/app/models.py) onto the Mechanica model the screens use:
- *   Bike    -> bike     {id, make, model, year, market, aliases[], manualId|null, manualUrl?,
- *                        idAliases[], thumb:null, image:null}
+ *   Bike    -> bike     {id, make, model, year, market, kind:"motorcycle"|"car", aliases[],
+ *                        manualId|null, manualUrl?, ondemand?, idAliases[], thumb, image}
  *   Manual  -> manual   {id, bikeId, bikeIds[], title, kind:"owner", publisher, file (PDF url),
  *                        pages, pagesDir:null, toc[{title,page,level}], outline, sections, parts,
  *                        systems[], jobs[]}
@@ -266,11 +266,12 @@ function mergeDuplicates(bikes) {
       by.set(key, b);
       continue;
     }
-    const rank = (x) => (x.manualId ? 2 : x.manualUrl ? 1 : 0);
+    const rank = (x) => (x.manualId ? 2 : x.manualUrl || x.ondemand ? 1 : 0);
     const [win, lose] = rank(b) > rank(seen) ? [b, seen] : [seen, b];
     win.idAliases = [...new Set([...(win.idAliases ?? []), ...(lose.idAliases ?? []), lose.id])];
     if (!win.manualId && lose.manualId) win.manualId = lose.manualId;
     if (!win.manualUrl && lose.manualUrl) win.manualUrl = lose.manualUrl;
+    if (!win.ondemand && lose.ondemand) win.ondemand = true;
     by.set(key, win);
   }
   return [...by.values()];
@@ -370,9 +371,8 @@ async function applyImages(bikes) {
 }
 
 /**
- * GET /catalog is 2.4 MB and measured 1.5-4 s off the Azure container, which is dead time
- * in front of the Identify screen. The bundled roster expands to the same 17.8k ids in
- * ~150 ms, so it renders first and /catalog refreshes it in the background — the API stays
+ * GET /catalog is 4.6 MB and measured seconds off the Azure container, which is dead time
+ * in front of the Identify screen. The bundled roster expands to the same ids in ~300 ms, so it renders first and /catalog refreshes it in the background — the API stays
  * the source of truth within the session, it just no longer blocks the first screen.
  * Set window.TTM_CATALOG = "api" to skip the bundle and wait for the API instead.
  */
@@ -404,7 +404,7 @@ async function refreshRoster() {
   if (!Array.isArray(bikes) || !bikes.length) return;
   const stale = bikes.some((b) => {
     const known = bikeIndex.get(b.id);
-    return !known || (b.manualId && !known.manualId) || (b.manualUrl && !known.manualUrl);
+    return !known || (b.manualId && !known.manualId) || (b.manualUrl && !known.manualUrl && !known.ondemand);
   });
   if (!stale) return;
   const next = mergeDuplicates(decorate(bikes));
@@ -412,6 +412,7 @@ async function refreshRoster() {
     const known = bikeIndex.get(b.id);
     if (known?.manualId && !b.manualId) b.manualId = known.manualId; // keep what ingest added
     if (known?.manualUrl && !b.manualUrl) b.manualUrl = known.manualUrl;
+    if (known?.ondemand && !b.manualUrl) b.ondemand = true;
   }
   indexBikes(await applyImages(next));
   scheduleIndex(roster);
@@ -425,13 +426,14 @@ async function bootLocal(url, collectionUrl) {
   } catch {
     local = local ?? null;
   }
-  const known = local?.bikes?.() ?? [];
+  const known = decorate(local?.bikes?.() ?? []); // query.js rows predate `kind`
   const seen = new Set(known.map((b) => b.id));
   const extra = [];
   for (const b of await loadBundle()) {
     if (seen.has(b.id)) continue;
-    // Offline the bundled manualId points at a manual only the API can serve.
-    extra.push({ ...b, manualId: local?.manual?.(b.manualId) ? b.manualId : null });
+    // Offline the bundled manualId points at a manual only the API can serve, and
+    // nothing can be indexed on demand either, so both states collapse to "none".
+    extra.push({ ...b, manualId: local?.manual?.(b.manualId) ? b.manualId : null, ondemand: false });
   }
   indexBikes(await applyImages(mergeDuplicates([...known, ...extra])));
   manualSummaries = local?.catalog?.()?.manuals ?? [];
@@ -486,12 +488,17 @@ export function hasManual(id) {
   return !!(b && b.manualId);
 }
 
-/** "ready" = indexed now, "ondemand" = a free official PDF we can index on request. */
+/**
+ * "ready" = indexed now, "ondemand" = a free official PDF exists that /manuals/ensure can
+ * index on request, "none" = nothing known. The API sends the URL in `manualUrl`; the
+ * bundled roster only carries the `ondemand` flag, because ensure() resolves the PDF from
+ * the bikeId anyway and 13k URLs would be 1.4 MB of bundle.
+ */
 export function manualState(input) {
   const b = typeof input === "object" && input ? input : bike(input);
   if (!b) return "none";
   if (b.manualId) return "ready";
-  if (b.manualUrl) return "ondemand";
+  if (b.manualUrl || b.ondemand) return "ondemand";
   return "none";
 }
 
@@ -1323,7 +1330,7 @@ export async function ensureManual(bikeId, onProgress, opts) {
   const hit = bike(bikeId);
   if (!hit) return null;
   if (hit.manualId) return manual(hit.manualId);
-  if (!hit.manualUrl && mode !== "remote") return null; // nothing to index, and no API anyway
+  if (manualState(hit) === "none" && mode !== "remote") return null; // nothing to index, no API anyway
   if (mode !== "remote") throw new Error("indexing a manual needs the API");
   const title = `${hit.make} ${hit.model} ${hit.year}`;
   const vin = typeof opts?.vin === "string" && opts.vin.trim() ? opts.vin.trim().toUpperCase() : null;
