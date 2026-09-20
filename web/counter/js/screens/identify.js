@@ -46,6 +46,7 @@ let vinMode = false;
 let vinHit = null;
 let vinTimer = 0;
 let vinGen = 0;
+let subOn = false;
 
 let photoUrl = null;
 let photoRows = [];
@@ -330,7 +331,9 @@ function bindRow(rec, row, index, text) {
   const years = row.years;
   const off = !Q.online();
   for (let i = 0; i < years.length; i++) {
-    const entry = years[i];
+    const raw = years[i];
+    const state = raw.state === "none" && row.rank < RANK.none ? "ondemand" : raw.state;
+    const entry = state === raw.state ? raw : { ...raw, state };
     const chip = chipOf(rec, i);
     chip.hidden = false;
     chip.entry = entry;
@@ -397,6 +400,36 @@ function refreshList(keepScroll) {
   shownRows = computeRows();
   if (!keepScroll && window.scrollY > 0) window.scrollTo(0, 0);
   paintWindow();
+  signalSub();
+}
+
+/** VIN, a photo or a typed query are sub-states: the header back button pops them. */
+function signalSub() {
+  const on = vinMode || Boolean(photoUrl) || textQ.trim().length > 0;
+  if (on === subOn) return;
+  subOn = on;
+  emit("substate", { screen: "identify", on });
+}
+
+function backOut() {
+  if (vinMode) {
+    setVinMode(false);
+    return true;
+  }
+  if (photoUrl) {
+    clearPhoto();
+    paintChips();
+    refreshList();
+    return true;
+  }
+  if (textQ.trim()) {
+    textQ = "";
+    queryEl.value = "";
+    paintChips();
+    refreshList();
+    return true;
+  }
+  return false;
 }
 
 function scheduleSearch() {
@@ -469,8 +502,9 @@ function pick(bike, mState) {
   if (!bike) return;
   if (mState === "none" && !Q.online()) return;
   remember(bike);
-  set({ bikeId: bike.id });
-  emit("bike", { bikeId: bike.id });
+  const vin = vinMode && vinHit && vinHit.id === bike.id && vinQ.length >= VIN_MIN ? vinQ : null;
+  set({ bikeId: bike.id, vin });
+  emit("bike", { bikeId: bike.id, vin });
   go("confirm");
 }
 
@@ -544,7 +578,7 @@ function setVinMode(on) {
   vinMode = on;
   searchEl.classList.toggle("is-vin", on);
   vinBtn.setAttribute("aria-pressed", String(on));
-  queryEl.setAttribute("placeholder", on ? "VIN" : "Honda CB650R");
+  queryEl.setAttribute("placeholder", on ? "VIN" : "Search here");
   queryEl.setAttribute("enterkeyhint", on ? "done" : "go");
   queryEl.setAttribute("autocapitalize", on ? "characters" : "off");
   queryEl.setAttribute("maxlength", on ? String(VIN_MAX) : "120");
@@ -709,7 +743,7 @@ registerScreen("identify", {
       spellcheck: "false",
       enterkeyhint: "go",
       maxlength: "120",
-      placeholder: "Honda CB650R",
+      placeholder: "Search here",
     });
 
     vinBtn = el("button", {
@@ -780,6 +814,10 @@ registerScreen("identify", {
       paintChips();
       refreshList(true);
     });
+  },
+
+  back() {
+    return backOut();
   },
 
   leave() {
