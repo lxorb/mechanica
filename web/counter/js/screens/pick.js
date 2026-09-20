@@ -293,7 +293,11 @@ function startViewer() {
   stopViewer();
   viewerBike = key;
   try {
-    viewer = mountViewer(els.stageViewer, key, { onSelect: onPartTap });
+    viewer = mountViewer(els.stageViewer, key, {
+      onSelect: onPartTap,
+      // the browser took the WebGL context away: a fresh mount is the only way back
+      onContextLost: () => { stopViewer(); startViewer(); },
+    });
   } catch {
     viewer = null;
   }

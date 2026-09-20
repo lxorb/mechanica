@@ -1472,20 +1472,28 @@ export function mount(host, model, opts = {}) {
   host.setAttribute("data-model", key);
   const loader = progressRing(host);
 
-  boot().then((scene) => {
-    if (dead) { scene.dispose(); return; }
-    live = scene;
-    if (wish.exploded) scene.explode(true, wish.spacing, true);
-    if (wish.part) scene.highlight(wish.part);
-    if (wish.focused && wish.part) scene.focus(wish.part);
-    if (wish.xray) scene.xray(true);
-    if (typeof opts.onReady === "function") opts.onReady(api);
-  }).catch((error) => {
-    loader.fail(() => fetchModel());
-    host.setAttribute("data-viewer3d", "error");
-    if (typeof opts.onError === "function") opts.onError(error);
-    else console.warn("viewer3d: could not start", error);
-  });
+  let attempts = 0;
+  start();
+
+  /** Boot the scene. A failed import (CDN hiccup, no WebGL context) leaves a ring that retries on tap. */
+  function start() {
+    host.setAttribute("data-viewer3d", "loading");
+    boot().then((scene) => {
+      if (dead) { scene.dispose(); return; }
+      live = scene;
+      if (wish.exploded) scene.explode(true, wish.spacing, true);
+      if (wish.part) scene.highlight(wish.part);
+      if (wish.focused && wish.part) scene.focus(wish.part);
+      if (wish.xray) scene.xray(true);
+      if (typeof opts.onReady === "function") opts.onReady(api);
+    }).catch((error) => {
+      if (dead) return;
+      loader.fail(() => start());
+      host.setAttribute("data-viewer3d", "error");
+      if (typeof opts.onError === "function") opts.onError(error);
+      else console.warn("viewer3d: could not start", error);
+    });
+  }
 
   /**
    * The environment comes up first — cached across mounts, and it reads as the garage the bike is
@@ -1518,9 +1526,16 @@ export function mount(host, model, opts = {}) {
       if (typeof opts.onUpgrade === "function") opts.onUpgrade(api);
     }).catch((error) => {
       if (dead) return;
-      loader.fail(() => fetchModel(scene));
+      const message = error && error.message ? error.message : String(error);
+      attempts += 1;
+      if (attempts < 3 && !/404|empty model/.test(message)) {
+        // a dropped connection or a CDN hiccup: try again on our own before asking for a tap
+        setTimeout(() => { if (!dead) fetchModel(scene); }, 800 * attempts);
+        return;
+      }
+      loader.fail(() => { attempts = 0; fetchModel(scene); });
       host.setAttribute("data-viewer3d", "error");
-      console.warn(`viewer3d: ${key} did not load (${url})`, error && error.message ? error.message : error);
+      console.warn(`viewer3d: ${key} did not load (${url})`, message);
       if (typeof opts.onError === "function") opts.onError(error);
     });
   }
@@ -1590,6 +1605,19 @@ function createScene(THREE, host, initialModel, opts) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.className = "viewer3d-canvas";
   host.append(renderer.domElement);
+
+  // Chrome drops the oldest WebGL context past ~16 live ones and can lose one under memory
+  // pressure; the canvas then stays blank for good. Tell the owner so it can remount.
+  let contextLost = false;
+  const onContextLost = (event) => {
+    event.preventDefault();
+    if (disposed || contextLost) return;
+    contextLost = true;
+    host.setAttribute("data-viewer3d", "error");
+    if (typeof opts.onContextLost === "function") opts.onContextLost();
+    else console.warn("viewer3d: WebGL context lost");
+  };
+  renderer.domElement.addEventListener("webglcontextlost", onContextLost);
 
   const camera = new THREE.PerspectiveCamera(34, 1, 0.01, 100);
   scene.add(model.root);
@@ -2257,7 +2285,12 @@ function createScene(THREE, host, initialModel, opts) {
     shadow.material.dispose();
     environment.dispose();
     disposeModel(model);
+    disposed = true;
+    renderer.domElement.removeEventListener("webglcontextlost", onContextLost);
     renderer.dispose();
+    // release the GPU context now rather than when the canvas is garbage-collected: Chrome
+    // allows about 16 live contexts and the Pick screen mounts one per vehicle
+    try { renderer.forceContextLoss(); } catch { /* already lost */ }
     renderer.domElement.remove();
     host.removeAttribute("data-part");
     host.removeAttribute("data-exploded");
