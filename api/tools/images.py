@@ -610,6 +610,11 @@ def fix_bands(rps: float) -> int:
 
 # --------------------------------------------------------------------- the gate
 
+# The hero is the large view. 960/q78 rather than 1280/q82: the bigger pair
+# cost 388 MB across the catalogue for detail no tile ever shows.
+HERO_PX = 960
+HERO_Q = 78
+
 SCORE_MODEL = "gpt-5.6-luna"
 # A motorcycle reads best in profile; a car reads best turned three-quarter front.
 VIEWS = {
@@ -706,15 +711,15 @@ def spent() -> float:
 
 
 def renditions(raw: bytes, key_slug: str) -> tuple:
-    """hero 1280/q82, tile 640/q80, thumb 160/q75. Returns (paths, bytes)."""
+    """hero HERO_PX/HERO_Q, tile 640/q80, thumb 160/q75. Returns (paths, bytes)."""
     hero = IMG_DIR / f"{key_slug}-hero.webp"
     dest = IMG_DIR / f"{key_slug}.webp"
     thumb = IMG_DIR / f"{key_slug}-thumb.webp"
     with Image.open(io.BytesIO(raw)) as src:
         im = debordered(flatten(src))
         big = im.copy()
-        big.thumbnail((1280, 1280), Image.LANCZOS)
-        big.save(hero, "WEBP", quality=82, method=6)
+        big.thumbnail((HERO_PX, HERO_PX), Image.LANCZOS)
+        big.save(hero, "WEBP", quality=HERO_Q, method=6)
     size = convert(raw, dest, thumb)
     return (hero, dest, thumb), hero.stat().st_size + size[0] + size[1]
 
@@ -928,6 +933,52 @@ def run_gate(args) -> int:
     return 0
 
 
+def rehero() -> tuple:
+    """Re-encode every stored hero at HERO_PX/HERO_Q, in place.
+
+    Downscaling the hero already on disk, rather than re-fetching it: the
+    resample low-passes the first encode, so the second one starts from a
+    cleaner signal than the file it replaces. Tile and thumb are untouched.
+    """
+    entries = json.loads(OUT_JSON.read_text(encoding="utf-8"))
+    before = after = done = skipped = 0
+    for key in sorted(entries):
+        rel = entries[key].get("hero")
+        if not rel:
+            continue
+        path = ROOT / "web" / rel
+        if not path.exists():
+            skipped += 1
+            continue
+        was = path.stat().st_size
+        try:
+            with Image.open(path) as src:
+                im = src.convert("RGB")
+                if max(im.size) <= HERO_PX:
+                    before += was
+                    after += was
+                    skipped += 1
+                    continue
+                im.thumbnail((HERO_PX, HERO_PX), Image.LANCZOS)
+                im.save(path, "WEBP", quality=HERO_Q, method=6)
+        except Exception as exc:  # noqa: BLE001
+            print(f"  ! {key}: {exc!r}", flush=True)
+            skipped += 1
+            continue
+        before += was
+        after += path.stat().st_size
+        done += 1
+        if done % 200 == 0:
+            print(f"  .. {done} heroes, {before / 1e6:.0f} -> {after / 1e6:.0f} MB", flush=True)
+    write_outputs(entries)
+    print(
+        f"{done} heroes re-rendered at {HERO_PX}px/q{HERO_Q}, {skipped} skipped: "
+        f"{before / 1e6:.1f} MB -> {after / 1e6:.1f} MB",
+        flush=True,
+    )
+    return done, before, after
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -943,6 +994,11 @@ def main() -> int:
         "--fix-bands",
         action="store_true",
         help="re-render stored tiles that have flat stripes down an edge, then exit",
+    )
+    ap.add_argument(
+        "--rehero",
+        action="store_true",
+        help=f"re-encode every stored hero at {HERO_PX}px/q{HERO_Q}, then exit",
     )
     ap.add_argument(
         "--gate",
@@ -965,6 +1021,9 @@ def main() -> int:
     )
     args = ap.parse_args()
 
+    if args.rehero:
+        rehero()
+        return 0
     if args.fix_bands:
         fix_bands(args.rps)
         return 0
