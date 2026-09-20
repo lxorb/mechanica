@@ -13,6 +13,7 @@ class Bike(BaseModel):
     market: str
     manualId: str | None = None
     manualUrl: str | None = None
+    kind: str | None = None  # "motorcycle" | "car"; None = motorcycle
     vins: list[str] | None = None
     cues: list[str] | None = None
 
@@ -122,7 +123,8 @@ class RegistryEntry(BaseModel):
     price: str | None = None
     site: str
     title: str | None = None
-    needsUa: str | None = None  # fetcher hint: "googlebot" or "browser" when the host rejects the default UA
+    needsUa: str | None = None
+    kind: str | None = None  # "motorcycle" | "car"  # fetcher hint: "googlebot" or "browser" when the host rejects the default UA
 
 
 class AskRequest(BaseModel):
