@@ -295,6 +295,29 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
   if (net && NETS[net]) await client.send("Network.emulateNetworkConditions", { offline: false, ...NETS[net] });
   if (cpu > 1) await client.send("Emulation.setCPUThrottlingRate", { rate: cpu });
 
+  /**
+   * A service worker re-issues the page's requests from its own target, which the page's
+   * session does not throttle: without this, every warm load quietly measures a 4 MB/s phone
+   * on unlimited wifi. Attached as the workers appear, for as long as this page lives.
+   */
+  const workers = new Set();
+  const throttleWorkers = async () => {
+    for (const target of browser.targets()) {
+      if (target.type() !== "service_worker" || workers.has(target)) continue;
+      workers.add(target);
+      try {
+        const sess = await target.createCDPSession();
+        if (net && NETS[net]) await sess.send("Network.emulateNetworkConditions", { offline: Boolean(offline), ...NETS[net] });
+        else if (offline) await sess.send("Network.emulateNetworkConditions", { offline: true, latency: 0, downloadThroughput: 0, uploadThroughput: 0 });
+        if (cpu > 1) await sess.send("Emulation.setCPUThrottlingRate", { rate: cpu });
+      } catch {
+        /* the worker was gone before we got to it: nothing to throttle */
+      }
+    }
+  };
+  await throttleWorkers();
+  const watching = setInterval(() => { throttleWorkers().catch(() => {}); }, 500);
+
   const started = Date.now();
   // Not awaited before the probe: on slow 3G `load` is minutes behind the first usable card,
   // and the numbers that matter are taken from inside the page anyway.
@@ -313,6 +336,17 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
       ttfb: Math.round(nav.responseStart || 0),
       dcl: Math.round(nav.domContentLoadedEventEnd || 0),
       load: Math.round(nav.loadEventEnd || 0),
+      // What the page itself asked for, the way DevTools counts it: a service worker re-issues
+      // the page's requests from its own context, where the page's CDP session cannot see them,
+      // so Network.loadingFinished alone undercounts every warm load.
+      res: performance.getEntriesByType("resource").map((e) => ({
+        url: e.name,
+        kind: e.initiatorType,
+        bytes: e.transferSize || 0,
+        body: e.encodedBodySize || 0,
+        end: Math.round(e.responseEnd),
+      })),
+      docBytes: (performance.getEntriesByType("navigation")[0] || {}).transferSize || 0,
       cards: document.querySelectorAll(".id-card").length,
       store: document.documentElement.dataset.store || "",
       sw: Boolean(navigator.serviceWorker && navigator.serviceWorker.controller),
@@ -323,24 +357,26 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
     };
   }).catch(() => ({ marks: {}, long: [] }));
 
-  const firstAt = Math.min(...[...wire.values()].map((r) => r.start ?? Infinity));
   const cardAt = Math.round(perf.marks.card ?? 0);
-  out.landing = { requests: 0, bytes: 0 };
-  for (const row of wire.values()) {
+  out.landing = { requests: 1, bytes: perf.docBytes || 0 };
+  out.requests = 1;
+  out.bytes = perf.docBytes || 0;
+  out.byType.html = perf.docBytes || 0;
+  for (const row of perf.res || []) {
     out.requests += 1;
-    const bytes = row.bytes || 0;
-    out.bytes += bytes;
-    const k = row.cache ? "cache" : row.kind;
-    out.byType[k] = (out.byType[k] || 0) + bytes;
-    if (row.cache) out.cached += 1;
-    if (row.sw) out.sw += 1;
+    out.bytes += row.bytes;
+    const k = row.bytes === 0 && row.body > 0 ? "cache/sw" : kind(row.kind, row.url);
+    out.byType[k] = (out.byType[k] || 0) + row.bytes;
+    if (row.bytes === 0 && row.body > 0) out.cached += 1;
     // What the landing actually cost: everything that had finished by the time the first card
     // was on screen. The rest (photo index, manuals, the worker filling its cache) is after.
-    if (row.end && cardAt && (row.end - firstAt) * 1000 <= cardAt) {
+    if (cardAt && row.end <= cardAt) {
       out.landing.requests += 1;
-      out.landing.bytes += bytes;
+      out.landing.bytes += row.bytes;
     }
   }
+  // The worker's own fetches, which the page's timeline never sees, kept separately.
+  for (const row of wire.values()) if (row.sw) out.sw += 1;
   const first = Math.min(...[...wire.values()].map((r) => r.start ?? Infinity));
   out.slow = [...wire.values()]
     .filter((r) => r.start && r.end)
@@ -362,6 +398,7 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
   out.longTotal = (perf.long || []).reduce((sum, e) => sum + e.dur, 0);
   out.longCount = (perf.long || []).length;
   out.phases = perf.phases || [];
+  clearInterval(watching);
   await page.close();
   return out;
 }
@@ -416,12 +453,20 @@ async function main() {
 
   const puppeteer = await import(`file:///${String(PUPPETEER).replace(/\\/g, "/")}`);
   const rows = [];
-  const plan = [
-    { id: "fast4g-cold", net: "fast4g", cpu, warm: false },
-    { id: "fast4g-warm", net: "fast4g", cpu, warm: true },
-    { id: "slow3g-cold", net: "slow3g", cpu, warm: false },
-    { id: "nothrottle-cold", net: "none", cpu: 1, warm: false },
-  ].filter((r) => !only || r.id === only);
+  // Every row three times if you ask for it: the API behind /api is a container in another
+  // hemisphere and one run of anything is a coin toss.
+  const runs = Math.max(1, Number(value("runs", 1)));
+  const plan = [];
+  for (let n = 0; n < runs; n++) {
+    for (const row of [
+      { id: "fast4g-cold", net: "fast4g", cpu, warm: false },
+      { id: "fast4g-warm", net: "fast4g", cpu, warm: true },
+      { id: "slow3g-cold", net: "slow3g", cpu, warm: false },
+      { id: "nothrottle-cold", net: "none", cpu: 1, warm: false },
+    ]) {
+      if (!only || row.id === only) plan.push(runs > 1 ? { ...row, tag: `.${n + 1}` } : row);
+    }
+  }
 
   for (const row of plan) {
     const browser = await puppeteer.launch({
@@ -438,7 +483,7 @@ async function main() {
         await new Promise((r) => setTimeout(r, 6000));
         await first.close();
       }
-      const res = await measure(browser, { url: origin, net: row.net, cpu: row.cpu, timeout, label: `${live ? "live" : "local"} ${row.id}` });
+      const res = await measure(browser, { url: origin, net: row.net, cpu: row.cpu, timeout, label: `${live ? "live" : "local"} ${row.id}${row.tag || ""}` });
       rows.push(res);
       console.log(line(res));
 

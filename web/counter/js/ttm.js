@@ -61,8 +61,8 @@
  * apiBase, online, storeMode.
  */
 
-import { highlight, search as searchIndex, tokens, fold } from "./search.js";
-import { aliasesOf, bikeId as slugId, decorate, expandBundle, forceIndex, scheduleIndex } from "./index-data.js";
+import { buildIndex, highlight, search as searchIndex, tokens, fold } from "./search.js";
+import { aliasesOf, bikeId as slugId, decorate, expandBundle, forceIndex } from "./index-data.js";
 
 export { highlight, aliasesOf };
 
@@ -202,8 +202,17 @@ export function apiBase() {
   return wanted.replace(/\/+$/, "") || "/api";
 }
 
+/**
+ * Has the API answered. While the /health probe is still in the air and there is no roster yet
+ * — the first two seconds of a cold load — this answers "assume so" if the device believes it
+ * has a network, because the one caller in that window is Identify's /catalog/suggest top-up:
+ * the API can name a bike in a few hundred milliseconds, and it is the only answer there is
+ * before the 27.4k-row search index has been built. A suggest that fails costs nothing and is
+ * swallowed. From the moment the store has a roster this is the probe's answer and nothing else.
+ */
 export function online() {
-  return healthy;
+  if (healthy) return true;
+  return mode === null && !roster.length && globalThis.navigator?.onLine !== false;
 }
 
 /** "remote" | "local" | null before loadCatalog(). Debug aid, not part of query.js. */
@@ -309,13 +318,35 @@ function mergeDuplicates(bikes) {
   return [...by.values()];
 }
 
+/**
+ * slugId() normalises, lowercases and re-punctuates "make model year" — five regexes and two
+ * string copies. Over 27.4k rows that was a fifth of a second of the boot for a result that
+ * only ever differs in the year: the same make+model gives the same prefix, and the year is
+ * already digits. So the prefix is computed once per model and checked against the real thing
+ * on that model's first row; a model where the shortcut disagrees (a name that ends in
+ * punctuation, say) falls back to the full call for every one of its rows.
+ */
+const slugPrefix = new Map();
+
+function fastSlug(b) {
+  const key = `${b.make}|${b.model}`;
+  let prefix = slugPrefix.get(key);
+  if (prefix === undefined) {
+    const full = slugId(b.make, b.model, b.year);
+    prefix = full.slice(0, full.length - String(b.year).length - 1);
+    slugPrefix.set(key, `${prefix}-${b.year}` === full ? prefix : null);
+    return full;
+  }
+  return prefix === null ? slugId(b.make, b.model, b.year) : `${prefix}-${b.year}`;
+}
+
 function indexBikes(bikes) {
   const next = new Map();
   for (const b of bikes) {
     next.set(b.id, b);
     // The registry slug is a second id the API can hand back (identify, ingest), even when
     // this row carries the hand-written one. Index it so either string resolves.
-    const slug = slugId(b.make, b.model, b.year);
+    const slug = fastSlug(b);
     if (slug && slug !== b.id) {
       if (!b.idAliases?.includes(slug)) b.idAliases = [...(b.idAliases ?? []), slug];
     }
@@ -325,11 +356,96 @@ function indexBikes(bikes) {
   roster = bikes;
 }
 
+/**
+ * "The roster changed under you." Identify listens for this and repaints — it is how the
+ * screen can be on the glass before the roster is, and how the photos can arrive after the
+ * cards. Fired on the first roster, on the image pass and on any later adoption.
+ */
+function announce() {
+  catalogView = null;
+  globalThis.dispatchEvent?.(new CustomEvent("ttm:catalog", { detail: { bikes: roster.length } }));
+}
+
+/**
+ * search.js indexes 27.4k vehicles into trigram sets: 1.2 s on a laptop, and 4.9 s of blocked
+ * main thread on a mid-range phone (measured, fast 4G + 4x CPU). It runs on the first idle slot
+ * after the roster lands and repaints the screen when it is there; findBikes() decides whether
+ * a keystroke that beat it has to wait for it.
+ */
+let indexed = false;
+let indexing = false;
+
+/**
+ * One row per model — the newest year of each make+model. 3.5k of the 27.4k rows, and for a
+ * typed query the same answer: Identify groups hits by make+model anyway and takes the card's
+ * year span from the roster, not from the index. So this is the whole search, eight times
+ * cheaper, and the full index behind it only sharpens ranking and year-word matching.
+ */
+function leadRows(bikes) {
+  const best = new Map();
+  for (const b of bikes) {
+    const key = `${b.make}|${b.model}`;
+    const seen = best.get(key);
+    if (!seen || (Number(b.year) || 0) > (Number(seen.year) || 0)) best.set(key, b);
+  }
+  return [...best.values()];
+}
+
+/**
+ * A task boundary after the roster is on the glass, then a model-deep index, then the full one,
+ * with a repaint after each.
+ *
+ * The boundary is not a delay for its own sake: Identify asks /catalog/suggest as soon as the
+ * local list looks thin, and that answer is on the wire while this runs. Letting it land first
+ * is the difference between a card in half a second and a card in five — and if it does not
+ * come, the index is four milliseconds behind where it would otherwise have been.
+ */
+function indexSoon() {
+  const bikes = roster;
+  indexed = false;
+  indexing = true;
+  sliceYield()
+    .then(() => {
+      if (roster !== bikes || bikes.length < 8000) return null;
+      const lead = phase("index-lead-rows", () => leadRows(bikes));
+      if (lead.length > bikes.length * 0.6) return null;
+      phase("index-lead", () => buildIndex(lead));
+      announce();
+      return sliceYield();
+    })
+    .then(() => {
+      if (roster !== bikes) return;
+      phase("index", () => forceIndex(bikes));
+      indexed = true;
+      indexing = false;
+      announce();
+    });
+}
+
+/**
+ * The bundle is 682 KB of JSON that expands into 27.4k objects. Parsing it is one task we
+ * cannot split, but expanding it is 3.5k independent model rows — so it goes in slices with a
+ * yield between them, and the search field, the first paint and the API's own answer are not
+ * held behind it. expandBundle dedupes within a call; the cross-slice case is the same
+ * make+model+year twice, which mergeDuplicates folds anyway.
+ *
+ * No Accept header: index.html preloads this file, and a preload only answers a request that
+ * asks for it the same way.
+ */
 async function loadBundle() {
   try {
-    const res = await fetch(BUNDLE_URL, { headers: { Accept: "application/json" } });
+    const res = await fetch(BUNDLE_URL);
     if (!res.ok) return [];
-    return expandBundle(await res.json());
+    const raw = await res.json();
+    const rows = raw && Array.isArray(raw.rows) ? raw.rows : [];
+    if (rows.length <= 600) return expandBundle(raw);
+    const out = [];
+    for (let i = 0; i < rows.length; i += 600) {
+      const slice = expandBundle({ ...raw, rows: rows.slice(i, i + 600) });
+      for (const bike of slice) out.push(bike);
+      if (i + 600 < rows.length) await sliceYield();
+    }
+    return out;
   } catch {
     return [];
   }
@@ -477,55 +593,147 @@ async function loadImageMap() {
   return { ...(second ?? {}), ...(first ?? {}) };
 }
 
-async function applyImages(bikes) {
-  if (imageMap === undefined) {
-    imageMap = null;
-    imageMap = await loadImageMap();
+/**
+ * 1.7 MB of photo index, 160 KB of it on the wire, and a ladder walk per row: nothing on the
+ * first screen needs any of it until a card is on the glass, and a card is drawn from whatever
+ * `image`/`thumb`/`hero` say at that moment. So the two files are fetched next to the roster
+ * (not after it) and applied off the critical path, and findBikes() paints whatever it is
+ * about to hand back the moment the map is in.
+ */
+let imagesPromise = null;
+
+function startImages() {
+  if (!imagesPromise) {
+    imagesPromise = phase("images-fetch", () => loadImageMap()).then((map) => {
+      imageMap = map ?? null;
+      return imageMap;
+    });
   }
-  const map = imageMap;
-  for (const b of bikes) {
-    if (b.image || b.thumb) continue; // query.js rows ship their own art
-    const hit = map ? lookupImage(map, b.make, b.model) : null;
-    b.image = hit?.image ?? null;
-    b.thumb = hit?.thumb ?? null;
-    b.hero = hit?.hero ?? null;
-    if (hit) b.credit = { title: hit.title, author: hit.author, license: hit.license, source: hit.source };
+  return imagesPromise;
+}
+
+/** make|model -> the photo entry, so a 27.4k-row pass costs one ladder walk per model. */
+const artMemo = new Map();
+
+function artFor(b) {
+  if (!imageMap) return null; // nothing is memoised before the map is in, or the miss would stick
+  const key = `${b.make}|${b.model}`;
+  let hit = artMemo.get(key);
+  if (hit === undefined) {
+    hit = lookupImage(imageMap, b.make, b.model);
+    artMemo.set(key, hit);
   }
-  return bikes;
+  return hit;
+}
+
+function paintOne(b) {
+  if (b.image || b.thumb) return; // query.js rows ship their own art, and so does a painted row
+  const hit = artFor(b);
+  b.image = hit?.image ?? null;
+  b.thumb = hit?.thumb ?? null;
+  b.hero = hit?.hero ?? null;
+  if (hit) b.credit = { title: hit.title, author: hit.author, license: hit.license, source: hit.source };
+}
+
+/** The rows a screen is about to draw, now, synchronously. No-op until the map has landed. */
+function paintArt(rows) {
+  if (!imageMap || !rows || !rows.length) return rows;
+  for (const row of rows) if (row && row.make) paintOne(row);
+  return rows;
+}
+
+/** Hand the thread back between slices: scheduler.yield() where it exists, a task boundary else. */
+function sliceYield() {
+  const s = globalThis.scheduler;
+  if (s && typeof s.yield === "function") return s.yield();
+  return new Promise((done) => setTimeout(done, 0));
 }
 
 /**
- * GET /catalog is 4.6 MB and measured seconds off the Azure container, which is dead time
- * in front of the Identify screen. The bundled roster expands to the same ids in ~300 ms, so it renders first and /catalog refreshes it in the background — the API stays
- * the source of truth within the session, it just no longer blocks the first screen.
- * Set window.TTM_CATALOG = "api" to skip the bundle and wait for the API instead.
+ * The whole roster, in 4k-row slices with a yield between them, so the photos landing never
+ * costs the search field a dropped keystroke. Repaints the screen once at the end.
+ */
+async function applyImagesLater() {
+  await startImages();
+  const bikes = roster;
+  if (!bikes.length) return;
+  await phase("images-apply", async () => {
+    for (let i = 0; i < bikes.length; i += 4000) {
+      const end = Math.min(i + 4000, bikes.length);
+      for (let j = i; j < end; j++) paintOne(bikes[j]);
+      if (end < bikes.length) await sliceYield();
+    }
+  });
+  if (roster === bikes) announce();
+}
+
+/** A roster that arrived later (the API's, query.js's) still gets the pass it was promised. */
+function repaintArt() {
+  applyImagesLater().catch(() => {});
+}
+
+/**
+ * GET /catalog is 4.6 MB and measured seconds off the Azure container, which is dead time in
+ * front of the Identify screen. The bundled roster expands to the same ids in ~300 ms, so it
+ * renders first and the API only fills in what it has added since.
+ *
+ * What it has added is always the same thing: a manual that has been indexed since the bundle
+ * was built. GET /manuals is 85 KB (12 KB gzipped) and says exactly that — id plus bikeIds —
+ * and it was already being fetched in the background for catalog().manuals. So the refresh now
+ * rides on it, and the 4.6 MB download (measured at 9.5 s of a cold fast-4G load, with the
+ * screens queued behind it) is gone. Set window.TTM_CATALOG = "api" to boot off /catalog
+ * instead, which is also what happens if the bundle file is missing.
  */
 async function bootRemote() {
-  const bundled = globalThis.TTM_CATALOG === "api" ? [] : await phase("bundle", () => loadBundle());
+  const bundled = globalThis.TTM_CATALOG === "api" ? [] : await phase("bundle", () => bundleRows());
   if (bundled.length) {
+    // A yield between the two: they are half a second of work each on a throttled phone, and
+    // gluing them into one task is how a page stops answering the key that was just pressed.
     const merged = phase("merge", () => mergeDuplicates(bundled));
-    const withArt = await phase("images", () => applyImages(merged));
-    phase("index-ids", () => indexBikes(withArt));
-    scheduleIndex(roster);
-    refreshRoster().catch(() => {});
+    await sliceYield();
+    phase("index-ids", () => indexBikes(merged));
   } else {
     const bikes = (await quiet("/catalog", { ms: CATALOG_MS }, [])) ?? [];
-    indexBikes(await applyImages(mergeDuplicates(decorate(bikes))));
-    scheduleIndex(roster);
+    phase("index-ids", () => indexBikes(mergeDuplicates(decorate(bikes))));
   }
-  // GET /manuals lists every indexed document and measured 5 s; nothing on the first
-  // screen needs it, so it lands in the background and catalog() picks it up when it does.
-  quiet("/manuals", { ms: CATALOG_MS }, []).then((rows) => {
-    if (Array.isArray(rows) && rows.length) manualSummaries = rows;
-  });
+  indexSoon();
+  // Both of these repaint the screen when they land, and neither is allowed to hold the
+  // roster — which is on the glass the moment this function returns.
+  repaintArt();
+  adoptManuals().catch(() => {});
 }
 
 /**
- * Adopt GET /catalog when it carries bikes or manuals the bundle does not. Fires
- * window "ttm:catalog" so a screen that has already painted a roster can repaint.
- * Rerun `node web/tools/catalog.mjs --api <base>` to make this a no-op again.
+ * GET /manuals, the cheap half of the old refresh: every indexed document with the bikes it
+ * covers. A bundled row that has since been indexed flips from "ondemand" to "ready" here,
+ * which is the one thing the bundle can be wrong about. Fires window "ttm:catalog" when it
+ * actually changed something, so a screen that has already painted can repaint.
  */
-async function refreshRoster() {
+async function adoptManuals() {
+  const rows = await phase("manuals", () => quiet("/manuals", { ms: CATALOG_MS }, []));
+  if (!Array.isArray(rows) || !rows.length) return;
+  manualSummaries = rows;
+  let changed = 0;
+  for (const row of rows) {
+    for (const id of row.bikeIds ?? []) {
+      const b = bikeIndex.get(String(id));
+      if (b && !b.manualId) {
+        b.manualId = row.id;
+        changed += 1;
+      }
+    }
+  }
+  catalogView = null;
+  if (changed) announce();
+}
+
+/**
+ * Adopt GET /catalog when it carries bikes or manuals the roster does not. Not on the boot
+ * path any more — adoptManuals() covers the case that actually happens — but kept for
+ * TTM_CATALOG = "api" and for anyone who wants the full registry in this session:
+ * `Q.refreshRoster()` from the console.
+ */
+export async function refreshRoster() {
   const bikes = await phase("refresh-fetch", () => quiet("/catalog", { ms: CATALOG_MS }, null));
   if (!Array.isArray(bikes) || !bikes.length) return;
   const stale = bikes.some((b) => {
@@ -540,9 +748,10 @@ async function refreshRoster() {
     if (known?.manualUrl && !b.manualUrl) b.manualUrl = known.manualUrl;
     if (known?.ondemand && !b.manualUrl) b.ondemand = true;
   }
-  indexBikes(await phase("refresh-images", () => applyImages(next)));
-  scheduleIndex(roster);
-  globalThis.dispatchEvent?.(new CustomEvent("ttm:catalog", { detail: { bikes: roster.length } }));
+  indexBikes(next);
+  indexSoon();
+  repaintArt();
+  announce();
 }
 
 async function bootLocal(url, collectionUrl) {
@@ -555,19 +764,35 @@ async function bootLocal(url, collectionUrl) {
   const known = decorate(local?.bikes?.() ?? []); // query.js rows predate `kind`
   const seen = new Set(known.map((b) => b.id));
   const extra = [];
-  for (const b of await loadBundle()) {
+  for (const b of await bundleRows()) {
     if (seen.has(b.id)) continue;
     // Offline the bundled manualId points at a manual only the API can serve, and
     // nothing can be indexed on demand either, so both states collapse to "none".
     extra.push({ ...b, manualId: local?.manual?.(b.manualId) ? b.manualId : null, ondemand: false });
   }
-  indexBikes(await applyImages(mergeDuplicates([...known, ...extra])));
+  indexBikes(mergeDuplicates([...known, ...extra]));
   manualSummaries = local?.catalog?.()?.manuals ?? [];
-  scheduleIndex(roster);
+  indexSoon();
+  repaintArt();
+}
+
+/**
+ * The bundle and the photo index are the same two files in both modes and neither of them
+ * depends on the answer to /health, so both leave the gate with the probe rather than after
+ * it. On a cold fast-4G load that alone took half a second off the roster.
+ */
+let bundlePromise = null;
+
+function bundleRows() {
+  if (!bundlePromise) bundlePromise = loadBundle();
+  return bundlePromise;
 }
 
 export function loadCatalog(url, collectionUrl) {
   if (bootPromise) return bootPromise;
+  // The bundle only, not the photo index: 160 KB of photo index downloading next to it would
+  // be 160 KB the roster is waiting for. That one starts when the roster is on the glass.
+  if (globalThis.TTM_CATALOG !== "api") bundleRows();
   bootPromise = (async () => {
     const found = await phase("health", () => pickBase());
     if (found) {
@@ -580,6 +805,7 @@ export function loadCatalog(url, collectionUrl) {
       healthy = false;
       await bootLocal(url, collectionUrl);
     }
+    announce();
     return catalog();
   })().catch(() => {
     mode = mode ?? "local";
@@ -606,7 +832,11 @@ export function bikes() {
 
 export function bike(id) {
   if (id == null || id === "") return undefined;
-  return bikeIndex.get(String(id));
+  const found = bikeIndex.get(String(id));
+  // Confirm and Pick read one row and show its photo: paint that row, in case the full pass
+  // over the roster has not reached it yet.
+  if (found && imageMap) paintOne(found);
+  return found;
 }
 
 export function hasManual(id) {
@@ -630,8 +860,18 @@ export function manualState(input) {
 
 /** Forces the idle-scheduled index if the first keystroke beat it. Sync, like query.js. */
 export function findBikes(text, opts) {
-  forceIndex(roster);
-  return searchIndex(text, opts);
+  // Online, a keystroke that beats the index is not made to wait for it: Identify asks
+  // /catalog/suggest whenever the local list is thin and the API answers in a few hundred
+  // milliseconds, where building the index here would freeze the page for five seconds and
+  // then answer. The idle build is at most 2.5 s behind and repaints when it lands. Offline
+  // there is nothing else to ask, so the keystroke pays for the index.
+  if (!indexed && !indexing) {
+    phase("index-force", () => forceIndex(roster));
+    indexed = true;
+  }
+  // The photo index lands next to the roster, not inside it, so the rows this hands back are
+  // painted here: the first search gets its pictures even if the full pass has not run yet.
+  return paintArt(searchIndex(text, opts));
 }
 
 export function asset(path) {

@@ -1,0 +1,244 @@
+{
+  "origin": "http://127.0.0.1:61307/counter/",
+  "when": "2026-09-20T11:54:21.000Z",
+  "rows": [
+    {
+      "label": "local slow3g-cold",
+      "requests": 64,
+      "bytes": 199409,
+      "byType": {
+        "html": 1887,
+        "link": 30390,
+        "js": 37712,
+        "css": 2050,
+        "api": 311,
+        "other": 23018,
+        "json": 104041,
+        "cache/sw": 0
+      },
+      "cached": 38,
+      "sw": 39,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 55,
+        "bytes": 199409
+      },
+      "slow": [
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 2354,
+          "ms": 9393,
+          "kb": 1
+        },
+        {
+          "url": "/counter/manifest.webmanifest",
+          "at": 2407,
+          "ms": 7001,
+          "kb": 1
+        },
+        {
+          "url": "/counter/js/app.js",
+          "at": 2897,
+          "ms": 6420,
+          "kb": 3
+        },
+        {
+          "url": "/api/catalog",
+          "at": 26223,
+          "ms": 6371,
+          "kb": 0
+        },
+        {
+          "url": "/api/manuals",
+          "at": 26225,
+          "ms": 5999,
+          "kb": 0
+        },
+        {
+          "url": "/store/ttm-catalog.json",
+          "at": 17556,
+          "ms": 5139,
+          "kb": 102
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 2346,
+          "ms": 5019,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 2346,
+          "ms": 4960,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 2347,
+          "ms": 4941,
+          "kb": 2
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 2346,
+          "ms": 4835,
+          "kb": 1
+        }
+      ],
+      "wall": 49394,
+      "fcp": 9934,
+      "lcp": 49284,
+      "field": 45898,
+      "card": 47663,
+      "ttfb": 201,
+      "dcl": 15052,
+      "load": 15192,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 26245,
+          "dur": 5935,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 35496,
+          "dur": 5428,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 33430,
+          "dur": 2017,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 46136,
+          "dur": 1589,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 22790,
+          "dur": 1370,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 25064,
+          "dur": 1173,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 32605,
+          "dur": 819,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 45897,
+          "dur": 236,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9627,
+          "dur": 100,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 22703,
+          "dur": 82,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 24993,
+          "dur": 68,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 24561,
+          "dur": 54,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 18922,
+      "longCount": 13,
+      "phases": [
+        {
+          "name": "health",
+          "start": 15038,
+          "dur": 2522
+        },
+        {
+          "name": "bundle",
+          "start": 17561,
+          "dur": 6274
+        },
+        {
+          "name": "merge",
+          "start": 23835,
+          "dur": 319
+        },
+        {
+          "name": "images",
+          "start": 24154,
+          "dur": 1831
+        },
+        {
+          "name": "index-ids",
+          "start": 25985,
+          "dur": 241
+        },
+        {
+          "name": "refresh-fetch",
+          "start": 26228,
+          "dur": 7202
+        },
+        {
+          "name": "refresh-merge",
+          "start": 33431,
+          "dur": 808
+        },
+        {
+          "name": "refresh-images",
+          "start": 34321,
+          "dur": 860
+        }
+      ]
+    }
+  ]
+}

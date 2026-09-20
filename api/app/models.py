@@ -125,6 +125,8 @@ class RegistryEntry(BaseModel):
     site: str
     title: str | None = None
     needsUa: str | None = None  # fetcher hint: "googlebot" or "browser" when the host rejects the default UA
+    source: str | None = None  # where the document came from, when `url` is not the publisher's own file
+    rendered: bool | None = None  # True when `url` is our own print of the official online manual
     kind: str | None = None  # "motorcycle" | "car"; None = motorcycle
     docKind: str | None = None  # owner | service | quickstart | brochure | warranty | supplement | infotainment | spec (from url/title only)
 

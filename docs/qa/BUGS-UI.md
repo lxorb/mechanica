@@ -12,11 +12,22 @@ Surfaces read and driven: `counter/js/bus.js`, `theme.js`, `pdf.js`, `climate.js
 Harness: **`node web/tools/bughunt-ui.mjs`** — 13 checks, one per fixed bug, each failing on the
 code as it was. `--view desk|tab|phone`, `--only <fragment>`. It serves `web/` locally with
 `/api/*` proxied to the live worker (request bodies included, which `theme-shots.mjs` drops), and
-cuts the API off at the proxy to drive the error states.
+cuts the API off at the proxy to drive the error states. A fourteenth check is opt-in because it
+takes six minutes: `--only themes` walks all five themes through nine stops and asserts the theme
+holds, the console stays silent, the Conditions sheet's bottom edge is the viewport's, and `#cost`
+opens cold — theme-shots' two assertions plus the two this pass fixed that a contact sheet cannot
+see.
 
-    node web/tools/bughunt-ui.mjs            -> 13 passed, 0 failed
-    node docs/qa/book/book-shots.mjs         -> unchanged, green
-    node web/tools/theme-shots.mjs           -> unchanged, green
+    node web/tools/bughunt-ui.mjs                  -> 13 passed, 0 failed  (phone; desk the same)
+    node web/tools/bughunt-ui.mjs --only themes    -> 1 passed  (5 themes x 9 stops, 0 console errors)
+    node docs/qa/book/book-shots.mjs               -> 42 states, 1 flagged (the documented tablet
+                                                      harness artifact in docs/qa/book/REPORT.md)
+
+`web/tools/theme-shots.mjs` was run too and its assertions pass (`ok workshop/phone — 10 stops, 0
+console errors`); the run was abandoned because its twenty full-page WebGL captures were losing
+frames to `Page.captureScreenshot: Internal error` with ~37 other Chrome instances on the box. That
+is the swiftshader flakiness its own source comments describe, not a change from this pass — and it
+is why the theme walk above exists without captures.
 
 Screenshots: `docs/qa/ui-bugs/` — before/after for UI-01 (the Conditions slab over the reader) and
 UI-02 (the cold `#cost`). "Before" is produced by serving the single line that carried the bug as
@@ -177,7 +188,7 @@ the file stays dependency-free.
 
 ## Handoff — the exact repro, for the owner
 
-### UI-H1 — the search field waits on the whole catalog · med · `app.js` / `ttm.js`
+### UI-H1 — boot hangs on the catalog, and a slow one loses the mechanic's place · med · `app.js` / `ttm.js`
 **Repro** `emulateNetworkConditions` 400 kbit/s, 400 ms latency, cold cache, `/counter/`:
 first paint 3.6 s, and `.id-q` **never appeared within 40 s**. On a fast link the same walk has the
 field at 2.3 s. QA-FINAL's own number (Fast 4G + 4× CPU: 10.2 s) is the same effect, smaller.
@@ -187,6 +198,16 @@ field at 2.3 s. QA-FINAL's own number (Fast 4G + 4× CPU: 10.2 s) is the same ef
 field can exist and accept keystrokes before the roster does; an empty-handed Identify is a far
 better first frame than an empty page. Suggested shape: import the screens and `firstGo()` first,
 then `pickStore()`, then the `ttm:catalog` event identify.js already listens for.
+
+**Second symptom, same cause.** `revive()` needs the roster complete at the instant it runs
+(`if (!Q.bike(spot.bikeId)) return false`). `bootRemote()` resolves with an **empty** roster when
+the bundle fetch and `/catalog` both time out under load, and fills it a few seconds later — so a
+reload inside Book lands on **Identify** with the mechanic's place intact in `sessionStorage` and
+unused. Reproduced twice in a row on a contended box (roster 29,938 by the time it was read back,
+0 when `revive()` asked). One line of insurance: re-run `revive()` + `firstGo()` once on the
+`ttm:catalog` event when the first attempt found nothing, or await the roster before `revive()`.
+`web/tools/bughunt-ui.mjs`'s reload check retries once and names this case, so it is not confused
+with UI-05.
 
 ### UI-H2 — the 3D model is fetched and then aborted · low · `viewer3d.js`
 **Repro** enter Pick on `ktm-390-duke-2024` and watch the network: exactly one request each for

@@ -25,11 +25,10 @@
  * choose. `FFMPEG_VPX` is a second ffmpeg that does have libvpx (npm `ffmpeg-static`), used only
  * for the WebM; everything else runs on the ffmpeg already on PATH.
  *
- * Bitrate. Capture goes to a near-lossless H.264 intermediate that keeps up with 24 fps, and the
- * two deliverables are encoded from it: the .mp4 at a true 8 Mbps CBR (`nal-hrd=cbr`, which is
- * what actually guarantees a floor — `-minrate` alone does not make x264 pad), and the .webm at
- * VP9 constrained quality, which on screen content with a 3D stage in it lands well above the
- * 6 Mbps the submission asks for. Both numbers are measured back out of the files and printed.
+ * Bitrate. Capture goes to a near-lossless H.264 intermediate, and the two deliverables are
+ * encoded from it: the .mp4 at a true CBR above the 6 Mbps floor, and the .webm at VP9
+ * constrained quality. See TARGET_BPS for why only one of the two can be promised. Both numbers
+ * are measured back out of the finished files and printed, never assumed.
  *
  * Cold bike. Take 2 needs a vehicle with a free manual URL and no index yet; the first run
  * warms it forever. The list is re-read from the live catalog at record time and the first
@@ -37,7 +36,7 @@
  */
 
 import { mkdirSync, existsSync, readFileSync, writeFileSync, rmSync, statSync } from "node:fs";
-import { spawn, spawnSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -56,14 +55,32 @@ const W = 1280;
 const H = 720;
 const FPS = 24;
 const CAPTURE_CRF = 12;
-const TARGET_BPS = "8M";
+/**
+ * The submission asks for ≥ 6 Mbps. Only x264 can actually promise that: with `nal-hrd=cbr` it
+ * pads a quiet frame up to the rate, so the measured average lands just above the setting.
+ * libvpx has no equivalent in either VP8 or VP9 — measured, a `-b:v 6M -minrate 6M -maxrate 6M`
+ * VP8 encode of this capture came out at 0.8 Mbps — so the WebM is encoded for quality instead
+ * and its real bitrate is printed rather than claimed.
+ */
+const TARGET_BPS = "6500k";
+
+/** The ffmpeg on PATH: everything but the WebM. */
+const FFMPEG = process.env.FFMPEG_PATH || "ffmpeg";
+/** One with libvpx in it, for VP9. `npm i ffmpeg-static` (win32/x64 runs fine emulated here). */
+const FFMPEG_VPX = process.env.FFMPEG_VPX || `${
+  process.env.TTM_SCRATCH
+  || "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad"
+}/node_modules/ffmpeg-static/ffmpeg.exe`;
+
+/** `TTM_CAPTURE=png` for pixel-exact frames at a quarter of the frame rate. See startCapture(). */
+const SHOT_EXT = process.env.TTM_CAPTURE === "png" ? "png" : "jpg";
 
 const DRY = process.argv.includes("--dry");
 const KEEP_RAW = process.argv.includes("--keep-raw");
 const ONLY = process.argv.slice(2).filter((a) => /^[12]$/.test(a)).map(Number);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const ff = (args) => spawnSync("ffmpeg", args, { encoding: "utf8" });
+const ff = (args, bin = FFMPEG) => spawnSync(bin, args, { encoding: "utf8" });
 const secs = (n) => `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(Math.floor(n % 60)).padStart(2, "0")}`;
 
 /* ------------------------------------------------------------------ the take recorder */
@@ -282,7 +299,7 @@ async function takeOne(page, take) {
   await waited(
     "3D stage",
     page.waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
-      timeout: 40000,
+      timeout: 20000,
     }),
   );
   await dwell(3000);
@@ -314,7 +331,7 @@ async function takeOne(page, take) {
   await waited(
     "page 77 + marks",
     page.waitForFunction(() => document.querySelectorAll('.page-sheet[data-page="77"] .mark').length >= 2, {
-      timeout: 45000,
+      timeout: 22000,
     }),
   );
   await dwell(1300);
@@ -600,23 +617,117 @@ function probe(file) {
   }
 }
 
+/**
+ * Captures the tab straight off CDP, one PNG per frame on disk, then encodes them with ffmpeg's
+ * concat demuxer and each frame's real on-screen duration.
+ *
+ * Two things force this shape. CDP only emits a frame when something changed, so a four-second
+ * dwell produces one frame, not ninety-six — the timeline has to come from the frame timestamps,
+ * not from the frame count. And piping the PNGs into `image2pipe` (what puppeteer's own recorder
+ * does) corrupted the stream on this machine after a hundred-odd frames — ffmpeg reported
+ * `chunk too big` and dropped the rest — while the very same frames written to files decode
+ * perfectly. Files also make a failed take inspectable instead of gone.
+ */
+async function startCapture(page, file) {
+  const dir = join(SCRATCH, "demo-frames");
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  const client = await page.createCDPSession();
+
+  const shots = [];
+  let lastWall = Date.now();
+
+  client.on("Page.screencastFrame", (ev) => {
+    const ts = ev.metadata?.timestamp;
+    client.send("Page.screencastFrameAck", { sessionId: ev.sessionId }).catch(() => {});
+    if (ts === undefined) return;
+    const name = join(dir, `${String(shots.length).padStart(6, "0")}.${SHOT_EXT}`);
+    writeFileSync(name, Buffer.from(ev.data, "base64"));
+    shots.push({ name, ts });
+    lastWall = Date.now();
+  });
+
+  // JPEG by default, and not to save disk: a 720p PNG takes Chrome long enough to encode that
+  // the screencast only delivers four or five frames a second, which turns the 3D spin and the
+  // scrolls into a slideshow. At quality 92 the frames arrive three to four times faster and the
+  // artefacts are well under what the final re-encode would show anyway. TTM_CAPTURE=png to
+  // trade the motion back for pixel-exact stills.
+  await client.send("Page.startScreencast", {
+    format: SHOT_EXT === "png" ? "png" : "jpeg",
+    quality: 92,
+    maxWidth: W,
+    maxHeight: H,
+    everyNthFrame: 1,
+  });
+
+  return {
+    async stop() {
+      await client.send("Page.stopScreencast").catch(() => {});
+      await sleep(250);
+      await client.detach().catch(() => {});
+      if (shots.length < 2) {
+        console.log("  !! no frames captured");
+        return { frames: 0, seconds: 0 };
+      }
+      const tail = Math.max(1 / FPS, (Date.now() - lastWall) / 1000);
+      const lines = [];
+      for (let i = 0; i < shots.length; i++) {
+        const d = i + 1 < shots.length ? shots[i + 1].ts - shots[i].ts : tail;
+        lines.push(`file '${shots[i].name.replace(/\\/g, "/")}'`, `duration ${Math.max(1 / FPS, d).toFixed(4)}`);
+      }
+      // The concat demuxer ignores the last entry's duration unless the file is repeated.
+      lines.push(`file '${shots[shots.length - 1].name.replace(/\\/g, "/")}'`);
+      const list = join(SCRATCH, "demo-frames.txt");
+      writeFileSync(list, lines.join("\n"), "utf8");
+      const r = ff([
+        "-y", "-loglevel", "error",
+        "-f", "concat", "-safe", "0", "-i", list,
+        "-an", "-fps_mode", "cfr", "-r", String(FPS),
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", String(CAPTURE_CRF), "-pix_fmt", "yuv420p",
+        "-vf", `crop='min(${W},iw):min(${H},ih):0:0',pad=${W}:${H}:0:0`,
+        file,
+      ]);
+      if (r.status !== 0) console.log(`  !! capture encode: ${(r.stderr || "").slice(0, 300)}`);
+      const seconds = shots[shots.length - 1].ts - shots[0].ts + tail;
+      rmSync(dir, { recursive: true, force: true });
+      rmSync(list, { force: true });
+      return { frames: shots.length, seconds };
+    },
+  };
+}
+
+/**
+ * The two deliverables, from the capture. The mp4 is a true CBR — `nal-hrd=cbr` is what makes
+ * x264 pad a quiet frame up to the rate, and without it `-minrate` is ignored and a mostly-still
+ * screen encodes at under a megabit. VP9 has no equivalent, so the webm is constrained quality
+ * with a high ceiling and its real bitrate is measured afterwards.
+ */
 function encode(raw, webm, mp4) {
-  console.log("  encoding webm @ 8 Mbps…");
-  const a = ff([
-    "-y", "-loglevel", "error", "-i", raw,
-    "-c:v", "libvpx-vp9", "-b:v", TARGET_BPS, "-minrate", "6M", "-maxrate", "12M",
-    "-deadline", "good", "-cpu-used", "4", "-row-mt", "1", "-threads", "8",
-    "-pix_fmt", "yuv420p", "-r", String(FPS), "-an", webm,
-  ]);
-  if (a.status !== 0) console.log("  !! webm encode:", (a.stderr || "").slice(0, 300));
-  console.log("  encoding mp4 @ 8 Mbps…");
+  console.log(`  encoding mp4 @ ${TARGET_BPS} CBR…`);
   const b = ff([
     "-y", "-loglevel", "error", "-i", raw,
-    "-c:v", "libx264", "-b:v", TARGET_BPS, "-maxrate", "10M", "-bufsize", "16M",
-    "-preset", "medium", "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", String(FPS),
-    "-movflags", "+faststart", "-an", mp4,
+    "-c:v", "libx264", "-preset", "medium", "-profile:v", "high",
+    "-b:v", TARGET_BPS, "-minrate", TARGET_BPS, "-maxrate", TARGET_BPS, "-bufsize", "16M",
+    "-x264-params", "nal-hrd=cbr:force-cfr=1",
+    "-pix_fmt", "yuv420p", "-r", String(FPS), "-movflags", "+faststart", "-an", mp4,
   ]);
   if (b.status !== 0) console.log("  !! mp4 encode:", (b.stderr || "").slice(0, 300));
+
+  if (!existsSync(FFMPEG_VPX)) {
+    console.log(`  !! no libvpx ffmpeg at ${FFMPEG_VPX} — skipping the webm (npm i ffmpeg-static)`);
+    return;
+  }
+  console.log("  encoding webm (VP9)…");
+  const a = ff(
+    [
+      "-y", "-loglevel", "error", "-i", raw,
+      "-c:v", "libvpx-vp9", "-b:v", "12M", "-maxrate", "16M", "-crf", "8",
+      "-deadline", "good", "-cpu-used", "3", "-row-mt", "1", "-threads", "8",
+      "-pix_fmt", "yuv420p", "-r", String(FPS), "-an", webm,
+    ],
+    FFMPEG_VPX,
+  );
+  if (a.status !== 0) console.log("  !! webm encode:", (a.stderr || "").slice(0, 300));
 }
 
 /** Twelve labelled frames, 4x3, so a judge can see the whole take without playing it. */
@@ -736,22 +847,24 @@ async function record(which, fn) {
 
   const take = makeTake(which.name);
   let recorder = null;
-  const raw = join(SCRATCH, `${which.file}.raw.webm`);
+  const raw = join(SCRATCH, `${which.file}.capture.mp4`);
   let extra = null;
+  let capture = null;
   try {
     // The load is outside the take: nobody wants to watch a service worker boot.
     await page.goto(APP, { waitUntil: "load", timeout: 90000 });
     await page.waitForSelector(".id-q", { timeout: 90000 });
     await sleep(900);
     if (!DRY) {
-      recorder = await page.screencast({ path: raw, fps: FPS, quality: CAPTURE_CRF });
+      recorder = await startCapture(page, raw);
       await sleep(500);
     }
     extra = await fn(page, take);
   } finally {
-    if (recorder) await recorder.stop();
+    if (recorder) capture = await recorder.stop();
     await browser.close();
   }
+  if (capture) console.log(`  captured ${capture.frames} frames (${capture.seconds.toFixed(1)} s)`);
   if (errors.length) console.log(`  page errors: ${[...new Set(errors)].slice(0, 3).join(" | ")}`);
   return { take, raw, extra };
 }
@@ -797,7 +910,9 @@ async function main() {
     const info = probe(webm);
     const infoMp4 = probe(mp4);
     const sheet = join(OUT, `${which.file}-sheet.png`);
-    const n = await contactSheet(webm, take.beats, info ? info.duration : take.seconds, sheet);
+    // The sheet is cut from the mp4: seeking a VP9 file frame-accurately twelve times is slow,
+    // and the two files are the same pictures.
+    const n = await contactSheet(mp4, take.beats, infoMp4 ? infoMp4.duration : take.seconds, sheet);
     if (!KEEP_RAW) rmSync(raw, { force: true });
     console.log(
       `  -> ${webm}  ${info ? `${info.duration.toFixed(1)} s · ${(info.bitrate / 1e6).toFixed(1)} Mbps · ${(info.size / 1e6).toFixed(1)} MB` : "probe failed"}`,
@@ -810,27 +925,35 @@ async function main() {
   if (!DRY && report.length) writeShotlist(report);
 }
 
+/**
+ * Rewrites only the sections for the takes that were just recorded, so `demo-video.mjs 2` does
+ * not delete take 1's table. Sections are keyed by heading; the prose above `<!-- takes -->` is
+ * hand-editable and never regenerated once it exists.
+ */
 function writeShotlist(report) {
   const path = join(OUT, "SHOTLIST.md");
   const old = existsSync(path) ? readFileSync(path, "utf8") : "";
-  const kept = old.includes("<!-- takes -->") ? old.split("<!-- takes -->")[0] : "";
-  const out = [];
-  out.push(kept || header());
-  out.push("<!-- takes -->");
-  for (const r of report) {
-    const dur = r.info ? r.info.duration : r.take.seconds;
-    out.push(`\n## ${r.name}\n`);
-    out.push(
-      `\`${r.file}.webm\` — **${secs(dur)}**, ${r.info ? `${(r.info.bitrate / 1e6).toFixed(1)} Mbps, ${(r.info.size / 1e6).toFixed(1)} MB, ${r.info.w}×${r.info.h}` : ""}. ` +
-        `\`${r.file}.mp4\` is the same take, H.264${r.infoMp4 ? `, ${(r.infoMp4.bitrate / 1e6).toFixed(1)} Mbps` : ""}. ` +
-        `Contact sheet: \`${r.file}-sheet.png\`.\n`,
-    );
-    out.push("| time | beat | what is on screen |");
-    out.push("|---|---|---|");
-    for (const b of r.take.beats) out.push(`| **${secs(b.t)}** | ${b.title} | ${b.note} |`);
+  const [before, after] = old.includes("<!-- takes -->") ? old.split("<!-- takes -->") : ["", ""];
+  const existing = new Map();
+  for (const chunk of (after || "").split(/^## /m).slice(1)) {
+    existing.set(chunk.split("\n")[0].trim(), `## ${chunk.replace(/\s+$/, "")}`);
   }
-  out.push("");
-  writeFileSync(path, out.join("\n"), "utf8");
+  for (const r of report) {
+    const dur = r.infoMp4 ? r.infoMp4.duration : r.take.seconds;
+    const rows = [`## ${r.name}\n`];
+    rows.push(
+      `**${secs(dur)}** · ${r.infoMp4 ? `${r.infoMp4.w}×${r.infoMp4.h}` : `${W}×${H}`}, ${FPS} fps, no audio.\n` +
+        `\`${r.file}.webm\` (VP9${r.info ? `, ${(r.info.bitrate / 1e6).toFixed(1)} Mbps, ${(r.info.size / 1e6).toFixed(1)} MB` : ""}) · ` +
+        `\`${r.file}.mp4\` (H.264${r.infoMp4 ? `, ${(r.infoMp4.bitrate / 1e6).toFixed(1)} Mbps, ${(r.infoMp4.size / 1e6).toFixed(1)} MB` : ""}) · ` +
+        `\`${r.file}-sheet.png\` (${r.sheet} frames).\n`,
+    );
+    rows.push("| time | beat | what is on screen |");
+    rows.push("|---|---|---|");
+    for (const b of r.take.beats) rows.push(`| **${secs(b.t)}** | ${b.title} | ${b.note} |`);
+    existing.set(r.name, rows.join("\n"));
+  }
+  const body = [...existing.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([, v]) => v);
+  writeFileSync(path, `${before || header()}<!-- takes -->\n\n${body.join("\n\n")}\n`, "utf8");
   console.log(`\n-> ${path}`);
 }
 
@@ -838,7 +961,7 @@ function header() {
   return `# Demo video — shot list
 
 Two takes, recorded on the live site (https://mechanica.emilvinu.ch/counter/) in headless Chrome
-at 1280×720, 24 fps, 8 Mbps. **No narration and no captions** — the presenter talks over it, and
+at 1280×720, 24 fps. **No narration and no captions** — the presenter talks over it, and
 every beat below is a timestamp to talk to or to seek to. Re-record with
 \`node web/tools/demo-video.mjs\` (\`--dry\` drives the path without recording;
 \`TTM_TRACE=1\` prints how long each wait really took).

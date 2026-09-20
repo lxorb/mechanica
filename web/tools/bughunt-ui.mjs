@@ -444,7 +444,7 @@ const CHECKS = [
   // the theme applies at every stop and the console stays silent — without the twenty
   // full-page WebGL captures that make that tool slow and flaky, plus the two things this
   // pass fixed that a contact sheet cannot see: the Conditions sheet's edge and a cold #cost.
-  ["themes: all five survive the walk, in both viewports", async (page, base, state, browser, view) => {
+  ["themes: all five survive the walk", async (page, base, state, browser, view) => {
     const faults = [];
     for (const theme of ["workshop", "night", "blueprint", "track", "paper"]) {
       const tab = await browser.newPage();
