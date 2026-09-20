@@ -12,42 +12,40 @@ from pathlib import Path
 from ..models import Bike, RegistryEntry
 from ..store import get_store
 from ._http import BROWSER_UA, GOOGLEBOT_UA, UA, client, log, request, slug
-from .bmw import bmw
-from .honda import honda_eu, honda_us
-from .india import bajaj, hero, tvs
-from .kawasaki import kawasaki
-from .kymco import kymco
-from .mvagusta import mv_agusta
-from .pierer import gasgas, husqvarna, ktm
-from .royalenfield import royal_enfield
-from .service import service_manuals
-from .suzuki import suzuki_de, suzuki_en
-from .triumph import triumph
-from .yamaha import yamaha_eu, yamaha_us
-from .zero import zero
 
-ADAPTERS: dict[str, Callable[[], Iterable[RegistryEntry]]] = {
-    "ktm": ktm,
-    "husqvarna": husqvarna,
-    "gasgas": gasgas,
-    "bmw": bmw,
-    "yamaha-eu": yamaha_eu,
-    "yamaha-us": yamaha_us,
-    "honda-us": honda_us,
-    "honda-eu": honda_eu,
-    "kawasaki": kawasaki,
-    "triumph": triumph,
-    "royal-enfield": royal_enfield,
-    "suzuki-de": suzuki_de,
-    "suzuki-en": suzuki_en,
-    "zero": zero,
-    "hero": hero,
-    "tvs": tvs,
-    "bajaj": bajaj,
-    "mv-agusta": mv_agusta,
-    "kymco": kymco,
-    "service": service_manuals,
+# adapter name -> (module in this package, function). Imported one by one rather than with a plain
+# `from .x import y`: several agents write modules in here at once, and one broken file must not take
+# the package - and with it the API - down. Whatever imports is registered; the rest is logged.
+BUILTIN: dict[str, tuple[str, str]] = {
+    "ktm": ("pierer", "ktm"),
+    "husqvarna": ("pierer", "husqvarna"),
+    "gasgas": ("pierer", "gasgas"),
+    "bmw": ("bmw", "bmw"),
+    "yamaha-eu": ("yamaha", "yamaha_eu"),
+    "yamaha-us": ("yamaha", "yamaha_us"),
+    "honda-us": ("honda", "honda_us"),
+    "honda-eu": ("honda", "honda_eu"),
+    "kawasaki": ("kawasaki", "kawasaki"),
+    "triumph": ("triumph", "triumph"),
+    "royal-enfield": ("royalenfield", "royal_enfield"),
+    "suzuki-de": ("suzuki", "suzuki_de"),
+    "suzuki-en": ("suzuki", "suzuki_en"),
+    "zero": ("zero", "zero"),
+    "hero": ("india", "hero"),
+    "tvs": ("india", "tvs"),
+    "bajaj": ("india", "bajaj"),
+    "mv-agusta": ("mvagusta", "mv_agusta"),
+    "kymco": ("kymco", "kymco"),
+    "service": ("service", "service_manuals"),
 }
+
+ADAPTERS: dict[str, Callable[[], Iterable[RegistryEntry]]] = {}
+
+for _name, (_module, _attr) in BUILTIN.items():
+    try:
+        ADAPTERS[_name] = getattr(importlib.import_module(f".{_module}", __name__), _attr)
+    except Exception as _exc:  # a module another agent is mid-edit on, or one that lost its function
+        log.warning("adapter %s unavailable (%s.%s): %s: %s", _name, _module, _attr, type(_exc).__name__, _exc)
 
 # Hosts that serve a PDF from a URL without a .pdf suffix. Every entry here was verified with a
 # magic-byte sample (python -m tools.registry stats --verify); nothing is whitelisted on faith.

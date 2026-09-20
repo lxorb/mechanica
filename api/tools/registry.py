@@ -161,7 +161,8 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     entries = store.registry()
     free = [e for e in entries if _ingestable(e)]
     with_url = sum(1 for b in bikes if b.manualUrl)
-    print(f"registry {len(entries)} rows, {len(free)} free english owner pdfs; bikes {len(bikes)}, {with_url} with a free PDF")
+    files = len({e.url for e in free})
+    print(f"registry {len(entries)} rows, {len(free)} free english owner pdfs ({files} distinct files); bikes {len(bikes)}, {with_url} with a free PDF")
     by_make: dict[str, int] = {}
     for e in free:
         by_make[e.make] = by_make.get(e.make, 0) + 1
@@ -188,6 +189,7 @@ def cmd_stats(args: argparse.Namespace) -> int:
     for make, (n, free) in sorted(rows.items(), key=lambda kv: -kv[1][1]):
         print(f"{make:<16}{n:>8}{free:>13}")
     print(f"{'TOTAL':<16}{len(entries):>8}{sum(v[1] for v in rows.values()):>13}")
+    print(f"{'distinct files':<16}{'':>8}{len({e.url for e in entries if _ingestable(e)}):>13}  (one PDF often covers several model years)")
     if args.sites:
         print()
         for site, (n, free) in sorted(sites.items(), key=lambda kv: -kv[1][1]):
