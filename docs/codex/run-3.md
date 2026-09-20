@@ -62,7 +62,7 @@ drifts:
 |---|---|
 | the cached-token split behind "99.5% cache hit" | `usd()` bills `max(0, input - cached)` fresh + `cached` at the cached rate; `(terra, 100 in, 200 cached)` = `$0.00004`, not a negative |
 | the per-ask and per-call USD figures | 11 hard-coded `usd()` expectations - `$0.00524` terra, `$0.0232` astra, `$0.000524` luna - written as literals, so a typo in `PRICES` breaks the test rather than silently re-pricing the slide |
-| **`$6.096` naive baseline** | `naive_usd()` at `800` tokens/page with the 2x long-context rate: `340 p = $2.72`, `341 p = $5.456`. That discontinuity is the assertion. `naive_usd(381) = $6.096` is exactly the slide figure |
+| **the naive baseline** | `naive_usd()` at `800` tokens/page with the 2x long-context rate: `340 p = $2.72`, `341 p = $5.456`. That discontinuity is the assertion, and it still holds. The pinned example `naive_usd(381)` was the slide figure when this ran; the slide is now `naive_usd(775) = $12.40`, because a larger manual has been ingested since — the test asserts the discontinuity, not the slide |
 | the `$10/1k` web-search fee | `WEB_SEARCH_CALL_USD` added once per `web_search_call` item, on top of tokens, and still billed when the model is unpriced |
 | **"prompt caching is what makes this cheap"** | `stream()` must send `prompt_cache_key="chat:gpt-5.6-terra"` by default and the caller's key when one is passed |
 | every `$` in `GET /api/cost` | `log()` writes exactly one `CostEvent` with the right route/model/usd and returns the same total it stored |

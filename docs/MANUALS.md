@@ -1,17 +1,19 @@
 # The manual registry
 
-**39,119 rows, 30 portal adapters, not one PDF copied at crawl time.** A `RegistryEntry` stores where a
+**53,557 rows, 37 portal adapters, not one PDF copied at crawl time.** A `RegistryEntry` stores where a
 manual lives — make, model, years, market, language, type, access, URL — and nothing else.
 Counts measured 2026-09-20 (`cd api && .venv/Scripts/python -m tools.registry stats`, `GET /api/registry`).
+The same counts, with the exact definition behind each one, are generated into `docs/pitches/numbers.md`
+by `api/tools/pitch_numbers.py --live` — re-run it rather than editing a number here by hand.
 
 | | count |
 |---|---|
-| registry rows | **39,119** (38,937 owner, 182 service) |
-| free owner's manuals | 38,937 rows, 40 languages, 59 markets — **19,163 in English** |
-| …English **and** a directly fetchable PDF, so `/ingest` can take it unattended | **16,404** |
-| …distinct PDF files behind those rows (one file often covers several years) | **8,319** |
-| catalog bikes derived from the registry | **22,300**, of which **9,421** have a free manual |
-| already ingested and warm in Azure Blob | **332 manuals** (`GET /api/manuals`) |
+| registry rows | **53,557** (53,375 owner, 182 service) across 84 portals, 80 makes |
+| free owner's manuals | 53,375 rows, 43 languages, 59 markets — **27,119 in English** |
+| …English **and** a directly fetchable PDF, so `/ingest` can take it unattended | **24,210** |
+| …distinct PDF files behind those rows (one file often covers several years) | **14,770** |
+| catalog vehicles derived from the registry | **27,751**, of which **13,537** have a free manual |
+| already ingested and warm in Azure Blob | **535 manuals** (`GET /api/manuals`) |
 
 ## Where the free manuals come from
 

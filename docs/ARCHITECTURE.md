@@ -15,9 +15,9 @@ https://mechanica.emilvinu.ch · API at `/api` (same origin). Measured 2026-09-2
 
 ## Data flow
 
-1. **Identify** — `GET /catalog` (22,300 bikes, 9,421 with a free manual) drives typeahead and model cards;
+1. **Identify** — `GET /catalog` (27,751 vehicles, 13,537 with a free manual) drives typeahead and model cards;
    `POST /identify/photo` or `/identify/vin` short-circuit to one bike.
-2. **Confirm** — `POST /manuals/ensure` → `ready` if warm (332 manuals), else a job: registry lookup → OEM
+2. **Confirm** — `POST /manuals/ensure` → `ready` if warm (535 manuals), else a job: registry lookup → OEM
    PDF → PyMuPDF text layer with per-block coords → LLM structure pass over 5-page windows (32 workers) →
    quotes grounded against the text layer, ungrounded ones dropped → blob. `early=true` publishes the PDF
    and contents first, so the manual is readable long before it is searchable.
@@ -32,15 +32,18 @@ https://mechanica.emilvinu.ch · API at `/api` (same origin). Measured 2026-09-2
 
 | operation | cost | latency | source |
 |---|---|---|---|
-| ingest one manual (median 177 p) | **$0.10** | 44–50 s to searchable, **6–7 s to readable** | 319 runs + 2 live |
+| ingest one manual (mean 177 p) | **$0.0951** | 40.4 s to searchable, **1.3 s to readable** | 648 runs (`mass_report.jsonl`) + a timed live run |
 | ask, cold spec | $0.00013 | 1.5 s | live |
 | ask, cold procedure | $0.0018–0.0038 | 3.1–3.5 s | live |
 | ask, repeated | **$0** | 0.2–0.4 s | answer cache, live |
 | ask, mean over 150-query eval | $0.00038 | p95 3.33 s | `api/eval/report.md` |
 | chat answer | $0.0045–0.0054 | first token 2.2–2.6 s | live + `chat-report.md` |
 | photo → bike | $0.0054 over all logged calls | — | `GET /api/cost` |
-| naive baseline (whole manual in the prompt) | **$6.096** | — | `GET /api/cost` |
-| everything spent on the live API so far | **$1.172** / 569 calls | — | `GET /api/cost` |
+| naive baseline (whole manual in the prompt) | **$12.40** | — | `GET /api/cost` → `naivePerAsk` = `naive_usd(775)`, the largest deployed manual |
+| everything spent on the live API so far | read it, don't quote it | — | `GET /api/cost` → `total`; a running counter that moves every hour and resets on redeploy |
+
+Every figure in this table is generated into `docs/pitches/numbers.md` by `api/tools/pitch_numbers.py --live`,
+with its exact definition. Re-run that before quoting any of them.
 
 ## What is cached where
 
