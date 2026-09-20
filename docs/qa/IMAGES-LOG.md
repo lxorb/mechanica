@@ -163,3 +163,49 @@ runs** - using it there was my error this cycle and cost ~8 minutes.
    the whole hour on the motorcycle gap list; that is the next thing to build.
 3. `makecat` has only been run against the gap list. Running it across the open
    manual-bearing lane has not been tried and is the obvious next sweep.
+
+---
+
+## Cycle 4 - 2026-09-20, ~55 min (motorcycles only)
+
+| | families | rows |
+|---|---|---|
+| overall | 4,055 -> **4,194** (+139) of 8,829 | 18,577 -> **19,212** (+635) of 30,513 |
+| **motorcycles** | 3,379 -> **3,518** (+139) of 7,795 | 13,469 -> **14,104** (+635) of 24,135 |
+| manual-bearing bikes | 1,752 -> **1,790** (+38) of 3,950 | 9,648 -> **9,818** (+170) of 15,878 |
+| cars | 676 of 1,034 (untouched, by design) | 5,108 of 6,378 (untouched) |
+
+**107 new photos, every one a motorcycle** (own tiles 378 -> 468). $0.17 of
+`images.score`, 88 MB of 150 MB. `lookupImage` on motorcycle rows: 59.9% ->
+**62.8%**; all rows 64.2% -> **66.5%**.
+
+**Motorcycles yield less than cars, and now we know by how much.** The mixed
+top-200 in cycle 3 hit 42%; the motorcycle top-200 hit 10%, and the deeper
+motorcycle list 15%. Commons simply has fewer free photos of a KX100 than of a
+Toyota Corolla. That is the price of the founder's priority, and it is worth
+paying - it is just not a sign anything is broken.
+
+**Depth beats width on the gap list now.** `--top 200` on motorcycles came back
+almost entirely cached misses on the second pass (173 of 200), so the third pass
+used `--top 900`, which yielded 535 real targets and 82 photos at 15%. Once a
+list has been worked, go deeper rather than re-generating the same 200.
+
+**`makecat` is now the best single source for motorcycles**: 52/84 candidates
+passed and it produced 31 of the 82 hits in the deep pass - more than plain
+search (24) or model categories (22). The per-make `deepcategory:` tree is where
+the motorcycle photos that are not in a model category live.
+
+**Tooling.** `images-coverage.mjs` gained `--kind bike|car`. Motorcycle rows carry
+no `kind`, cars carry `kind: "car"`, so "bike" is the absence of "car".
+
+**Bug fixed.** `--only` ignored the miss cache, so both gap passes re-walked the
+same exhausted motocross head (100 models, zero hits, ~10 minutes). `--only` now
+honours it, which is what turned pass 2 from 200 models into 27 real ones.
+
+**Next (cycle 5 is a mixed cycle).**
+1. Mixed `--top 200`, then go deep (`--top 900+`) rather than regenerating narrow.
+2. `makecat` across the open manual-bearing lane still has not been run; on this
+   cycle's evidence it is the most promising untried sweep.
+3. The Harley registry-document rows (113) are still in the catalog and still at
+   the top of every bike gap list. `--keys` filters them, but the list a human
+   reads still shows them. They want deleting from `api/data/bikes.json`.

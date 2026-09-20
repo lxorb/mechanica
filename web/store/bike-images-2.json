@@ -5390,6 +5390,18 @@
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-vrsc.hero.webp"
   },
+  "harley-davidson|vrscf-v-rod-muscle": {
+    "image": "store/img/bikes2/harley-davidson-vrscf-v-rod-muscle.webp",
+    "thumb": "store/img/bikes2/harley-davidson-vrscf-v-rod-muscle.thumb.webp",
+    "title": "Paris - Salon de la moto 2011 - Harley-Davidson - VRSCF V-Rod Muscle - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_VRSCF_V-Rod_Muscle_-_001.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-vrscf-v-rod-muscle.hero.webp"
+  },
   "harley-davidson|xl-883-sportster-883": {
     "image": "store/img/bikes/harley-davidson-xl-883-sportster.webp",
     "thumb": "store/img/bikes/harley-davidson-xl-883-sportster-thumb.webp",
@@ -7617,6 +7629,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "honda|cmx500"
+  },
+  "honda|cr-125": {
+    "image": "store/img/bikes2/honda-cr-125-r.webp",
+    "thumb": "store/img/bikes2/honda-cr-125-r.thumb.webp",
+    "hero": "store/img/bikes2/honda-cr-125-r.hero.webp",
+    "title": "Honda cr 125 2001.jpg",
+    "author": "Adriskala",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_cr_125_2001.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "honda|cr-125-r"
   },
   "honda|cr-125-r": {
     "image": "store/img/bikes2/honda-cr-125-r.webp",
@@ -13317,6 +13341,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_VN_1600_Classic.JPG",
     "via": "alias",
     "aliasOf": "kawasaki|vn-1600-classic"
+  },
+  "kawasaki|vn-1700-classic": {
+    "image": "store/img/bikes2/kawasaki-vn-1700-classic-tourer.webp",
+    "thumb": "store/img/bikes2/kawasaki-vn-1700-classic-tourer.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-vn-1700-classic-tourer.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Kawasaki - VN 1700 Classic Tourer - 002.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_VN_1700_Classic_Tourer_-_002.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|vn-1700-classic-tourer"
   },
   "kawasaki|vn-1700-classic-tourer": {
     "image": "store/img/bikes2/kawasaki-vn-1700-classic-tourer.webp",
@@ -19027,6 +19063,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:2008%E2%80%932017_Suzuki_ST250_E-type_in_Candy_Sonoma_Red,_rear_right_side.jpg",
     "via": "alias",
     "aliasOf": "suzuki|st250-e"
+  },
+  "suzuki|sv-1000": {
+    "image": "store/img/bikes2/suzuki-sv-1000-s.webp",
+    "thumb": "store/img/bikes2/suzuki-sv-1000-s.thumb.webp",
+    "title": "Suzuki SV1000S.jpg",
+    "author": "en:User:Motorhed",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SV1000S.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "suzuki|sv-1000-s"
   },
   "suzuki|sv-1000-s": {
     "image": "store/img/bikes2/suzuki-sv-1000-s.webp",

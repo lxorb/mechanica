@@ -2,9 +2,9 @@
 
 Generated 2026-09-20 by `node web/tools/images-coverage.mjs --write`. Re-run it after an image pass.
 
-Coverage: **19639/30578** catalog rows (64.2%) and **4647/9196** distinct models (50.5%) resolve to a photo through `lookupImage` in web/counter/js/ttm.js.
+Coverage: **20335/30578** catalog rows (66.5%) and **4807/9196** distinct models (52.3%) resolve to a photo through `lookupImage` in web/counter/js/ttm.js.
 
-Still uncovered: 4549 models over 10939 rows. The 200 worth shooting first,
+Still uncovered: 4389 models over 10243 rows. The 200 worth shooting first,
 by how many catalog rows go without a picture:
 
 | rows | make | model |
@@ -87,7 +87,6 @@ by how many catalog rows go without a picture:
 | 11 | Husqvarna | FX 350 |
 | 11 | Husqvarna | TC 50 |
 | 11 | Husqvarna | TC 65 |
-| 11 | Honda | CRF250X |
 | 11 | Suzuki | RMX450Z |
 | 11 | Aprilia | RX 125 |
 | 11 | Aprilia | SX 125 |
@@ -135,19 +134,11 @@ by how many catalog rows go without a picture:
 | 9 | Yamaha | XVS950 |
 | 9 | Yamaha | Tracer 7 |
 | 9 | Kawasaki | KLX450R |
-| 9 | Harley-Davidson | Road Glide |
-| 9 | Harley-Davidson | Tri Glide Ultra |
 | 9 | Suzuki | Kingquad 500AXI |
-| 9 | Aprilia | SR Max 300 |
 | 9 | Aprilia | SR Motard 125 |
 | 9 | Kawasaki | Brute Force 750 4X4I Eps Camo |
-| 9 | Royal Enfield | Thunderbird 350 |
 | 9 | Honda | TRX450R |
-| 9 | Aprilia | Dorsoduro 750 Abs |
 | 9 | Yamaha | WR125X |
-| 9 | Yamaha | BWS Naked |
-| 9 | Yamaha | V Star Silverado |
-| 9 | Harley-Davidson | FLSTC Heritage Softail Classic |
 | 9 | Yamaha | RAIDER S |
 | 9 | Yamaha | ROADLINER |
 | 9 | Yamaha | TT250R |
@@ -181,34 +172,43 @@ by how many catalog rows go without a picture:
 | 8 | Kawasaki | KLX140L |
 | 8 | Kawasaki | VULCAN 88 |
 | 8 | Triumph | Speed Twin 1200 |
-| 8 | Harley-Davidson | Freewheeler |
-| 8 | Harley-Davidson | Road Glide Special |
 | 8 | Suzuki | DR200S |
-| 8 | Suzuki | Smash 115 |
 | 8 | Yamaha | TRICITY 155 |
-| 8 | Harley-Davidson | Cvo Limited |
 | 8 | Suzuki | Kingquad 400ASI |
-| 8 | Moto Guzzi | California 1400 Touring |
-| 8 | Harley-Davidson | Sportster 1200 Custom |
 | 8 | Yamaha | ZUMA 50F |
 | 8 | Suzuki | Ozark 250 |
 | 8 | Yamaha | XVS1300A Midnight Star |
-| 8 | Aprilia | SXV 4.5 |
-| 8 | Yamaha | V Star Classic |
 | 8 | Harley-Davidson | FLHTC Electra Glide Classic |
 | 8 | Harley-Davidson | FXDWG Dyna Wide Glide |
-| 8 | Harley-Davidson | FLHT Electra Glide Standard |
-| 8 | Husqvarna | Wre 125 |
 | 8 | Yamaha | ROADLINER S |
 | 8 | Yamaha | TT-R90 |
 | 8 | Yamaha | ZUMA 50 |
 | 8 | Yamaha | D'ELIGHT 125 |
 | 8 | Zero | FXS |
 | 8 | Victory | Kingpin |
-| 8 | Victory | 8-Ball |
 | 8 | Harley-Davidson | FLHTKSE |
 | 8 | Harley-Davidson | Oper./Maint./Parts Listing/Spec. |
 | 8 | Yamaha | CZD250-A |
+| 8 | Yamaha | YZF250-A |
+| 8 | Yamaha | SIRIUS R |
+| 8 | Yamaha | NVX155 |
+| 8 | GMC | GMC T Series |
+| 8 | Chevrolet | Kodiak |
+| 8 | GMC | Jimmy |
+| 8 | Acura | ILX |
+| 8 | Acura | RDX |
+| 8 | Subaru | Ascent |
+| 8 | Honda | Vezel |
+| 8 | Honda | SHADOW750 |
+| 8 | Honda | ベンリィCD50 |
+| 8 | Toyota | Avensis |
+| 8 | Toyota | Estima |
+| 8 | Toyota | Markx |
+| 8 | Toyota | Pixis Joy |
+| 8 | Toyota | Sai |
+| 8 | Toyota | Wish |
+| 7 | KTM | 150 XC-W |
+| 7 | KTM | 450 EXC Six Days |
 
 ## What this list is and is not
 
@@ -217,7 +217,7 @@ reach - not a spelling the ladder misses, but a photo nobody has taken yet. The 
 crosses a digit run, so a size with no photo of its own stays on this list rather than borrowing
 its sibling's: a YZF-R6 never gets the R1's picture and a CB500F never gets the CB650's.
 
-Of the 4549, **77** do have a photo filed under a *longer* name of the same make and
+Of the 4389, **79** do have a photo filed under a *longer* name of the same make and
 the same displacement - "V-STAR 650" against `yamaha|v-star-650-classic`. The ladder shortens a
 name but never lengthens one, because the same rule would hand Land Rover Discovery the Discovery
 Sport's photo and Ford Explorer the Explorer Sport Trac's. Renaming those keys in the image files
