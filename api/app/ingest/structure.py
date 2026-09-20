@@ -140,7 +140,8 @@ def run_batches(prompts: list[str], on_done=None, model: str | None = None, work
     return results
 
 
-def keywords(titles: list[str], chunk: int = 40, model: str | None = None, on_done=None) -> list[list[str]]:
+def keywords(titles: list[str], chunk: int = 12, model: str | None = None, on_done=None) -> list[list[str]]:
+    """chunk is small on purpose: more calls run in parallel, so the pass is shorter and its progress is visible."""
     chosen = model or settings.model_struct
     out: list[list[str]] = [[] for _ in titles]
     chunks = [(i, titles[i : i + chunk]) for i in range(0, len(titles), chunk)]
