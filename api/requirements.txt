@@ -11,3 +11,5 @@ elasticsearch>=9.0
 pymongo>=4.8
 pillow>=10.4
 numpy>=1.26
+azure-storage-blob>=12.20
+azure-identity>=1.17

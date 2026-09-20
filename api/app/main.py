@@ -123,14 +123,32 @@ def manual(manual_id: str):
     return public(m)
 
 
+_pushed: set[str] = set()
+
+
+def _push_pdf(manual_id: str, path) -> None:
+    """A PDF an on-demand ingest just wrote is local to one replica. Hand it to blob so every other
+    replica - and the browser - can reach it. Once per process; a failure only means we serve it again."""
+    store = get_store()
+    upload = getattr(store, "put_pdf", None)
+    if upload is None or manual_id in _pushed:
+        return
+    _pushed.add(manual_id)
+    try:
+        upload(manual_id, path)
+    except Exception:
+        _pushed.discard(manual_id)
+
+
 @app.get("/manuals/{manual_id}/file")
-def manual_file(manual_id: str):
+def manual_file(manual_id: str, tasks: BackgroundTasks):
     url = pdf_url(manual_id)
     if url:
         return RedirectResponse(url, status_code=307)
     path = ingest_mod.pdf_path(manual_id)
     if not path.exists():
         raise HTTPException(404)
+    tasks.add_task(_push_pdf, manual_id, path)
     return FileResponse(path, media_type="application/pdf", filename=f"{manual_id}.pdf")
 
 

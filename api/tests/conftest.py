@@ -24,7 +24,16 @@ os.environ.setdefault("PYTEST_DEBUG_TEMPROOT", str(_tmp_root))
 DATA_DIR = _tmp_root / "data"
 shutil.copytree(SEED_DIR, DATA_DIR, ignore=shutil.ignore_patterns("seeds", "uploads"))
 
-for _var in ("MONGODB_URI", "ES_URL", "ES_API_KEY", "VOICE_TOOL_SECRET", "TTC_API_KEY", "PART_MODEL"):
+for _var in (
+    "MONGODB_URI",
+    "ES_URL",
+    "ES_API_KEY",
+    "VOICE_TOOL_SECRET",
+    "TTC_API_KEY",
+    "PART_MODEL",
+    "AZURE_STORAGE_CONNECTION_STRING",
+    "AZURE_STORAGE_ACCOUNT",
+):
     os.environ.pop(_var, None)
 os.environ["DATA_DIR"] = str(DATA_DIR)
 os.environ["OPENAI_API_KEY"] = "sk-test-not-a-real-key"

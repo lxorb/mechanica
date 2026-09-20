@@ -23,6 +23,11 @@ class Settings:
     es_url = os.getenv("ES_URL") or None
     es_api_key = os.getenv("ES_API_KEY") or None
     mongodb_uri = os.getenv("MONGODB_URI") or None
+    azure_storage_connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING") or None
+    azure_storage_account = os.getenv("AZURE_STORAGE_ACCOUNT") or None
+    azure_data_container = os.getenv("AZURE_STORAGE_DATA_CONTAINER", "data")
+    azure_pdf_container = os.getenv("AZURE_STORAGE_PDF_CONTAINER", "pdf")
+    azure_pdf_base = os.getenv("AZURE_STORAGE_PDF_BASE") or None
     elevenlabs_api_key = _secret("ELEVENLABS_API_KEY", "elevenlabs.txt")
     elevenlabs_agent_id = os.getenv("ELEVENLABS_AGENT_ID") or None
     deepgram_api_key = _secret("DEEPGRAM_API_KEY", "deepgram.txt")

@@ -34,6 +34,16 @@ az extension add --name containerapp --upgrade --allow-preview true --only-show-
 say "resource group $RG ($LOC)"
 az group create -n "$RG" -l "$LOC" -o none
 
+say "storage (deploy/storage.sh)"
+STORAGE_ENV=$(bash "$ROOT/deploy/storage.sh")
+SA=$(sed -n 's/^AZURE_STORAGE_ACCOUNT=//p' <<<"$STORAGE_ENV")
+PDF_BASE=$(sed -n 's/^AZURE_STORAGE_PDF_BASE=//p' <<<"$STORAGE_ENV")
+PDF_CONTAINER=$(sed -n 's/^AZURE_STORAGE_PDF_CONTAINER=//p' <<<"$STORAGE_ENV")
+DATA_CONTAINER=$(sed -n 's/^AZURE_STORAGE_DATA_CONTAINER=//p' <<<"$STORAGE_ENV")
+STORAGE_CONN=$(sed -n 's/^AZURE_STORAGE_CONNECTION_STRING=//p' <<<"$STORAGE_ENV")
+[ -n "$STORAGE_CONN" ] || { echo "storage.sh returned no connection string" >&2; exit 1; }
+echo "storage: $SA ($PDF_BASE)" >&2
+
 say "registry"
 ACR=$(az acr list -g "$RG" --query "[0].name" -o tsv 2>/dev/null || true)
 if [ -z "$ACR" ]; then
@@ -87,18 +97,25 @@ else
 fi
 
 say "secrets"
-if [ -n "$OPENAI_KEY" ]; then
-  az containerapp secret set -n "$APP" -g "$RG" --secrets "openai-key=$OPENAI_KEY" -o none
-fi
+SECRETS=("storage-conn=$STORAGE_CONN")
+[ -n "$OPENAI_KEY" ] && SECRETS+=("openai-key=$OPENAI_KEY")
+az containerapp secret set -n "$APP" -g "$RG" --secrets "${SECRETS[@]}" -o none
 
 FQDN=$(az containerapp show -n "$APP" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)
 API="https://$FQDN"
 
-say "config: image $TAG, PUBLIC_BASE=$API, 1 CPU / 2Gi, min 1 replica"
+say "config: image $TAG, PUBLIC_BASE=$API, storage $SA, 1 CPU / 2Gi, min 1 replica"
+# The image carries no manual data at all (see api/.dockerignore): blob is the system of record, so a
+# new replica is the same size whether the corpus is 28 manuals or 5000.
 # shellcheck disable=SC2086
 az containerapp update -n "$APP" -g "$RG" \
   --image "$IMAGE" \
-  --set-env-vars "PUBLIC_BASE=$API" "CORS_ORIGINS=*" $SECRET_ENV \
+  --set-env-vars "PUBLIC_BASE=$API" "CORS_ORIGINS=*" \
+    "AZURE_STORAGE_CONNECTION_STRING=secretref:storage-conn" \
+    "AZURE_STORAGE_ACCOUNT=$SA" \
+    "AZURE_STORAGE_PDF_BASE=$PDF_BASE" \
+    "AZURE_STORAGE_PDF_CONTAINER=$PDF_CONTAINER" \
+    "AZURE_STORAGE_DATA_CONTAINER=$DATA_CONTAINER" $SECRET_ENV \
   --min-replicas 1 --max-replicas 3 \
   --cpu 1.0 --memory 2.0Gi -o none
 
@@ -113,8 +130,16 @@ done
 
 say "checks"
 curl -fsS "$API/health" >&2 && echo >&2
-curl -fsS "$API/manuals" >&2 && echo >&2
-curl -s -o /dev/null -w 'manual pdf: %{http_code} %{content_type} %{size_download} bytes\n' \
+printf 'manuals: %s listed\n' "$(curl -fsS "$API/manuals" | grep -o '"id"' | wc -l)" >&2
+FILE_URL=$(curl -fsS "$API/manuals/ktm-390-duke-2024-om-en" | sed -n 's/.*"file": *"\([^"]*\)".*/\1/p')
+echo "file: $FILE_URL" >&2
+case "$FILE_URL" in
+  "$PDF_BASE"/*) echo "file: served straight from blob" >&2 ;;
+  *) echo "warning: file is not a blob URL - the API is still proxying PDFs" >&2 ;;
+esac
+curl -s -o /dev/null -w 'pdf: %{http_code} %{content_type} %{size_download} bytes\n' "$FILE_URL" >&2
+curl -s -o /dev/null -D - "$FILE_URL" | grep -i 'accept-ranges' >&2 || echo "warning: no Accept-Ranges" >&2
+curl -s -o /dev/null -w 'redirect: %{http_code} -> %{redirect_url}\n' \
   "$API/manuals/ktm-390-duke-2024-om-en/file" >&2
 
 say "API"

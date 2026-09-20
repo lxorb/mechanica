@@ -26,6 +26,9 @@ class Store(Protocol):
     def put_job(self, job: IngestJob) -> None: ...
     def log_cost(self, event: CostEvent) -> None: ...
     def costs(self) -> list[CostEvent]: ...
+    def pdf_url(self, manual_id: str) -> str | None:
+        """Public URL the browser can fetch the PDF from, or None when only the API can serve it."""
+        return None
 
 
 def _read(path: Path, default):
@@ -136,6 +139,9 @@ class FileStore:
                 return []
             return [CostEvent.model_validate(json.loads(line)) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
+    def pdf_url(self, manual_id: str) -> str | None:
+        return None
+
 
 _store: Store | None = None
 
@@ -143,7 +149,17 @@ _store: Store | None = None
 def get_store() -> Store:
     global _store
     if _store is None:
-        if settings.mongodb_uri:
+        if settings.azure_storage_connection_string or settings.azure_storage_account:
+            from .store_blob import BlobStore
+
+            _store = BlobStore(
+                settings.azure_storage_connection_string
+                or f"https://{settings.azure_storage_account}.blob.core.windows.net",
+                data_container=settings.azure_data_container,
+                pdf_container=settings.azure_pdf_container,
+                pdf_base=settings.azure_pdf_base,
+            )
+        elif settings.mongodb_uri:
             from .store_mongo import MongoStore
 
             _store = MongoStore(settings.mongodb_uri)
