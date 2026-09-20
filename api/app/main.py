@@ -106,13 +106,14 @@ def manuals():
 
 class EnsureRequest(BaseModel):
     bikeId: str
+    vin: str | None = None
 
 
 @app.post("/manuals/ensure")
 def manuals_ensure(req: EnsureRequest):
     if not get_store().bike(req.bikeId):
         raise HTTPException(404)
-    return ondemand.ensure(req.bikeId)
+    return ondemand.ensure(req.bikeId, req.vin)
 
 
 @app.get("/manuals/{manual_id}", response_model=Manual)
