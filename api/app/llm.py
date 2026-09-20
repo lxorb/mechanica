@@ -30,6 +30,8 @@ PRICES: dict[str, tuple[float, float, float]] = {
 
 TOKENS_PER_PAGE = 800
 NAIVE_MODEL = "gpt-6-astra"
+# built-in web_search tool: $10 / 1k calls, plus the search content billed as input tokens
+WEB_SEARCH_CALL_USD = 0.01
 
 _client: OpenAI | None = None
 
@@ -53,12 +55,13 @@ def naive_usd(pages: int) -> float:
     return tokens * p_in / 1_000_000
 
 
-def log(route: str, model: str, usage) -> float:
+def log(route: str, model: str, usage, extra_usd: float = 0.0) -> float:
+    """`extra_usd` is a tool fee the token price does not cover - the web_search call fee, for one."""
     input_tokens = int(getattr(usage, "input_tokens", 0) or 0)
     output_tokens = int(getattr(usage, "output_tokens", 0) or 0)
     details = getattr(usage, "input_tokens_details", None)
     cached = int(getattr(details, "cached_tokens", 0) or 0) if details else 0
-    cost = usd(model, input_tokens, cached, output_tokens)
+    cost = usd(model, input_tokens, cached, output_tokens) + extra_usd
     get_store().log_cost(
         CostEvent(
             ts=time.time(),
@@ -112,6 +115,40 @@ def structured(
     if parsed is None:
         raise RuntimeError(f"{route}: no parsed output")
     return parsed
+
+
+def web_search(
+    route: str,
+    model: str,
+    system: str,
+    user: str,
+    context_size: str = "low",
+    max_calls: int = 2,
+    reasoning: str = "low",
+    allowed_domains: list[str] | None = None,
+) -> tuple[str, float]:
+    """Free text grounded in the built-in web_search tool. Returns (text, usd).
+
+    The search fee is $10 / 1k calls on top of the tokens, and the search content lands in the input
+    tokens - a single answer is 20-30k input tokens, so `context_size` and `max_calls` are the two
+    dials that decide what a call costs. `reasoning="minimal"` is rejected by the API alongside
+    web_search. A hard `allowed_domains` filter measured much worse than naming the shops in the
+    prompt (five searches, one result), so it is off by default.
+    """
+    tool: dict = {"type": "web_search", "search_context_size": context_size}
+    if allowed_domains:
+        tool["filters"] = {"allowed_domains": allowed_domains}
+    response = client().responses.create(
+        model=model,
+        instructions=system,
+        input=[{"role": "user", "content": [text_part(user)]}],
+        tools=[tool],
+        reasoning={"effort": reasoning},
+        max_tool_calls=max_calls,
+    )
+    calls = sum(1 for item in response.output if getattr(item, "type", "") == "web_search_call")
+    cost = log(route, model, response.usage, extra_usd=calls * WEB_SEARCH_CALL_USD)
+    return response.output_text or "", cost
 
 
 def embed(route: str, texts: list[str], model: str = "text-embedding-3-small") -> list[list[float]]:

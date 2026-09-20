@@ -24,6 +24,12 @@ class Store(Protocol):
     def put_registry(self, entries: list[RegistryEntry]) -> None: ...
     def job(self, job_id: str) -> IngestJob | None: ...
     def put_job(self, job: IngestJob) -> None: ...
+    def offers(self, manual_id: str, part_id: str) -> dict | None:
+        """Last retailer lookup for one part, as written by put_offers, or None. Optional: a store that
+        does not implement the pair just means every /parts/offers call is a cold fetch."""
+        return None
+
+    def put_offers(self, manual_id: str, part_id: str, result: dict) -> None: ...
     def log_cost(self, event: CostEvent) -> None: ...
     def costs(self) -> list[CostEvent]: ...
     def pdf_url(self, manual_id: str) -> str | None:
@@ -124,6 +130,17 @@ class FileStore:
             data = _read(self.root / "jobs.json", {})
             data[job.id] = job.model_dump(exclude_none=True)
             _write(self.root / "jobs.json", data)
+
+    def _offers_path(self, manual_id: str, part_id: str) -> Path:
+        return self.root / "offers" / manual_id / f"{part_id}.json"
+
+    def offers(self, manual_id: str, part_id: str) -> dict | None:
+        with self.lock:
+            return _read(self._offers_path(manual_id, part_id), None)
+
+    def put_offers(self, manual_id: str, part_id: str, result: dict) -> None:
+        with self.lock:
+            _write(self._offers_path(manual_id, part_id), result)
 
     def log_cost(self, event: CostEvent) -> None:
         with self.lock:

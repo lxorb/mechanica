@@ -14,6 +14,7 @@ Layout in `data`:
   bikes.json          the bulk catalogue
   registry.json       the manual registry
   jobs/{id}.json      one blob per ingest job, never cached
+  offers/{manualId}/{partId}.json  the last retailer lookup for one part, re-fetched when a day old
   costs/{yyyymmdd}.jsonl  append blobs; concurrent appends are atomic server side
 
 Concurrency: nothing does read-modify-write on a shared blob without an ETag. Single-bike writes do not
@@ -48,6 +49,7 @@ PDF = ContentSettings(content_type="application/pdf")
 
 MANUAL_CACHE = 200
 PAGE_CACHE = 50
+OFFER_CACHE = 500
 DOC_TTL = 300.0
 LIST_TTL = 60.0
 COST_TTL = 30.0
@@ -129,6 +131,7 @@ class BlobStore:
         self._specs = _Cache(MANUAL_CACHE, DOC_TTL)
         self._lists = _Cache(8, LIST_TTL)
         self._costs = _Cache(1, COST_TTL)
+        self._offers = _Cache(OFFER_CACHE, DOC_TTL)
         self._create_lock = threading.Lock()
 
         if create:
@@ -406,6 +409,23 @@ class BlobStore:
 
     def put_job(self, job: IngestJob) -> None:
         self._write_json(f"jobs/{job.id}.json", job.model_dump(exclude_none=True))
+
+    # --- offers ---------------------------------------------------------
+
+    def offers(self, manual_id: str, part_id: str) -> dict | None:
+        """One blob per part, so a click on a part never contends with a click on another one."""
+        key = f"{manual_id}/{part_id}"
+        hit = self._offers.get(key)
+        if hit is not _MISS:
+            return hit
+        out = self._read_json(f"offers/{key}.json", None)
+        self._offers.put(key, out)
+        return out
+
+    def put_offers(self, manual_id: str, part_id: str, result: dict) -> None:
+        key = f"{manual_id}/{part_id}"
+        self._write_json(f"offers/{key}.json", result)
+        self._offers.put(key, result)
 
     # --- costs ----------------------------------------------------------
 

@@ -1,0 +1,217 @@
+{
+ "engine-oil": {
+  "webp": "engine-oil.webp",
+  "png": "engine-oil.png",
+  "prompt": "isometric product render of a single motorcycle one litre bottle of engine oil, plain unlabelled bottle with an orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "oil-filter": {
+  "webp": "oil-filter.webp",
+  "png": "oil-filter.png",
+  "prompt": "isometric product render of a single motorcycle spin-on cartridge oil filter, steel can with a threaded base, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "air-filter": {
+  "webp": "air-filter.webp",
+  "png": "air-filter.png",
+  "prompt": "isometric product render of a single motorcycle pleated panel air filter element with an orange rubber frame, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "spark-plug": {
+  "webp": "spark-plug.webp",
+  "png": "spark-plug.png",
+  "prompt": "isometric product render of a single motorcycle spark plug, ceramic insulator, steel hex body and threaded tip, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "brake-pads": {
+  "webp": "brake-pads.webp",
+  "png": "brake-pads.png",
+  "prompt": "isometric product render of a single motorcycle pair of sintered brake pads, friction material on steel backing plates, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "brake-disc": {
+  "webp": "brake-disc.webp",
+  "png": "brake-disc.png",
+  "prompt": "isometric product render of a single motorcycle front brake disc, drilled floating rotor with an orange carrier, tilted away from the camera in the same three-quarter view as the rest of the set, never face-on, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "brake-fluid": {
+  "webp": "brake-fluid.webp",
+  "png": "brake-fluid.png",
+  "prompt": "isometric product render of a single motorcycle small DOT 4 brake fluid bottle, plain unlabelled with an orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "brake-caliper": {
+  "webp": "brake-caliper.webp",
+  "png": "brake-caliper.png",
+  "prompt": "isometric product render of a single motorcycle radial four-piston brake caliper, machined body with an orange anodised accent, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "brake-lever": {
+  "webp": "brake-lever.webp",
+  "png": "brake-lever.png",
+  "prompt": "isometric product render of a single motorcycle handlebar brake lever, forged aluminium with an orange adjuster wheel, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "clutch-lever": {
+  "webp": "clutch-lever.webp",
+  "png": "clutch-lever.png",
+  "prompt": "isometric product render of a single motorcycle handlebar clutch lever, forged aluminium with an orange adjuster wheel, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "clutch-cable": {
+  "webp": "clutch-cable.webp",
+  "png": "clutch-cable.png",
+  "prompt": "isometric product render of a single motorcycle clutch cable, black outer sheath in one loose loop with a steel barrel nipple at one end and a threaded adjuster at the other, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "chain": {
+  "webp": "chain.webp",
+  "png": "chain.png",
+  "prompt": "isometric product render of a single motorcycle short section of 520 X-ring drive chain with steel rollers and an orange master link, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "sprocket": {
+  "webp": "sprocket.webp",
+  "png": "sprocket.png",
+  "prompt": "isometric product render of a single motorcycle rear sprocket, toothed aluminium ring with an orange anodised inner carrier, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "tire": {
+  "webp": "tire.webp",
+  "png": "tire.png",
+  "prompt": "isometric product render of a single motorcycle motorcycle tyre, deep tread block pattern, seen as a single standing tyre, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "wheel": {
+  "webp": "wheel.webp",
+  "png": "wheel.png",
+  "prompt": "isometric product render of a single motorcycle cast alloy motorcycle wheel with an orange rim stripe, no tyre fitted, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "front-fork": {
+  "webp": "front-fork.webp",
+  "png": "front-fork.png",
+  "prompt": "isometric product render of a single motorcycle single upside-down telescopic fork leg, gold stanchion and an orange preload adjuster, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "rear-shock": {
+  "webp": "rear-shock.webp",
+  "png": "rear-shock.png",
+  "prompt": "isometric product render of a single motorcycle rear monoshock absorber, orange coil spring over a steel damper body, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "swingarm": {
+  "webp": "swingarm.webp",
+  "png": "swingarm.png",
+  "prompt": "isometric product render of a single motorcycle aluminium single-sided swingarm casting, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "battery": {
+  "webp": "battery.webp",
+  "png": "battery.png",
+  "prompt": "isometric product render of a single motorcycle sealed AGM motorcycle battery, black case with an orange positive terminal cover, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "fuse": {
+  "webp": "fuse.webp",
+  "png": "fuse.png",
+  "prompt": "isometric product render of a single motorcycle automotive blade fuse, orange translucent body with steel blades, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "bulb-headlight": {
+  "webp": "bulb-headlight.webp",
+  "png": "bulb-headlight.png",
+  "prompt": "isometric product render of a single motorcycle H4 halogen headlight bulb, clear glass envelope on a metal base, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "taillight": {
+  "webp": "taillight.webp",
+  "png": "taillight.png",
+  "prompt": "isometric product render of a single motorcycle motorcycle tail light unit, red lens in a black housing, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "coolant": {
+  "webp": "coolant.webp",
+  "png": "coolant.png",
+  "prompt": "isometric product render of a single motorcycle one litre bottle of engine coolant, translucent bottle showing bright green coolant inside, orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "radiator": {
+  "webp": "radiator.webp",
+  "png": "radiator.png",
+  "prompt": "isometric product render of a single motorcycle motorcycle radiator core, aluminium fins and side tanks with an orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "fuel-tank": {
+  "webp": "fuel-tank.webp",
+  "png": "fuel-tank.png",
+  "prompt": "isometric product render of a single motorcycle motorcycle fuel tank, smooth painted shell with a metal filler cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "fuel-filter": {
+  "webp": "fuel-filter.webp",
+  "png": "fuel-filter.png",
+  "prompt": "isometric product render of a single motorcycle inline fuel filter cartridge, translucent body with two hose spigots, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "exhaust": {
+  "webp": "exhaust.webp",
+  "png": "exhaust.png",
+  "prompt": "isometric product render of a single motorcycle slip-on exhaust silencer, brushed steel canister with a carbon end cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "mirror": {
+  "webp": "mirror.webp",
+  "png": "mirror.png",
+  "prompt": "isometric product render of a single motorcycle motorcycle rear-view mirror on a threaded stem, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "handlebar": {
+  "webp": "handlebar.webp",
+  "png": "handlebar.png",
+  "prompt": "isometric product render of a single motorcycle tapered aluminium handlebar with an orange anodised centre clamp area, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "seat": {
+  "webp": "seat.webp",
+  "png": "seat.png",
+  "prompt": "isometric product render of a single motorcycle single motorcycle rider seat, stitched black cover on a moulded base, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "footpeg": {
+  "webp": "footpeg.webp",
+  "png": "footpeg.png",
+  "prompt": "isometric product render of a single motorcycle rider footpeg, a short knurled steel foot platform hinged on a mounting bracket that bolts to the frame, seen from the side, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "throttle-cable": {
+  "webp": "throttle-cable.webp",
+  "png": "throttle-cable.png",
+  "prompt": "isometric product render of a single motorcycle throttle cable, black outer sheath coiled once with a twist-grip end fitting, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "bearing": {
+  "webp": "bearing.webp",
+  "png": "bearing.png",
+  "prompt": "isometric product render of a single motorcycle sealed ball bearing, steel races with an orange rubber seal, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "bolt-torque": {
+  "webp": "bolt-torque.webp",
+  "png": "bolt-torque.png",
+  "prompt": "isometric product render of a single motorcycle hex flange bolt beside a torque wrench head, steel with an orange handle grip, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "tool-kit": {
+  "webp": "tool-kit.webp",
+  "png": "tool-kit.png",
+  "prompt": "isometric product render of a single motorcycle compact motorcycle on-board tool kit, a few spanners and a screwdriver laid flat, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "generic-part": {
+  "webp": "generic-part.webp",
+  "png": "generic-part.png",
+  "prompt": "isometric product render of a single motorcycle small machined steel motorcycle spare part on a hex mounting flange, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "grease": {
+  "webp": "grease.webp",
+  "png": "grease.png",
+  "prompt": "isometric product render of a single motorcycle tub of white lithium grease with the lid off and an orange label band, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "threadlock": {
+  "webp": "threadlock.webp",
+  "png": "threadlock.png",
+  "prompt": "isometric product render of a single motorcycle small bottle of thread-locking compound, plain bottle with an orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "chain-lube": {
+  "webp": "chain-lube.webp",
+  "png": "chain-lube.png",
+  "prompt": "isometric product render of a single motorcycle aerosol can of chain lube with a thin application straw, orange accent band, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "cleaner-spray": {
+  "webp": "cleaner-spray.webp",
+  "png": "cleaner-spray.png",
+  "prompt": "isometric product render of a single motorcycle aerosol cleaning spray can with a trigger nozzle, orange accent band, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "fuel-additive": {
+  "webp": "fuel-additive.webp",
+  "png": "fuel-additive.png",
+  "prompt": "isometric product render of a single motorcycle small bottle of fuel additive with a long pouring neck and an orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "gear-oil": {
+  "webp": "gear-oil.webp",
+  "png": "gear-oil.png",
+  "prompt": "isometric product render of a single motorcycle squat silver bottle of final drive gear oil with a long narrow pouring spout folded over the shoulder and an orange cap, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ },
+ "button-cell": {
+  "webp": "button-cell.webp",
+  "png": "button-cell.png",
+  "prompt": "isometric product render of a single motorcycle CR2032 button cell battery, polished steel coin cell, studio lighting, semi-realistic, clean, orange #e85d04 accent on ink/steel materials, no text, no background clutter. Three-quarter isometric view from the front left at a 30 degree elevation, the object centred and filling about 80 percent of a square frame, consistent scale with other parts of the same kind, one soft key light from the upper left and a gentle fill, soft contact shadow, fully transparent background, no ground plane, no props, no packaging, no lettering, no logos, no watermarks"
+ }
+}
