@@ -78,6 +78,7 @@ if [ -z "$OPENAI_KEY" ] && [ -f "$SECRETS_DIR/openai.txt" ]; then
 fi
 if [ -n "$OPENAI_KEY" ]; then
   SECRET_ENV="OPENAI_API_KEY=secretref:openai-key"
+  [ -n "$TTC_KEY" ] && SECRET_ENV="$SECRET_ENV TTC_API_KEY=secretref:ttc-key"
 else
   echo "warning: no OpenAI key found (\$OPENAI_API_KEY or $SECRETS_DIR/openai.txt)" >&2
   SECRET_ENV=""
@@ -99,6 +100,7 @@ fi
 say "secrets"
 SECRETS=("storage-conn=$STORAGE_CONN")
 [ -n "$OPENAI_KEY" ] && SECRETS+=("openai-key=$OPENAI_KEY")
+[ -n "$TTC_KEY" ] && SECRETS+=("ttc-key=$TTC_KEY")
 az containerapp secret set -n "$APP" -g "$RG" --secrets "${SECRETS[@]}" -o none
 
 FQDN=$(az containerapp show -n "$APP" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)
