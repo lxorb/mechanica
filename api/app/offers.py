@@ -46,8 +46,8 @@ MAX_OFFERS = 15
 VERIFY_TIMEOUT = 2.5
 VERIFY_WORKERS = 16
 SEARCH_CALLS = 2
-# under the counter's own 6 s abort, so a cold click still paints whatever was verified in time
-DEADLINE = 5.5
+# well under the counter's own 6 s abort, so a cold click still paints whatever was verified in time
+DEADLINE = 4.5
 WARM_PARTS = 12
 WARM_WORKERS = 12
 

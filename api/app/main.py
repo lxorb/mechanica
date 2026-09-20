@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from . import ask as ask_mod
 from . import chat as chat_mod
 from . import offers as offers_mod
+from . import parts_catalog as parts_catalog_mod
 from . import cost_ttc
 from . import identify as identify_mod
 from . import ingest as ingest_mod
@@ -206,6 +207,15 @@ def parts_offers_warm(req: WarmRequest):
         raise HTTPException(404)
     bike = store.bike(req.bikeId) if req.bikeId else None
     return offers_mod.warm(req.manualId, bike, req.partIds)
+
+
+@app.get("/parts/catalog", response_model=parts_catalog_mod.CatalogResult)
+def parts_catalog(manualId: str, bikeId: str | None = None):
+    """Every part a mechanic would search for on this bike, not only the ones the manual printed."""
+    store = get_store()
+    if not store.manual(manualId):
+        raise HTTPException(404)
+    return parts_catalog_mod.catalog(manualId, store.bike(bikeId) if bikeId else None)
 
 
 @app.post("/identify/photo", response_model=IdentifyResponse)
