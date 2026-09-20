@@ -12,6 +12,7 @@ class Bike(BaseModel):
     year: int
     market: str
     manualId: str | None = None
+    manualUrl: str | None = None
     vins: list[str] | None = None
     cues: list[str] | None = None
 

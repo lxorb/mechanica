@@ -4,11 +4,15 @@ from collections import defaultdict
 
 from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from pydantic import BaseModel
+from fastapi.middleware.gzip import GZipMiddleware
+from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES
+from fastapi.responses import FileResponse, RedirectResponse
 
 from . import ask as ask_mod
 from . import identify as identify_mod
 from . import ingest as ingest_mod
+from . import ondemand
 from . import voice
 from .config import settings
 from .llm import naive_usd
@@ -32,11 +36,18 @@ MAX_IMAGE = 12 * 1024 * 1024
 
 app = FastAPI(title="Trust the manual", version="0.1.0")
 app.add_middleware(
+    GZipMiddleware,
+    minimum_size=1024,
+    compresslevel=6,
+    exclude_content_types=(*DEFAULT_EXCLUDED_CONTENT_TYPES, "application/pdf"),
+)
+app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
     allow_origin_regex=r"https?://.*" if settings.cors_origins == ["*"] else None,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["Accept-Ranges", "Content-Range", "Content-Length", "Content-Encoding"],
 )
 app.include_router(voice.router)
 
@@ -45,8 +56,15 @@ def slug(*parts: str | int) -> str:
     return re.sub(r"[^a-z0-9]+", "-", " ".join(str(p) for p in parts).lower()).strip("-")
 
 
+def pdf_url(manual_id: str) -> str | None:
+    """Public blob URL when the store has one; the browser then fetches the PDF without an API hop."""
+    resolve = getattr(get_store(), "pdf_url", None)
+    return resolve(manual_id) if resolve else None
+
+
 def public(manual: Manual) -> Manual:
-    return manual.model_copy(update={"file": f"{settings.public_base}/manuals/{manual.id}/file"})
+    url = pdf_url(manual.id) or f"{settings.public_base}/manuals/{manual.id}/file"
+    return manual.model_copy(update={"file": url})
 
 
 @app.get("/health")
@@ -74,10 +92,27 @@ def suggest(q: str = ""):
 
 @app.get("/manuals")
 def manuals():
+    store = get_store()
+    # thousands of manuals: BlobStore answers this from a cached blob listing instead of
+    # downloading every document. Same four fields either way.
+    summaries = getattr(store, "manual_summaries", None)
+    if summaries is not None:
+        return summaries()
     return [
         {"id": m.id, "title": m.title, "bikeIds": m.bikeIds, "pages": m.pages, "sections": len(m.sections)}
-        for m in get_store().manuals()
+        for m in store.manuals()
     ]
+
+
+class EnsureRequest(BaseModel):
+    bikeId: str
+
+
+@app.post("/manuals/ensure")
+def manuals_ensure(req: EnsureRequest):
+    if not get_store().bike(req.bikeId):
+        raise HTTPException(404)
+    return ondemand.ensure(req.bikeId)
 
 
 @app.get("/manuals/{manual_id}", response_model=Manual)
@@ -90,6 +125,9 @@ def manual(manual_id: str):
 
 @app.get("/manuals/{manual_id}/file")
 def manual_file(manual_id: str):
+    url = pdf_url(manual_id)
+    if url:
+        return RedirectResponse(url, status_code=307)
     path = ingest_mod.pdf_path(manual_id)
     if not path.exists():
         raise HTTPException(404)

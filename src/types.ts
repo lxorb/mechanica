@@ -9,6 +9,7 @@ export interface Bike {
   year: number          // 2024
   market: string        // "EU" | "US"
   manualId: string | null // null = no manual indexed yet
+  manualUrl?: string | null // free official PDF known, not indexed yet
   vins?: string[]       // mock VIN prefixes (first 9-11 chars) that decode to this bike
   cues?: string[]       // mock visual cues for photo identification
 }
