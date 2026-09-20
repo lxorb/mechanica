@@ -1,233 +1,242 @@
 {
-  "origin": "http://127.0.0.1:63740/counter/",
-  "when": "2026-09-20T13:01:43.185Z",
+  "origin": "http://127.0.0.1:61307/counter/",
+  "when": "2026-09-20T11:54:21.000Z",
   "rows": [
     {
       "label": "local slow3g-cold",
-      "requests": 65,
-      "bytes": 95415,
+      "requests": 64,
+      "bytes": 199409,
       "byType": {
         "html": 1887,
-        "link": 30437,
+        "link": 30390,
         "js": 37712,
         "css": 2050,
         "api": 311,
         "other": 23018,
+        "json": 104041,
         "cache/sw": 0
       },
-      "cached": 40,
-      "sw": 41,
+      "cached": 38,
+      "sw": 39,
       "failed": [],
       "errors": [],
       "landing": {
-        "requests": 56,
-        "bytes": 95415
+        "requests": 55,
+        "bytes": 199409
       },
       "slow": [
         {
           "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
-          "at": 2142,
-          "ms": 8444,
+          "at": 2354,
+          "ms": 9393,
           "kb": 1
         },
         {
           "url": "/counter/manifest.webmanifest",
-          "at": 2160,
-          "ms": 6480,
+          "at": 2407,
+          "ms": 7001,
           "kb": 1
         },
         {
           "url": "/counter/js/app.js",
-          "at": 2122,
-          "ms": 6206,
-          "kb": 3
-        },
-        {
-          "url": "/counter/js/theme.js",
-          "at": 2121,
-          "ms": 4590,
-          "kb": 3
-        },
-        {
-          "url": "/counter/css/climate.css",
-          "at": 2121,
-          "ms": 4559,
-          "kb": 2
-        },
-        {
-          "url": "/counter/css/screens/invoice.css",
-          "at": 2120,
-          "ms": 4529,
-          "kb": 3
-        },
-        {
-          "url": "/counter/css/screens/book.css",
-          "at": 2119,
-          "ms": 4467,
-          "kb": 3
-        },
-        {
-          "url": "/counter/css/screens/cost.css",
-          "at": 2120,
-          "ms": 4388,
-          "kb": 1
-        },
-        {
-          "url": "/counter/css/screens/pick.css",
-          "at": 2118,
-          "ms": 4155,
+          "at": 2897,
+          "ms": 6420,
           "kb": 3
         },
         {
           "url": "/api/catalog",
-          "at": 17586,
-          "ms": 3163,
+          "at": 26223,
+          "ms": 6371,
           "kb": 0
+        },
+        {
+          "url": "/api/manuals",
+          "at": 26225,
+          "ms": 5999,
+          "kb": 0
+        },
+        {
+          "url": "/store/ttm-catalog.json",
+          "at": 17556,
+          "ms": 5139,
+          "kb": 102
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 2346,
+          "ms": 5019,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 2346,
+          "ms": 4960,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 2347,
+          "ms": 4941,
+          "kb": 2
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 2346,
+          "ms": 4835,
+          "kb": 1
         }
       ],
-      "wall": 27794,
-      "fcp": 8724,
-      "lcp": 26408,
-      "field": 25381,
-      "card": 26227,
-      "ttfb": 7,
-      "dcl": 13487,
-      "load": 13519,
+      "wall": 49394,
+      "fcp": 9934,
+      "lcp": 49284,
+      "field": 45898,
+      "card": 47663,
+      "ttfb": 201,
+      "dcl": 15052,
+      "load": 15192,
       "cards": 60,
       "store": "remote",
       "controlled": true,
       "long": [
         {
-          "start": 17607,
-          "dur": 2994,
+          "start": 26245,
+          "dur": 5935,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 22119,
-          "dur": 2955,
+          "start": 35496,
+          "dur": 5428,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 21014,
-          "dur": 1083,
+          "start": 33430,
+          "dur": 2017,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 25558,
-          "dur": 711,
+          "start": 46136,
+          "dur": 1589,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 16934,
-          "dur": 668,
+          "start": 22790,
+          "dur": 1370,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 16129,
-          "dur": 637,
+          "start": 25064,
+          "dur": 1173,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 20762,
-          "dur": 244,
+          "start": 32605,
+          "dur": 819,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 25381,
-          "dur": 172,
+          "start": 45897,
+          "dur": 236,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 8583,
-          "dur": 66,
+          "start": 9627,
+          "dur": 100,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 16065,
-          "dur": 60,
+          "start": 22703,
+          "dur": 82,
           "name": "self",
           "attr": [
             "unknown"
           ]
         },
         {
-          "start": 16877,
-          "dur": 52,
+          "start": 24993,
+          "dur": 68,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 24561,
+          "dur": 54,
           "name": "self",
           "attr": [
             "unknown"
           ]
         }
       ],
-      "longTotal": 9642,
-      "longCount": 11,
+      "longTotal": 18922,
+      "longCount": 13,
       "phases": [
         {
           "name": "health",
-          "start": 13465,
-          "dur": 2520
+          "start": 15038,
+          "dur": 2522
         },
         {
           "name": "bundle",
-          "start": 15987,
-          "dur": 601
+          "start": 17561,
+          "dur": 6274
         },
         {
           "name": "merge",
-          "start": 16589,
-          "dur": 169
+          "start": 23835,
+          "dur": 319
         },
         {
           "name": "images",
-          "start": 16757,
-          "dur": 690
+          "start": 24154,
+          "dur": 1831
         },
         {
           "name": "index-ids",
-          "start": 17447,
-          "dur": 133
+          "start": 25985,
+          "dur": 241
         },
         {
           "name": "refresh-fetch",
-          "start": 17583,
-          "dur": 3432
+          "start": 26228,
+          "dur": 7202
         },
         {
           "name": "refresh-merge",
-          "start": 21016,
-          "dur": 423
+          "start": 33431,
+          "dur": 808
         },
         {
           "name": "refresh-images",
-          "start": 21494,
-          "dur": 461
+          "start": 34321,
+          "dur": 860
         }
       ]
     }
