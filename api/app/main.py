@@ -7,9 +7,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.middleware.gzip import GZipMiddleware
 from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 
 from . import ask as ask_mod
+from . import chat as chat_mod
 from . import identify as identify_mod
 from . import ingest as ingest_mod
 from . import ondemand
@@ -158,6 +159,18 @@ def ask(req: AskRequest):
     if not get_store().manual(req.manualId):
         raise HTTPException(404)
     return ask_mod.answer(req.manualId, req.query)
+
+
+class ChatRequest(BaseModel):
+    manualId: str
+    messages: list[dict]
+
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+    if not get_store().manual(req.manualId):
+        raise HTTPException(404)
+    return StreamingResponse(chat_mod.answer(req.manualId, req.messages), media_type="text/event-stream")
 
 
 @app.post("/identify/photo", response_model=IdentifyResponse)

@@ -31,6 +31,8 @@ class Settings:
     elevenlabs_api_key = _secret("ELEVENLABS_API_KEY", "elevenlabs.txt")
     elevenlabs_agent_id = os.getenv("ELEVENLABS_AGENT_ID") or None
     deepgram_api_key = _secret("DEEPGRAM_API_KEY", "deepgram.txt")
+    ttc_api_key = _secret("TTC_API_KEY", "ttc.txt")
+    model_chat = os.getenv("MODEL_CHAT", "gpt-5.6-terra")
     model_router = os.getenv("MODEL_ROUTER", "gpt-5.6-luna")
     model_picker = os.getenv("MODEL_PICKER", "gpt-5.6-terra")
     model_struct = os.getenv("MODEL_STRUCT", "gpt-5.6-luna")
