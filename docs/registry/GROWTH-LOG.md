@@ -259,3 +259,254 @@ non-four-digit year. Nothing was retracted for a year, and nothing should be.
 
 Final cycle-2 state: **53,575 rows, 24,223 free English owner PDFs, 14,780 distinct files,
 27,761 vehicles, 13,547 with a `manualUrl`**, 0 impossible years, Harley's 7 archive rows intact.
+
+---
+
+## Cycle 3 — 2026-09-20
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 53,575 | **77,993** | +24,418 |
+| free English owner PDFs | 24,223 | **24,236** | +13 |
+| distinct PDF files | 14,780 | **14,783** | +3 |
+| catalog vehicles | 27,761 | **27,776** | +15 |
+| …with a `manualUrl` | 13,547 | **15,449** | **+1,902** |
+
+Two things: the matching work below turns manuals the registry already held into offers, and one
+new multi-language crawl adds 24,418 rows. **Alias match +301, language fallback +1,586**, and
+KTM/Husqvarna/GasGas in every language the portal prints (+15 vehicles, +14,828 distinct PDFs). Motorcycles 9,434 → **10,999**, cars 4,113 →
+**4,435**. Roster 594 → 630 KB raw / 84 → 89 KB gzip, still inside the 700 KB budget.
+Full suite: **767 passed, 20 skipped, 0 failed.**
+
+### How a vehicle is matched now — three passes, strictly ordered, never mixed
+
+1. **Exact** `slug(make, model, year)`, as before.
+2. **Alias** — `alias_key()` rubs the punctuation out of the model name (case, hyphen, space,
+   period, slash, `&` → `and`) and keys on make + that + year. What survives is the model's whole
+   alphanumeric sequence *in order*, which is why this can only ever merge two spellings and never
+   two model families: `CB500F` and `CB500X` stay apart, so do `RS 660` and `RS 457`. The make and
+   the year are inside the key, so an alias never reaches across either, and a core shorter than
+   three characters gets no key at all (`R` would match far too much).
+3. **Language fallback** — only when passes 1 and 2 found *nothing*, the vehicle is offered the
+   manufacturer's own handbook in another language, ranked by the vehicle's own market first and
+   then `LANG_FALLBACK` (de, fr, es, it, nl, pt, ja, sv, da, no, fi, pl, then the rest).
+   `Bike.lang` is stamped with that language and is `None` for English, so a reader is told before
+   they open it. `catalog.mjs` carries it into the roster's extra field as `l: {"<year>": lang}`.
+
+`_ingestable()` is unchanged, so **no foreign row is ever queued for unattended ingest** —
+`free_owner_manuals()`, `list-free` and `ingest-free` still see English only. `_fetchable()` is the
+new, wider predicate the foreign index uses.
+
+Tests: `api/tests/test_registry_match.py`, 24 cases — the alias key both ways, a neighbouring model
+and a neighbouring year both refused, English beating a foreign row for the same vehicle, a foreign
+row being labelled, the market-before-language order, and paid/non-PDF rows never offered in any
+language.
+
+### Language fallback, by language and by make (1,586 vehicles)
+
+| lang | vehicles | | make | vehicles |
+|---|---|---|---|---|
+| id (Indonesian) | 332 | | Yamaha | 851 |
+| th (Thai) | 302 | | Suzuki | 370 |
+| de | 240 | | Opel | 170 |
+| vi (Vietnamese) | 215 | | Fiat | 49 |
+| ja | 177 | | Peugeot | 26 |
+| fr | 157 | | Alfa Romeo | 23 |
+| it 38 · es 32 · ro 16 · mk 12 · lt 11 · el 10 · uk 9 · ru 7 · pl 6 · nl 5 · da 4 · + 8 more | 123 | | Citroën 17 · QJ 15 · Honda 14 · Triumph 13 · Jeep 12 · Lancia 12 · Dacia 10 · DS 2 · Ducati 1 · Volvo 1 | 97 |
+
+That Opel 170 is the whole Opel gap closed — the PSA asset hosts publish those books in French and
+German, and cycle 2's log named it as the one car gap with a known payoff.
+
+### Every alias pairing — 301 vehicles over 146 spellings
+
+| make | catalogue name | registry name | vehicles |
+|---|---|---|---|
+| BMW | `F650GS` | `F 650 GS` | 1 |
+| BMW | `F800 S` | `F 800 S` | 2 |
+| BMW | `F800 ST` | `F 800 ST` | 2 |
+| BMW | `G650X Challenge` | `G 650 Xchallenge` | 1 |
+| BMW | `G650X Country` | `G 650 Xcountry` | 1 |
+| BMW | `G650X Moto` | `G 650 Xmoto` | 1 |
+| BMW | `K1200 GT` | `K 1200 GT` | 1 |
+| BMW | `K1200GT` | `K 1200 GT` | 1 |
+| BMW | `K1200LT` | `K 1200 LT` | 1 |
+| BMW | `K1200R` | `K 1200 R` | 1 |
+| BMW | `K1200S` | `K 1200 S` | 1 |
+| BMW | `R 12` | `R 12` | 1 |
+| BMW | `R 12 G/S` | `R 12 G/S` | 1 |
+| BMW | `R Nine T` | `R nineT` | 4 |
+| BMW | `R Nine T Pure` | `R nineT Pure` | 5 |
+| BMW | `R Nine T Scrambler` | `R nineT Scrambler` | 1 |
+| BMW | `R Ninet Urban GS` | `R nineT Urban G/S` | 5 |
+| BMW | `R1200GS` | `R 1200 GS` | 1 |
+| BMW | `R1200GS Adventure` | `R 1200 GS Adventure` | 1 |
+| BMW | `R1200R` | `R 1200 R` | 1 |
+| BMW | `R1200RT` | `R 1200 RT` | 1 |
+| BMW | `R1200S` | `R 1200 S` | 1 |
+| BMW | `R1200ST` | `R 1200 ST` | 1 |
+| Ducati | `Multistrada V4S` | `Multistrada V4 S` | 2 |
+| GasGas | `EC300` | `EC 300` | 1 |
+| Honda | `CB1100 Ex` | `CB1100EX` | 2 |
+| Honda | `CB1100 RS` | `CB1100RS` | 1 |
+| Honda | `CBR 250R` | `CBR250R` | 1 |
+| Honda | `CBR 300R` | `CBR300R` | 2 |
+| Honda | `CBR 300R Abs` | `CBR300R ABS` | 1 |
+| Honda | `CMX500A` | `CMX500-A` | 1 |
+| Honda | `CRF 50 F` | `CRF50F` | 1 |
+| Honda | `CTX 700` | `CTX700` | 2 |
+| Honda | `Click 125I` | `Click125i` | 2 |
+| Honda | `GL1800 (Goldwing)` | `GL1800 Gold Wing` | 2 |
+| Honda | `Montesa Cota 4RT 260` | `Montesa Cota 4RT260` | 1 |
+| Honda | `PCX 125` | `PCX125` | 1 |
+| Honda | `ST 1300 Abs` | `ST1300 ABS` | 1 |
+| Honda | `Trail 125` | `Trail125` | 1 |
+| Husqvarna | `FC250` | `FC 250` | 1 |
+| Husqvarna | `FC350` | `FC 350` | 1 |
+| Husqvarna | `FC450` | `FC 450` | 1 |
+| Husqvarna | `TC250` | `TC 250` | 1 |
+| Husqvarna | `TC85 17-14` | `TC 85 17/14` | 1 |
+| Husqvarna | `TC85 19-16` | `TC 85 19/16` | 1 |
+| KTM | `125 Exc Sixdays` | `125 EXC Six Days` | 5 |
+| KTM | `250 Exc Sixdays` | `250 EXC Six Days` | 2 |
+| KTM | `250 Exc-F Sixdays` | `250 EXC-F Six Days` | 1 |
+| KTM | `250 SXF Prado` | `250 SX-F Prado` | 1 |
+| KTM | `300 Exc Sixdays` | `300 EXC Six Days` | 1 |
+| KTM | `300 Exc Tpi Erzberg Rodeo` | `300 EXC TPI Erzbergrodeo` | 1 |
+| KTM | `450 Exc Sixdays` | `450 EXC Six Days` | 2 |
+| KTM | `530 Exc Sixdays` | `530 EXC Six Days` | 2 |
+| KTM | `990 Superduke R` | `990 Super Duke R` | 1 |
+| Triumph | `Bonneville T 100` | `Bonneville T100` | 1 |
+| Triumph | `Daytona MOTO2 765` | `Daytona Moto2™ 765` | 1 |
+| Triumph | `Scrambler 1200XE` | `Scrambler 1200 XE` | 2 |
+| Triumph | `Street Twin Gold Line` | `Street Twin Goldline` | 2 |
+| Yamaha | `BWS 125` | `BW'S 125` | 7 |
+| Yamaha | `DT 125 Re` | `DT125RE` | 1 |
+| Yamaha | `DT 125 X` | `DT125X` | 1 |
+| Yamaha | `Delight` | `D'ELIGHT` | 4 |
+| Yamaha | `Delight 125` | `D'ELIGHT 125` | 1 |
+| Yamaha | `FAZER8` | `FAZER 8` | 3 |
+| Yamaha | `FAZER8 Abs` | `FAZER 8 ABS` | 2 |
+| Yamaha | `FJR 1300` | `FJR1300` | 5 |
+| Yamaha | `FJR 1300 A` | `FJR1300A` | 3 |
+| Yamaha | `FJR 1300 Ae` | `FJR1300AE` | 2 |
+| Yamaha | `FJR 1300 As` | `FJR1300AS` | 3 |
+| Yamaha | `FZ 6` | `FZ6` | 1 |
+| Yamaha | `FZ25` | `FZ 25` | 1 |
+| Yamaha | `Fascino 125FI` | `FASCINO 125 FI` | 1 |
+| Yamaha | `MT-07` | `MT07` | 1 |
+| Yamaha | `MT-09 TR` | `MT-09TR` | 2 |
+| Yamaha | `MT-09SP` | `MT09 SP` | 1 |
+| Yamaha | `MT-10 SP` | `MT-10SP` | 3 |
+| Yamaha | `MT-125` | `MT125` | 3 |
+| Yamaha | `MT-25` | `MT25` | 4 |
+| Yamaha | `MT09TR GT` | `MT-09TRGT` | 1 |
+| Yamaha | `NMAX155` | `NMAX 155` | 2 |
+| Yamaha | `PW 50` | `PW50` | 1 |
+| Yamaha | `SCR 950` | `SCR950` | 1 |
+| Yamaha | `SR 400` | `SR400` | 1 |
+| Yamaha | `T MAX` | `TMAX` | 2 |
+| Yamaha | `TDM 850` | `TDM850` | 2 |
+| Yamaha | `TDM 900` | `TDM900` | 8 |
+| Yamaha | `TDM 900 - A` | `TDM900A` | 2 |
+| Yamaha | `TDM 900A` | `TDM900A` | 2 |
+| Yamaha | `TENERE700` | `TENERE 700` | 2 |
+| Yamaha | `TRACER 900GT` | `TRACER 900 GT` | 2 |
+| Yamaha | `TRACER 9GT` | `TRACER 9 GT` | 1 |
+| Yamaha | `TRACER 9GT` | `TRACER 9 GT+` | 1 |
+| Yamaha | `TT-R 125` | `TT-R125` | 3 |
+| Yamaha | `TT-R 125 E` | `TT-R125E` | 3 |
+| Yamaha | `TT-R 125 LW` | `TT-R125LW` | 2 |
+| Yamaha | `TT-R 125 Lwe` | `TT-R125LWE` | 1 |
+| Yamaha | `TT-R 225` | `TT-R225` | 1 |
+| Yamaha | `TT-R 230` | `TT-R230` | 1 |
+| Yamaha | `TT-R 250` | `TT-R250` | 1 |
+| Yamaha | `TT-R 50 E` | `TT-R50E` | 1 |
+| Yamaha | `TT-R 90` | `TT-R90` | 2 |
+| Yamaha | `TT-R 90 E` | `TT-R90E` | 3 |
+| Yamaha | `TT-R125 - LW` | `TT-R125LW` | 1 |
+| Yamaha | `TT-R125 LW E` | `TT-R125LWE` | 1 |
+| Yamaha | `TT-R125LW E` | `TT-R125LWE` | 1 |
+| Yamaha | `TT-R90 E` | `TT-R90E` | 1 |
+| Yamaha | `TTR125LWE` | `TT-R125LWE` | 2 |
+| Yamaha | `TW 125` | `TW125` | 5 |
+| Yamaha | `TW 200` | `TW200` | 4 |
+| Yamaha | `TZR 50` | `TZR50` | 3 |
+| Yamaha | `V-Max 1200` | `VMAX 1200` | 1 |
+| Yamaha | `WR 125R` | `WR125R` | 1 |
+| Yamaha | `WR 125X` | `WR125X` | 1 |
+| Yamaha | `WR 250 F` | `WR250F` | 4 |
+| Yamaha | `WR 450 F` | `WR450F` | 4 |
+| Yamaha | `WR125 X` | `WR125X` | 2 |
+| Yamaha | `X-Max 250` | `XMAX 250` | 11 |
+| Yamaha | `X-Max 250 Abs` | `XMAX 250 ABS` | 2 |
+| Yamaha | `X-Max 300` | `XMAX 300` | 4 |
+| Yamaha | `X-Max 400` | `XMAX 400` | 3 |
+| Yamaha | `X-Max 400 Abs` | `XMAX 400 ABS` | 1 |
+| Yamaha | `XJR 1300` | `XJR1300` | 10 |
+| Yamaha | `XJR 1300 SP` | `XJR1300SP` | 2 |
+| Yamaha | `XSR 125` | `XSR125` | 1 |
+| Yamaha | `XT 350` | `XT350` | 1 |
+| Yamaha | `XT 600 E` | `XT600E` | 2 |
+| Yamaha | `XT 660 R` | `XT660R` | 2 |
+| Yamaha | `XT 660 X` | `XT660X` | 2 |
+| Yamaha | `XT 660R` | `XT660R` | 1 |
+| Yamaha | `XT 660X` | `XT660X` | 1 |
+| Yamaha | `XVS650 A` | `XVS650A` | 1 |
+| Yamaha | `YBR 125` | `YBR125` | 4 |
+| Yamaha | `YBR 250` | `YBR250` | 1 |
+| Yamaha | `YZ 125` | `YZ125` | 5 |
+| Yamaha | `YZ 250` | `YZ250` | 5 |
+| Yamaha | `YZ 250 F` | `YZ250F` | 5 |
+| Yamaha | `YZ 426 F` | `YZ426F` | 1 |
+| Yamaha | `YZ 450 F` | `YZ450F` | 4 |
+| Yamaha | `YZ 65` | `YZ65` | 1 |
+| Yamaha | `YZ 85` | `YZ85` | 5 |
+| Yamaha | `YZ 85 LW` | `YZ85LW` | 3 |
+| Yamaha | `YZ 85LW` | `YZ85LW` | 2 |
+| Yamaha | `YZ450 FX` | `YZ450FX` | 2 |
+| Yamaha | `YZ85 LW` | `YZ85LW` | 3 |
+| Yamaha | `YZF 600 R` | `YZF600R` | 2 |
+| Yamaha | `YZF-R 125` | `YZF-R125` | 2 |
+
+### Handoff: the roster carries `l`, the counter app does not read it yet
+
+`web/store/ttm-catalog.json` rows now ship `extra.l = {"<year>": "de"}` for the 1,586 vehicles whose
+offered manual is not in English. `web/counter/js/index-data.js:108` destructures
+`{i, o, k}` and ignores `l`, so the offline roster currently shows those vehicles as an ordinary
+on-demand manual with no language shown. That file is the counter agent's, not mine — it needs one
+line (`const lang = extra?.l?.[year]`) and a badge, so a rider is told the book is in German before
+`/manuals/ensure` fetches it. The data side is done and stable; nothing breaks without the change.
+
+### Source added: KTM · Husqvarna · GasGas, every language the portal prints
+
+`pierer.py` has always filtered through `keep_lang()`, so the default `REGISTRY_LANGS=en` kept
+2,382 of the rows the one AEM component actually publishes. Re-run with `REGISTRY_LANGS='*'` it
+yields **26,784 rows over 14,828 distinct PDFs** — KTM 18,333, Husqvarna 5,893, GasGas 2,558 — in
+de 2,389 · en 2,379 · es 2,329 · fr 2,305 · it 1,937 · nl 1,678 · ja 1,644 · cs 1,636 · fi 1,596 ·
+pl 1,586 · sv 1,526 · pt 1,493 and more. No adapter change was needed; the row ids already carry
+the language, so the 2,379 English rows merged onto themselves and **24,418 rows are new**.
+Verified: 8 non-English samples across four languages, 8/8 `%PDF-`.
+
+It moves the vehicle count barely (+15) because KTM prints the same models in every language, so
+almost all of it lands on bikes an English manual already covered — but it is 14,828 real official
+handbooks the registry can now answer with, and it is what makes the language fallback worth having
+for the next make that is *not* English-first.
+
+**The same one-line experiment is owed to every adapter that calls `keep_lang()`:**
+`americas.py`, `bmw.py`, `electric.py`, `euro_small.py`, `honda.py`, `honda_intl.py`,
+`kawasaki.py`, `royalenfield.py`, `suzuki_intl.py`, `triumph.py`, `triumph_pdf.py`, `yamaha.py`,
+`yamaha_intl.py`, `royalalloy.py`. `yamaha_intl.py` and `triumph_pdf.py` were already built with
+`'*'`; the rest have not been measured. Run each with `REGISTRY_LANGS='*'` into its own fragment,
+verify a sample, merge. Start with **Honda** and **BMW** — both are multi-language portals feeding
+the two biggest remaining unknown-model pools.
+
+Caveat for whoever commits this: `api/data/registry-fragments/pierer-langs.json` is **9.2 MB**, and
+`registry.json` is now 36.6 MB in the blob. Neither is a problem for the sync, but it is a large
+file to put in git — squash or gitignore it if the repo policy says so; the adapter reproduces it
+from one command.
+
+### Cycle 3 final state
+
+**77,993 rows · 24,236 free English owner PDFs · 14,783 distinct files · 27,776 vehicles ·
+15,449 with a manual (1,601 of them in another language).** 767 tests pass, 0 impossible years,
+roster 631 KB raw / 89 KB gzip.
