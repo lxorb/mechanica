@@ -108,7 +108,8 @@ function marketOf(packed, year) {
 
 /**
  * web/store/ttm-catalog.json -> Bike[] with aliases.
- * Row: [make, model, years, manuals, market, extra?] where extra is {i:ids, o:[years], k:1, l:langs}
+ * Row: [make, model, years, manuals, market, extra?] where extra is
+ * {i:ids, o:[years]|{r:[from,to]}, k:1, l:lang|langs}
  * — see web/tools/catalog.mjs. `ondemand` is a flag, not a URL: /manuals/ensure resolves the
  * PDF server-side from the bikeId, and bundling 13k URLs would cost 1.4 MB.
  */
@@ -120,10 +121,14 @@ export function expandBundle(bundle) {
     const [make, model, years, manuals, market, extra] = row;
     const aliases = aliasesOf(make, model);
     const ids = extra?.i;
-    const ondemand = extra?.o ? new Set(extra.o) : null;
+    // `o` is packed like `years`: a list, or {r:[from,to]} when the run is dense. yearsOf()
+    // understands both and returns [] for anything else, so a malformed row costs one model,
+    // not the whole roster.
+    const ondemand = extra?.o ? new Set(yearsOf(extra.o)) : null;
     const kind = extra?.k ? "car" : "motorcycle";
-    // `l` is per year, like `manuals`: the language of the manual assigned to that year, set
-    // only where no English one exists.
+    // `l` is the language of the manual assigned to a year, set only where no English one
+    // exists: a bare string when every on-demand year shares it (the common case, and the same
+    // shorthand `market` uses), otherwise a per-year map like `manuals`.
     const langs = extra?.l;
     for (const year of yearsOf(years)) {
       const id = (ids && ids[year]) || bikeId(make, model, year);
@@ -139,7 +144,7 @@ export function expandBundle(bundle) {
         manualId: (manuals && manuals[year]) || null,
         manualUrl: null,
         ondemand: ondemand ? ondemand.has(year) : false,
-        lang: langOf(langs && langs[year]),
+        lang: langOf(typeof langs === "string" ? langs : langs && langs[year]),
         aliases,
       });
     }

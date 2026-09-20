@@ -70,6 +70,41 @@ const CDN = `https://cdn.jsdelivr.net/npm/three@${THREE_VERSION}/`;
 const IMPORTS = { three: `${CDN}build/three.module.js`, "three/addons/": `${CDN}examples/jsm/` };
 
 const ORANGE = 0xe85d04;
+
+/* ------------------------------------------------------------------ stage colours
+ * The 3D panel is the one part of the app whose colours are not CSS, so it has to fetch them.
+ * `docs/ui-themes.md` marks `--grid`, `--grid-bg` and `--accent` as **stage** tokens: declared in
+ * CSS, read by this file. Everything else in here stays put — the HDRIs, the four lights and the
+ * studio sky gradient are photographic, and tinting them would light the vehicle a different
+ * colour per theme rather than restyle the panel around it.
+ *
+ * Read at mount and again on `mechanica:theme`, whose `detail.tokens` already carries the three
+ * values; the CSS is consulted when it does not, and the literals below are used when neither
+ * does. viewer-test.html mounts the viewer without themes.css, so "neither" is a real case.
+ */
+const STAGE_FALLBACK = { accent: ORANGE, grid: 0xb6bcc4, gridBg: 0x1a1f24, muted: 0x9fa2a6 };
+const STAGE_TOKEN = { accent: "--accent", grid: "--grid", gridBg: "--grid-bg", muted: "--muted" };
+const CSS_COLOR = /^(#|rgba?\(|hsla?\(|color\()/i;
+
+/**
+ * stageColor(THREE, name, tokens?) -> THREE.Color
+ * `tokens` is the `detail.tokens` object from a mechanica:theme event, when there is one.
+ * Never throws and never returns white-by-accident: an unparseable token falls back to the
+ * literal the panel shipped with.
+ */
+function stageColor(THREE, name, tokens) {
+  let text = tokens && typeof tokens[name] === "string" ? tokens[name].trim() : "";
+  if (!text && typeof document !== "undefined" && document.documentElement) {
+    try {
+      text = getComputedStyle(document.documentElement).getPropertyValue(STAGE_TOKEN[name]).trim();
+    } catch { text = ""; }
+  }
+  const color = new THREE.Color(STAGE_FALLBACK[name]);
+  if (!text || !CSS_COLOR.test(text)) return color;
+  try { color.setStyle(text); } catch { color.setHex(STAGE_FALLBACK[name]); }
+  return color;
+}
+
 /**
  * How far the unselected parts fade when one part is focused. 0.35 made the exploded view
  * unreadable — everything that was not the answer went to a silhouette, and against the ink grid
@@ -1048,10 +1083,12 @@ function technicalBackdrop(THREE) {
       uOpacity: { value: 0 },
       // mid-dark slate, not black: the parts floating in front of it are themselves dark, and
       // black behind dark metal is a silhouette. The grid lines have to be visible too — a grid
-      // you cannot see is just a dark rectangle.
-      uInk: { value: new THREE.Color(0x1a1f24) },
-      uLine: { value: new THREE.Color(0xb6bcc4) },
-      uAccent: { value: new THREE.Color(ORANGE) },
+      // you cannot see is just a dark rectangle. Which slate, which line colour and which accent
+      // are the theme's --grid-bg / --grid / --accent; the shipped Workshop values are the
+      // fallbacks in STAGE_FALLBACK.
+      uInk: { value: stageColor(THREE, "gridBg") },
+      uLine: { value: stageColor(THREE, "grid") },
+      uAccent: { value: stageColor(THREE, "accent") },
     },
     side: THREE.BackSide,
     transparent: true,
@@ -1146,7 +1183,7 @@ async function loadRoom(THREE, file, radius, height) {
     const root = gltf.scene;
 
     const concrete = new THREE.MeshStandardMaterial({
-      color: 0x9fa2a6, roughness: 0.92, metalness: 0.0,
+      color: stageColor(THREE, "muted"), roughness: 0.92, metalness: 0.0,
       // FrontSide, not DoubleSide: this is a modelled interior, and rendering both sides of every
       // wall means seeing the backs of the far ones through the near ones, which turns a room
       // into a pile of shapes
@@ -1865,11 +1902,23 @@ function createScene(THREE, host, initialModel, opts) {
   // materials: one highlight clone and one dim clone per source material
   const hlMaterials = new Map();
   const dimMaterials = new Map();
+  /**
+   * The highlight tint, re-derived from each SOURCE material rather than from the clone, so it
+   * can be recomputed on a theme change without drifting: lerping an already-lerped colour
+   * towards a new accent five themes running would end up somewhere no theme asked for.
+   */
+  function tintHighlights(accent) {
+    for (const [source, hl] of hlMaterials) {
+      if (hl.emissive) { hl.emissive.copy(accent); hl.emissiveIntensity = 0.55; }
+      if (hl.color && source.color) hl.color.copy(source.color).lerp(accent, 0.18);
+    }
+  }
   function cloneMaterials() {
+    const accent = stageColor(THREE, "accent");
     for (const material of model.materials) {
       const hl = material.clone();
-      if (hl.emissive) { hl.emissive.setHex(ORANGE); hl.emissiveIntensity = 0.55; }
-      if (hl.color) hl.color.lerp(new THREE.Color(ORANGE), 0.18);
+      if (hl.emissive) { hl.emissive.copy(accent); hl.emissiveIntensity = 0.55; }
+      if (hl.color) hl.color.lerp(accent, 0.18);
       hlMaterials.set(material, hl);
       const dim = material.clone();
       dim.transparent = true;
@@ -1904,9 +1953,28 @@ function createScene(THREE, host, initialModel, opts) {
   }
 
   const xrayMaterial = new THREE.MeshBasicMaterial({
-    color: 0x6f7885, transparent: true, opacity: 0.12, depthWrite: false,
+    color: stageColor(THREE, "grid"), transparent: true, opacity: 0.12, depthWrite: false,
     side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
   });
+
+  /**
+   * The theme changed under a mounted viewer. Only the three stage tokens move, and they move in
+   * place — no material is rebuilt, no frame is dropped, and nothing that lights the vehicle is
+   * touched. The panel is invalidated so the change shows even while the viewer is idle.
+   */
+  function onTheme(event) {
+    if (disposed) return;
+    const tokens = event && event.detail ? event.detail.tokens : null;
+    const accent = stageColor(THREE, "accent", tokens);
+    const uniforms = gridBackdrop.material.uniforms;
+    uniforms.uInk.value.copy(stageColor(THREE, "gridBg", tokens));
+    uniforms.uLine.value.copy(stageColor(THREE, "grid", tokens));
+    uniforms.uAccent.value.copy(accent);
+    xrayMaterial.color.copy(stageColor(THREE, "grid", tokens));
+    tintHighlights(accent);
+    run();
+  }
+  window.addEventListener("mechanica:theme", onTheme);
 
   const reduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   const tmpBox = new THREE.Box3();
@@ -2279,6 +2347,7 @@ function createScene(THREE, host, initialModel, opts) {
     resizeObserver.disconnect();
     intersectionObserver.disconnect();
     document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("mechanica:theme", onTheme);
     renderer.domElement.removeEventListener("pointerdown", onDown);
     renderer.domElement.removeEventListener("pointercancel", onCancel);
     window.removeEventListener("pointerup", onCancel);

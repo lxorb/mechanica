@@ -1,4 +1,4 @@
-"""Run one adapter with REGISTRY_LANGS='*' and dump it to a fragment. Usage: _langs.py <adapter>"""
+"""Run one adapter with REGISTRY_LANGS='*' and dump it to a fragment. Usage: _langs.py <module:attr>"""
 import collections, importlib, json, os, sys
 
 os.environ["REGISTRY_LANGS"] = "*"

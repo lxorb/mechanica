@@ -133,6 +133,9 @@ async function run() {
     const page = await browser.newPage();
     await page.setViewport({ width, height, deviceScaleFactor: 2 });
     await page.bringToFront();
+    // Headless answers prefers-color-scheme with "dark", and index.html's pre-paint script turns
+    // that into Night. The state shots below should be the app's default livery.
+    await page.emulateMediaFeatures([{ name: "prefers-color-scheme", value: "light" }]);
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     page.on("console", (m) => {
@@ -345,6 +348,7 @@ async function run() {
     // swap. Workshop is the :root default; Night and Paper are the two furthest from it.
     for (const theme of ["night", "paper"]) {
       const painted = await page.evaluate(async (id) => {
+        window.__orb.peek(false);
         document.documentElement.setAttribute("data-theme", id);
         const chat = document.querySelector(".cv-body deep-chat");
         try {
@@ -377,7 +381,7 @@ async function run() {
         `${theme}: the transcript took the theme's ground (${painted.messages} vs --bg ${painted.ground})`);
       await page.screenshot({ path: join(SHOTS, `theme-${theme}-${label}.png`) });
     }
-    await page.evaluate(() => document.documentElement.removeAttribute("data-theme"));
+    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "workshop"));
 
     // and it unmounts clean
     // pick.js quietly mounts a chat view of its own once the manual resolves, so what is asserted

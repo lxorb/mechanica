@@ -81,6 +81,7 @@ const CHAT_MS = 120000;
 const CLIMATE_MS = 8000; // two in-memory tables on the API side: this is never a slow route
 const INGEST_POLL_MS = 1000;
 const INGEST_MAX_MS = 15 * 60 * 1000;
+const INGEST_MISS_MAX = 10; // polls in a row that answer nothing before the job counts as gone
 const SECTIONS_POLL_MS = 2000;
 const SECTIONS_MAX_MS = 3 * 60 * 1000;
 const MAX_JOB_PAGES = 40;
@@ -189,7 +190,7 @@ function timeout(ms) {
 }
 
 async function http(path, opts = {}) {
-  const { method = "GET", body, json, form, ms = 15000, base: override } = opts;
+  const { method = "GET", body, json, form, ms = 15000, base: override, cache } = opts;
   const root = override ?? apiBase();
   const url = path.startsWith("http") ? path : `${root}${path}`;
   const guard = timeout(ms);
@@ -200,8 +201,10 @@ async function http(path, opts = {}) {
     payload = JSON.stringify(json);
   }
   if (form !== undefined) payload = form;
+  const init = { method, headers, body: payload, signal: guard.signal };
+  if (cache) init.cache = cache; // "no-store": ask the network, not the HTTP cache
   try {
-    const res = await fetch(url, { method, headers, body: payload, signal: guard.signal });
+    const res = await fetch(url, init);
     if (!res.ok) {
       const err = new Error(`${method} ${url} -> ${res.status}`);
       err.status = res.status;
@@ -782,7 +785,11 @@ export async function manual(id, { fresh = false } = {}) {
   if (!fresh && manualInflight.has(manualId)) return manualInflight.get(manualId);
 
   const task = (async () => {
-    const raw = await quiet(`/manuals/${encodeURIComponent(manualId)}`, { ms: MANUAL_MS }, null);
+    // `fresh` is the poll that waits for an ingest to fill in the sections, so it must not be
+    // answered from the HTTP cache: the early, section-less publish is a 200 and the edge holds
+    // one for a minute (docs/qa/BUGS.md BUG-15).
+    const opts = fresh ? { ms: MANUAL_MS, cache: "no-store" } : { ms: MANUAL_MS };
+    const raw = await quiet(`/manuals/${encodeURIComponent(manualId)}`, opts, null);
     if (!raw) return undefined;
     const made = mapManual(raw);
     manualCache.set(manualId, made);
@@ -1332,16 +1339,37 @@ function report(onProgress, patch) {
   }
 }
 
+/** An error a second attempt could still get past: a dead job, not a broken manual. */
+function again(message) {
+  const err = new Error(message);
+  err.retry = true;
+  return err;
+}
+
+/**
+ * Poll one ingest job to its end. Two ways out besides "done" are worth a retry rather than a
+ * failure, because in both the job is gone and `POST /manuals/ensure` will start a fresh one
+ * (docs/qa/BUGS.md BUG-13): the API reporting the job as `error: "stalled"` — its replica stopped
+ * writing to it — and the id answering nothing at all for INGEST_MISS_MAX polls in a row. Without
+ * the second one a job id that 404s costs the rider the full INGEST_MAX_MS of polling.
+ */
 async function pollJob(jobId, onProgress, title) {
   const deadline = Date.now() + INGEST_MAX_MS;
   let last = null;
+  let misses = 0;
   while (Date.now() < deadline) {
     const job = await quiet(`/ingest/${encodeURIComponent(jobId)}`, { ms: 10000 }, null);
     if (job) {
+      misses = 0;
       last = job;
       report(onProgress, { status: job.status, done: job.done ?? 0, pages: job.pages ?? 0, stage: job.stage ?? null, title });
       if (job.status === "done") return job;
-      if (job.status === "error") throw new Error(job.error || "ingest failed");
+      if (job.status === "error") {
+        if (job.error === "stalled") throw again("the indexing job stopped");
+        throw new Error(job.error || "ingest failed");
+      }
+    } else if ((misses += 1) >= INGEST_MISS_MAX) {
+      throw again(`ingest job ${jobId} is not answering`);
     }
     await sleep(INGEST_POLL_MS);
   }
@@ -1428,31 +1456,51 @@ export async function ensureManual(bikeId, onProgress, opts) {
   const title = `${hit.make} ${hit.model} ${hit.year}`;
   const vin = typeof opts?.vin === "string" && opts.vin.trim() ? opts.vin.trim().toUpperCase() : null;
 
-  let body = null;
-  try {
-    const json = vin ? { bikeId: hit.id, vin } : { bikeId: hit.id };
-    body = await http("/manuals/ensure", { method: "POST", json, ms: 30000 });
-  } catch (err) {
-    if (err?.status !== 404 && err?.status !== 405) throw err;
-    if (!hit.manualUrl) return null;
-    report(onProgress, { status: "queued", done: 0, pages: 0, title });
-    return ingest(hit.manualUrl, { make: hit.make, model: hit.model, year: hit.year, market: hit.market }, onProgress);
-  }
+  // Two attempts. A job whose replica died mid-ingest comes back as `error: "stalled"` and a fresh
+  // POST /manuals/ensure starts a new one, so the rider is only shown a failure when the second
+  // attempt fails too (docs/qa/BUGS.md BUG-13). The retry cannot start a second paid ingest: a
+  // live job is joined, and a manual that is genuinely broken answers "error" without one.
+  for (let attempt = 0; attempt < 2; attempt++) {
+    let body = null;
+    try {
+      const json = vin ? { bikeId: hit.id, vin } : { bikeId: hit.id };
+      body = await http("/manuals/ensure", { method: "POST", json, ms: 30000 });
+    } catch (err) {
+      if (err?.status !== 404 && err?.status !== 405) throw err;
+      if (!hit.manualUrl) return null;
+      report(onProgress, { status: "queued", done: 0, pages: 0, title });
+      return ingest(hit.manualUrl, { make: hit.make, model: hit.model, year: hit.year, market: hit.market }, onProgress);
+    }
 
-  if (!body || body.status === "none") {
-    report(onProgress, { status: "none", reason: body?.reason ?? "no free manual known", done: 0, pages: 0, title });
-    return null;
-  }
-  report(onProgress, { status: body.status, done: body.done ?? 0, pages: body.pages ?? 0, title });
+    if (!body || body.status === "none") {
+      report(onProgress, { status: "none", reason: body?.reason ?? "no free manual known", done: 0, pages: 0, title });
+      return null;
+    }
+    if (body.status === "error") {
+      // a manual that could not be built stays broken for hours; waiting three minutes for
+      // sections that are never coming only makes the rider wait for the same answer
+      report(onProgress, { status: "error", reason: body.error ?? "ingest failed", done: 0, pages: 0, title });
+      throw new Error(body.error || "ingest failed");
+    }
+    report(onProgress, { status: body.status, done: body.done ?? 0, pages: body.pages ?? 0, title });
 
-  if (body.status === "ready" && body.manualId) {
-    adoptManual(hit.id, body.manualId);
-    return manual(body.manualId);
+    if (body.status === "ready" && body.manualId) {
+      adoptManual(hit.id, body.manualId);
+      return manual(body.manualId);
+    }
+    if (body.jobId) {
+      try {
+        await pollJob(body.jobId, onProgress, title);
+      } catch (err) {
+        if (attempt === 0 && err?.retry) continue;
+        throw err;
+      }
+    }
+    const made = await waitForSections(body.manualId, onProgress, title);
+    if (made) adoptManual(hit.id, made.id);
+    return made ?? null;
   }
-  if (body.jobId) await pollJob(body.jobId, onProgress, title);
-  const made = await waitForSections(body.manualId, onProgress, title);
-  if (made) adoptManual(hit.id, made.id);
-  return made ?? null;
+  return null;
 }
 
 // ---------------------------------------------------------------- ops

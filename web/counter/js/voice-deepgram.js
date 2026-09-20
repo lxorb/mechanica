@@ -523,6 +523,10 @@ function handle(session, ws, msg, say) {
     case "EndOfTurn":
       fresh(session);
       status(session, "thinking", say);
+      // The clock starts when HE stopped talking, not when a lookup happens to be reported: the
+      // first FunctionCallRequest is itself 0.7-1.0 s away, and 2,500 ms measured from there
+      // would land the acknowledgement after the answer on half the turns it is meant to cover.
+      arm(session, ws, say);
       break;
     case "AgentThinking":
       status(session, "thinking", say);
@@ -565,6 +569,7 @@ function handle(session, ws, msg, say) {
         run_function(session, ws, call, say);
       }
       status(session, "thinking", say);
+      // Only if the turn began before this client was listening (a reconnect mid-turn).
       arm(session, ws, say);
       break;
     case "FunctionCallResponse":

@@ -13,7 +13,17 @@
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png?v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Non-blocking. As a plain stylesheet this third party sat on the critical path of an
+       app whose every other byte is local: measured with fonts.googleapis.com hanging, the
+       first paint went from 0.3 s to 12.1 s — a blank screen in a garage with bad wifi.
+       The faces already carry display=swap, so a cold load was already a FOUT; this only
+       decides whether the app is on screen while it waits. -->
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap">
+  <noscript>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Big+Shoulders+Display:wght@700;800&display=swap">
+  </noscript>
   <link rel="stylesheet" href="css/counter.css">
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/particons.css">
