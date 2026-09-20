@@ -400,7 +400,7 @@ async function main() {
    */
   // --envs: every environment, with one exact and one generic model, at both viewports
   if (process.argv.includes("--envs")) {
-    const ENVS = ["auto_service", "garage", "studio_small_09", "empty_warehouse_01"];
+    const ENVS = ["auto_service", "autoshop_01", "studio_small_09", "empty_warehouse_01"];
     const MODELS = [["yzf", "model=yzf-2021"], ["naked", "model=generic/naked"]];
     const list = [];
     for (const env of ENVS) for (const [m, q] of MODELS) list.push([`${env} ${m}`, `${q}&env=${env}`]);

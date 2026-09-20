@@ -70,9 +70,30 @@ def test_unknown_manual_is_404_not_an_empty_agent(client):
 
 def test_listen_speak_and_think_providers(agent):
     assert agent["language"] == "en"
-    assert agent["listen"]["provider"] == {"type": "deepgram", "model": "nova-3"}
-    assert agent["speak"]["provider"] == {"type": "deepgram", "model": "aura-2-thalia-en"}
+    assert agent["speak"]["provider"] == {"type": "deepgram", "model": "aura-2-asteria-en"}
     assert agent["think"]["provider"]["type"] == "open_ai"
+
+
+def test_listening_is_flux_with_eager_end_of_turn(agent):
+    """Flux detects the end of a turn inside the model and, with an eager threshold, starts the
+    answer before the rider has stopped. Measured at 1.35 s to first audio against nova-3's 1.97."""
+    listen = agent["listen"]["provider"]
+    assert listen["type"] == "deepgram"
+    assert listen["version"] == "v2", "flux is a listen v2 model"
+    assert listen["model"] == "flux-general-en"
+    assert 0.3 <= listen["eager_eot_threshold"] <= listen["eot_threshold"] <= 1.0
+    assert 500 <= listen["eot_timeout_ms"] <= 3000, "a mechanic's question ends when it ends"
+
+
+def test_the_listen_config_is_copied_not_shared(client):
+    """The module-level dict must not be handed out by reference, or one response's edit would
+    follow every later one."""
+    from app import voice as voice_mod
+
+    body = client.get(SETTINGS, params={"manualId": KTM}).json()
+    listen = body["settings"]["agent"]["listen"]["provider"]
+    assert listen == voice_mod.LISTEN
+    assert listen is not voice_mod.LISTEN
 
 
 def test_think_model_is_one_deepgram_lists_for_open_ai(agent):
@@ -117,7 +138,7 @@ def test_an_unknown_bike_id_falls_back_to_the_manual_rather_than_greeting_nobody
 def digest_of(prompt: str) -> str:
     head, _, rest = prompt.partition("WHAT THIS MANUAL CONTAINS:\n")
     assert head, "the context block moved"
-    return rest.split("\n\nHow you answer:")[0]
+    return rest.split("\n\n")[0]
 
 
 def test_the_prompt_carries_the_bike_the_title_and_a_digest(agent):
@@ -171,11 +192,32 @@ def test_a_manual_with_no_outline_still_gets_a_digest_from_its_sections(client, 
         "no markdown",
         "Answer ONLY from what a function gave you back",
         "NEVER guess",
-        "Always say the page",
+        "Say the page whenever a figure came off one",
     ],
 )
 def test_the_spoken_style_is_spelled_out(agent, phrase):
     assert phrase in agent["think"]["prompt"]
+
+
+def test_the_grounding_rule_stands_above_the_style_rules(agent):
+    """Measured, not assumed: with this rule written as one more bullet, gpt-4.1 answered "how
+    much engine oil does it take?" off its own memory of the 390 Duke - twice, with two different
+    wrong capacities and no function call. Hoisted above the list, four runs out of four called
+    get_spec and said the 1.5 l the manual prints."""
+    prompt = agent["think"]["prompt"]
+    head = prompt.split("How you answer:")[0]
+    assert "THE ONE RULE ABOVE ALL OTHERS" in head
+    assert "You do not know anything about this motorcycle" in head
+    assert "Call\na function FIRST" in head
+
+
+@pytest.mark.parametrize("filler", ["sure", "of course", "great question", "let me check", "according to the manual"])
+def test_the_prompt_names_the_filler_openings_it_bans(agent, filler):
+    """A spoken answer that opens with "sure, let me check" has already spent the second that
+    made voice worth using."""
+    prompt = agent["think"]["prompt"].lower()
+    assert "no filler, ever" in prompt
+    assert f'"{filler}"' in prompt
 
 
 def test_the_prompt_bans_the_dealer_referral(agent):
@@ -185,8 +227,23 @@ def test_the_prompt_bans_the_dealer_referral(agent):
         assert word in prompt
 
 
-def test_the_prompt_says_what_to_do_when_the_manual_does_not_cover_it(agent):
-    assert "offer to open the closest page" in agent["think"]["prompt"]
+def test_a_job_the_manual_names_but_does_not_print_gets_the_general_steps(agent):
+    """Same policy as the typed chat: the ordinary workshop procedure, marked as general, plus
+    every figure the manual does print - never the referral the manual prints instead."""
+    prompt = agent["think"]["prompt"]
+    assert "naming the job but printing no steps" in prompt
+    assert "the manual\n  doesn't print the steps" in prompt
+    assert "Mark the general part as general" in prompt
+    assert "the usual way\n  is" in prompt
+    assert "say every figure the\n  manual DOES print for that job with its page" in prompt
+    # the licence must not leak into the figures, which is the whole safety of the feature
+    assert "This licence covers STEPS AND ORDER ONLY" in prompt
+    assert "general steps carry no figures" in prompt
+
+
+def test_the_prompt_says_what_to_do_when_the_manual_does_not_cover_it_at_all(agent):
+    assert "offer to open the closest" in agent["think"]["prompt"]
+    assert "Never carry a figure over from another motorcycle" in agent["think"]["prompt"]
 
 
 # ---------------------------------------------------------------- the functions

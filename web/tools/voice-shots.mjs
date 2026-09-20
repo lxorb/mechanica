@@ -2,7 +2,12 @@
  * Drives the chat view and voice mode in headless Chrome and saves web/docs-shots/voice-*.png.
  * Owner: voice-mode agent. Pairs with counter/js/chat-ui.js and counter/js/voice-deepgram.js.
  *
- *   node web/tools/voice-shots.mjs                 # needs web on :5201 and the API on :8017
+ *   node web/tools/voice-shots.mjs                 # both viewports
+ *   ONLY=390 node web/tools/voice-shots.mjs        # just the phone
+ *
+ * Needs web on :5201 and the API on :8017, and the API must advertise an https PUBLIC_BASE —
+ * Deepgram calls the tool endpoints from its own servers and refuses http:
+ *   PUBLIC_BASE=https://mechanica.emilvinu.ch/api uvicorn app.main:app --port 8017
  *
  * Headless Chrome has no microphone, so --use-fake-device-for-media-stream hands the page a
  * synthetic input and the turn is typed into the LIVE session instead, through the same
@@ -12,6 +17,9 @@
  * /voice/deepgram-token is fulfilled locally with the account key, because that key cannot mint
  * a browser credential (no keys:write on the project) and the endpoint honestly 502s. The key
  * never leaves this machine and never reaches a deployed page.
+ *
+ * It also measures the input row and photographs it on its own (voice-input-row-*.png): field
+ * flex-1, VOICE 44x44, SEND 44x44, 8 px gaps, one baseline.
  */
 
 import { existsSync, mkdirSync, readFileSync } from "node:fs";

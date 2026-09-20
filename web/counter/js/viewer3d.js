@@ -1006,10 +1006,24 @@ function technicalBackdrop(THREE) {
  */
 export const ENVIRONMENTS = [
   { id: "auto_service", label: "Service", swatch: "#b08d5e" },
-  { id: "garage", label: "Garage", swatch: "#8f9196", scene: "garage-interior.glb", lighting: "auto_service" },
+  { id: "autoshop_01", label: "Garage", swatch: "#8f9196" },
   { id: "studio_small_09", label: "Studio", swatch: "#e6e2da" },
   { id: "empty_warehouse_01", label: "Warehouse", swatch: "#6f7680" },
 ];
+
+/**
+ * `scene: "<file>.glb"` on an entry makes it a modelled room instead of a panorama — loadRoom()
+ * below scales it to the vehicle, floors it, gives it a concrete material and fences the camera
+ * in. That path is live and tested; what it needs is a room GLB that is actually a room.
+ *
+ * The one we were given, store/models/env/garage-interior.glb, is not: 98k triangles in a single
+ * unnamed mesh with no materials, and the geometry is a field of spikes rather than walls, floor
+ * and a door — decimated past the point of being an interior. Rendering it put the bike in the
+ * middle of what looks like a cave. So the Garage slot is an HDRI of a real workshop for now, and
+ * dropping a usable GLB in here is a one-line change:
+ *
+ *   { id: "garage", label: "Garage", swatch: "#8f9196", scene: "<file>.glb", lighting: "auto_service" }
+ */
 
 export const DEFAULT_ENV = "auto_service";
 const ENV_STORAGE_KEY = "mechanica.viewer3d.env";
@@ -1055,11 +1069,18 @@ async function loadRoom(THREE, file, radius, height) {
     const root = gltf.scene;
 
     const concrete = new THREE.MeshStandardMaterial({
-      color: 0x9fa2a6, roughness: 0.92, metalness: 0.0, side: THREE.DoubleSide,
+      color: 0x9fa2a6, roughness: 0.92, metalness: 0.0,
+      // FrontSide, not DoubleSide: this is a modelled interior, and rendering both sides of every
+      // wall means seeing the backs of the far ones through the near ones, which turns a room
+      // into a pile of shapes
+      side: THREE.FrontSide,
     });
     root.traverse((object) => {
       if (!object.isMesh) return;
       object.material = concrete;
+      // the GLB carries no materials and may carry no normals either; without them a standard
+      // material has nothing to shade with and the whole room reads as flat white
+      if (!object.geometry.getAttribute("normal")) object.geometry.computeVertexNormals();
       object.castShadow = false;
       object.receiveShadow = true;
     });

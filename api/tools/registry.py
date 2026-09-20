@@ -265,10 +265,21 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
 
     if incoming:
         store.put_registry(merge_ua(incoming.values()))  # one write for every fragment, not one each
-    stale = [e for e in store.registry() if not e.needsUa and merge_ua([e])[0].needsUa]
-    if stale:  # rows merged before their host was known to need a UA, or left behind by a rewrite
-        store.put_registry(stale)
-        print(f"  stamped {len(stale)} row(s) with a User-Agent hint")
+    pending = [e for e in store.registry() if not e.docKind or not e.needsUa]
+    stamped = [e for e in merge_ua(pending) if e.docKind or e.needsUa]
+    if stamped:  # rows indexed before docKind existed, or before their host was known to need a UA
+        store.put_registry(stamped)
+        print(f"  stamped {len(stamped)} row(s) with docKind / User-Agent metadata")
+    docs = {}
+    for e in store.registry():
+        docs.setdefault(e.site, {}).setdefault(doc_kind(e), 0)
+        docs[e.site][doc_kind(e)] += 1
+    mixed = {site: kinds for site, kinds in docs.items() if set(kinds) - {"owner"}}
+    if mixed:
+        print("  docKind by site (sites publishing more than handbooks):")
+        for site, kinds in sorted(mixed.items(), key=lambda kv: -sum(kv[1].values())):
+            spread = "  ".join(f"{k} {n}" for k, n in sorted(kinds.items(), key=lambda kv: -kv[1]))
+            print(f"    {site:<34}{spread}")
     for name, kept, fresh, bad in merged:
         print(f"  {name:<28} {kept:>6} rows, {fresh:>6} new" + (f", {bad} invalid" if bad else ""))
     if not merged:

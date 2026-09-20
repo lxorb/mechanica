@@ -27,11 +27,14 @@
 import * as T from "./ttm.js";
 
 const FALLBACK_RATE = 24000;
-const FRAME = 2048; // samples per upstream chunk: ~85 ms at 24 kHz
+const FRAME = 1024; // samples per upstream chunk: ~43 ms at 24 kHz
 const LEVEL_DECAY = 0.82;
-// Enough to ride out a stalled frame without the answer arriving noticeably late.
-const JITTER_S = 0.12;
+// Enough to ride out a stalled frame, small enough that it is not felt in front of the answer.
+const JITTER_S = 0.08;
 const KEEPALIVE_MS = 8000;
+// How long after a barge-in to keep dropping the abandoned answer's chunks. Long enough to cover
+// what was already in flight, short enough that a missing AgentStartedSpeaking costs nothing.
+const BARGE_MUTE_MS = 500;
 
 const WORKLET = `class Tap extends AudioWorkletProcessor {
   process(inputs) {
@@ -85,6 +88,7 @@ function player(ctx, rate, onDone) {
   let cursor = 0;
   let live = [];
   let gain = null;
+  let muteUntil = 0;
 
   function sink() {
     if (!gain) {
@@ -96,6 +100,11 @@ function player(ctx, rate, onDone) {
 
   return {
     push(buffer) {
+      // After a barge-in the rest of the abandoned answer keeps arriving for a moment; dropping
+      // it is the difference between interrupting the agent and talking over it. A window, not a
+      // flag: Deepgram does not always send AgentStartedSpeaking, and a mute nothing lifts would
+      // silence the session for good.
+      if (performance.now() < muteUntil) return;
       const samples = toFloat(buffer);
       if (!samples.length) return;
       const frame = ctx.createBuffer(1, samples.length, rate);
@@ -113,10 +122,16 @@ function player(ctx, rate, onDone) {
         if (!live.length && typeof onDone === "function") onDone();
       };
     },
-    /** Barge-in: the rider started talking, so the agent stops mid-word. */
+    /**
+     * Barge-in: the rider started talking, so the agent stops mid-word. `stop()` on a scheduled
+     * AudioBufferSourceNode takes effect on the next render quantum - under 3 ms - so what the
+     * rider actually waits for is Deepgram's UserStartedSpeaking crossing the network.
+     */
     flush() {
+      muteUntil = performance.now() + BARGE_MUTE_MS;
       for (const src of live) {
         try {
+          src.onended = null;
           src.stop();
         } catch {
           /* already finished */
@@ -124,6 +139,10 @@ function player(ctx, rate, onDone) {
       }
       live = [];
       cursor = 0;
+    },
+    /** The agent is starting a new answer: take the mute off early. */
+    resume() {
+      muteUntil = 0;
     },
     busy() {
       return live.length > 0;
@@ -288,8 +307,10 @@ function handle(session, ws, msg, say) {
     case "SettingsApplied":
       say({ type: "status", value: "listening" });
       break;
+    // Barge-in. Flux (listen v2) announces a turn with StartOfTurn; nova-3 sends
+    // UserStartedSpeaking. Whichever arrives, the buffered answer dies on the spot.
     case "UserStartedSpeaking":
-      // Barge-in: kill the buffered answer so the rider is not talking over it.
+    case "StartOfTurn":
       session.play.flush();
       say({ type: "status", value: "listening" });
       break;
@@ -297,6 +318,7 @@ function handle(session, ws, msg, say) {
       say({ type: "status", value: "thinking" });
       break;
     case "AgentStartedSpeaking":
+      session.play.resume();
       say({ type: "status", value: "speaking" });
       break;
     case "ConversationText": {

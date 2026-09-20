@@ -12,6 +12,7 @@ from pathlib import Path
 from ..models import Bike, RegistryEntry
 from ..store import get_store
 from ._http import BROWSER_UA, GOOGLEBOT_UA, UA, client, log, request, slug
+from .doctype import classify_doc
 
 # adapter name -> (module in this package, function). Imported one by one rather than with a plain
 # `from .x import y`: several agents write modules in here at once, and one broken file must not take
@@ -131,9 +132,12 @@ def _ingestable(e: RegistryEntry) -> bool:
 
 
 def merge_ua(entries: Iterable[RegistryEntry]) -> list[RegistryEntry]:
-    """Stamp the known User-Agent hint on rows that arrive without one (adapters written elsewhere)."""
+    """Stamp the derived metadata adapters written elsewhere do not set: the User-Agent hint and the
+    document kind. Both are additive - no existing field is touched."""
     rows = list(entries)
     for e in rows:
+        if not e.docKind:
+            e.docKind = classify_doc(e.url, e.title)
         if not e.needsUa:
             host = e.url.split("/")[2].lower() if "//" in e.url else ""
             hint = UA_BY_HOST.get(host)
@@ -151,13 +155,25 @@ def pdf_index() -> dict[str, list[RegistryEntry]]:
         for year in e.years:
             found.setdefault(slug(e.make, e.model, year), []).append(e)
     for rows in found.values():
-        rows.sort(key=lambda e: (_market_rank(e.market), _supplement(e)))
+        rows.sort(key=lambda e: (_supplement(e), _market_rank(e.market)))
     return found
 
 
+# What a vehicle should link to, best first. A brochure is a real free PDF and stays in the registry,
+# it just never wins over a handbook.
+DOC_RANK = ("owner", "service", "quickstart", "supplement", "spec", "infotainment", "brochure", "warranty")
+
+
+def doc_kind(e: RegistryEntry) -> str:
+    """The row's docKind, classified on the spot when it was indexed before the field existed."""
+    return e.docKind or classify_doc(e.url, e.title)
+
+
 def _supplement(e: RegistryEntry) -> int:
-    """Addenda, specification sheets and connectivity guides are real PDFs but not the handbook."""
-    return int(bool(re.search(r"addendum|supplement|specification|connectivity", e.title or "", re.I)))
+    try:
+        return DOC_RANK.index(doc_kind(e))
+    except ValueError:
+        return len(DOC_RANK)
 
 
 def kind_of(item: Bike | RegistryEntry) -> str:
@@ -169,6 +185,8 @@ def _pick(rows: list[RegistryEntry], market: str, kind: str = "motorcycle") -> R
     """Never hand a car's manual to a motorcycle: same kind first, then the bike's own market, then
     the fallback order (EU, US, GB, WW, IN)."""
     same = [e for e in rows if kind_of(e) == kind] or rows
+    best = min(_supplement(e) for e in same)
+    same = [e for e in same if _supplement(e) == best]  # a handbook beats a brochure, whatever its market
     return next((e for e in same if e.market.upper() == market.upper()), same[0])
 
 

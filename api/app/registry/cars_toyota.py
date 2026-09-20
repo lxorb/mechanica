@@ -34,7 +34,7 @@ YEARS = range(1996, 2029)
 # are real PDFs for the same model year and `pdf_index()` cannot rank them below the manual, so one of
 # them would sometimes be served instead of it.
 BUCKETS = ("ownerManuals", "omotaOwnersManualOverTheAir")
-SKIP_TITLE = re.compile(r"warranty|maintenance guide|services guide|roadside|quick guide|quick reference|excerpt", re.I)
+SKIP_TITLE = re.compile(r"warranty|maintenance guide|services guide|roadside|quick guide|quick reference|excerpt|pocket reference|propietario|solo para", re.I)
 THROTTLE = Throttle(2.0)
 
 TOYOTA = """4runner 4runnerhybrid avalon avalonhybrid bz bz4x bzwoodland camry camryhybrid camrysolara
@@ -51,25 +51,72 @@ lx450 lx470 lx570 lx600 lx700h nx200t nx250 nx300 nx300h nx350 nx350h nx450h rc2
 rx300 rx330 rx350 rx350h rx350l rx400h rx450h rx450hl rx500h rz300e rz450e sc300 sc400 sc430 tx350
 tx500h tx550h ux200 ux250h ux300h lm500h""".split()
 
-# "Toyota 2023 Corolla, Corolla HV Multimedia Owner's Manual (OM12P95U)" -> make, model.
-NAME = re.compile(r"^(Toyota|Lexus|Scion)\s+((?:19|20)\d{2})\s+(.+?)\s*(?:\(|Owner|Multimedia|Navigation|$)", re.I)
+# The title names the brand reliably. It does NOT name the model reliably: Toyota folds the production
+# window into it ("2003 4Runner From Apr. 2003 Prod."), so the model comes off the series slug instead.
+MAKE = re.compile(r"^(Toyota|Lexus|Scion)\b", re.I)
+# Slugs whose display name a rule cannot reach. Everything else falls out of _display().
+NAMES = {
+    "4runner": "4Runner",
+    "4runnerhybrid": "4Runner Hybrid",
+    "86": "86",
+    "bz": "bZ",
+    "bz4x": "bZ4X",
+    "bzwoodland": "bZ Woodland",
+    "c-hr": "C-HR",
+    "fjcruiser": "FJ Cruiser",
+    "gr86": "GR86",
+    "grcorolla": "GR Corolla",
+    "grsupra": "GR Supra",
+    "landcruiser": "Land Cruiser",
+    "lfa": "LFA",
+    "mr2": "MR2",
+    "mr2spyder": "MR2 Spyder",
+    "pickup": "Pickup",
+    "priusc": "Prius c",
+    "priusv": "Prius v",
+    "priusprime": "Prius Prime",
+    "priuspluginhybrid": "Prius Plug-in Hybrid",
+    "rav4": "RAV4",
+    "rav4hybrid": "RAV4 Hybrid",
+    "rav4prime": "RAV4 Prime",
+    "rav4pluginhybrid": "RAV4 Plug-in Hybrid",
+    "t100": "T100",
+    "toyotacrown": "Crown",
+    "toyotacrownsignia": "Crown Signia",
+    "yarisia": "Yaris iA",
+    "camrysolara": "Camry Solara",
+    "corollaim": "Corolla iM",
+    "chr": "C-HR",
+    "isc": "IS C",
+    "86": "86",
+    "scion86": "86",
+}
+# corollacross -> Corolla Cross, tacomahybrid -> Tacoma Hybrid: the suffix is a trim, not a new model.
+SUFFIX = ("hybrid", "hatchback", "cross", "signia", "liftback", "prime", "spyder", "highlander")
+LEXUS_CODE = re.compile(r"^([a-z]{2})(\d{3})([a-z]{0,2})$")  # es350, nx300h, rz450e
+LEXUS_F = re.compile(r"^([a-z]{2})f$")  # gsf -> GS F
 
 
-def _title_model(title: str, fallback: str) -> tuple[str, str]:
-    hit = NAME.match(title or "")
-    if not hit:
-        return ("Lexus" if fallback in LEXUS else "Toyota"), ""
-    make = hit.group(1).title()
-    model = hit.group(3).split(",")[0].strip(" -/")
-    return make, model
+def _display(series: str) -> str:
+    if series in NAMES:
+        return NAMES[series]
+    if series in LEXUS:
+        hit = LEXUS_CODE.match(series)
+        if hit:
+            return f"{hit.group(1).upper()} {hit.group(2)}{hit.group(3)}"
+        f = LEXUS_F.match(series)
+        if f:
+            return f"{f.group(1).upper()} F"
+        return series.upper()
+    for tail in SUFFIX:
+        if series.endswith(tail) and len(series) > len(tail):
+            return f"{_display(series[: -len(tail)])} {tail.capitalize()}"
+    return series.capitalize()
 
 
-def _pretty(series: str) -> str:
-    """Fall back to the slug when the title does not name the model: 'rav4prime' -> 'RAV4 Prime'."""
-    hit = re.match(r"([a-z]+)(\d.*)?$", series)
-    if hit and hit.group(2):
-        return f"{hit.group(1).upper()} {hit.group(2).upper()}".strip()
-    return series.upper() if len(series) <= 5 else series.capitalize()
+def _make(title: str, series: str) -> str:
+    hit = MAKE.match(title or "")
+    return hit.group(1).title() if hit else ("Lexus" if series in LEXUS else "Toyota")
 
 
 def _fetch(job: tuple[str, int]) -> list[RegistryEntry]:
@@ -93,8 +140,7 @@ def _fetch(job: tuple[str, int]) -> list[RegistryEntry]:
                 title = str(doc.get("title") or pub.get("pubTitle") or "").strip()
                 if doc.get("format") != "PDF" or not url.lower().endswith(".pdf") or SKIP_TITLE.search(title):
                     continue
-                make, model = _title_model(title, series)
-                model = model or _pretty(series)
+                make, model = _make(title, series), _display(series)
                 out.append(
                     RegistryEntry(
                         id=slug(SITE, make, model, year, "us", lang, "owner", url.rsplit("/", 1)[-1][:40]),
