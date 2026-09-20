@@ -1,6 +1,6 @@
 // Stamped by deploy/web.sh on every deploy (git sha + time), so each release installs a fresh
 // worker, drops the previous caches and takes over every open tab.
-const VERSION = "c9e8f72a-202609201454";
+const VERSION = "f03745ed-202609201456";
 const SHELL = `mechanica-shell-${VERSION}`;
 const RUNTIME = `mechanica-runtime-${VERSION}`;
 const DATA = `mechanica-data-${VERSION}`;
