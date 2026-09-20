@@ -1,11 +1,11 @@
 Model Information:
-* title:	Harley Davidson Breakout
-* source:	https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268
-* author:	FWSean (https://sketchfab.com/FWSean)
+* title:	Harley Davidson Motorcycle "EL OHV V-TWIN"
+* source:	https://sketchfab.com/3d-models/harley-davidson-motorcycle-el-ohv-v-twin-9923aaa519334f48b8dd44fd792475ed
+* author:	matias_romero (https://sketchfab.com/matias_romero)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Harley Davidson Breakout" (https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268) by FWSean (https://sketchfab.com/FWSean) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Harley Davidson Motorcycle "EL OHV V-TWIN"" (https://sketchfab.com/3d-models/harley-davidson-motorcycle-el-ohv-v-twin-9923aaa519334f48b8dd44fd792475ed) by matias_romero (https://sketchfab.com/matias_romero) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

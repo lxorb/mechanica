@@ -116,6 +116,9 @@ async function run() {
       "--disable-renderer-backgrounding",
       "--disable-backgrounding-occluded-windows",
     ],
+    // Four one-second samples of a state plus the retries fit inside this; the default 30 s does
+    // not always, and a timeout here reads as a broken orb rather than a slow harness.
+    protocolTimeout: 120000,
   });
   mkdirSync(SHOTS, { recursive: true });
 
@@ -168,12 +171,17 @@ async function run() {
       window.__setLevel = (v) => {
         level = v;
       };
+      const settle = () =>
+        Promise.race([
+          new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
+          new Promise((r) => setTimeout(r, 200)),
+        ]);
       const before = box();
       orb.setState("listening");
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await settle();
       const during = box();
       orb.setState("closed");
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await settle();
       const after = box();
       return { before, during, after };
     });
@@ -318,7 +326,10 @@ async function run() {
       const t0 = performance.now();
       while (performance.now() - t0 < 600) {
         window.__setLevel(0.15 + 0.6 * Math.abs(Math.sin((performance.now() - t0) / 140)));
-        await new Promise((r) => requestAnimationFrame(r));
+        await Promise.race([
+          new Promise((r) => requestAnimationFrame(r)),
+          new Promise((r) => setTimeout(r, 100)),
+        ]);
         scales.add(getComputedStyle(el.querySelector(".vo-ring")).transform);
         levels.add(el.style.getPropertyValue("--lvl"));
       }

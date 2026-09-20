@@ -196,7 +196,14 @@ const BIKE_PARTS = [
   { key: "spark-plug", explode: [0.25, 0.45, -0.50], meshes: [/spark/i, ww("plug"), /ignition.?coil/i] },
   { key: "oil", explode: [0.20, -0.60, -0.45], meshes: [/oil/i, ww("sump")] },
   { key: "air-filter", explode: [0.05, 0.60, 0.55], meshes: [/air ?(box|filter|intake|cleaner)/i, /airbox/i] },
-  { key: "engine", explode: [0, -0.65, 0], meshes: [/enginecbr/i, /misc_a/i, /engine/i, ww("motor"), /crankcase/i, /cylinder/i, /gearbox/i, /transmission/i, /carburet/i, /(^|[^a-z])carb($|[^a-z])/i] },
+  // `cylinder(?![.\d])` and not `cylinder`: Blender names every primitive it makes
+  // "Cylinder", "Cylinder.001", "Cylinder.002", and a Sketchfab export keeps them. On the
+  // Harley EL OHV that stands in for every cruiser, 229 of its 429 meshes are a numbered
+  // Blender cylinder — fenders, wheel spacers, the seat, the handlebars — and `/cylinder/`
+  // put every one of them in the engine, which is exactly the confident wrong answer.
+  // A real engine part is "Cylinder Head", "Engine_Cylinders", "Cylinder_BLACK PLASTICS":
+  // a cylinder followed by a "." or a digit is Blender's counter, not a component.
+  { key: "engine", explode: [0, -0.65, 0], meshes: [/enginecbr/i, /misc_a/i, /engine/i, ww("motor"), /crankcase/i, /cylinder(?![.\d])/i, /gearbox/i, /transmission/i, /carburet/i, /(^|[^a-z])carb($|[^a-z])/i] },
   { key: "battery", explode: [-0.30, 0.45, -0.55], meshes: [/battery/i] },
   { key: "fuse", explode: [-0.45, 0.45, 0.55], meshes: [/fuse/i, /relay/i] },
   { key: "fuel-tank", explode: [0.05, 0.80, 0], meshes: [/fuel/i, /petrol/i, /gas ?tank/i, ww("tank")] },

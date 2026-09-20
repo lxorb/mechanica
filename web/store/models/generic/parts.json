@@ -1,15 +1,89 @@
 {
  "scooter": {
   "kind": "bike",
-  "rotate": null,
-  "orient": 180,
+  "rotate": [
+   0,
+   90,
+   0
+  ],
+  "orient": 0,
   "paint": [
    "fuel-tank",
    "fairing",
    "frame"
   ],
   "paintMaterials": [],
-  "extra": {}
+  "extra": {
+   "front-wheel": [
+    "^Front_Screw",
+    "^Front_Bolt",
+    "^Screws_Front",
+    "^Bolts_Front"
+   ],
+   "rear-wheel": [
+    "^Back_Wheel_low",
+    "^Back_Rim_low",
+    "^Screws_Back",
+    "^Bolts_Back"
+   ],
+   "front-brake": [
+    "^Break_Output",
+    "^Long_Break",
+    "^Break_Pull",
+    "^Break_Puller",
+    "^Mini_Thread_low"
+   ],
+   "rear-brake": [
+    "^Foot_Break",
+    "^Foot_low",
+    "^Pole_low",
+    "^Pedal_Arm",
+    "^Pedal_Bolt",
+    "^Foot_Pedal",
+    "^Puller_low",
+    "^Reciver_low"
+   ],
+   "front-fork": [
+    "^Front_Hydrolic",
+    "^Arm_low",
+    "^Extender_low",
+    "^Long_Thread_low",
+    "^Whire_Hole_low"
+   ],
+   "rear-shock": [
+    "^Back_Hydrolic"
+   ],
+   "handlebar": [
+    "^Handles_low",
+    "^Handlebars_switch",
+    "^Stearing",
+    "^Dial",
+    "^Needle_low",
+    "^Switch_box",
+    "^Circle_switch",
+    "^Square_switch",
+    "^Break_low",
+    "^Ramme_low"
+   ],
+   "headlight": [
+    "^Light_Glass_low",
+    "^Light_Frame_low"
+   ],
+   "taillight": [
+    "^Water_Blocker_low",
+    "^Screw_Top_low",
+    "^Screw_Bottom_low"
+   ],
+   "footpeg": [
+    "^Foot_Rest_low",
+    "^Anti_Slipping"
+   ],
+   "fairing": [
+    "^M_Case_",
+    "^Decorative_Line",
+    "^Case_hinge"
+   ]
+  }
  },
  "sportbike": {
   "kind": "bike",
@@ -60,14 +134,146 @@
    90,
    0
   ],
-  "orient": 180,
+  "orient": 0,
   "paint": [
    "fuel-tank",
    "fairing",
    "frame"
   ],
   "paintMaterials": [],
-  "extra": {}
+  "extra": {
+   "front-wheel": [
+    "^Cylinder\\.016_Wheel Pieces_0$",
+    "^Cylinder\\.189_Wheel Pieces_0$",
+    "^Circle\\.011_Wheel Pieces_0$",
+    "^Cube\\.023_Wheel Pieces_0$",
+    "^NurbsPath\\.031_Wheel Pieces_0$",
+    "^Cylinder\\.199_Wheel Pieces_0$",
+    "^Cylinder\\.196_Wheel Pieces_0$",
+    "^Flathead screw\\.046_Wheel Pieces_0$",
+    "^Cylinder\\.191_Wheel Pieces_0$",
+    "^Cylinder\\.192_Wheel Pieces_0$",
+    "^Cylinder\\.193_Wheel Pieces_0$",
+    "^Cylinder\\.195_Wheel Pieces_0$",
+    "^Cylinder\\.197_Wheel Pieces_0$",
+    "^Cylinder\\.198_Wheel Pieces_0$",
+    "^Cylinder\\.200_Wheel Pieces_0$",
+    "^Cylinder\\.201_Wheel Pieces_0$",
+    "^Cylinder\\.190_Wheel Pieces_0$",
+    "^Cylinder\\.194_Wheel Pieces_0$",
+    "^Wheel and Tire rear\\.001_Tires_0$",
+    "^Wheel and Spokes rear\\.001_Wheels_0$"
+   ],
+   "rear-wheel": [
+    "^Cylinder\\.207_Wheel Pieces_0$",
+    "^Plane\\.032_Wheel Pieces_0$",
+    "^Cube\\.024_Wheel Pieces_0$",
+    "^Cylinder\\.208_Wheel Pieces_0$",
+    "^Cylinder\\.210_Wheel Pieces_0$",
+    "^Cylinder\\.222_Wheel Pieces_0$",
+    "^Flathead screw\\.042_Wheel Pieces_0$",
+    "^Cube\\.027_Wheel Pieces_0$",
+    "^Cylinder\\.158_Wheel Pieces_0$",
+    "^Cylinder\\.159_Wheel Pieces_0$",
+    "^Cylinder\\.156_Wheel Pieces_0$",
+    "^Cylinder\\.157_Wheel Pieces_0$",
+    "^Plane\\.018_Wheel Pieces_0$",
+    "^Plane\\.033_Wheel Pieces_0$",
+    "^Plane\\.034_Wheel Pieces_0$",
+    "^Cube\\.025_Wheel Pieces_0$"
+   ],
+   "rear-brake": [
+    "^Cylinder\\.121_Brake Pedal_0$",
+    "^Cylinder\\.124_Brake Pedal_0$",
+    "^Cylinder\\.120_Brake Pedal_0$",
+    "^Cylinder\\.122_Brake Pedal_0$",
+    "^Cylinder\\.123_Brake Pedal_0$",
+    "^Plane\\.016_Brake Pedal_0$",
+    "^Plane\\.022_Brake Pedal_0$",
+    "^Cylinder\\.173_Brake Pedal_0$"
+   ],
+   "engine": [
+    "^Cylinder\\.050_Vent and Knuckleheads_0$",
+    "^Cylinder\\.051_Vent and Knuckleheads_0$",
+    "^Knucklehead L_Vent and Knuckleheads_0$",
+    "^Knucklehead R_Vent and Knuckleheads_0$",
+    "^Air vent_Vent and Knuckleheads_0$"
+   ],
+   "fuse": [
+    "^Cylinder\\.087_Circuit Breaker_0$",
+    "^Cube\\.010_Circuit Breaker_0$",
+    "^Cube\\.011_Circuit Breaker_0$",
+    "^Cube\\.012_Circuit Breaker_0$",
+    "^Cylinder\\.088_Circuit Breaker_0$",
+    "^Cylinder\\.091_Circuit Breaker_0$",
+    "^Cube\\.013_Circuit Breaker_0$",
+    "^NurbsPath\\.008_Circuit Breaker_0$",
+    "^NurbsPath\\.009_Circuit Breaker_0$",
+    "^NurbsPath\\.010_Circuit Breaker_0$",
+    "^Flathead screw\\.025_Circuit Breaker_0$",
+    "^Flathead screw\\.026_Circuit Breaker_0$",
+    "^Flathead screw\\.027_Circuit Breaker_0$",
+    "^Flathead screw\\.028_Circuit Breaker_0$",
+    "^Flathead screw\\.029_Circuit Breaker_0$",
+    "^Flathead screw\\.030_Circuit Breaker_0$",
+    "^Flathead screw\\.031_Circuit Breaker_0$",
+    "^Flathead screw\\.032_Circuit Breaker_0$",
+    "^Cylinder\\.089_Circuit Breaker_0$",
+    "^Cylinder\\.090_Circuit Breaker_0$",
+    "^Cylinder\\.069_Box Electrical_0$",
+    "^Cylinder\\.070_Box Electrical_0$",
+    "^Flathead screw\\.040_Box Electrical_0$",
+    "^Flathead screw\\.041_Box Electrical_0$",
+    "^Cube\\.020_Box Electrical_0$",
+    "^Cylinder\\.067_Box Electrical_0$",
+    "^Cube\\.021_Box Electrical_0$",
+    "^Cylinder\\.068_Box Electrical_0$",
+    "^Cylinder\\.141_Box Electrical_0$"
+   ],
+   "footpeg": [
+    "^Plane\\.012_Gear Shift_0$",
+    "^Sphere\\.004_Gear Shift_0$",
+    "^NurbsPath\\.013_Gear Shift_0$",
+    "^Cylinder\\.101_Gear Shift_0$",
+    "^Sphere\\.005_Gear Shift_0$",
+    "^Cylinder\\.105_Gear Shift_0$",
+    "^Cylinder\\.106_Gear Shift_0$",
+    "^Flathead screw\\.033_Gear Shift_0$",
+    "^Flathead screw\\.034_Gear Shift_0$",
+    "^Plane\\.035_Gear Shift_0$",
+    "^Cylinder\\.160_Gear Shift_0$",
+    "^Cylinder\\.162_Gear Shift_0$",
+    "^Cylinder\\.161_Gear Shift_0$"
+   ],
+   "fairing": [
+    "^Tool box_Toolbox_0$",
+    "^NurbsPath\\.015_Toolbox_0$",
+    "^NurbsPath\\.016_Toolbox_0$"
+   ],
+   "frame": [
+    "^Horn base_Horn_0$",
+    "^Horn front_Horn_0$",
+    "^Cylinder\\.014_Horn_0$",
+    "^Cylinder\\.015_Horn_0$",
+    "^Plane_Horn_0$",
+    "^Plane\\.001_Horn_0$",
+    "^Plane\\.002_Horn_0$",
+    "^Plane\\.005_Horn_0$",
+    "^NurbsPath\\.032_Cables and Tubes_0$",
+    "^NurbsPath\\.017_Cables and Tubes_0$",
+    "^NurbsPath\\.035_Cables and Tubes_0$",
+    "^NurbsPath\\.036_Cables and Tubes_0$",
+    "^NurbsPath\\.024_Cables and Tubes_0$",
+    "^NurbsPath\\.025_Cables and Tubes_0$",
+    "^NurbsPath\\.020_Cables and Tubes_0$",
+    "^NurbsPath\\.018_Cables and Tubes_0$",
+    "^NurbsPath\\.019_Cables and Tubes_0$",
+    "^NurbsPath\\.037_Cables and Tubes_0$",
+    "^NurbsPath\\.038_Cables and Tubes_0$",
+    "^NurbsPath\\.039_Cables and Tubes_0$",
+    "^NurbsPath\\.041_Cables and Tubes_0$"
+   ]
+  }
  },
  "naked": {
   "kind": "bike",
@@ -280,18 +486,6 @@
  },
  "touring": {
   "kind": "bike",
-  "rotate": null,
-  "orient": 90,
-  "paint": [
-   "fuel-tank",
-   "fairing",
-   "frame"
-  ],
-  "paintMaterials": [],
-  "extra": {}
- },
- "adventure": {
-  "kind": "bike",
   "rotate": [
    0,
    90,
@@ -304,7 +498,157 @@
    "frame"
   ],
   "paintMaterials": [],
-  "extra": {}
+  "extra": {
+   "front-wheel": [
+    "^Object_149$",
+    "^Object_147$",
+    "^Object_154$",
+    "^Object_156$",
+    "^Object_158$",
+    "^Object_160$",
+    "^Object_162$",
+    "^Object_164$",
+    "^Object_171$",
+    "^Object_173$"
+   ],
+   "rear-wheel": [
+    "^Object_98$",
+    "^Object_101$",
+    "^Object_104$",
+    "^Object_8$",
+    "^Object_107$",
+    "^Object_110$"
+   ],
+   "front-fork": [
+    "^Object_142$",
+    "^Object_195$",
+    "^Object_166$"
+   ],
+   "rear-shock": [
+    "^Object_93$",
+    "^Object_95$"
+   ],
+   "exhaust": [
+    "^Object_85$",
+    "^Object_200$",
+    "^Object_50$"
+   ],
+   "engine": [
+    "^Object_39$",
+    "^Object_56$",
+    "^Object_59$",
+    "^Object_65$",
+    "^Object_71$",
+    "^Object_5$",
+    "^Object_42$",
+    "^Object_45$",
+    "^Object_48$"
+   ],
+   "fuel-tank": [
+    "^Object_33$",
+    "^Object_36$",
+    "^Object_211$"
+   ],
+   "seat": [
+    "^Object_88$"
+   ],
+   "handlebar": [
+    "^Object_190$",
+    "^Object_145$",
+    "^Object_180$",
+    "^Object_23$",
+    "^Object_192$"
+   ],
+   "headlight": [
+    "^Object_152$",
+    "^Object_169$",
+    "^Object_175$",
+    "^Object_177$"
+   ],
+   "taillight": [
+    "^Object_131$",
+    "^Object_134$",
+    "^Object_136$",
+    "^Object_138$",
+    "^Object_140$",
+    "^Object_121$",
+    "^Object_123$",
+    "^Object_125$"
+   ],
+   "footpeg": [
+    "^Object_14$",
+    "^Object_20$",
+    "^Object_25$",
+    "^Object_27$"
+   ],
+   "fairing": [
+    "^Object_183$",
+    "^Object_186$",
+    "^Object_188$",
+    "^Object_197$",
+    "^Object_206$",
+    "^Object_202$",
+    "^Object_113$",
+    "^Object_115$",
+    "^Object_82$",
+    "^Object_91$",
+    "^Object_128$"
+   ],
+   "frame": [
+    "^Object_77$",
+    "^Object_204$",
+    "^Object_11$",
+    "^Object_30$"
+   ]
+  }
+ },
+ "adventure": {
+  "kind": "bike",
+  "rotate": null,
+  "orient": 0,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {
+   "front-wheel": [
+    "^CircPattern_3_FAC207001"
+   ],
+   "rear-wheel": [
+    "^CircPattern_3_FAC207_"
+   ],
+   "headlight": [
+    "^vidro_farol",
+    "^Icosphere_138",
+    "^STD_CB500X_BlinkersFront_\\d"
+   ],
+   "taillight": [
+    "^vidro_lanterna",
+    "^piscas_traseiros",
+    "^BASE_CB500X_Stoplight"
+   ],
+   "fuel-tank": [
+    "^tanque_e_carenagem"
+   ],
+   "seat": [
+    "^banco_"
+   ],
+   "handlebar": [
+    "^protetor_mao"
+   ],
+   "footpeg": [
+    "^STD_CB500X_Pegs"
+   ],
+   "fairing": [
+    "^STD_CB500X_LP",
+    "^Placa-Mercosul",
+    "^logo002007",
+    "^ACC_CB500X_RearCarrierCover",
+    "^STD_CB500X_GrabBars"
+   ]
+  }
  },
  "car": {
   "kind": "car",

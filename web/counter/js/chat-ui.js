@@ -54,11 +54,22 @@ import { mountOrb } from "./voice-orb.js";
 const BUNDLE = "../../vendor/deep-chat/deepChat.bundle.js";
 const OVERLAY = "chat";
 
-const INK = "#141414";
-const PAPER = "#ece7dc";
-const ORANGE = "#e85d04";
-const YELLOW = "#ffe600";
-const CARD = "#ffffff";
+// Tokens, not hexes. <deep-chat> renders into a shadow root, so css/chat-ui.css cannot reach
+// inside it and every colour in the transcript has to be written from here - but a CUSTOM PROPERTY
+// crosses a shadow boundary, because it inherits down the flattened tree like any other inherited
+// value. So one name works in the injected stylesheet below AND in the inline style objects the
+// component writes onto its own nodes, and the whole conversation changes livery with the theme
+// switch without this file knowing that themes exist. Names from css/counter.css.
+const INK = "var(--fg)"; // text
+const LINE = "var(--line)"; // the 3px structural border this app is built from
+const SLAB = "var(--slab)"; // a solid block: the rider's own bubble, an error bar, SEND
+const SLAB_FG = "var(--slab-fg)"; // text on a slab
+const PAPER = "var(--bg)"; // the ground the conversation sits on
+const ORANGE = "var(--accent)";
+const ORANGE_INK = "var(--accent-ink)";
+const YELLOW = "var(--accent-2)"; // the livery's second colour: buttons, chips
+const YELLOW_INK = "var(--accent-2-ink)";
+const CARD = "var(--card)"; // anything raised off the ground: the agent's bubble, the field
 const SANS = "Barlow, system-ui, sans-serif";
 const DISPLAY = '"Big Shoulders Display", sans-serif';
 
@@ -88,9 +99,9 @@ const AUX = `
   #chat-view { background: ${PAPER}; }
   #messages { background: ${PAPER}; padding-top: 10px; scrollbar-width: thin; }
   #messages::-webkit-scrollbar { width: 8px; }
-  #messages::-webkit-scrollbar-thumb { background: ${INK}; }
+  #messages::-webkit-scrollbar-thumb { background: ${SLAB}; }
   .message-bubble { font-family: ${SANS}; font-weight: 400; font-size: 0.95rem; line-height: 1.35;
-    border-radius: 0 !important; border: 3px solid ${INK}; max-width: 86%; }
+    border-radius: 0 !important; border: 3px solid ${LINE}; max-width: 86%; }
   .message-bubble p { margin: 0 0 6px; }
   .message-bubble p:last-child { margin-bottom: 0; }
   .message-bubble ol, .message-bubble ul { margin: 2px 0 0 18px; }
@@ -98,7 +109,7 @@ const AUX = `
   .html-message .message-bubble { border: 0 !important; background: transparent !important;
     padding: 0 !important; max-width: 100%; }
   .error-message-text { font-family: ${SANS}; font-weight: 800; font-size: 0.8rem;
-    letter-spacing: 0.06em; text-transform: uppercase; background: ${INK} !important;
+    letter-spacing: 0.06em; text-transform: uppercase; background: ${SLAB} !important;
     color: ${YELLOW} !important; border-radius: 0 !important; border: 0 !important; }
 
   #input { box-sizing: border-box; display: flex; align-items: center; gap: 8px; }
@@ -125,18 +136,18 @@ const AUX = `
 
   /* the VOICE toggle, injected into the row next to SEND */
   .ttm-voice { flex: 0 0 auto; width: 44px; height: 44px; padding: 0; box-sizing: border-box;
-    display: flex; align-items: center; justify-content: center; border: 3px solid ${INK};
-    border-radius: 0; background: ${YELLOW}; color: ${INK}; cursor: pointer; appearance: none; }
+    display: flex; align-items: center; justify-content: center; border: 3px solid ${LINE};
+    border-radius: 0; background: ${YELLOW}; color: ${YELLOW_INK}; cursor: pointer; appearance: none; }
   .ttm-voice svg { display: block; width: 20px; height: 20px; }
   /* the flex display above outranks the UA rule behind the hidden attribute */
   .ttm-voice[hidden] { display: none !important; }
-  .ttm-voice.is-on { background: ${INK}; color: ${YELLOW}; }
+  .ttm-voice.is-on { background: ${SLAB}; color: ${YELLOW}; }
   .ttm-voice.is-on svg { animation: ttm-pulse 1.1s ease-in-out infinite; }
-  .ttm-voice:active { background: ${ORANGE}; color: #fff; }
-  @media (hover: hover) { .ttm-voice:hover { background: ${ORANGE}; color: #fff; } }
+  .ttm-voice:active { background: ${ORANGE}; color: ${ORANGE_INK}; }
+  @media (hover: hover) { .ttm-voice:hover { background: ${ORANGE}; color: ${ORANGE_INK}; } }
   @keyframes ttm-pulse { 50% { opacity: 0.3; } }
 
-  #scroll-button { border-radius: 0; border: 3px solid ${INK}; background: ${YELLOW}; }
+  #scroll-button { border-radius: 0; border: 3px solid ${LINE}; background: ${YELLOW}; }
 `;
 
 const MIC_BODY = "M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z";
@@ -439,22 +450,22 @@ export function mountChat(host, opts = {}) {
     el.messageStyles = {
       default: {
         shared: { bubble: { fontFamily: SANS } },
-        user: { bubble: { background: INK, color: "#fff", borderColor: INK } },
-        ai: { bubble: { background: CARD, color: INK, borderColor: INK } },
+        user: { bubble: { background: SLAB, color: SLAB_FG, borderColor: LINE } },
+        ai: { bubble: { background: CARD, color: INK, borderColor: LINE } },
       },
       html: {
         shared: { outerContainer: { marginTop: "-4px" } },
       },
       loading: {
-        message: { styles: { bubble: { background: CARD, borderColor: INK } } },
+        message: { styles: { bubble: { background: CARD, borderColor: LINE } } },
       },
     };
     el.textInput = {
-      placeholder: { text: "Ask the manual", style: { color: "#8d8778", fontWeight: "600" } },
+      placeholder: { text: "Ask the manual", style: { color: "var(--muted)", fontWeight: "600" } },
       styles: {
         container: {
           background: CARD,
-          border: `3px solid ${INK}`,
+          border: `3px solid ${LINE}`,
           borderRadius: "0",
           boxShadow: "none",
           minHeight: "48px",
@@ -465,13 +476,13 @@ export function mountChat(host, opts = {}) {
     };
     el.inputAreaStyle = {
       background: PAPER,
-      borderTop: `3px solid ${INK}`,
+      borderTop: `3px solid ${LINE}`,
       padding: "8px",
       boxSizing: "border-box",
     };
     // backgroundColor, not the `background` shorthand: the component merges its own defaults
     // into this object and the shorthand comes back out as `background-color: unset`.
-    const square = (backgroundColor, border = INK) => ({
+    const square = (backgroundColor, border = LINE) => ({
       backgroundColor,
       border: `3px solid ${border}`,
       borderRadius: "0",
@@ -484,7 +495,7 @@ export function mountChat(host, opts = {}) {
     el.submitButtonStyles = {
       position: "outside-end",
       submit: {
-        container: { default: square(INK), hover: square(ORANGE), click: square(ORANGE) },
+        container: { default: square(SLAB), hover: square(ORANGE), click: square(ORANGE) },
         svg: { styles: { default: { filter: "brightness(0) invert(1)", width: "20px" } } },
       },
       loading: {
@@ -496,7 +507,7 @@ export function mountChat(host, opts = {}) {
         svg: { styles: { default: { filter: "brightness(0) invert(1)" } } },
       },
       disabled: {
-        container: { default: square("#b9b2a3") },
+        container: { default: square("var(--slab-off)") },
         svg: { styles: { default: { filter: "brightness(0) invert(1)", width: "20px" } } },
       },
     };
@@ -516,10 +527,10 @@ export function mountChat(host, opts = {}) {
             alignItems: "center",
             minHeight: "34px",
             padding: "0 10px",
-            border: `3px solid ${INK}`,
+            border: `3px solid ${LINE}`,
             borderRadius: "0",
             background: YELLOW,
-            color: INK,
+            color: YELLOW_INK,
             fontFamily: DISPLAY,
             fontWeight: "800",
             fontSize: "1rem",
@@ -528,8 +539,8 @@ export function mountChat(host, opts = {}) {
             fontVariantNumeric: "tabular-nums",
             cursor: "pointer",
           },
-          hover: { background: ORANGE, color: "#fff" },
-          click: { background: INK, color: YELLOW },
+          hover: { background: ORANGE, color: ORANGE_INK },
+          click: { background: SLAB, color: YELLOW },
         },
       },
     };
