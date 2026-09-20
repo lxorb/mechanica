@@ -49,7 +49,11 @@ for _name, (_module, _attr) in BUILTIN.items():
 
 # Hosts that serve a PDF from a URL without a .pdf suffix. Every entry here was verified with a
 # magic-byte sample (python -m tools.registry stats --verify); nothing is whitelisted on faith.
-PDF_HOSTS: tuple[str, ...] = ("zeromotorcycles.learnupon.com", "api.triumphtechnicalinformation.com")
+PDF_HOSTS: tuple[str, ...] = (
+    "zeromotorcycles.learnupon.com",
+    "api.triumphtechnicalinformation.com",
+    "operatorsguides.brp.com",  # /readguide/<id> streams the Can-Am operator's guide as application/pdf
+)
 
 UA_HEADER = {"googlebot": GOOGLEBOT_UA, "browser": BROWSER_UA}
 MARKET_FALLBACK = ("EU", "US", "GB", "WW", "IN")
