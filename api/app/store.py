@@ -1,9 +1,11 @@
 """System of record. FileStore = JSON under DATA_DIR. MongoStore (app/store_mongo.py) implements the same Protocol."""
 
 import json
+import os
 import threading
+from collections.abc import Callable
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
 
 from .config import settings
 from .models import Bike, CostEvent, IngestJob, Manual, Page, RegistryEntry, Spec
@@ -50,18 +52,109 @@ def _write(path: Path, data) -> None:
     tmp.replace(path)
 
 
+# ------------------------------------------------------------------ read cache
+#
+# A FileStore re-parses the same files on every call, and the four corpus-sized reads
+# dominate everything else: manuals/ is 508 documents and 62 MB (~57 s), registry.json
+# is 99k rows (~13 s), costs.jsonl 44k events (~17 s) and bikes.json 30k rows (~0.8 s).
+# The API pays that per request and the test suite paid it per test, because each test
+# drops the module-level store and builds a fresh FileStore over the same directory.
+#
+# So the cache lives here, not on the instance: (root, kind) -> (stamp, value), where the
+# stamp is the filesystem fingerprint of the file(s) behind that read plus a write counter
+# this module bumps on every write it makes. The stat half notices another process; the
+# counter half notices our own writes, which Windows can stamp with the same mtime when two
+# land inside one clock tick. Either half changing re-reads, so a caller only ever sees what
+# is on disk - the cache is invisible, and nothing about the read path's contract moved.
+#
+# **A cached value is shared, so a caller must not mutate one in place.** That is the same
+# contract the registry rows have always had; every reader in the tree either only reads or
+# copies first (Manual.model_copy in app/main.py, registry.merge_ua, the merge tool).
+# The list itself is never shared: each reader gets a fresh one and may sort or filter it.
+
+_cache_lock = threading.Lock()
+_cache: dict[tuple[str, str], tuple[Any, Any]] = {}
+_writes: dict[tuple[str, str], int] = {}
+
+
+def _touch(root: Path, kind: str) -> None:
+    """A write landed on `kind` under `root`: whatever is cached for it is now history."""
+    key = (str(root), kind)
+    with _cache_lock:
+        _writes[key] = _writes.get(key, 0) + 1
+        _cache.pop(key, None)
+
+
+def _file_stamp(path: Path) -> tuple[int, int] | None:
+    """(mtime, size), or None when the file is not there - which is itself a stamp."""
+    try:
+        st = path.stat()
+    except OSError:
+        return None
+    return (st.st_mtime_ns, st.st_size)
+
+
+def _dir_stamp(folder: Path, suffix: str = ".json") -> tuple | None:
+    """One (name, mtime, size) row per file, so a rewrite, a new file and a deleted one all show."""
+    try:
+        with os.scandir(folder) as entries:
+            return tuple(sorted(
+                (e.name, e.stat().st_mtime_ns, e.stat().st_size)
+                for e in entries
+                if e.name.endswith(suffix) and e.is_file()
+            ))
+    except OSError:
+        return None
+
+
+# Every entry is bounded, because the keys are open-ended in both directions: one manual is up to a
+# megabyte once parsed and /ask, /chat and both /parts routes load one per request, and the corpus
+# reads are keyed on the root, of which the test suite alone makes hundreds. Past the ceiling the
+# oldest go first; a dropped entry only means the next read parses again. A deployment has one root,
+# so these never bite in production.
+_KEEP = {"bikes": 4, "costs": 4, "manuals": 4, "registry": 4, "manual:": 64}
+
+
+def _prune(kind: str) -> None:
+    family = "manual:" if kind.startswith("manual:") else kind
+    ceiling = _KEEP.get(family)
+    if ceiling is None:
+        return
+    with _cache_lock:
+        keys = [k for k in _cache if (k[1].startswith("manual:") if family == "manual:" else k[1] == family)]
+        for key in keys[: max(0, len(keys) - ceiling)]:  # dicts keep insertion order: oldest first
+            _cache.pop(key, None)
+
+
+def _cached(root: Path, kind: str, stamp: Any, build: Callable[[], Any]) -> Any:
+    key = (str(root), kind)
+    with _cache_lock:
+        generation = _writes.get(key, 0)
+        hit = _cache.get(key)
+        if hit is not None and hit[0] == (generation, stamp):
+            return hit[1]
+    value = build()  # outside the lock: parsing 62 MB must not block every other reader
+    with _cache_lock:
+        if _writes.get(key, 0) == generation:  # a write that landed while we parsed wins
+            _cache.pop(key, None)  # re-inserted below, so this root counts as the newest
+            _cache[key] = ((generation, stamp), value)
+    _prune(kind)
+    return value
+
+
 class FileStore:
     def __init__(self, root: Path):
         self.root = root
         self.lock = threading.RLock()
-        self._registry_cache: tuple[tuple[int, int], list[RegistryEntry]] | None = None
 
     def _bikes_path(self) -> Path:
         return self.root / "bikes.json"
 
     def bikes(self) -> list[Bike]:
         with self.lock:
-            return [Bike.model_validate(b) for b in _read(self._bikes_path(), [])]
+            path = self._bikes_path()
+            rows = _cached(self.root, "bikes", _file_stamp(path), lambda: [Bike.model_validate(b) for b in _read(path, [])])
+            return list(rows)
 
     def bike(self, bike_id: str) -> Bike | None:
         return next((b for b in self.bikes() if b.id == bike_id), None)
@@ -72,20 +165,35 @@ class FileStore:
             for b in bikes:
                 merged[b.id] = b
             _write(self._bikes_path(), [b.model_dump(exclude_none=True) for b in merged.values()])
+            _touch(self.root, "bikes")
+
+    def _manuals_dir(self) -> Path:
+        return self.root / "manuals"
 
     def manuals(self) -> list[Manual]:
         with self.lock:
-            folder = self.root / "manuals"
-            return [Manual.model_validate(_read(p, {})) for p in sorted(folder.glob("*.json"))] if folder.exists() else []
+            folder = self._manuals_dir()
+            rows = _cached(
+                self.root,
+                "manuals",
+                _dir_stamp(folder),
+                lambda: [Manual.model_validate(_read(p, {})) for p in sorted(folder.glob("*.json"))] if folder.exists() else [],
+            )
+            return list(rows)
 
     def manual(self, manual_id: str) -> Manual | None:
         with self.lock:
-            path = self.root / "manuals" / f"{manual_id}.json"
-            return Manual.model_validate(_read(path, {})) if path.exists() else None
+            path = self._manuals_dir() / f"{manual_id}.json"
+            stamp = _file_stamp(path)
+            if stamp is None:
+                return None
+            return _cached(self.root, f"manual:{manual_id}", stamp, lambda: Manual.model_validate(_read(path, {})))
 
     def put_manual(self, manual: Manual) -> None:
         with self.lock:
-            _write(self.root / "manuals" / f"{manual.id}.json", manual.model_dump(exclude_none=True))
+            _write(self._manuals_dir() / f"{manual.id}.json", manual.model_dump(exclude_none=True))
+            _touch(self.root, "manuals")
+            _touch(self.root, f"manual:{manual.id}")
 
     def pages(self, manual_id: str) -> list[Page]:
         with self.lock:
@@ -109,7 +217,7 @@ class FileStore:
     def _registry_rows(self) -> list[RegistryEntry]:
         """Every row, validated once per version of the file.
 
-        registry.json is 40 MB and 99k rows: `json.loads` costs ~1.8 s and validating them ~3.0 s,
+        registry.json is 40 MB and 99k rows: `json.loads` costs ~3.7 s and validating them ~8.9 s,
         and the API and the test suite both call this many times per process. The cache key is the
         file's own (mtime_ns, size), so any writer - put_registry here, the merge tool's wholesale
         rewrite, another process - invalidates it without needing to know the cache exists. A file
@@ -121,18 +229,9 @@ class FileStore:
         the process sees, and would survive until the file changed.
         """
         path = self._registry_path()
-        try:
-            stat = path.stat()
-            key = (stat.st_mtime_ns, stat.st_size)
-        except OSError:
-            self._registry_cache = None
+        if not path.exists():
             return []
-        cached = self._registry_cache
-        if cached is not None and cached[0] == key:
-            return cached[1]
-        rows = [RegistryEntry.model_validate(e) for e in _read(path, [])]
-        self._registry_cache = (key, rows)
-        return rows
+        return _cached(self.root, "registry", _file_stamp(path), lambda: [RegistryEntry.model_validate(e) for e in _read(path, [])])
 
     def registry(self, make: str | None = None, model: str | None = None, year: int | None = None) -> list[RegistryEntry]:
         with self.lock:
@@ -151,6 +250,7 @@ class FileStore:
             for e in entries:
                 merged[e.id] = e
             _write(self.root / "registry.json", [e.model_dump(exclude_none=True) for e in merged.values()])
+            _touch(self.root, "registry")
 
     def job(self, job_id: str) -> IngestJob | None:
         with self.lock:
@@ -174,19 +274,29 @@ class FileStore:
         with self.lock:
             _write(self._offers_path(manual_id, part_id), result)
 
+    def _costs_path(self) -> Path:
+        return self.root / "costs.jsonl"
+
     def log_cost(self, event: CostEvent) -> None:
         with self.lock:
-            path = self.root / "costs.jsonl"
+            path = self._costs_path()
             path.parent.mkdir(parents=True, exist_ok=True)
             with path.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(event.model_dump()) + "\n")
+            _touch(self.root, "costs")
 
     def costs(self) -> list[CostEvent]:
         with self.lock:
-            path = self.root / "costs.jsonl"
+            path = self._costs_path()
             if not path.exists():
                 return []
-            return [CostEvent.model_validate(json.loads(line)) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows = _cached(
+                self.root,
+                "costs",
+                _file_stamp(path),
+                lambda: [CostEvent.model_validate(json.loads(line)) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()],
+            )
+            return list(rows)
 
     def pdf_url(self, manual_id: str) -> str | None:
         return None

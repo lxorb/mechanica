@@ -299,7 +299,7 @@ async function takeOne(page, take) {
   await waited(
     "3D stage",
     page.waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
-      timeout: 20000,
+      timeout: 26000,
     }),
   );
   await dwell(3000);
@@ -781,23 +781,38 @@ async function contactSheet(video, beats, duration, out) {
 /* ------------------------------------------------------------------ run */
 
 /**
- * A throwaway tab that opens the manual and the parts list once, so the recorded tab gets the
- * PDF and the parts catalogue out of the HTTP cache instead of making the video sit on a
- * progress ring. It deliberately never touches Pick: a second WebGL context on this box makes
- * the recorded one take three times longer to come up, or hang the tab outright — which is
- * worse than the ring it was meant to save. Take 2 is never warmed; the cold fetch is its point.
+ * Walks the path once in the tab that is about to be recorded, then reloads it. That gets the
+ * 4 MB GLB, the HDRI, the manual's pages and the parts catalogue into the HTTP cache and the
+ * shaders into the GPU's, so the recorded run mounts the 3D stage in a few seconds rather than
+ * spending twenty on a progress ring.
+ *
+ * In the same tab, deliberately. A second tab holding its own WebGL context made the recorded
+ * one three times slower to come up and twice hung it outright — this box has one GPU and the
+ * screencast is already taking a slice of it. The reload afterwards throws away the bus state
+ * and the history, so the take still opens on a clean landing page.
+ *
+ * Take 2 is never warmed: a manual that has never been fetched is the whole point of it.
  */
-async function warm(browser) {
-  const page = await browser.newPage();
-  await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
+async function warm(page) {
   try {
     await page.goto(APP, { waitUntil: "load", timeout: 90000 });
     await page.waitForSelector(".id-q", { timeout: 90000 });
     await page.evaluate(async () => {
+      await import("/counter/js/screens/pick.js");
+      const bus = await import("/counter/js/bus.js");
+      bus.set({ bikeId: "ktm-390-duke-2024" });
+      bus.go("pick");
+    });
+    await page
+      .waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
+        timeout: 120000,
+      })
+      .catch(() => {});
+    await page.evaluate(async () => {
       await import("/counter/js/screens/book.js");
       await import("/counter/js/screens/invoice.js");
       const bus = await import("/counter/js/bus.js");
-      bus.set({ bikeId: "ktm-390-duke-2024", jobId: "ktm-390-duke-2024/chain-tension-check" });
+      bus.set({ jobId: "ktm-390-duke-2024/chain-tension-check" });
       bus.go("book");
     });
     await page
@@ -807,12 +822,10 @@ async function warm(browser) {
       .catch(() => {});
     await page.evaluate(() => document.querySelector(".book-parts")?.click());
     await page.waitForFunction(() => document.querySelectorAll(".pv-tile").length > 10, { timeout: 60000 }).catch(() => {});
-    await sleep(1200);
+    await sleep(1000);
   } catch {
     /* a cold cache only costs the video a few seconds of ring */
   }
-  await page.close();
-  await sleep(1500);
 }
 
 async function record(which, fn) {
@@ -830,7 +843,6 @@ async function record(which, fn) {
       `--window-size=${W},${H}`,
     ],
   });
-  if (which.warm) await warm(browser);
   const page = await browser.newPage();
   // Workshop, not Night: headless reports a dark system and the video would open on the one
   // theme that is not the product's own.
@@ -851,6 +863,7 @@ async function record(which, fn) {
   let extra = null;
   let capture = null;
   try {
+    if (which.warm) await warm(page);
     // The load is outside the take: nobody wants to watch a service worker boot.
     await page.goto(APP, { waitUntil: "load", timeout: 90000 });
     await page.waitForSelector(".id-q", { timeout: 90000 });

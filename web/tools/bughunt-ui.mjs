@@ -169,7 +169,9 @@ async function toPick(page, base) {
     bus.set({ bikeId: id });
     bus.go("pick");
   }, BIKE);
-  await page.waitForSelector("[data-screen='pick'] .hit", { timeout: 45000 });
+  // The live API is on the other side of the proxy and other work on the box can starve it;
+  // a slow manual fetch is not a finding, so this waits long rather than reporting a bug.
+  await page.waitForSelector("[data-screen='pick'] .hit", { timeout: 120000 });
   await nap(1500);
 }
 

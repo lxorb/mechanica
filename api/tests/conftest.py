@@ -22,7 +22,45 @@ _tmp_root = Path(tempfile.mkdtemp(prefix="ttm-tests-"))
 os.environ.setdefault("PYTEST_DEBUG_TEMPROOT", str(_tmp_root))
 
 DATA_DIR = _tmp_root / "data"
-shutil.copytree(SEED_DIR, DATA_DIR, ignore=shutil.ignore_patterns("seeds", "uploads", "*.part*"))
+
+KTM = "ktm-390-duke-2024-om-en"
+BMW = "bmw-r12gs-2025-rm-en"
+
+# Four directories hold one file per manual, and seeding all 509 of them meant copying 4.5 GB
+# (4.1 GB of it PDFs) before the first test ran and then parsing 62 MB of manual JSON on every
+# call to store.manuals(). Nothing in the suite counts manuals or reaches for one it does not
+# name, so the corpus is seeded down to these - every id the tests use, plus the two the ingest
+# fixtures share a shape with, plus the longest manual in the corpus, which is what pins
+# max_manual_pages() and therefore the /cost naive-per-ask figure the shape test compares against.
+PER_MANUAL_DIRS = ("manuals", "pages", "specs", "pdf")
+SEEDED_MANUALS = (
+    KTM,
+    BMW,
+    "bmw-f-900-r-2025-eu-om",
+    "ktm-1390-super-adventure-r-2026-us-om",
+    "honda-africa-twin-adventure-sports-es-dct-2026-us-om",  # 381 pages: the corpus maximum
+)
+
+
+def _seed(src: Path, dst: Path) -> None:
+    """api/data -> the throwaway copy, whole except for the four per-manual directories."""
+    dst.mkdir(parents=True, exist_ok=True)
+    skip = shutil.ignore_patterns("seeds", "uploads", "*.part*")  # bulky, and never read back
+    for entry in src.iterdir():
+        if skip(str(src), [entry.name]):
+            continue
+        if entry.name in PER_MANUAL_DIRS:
+            (dst / entry.name).mkdir(exist_ok=True)
+            for manual_id in SEEDED_MANUALS:
+                for one in entry.glob(f"{manual_id}.*"):
+                    shutil.copy2(one, dst / entry.name / one.name)
+        elif entry.is_dir():
+            shutil.copytree(entry, dst / entry.name, ignore=skip)
+        else:
+            shutil.copy2(entry, dst / entry.name)
+
+
+_seed(SEED_DIR, DATA_DIR)
 
 for _var in (
     "MONGODB_URI",
@@ -41,9 +79,6 @@ os.environ["ELEVENLABS_AGENT_ID"] = "agent_test"
 os.environ["PUBLIC_BASE"] = "http://testserver"
 
 atexit.register(lambda: shutil.rmtree(_tmp_root, ignore_errors=True))
-
-KTM = "ktm-390-duke-2024-om-en"
-BMW = "bmw-r12gs-2025-rm-en"
 
 
 @pytest.fixture(autouse=True)

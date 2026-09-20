@@ -413,6 +413,9 @@ function indexSoon() {
       announce();
       return sliceYield();
     })
+    .catch(() => {
+      indexing = false; // whatever went wrong, the next keystroke is allowed to build it itself
+    })
     .then(() => {
       if (roster !== bikes) return;
       phase("index", () => forceIndex(bikes));

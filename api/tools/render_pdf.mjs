@@ -62,9 +62,12 @@ const FOOT = `
     <span><span class="pageNumber"></span>/<span class="totalPages"></span></span>
   </div>`;
 
+// A 200-section manual with hundreds of figures takes minutes to lay out and print, and
+// puppeteer's default protocolTimeout is 180 s - which is what "Page.printToPDF timed out" means.
 const browser = await puppeteer.launch({
   executablePath: chrome,
   headless: "new",
+  protocolTimeout: 1_800_000,
   args: ["--no-sandbox", "--disable-dev-shm-usage", "--font-render-hinting=none"],
 });
 try {
@@ -72,7 +75,13 @@ try {
   page.setDefaultNavigationTimeout(180000);
   // A missing image must not fail the print: the manual's text is the part /ingest needs.
   page.on("requestfailed", (r) => console.error(`  asset failed: ${r.url().slice(0, 120)}`));
-  await page.goto(pathToFileURL(resolve(input)).href, { waitUntil: "networkidle0", timeout: 180000 });
+  // `load` plus a settle window, not networkidle0: a manual pulls hundreds of CDN images and the
+  // network never goes fully idle for the two seconds networkidle0 insists on.
+  await page.goto(pathToFileURL(resolve(input)).href, { waitUntil: "load", timeout: 300000 });
+  await page.evaluate(async () => {
+    await Promise.all([...document.images].filter((i) => !i.complete).map((i) =>
+      new Promise((done) => { i.addEventListener("load", done, { once: true }); i.addEventListener("error", done, { once: true }); })));
+  });
   await page.emulateMediaType("print");
   await page.pdf({
     path: resolve(output),
@@ -83,7 +92,7 @@ try {
     displayHeaderFooter: true,
     headerTemplate: "<span></span>",
     footerTemplate: FOOT,
-    timeout: 300000,
+    timeout: 1_500_000,
   });
 } finally {
   await browser.close();
