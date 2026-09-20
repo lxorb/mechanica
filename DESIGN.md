@@ -21,18 +21,11 @@ Purpose: validate the UX. "Don't trust the AI. Trust the manual. We just get you
 Photo · VIN · search placeholder "Make, model" · question placeholder "What do you want to do?" · Parts · p. · ← · ✕ · ↑ (send) · mic glyph.
 Section titles, chapter titles, part names, specs and shop names come from the data files verbatim.
 
-## Code
-- React 19 + TypeScript + Vite + Tailwind v4 + pdfjs-dist. Types in src/types.ts are the contract; do not change them.
-- Each owner edits only their own files (see File ownership). Shared files (App.tsx, types.ts, data/index.ts, data/bikes.json, index.css) are owned by the integrator.
-- Pure functions in src/lib, screens in src/screens, reusable pieces in src/components.
-- No comments explaining what code does. No README prose. `npm run build` must pass with zero TS errors.
-
-## File ownership (phase 1, done)
-- identify agent: src/screens/Identify.tsx, src/lib/identify.ts
-- ask agent: src/screens/Ask.tsx, src/lib/match.ts, src/lib/speech.ts, src/components/Parts.tsx
-- viewer agent: src/screens/Result.tsx, src/components/PdfPage.tsx, src/lib/pdf.ts
-- data agents: public/manuals/<id>.pdf, src/data/manuals/<id>.json, tools/extract_<id>.py
-- pwa agent: public/icons/*, vite.config.ts (PWA block only), index.html (head only)
+## Code (since 2026-09-20 evening)
+- Frontend = Handy Book counter app in web/ (vanilla ES modules, no build): screens in web/counter/js/screens, adapter web/counter/js/ttm.js (only module screens import), 3D viewer web/counter/js/viewer3d.js, part icons web/counter/js/particons.js. The old React app was removed.
+- Backend = api/ (FastAPI). The UI contract stays Manual + jobs (sections); no backend prose ever reaches the UI.
+- Steps: 1 Identify · 2 Confirm · 3 Pick (3D model + search over chapters/subchapters) · 4 Book (fullscreen manual). Parts is a sheet from Book.
+- Deploy: `bash deploy/web.sh` (Cloudflare Worker, https://mechanica.emilvinu.ch, /api proxied to Azure), `bash deploy/azure.sh` (API).
 
 ## Phase 2: real backend (api/, FastAPI, Python 3.12)
 Contracts owned by the integrator: api/app/models.py (camelCase, byte-compatible with src/types.ts), api/app/store.py (Store protocol + FileStore),
