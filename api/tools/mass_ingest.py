@@ -926,12 +926,24 @@ def _unlink_bikes(store, manual_id: str, bike_ids: list[str]) -> int:
         if bike is None or bike.manualId != manual_id:
             continue
         store.put_bikes([bike.model_copy(update={"manualId": None})])
-        if (store.bike(bike_id) or bike).manualId == manual_id:
-            # model_dump(exclude_none=True) drops the field, so an overlay cannot clear what the base row holds
-            blob = getattr(store, "_blob", None)
-            if blob is not None:
+        # model_dump(exclude_none=True) drops the field, so neither a rewritten overlay nor a deleted one can
+        # clear a manualId that lives in the base bikes.json. Take it out of the base row itself.
+        blob = getattr(store, "_blob", None)
+        if blob is not None and (store.bike(bike_id) or bike).manualId == manual_id:
+            try:
                 blob(f"links/{bike_id}.json").delete_blob()
-                store._lists.drop("bikes")
+            except Exception:
+                pass
+
+            def drop(current, _id=bike_id):
+                rows = [r for r in (current or []) if isinstance(r, dict)]
+                for row in rows:
+                    if row.get("id") == _id:
+                        row.pop("manualId", None)
+                return rows
+
+            store._cas("bikes.json", drop)
+            store._lists.clear()
         freed += 1
     return freed
 

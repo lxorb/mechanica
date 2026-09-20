@@ -42,6 +42,7 @@ import html
 import io
 import json
 import re
+import signal
 import sys
 import threading
 import time
@@ -306,10 +307,10 @@ class Model:
 
     @property
     def lane(self) -> int:
-        """Queue order: manual-bearing bikes, then every car, then the bike tail."""
+        """Queue order: manualId bikes, manualUrl bikes, cars with a manual, the rest."""
         if self.kind == "car":
-            return 1
-        return 0 if self.tier <= 1 else 2
+            return 2 if self.tier <= 1 else 3
+        return 0 if self.manual_id else (1 if self.manual_url else 3)
 
     @property
     def label(self) -> str:
@@ -1098,6 +1099,12 @@ def main() -> int:
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--minutes", type=float, default=0.0)
     ap.add_argument("--checkpoint", type=int, default=25)
+    ap.add_argument(
+        "--checkpoint-seconds",
+        type=float,
+        default=90.0,
+        help="also checkpoint this often, whatever the counter says",
+    )
     ap.add_argument("--candidates", type=int, default=6)
     ap.add_argument("--min-score", type=float, default=6.0)
     ap.add_argument("--quality", default="70,76,72", help="hero,full,thumb webp quality")
@@ -1322,6 +1329,54 @@ def main() -> int:
             stats["render_gave_up"] += 1
         return False
 
+    saving = threading.Lock()
+    last_save = [time.monotonic()]
+
+    def checkpoint(tag: str = "") -> None:
+        """Persist the map and the credits. Never raises, never blocks a worker twice.
+
+        Driven by a clock as well as a counter: a run that short-circuits thousands
+        of models after its deadline, or one whose counter races, still gets its
+        work to disk. `saving` is non-blocking on purpose -- if another thread is
+        already writing, this one has nothing to add and goes back to fetching.
+        """
+        if not saving.acquire(blocking=False):
+            return
+        try:
+            with lock:
+                gone = verify(entries)
+                snapshot = (stats["done"], stats["hit"], stats["attempted"], spend["usd"])
+            if gone:
+                print(f"  - {gone} entries dropped: their photo is gone", flush=True)
+            write_outputs(entries)
+            _, titles = first_pass()  # the other agent is still claiming files
+            with lock:
+                used.update(titles)
+            last_save[0] = time.monotonic()
+            print(
+                f"  ..{tag} {snapshot[0]}/{len(models)} tried, {len(entries)} images, "
+                f"{bytes_used / 1e6:.1f} MB, hit {100 * snapshot[1] / max(1, snapshot[2]):.0f}%, "
+                f"${snapshot[3]:.2f}",
+                flush=True,
+            )
+        except Exception as exc:  # noqa: BLE001 - a checkpoint must never kill the run
+            print(f"  ! checkpoint: {exc!r}"[:200], flush=True)
+        finally:
+            saving.release()
+
+    def bail(signum, _frame) -> None:
+        """Ctrl-C / SIGTERM: stop taking work and flush what is already fetched."""
+        stop.set()
+        print(f"== signal {signum}: stopping, writing {len(entries)} entries ==", flush=True)
+        checkpoint(" signal")
+        raise SystemExit(130)
+
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            signal.signal(sig, bail)
+        except (ValueError, OSError):  # not the main thread, or not supported
+            pass
+
     def work(client: httpx.Client, m: Model) -> None:
         try:
             fetch(client, m)
@@ -1331,24 +1386,10 @@ def main() -> int:
             print(f"  ! {m.key}: {exc!r}"[:150], flush=True)
         with lock:
             stats["done"] += 1
-            stats[f"tier{m.tier}:done"] += 1
+            stats[f"lane{m.lane}:done"] += 1
             due = stats["done"] % args.checkpoint == 0
-        if due:
-            with lock:
-                gone = verify(entries)
-            if gone:
-                print(f"  - {gone} entries dropped: the photo they pointed at is gone", flush=True)
-            write_outputs(entries)
-            _, titles = first_pass()  # the other agent is still claiming files
-            with lock:
-                used.update(titles)
-                snapshot = (stats["done"], stats["hit"], stats["attempted"], spend["usd"])
-            print(
-                f"  .. {snapshot[0]}/{len(models)} tried, {len(entries)} images, "
-                f"{bytes_used / 1e6:.1f} MB, hit {100 * snapshot[1] / max(1, snapshot[2]):.0f}%, "
-                f"${snapshot[3]:.2f}",
-                flush=True,
-            )
+        if due or time.monotonic() - last_save[0] > args.checkpoint_seconds:
+            checkpoint()
 
     tiers: dict = defaultdict(int)
     for m in models:
@@ -1394,7 +1435,7 @@ def main() -> int:
                 "candidates_rated": stats["rated"],
                 "pass_rate_by_source": pass_rate,
                 "hits_by_source": by("hit:"),
-                "by_tier": {k: v for k, v in sorted(stats.items()) if k.startswith("tier")},
+                "by_lane": {k: v for k, v in sorted(stats.items()) if k.startswith("lane")},
                 "stopped_for_budget": bool(stats["budget"]),
                 "stopped_for_time": stop.is_set() and not stats["budget"],
             },
