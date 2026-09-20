@@ -119,6 +119,8 @@
   align-items: stretch;
 }
 
+/* No top padding on the grid: the sticky shelf headings park on the scrollport's edge, and
+   a padding strip there would let tiles slide past above them. */
 .pv-grid,
 .pv-detail {
   flex: 1 1 auto;
@@ -126,7 +128,16 @@
   overflow: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 10px 12px calc(20px + env(safe-area-inset-bottom));
+  padding: 0 12px calc(20px + env(safe-area-inset-bottom));
+}
+
+.pv-detail {
+  padding-top: 12px;
+}
+
+/* The flat list a search shows, with no heading over it. */
+.pv-grid > .pv-tiles {
+  margin-top: 10px;
 }
 
 .pv-sheet[data-view="grid"] .pv-detail {
@@ -139,8 +150,14 @@
 
 /* ---------- grid ---------- */
 
-/* Sticky, because the catalogue runs to a hundred entries and the shelf you are in is
-   the one thing you must not lose while scrolling. */
+/* One section per shelf: its heading sticks over its own tiles and the next shelf pushes
+   it off, because the catalogue runs to a hundred entries and the shelf you are looking at
+   is the one thing you must not lose while scrolling. */
+.pv-shelf {
+  display: block;
+  margin-bottom: 14px;
+}
+
 .pv-group {
   position: sticky;
   top: 0;
@@ -151,14 +168,10 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.1;
-  margin: 16px 0 8px;
-  padding: 6px 0 4px;
+  margin: 0 0 8px;
+  padding: 8px 0 5px;
   background: var(--paper);
   border-bottom: 3px solid var(--ink);
-}
-
-.pv-group:first-child {
-  margin-top: 0;
 }
 
 .pv-tiles {
@@ -584,7 +597,11 @@
 
   .pv-grid,
   .pv-detail {
-    padding: 14px 20px calc(24px + env(safe-area-inset-bottom));
+    padding: 0 20px calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .pv-detail {
+    padding-top: 16px;
   }
 
   /* Two panes: the grid keeps its place, the part opens beside it. */

@@ -816,9 +816,13 @@ function partGroup(value) {
 
 function mapCatalogPart(raw, manualId) {
   if (!raw || raw.id == null || raw.id === "") return null;
-  const mentions = (Array.isArray(raw.mentions) ? raw.mentions : [])
-    .map((m) => (m && m.page != null ? { page: Number(m.page) || null, quote: m.quote == null ? "" : String(m.quote) } : null))
-    .filter((m) => m && m.page);
+  const byPage = new Map(); // one chip per printed page, the first quote wins
+  for (const m of Array.isArray(raw.mentions) ? raw.mentions : []) {
+    const page = m && m.page != null ? Number(m.page) || null : null;
+    if (!page || byPage.has(page)) continue;
+    byPage.set(page, { page, quote: m.quote == null ? "" : String(m.quote) });
+  }
+  const mentions = [...byPage.values()].sort((a, z) => a.page - z.page);
   const synonyms = [raw.synonyms, raw.aliases, raw.keywords]
     .flat()
     .filter((s) => typeof s === "string" && s);

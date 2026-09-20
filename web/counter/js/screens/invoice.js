@@ -395,7 +395,9 @@ function paintGrid() {
     if (!list || !list.length) continue;
     const tiles = h("div", { class: "pv-tiles" });
     for (const row of list) tiles.append(tile(row));
-    els.grid.append(h("h3", { class: "pv-group", text: label }), tiles);
+    // One section per shelf, so its heading sticks over its own tiles and is pushed off by
+    // the next one instead of every heading piling up at the top.
+    els.grid.append(h("section", { class: "pv-shelf" }, h("h3", { class: "pv-group", text: label }), tiles));
   }
 }
 
