@@ -1,9 +1,11 @@
 """PDF in, Manual out. Sections with grounded highlights, specs and parts - never a word the manual does not print."""
 
 import logging
+import os
 import threading
 import time
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import pymupdf
 
@@ -18,6 +20,64 @@ log = logging.getLogger("ingest")
 
 MIN_PAGES = 8  # a rider's manual is never this short; anything shorter is a test file or a leaflet
 MIN_READABLE_PAGES = 8  # a scan without a text layer: nothing to quote, so never pay an LLM for it
+
+# One ingest is 32 parallel LLM calls and a whole PDF in memory. Three at once already saturates a
+# 1 CPU / 2 GiB replica, and anything past that only makes every one of them slower - so a fourth
+# waits its turn instead, which is exactly what its job status already says ("queued").
+MAX_CONCURRENT = max(1, int(os.getenv("INGEST_MAX_CONCURRENT") or 3))
+QUEUE_WAIT = 600.0
+_slots = threading.BoundedSemaphore(MAX_CONCURRENT)
+
+# --- where an operator-supplied URL is allowed to point ------------------------------------------
+# POST /ingest takes a URL from a human. Even behind the admin token it may only reach a host the
+# registry already publishes manuals from: the fetcher will follow redirects and stream 180 s from
+# whatever it is given, and that is not a capability to hand out on a hostname alone.
+HOSTS_MAX_AGE = 300.0
+_hosts: frozenset[str] = frozenset()
+_hosts_at = 0.0
+_hosts_lock = threading.Lock()
+
+
+def _host_of(url: str) -> str:
+    try:
+        parts = urlsplit(str(url))
+    except ValueError:
+        return ""
+    if parts.scheme.lower() not in ("http", "https"):
+        return ""
+    return (parts.hostname or "").lower()
+
+
+def known_pdf_hosts() -> frozenset[str]:
+    """Every host the registry serves a manual from, plus app.registry's verified PDF_HOSTS."""
+    global _hosts, _hosts_at
+    with _hosts_lock:
+        if _hosts and time.monotonic() - _hosts_at < HOSTS_MAX_AGE:
+            return _hosts
+        found: set[str] = set()
+        try:
+            from ..registry import PDF_HOSTS
+
+            found.update(h.split("/", 1)[0].lower() for h in PDF_HOSTS)
+        except Exception as exc:  # the registry agents own that package; a broken one is not fatal
+            log.warning("PDF_HOSTS unavailable: %s", exc)
+        try:
+            for entry in get_store().registry():
+                host = _host_of(entry.url)
+                if host:
+                    found.add(host)
+        except Exception as exc:
+            log.warning("registry hosts unavailable: %s", exc)
+        _hosts, _hosts_at = frozenset(found), time.monotonic()
+        return _hosts
+
+
+def known_pdf_host(url: str) -> bool:
+    host = _host_of(url)
+    if not host:
+        return False
+    hosts = known_pdf_hosts()
+    return host in hosts or any(host.endswith("." + known) for known in hosts)
 
 
 def pdf_path(manual_id: str) -> Path:
@@ -113,6 +173,12 @@ def run(
     """
     store = get_store()
     job = _job(job_id, manual_id)
+    # Acquired before the job says "running", so a queued ingest looks queued to whoever is watching.
+    if not _slots.acquire(timeout=QUEUE_WAIT):
+        job.status = "error"
+        job.error = f"{MAX_CONCURRENT} ingests already running; waited {QUEUE_WAIT:.0f}s"
+        store.put_job(job)
+        raise RuntimeError(job.error)
     job.status = "running"
     job.error = None
     store.put_job(job)
@@ -232,6 +298,7 @@ def run(
         store.put_job(job)
         raise
     finally:
+        _slots.release()
         # Every failure above used to leave the pymupdf Document open, and with it the mapped
         # PDF and the file handle. A replica that fails a few hundred ingests leaks both.
         if doc is not None:

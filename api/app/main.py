@@ -1,8 +1,9 @@
 import re
+import secrets
 import uuid
 from collections import defaultdict
 
-from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
+from fastapi import BackgroundTasks, FastAPI, File, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.middleware.gzip import GZipMiddleware
@@ -264,7 +265,23 @@ def _start_job(tasks: BackgroundTasks, source: str, make: str, model: str, year:
 
 
 @app.post("/ingest", response_model=IngestJob)
-def ingest_url(req: IngestRequest, tasks: BackgroundTasks):
+def ingest_url(
+    req: IngestRequest,
+    tasks: BackgroundTasks,
+    x_admin_token: str | None = Header(default=None),
+):
+    """Admin only. This is the one route that takes a URL from a human and fetches it.
+
+    The product never comes through here: a rider gets a manual through POST /manuals/ensure, which
+    resolves the PDF from the registry server-side, or by uploading a file to POST /ingest/upload.
+    Left open it was a request-forgery primitive with a 180 s timeout that also wrote an
+    attacker-named vehicle into the catalogue every browser downloads (docs/qa/BUGS.md BUG-09).
+    """
+    expected = settings.admin_token
+    if not expected or not secrets.compare_digest(x_admin_token or "", expected):
+        raise HTTPException(401)
+    if not ingest_mod.known_pdf_host(req.url):
+        raise HTTPException(403, "host is not one the registry publishes manuals from")
     return _start_job(tasks, req.url, req.make, req.model, req.year, req.market)
 
 

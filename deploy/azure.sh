@@ -80,10 +80,14 @@ DEEPGRAM_KEY="${DEEPGRAM_API_KEY:-}"
 [ -z "$DEEPGRAM_KEY" ] && [ -f "$SECRETS_DIR/deepgram.txt" ] && DEEPGRAM_KEY=$(tr -d '\r\n' < "$SECRETS_DIR/deepgram.txt")
 TTC_KEY="${TTC_API_KEY:-}"
 [ -z "$TTC_KEY" ] && [ -f "$SECRETS_DIR/ttc.txt" ] && TTC_KEY=$(tr -d '\r\n' < "$SECRETS_DIR/ttc.txt")
+# The gate on POST /ingest. Without it that route answers 401 to everyone, which is the safe default.
+ADMIN_TOKEN_VALUE="${ADMIN_TOKEN:-}"
+[ -z "$ADMIN_TOKEN_VALUE" ] && [ -f "$SECRETS_DIR/admin.txt" ] && ADMIN_TOKEN_VALUE=$(tr -d '\r\n' < "$SECRETS_DIR/admin.txt")
 if [ -n "$OPENAI_KEY" ]; then
   SECRET_ENV="OPENAI_API_KEY=secretref:openai-key"
   [ -n "$TTC_KEY" ] && SECRET_ENV="$SECRET_ENV TTC_API_KEY=secretref:ttc-key"
   [ -n "$DEEPGRAM_KEY" ] && SECRET_ENV="$SECRET_ENV DEEPGRAM_API_KEY=secretref:deepgram-key"
+  [ -n "$ADMIN_TOKEN_VALUE" ] && SECRET_ENV="$SECRET_ENV ADMIN_TOKEN=secretref:admin-token"
 else
   echo "warning: no OpenAI key found (\$OPENAI_API_KEY or $SECRETS_DIR/openai.txt)" >&2
   SECRET_ENV=""
@@ -107,6 +111,7 @@ SECRETS=("storage-conn=$STORAGE_CONN")
 [ -n "$OPENAI_KEY" ] && SECRETS+=("openai-key=$OPENAI_KEY")
 [ -n "$TTC_KEY" ] && SECRETS+=("ttc-key=$TTC_KEY")
 [ -n "$DEEPGRAM_KEY" ] && SECRETS+=("deepgram-key=$DEEPGRAM_KEY")
+[ -n "$ADMIN_TOKEN_VALUE" ] && SECRETS+=("admin-token=$ADMIN_TOKEN_VALUE")
 az containerapp secret set -n "$APP" -g "$RG" --secrets "${SECRETS[@]}" -o none
 
 FQDN=$(az containerapp show -n "$APP" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)

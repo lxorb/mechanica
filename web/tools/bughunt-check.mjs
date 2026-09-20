@@ -140,6 +140,19 @@ const DECOMPOSED = "Ténéré 700".normalize("NFD");
   eq("another host is left alone", worker.backToApi("https://example.com/x", here), "");
 }
 
+/* ----------------------------------- BUG-10  the Deepgram proxy must not trust a missing Origin */
+
+{
+  const here = new URL("https://mechanica.emilvinu.ch/ws/deepgram/agent");
+  ok("a handshake with no Origin is refused", worker.originOk(null, here) === false);
+  ok("an empty Origin is refused", worker.originOk("", here) === false);
+  ok("a foreign Origin is refused", worker.originOk("https://evil.example", here) === false);
+  ok("garbage in Origin is refused", worker.originOk("not-a-url", here) === false);
+  ok("our own domain is allowed", worker.originOk("https://mechanica.emilvinu.ch", here) === true);
+  ok("a workers.dev preview is allowed", worker.originOk("https://trustthemanual.cloudflare-disjoin783.workers.dev", here) === true);
+  ok("localhost dev is allowed", worker.originOk("http://localhost:5173", here) === true);
+}
+
 /* ------------------------------------------- BUG-21  one bad bundle row must not kill the roster */
 
 {

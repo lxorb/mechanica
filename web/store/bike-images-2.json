@@ -2111,6 +2111,18 @@
     "via": "alias",
     "aliasOf": "ducati|999"
   },
+  "ducati|cafe-racer": {
+    "image": "store/img/bikes2/ducati-cafe-racer.webp",
+    "thumb": "store/img/bikes2/ducati-cafe-racer.thumb.webp",
+    "title": "Ducati Scrambler Cafe Racer Petersen Automotive Museum.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Scrambler_Cafe_Racer_Petersen_Automotive_Museum.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ducati-cafe-racer.hero.webp"
+  },
   "ducati|desert-sled": {
     "image": "store/img/bikes2/ducati-desert-sled.webp",
     "thumb": "store/img/bikes2/ducati-desert-sled.thumb.webp",
@@ -2785,6 +2797,78 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1200,_red_(2).jpg",
     "via": "alias",
     "aliasOf": "ducati|multistrada-1200-s"
+  },
+  "ducati|multistrada-1260": {
+    "image": "store/img/bikes2/ducati-multistrada-1260.webp",
+    "thumb": "store/img/bikes2/ducati-multistrada-1260.thumb.webp",
+    "title": "Ducati Multistrada 1260 Pikes Peak, Paris Motor Show 2018, IMG 0445.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_Pikes_Peak,_Paris_Motor_Show_2018,_IMG_0445.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ducati-multistrada-1260.hero.webp"
+  },
+  "ducati|multistrada-1260-d-air": {
+    "image": "store/img/bikes2/ducati-multistrada-1260.webp",
+    "thumb": "store/img/bikes2/ducati-multistrada-1260.thumb.webp",
+    "hero": "store/img/bikes2/ducati-multistrada-1260.hero.webp",
+    "title": "Ducati Multistrada 1260 Pikes Peak, Paris Motor Show 2018, IMG 0445.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_Pikes_Peak,_Paris_Motor_Show_2018,_IMG_0445.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|multistrada-1260"
+  },
+  "ducati|multistrada-1260-enduro": {
+    "image": "store/img/bikes2/ducati-multistrada-1260.webp",
+    "thumb": "store/img/bikes2/ducati-multistrada-1260.thumb.webp",
+    "hero": "store/img/bikes2/ducati-multistrada-1260.hero.webp",
+    "title": "Ducati Multistrada 1260 Pikes Peak, Paris Motor Show 2018, IMG 0445.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_Pikes_Peak,_Paris_Motor_Show_2018,_IMG_0445.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|multistrada-1260"
+  },
+  "ducati|multistrada-1260-s": {
+    "image": "store/img/bikes2/ducati-multistrada-1260-s.webp",
+    "thumb": "store/img/bikes2/ducati-multistrada-1260-s.thumb.webp",
+    "title": "Ducati Multistrada 1260 S.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_S.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ducati-multistrada-1260-s.hero.webp"
+  },
+  "ducati|multistrada-1260-s-d-air": {
+    "image": "store/img/bikes2/ducati-multistrada-1260-s.webp",
+    "thumb": "store/img/bikes2/ducati-multistrada-1260-s.thumb.webp",
+    "hero": "store/img/bikes2/ducati-multistrada-1260-s.hero.webp",
+    "title": "Ducati Multistrada 1260 S.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_S.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ducati|multistrada-1260-s"
+  },
+  "ducati|multistrada-1260-s-grand-tour": {
+    "image": "store/img/bikes2/ducati-multistrada-1260-s.webp",
+    "thumb": "store/img/bikes2/ducati-multistrada-1260-s.thumb.webp",
+    "hero": "store/img/bikes2/ducati-multistrada-1260-s.hero.webp",
+    "title": "Ducati Multistrada 1260 S.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_S.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ducati|multistrada-1260-s"
   },
   "ducati|multistrada-950-s": {
     "image": "store/img/bikes/ducati-multistrada-950.webp",
@@ -6028,6 +6112,30 @@
     "via": "alias",
     "aliasOf": "honda|crf1000l-africa-twin"
   },
+  "honda|crf1100l": {
+    "image": "store/img/bikes2/honda-crf1100l.webp",
+    "thumb": "store/img/bikes2/honda-crf1100l.thumb.webp",
+    "title": "2020 Honda CRF1100L Africa Twin MT.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Honda_CRF1100L_Africa_Twin_MT.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-crf1100l.hero.webp"
+  },
+  "honda|crf1100l-africa-twin-adventure-sports": {
+    "image": "store/img/bikes2/honda-crf1100l.webp",
+    "thumb": "store/img/bikes2/honda-crf1100l.thumb.webp",
+    "hero": "store/img/bikes2/honda-crf1100l.hero.webp",
+    "title": "2020 Honda CRF1100L Africa Twin MT.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Honda_CRF1100L_Africa_Twin_MT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|crf1100l"
+  },
   "honda|crf150f-big-wheel": {
     "image": "store/img/bikes/honda-crf150f.webp",
     "thumb": "store/img/bikes/honda-crf150f-thumb.webp",
@@ -6652,6 +6760,18 @@
     "view": "three_quarter",
     "score": 7.5,
     "hero": "store/img/bikes2/honda-gb350s.hero.webp"
+  },
+  "honda|genio": {
+    "image": "store/img/bikes2/honda-genio.webp",
+    "thumb": "store/img/bikes2/honda-genio.thumb.webp",
+    "title": "2020 Honda Genio CBS 110 (20220215).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Honda_Genio_CBS_110_(20220215).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-genio.hero.webp"
   },
   "honda|gl1800": {
     "image": "store/img/bikes2/honda-gl1800.webp",
@@ -7342,6 +7462,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Rebel_500_(2BL-PC60)_front.jpg",
     "via": "alias",
     "aliasOf": "honda|rebel-500"
+  },
+  "honda|rs125": {
+    "image": "store/img/bikes2/honda-rs125.webp",
+    "thumb": "store/img/bikes2/honda-rs125.thumb.webp",
+    "title": "Honda RS125R-W in the Honda Collection Hall.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_RS125R-W_in_the_Honda_Collection_Hall.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-rs125.hero.webp"
   },
   "honda|s-wing-125-c-abs": {
     "image": "store/img/bikes/honda-s-wing-125.webp",
@@ -8528,6 +8660,114 @@
     "source": "https://commons.wikimedia.org/wiki/File:Indian_Big_Chief_(41662681662).jpg",
     "via": "alias",
     "aliasOf": "indian|chief-dark-horse"
+  },
+  "indian|ftr": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/indian-ftr.hero.webp"
+  },
+  "indian|ftr-carbon": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-championship-edition": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-r": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-r-carbon": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-rally": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-s": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-sport": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
+  },
+  "indian|ftr-x-rsd-super-hooligan": {
+    "image": "store/img/bikes2/indian-ftr.webp",
+    "thumb": "store/img/bikes2/indian-ftr.thumb.webp",
+    "hero": "store/img/bikes2/indian-ftr.hero.webp",
+    "title": "Indian FTR 1200 - special.jpg",
+    "author": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_FTR_1200_-_special.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|ftr"
   },
   "indian|indian": {
     "image": "store/img/bikes2/indian-indian.webp",
@@ -12442,6 +12682,30 @@
     "via": "alias",
     "aliasOf": "ktm|640-duke-ii"
   },
+  "ktm|640-lc4-adventure": {
+    "image": "store/img/bikes2/ktm-640-lc4-adventure.webp",
+    "thumb": "store/img/bikes2/ktm-640-lc4-adventure.thumb.webp",
+    "title": "KTM 640 LC4 Enduro Kotka 2013.JPG",
+    "author": "MKFI",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_640_LC4_Enduro_Kotka_2013.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ktm-640-lc4-adventure.hero.webp"
+  },
+  "ktm|640-lc4-adventure-r": {
+    "image": "store/img/bikes2/ktm-640-lc4-adventure.webp",
+    "thumb": "store/img/bikes2/ktm-640-lc4-adventure.thumb.webp",
+    "hero": "store/img/bikes2/ktm-640-lc4-adventure.hero.webp",
+    "title": "KTM 640 LC4 Enduro Kotka 2013.JPG",
+    "author": "MKFI",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_640_LC4_Enduro_Kotka_2013.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ktm|640-lc4-adventure"
+  },
   "ktm|640-lc4-enduro-orange": {
     "image": "store/img/bikes/ktm-640-lc4-enduro.webp",
     "thumb": "store/img/bikes/ktm-640-lc4-enduro-thumb.webp",
@@ -13268,6 +13532,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V9_Bobber_Centenario_2021_museum.jpg",
     "via": "alias",
     "aliasOf": "moto-guzzi|v9-bobber"
+  },
+  "mv-agusta|brutale-1000-nurburgring": {
+    "image": "store/img/bikes2/mv-agusta-brutale-1000-nurburgring.webp",
+    "thumb": "store/img/bikes2/mv-agusta-brutale-1000-nurburgring.thumb.webp",
+    "title": "2024 MV Agusta Brutale 1000 RS (2).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_MV_Agusta_Brutale_1000_RS_(2).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/mv-agusta-brutale-1000-nurburgring.hero.webp"
   },
   "mv-agusta|brutale-1000-rr": {
     "image": "store/img/bikes2/mv-agusta-brutale-1000-rr.webp",
@@ -15027,6 +15303,18 @@
     "via": "alias",
     "aliasOf": "suzuki|gsx-r750"
   },
+  "suzuki|gsx-s1000-&-gsx-s950": {
+    "image": "store/img/bikes2/suzuki-gsx-s1000-gsx-s950.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s1000-gsx-s950.thumb.webp",
+    "title": "Suzuki GSX-S1000.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S1000.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/suzuki-gsx-s1000-gsx-s950.hero.webp"
+  },
   "suzuki|gsx-s1000-abs": {
     "image": "store/img/bikes/suzuki-gsx-s1000.webp",
     "thumb": "store/img/bikes/suzuki-gsx-s1000-thumb.webp",
@@ -15303,6 +15591,30 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/suzuki-katana.hero.webp"
+  },
+  "suzuki|let's": {
+    "image": "store/img/bikes2/suzuki-let-s.webp",
+    "thumb": "store/img/bikes2/suzuki-let-s.thumb.webp",
+    "title": "Suzuki lets4.jpg",
+    "author": "ラ ばあさん",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_lets4.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/suzuki-let-s.hero.webp"
+  },
+  "suzuki|let's-basket": {
+    "image": "store/img/bikes2/suzuki-let-s.webp",
+    "thumb": "store/img/bikes2/suzuki-let-s.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-let-s.hero.webp",
+    "title": "Suzuki lets4.jpg",
+    "author": "ラ ばあさん",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_lets4.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "suzuki|let's"
   },
   "suzuki|rm-z450": {
     "image": "store/img/bikes2/suzuki-rm-z450.webp",
@@ -17658,6 +17970,18 @@
     "via": "alias",
     "aliasOf": "triumph|trophy-se"
   },
+  "triumph|tt600": {
+    "image": "store/img/bikes2/triumph-tt600.webp",
+    "thumb": "store/img/bikes2/triumph-tt600.thumb.webp",
+    "title": "Triumph TT600.jpg",
+    "author": "Reg Mckenna from UK",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_TT600.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/triumph-tt600.hero.webp"
+  },
   "tvs|tvs-ntorq-race-xp": {
     "image": "store/img/bikes/tvs-tvs-ntorq.webp",
     "thumb": "store/img/bikes/tvs-tvs-ntorq-thumb.webp",
@@ -18164,6 +18488,18 @@
     "view": "three_quarter",
     "score": 8.5,
     "hero": "store/img/bikes2/yamaha-fazzio-bkf.hero.webp"
+  },
+  "yamaha|fazzio-lux": {
+    "image": "store/img/bikes2/yamaha-fazzio-lux.webp",
+    "thumb": "store/img/bikes2/yamaha-fazzio-lux.thumb.webp",
+    "title": "Yamaha Fazzio (side view, below) & Yamaha Grand Filano (side view, upper) in Jambi Business Center - Jambi City, JA.jpg",
+    "author": "Firzafp",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Fazzio_(side_view,_below)_%26_Yamaha_Grand_Filano_(side_view,_upper)_in_Jambi_Business_Center_-_Jambi_City,_JA.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-fazzio-lux.hero.webp"
   },
   "yamaha|fino-grande": {
     "image": "store/img/bikes2/yamaha-fino-grande.webp",
@@ -22499,5 +22835,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Zuma.jpg",
     "via": "alias",
     "aliasOf": "yamaha|zuma"
+  },
+  "zero|dsr/x": {
+    "image": "store/img/bikes2/zero-dsr-x.webp",
+    "thumb": "store/img/bikes2/zero-dsr-x.thumb.webp",
+    "title": "Zero DSRX, BAS 24, Brussels (P1170324-RR).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Zero_DSRX,_BAS_24,_Brussels_(P1170324-RR).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/zero-dsr-x.hero.webp"
   }
 }

@@ -183,9 +183,27 @@ async function run() {
       `no layout shift entering or leaving voice mode ${JSON.stringify(shift.before)}`
     );
 
+    // Headless parks requestAnimationFrame until the compositor has had work for a while, so the
+    // first second after a page settles is 8-15 fps and says nothing about the orb. Spin a second
+    // of frames into it first - raced against a timer, because a parked rAF never resolves at all
+    // and a while-loop awaiting one would simply hang.
+    await page.evaluate(async () => {
+      window.__orb.setState("speaking");
+      const t0 = performance.now();
+      while (performance.now() - t0 < 1400) {
+        window.__setLevel(Math.random());
+        await Promise.race([
+          new Promise((r) => requestAnimationFrame(r)),
+          new Promise((r) => setTimeout(r, 100)),
+        ]);
+      }
+      window.__orb.setState("closed");
+    });
+
     // 3. the three states, sampled and photographed
     for (const state of STATES) {
-      const moved = await page.evaluate(
+      const sample = () =>
+        page.evaluate(
         async (name) => {
           const orb = window.__orb;
           orb.setState(name);
@@ -243,8 +261,13 @@ async function run() {
             visible: !root.hidden,
           };
         },
-        state
-      );
+          state
+        );
+      // Headless hands out a frame budget of its own choosing and sometimes hands out almost
+      // none. A second of two frames is not a slow orb, it is a browser that did not draw: take
+      // the sample again rather than reporting a frame rate that is the harness's, not the app's.
+      let moved = await sample();
+      for (let tries = 0; tries < 3 && moved.frames < 30; tries += 1) moved = await sample();
       const wanted = state[0].toUpperCase() + state.slice(1);
       say(moved.visible, `${state}: the orb is on screen`);
       say(moved.word === wanted, `${state}: the label says ${wanted} (${moved.word})`);

@@ -28,7 +28,6 @@ const DEEPGRAM_ROUTES = {
   "/ws/deepgram/listen": "https://api.deepgram.com/v2/listen",
 };
 
-// Browsers always send Origin on a WebSocket handshake; anything else is one of our own scripts.
 const ORIGIN_ALLOW = new Set([
   "mechanica.emilvinu.ch",
   "trustthemanual.cloudflare-disjoin783.workers.dev",
@@ -36,8 +35,15 @@ const ORIGIN_ALLOW = new Set([
   "127.0.0.1",
 ]);
 
-function originOk(origin, url) {
-  if (!origin) return true;
+/**
+ * Browsers always send Origin on a WebSocket handshake. This used to read that the other way round
+ * — "no Origin means one of our own scripts" — but everything that is not a browser also sends no
+ * Origin, so the check was an open door to DEEPGRAM_API_KEY for any client that simply left the
+ * header off (docs/qa/BUGS.md BUG-10). Nothing of ours needs the exemption: every harness in
+ * web/tools drives headless Chrome, and there is no node WebSocket client in the repo.
+ */
+export function originOk(origin, url) {
+  if (!origin) return false;
   let host;
   try {
     host = new URL(origin).hostname;

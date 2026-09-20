@@ -14,6 +14,7 @@ class Bike(BaseModel):
     manualId: str | None = None
     manualUrl: str | None = None
     kind: str | None = None  # "motorcycle" | "car"; None = motorcycle
+    lang: str | None = None  # language of manualUrl; None = "en", set only when no English one exists
     vins: list[str] | None = None
     cues: list[str] | None = None
 

@@ -5,6 +5,7 @@ crawl() stores them; bikes_from_registry() derives catalog Bikes; free_owner_man
 """
 
 import importlib
+import re
 from collections.abc import Callable, Iterable
 from pathlib import Path
 
@@ -124,10 +125,16 @@ def _is_pdf(url: str) -> bool:
     return head.endswith(".pdf") or any(h in head for h in PDF_HOSTS)
 
 
-def _ingestable(e: RegistryEntry) -> bool:
+def _fetchable(e: RegistryEntry) -> bool:
+    """A free official owner's manual our fetcher can take, in any language."""
     if any(h in e.url for h in BROKEN_HOSTS):
         return False
-    return e.type == "owner" and e.access == "free" and e.lang.lower().startswith("en") and _is_pdf(e.url)
+    return e.type == "owner" and e.access == "free" and _is_pdf(e.url)
+
+
+def _ingestable(e: RegistryEntry) -> bool:
+    """...and in English, which is the only thing `/ingest` queues unattended."""
+    return _fetchable(e) and e.lang.lower().startswith("en")
 
 
 def merge_ua(entries: Iterable[RegistryEntry]) -> list[RegistryEntry]:
@@ -145,17 +152,59 @@ def merge_ua(entries: Iterable[RegistryEntry]) -> list[RegistryEntry]:
     return rows
 
 
-def pdf_index() -> dict[str, list[RegistryEntry]]:
-    """bike id -> every free English owner's-manual PDF covering it, best market first."""
+ALIAS_MIN = 3
+NOT_ALNUM = re.compile(r"[^a-z0-9]+")
+
+
+def alias_key(make: str, model: str, year: object) -> str:
+    """The same vehicle with the punctuation rubbed out: `Multistrada V4 S` and `Multistrada V4S`,
+    `FC 250` and `FC250`, `R nineT` and `R Nine T`, `R&G` and `R and G` all collapse to one key.
+
+    This can only ever merge spellings, never model families: what is left after the rub-out is the
+    model's whole alphanumeric sequence in order, so two genuinely different models cannot collide -
+    `CB500F` and `CB500X` stay apart, and so do `RS 660` and `RS 457`. The make and the year are
+    part of the key, so an alias never reaches across either. A stub shorter than three characters
+    gets no key at all, because `R` would match far too much."""
+    core = NOT_ALNUM.sub("", (model or "").lower().replace("&", " and "))
+    if len(core) < ALIAS_MIN:
+        return ""
+    return f"{NOT_ALNUM.sub('', (make or '').lower())}|{core}|{year}"
+
+
+def _index(rows: Iterable[RegistryEntry], keyed: Callable[[RegistryEntry, int], str]) -> dict[str, list[RegistryEntry]]:
     found: dict[str, list[RegistryEntry]] = {}
-    for e in get_store().registry():
-        if not _ingestable(e) or not e.model or e.model.strip().lower() == "all models":
+    for e in rows:
+        if not e.model or e.model.strip().lower() == "all models":
             continue
         for year in e.years:
-            found.setdefault(slug(e.make, e.model, year), []).append(e)
-    for rows in found.values():
-        rows.sort(key=lambda e: (_supplement(e), _market_rank(e.market)))
+            key = keyed(e, year)
+            if key:
+                found.setdefault(key, []).append(e)
+    for group in found.values():
+        group.sort(key=lambda e: (_supplement(e), _lang_rank(e.lang), _market_rank(e.market)))
     return found
+
+
+def pdf_index() -> dict[str, list[RegistryEntry]]:
+    """bike id -> every free English owner's-manual PDF covering it, best market first."""
+    return _index((e for e in get_store().registry() if _ingestable(e)), lambda e, y: slug(e.make, e.model, y))
+
+
+def alias_index() -> dict[str, list[RegistryEntry]]:
+    """The same thing keyed by `alias_key()`, for vehicles whose model name is spelled differently
+    in the catalogue than on the OEM's portal."""
+    return _index((e for e in get_store().registry() if _ingestable(e)), lambda e, y: alias_key(e.make, e.model, y))
+
+
+def foreign_index() -> dict[str, list[RegistryEntry]]:
+    """Free official handbooks that are **not** in English, keyed both ways. Used only for vehicles
+    no English manual covers: a German Betriebsanleitung is the manufacturer's own book for that
+    bike, and offering it beats offering nothing. Never queued for unattended ingest."""
+    rows = [e for e in get_store().registry() if _fetchable(e) and not e.lang.lower().startswith("en")]
+    both = _index(rows, lambda e, y: slug(e.make, e.model, y))
+    for key, group in _index(rows, lambda e, y: alias_key(e.make, e.model, y)).items():
+        both.setdefault(key, group)
+    return both
 
 
 # What a vehicle should link to, best first. A brochure is a real free PDF and stays in the registry,
@@ -189,6 +238,21 @@ def _pick(rows: list[RegistryEntry], market: str, kind: str = "motorcycle") -> R
     return next((e for e in same if e.market.upper() == market.upper()), same[0])
 
 
+# When a vehicle has no English manual at all, this is the order the other languages are offered in:
+# the big European printings first, then the maker's home languages. Anything unlisted comes last.
+LANG_FALLBACK = ("de", "fr", "es", "it", "nl", "pt", "ja", "sv", "da", "no", "fi", "pl")
+
+
+def _lang_rank(lang: str) -> int:
+    code = (lang or "").lower().split("-")[0]
+    if code.startswith("en"):
+        return -1  # English always first; the foreign index never contains one
+    try:
+        return LANG_FALLBACK.index(code)
+    except ValueError:
+        return len(LANG_FALLBACK)
+
+
 def _market_rank(market: str) -> int:
     try:
         return MARKET_FALLBACK.index(market.upper())
@@ -203,6 +267,9 @@ def bikes_from_registry() -> list[Bike]:
     vins and cues set by other passes are kept."""
     store = get_store()
     manuals = pdf_index()
+    aliases = alias_index()
+    foreign = foreign_index()
+    hits: list[tuple[str, str, str, str]] = []  # (how, make, catalogue model, registry model)
     known = {b.id: b for b in store.bikes()}  # re-read late: other passes write manualId concurrently
     out: dict[str, Bike] = {}
     for e in store.registry():
@@ -222,17 +289,46 @@ def bikes_from_registry() -> list[Bike]:
                 manualId=old.manualId if old else None,
                 manualUrl=None,
                 kind=e.kind or (old.kind if old else None),  # a car's registry row must derive a car
+                lang=None,  # recomputed below, like manualUrl
                 vins=old.vins if old else None,
                 cues=old.cues if old else None,
             )
     for bid, bike in known.items():  # seed-catalog bikes the registry never produced can still have a PDF
-        if bid not in out and bid in manuals:
+        if bid in out:
+            continue
+        key = alias_key(bike.make, bike.model, bike.year)
+        if bid in manuals or bid in foreign or (key and (key in aliases or key in foreign)):
             out[bid] = bike.model_copy()
     for bid, bike in out.items():
+        # Three passes, each strictly worse than the one before, and never mixed: the exact id, then
+        # the same model spelled differently, then the manufacturer's own book in another language.
+        # manualUrl stays a pure function of the registry - no covering row means no offer, so a
+        # retracted row stops being advertised instead of lingering as a link nothing can fetch.
+        key = alias_key(bike.make, bike.model, bike.year)
         rows = manuals.get(bid)
-        # manualUrl is a pure function of the registry: no covering row means no offer, so a retracted
-        # row stops being advertised instead of lingering as a link nothing can fetch.
-        bike.manualUrl = _pick(rows, bike.market, kind_of(bike)).url if rows else None
+        how = "exact"
+        if not rows and key:
+            rows = aliases.get(key)
+            how = "alias"
+        if not rows:
+            rows = foreign.get(bid) or (foreign.get(key) if key else None)
+            how = "foreign"
+        if not rows:
+            bike.manualUrl, bike.lang = None, None
+            continue
+        best = _pick(rows, bike.market, kind_of(bike))
+        bike.manualUrl = best.url
+        # `lang` is set only when the offer is not English, so a reader can be told before they open it.
+        bike.lang = None if best.lang.lower().startswith("en") else best.lang
+        if how != "exact" and best.model.lower() != bike.model.lower():
+            hits.append((how, bike.make, bike.model, best.model))
+        elif how == "foreign":
+            hits.append((how, bike.make, bike.model, best.lang))
+    if hits:
+        pairs = sorted({h for h in hits})
+        log.info("bikes: %d vehicle(s) matched by alias or language fallback, %d distinct pairing(s)", len(hits), len(pairs))
+        for how, make, catalogue, other in pairs[:40]:
+            log.info("  %-7s %-16s %-32s -> %s", how, make, catalogue[:32], other)
     bikes = list(out.values())
     if bikes:
         store.put_bikes(bikes)

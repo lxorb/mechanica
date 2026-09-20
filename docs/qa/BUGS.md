@@ -5,9 +5,10 @@ Surfaces: `api/app/chat.py`, `ingest/**`, `ondemand.py`, `store.py`, `store_blob
 `counter/js/bus.js`, `pick-search.js`, `parts-search.js`, `particons.js`, `index-data.js`, `search.js`,
 `query.js`, and the Identify/Confirm/Pick screens. Read for defects, then fuzzed live at ≤ 5 req/s.
 
-Tests: `api/tests/test_bughunt_store.py`, `api/tests/test_bughunt_api.py`, `web/tools/bughunt-check.mjs`.
-`api/.venv/Scripts/python -m pytest api/tests -q` → **708 passed, 20 skipped**.
-`node web/tools/bughunt-check.mjs` → **32 passed**. `node web/tools/adapter-test.mjs` → **68 passed**.
+Tests: `api/tests/test_bughunt_store.py`, `test_bughunt_api.py`, `test_bughunt_ingest_guard.py`,
+`web/tools/bughunt-check.mjs`.
+`api/.venv/Scripts/python -m pytest api/tests -q` → **743 passed, 20 skipped**.
+`node web/tools/bughunt-check.mjs` → **39 passed**. `node web/tools/adapter-test.mjs` → **68 passed**.
 
 ## Findings
 
@@ -21,11 +22,11 @@ Tests: `api/tests/test_bughunt_store.py`, `api/tests/test_bughunt_api.py`, `web/
 | BUG-06 | med | `parts_catalog.py` | `taxonomy()` published itself before its id map was filled | fixed |
 | BUG-07 | low | `search.js`, `pick-search.js` | highlight offsets were computed on a different string than they marked | fixed |
 | BUG-08 | low | `search.js`, `pick-search.js` | no ceiling on query tokens: a pasted paragraph pins the main thread | fixed |
-| BUG-09 | **high** | `main.py` `/ingest`, `/ingest/upload` | unauthenticated arbitrary-URL fetch + writes into the shared catalog | open |
-| BUG-10 | med | `worker/index.js` | the Deepgram proxy accepts a handshake with no `Origin` | open |
-| BUG-11 | med | `store_blob.py` `bikes()` | every cache miss lists and downloads every `links/*.json` | open |
-| BUG-12 | med | `store_blob.py` `costs()` | every 30 s miss re-reads and re-parses every cost event ever written | open |
-| BUG-13 | med | `ondemand.py` | one in-flight job per **replica**; a restart leaves a job "running" for ever | open |
+| BUG-09 | **high** | `main.py` `/ingest`, `ingest/fetch.py` | unauthenticated arbitrary-URL fetch; SSRF; unbounded paid ingests | fixed |
+| BUG-10 | med | `worker/index.js` | the Deepgram proxy accepted a handshake with no `Origin` | fixed |
+| BUG-11 | med | `store_blob.py` `bikes()` | every cache miss listed and downloaded every `links/*.json` | fixed |
+| BUG-12 | med | `store_blob.py` `costs()` | every 30 s miss re-parsed every cost event ever written; append cap | fixed |
+| BUG-13 | med | `ondemand.py`, `ttm.js` | one in-flight job per **replica**; a restart leaves a job "running" for ever | open |
 | BUG-14 | low | `climate/rules.py:389` | the same all-Manuals load as BUG-01, in another owner's file | open |
 | BUG-15 | low | `worker/index.js`, `main.py` | `GET /manuals/{id}` is `max-age=60`, so the early manual can outlive the real one | open |
 | BUG-16 | low | `ondemand.py` | ingest-failure markers are per-replica files on an ephemeral disk | open |
@@ -35,7 +36,10 @@ Tests: `api/tests/test_bughunt_store.py`, `api/tests/test_bughunt_api.py`, `web/
 | BUG-20 | low | `main.py` `_pushed` | unbounded set, and a racing request can skip a needed re-push | open |
 | BUG-21 | low | `index-data.js` | a year range with `to < from` threw `RangeError` out of `expandBundle` | fixed |
 
-9 fixed · 12 open · 0 crashes or hangs in 143 live requests.
+13 fixed · 8 open · 0 crashes or hangs in 143 live requests.
+
+BUG-09's policy (admin token + registry hosts only) was set by the coordinator on 2026-09-20 and is
+implemented below; the product path — `POST /manuals/ensure` and `POST /ingest/upload` — is unchanged.
 
 ---
 
@@ -137,50 +141,76 @@ Our own generator never emits one, so this is defence only.
 **Fix** a reversed / non-finite range yields `[]` and the rows beside it still expand.
 **Test** three cases in `bughunt-check.mjs`.
 
+### BUG-09 — `POST /ingest` took a URL from anyone on the internet · high, security
+**Repro** `curl -X POST https://mechanica.emilvinu.ch/api/ingest -d '{"url":"http://169.254.169.254/...",
+"make":"x","model":"y","year":2024}'` → 200 and a job.
+**Root cause** the route handed an operator-supplied URL to a fetcher that followed redirects for up to
+180 s — a request-forgery primitive against anything the container can reach — started a real paid
+ingest per call, and wrote a bike with attacker-chosen make/model/year into the catalogue every browser
+downloads. Not a file-read primitive: a local path is accepted but the `%PDF` check rejects the result.
+**Fix** (policy set by the coordinator, 2026-09-20) four layers, none of them on the product path:
+1. **admin only** — `X-Admin-Token` must equal `settings.admin_token`, compared with
+   `secrets.compare_digest`. Missing, wrong, or **no token configured at all** → `401`; an unconfigured
+   deployment is closed, not open. The secret is `config._secret("ADMIN_TOKEN", "admin.txt")`, wired into
+   `deploy/azure.sh` as the `admin-token` secret + `ADMIN_TOKEN=secretref:admin-token`, exactly like
+   `openai-key`/`ttc-key`/`deepgram-key`, and listed in `api/.env.example`.
+2. **registry hosts only** — even with the token the URL's host must be one the registry already
+   publishes manuals from (`ingest.known_pdf_host()`: every host in `registry.json` plus
+   `app.registry.PDF_HOSTS`, cached 300 s). Anything else, and any scheme that is not http(s) → `403`.
+3. **no private targets** — `ingest/fetch.py::_guard` resolves the host and refuses loopback, private,
+   link-local, multicast and anything non-global, **on every redirect hop** (an `httpx.Client` request
+   event hook, not a pre-check, because the interesting SSRF is the 302, not the first URL). DNS can
+   still answer differently on the connect that follows; `TTM_ALLOW_PRIVATE_FETCH=1` opts out locally.
+4. **a ceiling on paid work** — `ingest.run()` takes one of `INGEST_MAX_CONCURRENT` (3) slots before the
+   job says "running", so a fourth waits instead of making the other three slower.
+The product path is untouched and asserted: `POST /manuals/ensure` carries no URL (the PDF is resolved
+server-side from the registry) and `POST /ingest/upload` carries a file. No `api/tools` script calls the
+`/ingest` route — `tools/ingest.py`, `bulk_ingest.py` and `mass_ingest.py` all import `app.ingest` and
+call `run()` in process — so none needed the header.
+**Test** 29 cases in `test_bughunt_ingest_guard.py`: 401 (none/wrong/prefix/unconfigured), 403 (eight URL
+shapes incl. the metadata service and a `www.ktm.com.evil.example` suffix trick), the redirect-hop guard,
+the escape hatch, the untouched product path, and the semaphore. Verified separately that twelve real
+registry hosts still pass `_public()`.
+
+### BUG-10 — the Deepgram proxy trusted a missing `Origin` · med, security
+**Root cause** `originOk()` returned `true` when there was no `Origin` header, reasoning that browsers
+always send one — but everything that is *not* a browser also sends none, so any client could open
+`wss://mechanica.emilvinu.ch/ws/deepgram/agent` and spend the account's Deepgram key.
+**Fix** `if (!origin) return false;`. Safe to make: every harness in `web/tools` drives headless Chrome
+(which always sends `Origin`) and there is no node WebSocket client in the repo.
+**Test** seven cases in `bughunt-check.mjs`.
+
+### BUG-11 — `bikes()` fanned out over every link blob on every cache miss · med
+**Root cause** single-bike writes drop `links/<id>.json` and `bikes()` listed the prefix and downloaded
+every one of them each time the 60 s listing cache expired. `compact_bikes()` folds them back but was
+documented as "maintenance only — run it when idle", so nothing ever ran it.
+**Fix** past `COMPACT_AT` = 200 links, `bikes()` starts the fold on a daemon thread, one at a time, after
+it has already answered. A failure is harmless: the links are still there and `bikes()` still merges them.
+**Test** two cases in `test_bughunt_store.py` (fires past the threshold, silent below it).
+
+### BUG-12 — `costs()` re-parsed every cost event ever logged, and the day blob could fill up · med
+**Root cause** the live counter refreshes every 30 s and each refresh downloaded and re-parsed every
+`costs/<day>.jsonl` blob — O(everything ever logged). Separately, an Azure append blob holds **50,000
+blocks** and `log_cost` writes one block per LLM call, so a busy enough day would eventually stop
+appending.
+**Fix** the blob listing already carries each blob's ETag, so `_cost_events(name, etag)` parses a day
+once and yesterday's file is never downloaded again — only today's growing one is. And on
+`BlockCountExceedsLimit` the day rolls onto `costs/<day>-<n>.jsonl`, which the same prefix listing picks
+up, instead of losing the event. Any other append error still raises.
+**Test** four cases in `test_bughunt_store.py`.
+
 ---
 
 ## Open
-
-### BUG-09 — `POST /ingest` is an unauthenticated arbitrary-URL fetch · **high, security**
-`/ingest` takes `{url, make, model, year}` from anyone on the internet and hands the url to
-`ingest/fetch.py`, which follows redirects with a **180 s** timeout. That is a server-side request forgery
-primitive against anything the container can reach, an unbounded resource drain (each call starts a real
-ingest thread and pays OpenAI), and it writes a bike with attacker-chosen `make`/`model`/`year` into the
-shared catalogue every browser downloads. `/ingest/upload` takes 60 MB uploads on the same terms.
-Not exploitable as a file read — a local path is accepted but the `%PDF` check rejects whatever comes back.
-**Open because** the fix is a policy decision (a shared token? an allowlist of registry hosts? drop the
-route from the public surface and keep it for `api/tools`?), not a code change I should make alone.
-Cheapest partial mitigation inside `fetch.py`: refuse loopback / link-local / RFC1918 targets after
-resolution, which costs the legitimate registry hosts nothing.
-
-### BUG-10 — the Deepgram proxy trusts a missing `Origin` · med, security
-`worker/index.js::originOk()` returns `true` when there is no `Origin` header, on the reasoning that
-browsers always send one. Everything that is not a browser also never sends one, so any client can open
-`wss://mechanica.emilvinu.ch/ws/deepgram/agent` and spend the account's Deepgram key. One-line fix
-(`if (!origin) return false;`), left open only because `web/tools/*-shots.mjs` may drive that socket from
-node and I did not want to break the demo harnesses without checking with the voice owner.
-
-### BUG-11 — `bikes()` fans out over every link blob on every cache miss · med
-Single-bike writes drop `links/<id>.json`, and `bikes()` lists the prefix and downloads every one of them
-each time the 60 s listing cache expires. `compact_bikes()` folds them back but is documented as
-"maintenance only — run it when idle", so nothing runs it. With 13.5k on-demand-capable vehicles this
-grows into thousands of blob GETs a minute. Suggested fix: compact automatically once `len(links) >` a
-threshold, from inside `bikes()`, guarded so only one thread does it.
-
-### BUG-12 — `costs()` re-reads every cost event ever logged · med
-`GET /cost` (and `ask.py`'s spend guard) parse every line of every `costs/<yyyymmdd>.jsonl` blob on each
-30 s cache miss — 1,668 events today, monotonically growing. Two related limits: an Azure **append blob
-caps at 50,000 blocks**, and `log_cost` writes one block per LLM call, so a busy day eventually fails to
-append; and `log_cost` is called synchronously inside the request path. Suggested fix: keep a rolling
-daily total blob and read only today's file for the live counter.
 
 ### BUG-13 — a job can be "running" for ever, and two replicas can ingest the same manual · med
 `ondemand._jobs` is a process-local dict, so with 1–3 replicas two of them can start the same ingest at
 once (both pay). Worse, if a replica is recycled mid-ingest the blob job stays `running` with nobody
 advancing it: `GET /ingest/<id>` keeps returning it, and `ttm.js` polls for `INGEST_MAX_MS` = **15 minutes**
 before giving up. `ensure()` itself recovers (it starts a fresh job), but the Confirm screen is watching the
-dead one. Suggested fix: stamp the job with a heartbeat and treat a job whose heartbeat is older than a
-minute as failed.
+dead one. **Left open** because the remaining harm is outside these files: the fix needs a heartbeat on
+`IngestJob` *and* a staleness check in `GET /ingest/{job_id}` (`main.py`) or in `ttm.js`'s poll loop, and
+the duplicate-ingest half needs a cross-replica lock (a blob lease), which is a design decision.
 
 ### BUG-14 — `climate/rules.py:389` repeats BUG-01 · low
 `sorted(m.id for m in store.manuals())` — the same ~72 MB load, in the climate owner's file. It wants ids

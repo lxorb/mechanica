@@ -34,7 +34,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from azure.core import MatchConditions
-from azure.core.exceptions import ResourceExistsError, ResourceModifiedError, ResourceNotFoundError
+from azure.core.exceptions import (
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceModifiedError,
+    ResourceNotFoundError,
+)
 from azure.storage.blob import BlobServiceClient, ContentSettings
 
 from .models import Bike, CostEvent, IngestJob, Manual, Page, RegistryEntry, Spec
@@ -62,6 +67,12 @@ WORKERS = 16
 # above this many bikes in one call it is a bulk catalogue write, not an ingest worker linking one bike
 BULK_BIKES = 8
 CAS_RETRIES = 10
+# links/ blobs past which bikes() folds them into bikes.json in the background. Every cache miss
+# otherwise lists the prefix and downloads every one of them, and nothing was calling compact_bikes().
+COMPACT_AT = 200
+# Azure's hard cap on one append blob. log_cost writes one block per LLM call, so a busy enough day
+# eventually hits it; past that the day rolls onto costs/<day>-<n>.jsonl, which costs() picks up.
+COST_BLOB_CACHE = 64
 
 _MISS = object()
 
@@ -140,8 +151,14 @@ class BlobStore:
         self._specs = _Cache(MANUAL_CACHE, DOC_TTL)
         self._lists = _Cache(8, LIST_TTL)
         self._costs = _Cache(1, COST_TTL)
+        # One day of cost events, keyed by blob name + ETag. Yesterday's file never changes, so it is
+        # downloaded and parsed once per process instead of on every 30 s refresh of the live counter.
+        self._cost_docs = _Cache(COST_BLOB_CACHE, 24 * 3600.0)
+        self._cost_roll: dict[str, int] = {}
         self._offers = _Cache(OFFER_CACHE, DOC_TTL)
         self._create_lock = threading.Lock()
+        self._compact_lock = threading.Lock()
+        self._compacting = False
 
         if create:
             self._ensure_containers()
@@ -218,11 +235,39 @@ class BlobStore:
             return hit
         base = self._read_json("bikes.json", [])
         merged: dict[str, dict] = {b["id"]: b for b in base if isinstance(b, dict) and b.get("id")}
-        for link in self._links():
+        links = self._links()
+        for link in links:
             merged[link["id"]] = {**merged.get(link["id"], {}), **link}
         out = [Bike.model_validate(b) for b in merged.values()]
         self._lists.put("bikes", out)
+        if len(links) > COMPACT_AT:
+            self._compact_soon(len(links))
         return out
+
+    def _compact_soon(self, seen: int) -> None:
+        """Fold the link blobs away off the request path, once at a time.
+
+        Every on-demand ingest drops one links/<id>.json, and bikes() reads all of them on every
+        60 s cache miss. compact_bikes() exists to fold them back but was documented as manual
+        maintenance, so nothing ever ran it (docs/qa/BUGS.md BUG-11). A failure here is harmless:
+        the links are still there and bikes() still merges them.
+        """
+        with self._compact_lock:
+            if self._compacting:
+                return
+            self._compacting = True
+
+        def run() -> None:
+            try:
+                log.info("folding %d link blobs into bikes.json", seen)
+                self.compact_bikes()
+            except Exception as exc:
+                log.warning("link compaction failed: %s", exc)
+            finally:
+                with self._compact_lock:
+                    self._compacting = False
+
+        threading.Thread(target=run, daemon=True, name="blob-compact").start()
 
     def _links(self) -> list[dict]:
         names = self._names("links/")
@@ -439,14 +484,21 @@ class BlobStore:
 
     # --- costs ----------------------------------------------------------
 
+    def _cost_name(self) -> str:
+        """Today's append blob, rolled to -1, -2 ... once one hits Azure's 50,000-block ceiling."""
+        day = datetime.now(timezone.utc).strftime("%Y%m%d")
+        roll = self._cost_roll.get(day, 0)
+        return f"costs/{day}.jsonl" if roll == 0 else f"costs/{day}-{roll}.jsonl"
+
     def log_cost(self, event: CostEvent) -> None:
         """Appends are atomic server side, so workers never serialise here. The one race is creating
         today's blob: an unconditional create_append_blob truncates whatever a racing worker already
         wrote, so the create is conditional on the blob still being missing."""
-        name = f"costs/{datetime.now(timezone.utc).strftime('%Y%m%d')}.jsonl"
-        client = self._blob(name)
         line = (json.dumps(event.model_dump()) + "\n").encode("utf-8")
-        for _ in range(3):
+        name = self._cost_name()
+        for _ in range(4):
+            name = self._cost_name()
+            client = self._blob(name)
             try:
                 client.append_block(line)
                 break
@@ -458,6 +510,14 @@ class BlobStore:
                         )
                     except (ResourceExistsError, ResourceModifiedError):
                         pass
+            except HttpResponseError as exc:
+                # One append blob holds 50,000 blocks and one call is one block. Start a new one
+                # for the rest of the day rather than losing the event; costs() reads the prefix.
+                if getattr(exc, "error_code", "") != "BlockCountExceedsLimit":
+                    raise
+                day = datetime.now(timezone.utc).strftime("%Y%m%d")
+                self._cost_roll[day] = self._cost_roll.get(day, 0) + 1
+                log.warning("%s is full; rolling to %s", name, self._cost_name())
         else:
             raise RuntimeError(f"{name}: could not append")
         self._costs.drop("costs")
@@ -466,13 +526,31 @@ class BlobStore:
         hit = self._costs.get("costs")
         if hit is not _MISS:
             return hit
-        names = sorted(n for n in self._names("costs/") if n.endswith(".jsonl"))
+        client = self.service.get_container_client(self.data)
+        blobs = sorted(
+            (b.name, str(getattr(b, "etag", "") or getattr(b, "size", "")))
+            for b in client.list_blobs(name_starts_with="costs/")
+            if b.name.endswith(".jsonl")
+        )
         out: list[CostEvent] = []
-        for raw in self._fanout(lambda n: self._read_text(n), names):
-            for line in raw.splitlines():
-                if line.strip():
-                    out.append(CostEvent.model_validate(json.loads(line)))
+        for events in self._fanout(lambda pair: self._cost_events(*pair), blobs):
+            out.extend(events)
         self._costs.put("costs", out)
+        return out
+
+    def _cost_events(self, name: str, tag: str) -> list[CostEvent]:
+        """One day's events. The ETag comes free with the listing, so a day that has not changed is
+        never downloaded or parsed twice - only today's file is still growing."""
+        key = f"{name}|{tag}"
+        hit = self._cost_docs.get(key)
+        if hit is not _MISS:
+            return hit
+        out = [
+            CostEvent.model_validate(json.loads(line))
+            for line in self._read_text(name).splitlines()
+            if line.strip()
+        ]
+        self._cost_docs.put(key, out)
         return out
 
     def _read_text(self, name: str) -> str:
