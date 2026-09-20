@@ -17,6 +17,16 @@ finishes saying the number.*
 Every figure below is **measured** on the live deployment on 2026-09-20 unless it says otherwise, with the
 message trace saved. Where we could not measure something, it says so.
 
+> **Deploy status, read before rehearsing.** The latency table is the deployed system. Three changes made
+> on 2026-09-20 — keyterms in the `Settings` message, the spoken-page reader fallback, and `get_spec`
+> ranking — are **written and tested but not yet deployed** (`voice.py` needs an API deploy,
+> `voice-deepgram.js` a static-asset deploy; the Worker is unchanged). The keyterms were proved
+> against the live socket by injecting the same 100 terms into the `Settings` message from a probe
+> (accepted, zero errors), and the latency numbers were taken with them in. **Demo turn 2 ("and the front
+> one?") needs the `get_spec` ranking deployed to be deterministic** — on the old ranking the right row was
+> 5th of 6 and the model found it in one run and refused in another. Deploy before the rehearsal, or drop
+> turn 2 to "what's the tyre pressure?".
+
 ---
 
 ## 0:30 — The workshop moment
@@ -100,8 +110,12 @@ socket opens**.
 | 6 | **"What's the valve clearance on a Ducati Panigale?"** | *"That is not in this manual."* — no figure, no guess, no carry-over from another bike | — |
 
 **Numbers are spoken, not printed.** The prompt bans every screen-only token: no markdown, no bullets, no
-"4.5 Nm". The agent says *"one hundred newton metres"*, *"two point zero bar"*, *"SAE fifteen W fifty"*.
-Aura-2 reads a spelled-out figure correctly every time; it reads `4.5 Nm` as "four point five enn emm".
+"4.5 Nm". Measured over 8 live turns, every *figure* came out spelled: *"one hundred newton metres"*,
+*"forty five newton metres"*, *"two point zero bar front and two point two bar rear"*, *"one point five
+litres"*. Two turns leaked a printed **grade** through unspoken — `SAE 15W/50` and `DOT 4 or DOT 5.1` — and
+aura-2 reads those as letters, which is survivable but not right. The fix is item 8 in
+[`deepgram/improvements.md`](deepgram/improvements.md): spell the figure server-side in the tool result, so
+correct speech is data rather than an instruction the model may drop. Do not claim 8/8; claim what it is.
 
 **Do not hide turn 4.** Say the honest line: *"That one took ten seconds, because the question walks our
 search pipeline and then reads four printed pages. A spec question that lands on `get_spec` is a
