@@ -195,7 +195,8 @@ def test_car_fragments_are_valid_and_tagged(tmp_path):
     from app.config import settings
     from app.models import RegistryEntry
 
-    files = sorted((settings.data_dir / "registry-fragments").glob("cars-*.json"))
+    # *.drop.json sits next to the fragments and is a plain list of ids for the merge to retract.
+    files = [p for p in sorted((settings.data_dir / "registry-fragments").glob("cars-*.json")) if not p.name.endswith(".drop.json")]
     assert files, "no car fragments checked in"
     total = 0
     for path in files:

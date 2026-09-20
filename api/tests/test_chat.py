@@ -129,12 +129,17 @@ def test_out_of_manual_question_says_not_covered_and_cites_nothing(monkeypatch):
     assert done["usd"] == 0.0
 
 
-def test_no_retrieved_page_also_says_not_covered(monkeypatch):
+def test_a_real_job_with_no_matching_page_still_gets_an_answer(monkeypatch):
+    """The policy change: only "not about this motorcycle" refuses. A job the index simply missed must
+    still reach the model, which then gives general steps with nothing to cite."""
     monkeypatch.setattr(chat.get_index(), "query", lambda *a, **k: [])
-    monkeypatch.setattr(chat.llm, "stream", lambda *a, **k: (_ for _ in ()).throw(AssertionError("no call")))
-    done = frames(chat.answer(KTM, [{"role": "user", "content": "how much does it weigh on Mars"}]))[-1]
-    assert done["answer"] == chat.NOT_COVERED
-    assert done["citations"] == []
+    stream = fake_stream(lambda user: f"{chat.GENERAL}
+1. Drain the old fluid.
+2. Refill and bleed.")
+    monkeypatch.setattr(chat.llm, "stream", stream)
+    done = frames(chat.answer(KTM, [{"role": "user", "content": "change the brake fluid"}]))[-1]
+    assert done["answer"].startswith(chat.GENERAL)
+    assert "No printed page" in stream.seen["user"]
 
 
 def test_model_that_ignores_the_prompt_still_yields_no_unverified_citation(monkeypatch):
@@ -328,7 +333,7 @@ def test_boilerplate_only_pages_lose_their_slot(monkeypatch):
         def __init__(self, page, text):
             self.page, self.text = page, text
 
-    monkeypatch.setattr(chat, "_pages_for", lambda m, q: [boiler, solid])
+    monkeypatch.setattr(chat, "_pages_for", lambda m, q: ([boiler, solid], True))
     real_pages = get_store().pages
 
     def patched(manual_id):
@@ -348,4 +353,4 @@ def test_the_prompt_forbids_dealer_advice_and_safety_boilerplate(monkeypatch):
     assert "professional" in system and "on the lift" in system
     assert "authorised workshop" in system and "NEVER tell the reader" in system
     assert "safety boilerplate" in system
-    assert chat.NO_PROCEDURE in system
+    assert chat.GENERAL in system
