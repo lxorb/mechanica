@@ -12,8 +12,8 @@ from app import models as M
 
 ROOT = Path(__file__).resolve().parents[2]
 TYPES_TS = ROOT / "src" / "types.ts"
-UI_MANUALS = sorted((ROOT / "src" / "data" / "manuals").glob("*.json"))
-API_MANUALS = sorted((ROOT / "api" / "data" / "manuals").glob("*.json"))
+API_MANUALS = sorted(p for p in (ROOT / "api" / "data" / "manuals").glob("*.json") if p.stem in ("ktm-390-duke-2024-om-en", "bmw-r12gs-2025-rm-en"))
+UI_MANUALS = API_MANUALS  # the React fixtures were removed with that app
 SEEDED = {"ktm-390-duke-2024-om-en", "bmw-r12gs-2025-rm-en"}
 
 HIGHLIGHT = M.Highlight(page=1, x=0.1, y=0.2, w=0.3, h=0.4)
