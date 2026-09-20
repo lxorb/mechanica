@@ -287,14 +287,24 @@ function onPop(event) {
     go("identify", { replace: true });
     return;
   }
-  syncOverlay(overlays.has(overlay) ? overlay : null);
+  const want = overlays.has(overlay) ? overlay : null;
+  // Close before the screen switch and open after it. go() closes whatever sheet is up, so
+  // opening first meant walking back onto an entry that names a sheet (#book+invoice from
+  // another screen) opened it and then shut it again in the same frame.
+  if (!want) syncOverlay(null);
   // A hash that is not a step (#cost) belongs to something else: the screen underneath
   // keeps its place instead of being thrown back to Identify.
   if (!FLOW.includes(id)) {
+    if (want) syncOverlay(want);
     if (!currentId) go("identify", { replace: true });
     return;
   }
   go(id, { replace: true });
+  if (want && want !== overlayId) {
+    syncOverlay(want);
+    // go() wrote the URL while the sheet was still closed.
+    history.replaceState(histFor(id), "", hashFor(id));
+  }
 }
 
 function onKey(e) {

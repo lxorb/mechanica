@@ -1,4 +1,9 @@
-# BUGS — bug hunt pass 1, 2026-09-20
+# BUGS — bug hunt, 2026-09-20 (pass 1 + pass 2)
+
+Pass 1 found 21 and fixed 13; pass 2 closed seven of the eight that were left, all of them in files
+pass 1 did not own at the time. One is open, and it is somebody else's file this round.
+
+## Pass 1 — surfaces and tests
 
 Surfaces: `api/app/chat.py`, `ingest/**`, `ondemand.py`, `store.py`, `store_blob.py`, `parts_catalog.py`,
 `parts/**`, `ttc.py`, `cost_ttc.py`, `llm.py`, `models.py`, `worker/index.js`, `wrangler.jsonc`,
@@ -26,24 +31,31 @@ Tests: `api/tests/test_bughunt_store.py`, `test_bughunt_api.py`, `test_bughunt_i
 | BUG-10 | med | `worker/index.js` | the Deepgram proxy accepted a handshake with no `Origin` | fixed |
 | BUG-11 | med | `store_blob.py` `bikes()` | every cache miss listed and downloaded every `links/*.json` | fixed |
 | BUG-12 | med | `store_blob.py` `costs()` | every 30 s miss re-parsed every cost event ever written; append cap | fixed |
-| BUG-13 | med | `ondemand.py`, `ttm.js` | one in-flight job per **replica**; a restart leaves a job "running" for ever | open |
-| BUG-14 | low | `climate/rules.py:389` | the same all-Manuals load as BUG-01, in another owner's file | open |
-| BUG-15 | low | `worker/index.js`, `main.py` | `GET /manuals/{id}` is `max-age=60`, so the early manual can outlive the real one | open |
-| BUG-16 | low | `ondemand.py` | ingest-failure markers are per-replica files on an ephemeral disk | open |
+| BUG-13 | med | `ondemand.py`, `main.py`, `ttm.js` | one in-flight job per **replica**; a restart leaves a job "running" for ever | fixed |
+| BUG-14 | low | `climate/rules.py:389` | the same all-Manuals load as BUG-01, in another owner's file | fixed |
+| BUG-15 | low | `worker/index.js`, `main.py`, `ttm.js` | `GET /manuals/{id}` is `max-age=60`, so the early manual can outlive the real one | fixed |
+| BUG-16 | low | `ondemand.py` | ingest-failure markers are per-replica files on an ephemeral disk | fixed |
 | BUG-17 | low | `ingest/curate.py` | `curate()` mutates the Section objects the manual cache is holding | open |
-| BUG-18 | low | `main.py` (FastAPI) | `HEAD` on every `GET` route answers 405 | open |
-| BUG-19 | low | `main.py` `/manuals/ensure` | `vin` has no length cap: 5,000 chars accepted | open |
-| BUG-20 | low | `main.py` `_pushed` | unbounded set, and a racing request can skip a needed re-push | open |
+| BUG-18 | low | `main.py` (FastAPI) | `HEAD` on every `GET` route answers 405 | fixed |
+| BUG-19 | low | `main.py` `/manuals/ensure` | `vin` has no length cap: 5,000 chars accepted | fixed |
+| BUG-20 | low | `main.py` `_pushed` | unbounded set, and a racing request can skip a needed re-push | fixed |
 | BUG-21 | low | `index-data.js` | a year range with `to < from` threw `RangeError` out of `expandBundle` | fixed |
 
-13 fixed · 8 open · 0 crashes or hangs in 143 live requests.
+20 fixed · 1 open · 0 crashes or hangs in 143 live requests.
+
+**Pass 2, 2026-09-20** (the same list, second agent) closed BUG-13, 14, 15, 16, 18, 19 and 20; the
+fixes are in [Pass 2](#pass-2) below. **BUG-17 stays open**: `ingest/curate.py` belongs to another
+agent in this round and nothing outside it can fix a function that mutates its argument in place.
+Tests: `api/tests/test_bughunt_ondemand.py` (41 cases), 14 more in `web/tools/bughunt-check.mjs`.
+`api/.venv/Scripts/python -m pytest api/tests -q` → **843 passed, 20 skipped**.
+`node web/tools/bughunt-check.mjs` → **53 passed**. `node web/tools/adapter-test.mjs --offline` → **52 passed**.
 
 BUG-09's policy (admin token + registry hosts only) was set by the coordinator on 2026-09-20 and is
 implemented below; the product path — `POST /manuals/ensure` and `POST /ingest/upload` — is unchanged.
 
 ---
 
-## Fixed
+## Pass 1 — fixed
 
 ### BUG-01 — `/cost` downloads every manual to read one number · high
 **Repro** `curl -s -o NUL -w "%{time_total}" https://mechanica.emilvinu.ch/api/cost` → **7.52 s** cold.
@@ -201,30 +213,85 @@ up, instead of losing the event. Any other append error still raises.
 
 ---
 
-## Open
+<a id="pass-2"></a>
+## Pass 2 — fixed
 
-### BUG-13 — a job can be "running" for ever, and two replicas can ingest the same manual · med
-`ondemand._jobs` is a process-local dict, so with 1–3 replicas two of them can start the same ingest at
-once (both pay). Worse, if a replica is recycled mid-ingest the blob job stays `running` with nobody
-advancing it: `GET /ingest/<id>` keeps returning it, and `ttm.js` polls for `INGEST_MAX_MS` = **15 minutes**
-before giving up. `ensure()` itself recovers (it starts a fresh job), but the Confirm screen is watching the
-dead one. **Left open** because the remaining harm is outside these files: the fix needs a heartbeat on
-`IngestJob` *and* a staleness check in `GET /ingest/{job_id}` (`main.py`) or in `ttm.js`'s poll loop, and
-the duplicate-ingest half needs a cross-replica lock (a blob lease), which is a design decision.
+### BUG-13 — a dead job was polled for fifteen minutes, and two replicas could pay for one manual · med
+**Repro** the deployed shape, 1–3 replicas. Hand out a job and stop writing to it (a recycled replica, a
+crash, a wedged thread): `GET /ingest/<id>` kept answering `running`, `ttm.js` polled it for
+`INGEST_MAX_MS` = **15 minutes**, and the rider watched a bar that could never move. Separately,
+`ondemand._jobs` is a dict in one process, so two replicas asked for the same manual both started — and
+both paid for — the same ingest.
+**Fix**, in three parts:
+1. **A heartbeat.** `IngestJob.updatedAt` (additive, `None` on a job written by the old build) is the
+   wall clock of the last write by the replica that owns the job. `ondemand.Beat` renews it every
+   `HEARTBEAT` = 5 s from the worker thread, which also covers the two stages that are legitimately
+   silent for minutes: waiting for one of the three ingest slots, and a single slow LLM batch.
+2. **A staleness rule.** `ondemand.alive()` = a fresh `updatedAt` (no extra read on a healthy poll) *or*
+   a live lease naming this job. `GET /ingest/{job_id}` reports anything else that still says
+   `queued`/`running` as `status: "error", error: "stalled"` — the stored job is not rewritten, so the
+   progress it reached is still visible. `ensure()` uses the same predicate, so the next call starts a
+   fresh job instead of handing the dead one out again.
+3. **A cross-replica lease.** `leases/{manualId}.json`, `{"jobId", "at"}`, written through the store's
+   ETag compare-and-set and honoured for `STALE_AFTER` = 60 s after its last renewal. Of two replicas
+   reading the same free or expired lease exactly one wins the race; the loser is handed the winner's
+   job id and joins it. The owner renews while it works and releases when it is done, so a replica that
+   dies holds a manual for at most a minute, and a renewal that slept through the TTL never steals the
+   manual back from whoever took it. `FileStore` (dev, tests) has no compare-and-set and falls back to a
+   file under `DATA_DIR` — exactly as strong as a one-process deployment needs. A store that cannot be
+   reached at all never blocks an ingest; the lease simply stops being a lease.
+   The one interleaving left — the beat writing back the document it read a moment before the worker's
+   own `done` landed — is closed by `settle()`, one re-read after the beat is joined.
+**Client** `ttm.js::ensureManual` runs at most two attempts: a poll that ends in `stalled`, or a job id
+that answers nothing `INGEST_MISS_MAX` = 10 polls in a row, is retried once, silently. A real ingest
+failure (`no text layer`) is *not* retried, and `ensure()` answering `error` (the six-hour failure marker)
+now fails at once instead of waiting three minutes for sections that are never coming.
+**Test** 41 cases in `test_bughunt_ondemand.py` — the lease race driven through a fake ETag store with a
+deliberate interleave, the take-over of a lapsed lease, the two-replica join (one `ingest.run`, one job
+id, one bill), every branch of the staleness rule, the beat, `settle()`, and the route — plus four
+adapter cases in `bughunt-check.mjs`. Headless, against a local API whose first worker is given no
+heartbeat: Confirm → yes → work bar → the job dies → **Pick in 7.6 s**, two `POST /manuals/ensure`, two
+job ids polled, the abandoned one reading `error: "stalled"`.
 
-### BUG-14 — `climate/rules.py:389` repeats BUG-01 · low
-`sorted(m.id for m in store.manuals())` — the same ~72 MB load, in the climate owner's file. It wants ids
-only, which `manual_summaries()` gives for free.
+### BUG-14 — `climate/rules.py` could still download every Manual · low
+`manual_ids()` already preferred `manual_summaries()`, so the deployed blob store never took the
+`store.manuals()` line; a store with neither that method nor a `root` did, and a listing that threw took
+the whole build with it. Now the fallback is last, documented, and a failed listing falls through to it
+instead of raising. **Test** two cases; the fake store's `manuals()` asserts if it is ever called.
 
-### BUG-15 — the early manual can outlive the real one in the browser cache · low
-The Worker sets `Cache-Control: public, max-age=60` on `GET /manuals/*`. The section-less manual published
-by `early=true` is a 200, so a browser that fetched it during ingest keeps it for up to a minute after the
-full one lands. Harmless once BUG-02 is deployed (the server no longer holds it for 300 s), but the minute
-remains. Suggested fix: `no-store` for a manual with no sections, or a short `max-age` for that shape.
+### BUG-15 — the early manual could outlive the real one · low
+`GET /manuals/{id}` now answers `Cache-Control: no-store` for a manual with no sections — the provisional
+document `early=True` publishes — and `public, max-age=60` for a real one. The Worker only applies its own
+minute when the upstream states no policy, so that `no-store` survives the proxy, and `ttm.js` fetches the
+`fresh` poll (the one that waits for sections) with `cache: "no-store"` so the browser's own cache cannot
+answer it either. **Test** two route cases, four Worker-policy cases in `bughunt-check.mjs`; verified live:
+section-less → `no-store`, finished → `public, max-age=60`.
 
 ### BUG-16 — ingest-failure markers are per-replica · low
-`ondemand.remember_failure()` writes `DATA_DIR/failed/<id>.json`, which on Azure is the container's
-ephemeral disk. Replica A refuses a broken manual for 6 h while replica B cheerfully retries it.
+`remember_failure`/`recent_failure`/`forget_failure` now go through the same shared-record layer as the
+lease, so a manual replica A could not build is not retried by replica B for the next six hours.
+`FileStore` still writes `DATA_DIR/failed/<id>.json`, the same path as before. **Test** three cases,
+including the marker surviving a wiped in-process cache and expiring after `FAIL_COOLDOWN`.
+
+### BUG-18 — `HEAD` answered 405 everywhere · low
+A four-line pure-ASGI middleware above the router rewrites `HEAD` to `GET` and drops the body on the way
+out, so the headers are exactly the ones `GET` would send. Done there rather than by adding `HEAD` to
+`route.methods`, which would have given every route a second OpenAPI operation with a duplicate operation
+id. **Test** four routes through the app, the 404 and 405 cases, and an assertion that the schema did not
+change; verified live against uvicorn (`content-length` correct, empty body, keep-alive intact).
+
+### BUG-19 — `vin` had no length cap · low
+`EnsureRequest.vin` is `max_length=32` (a VIN is 17). 5,000 characters → 422, live and in the suite.
+
+### BUG-20 — `main.py::_pushed` · low
+The claim is now atomic under a lock (`_claim_push`), a failed upload is forgotten so the next request
+retries it, and the set is bounded at `_PUSHED_MAX` = 512 — past which it is dropped whole, since an entry
+only ever saves a repeat upload. **Test** eight threads racing for one claim, the retry after a failure,
+and the ceiling.
+
+---
+
+## Still open
 
 ### BUG-17 — `curate()` mutates cached Section objects in place · low
 `curate.curate()` assigns `section.related` and `section.highlights` on the sections of the manual it was
@@ -234,19 +301,10 @@ concurrent reader can see a half-curated manual. Also worth noting for the store
 `registry()` and `manual()` hand callers the cached object itself, so any future caller that sorts or
 appends in place corrupts the cache for everyone. (Audited: no current caller does.)
 
-### BUG-18 — `HEAD` answers 405 on every route · low
-`HEAD /api/health` → 405 `allow: GET`, at the origin too. FastAPI's `APIRoute` does not add `HEAD` to a
-`GET` route the way Starlette's `Route` does. Nothing in the app issues a HEAD, so this is a note, not a
-defect to chase.
-
-### BUG-19 — `vin` has no length cap · low
-`POST /manuals/ensure {"bikeId": "...", "vin": "a"×5000}` → 200. The string is passed on to the per-make
-dynamic resolvers. A `max_length=32` on the field would settle it.
-
-### BUG-20 — `main.py::_pushed` · low
-An unbounded `set[str]`, and `_pushed.add()` happens before the upload, so a second request during the
-upload returns early and a failed upload that is being retried can be skipped. Both tiny; noted for
-whoever owns that route next.
+**Still open after pass 2** because `ingest/curate.py` is another agent's file this round. Nothing outside
+it can fix it: the defect is that `curate()` writes to the object it is handed, and every caller already
+passes a `model_copy`, which is shallow by design. The fix is one `deepcopy` (or a rebuilt Section list)
+inside `curate()`.
 
 ---
 
@@ -301,7 +359,7 @@ the `ensure` concurrency test used a bike whose manual is already warm.
 Scripts: `%TEMP%/…/scratchpad/fuzz.py` and `fuzz2.py` (throwaway; the cases worth keeping are in the
 test files listed at the top).
 
-## Not covered — for pass 2
+## Not covered
 
 `screens/identify.js`, `confirm.js`, `pick.js` were read for async/lifecycle defects (no `innerHTML`
 anywhere, every fetch has a `catch`, every timer is cleared) but their interaction logic was **not**
@@ -310,3 +368,9 @@ exercised in a browser. Untouched by this pass: `viewer3d.js`, `book.js`, `pdf.j
 `registry/`, `dropbox_sync.py`, `voice.py`, all CSS. The open items in `web/QA-FINAL.md` (3D part groups,
 photo identify accuracy, cold offers latency, offline reload, the Book/chapter markers, themes, voice)
 belong to their owners and are not repeated here.
+
+**Pass 2 covered** `ondemand.py`, `main.py`, `models.py` (`IngestJob.updatedAt`, additive),
+`climate/rules.py`, `worker/index.js` (one line) and the ingest half of `ttm.js`, and drove the Confirm
+screen's on-demand path headless against a local API. Still not exercised: `ask.py`, `search/`,
+`identify.py`, `offers.py`, `chat.py`, `sw.js`, `app.js` — no defect was found in them by reading, and
+none of the open items touches them.

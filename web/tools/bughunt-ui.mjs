@@ -486,6 +486,9 @@ async function run() {
   const browser = await puppeteer.launch({
     executablePath: CHROME,
     headless: "new",
+    // Software-rasterised WebGL blocks the renderer for seconds at a time while the 3D
+    // stage warms up; the default 30 s protocol timeout fires on that, not on a bug.
+    protocolTimeout: 180000,
     args: [
       "--no-sandbox", "--enable-unsafe-swiftshader", "--use-gl=angle", "--hide-scrollbars",
       "--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream",

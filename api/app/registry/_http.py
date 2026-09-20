@@ -155,6 +155,49 @@ def published_year(c: httpx.Client, url: str) -> int | None:
         return None
 
 
+def name_families(folders: Iterable[str]) -> set[str]:
+    """The nameplates a slug list can be split on: every slug, plus every prefix two slugs share.
+
+    `acty` is not a slug of its own but is the family in `actytruck`/`actyvan`, and `corolla` is
+    both a slug and the family in `corollaaxio`. The shared prefix is what says so, which is why
+    nothing here is a list somebody typed. Prefixes shorter than four characters are ignored -
+    `cr-` would split `cr-v` and `cr-z` into nothing useful."""
+    names = sorted(folders)
+    shared: set[str] = set()
+    for left, right in zip(names, names[1:]):
+        common = ""
+        for a, b in zip(left, right):
+            if a != b:
+                break
+            common += a
+        if len(common) >= 4:
+            shared.add(common.rstrip("-"))
+    return set(names) | shared
+
+
+def pretty_slug(folder: str, known: set[str], spelling: dict[str, str] | None = None) -> str:
+    """`accordtourer` -> `Accord Tourer`, `landcruiserprado` -> `Land Cruiser Prado`.
+
+    The Japanese portals key their files by a romanised, lower-case, run-together model slug, and
+    the only reliable way to put the spaces back is the maker's own slug list: the base is the
+    longest *other* known name that is a strict prefix, applied recursively. `spelling` fixes how a
+    remainder reads (`typer` -> `Type R`); it never invents a model. A slug nothing splits stays one
+    capitalised word, and hyphens the maker spells are kept (`cr-v` -> `CR-V`)."""
+    table = spelling or {}
+
+    def one(part: str) -> str:
+        if part in table:
+            return table[part]
+        return part.upper() if len(part) <= 2 or part.isdigit() else part.capitalize()
+
+    base = max((f for f in known if f != folder and folder.startswith(f)), key=len, default="")
+    if not base:
+        return "-".join(one(p) for p in folder.split("-"))
+    rest = folder[len(base) :].lstrip("-")
+    head = pretty_slug(base, known - {folder}, table)
+    return f"{head} {one(rest)}".strip() if rest else head
+
+
 def slug(*parts: object) -> str:
     raw = "-".join(str(p) for p in parts if p not in (None, ""))
     raw = unicodedata.normalize("NFKD", raw).encode("ascii", "ignore").decode()

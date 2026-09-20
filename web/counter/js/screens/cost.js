@@ -100,13 +100,27 @@ function load() {
     .catch(() => {});
 }
 
-function open() {
+function open(fromBoot) {
   if (!veil) build();
   if (!veil.hidden) {
     load();
     return;
   }
   veil.hidden = false;
+  // At boot this module runs inside app.js's import loop, and firstGo() writes the hash one
+  // more time after it. Stamping #cost again on the next frame means the address bar still
+  // says what the page is showing. replaceState fires no hashchange, so nothing closes.
+  if (fromBoot) {
+    requestAnimationFrame(() => {
+      if (veil && !veil.hidden && readHash() !== "cost") {
+        try {
+          history.replaceState({ screen: lastScreen || "identify" }, "", "#cost");
+        } catch {
+          /* no history */
+        }
+      }
+    });
+  }
   const back = costBack || lastScreen;
   if (back && back !== lastScreen && state.bikeId) {
     try {
@@ -173,9 +187,16 @@ export function initCost() {
     lastScreen = id;
     if (wanted && !veil) {
       costBack = id;
-      open();
+      open(true);
     }
   });
   window.addEventListener("hashchange", onHash);
   window.addEventListener("popstate", onPop);
+  // The boot's only "screen" event is emitted while the FIRST screen module is still being
+  // imported — this module is loaded by the third — so waiting for it meant a cold load of
+  // the meter's own address showed the landing page and nothing else, for ever.
+  if (wanted && !veil) {
+    costBack = lastScreen;
+    open(true);
+  }
 }

@@ -42,7 +42,7 @@ from collections.abc import Iterable, Iterator
 from typing import Any
 
 from ..models import RegistryEntry
-from ._http import client, get_json, keep_lang, log, plausible_years, slug
+from ._http import client, get_json, keep_lang, log, name_families, plausible_years, pretty_slug, slug
 
 SITE = "honda.co.jp"
 SEARCH = "https://www.honda.co.jp/ownersmanual/HondaMotor/auto/data/search.json"
@@ -77,39 +77,14 @@ SPELLING = {
     "hatchback": "Hatchback",
     "sportscr-x": "Sports CR-X",
 }
-WORD = re.compile(r"[a-z]+|[0-9]+|[^a-z0-9]+")
-
-
-def _spell(part: str) -> str:
-    if part in SPELLING:
-        return SPELLING[part]
-    return part.upper() if len(part) <= 2 or part.isdigit() else part.capitalize()
-
-
 def families(folders: set[str]) -> set[str]:
-    """The nameplates to split on: every folder, plus every prefix two folders share. `acty` and
-    `clarity` are not folders of their own but are the family in `actytruck` and `clarityphev`,
-    and the shared prefix is what says so - nothing here is a list somebody typed."""
-    names = sorted(folders)
-    shared = set()
-    for left, right in zip(names, names[1:]):
-        common = ""
-        for a, b in zip(left, right):
-            if a != b:
-                break
-            common += a
-        if len(common) >= 4:
-            shared.add(common.rstrip("-"))
-    return folders | shared
+    """Honda's folder list plus the families two folders share. See `_http.name_families`."""
+    return name_families(folders)
 
 
 def model_name(folder: str, known: set[str]) -> str:
     """`accordtourer` -> `Accord Tourer`, using Honda's own folder list to find the family."""
-    base = max((f for f in known if f != folder and folder.startswith(f)), key=len, default="")
-    if not base:
-        return "-".join(_spell(p) for p in folder.split("-"))
-    rest = folder[len(base) :].lstrip("-")
-    return f"{model_name(base, known - {folder})} {_spell(rest)}".strip() if rest else _spell(base)
+    return pretty_slug(folder, known, SPELLING)
 
 
 def _kind(name: str) -> str:
