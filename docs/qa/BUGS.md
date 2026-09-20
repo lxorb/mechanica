@@ -35,13 +35,13 @@ Tests: `api/tests/test_bughunt_store.py`, `test_bughunt_api.py`, `test_bughunt_i
 | BUG-14 | low | `climate/rules.py:389` | the same all-Manuals load as BUG-01, in another owner's file | fixed |
 | BUG-15 | low | `worker/index.js`, `main.py`, `ttm.js` | `GET /manuals/{id}` is `max-age=60`, so the early manual can outlive the real one | fixed |
 | BUG-16 | low | `ondemand.py` | ingest-failure markers are per-replica files on an ephemeral disk | fixed |
-| BUG-17 | low | `ingest/curate.py` | `curate()` mutates the Section objects the manual cache is holding | open |
+| BUG-17 | low | `ingest/curate.py` | `curate()` mutates the Section objects the manual cache is holding | fixed (deep copy of kept sections) |
 | BUG-18 | low | `main.py` (FastAPI) | `HEAD` on every `GET` route answers 405 | fixed |
 | BUG-19 | low | `main.py` `/manuals/ensure` | `vin` has no length cap: 5,000 chars accepted | fixed |
 | BUG-20 | low | `main.py` `_pushed` | unbounded set, and a racing request can skip a needed re-push | fixed |
 | BUG-21 | low | `index-data.js` | a year range with `to < from` threw `RangeError` out of `expandBundle` | fixed |
 
-20 fixed · 1 open · 0 crashes or hangs in 143 live requests.
+21 fixed · 0 open · 0 crashes or hangs in 143 live requests.
 
 **Pass 2, 2026-09-20** (the same list, second agent) closed BUG-13, 14, 15, 16, 18, 19 and 20; the
 fixes are in [Pass 2](#pass-2) below. **BUG-17 stays open**: `ingest/curate.py` belongs to another

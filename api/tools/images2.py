@@ -600,7 +600,7 @@ def commons_pages(client: httpx.Client, bucket: Bucket, titles: list) -> list:
     return out
 
 
-def to_cand(page: dict, m: Model, used: set, *, via: str, base: float, need_name: bool):
+def to_cand(page: dict, m: Model, used: set, *, via: str, base: float, need_name: bool, match: str = ""):
     info = (page.get("imageinfo") or [None])[0]
     if not info:
         return None
@@ -614,12 +614,19 @@ def to_cand(page: dict, m: Model, used: set, *, via: str, base: float, need_name
     stem = EXT.sub("", title)
     if bad_title(stem, m):
         return None
-    if need_name:
+    if need_name or match == "desc":
         desc = " ".join(
             strip_html((meta.get(k) or {}).get("value", ""))
             for k in ("ObjectName", "ImageDescription", "Categories")
         )
-        if not (mentions(stem, m.model) and mentions(f"{title} {desc}", m.make)):
+        if not mentions(f"{title} {desc}", m.make):
+            return None
+        # "name": the model must be in the FILENAME -- the strict rule, for a blind
+        # search. "desc": the file's own description or categories will do, which is
+        # what a deep category search needs, since the whole point of it is files
+        # named Vn750-2.jpg. Anything looser lets a VN700 stand in for a VN750.
+        where = stem if need_name else f"{stem} {desc}"
+        if not mentions(where, m.model):
             return None
     return Cand(title, page_title, info, meta, via, prescore(stem, info, m, base=base))
 
@@ -850,6 +857,45 @@ def from_openverse(client: httpx.Client, bucket: Hosts, m: Model, used: set, wan
     return out
 
 
+def from_make_category(client: httpx.Client, bucket: Hosts, m: Model, used: set, want: int) -> list:
+    """Search the make's whole category tree, not the model's own category.
+
+    `deepcategory:` walks subcategories, so `deepcategory:"Kawasaki motorcycles"
+    VULCAN 750` reaches files that no filename query can: Commons files the
+    uploader called Vn750-2.jpg. Because the filename is then no evidence at all,
+    the model has to show up in the file's description or category list instead --
+    that search hit alone is not enough, or a VN700 becomes a VN750.
+    """
+    out: list = []
+    for noun in (f"{m.make} motorcycles", f"{m.make} vehicles") if m.kind == "bike" else (
+        f"{m.make} vehicles",
+        f"{m.make} automobiles",
+    ):
+        data = api_json(
+            client,
+            COMMONS,
+            bucket,
+            {
+                "action": "query",
+                "format": "json",
+                "formatversion": "2",
+                "generator": "search",
+                "gsrsearch": f'deepcategory:"{noun}" {m.model}',
+                "gsrnamespace": "6",
+                "gsrlimit": "20",
+                "prop": "imageinfo",
+                "iiprop": "url|extmetadata|size|mime",
+            },
+        )
+        for page in (data.get("query") or {}).get("pages") or []:
+            c = to_cand(page, m, used, via="makecat", base=2.0, need_name=False, match="desc")
+            if c:
+                out.append(c)
+        if out:
+            break
+    return out
+
+
 def gather(
     client: httpx.Client,
     bucket: Bucket,
@@ -859,6 +905,7 @@ def gather(
     want: int,
     depths: int = 2,
     openverse: bool = False,
+    make_categories: bool = False,
 ) -> list:
     """Up to `want` licence-clean candidates, best-looking first.
 
@@ -881,6 +928,8 @@ def gather(
         ]
         if depth == 0 and wikis:
             sources.append(lambda: from_wikis(client, bucket, probe, used, wikis))
+        if depth == 0 and make_categories:
+            sources.append(lambda: from_make_category(client, bucket, probe, used, want))
         if depth == 0 and openverse:
             sources.append(lambda: from_openverse(client, bucket, probe, used, want))
         for source in sources:
@@ -1315,6 +1364,11 @@ def main() -> int:
         help="with --verify: also fill short names from a longer name of the same displacement",
     )
     ap.add_argument(
+        "--make-categories",
+        action="store_true",
+        help="also search each make's whole Commons category tree (deepcategory:)",
+    )
+    ap.add_argument(
         "--openverse",
         action="store_true",
         help="also query Openverse (200 requests/day anonymous - use with --only)",
@@ -1454,6 +1508,7 @@ def main() -> int:
             args.candidates,
             args.depths,
             args.openverse,
+            args.make_categories,
         )
         with lock:
             stats["cands"] += len(cands)
@@ -1679,7 +1734,7 @@ def main() -> int:
         k.split(":", 1)[1]: v for k, v in sorted(stats.items()) if k.startswith(prefix)
     }
     pass_rate = {}
-    for src in ("wikipedia", "category", "family", "search", "openverse"):
+    for src in ("wikipedia", "category", "family", "makecat", "search", "openverse"):
         seen = stats.get(f"scored:{src}", 0)
         if seen:
             pass_rate[src] = f"{stats.get(f'passed:{src}', 0)}/{seen}"

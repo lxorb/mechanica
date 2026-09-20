@@ -1418,6 +1418,9 @@ function flash(n) {
   const rec = sheets.get(n);
   if (!rec) return;
   if (askFlashTimer) window.clearTimeout(askFlashTimer);
+  // Clearing only the new sheet left the previous one glowing for ever when two answers
+  // were opened inside 900 ms.
+  for (const other of sheets.values()) other.host.classList.remove("ask-flash");
   rec.host.classList.remove("ask-flash");
   void rec.host.offsetWidth;
   rec.host.classList.add("ask-flash");

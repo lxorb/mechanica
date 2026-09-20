@@ -4,6 +4,9 @@
  *   node web/tools/images-coverage.mjs                 # measure, print the summary
  *   node web/tools/images-coverage.mjs --write         # also write docs/qa/images-gaps.md
  *   node web/tools/images-coverage.mjs --before        # measure the old exact+VARIANT lookup too
+ *   node web/tools/images-coverage.mjs --top 200       # how many gaps to list (default 30)
+ *   node web/tools/images-coverage.mjs --keys --top 200  # print "Make|Model" lines instead, for
+ *                                                        # api/tools/images2.py --only
  *
  * Reads the same two files the counter reads (web/store/bike-images.json wins every key it shares
  * with bike-images-2.json) and the same catalog the bundled roster is built from
@@ -20,7 +23,15 @@ import { lookupImage } from "../counter/js/ttm.js";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..", "..");
 const GAPS = resolve(ROOT, "docs", "qa", "images-gaps.md");
-const TOP_GAPS = 30;
+/** --top N, default 30. The gap list is the highest-yield lane an image pass has: each
+ *  entry stands for every catalog row of that model, so a photo near the top of this
+ *  list is worth twenty from the open queue. */
+const argOf = (flag, fallback) => {
+  const at = process.argv.indexOf(flag);
+  const value = at >= 0 ? Number(process.argv[at + 1]) : NaN;
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
+};
+const TOP_GAPS = argOf("--top", 30);
 
 const json = (path) => JSON.parse(readFileSync(resolve(ROOT, path), "utf8"));
 
@@ -82,13 +93,19 @@ function line(label, m) {
 
 const { map, sizes } = imageMap();
 const rows = json("api/data/bikes.json");
-console.log(`images: ${sizes[0]} + ${sizes[1]} -> ${Object.keys(map).length} merged keys`);
+// --keys is meant to be piped straight into `images2.py --only`, so it prints the
+// keys and nothing else.
+const KEYS = process.argv.includes("--keys");
+const say = (...parts) => {
+  if (!KEYS) console.log(...parts);
+};
+say(`images: ${sizes[0]} + ${sizes[1]} -> ${Object.keys(map).length} merged keys`);
 
 if (process.argv.includes("--before")) {
-  console.log(line("before", measure(rows, map, oldLookup)));
+  say(line("before", measure(rows, map, oldLookup)));
 }
 const after = measure(rows, map, lookupImage);
-console.log(line("after ", after));
+say(line("after ", after));
 
 const gaps = [...after.table.values()].filter((m) => !m.hit).sort((a, b) => b.rows - a.rows);
 const gapRows = gaps.reduce((n, m) => n + m.rows, 0);
@@ -123,8 +140,20 @@ function longerNames() {
   }
   return n;
 }
-console.log(`uncovered: ${gaps.length} models over ${gapRows} rows`);
-console.log(
+if (KEYS) {
+  // Registry documents that arrived as catalog rows. Not vehicles; never photographable.
+  const NOT_A_VEHICLE = /parts listing|shop dope|service bulletin|oper\.\/maint/i;
+  console.log(
+    gaps
+      .filter((m) => !NOT_A_VEHICLE.test(m.model))
+      .slice(0, TOP_GAPS)
+      .map((m) => `${m.make}|${m.model}`)
+      .join("\n")
+  );
+  process.exit(0);
+}
+say(`uncovered: ${gaps.length} models over ${gapRows} rows`);
+say(
   gaps
     .slice(0, TOP_GAPS)
     .map((m) => `  ${String(m.rows).padStart(4)}  ${m.make} ${m.model}`)

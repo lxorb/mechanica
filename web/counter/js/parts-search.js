@@ -13,6 +13,8 @@
  */
 
 const DIACRITIC = /\p{M}/gu;
+/** Same ceiling search.js keeps, held here so this file stays dependency-free. */
+const MAX_QUERY_TOKENS = 12;
 
 /** "Brake fluid DOT 5.1" -> "brake fluid dot 5 1" */
 export function fold(value) {
@@ -230,7 +232,10 @@ function scoreToken(row, token) {
  */
 export function search(rows, query) {
   const list = Array.isArray(rows) ? rows : [];
-  const q = words(query);
+  // Same ceiling as search.js and pick-search.js (pass 1, BUG-08): every extra word is
+  // another Damerau pass over every token of every row, and past a dozen words a query
+  // cannot narrow any further. A pasted paragraph is not a search.
+  const q = words(query).slice(0, MAX_QUERY_TOKENS);
   if (!q.length) return list.slice();
   const out = [];
   for (const row of list) {

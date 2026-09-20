@@ -5282,6 +5282,18 @@
     "via": "alias",
     "aliasOf": "honda|cb1000-hornet-sp"
   },
+  "honda|cb1000-hornet,cb1000-hornet-sp": {
+    "image": "store/img/bikes2/honda-cb1000-hornet-sp.webp",
+    "thumb": "store/img/bikes2/honda-cb1000-hornet-sp.thumb.webp",
+    "hero": "store/img/bikes2/honda-cb1000-hornet-sp.hero.webp",
+    "title": "2025 Honda CB1000 Hornet SP.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|cb1000"
+  },
   "honda|cb1000-hornet-sp": {
     "image": "store/img/bikes2/honda-cb1000-hornet-sp.webp",
     "thumb": "store/img/bikes2/honda-cb1000-hornet-sp.thumb.webp",
@@ -5293,6 +5305,18 @@
     "view": "three_quarter",
     "score": 7.5,
     "hero": "store/img/bikes2/honda-cb1000-hornet-sp.hero.webp"
+  },
+  "honda|cb1000-super-four": {
+    "image": "store/img/bikes2/honda-cb1000-hornet-sp.webp",
+    "thumb": "store/img/bikes2/honda-cb1000-hornet-sp.thumb.webp",
+    "hero": "store/img/bikes2/honda-cb1000-hornet-sp.hero.webp",
+    "title": "2025 Honda CB1000 Hornet SP.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|cb1000"
   },
   "honda|cb1000f": {
     "image": "store/img/bikes2/honda-cb1000f.webp",
@@ -5617,6 +5641,28 @@
     "via": "alias",
     "aliasOf": "honda|cb1300-super-bol-dor"
   },
+  "honda|cb1300-super-bol-d'or": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
+  "honda|cb1300-super-bol-d'or,sp": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
   "honda|cb1300-super-bol-dor": {
     "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
     "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
@@ -5627,6 +5673,83 @@
     "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
     "via": "alias",
     "aliasOf": "honda|cb1300-super-bol-dor-abs"
+  },
+  "honda|cb1300-super-bol-d’or": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
+  "honda|cb1300-super-four": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
+  "honda|cb1300-super-four,sp": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
+  "honda|cb1300-super-four-abs": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300-super-four"
+  },
+  "honda|cb1300-super-touring": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
+  "honda|cb1300s-abs": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
+  },
+  "honda|cb1300sa": {
+    "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
+    "thumb": "store/img/bikes/honda-cb1300-super-bol-dor-abs-thumb.webp",
+    "hero": "store/img/bikes/honda-cb1300-super-bol-dor-abs-hero.webp",
+    "title": "CB1300 SUPER BOL D'OR ABSスペシャル.JPG",
+    "author": "慎太郎ワールド",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
+    "via": "alias",
+    "aliasOf": "honda|cb1300"
   },
   "honda|cb300f-abs": {
     "image": "store/img/bikes/honda-cb300f.webp",
@@ -6007,6 +6130,54 @@
     "view": "three_quarter",
     "score": 9.5,
     "hero": "store/img/bikes2/honda-cb750-hornet-e-clutch.hero.webp"
+  },
+  "honda|cb750a-(hornet)": {
+    "image": "store/img/bikes2/honda-cb750-hornet.webp",
+    "thumb": "store/img/bikes2/honda-cb750-hornet.thumb.webp",
+    "hero": "store/img/bikes2/honda-cb750-hornet.hero.webp",
+    "title": "2025 Honda CB750 Hornet.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|cb750"
+  },
+  "honda|cb750ac-(hornet)": {
+    "image": "store/img/bikes2/honda-cb750-hornet.webp",
+    "thumb": "store/img/bikes2/honda-cb750-hornet.thumb.webp",
+    "hero": "store/img/bikes2/honda-cb750-hornet.hero.webp",
+    "title": "2025 Honda CB750 Hornet.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|cb750"
+  },
+  "honda|cb750f": {
+    "image": "store/img/bikes2/honda-cb750-hornet.webp",
+    "thumb": "store/img/bikes2/honda-cb750-hornet.thumb.webp",
+    "hero": "store/img/bikes2/honda-cb750-hornet.hero.webp",
+    "title": "2025 Honda CB750 Hornet.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|cb750"
+  },
+  "honda|cb750k": {
+    "image": "store/img/bikes2/honda-cb750-hornet.webp",
+    "thumb": "store/img/bikes2/honda-cb750-hornet.thumb.webp",
+    "hero": "store/img/bikes2/honda-cb750-hornet.hero.webp",
+    "title": "2025 Honda CB750 Hornet.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|cb750"
   },
   "honda|cbf-1000-f-abs": {
     "image": "store/img/bikes/honda-cbf-1000.webp",

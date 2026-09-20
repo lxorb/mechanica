@@ -121,7 +121,8 @@ def curate(manual: Manual, pages: list[Page]) -> Curated:
         if stopped(section.title) or _thin(section, text):
             dropped.append(section.title)
         else:
-            kept.append(section)
+            # BUG-17: the manual cache holds these Section objects; the clamp loop below must edit copies
+            kept.append(section.model_copy(deep=True))
 
     alive = {s.id for s in kept}
     clamped = discarded = 0
