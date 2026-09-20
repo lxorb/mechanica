@@ -106,9 +106,9 @@ Every one of these is strong somewhere else and actively costs you points here.
 | **The Token Company / bear-2 compression slide** (31% tokens saved, aggressiveness 0.3 vs 0.5, page fences) | Vendor-specific prompt economics. Long Lake cares that the unit cost is $0.0006, not how the last 20% of it was won. One sentence in Q&A, never a slide. |
 | **The Voloridge climate feature** (600 GB NOAA, the −25 °C antifreeze finding) | Built for a different sponsor, partly unshipped (marked † in that doc), and it moves the story from "operations" to "data science". Cut entirely. |
 | **Codex as the fifth teammate** (the FLOOR bug, run-1/run-2) | That is OpenAI's track. Here it reads as tooling trivia. |
-| **Anything pending a key: ElevenLabs voice, Deepgram, Dropbox chooser, Elastic, Runpod, Visa checkout** | Long Lake's literal first criterion is "not a pilot or a proof of concept". Demoing a button that hides itself without a key is the single worst thing you can do in this room. **Do not open the mic. Do not say the word Elastic.** |
+| **Anything pending a key: ElevenLabs voice, the Dropbox chooser, Elastic, Runpod, Visa checkout** | Long Lake's literal first criterion is "not a pilot or a proof of concept". Demoing a button that hides itself without a key is the single worst thing you can do in this room. **Do not say the word Elastic.** Deepgram voice is *not* in this list — it is live and measured — but it is off-thesis here, so open the mic only if a judge asks. |
 | **The 3D exploded model and the 97 generated part illustrations** | Let it appear on screen for four seconds because it is genuinely fast and pretty. Never argue from it. If asked: "it's a part locator, not a manufacturer parts catalogue" and move on. |
-| **The multiples — "16,000× cheaper", "1,500× cheaper"** | An operator discounts a multiple against a strawman on instinct. Lead with the two absolute numbers — **$12.40 and $0.0006** — and let them do the division themselves. |
+| **The multiples — "32,632× cheaper", "3,600× cheaper"** | An operator discounts a multiple against a strawman on instinct. Lead with the two absolute numbers — **$12.40 and $0.0006** — and let them do the division themselves. |
 | **Model names and price tiers** (luna/terra, $0.20/M vs $2/M) | Only in Q&A, only if asked "how is it that cheap". |
 | **Any market-size number** | We have no sourced TAM. Do not invent one. The arithmetic we can defend is per-mechanic and comes from our design partner; label it as his. |
 
@@ -189,7 +189,7 @@ flowchart TB
   subgraph NOW["WHERE THAT LEAVES US — measured 2026-09-20  "]
     direction LR
     C1["<b>the corpus</b><br/>535 manuals · 95,914 pages<br/>91,388 grounded sections<br/><b>$51 spent, once</b>"]
-    C2["<b>the catalog</b><br/>27,751 vehicles<br/>13,544 with a free official manual<br/><b>23,140 motorcycles AND 4,611 cars,<br/>identical code path</b>"]
+    C2["<b>the catalog</b><br/>27,751 vehicles<br/>13,537 with a free official manual<br/><b>23,140 motorcycles AND 4,611 cars,<br/>identical code path</b>"]
     C3["<b>the marginal deployment</b><br/>a new vehicle: $0.096, 40 s, no human<br/>a new shop: no engineering at all<br/><b>every shop inherits<br/>every other shop's ingest</b>"]
     C1 ~~~ C2 ~~~ C3
   end
@@ -223,9 +223,9 @@ Start the cold ingest at 0:50 and talk over it. Clock in the left column.
 | **0:35–0:50** | — | same slide, two numbers appear | "He does not use AI. Two reasons, both fair. It's right ninety-five percent of the time and **he signs for the five**. And when he tried it, **one question cost about four dollars**, because the model had to read a five-hundred-page manual. He hit his limit before lunch." | *Both objections are correct. I'd refuse too.* |
 | **0:50–1:05** | pick up the phone, type `mt-07`, tap the card, tap **2018** (a year with no manual yet), Confirm → **Yes**. A progress bar starts. **Put the phone down and leave it running.** | a bar filling | "I've just asked it for a manual that has never been on our servers. **Nobody is doing anything.** Come back to that in three minutes." | *Something is deploying itself in the background.* |
 | **1:05–1:25** | — | the diagram, §4 | "Here's the shape. **Grey took us the whole hackathon and is never paid for again** — eighty-four manufacturer portals, none of which has an API, and the layer that decides whether a model's answer is allowed out. **Orange is what one new vehicle costs: nine cents and forty seconds, with no person in it.** Black is what a new shop costs, which is nothing." | *They built deployment infrastructure, not a demo.* |
-| **1:25–1:55** | phone: type `390 duke`, tap the **KTM 390 DUKE** card, tap **2023**, Confirm. On Pick, type `chain` | the bike explodes, the chain lights, KTM's own headings rank under it: *Checking the chain tension* **p.62**, *Adjusting the chain tension* **p.63** | "Plain words in — what he'd actually say with the bike on the lift. And what comes back **is not our words**. That's KTM's own table of contents." | *It didn't write anything.* |
-| **1:55–2:20** | tap *Checking the chain tension* → **Open** | KTM p.62, orange markers on the two answering lines | "There it is. **Page 62 of KTM's manual**, and the marker sits on the two lines that answer him. It is only there because we found that exact text in KTM's PDF. **If we can't find the ink, we don't draw the marker.** Five minutes of thumbing a PDF became two seconds — that's the cycle time, and it's the whole product." | *That is the actual document, not a summary.* |
-| **2:20–2:45** | tap **Chat**, type `chain is loose, what do I do`. When it lands, tap a **[p. 62]** chip. | numbered steps, every sentence ending in a `[p. 62]` / `[p. 63]` chip; the chip jumps to the page | "This is the one place it is allowed to write a sentence, and **it is only allowed to write page numbers**. The model names a page; **our server slices the quote out of the original page**. So the citation is verbatim by construction, not because we trusted it. Measured: forty-three of forty-three quotes verbatim, **zero invented numbers**." | *Even the chatty part is leashed — and checkably so.* |
+| **1:25–1:55** | phone: type `390 duke`, tap the **KTM 390 DUKE** card, tap **2024**, Confirm. On Pick, type `chain` | the bike explodes, the chain lights, KTM's own headings rank under it: *Checking the chain tension* **p.77–78**, *Adjusting the chain tension* **p.78** | "Plain words in — what he'd actually say with the bike on the lift. And what comes back **is not our words**. That's KTM's own table of contents." | *It didn't write anything.* |
+| **1:55–2:20** | tap *Checking the chain tension* → **Open** | KTM p.77, orange markers on the two answering lines | "There it is. **Page 77 of KTM's manual**, and the marker sits on the two lines that answer him. It is only there because we found that exact text in KTM's PDF. **If we can't find the ink, we don't draw the marker.** Five minutes of thumbing a PDF became two seconds — that's the cycle time, and it's the whole product." | *That is the actual document, not a summary.* |
+| **2:20–2:45** | tap **Chat**, type `chain is loose, what do I do`. When it lands, tap a **[p. 77]** chip. | numbered steps, every sentence ending in a `[p. 77]` / `[p. 78]` chip; the chip jumps to the page | "This is the one place it is allowed to write a sentence, and **it is only allowed to write page numbers**. The model names a page; **our server slices the quote out of the original page**. So the citation is verbatim by construction, not because we trusted it. Measured: forty-three of forty-three quotes verbatim, **zero invented numbers**." | *Even the chatty part is leashed — and checkably so.* |
 | **2:45–3:25** | **The second deployment.** Back to the landing, type `civic`, tap **Honda Civic Sedan 2022**, Confirm, type `tire pressure` → Open. Then back, type `how do I change a flat tyre` → Open. | *Checking Tires* **p.681**; then *Replacing the Flat Tire* **p.709** | "That's not a motorcycle. **Same code, same pipeline, nobody wrote a car version.** And this is the biggest document we hold — **seven hundred and seventy-five pages**. Reading that book to a model once, to answer one question, is **twelve dollars forty** — that's our own cost endpoint's number for this exact manual. **That question cost six ten-thousandths of a dollar** and came back in under four seconds. I typed *tyre* with a Y, by the way." | *Oh — it generalises. And the arithmetic is brutal.* |
 | **3:25–3:45** | back to the landing — the **MT-07** from 0:50 is ready. Tap it, type `oil` → Open | the page | "And that one is done. **Three minutes ago that manual did not exist on our servers.** Thirteen and a half thousand of our twenty-seven thousand vehicles already have a free official manual attached, and any one of them costs nine cents and forty seconds to bring online. **Nobody touched it.**" | *The catalogue is not the limit, and the marginal deployment is free.* |
 | **3:45–4:20** | phone down | numbers slide | "So, the metrics. **Cycle time:** five minutes to two seconds, p95 three point three. **Error rate:** the right section first on a hundred out of a hundred and fifty real rider questions, and **zero of twenty** off-topic questions answered instead of refused. **Unit cost:** four hundredths of a cent against twelve dollars forty. Five hundred and thirty-five manuals, ninety-six thousand pages, ninety-one thousand sections — the whole thing has spent **eight dollars** on the live API." | *Every axis he'd ask about already has a number.* |
@@ -244,8 +244,8 @@ Every input below was returned by the live API on **2026-09-20**. Do not improvi
 | # | bike/car | type exactly | lands on | verified |
 |---|---|---|---|---|
 | 1 | Yamaha **MT-07 2018** (any year chip with no manual) | — | cold ingest, progress bar | `docs/DEMO.md`, measured twice |
-| 2 | **KTM 390 Duke 2023** | `chain` | *Checking the chain tension* **p.62**, *Adjusting the chain tension* **p.63** | `docs/DEMO.md` |
-| 3 | KTM 390 Duke 2023, Chat | `chain is loose, what do I do` | numbered steps, every sentence `[p. 62]` / `[p. 63]` | `docs/DEMO.md` |
+| 2 | **KTM 390 Duke 2024** | `chain` | *Checking the chain tension* **p.77–78**, *Adjusting the chain tension* **p.78** | `docs/DEMO.md` |
+| 3 | KTM 390 Duke 2024, Chat | `chain is loose, what do I do` | numbered steps, every sentence `[p. 77]` / `[p. 78]` | `docs/DEMO.md` |
 | 4 | **Honda Civic Sedan 2022** (775 p) | `tire pressure` | *Checking Tires* **p.681** (then *Changing a Flat Tire* p.705) | live `POST /api/ask`, 2026-09-20 |
 | 5 | Honda Civic Sedan 2022 | `how do I change a flat tyre` | *Replacing the Flat Tire* **p.709** — **cold 3.95 s, repeat 0.088 s** | live, timed, 2026-09-20 |
 | 6 | MT-07 (now warm) | `oil` | the oil-change pages | `docs/DEMO.md` |
@@ -256,8 +256,8 @@ Every input below was returned by the live API on **2026-09-20**. Do not improvi
 |---|---|---|
 | Honda Civic Sedan 2022 | `how do I check the engine oil` | *Oil Check* p.663–664, *Adding Engine Oil* p.665 |
 | Honda Civic Sedan 2022 | `how much oil does it take` | *Changing the Engine Oil and Oil Filter* p.666–668 |
-| KTM 390 Duke 2023 | `what torque for the rear axle` | p.78 *Installing the rear wheel*, p.113 *Chassis tightening torques* |
-| KTM 390 Duke 2023 | `what pressure should the tyres be` | p.81 *Checking tire pressure* |
+| KTM 390 Duke 2024 | `what torque for the rear axle` | p.128–130 *Chassis tightening torques*, p.78 *Adjusting the chain tension* |
+| KTM 390 Duke 2024 | `what pressure should the tyres be` | p.95 *Checking tire pressure* |
 | BMW R 12 G/S 2026 | `how do I check the engine oil level` | p.164, p.165 |
 | Chevrolet **Corvette 2022** (338 p) | second car if the Civic misbehaves | warm, `chevrolet-corvette-2022-ca-om` |
 
@@ -288,7 +288,7 @@ Every input below was returned by the live API on **2026-09-20**. Do not improvi
 | 1 | **400 hours** | A mechanic. One number: *a fifth of his working year, looking for a page.* | `general/01-landing.png` or blank |
 | 2 | **Why he won't use AI** | *95% right — and he signs for the 5%. $4 a question when he tried.* Two numbers, huge, nothing else. | — |
 | 3 | **Built once. Deployed N times.** | The §4 diagram, full bleed. Three zone labels are the only text they read. | `long-lake/second-deployment.mmd` |
-| 4 | **The answer is a page** | KTM p.62, markers on the two answering lines. *The marker is only there because we found that ink.* | `general/05-book.png` |
+| 4 | **The answer is a page** | KTM p.77, markers on the two answering lines. *The marker is only there because we found that ink.* | `general/05-book.png` |
 | 5 | **The metrics that moved** | cycle time **5 min → 2 s** (p95 3.33 s) · error rate **100% top-1 / 150**, **0 of 20** off-topic answered, **0** invented numbers · unit cost **$0.0006 vs $12.40** · **535 manuals, 95,914 pages, $8 spent** | — |
 | 6 | **What we don't have yet** | *Not in daily production use. One shop. Ten shops for a month, and the number is how much of the 20% comes back.* Then the URL. | — |
 
@@ -474,7 +474,7 @@ record.
 | **a question is slow** | Every scripted question was run beforehand, so it returns from cache in ~0.09 s. If you improvised, you deserved it — say "that one's cold" and move on. |
 | **the 3D bike doesn't load** | It never blocks anything. Carry on; the headings and the page are the point. |
 | **"is that actually a 390 Duke?"** | Honest: it's a stand-in motorcycle for most vehicles and it's a *part locator*, not a manufacturer parts catalogue. Pick the Honda CBR650R 2023 and it is that bike. |
-| **they ask about voice** | *"Not live — it needs a key we don't have, and the button hides itself without one."* Then stop. Do not demo it. |
+| **they ask about voice** | *"Voice is live — it runs on Deepgram's agent over the same four grounded tools, median two seconds from end of speech. It is just not the part of this that matters to you."* Then stop. The **ElevenLabs** engine is the one that needs a key we don't have, and its button hides itself. Do not demo either on the clock. |
 
 ---
 
@@ -485,20 +485,20 @@ Read the live ones again before you go on. They move.
 | claim | value | source | when |
 |---|---|---|---|
 | vehicles you can pick | **27,751** (23,140 motorcycles, 4,611 cars), 77 makes | live `GET /api/catalog` | 2026-09-20 09:30 UTC |
-| …with a free official manual attached | **13,544** | same | same |
+| …with a free official manual attached | **13,537** | same | same |
 | manuals indexed | **535** · **95,914 pages** · **91,388 sections** · 662 vehicles covered | live `GET /api/manuals` | same |
-| all spend on the live API | **$7.97** over **1,592** calls | live `GET /api/cost` | same |
+| all spend on the live API | **$8.93** over **1,633** calls — it moves every hour | live `GET /api/cost` | 2026-09-20 09:55 UTC |
 | naive baseline, per ask | **$12.40** (the 775-page Civic read to a model once) | live `GET /api/cost` → `naivePerAsk` | same |
 | six asks against that 775-page manual | **$0.00357 total — $0.0006 an ask**, one of the six a $0 cache repeat | `GET /api/cost` before/after, `ask.router` + `ask.picker` delta | same |
 | that ask, cold / repeated | **3.95 s** / **0.088 s** | live timed `POST /api/ask`, Honda Civic Sedan 2022, `how do I change a flat tyre` → p.709 | same |
 | ask, mean over 150-query eval | **$0.00038**, p95 **3.33 s**, top-1 **100%** | `api/eval/report.md` | — |
 | off-topic questions answered | **0 of 20** | `api/eval/report.md` | — |
 | chat honesty | **43/43 quotes verbatim · 48/48 claim sentences carry a page · 0 invented numbers · 0 dealer referrals** | `api/eval/chat-report.md` | — |
-| ingest a manual | **$0.096**, median 169 pages; **1.3 s to readable, 40.4 s to searchable** | `api/data/mass_report.jsonl` (773 manuals); live run, KTM 390 Duke 2014, 182 p | 2026-09-20 |
-| registry | **53,557 rows**, 84 publisher hosts, 80 makes; **17,556 distinct free English PDFs**; **28,200 distinct URLs** | `api/data/registry.json`, `GET /api/registry` | 2026-09-20 |
+| ingest a manual | **$0.0972** median (170 p), **$0.0951** mean (177 p); **1.3 s to readable, 40.4 s to searchable** | `api/data/mass_report.jsonl` (**648** real ingests of 773 lines); live run, KTM 390 Duke 2014, 182 p | 2026-09-20 |
+| registry | **53,557 rows**, 84 publisher hosts, 80 makes; **14,770 distinct free English PDFs**; **28,200 distinct URLs** | `api/data/registry.json`, `GET /api/registry` | 2026-09-20 |
 | adapters | **34 modules + 26 crawl fragments**; **17 makes documented unreachable** | `api/app/registry/**`, `docs/MANUALS.md` | — |
 | Ducati / Kawasaki / Honda portal behaviour | Akamai headful-only via CDP · 401 on `Accept: application/json` · Googlebot UA + CSRF, 4 of 41 codes from 479 candidates | `docs/MANUALS.md` | — |
-| the manual page counts quoted | KTM 390 Duke 2023 **128 p**, Honda Civic Sedan 2022 **775 p** (largest in the deployed catalog), Corvette 2022 **338 p**, median **171 p** | live `GET /api/manuals` | 2026-09-20 09:30 UTC |
+| the manual page counts quoted | KTM 390 Duke 2024 **143 p**, Honda Civic Sedan 2022 **775 p** (largest in the deployed catalog), Corvette 2022 **338 p**, median **171 p** | live `GET /api/manuals` | 2026-09-20 09:30 UTC |
 
 **His numbers — say "his number" out loud:** ~20% of his working time; ~$4 a question when he tried
 AI; *"95% right isn't enough when I sign for the 5%."*

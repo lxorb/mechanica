@@ -62,9 +62,9 @@ Start the slow thing first (0:20) and talk over it. Every input is literal: type
 | **2:55–3:15** | tap **PARTS**, then the **Chain** tile | Chain · 5/8 x 1/4" (520) X-ring · P. 126 · RevZilla $61.15, free shipping, in stock | "A hundred and thirty-five parts for this bike. Every one of them is on that list because the manual prints a spec for it — that chain size is KTM's, not a guess. Then the live price, because the next thing after 'it's worn' is 'what does it cost'." | *It closes the loop.* |
 | **3:15–3:40** | back, tap **CHAT**, type `chain is loose, what do I do` | four numbered steps, every sentence ending in a `[p. 77]` or `[p. 78]` chip. Tap **[p. 78]** — the page appears. | "This is the one place it's allowed to write a sentence. And it is only allowed to write page numbers. Every claim is one tap from the ink." | *Even the chatty part is leashed.* |
 | **3:40–3:50** | tap the **mic**, say `how much engine oil does it take` | it answers out loud and turns the page itself | "Hands covered in oil, bike on the lift. He talks; it reads him the manual's own number and shows him the page." | *That's a workshop, not a website.* |
-| **3:50–4:05** | go back — the **MT-07** from 0:20 is ready. Tap it, type `oil` | the page | "That manual did not exist on our servers four minutes ago. Seventeen thousand free official manuals — any of them, fetched and searchable in under a minute, for ten cents." | *So the catalogue isn't the limit.* |
+| **3:50–4:05** | go back — the **MT-07** from 0:20 is ready. Tap it, type `oil` | the page | "That manual did not exist on our servers four minutes ago. Nearly fifteen thousand free official manuals — any of them, fetched and searchable in under a minute, for ten cents." | *So the catalogue isn't the limit.* |
 | **4:05–4:35** | phone down | — | "Why now: the manufacturers put these PDFs online for free, and they're unusable — two hundred pages, no search worth the name. Reading one to a model end to end costs dollars a question. Reading only the page that answers costs four hundredths of a cent. That gap is the whole product, and it only opened in the last year." | *The timing is real, not a pitch.* |
-| **4:35–5:00** | — | the marked page | "Today: twenty-seven thousand vehicles, five hundred manuals already indexed, and the whole thing has cost six dollars to run. Every number I gave you is on the live site right now. And there is not one AI-written sentence on this screen. Don't trust the AI. Trust the manual — we just get you to the page." | *I want to show this to someone who turns wrenches.* |
+| **4:35–5:00** | — | the marked page | "Today: twenty-seven thousand vehicles, five hundred and thirty-five manuals already indexed, and the whole thing has cost under ten dollars to run. Every number I gave you is on the live site right now. And there is not one AI-written sentence on this screen. Don't trust the AI. Trust the manual — we just get you to the page." | *I want to show this to someone who turns wrenches.* |
 
 **Running short?** Cut 2:45–2:55 (ALL) and 3:40–3:50 (voice), in that order. Never cut the page at
 2:20 or the chat at 3:15 — one is the proof, the other is the objection-killer.
@@ -88,7 +88,7 @@ Start the slow thing first (0:20) and talk over it. Every input is literal: type
 | 7 | **The answer is a page** | KTM's page 77, marked on the two lines that answer — and only where we found that ink. | `05-book.png` |
 | 8 | **What it needs, what it costs** | 135 parts, each one there because the manual prints a spec for it. Live prices. | `06-parts.png` → `07-part-detail.png` |
 | 9 | **When you do want a sentence** | It may only write page numbers. Every claim is one tap from the ink. | `08-chat.png` |
-| 10 | **Today** | 17,556 free manuals reachable · any of them searchable in under a minute for 10¢ · four hundredths of a cent a question. | — (numbers) |
+| 10 | **Today** | 14,770 free manuals reachable · any of them searchable in under a minute for 10¢ · four hundredths of a cent a question. | — (numbers) |
 
 ---
 
@@ -144,8 +144,8 @@ already liable for.
 We only use manuals the manufacturers publish free on their own sites — KTM, BMW, Yamaha, Honda,
 Ford, Toyota, Tesla and seventy-odd others. We don't host them: the PDF you're looking at is the
 manufacturer's own file, and the page is the one they typed. We index where things are; we don't
-republish and we don't paraphrase. Paid service manuals — seventy of them in our index, none of them
-free — we deliberately don't touch. For those, a shop points us at the copy it already bought.
+republish and we don't paraphrase. Service manuals — our registry lists 182 rows, and the 15 that are paid, subscription or dealer-login
+only we deliberately don't touch. For those, a shop points us at the copy it already bought.
 
 **3. "Bikes are a niche. What about cars?"**
 Cars are already in — 4,611 of them, 4,113 with a free official manual, and you can ask one right now.
@@ -205,23 +205,23 @@ Say **measured** or **his number** out loud. Never round up.
 |---|---|---|
 | vehicles you can pick | **27,751** — 23,140 motorcycles, 4,611 cars, 77 makes | live `GET /api/catalog` |
 | …with a free official manual attached | **13,537** | same |
-| manuals we can reach | **53,557** registry rows across 80 makes; **17,556** distinct free English PDFs | live `GET /api/registry` |
+| manuals we can reach | **53,557** registry rows across 80 makes; **14,770** distinct free English PDFs | live `GET /api/registry` |
 | manuals already indexed | **535** | live `GET /api/manuals` |
 | brand-new manual → readable | **1.3 s** | live run, KTM 390 Duke 2014, 182 p, 2026-09-20 |
 | brand-new manual → fully searchable | **40.4 s** | same run |
 | what that cost | **$0.089** | cost-log delta over that run |
-| …median over 773 manuals | **$0.096**, 169 pages | `api/data/mass_report.jsonl` |
+| …median over **648** real ingests | **$0.0972**, 170 pages (mean **$0.0951**, 177 pages) | `api/data/mass_report.jsonl` |
 | a question, first time | **2.2–3.4 s** | live, 2026-09-20 |
 | a question, asked again | **0.20 s, $0** | live |
 | accuracy | right section first on **100% of 150 questions**; **0 of 20** off-topic questions answered | `api/eval/report.md` |
 | cost per question | **$0.00038** mean | same |
 | chat honesty | **100%** of 48 claim sentences carry a page; **100%** of 43 quotes verbatim; **0** invented numbers; **0** dealer referrals | `api/eval/chat-report.md` |
 | chat speed / cost | first word **2.64 s** median, **$0.0049** an answer | same |
-| voice | you stop talking → it starts talking in **1.5–2.0 s**; whole answer 3.9–4.6 s | `web/docs/VOICE.md` |
+| voice (Deepgram, live) | you stop talking → it starts talking in a **median 2.08 s** over 5 spec turns (1.73–4.01 s); a procedure question is 9.9 s | `web/docs/VOICE.md`, `docs/pitches/deepgram.md` |
 | VIN → the exact bike | **1.3 s** | live `POST /api/identify/vin`, `VBKJSA40XXXXXXXXX` → KTM 390 Duke 2024 |
 | parts for the KTM 390 Duke 2024 | **135**, each with the spec the manual prints | live `GET /api/parts/catalog` |
 | reading the whole manual to a model instead | **$12.40** a question, worst case | live `GET /api/cost` → `naivePerAsk` |
-| everything we have ever spent running this | **$6.13** over 1,546 model calls | live `GET /api/cost` |
+| everything the deployed app has spent | **$8.93** over 1,633 model calls, as of 2026-09-20 09:55 — it moves every hour and resets on redeploy, so re-read it | live `GET /api/cost` |
 
 **His numbers, not ours — say so:** about 20% of his working time; ~$4 a question when he tried AI;
 "95% right isn't enough when I sign for the 5%."

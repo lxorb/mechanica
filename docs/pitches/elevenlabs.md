@@ -61,7 +61,7 @@ Deepgram path at all**. `api/app/config.py` already read `elevenlabs.txt`, so it
 | [`elevenlabs/chat-ui.patch`](elevenlabs/chat-ui.patch) | The two-line hook into `chat-ui.js`. **Not applied** |
 | [`elevenlabs/agent-dry-run.txt`](elevenlabs/agent-dry-run.txt) | The exact JSON the setup tool would POST, against the live `PUBLIC_BASE` |
 
-**Test status: 29/29 in the new file, 488 passed / 20 skipped across `api/tests`, `node --check` clean.**
+**Test status: 29/29 in the new file, 617 passed / 20 skipped across `api/tests`, `node --check` clean.**
 
 ### The three things that make it not a re-skin
 
@@ -198,14 +198,14 @@ numbers are measured and they told me which half was theirs.* 5 — *this ships 
 > **Latency.** WebRTC, `eleven_flash_v2_5` (~75 ms to first audio), Scribe v2 realtime (~150 ms partials),
 > and a tool leg we measure ourselves at `GET /api/voice/elevenlabs/timings` — per-call, p50, p95.
 > ElevenLabs' servers call our tools directly, so no browser round trip sits in the loop. Our comparable
-> live engine answers 1.5–2.0 s from end of speech.
+> live engine answers in a median of 2.08 s from end of speech.
 >
 > **Multimodal.** Voice, the page, and the camera in one session: the mechanic holds a part up, our
 > classifier labels it, and the labels enter as a *contextual update* — context, never an answer — so the
 > agent must still look the part up in the book. Typed turns go into the same conversation. And it follows
 > the mechanic into German, with one rule: its own words translate, the manual's do not.
 >
-> Live: mechanica.emilvinu.ch — 13,500 free official manuals, $0.0003–0.005 per question.
+> Live: mechanica.emilvinu.ch — 14,770 free official manuals, $0.00038 an ask and $0.0041 a written answer.
 
 *(398 words.)*
 
@@ -217,7 +217,8 @@ numbers are measured and they told me which half was theirs.* 5 — *this ships 
 No. There is no ElevenLabs key on this machine, and I am not going to pretend otherwise. What exists is the
 agent definition, the session endpoint, the tool endpoints, the browser client and 29 tests with the HTTP
 mocked; `--dry-run` prints the exact bodies. The live voice mode you saw runs on Deepgram, which is why I
-can quote a measured 1.5–2.0 s. One key turns this on.
+can quote a measured median of 2.08 s (5 spec turns, 1.73–4.01 s; a procedure question is 9.9 s). One key
+turns this on.
 
 **"So this is a Deepgram app with an ElevenLabs sticker."**
 The opposite. The two platforms ground an agent in opposite directions: Deepgram is stateless — we push the
@@ -230,7 +231,7 @@ grounding policy, imported rather than copied, with a test that fails if they dr
 **"Why not just use the knowledge base / RAG that ElevenLabs gives you?"**
 Because a RAG answer is a paraphrase with a citation stapled on, and this mechanic is liable for the
 number. Our tools return the page's verbatim text and the page number, and the prompt forbids any figure
-that a tool result did not print. Also: 13,500 manuals, 27,000 vehicles. Uploading them into a knowledge
+that a tool result did not print. Also: 14,770 distinct free English PDFs, 27,751 vehicles. Uploading them into a knowledge
 base is a copy we have no right to make — we index what the manufacturer publishes and link to their file.
 
 **"What stops the model from just answering from memory? Every prompt says 'don't hallucinate'."**
@@ -245,7 +246,8 @@ I don't have one, and I'd rather say that than read you their marketing page as 
 can give you is the decomposition and the half we own: `GET /api/voice/elevenlabs/timings` returns every
 tool call this process has served with p50 and p95, and each is one index lookup or one page read against a
 warm manual. Their published figures are ~150 ms to a partial transcript and ~75 ms to first audio. The
-comparable full round trip on our live engine is 1.5–2.0 s from end of speech to first audio.
+comparable full round trip on our live engine is a median 2.08 s from end of speech to first audio, over
+5 spec turns — and 9.9 s on a procedure question, which is the number I would not leave out.
 
 **"Why WebRTC instead of the WebSocket?"**
 A workshop's wifi is the worst network in the building. A WebSocket is TCP: one lost packet head-of-line

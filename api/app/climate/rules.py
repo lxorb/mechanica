@@ -52,6 +52,9 @@ EXTRACT_ROUTE = "climate.extract"
 EXTRACT_MODEL = "gpt-5.6-luna"
 WINDOW = 400  # +/- characters handed to pass B, never a whole page
 MAX_QUOTE = 240
+# A row is a claim, a number and a page. A claim longer than this is a paragraph, and this product
+# does not print paragraphs - it is clipped at a word boundary, which keeps it a real substring.
+MAX_CLAIM = 150
 
 # --- character classes the text layer actually uses ------------------------------------------------
 MINUS = r"[-‐‑‒–—―−]"
@@ -150,7 +153,7 @@ def rule_id(manual_id: str, page: int, rule_type: str, value: str) -> str:
 
 def grounded(quote: str, page_text: str) -> bool:
     """Pass C. Character-for-character after the same folding the ingest highlights use."""
-    needle = norm(quote)
+    needle = norm(quote.rstrip(" …"))
     return len(needle) >= 8 and needle in norm(page_text)
 
 
@@ -171,6 +174,15 @@ def floor_of(quote: str, first: float) -> float:
         if -60 <= c <= 10:
             values.append(c)
     return max(values) if values else first
+
+
+def clip_claim(quote: str) -> str:
+    """Cut a long clause at a word boundary. Still a character-for-character prefix, so pass C
+    holds; an ellipsis is appended only for the reader and stripped before the check."""
+    if len(quote) <= MAX_CLAIM:
+        return quote
+    cut = quote[:MAX_CLAIM].rsplit(" ", 1)[0].rstrip(" ,;:-")
+    return cut + " …"
 
 
 def _clip(text: str, start: int, end: int) -> str:
@@ -348,10 +360,12 @@ def pass_b(candidate: dict, cache: dict, meter: CostMeter, lock=None) -> Climate
     return ClimateRule(
         id=rule_id(candidate["manualId"], candidate["page"], candidate["ruleType"], str(value)),
         manualId=candidate["manualId"], ruleType=candidate["ruleType"],
-        name=(hit.get("name") or LABELS[candidate["ruleType"]])[:80],
+        name=LABELS[candidate["ruleType"]],  # one label per rule type, always: the
+        # manual's own line is the claim, and a model-written label would differ per manual
+
         comparator=comparator, thresholdC=hit.get("thresholdC"), thresholdM=hit.get("thresholdM"),
         value=str(value)[:60], intervalKm=hit.get("intervalKm"),
-        page=candidate["page"], quote=fold(hit["quote"])[:MAX_QUOTE], source="model",
+        page=candidate["page"], quote=clip_claim(fold(hit["quote"])), source="model",
     )
 
 

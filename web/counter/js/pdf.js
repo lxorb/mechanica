@@ -22,6 +22,43 @@ const sheets = new Map();
 const jobs = new Map();
 const wanted = new WeakMap();
 
+/**
+ * One record per manual file: "idle" | "loading" | "ready" | "failed", plus the bytes pdf.js
+ * reports while the file comes down. The reader draws its progress ring straight off this, so
+ * a manual that is still downloading looks like a download and not like a broken page.
+ */
+const states = new Map();
+const watchers = new Map();
+
+export function docStatus(url) {
+  return states.get(url) || { status: "idle", loaded: 0, total: 0 };
+}
+
+function setStatus(url, patch) {
+  const next = Object.assign(docStatus(url), patch);
+  states.set(url, next);
+  const set = watchers.get(url);
+  if (set) for (const fn of [...set]) fn(next);
+}
+
+/** Subscribe to a file's load state. Fires once immediately; returns the unsubscribe. */
+export function onDoc(url, fn) {
+  if (!url || typeof fn !== "function") return () => {};
+  let set = watchers.get(url);
+  if (!set) watchers.set(url, (set = new Set()));
+  set.add(fn);
+  fn(docStatus(url));
+  return () => set.delete(fn);
+}
+
+/** Drop a failed document so the next getDocument() retries it from scratch. */
+export function forget(url) {
+  docs.delete(url);
+  states.delete(url);
+  for (const key of [...sheets.keys()]) if (key.startsWith(`${url}|`)) sheets.delete(key);
+  setStatus(url, { status: "idle", loaded: 0, total: 0 });
+}
+
 function dpr() {
   const raw = (typeof window !== "undefined" && window.devicePixelRatio) || 1;
   return Math.min(raw, MAX_DPR);
@@ -57,18 +94,31 @@ function loadPdfjs() {
 export function getDocument(url) {
   const open = docs.get(url);
   if (open) return open;
-  const job = loadPdfjs().then(
-    (pdfjs) =>
-      pdfjs.getDocument({
-        url,
-        withCredentials: false,
-        standardFontDataUrl: PDFJS_FONTS,
-        cMapUrl: PDFJS_CMAPS,
-        cMapPacked: true,
-      }).promise,
-  );
+  setStatus(url, { status: "loading", loaded: 0, total: 0 });
+  const job = loadPdfjs().then((pdfjs) => {
+    const task = pdfjs.getDocument({
+      url,
+      withCredentials: false,
+      standardFontDataUrl: PDFJS_FONTS,
+      cMapUrl: PDFJS_CMAPS,
+      cMapPacked: true,
+    });
+    // pdf.js only reports a total when the server sends Content-Length; without one the
+    // reader shows the indeterminate ring rather than inventing a percentage.
+    task.onProgress = ({ loaded, total }) => {
+      if (docs.get(url) !== job) return;
+      setStatus(url, { status: "loading", loaded: Number(loaded) || 0, total: Number(total) || 0 });
+    };
+    return task.promise;
+  });
   docs.set(url, job);
-  job.catch(() => docs.delete(url));
+  job.then(
+    () => setStatus(url, { status: "ready" }),
+    () => {
+      docs.delete(url);
+      setStatus(url, { status: "failed" });
+    },
+  );
   return job;
 }
 

@@ -1076,10 +1076,12 @@
    "yamaha-xsr900-gp-2026-eu-om"
   ],
   "yamaha yz125": [
-   "yamaha-yz125-2025-eu-om"
+   "yamaha-yz125-2025-eu-om",
+   "yamaha-yz125-2026-eu-om"
   ],
   "yamaha yz250": [
-   "yamaha-yz250-2025-eu-om"
+   "yamaha-yz250-2025-eu-om",
+   "yamaha-yz250-2026-eu-om"
   ],
   "yamaha yz250f": [
    "yamaha-yz250f-2025-eu-om",
@@ -1111,21 +1113,6 @@
  "drift": [
   {
    "family": "bmw 1000",
-   "ruleType": "dust_interval",
-   "values": [
-    "dusty (2024)",
-    "dusty (2026)",
-    "more frequently (2025)"
-   ],
-   "members": [
-    "bmw-s-1000-r-2025-eu-om",
-    "bmw-s-1000-r-2026-eu-om",
-    "bmw-s-1000-rr-2024-eu-om",
-    "bmw-s-1000-rr-2026-eu-om"
-   ]
-  },
-  {
-   "family": "bmw 1000",
    "ruleType": "wet_interval",
    "values": [
     "more frequently (2025)",
@@ -1141,12 +1128,11 @@
   },
   {
    "family": "bmw 1000",
-   "ruleType": "cold_start",
+   "ruleType": "dust_interval",
    "values": [
-    "Pull the clutch lever (2024)",
-    "Pull the clutch lever (2026)",
-    "Repeated, brief application of load on the battery causes ba (2026)",
-    "low temperatures (2025)"
+    "dusty (2024)",
+    "dusty (2026)",
+    "more frequently (2025)"
    ],
    "members": [
     "bmw-s-1000-r-2025-eu-om",
@@ -1156,23 +1142,27 @@
    ]
   },
   {
-   "family": "bmw 1000 xr",
+   "family": "bmw 1000",
    "ruleType": "cold_start",
    "values": [
-    "Low temperatures (2026)",
-    "Repeated, brief application of load on the battery causes ba (2025)"
+    "Pull the clutch lever (2024)",
+    "Pull the clutch lever (2026)",
+    "Repeated, brief application of load on the battery causes ba (2025)",
+    "Repeated, brief application of load on the battery causes ba (2026)"
    ],
    "members": [
-    "bmw-s-1000-xr-2025-eu-om",
-    "bmw-s-1000-xr-2026-eu-om"
+    "bmw-s-1000-r-2025-eu-om",
+    "bmw-s-1000-r-2026-eu-om",
+    "bmw-s-1000-rr-2024-eu-om",
+    "bmw-s-1000-rr-2026-eu-om"
    ]
   },
   {
    "family": "bmw 12",
    "ruleType": "cold_start",
    "values": [
-    "cold starts and low temperatures (2025)",
-    "low temperatures (2026)"
+    "Pull the clutch lever. Press and hold the starter button 1 u (2026)",
+    "cold starts and low temperatures (2025)"
    ],
    "members": [
     "bmw-r-12-2025-eu-om",
@@ -1185,18 +1175,6 @@
    "values": [
     "cold water (2025)",
     "cold water immediately after every trip (2026)"
-   ],
-   "members": [
-    "bmw-r-12-g-s-2025-eu-om",
-    "bmw-r-12-g-s-2026-eu-om"
-   ]
-  },
-  {
-   "family": "bmw 12 g",
-   "ruleType": "cold_start",
-   "values": [
-    "Pull the clutch lever. Press and hold the starter button 1 u (2025)",
-    "low temperatures (2026)"
    ],
    "members": [
     "bmw-r-12-g-s-2025-eu-om",
@@ -1222,9 +1200,9 @@
    "family": "bmw 1300",
    "ruleType": "cold_start",
    "values": [
-    "Low temperatures can impact on the starting response. (2025)",
-    "Pull the clutch lever. Press starter button 1 and hold it do (2026)",
     "cold starts and low temperatures (2025)",
+    "cold starts and low temperatures (2026)",
+    "low temperatures (2025)",
     "low temperatures (2026)"
    ],
    "members": [
@@ -1238,27 +1216,16 @@
    "family": "bmw 1300 gs",
    "ruleType": "cold_start",
    "values": [
-    "Cold starts and low temperat- ures (2025)",
     "Pull the clutch lever. Press starter button 1 and hold it do (2025)",
-    "Pull the clutch lever. Press starter button 1 and hold it do (2026)"
+    "Pull the clutch lever. Press starter button 1 and hold it do (2026)",
+    "cold starts and low temperatures (2025)",
+    "cold starts and low temperatures (2026)"
    ],
    "members": [
     "bmw-r-1300-gs-2025-eu-om",
     "bmw-r-1300-gs-2026-eu-om",
     "bmw-r-1300-gs-adventure-2025-eu-om",
     "bmw-r-1300-gs-adventure-2026-eu-om"
-   ]
-  },
-  {
-   "family": "bmw 1300 rt",
-   "ruleType": "cold_start",
-   "values": [
-    "Cold starts and low temperat- ures (2026)",
-    "cold starts and low temperatures (2025)"
-   ],
-   "members": [
-    "bmw-r-1300-rt-2025-eu-om",
-    "bmw-r-1300-rt-2026-eu-om"
    ]
   },
   {
@@ -1269,13 +1236,10 @@
     "Clean chrome parts with plenty of water and motorcycle clean (2025)",
     "Clean chrome parts with plenty of water and motorcycle clean (2026)",
     "cold water (2024)",
-    "cold water (2025)",
-    "cold water (2026)",
     "cold water immediately after every trip (2024)",
     "cold water immediately after every trip (2025)",
-    "road salt (2024)",
-    "road salt (2025)",
-    "road salt (2026)"
+    "cold water immediately after every trip (2026)",
+    "road salt (2024)"
    ],
    "members": [
     "bmw-c-400-gt-2024-eu-om",
@@ -1284,35 +1248,6 @@
     "bmw-c-400-x-2024-eu-om",
     "bmw-c-400-x-2025-eu-om",
     "bmw-c-400-x-2026-eu-om"
-   ]
-  },
-  {
-   "family": "bmw ce 02",
-   "ruleType": "cold_start",
-   "values": [
-    "-20 °C (2025)",
-    "Power output and power draw are adversely affected (2024)",
-    "adversely affected (2025)",
-    "can cause damage (2024)",
-    "extremely low temperatures (2025)",
-    "vehicle can no longer be used (2024)"
-   ],
-   "members": [
-    "bmw-ce-02-2024-eu-om",
-    "bmw-ce-02-2025-eu-om"
-   ]
-  },
-  {
-   "family": "bmw ce 02",
-   "ruleType": "heat_limit",
-   "values": [
-    "below -20 °C or above 45 °C for longer periods of time (2024)",
-    "below -20 °C or above 45 °C for longer periods of time (2025)",
-    "damage (2024)"
-   ],
-   "members": [
-    "bmw-ce-02-2024-eu-om",
-    "bmw-ce-02-2025-eu-om"
    ]
   },
   {
@@ -1328,11 +1263,28 @@
    ]
   },
   {
-   "family": "bmw ce 04",
+   "family": "bmw ce 02",
    "ruleType": "cold_start",
    "values": [
-    "Power output and power draw are adversely affected by low te (2024)",
-    "shortens (2025)"
+    "Power output and power draw are adversely affected (2024)",
+    "adversely affected (2025)",
+    "can cause damage (2024)",
+    "can cause damage (2025)",
+    "extremely low temperatures (2024)",
+    "extremely low temperatures (2025)"
+   ],
+   "members": [
+    "bmw-ce-02-2024-eu-om",
+    "bmw-ce-02-2025-eu-om"
+   ]
+  },
+  {
+   "family": "bmw ce 04",
+   "ruleType": "heat_limit",
+   "values": [
+    "35 °C (2024)",
+    "35 °C (2025)",
+    "shorten the service life of the battery cells (2025)"
    ],
    "members": [
     "bmw-ce-04-2024-eu-om",
@@ -1353,11 +1305,10 @@
   },
   {
    "family": "bmw ce 04",
-   "ruleType": "heat_limit",
+   "ruleType": "cold_start",
    "values": [
-    "35 °C (2024)",
-    "35 °C (2025)",
-    "shorten the service life of the battery cells (2025)"
+    "Power output and power draw are adversely affected by low te (2024)",
+    "shortens (2025)"
    ],
    "members": [
     "bmw-ce-04-2024-eu-om",
@@ -1410,6 +1361,20 @@
    ]
   },
   {
+   "family": "bmw f 900 xr",
+   "ruleType": "salt_wash",
+   "values": [
+    "cold water immediately after every trip (2025)",
+    "cold water immediately after every trip (2026)",
+    "frequently (2024)"
+   ],
+   "members": [
+    "bmw-f-900-xr-2024-eu-om",
+    "bmw-f-900-xr-2025-eu-om",
+    "bmw-f-900-xr-2026-eu-om"
+   ]
+  },
+  {
    "family": "bmw g 310 gs",
    "ruleType": "salt_wash",
    "values": [
@@ -1431,18 +1396,6 @@
    "members": [
     "bmw-m-1000-r-2026-eu-om",
     "bmw-m-1000-rr-2026-eu-om"
-   ]
-  },
-  {
-   "family": "bmw m 1000 xr",
-   "ruleType": "cold_start",
-   "values": [
-    "Low temperatures can impact on the starting response. (2025)",
-    "Repeated, brief application of load on the battery causes ba (2026)"
-   ],
-   "members": [
-    "bmw-m-1000-xr-2025-eu-om",
-    "bmw-m-1000-xr-2026-eu-om"
    ]
   },
   {
@@ -1471,18 +1424,6 @@
   },
   {
    "family": "gasgas ec 250f",
-   "ruleType": "salt_wash",
-   "values": [
-    "cold water (2024)",
-    "thoroughly wash the brake calipers and brake pads with cold  (2025)"
-   ],
-   "members": [
-    "gasgas-ec-250f-2024-eu-om",
-    "gasgas-ec-250f-2025-eu-om"
-   ]
-  },
-  {
-   "family": "gasgas ec 250f",
    "ruleType": "cold_start",
    "values": [
     "30 seconds (2024)",
@@ -1491,6 +1432,18 @@
     "Push the cold start button in all the way. (2024)",
     "charging time may be longer (2025)",
     "longer (2024)"
+   ],
+   "members": [
+    "gasgas-ec-250f-2024-eu-om",
+    "gasgas-ec-250f-2025-eu-om"
+   ]
+  },
+  {
+   "family": "gasgas ec 250f",
+   "ruleType": "salt_wash",
+   "values": [
+    "cold water (2024)",
+    "thoroughly wash the brake calipers and brake pads with cold  (2025)"
    ],
    "members": [
     "gasgas-ec-250f-2024-eu-om",
@@ -1511,6 +1464,18 @@
   },
   {
    "family": "gasgas ec 300 gp",
+   "ruleType": "salt_wash",
+   "values": [
+    "cold water (2026)",
+    "thoroughly wash the brake calipers and the brake pads with c (2025)"
+   ],
+   "members": [
+    "gasgas-ec-300-gp-2025-eu-om",
+    "gasgas-ec-300-gp-2026-rw-om"
+   ]
+  },
+  {
+   "family": "gasgas ec 300 gp",
    "ruleType": "cold_start",
    "values": [
     "Press the cold start button in all the way to the stop. (2025)",
@@ -1523,32 +1488,6 @@
    "members": [
     "gasgas-ec-300-gp-2025-eu-om",
     "gasgas-ec-300-gp-2026-rw-om"
-   ]
-  },
-  {
-   "family": "gasgas ec 300 gp",
-   "ruleType": "salt_wash",
-   "values": [
-    "cold water (2026)",
-    "thoroughly wash the brake calipers and the brake pads with c (2025)"
-   ],
-   "members": [
-    "gasgas-ec-300-gp-2025-eu-om",
-    "gasgas-ec-300-gp-2026-rw-om"
-   ]
-  },
-  {
-   "family": "gasgas ec 350f",
-   "ruleType": "salt_wash",
-   "values": [
-    "cold water (2024)",
-    "cold water (2025)",
-    "thoroughly wash the brake calipers and brake pads with cold  (2026)"
-   ],
-   "members": [
-    "gasgas-ec-350f-2024-eu-om",
-    "gasgas-ec-350f-2025-eu-om",
-    "gasgas-ec-350f-2026-eu-om"
    ]
   },
   {
@@ -1573,15 +1512,29 @@
    ]
   },
   {
+   "family": "gasgas ec 350f",
+   "ruleType": "salt_wash",
+   "values": [
+    "cold water (2024)",
+    "cold water (2025)",
+    "thoroughly wash the brake calipers and brake pads with cold  (2026)"
+   ],
+   "members": [
+    "gasgas-ec-350f-2024-eu-om",
+    "gasgas-ec-350f-2025-eu-om",
+    "gasgas-ec-350f-2026-eu-om"
+   ]
+  },
+  {
    "family": "gasgas ec 450f",
    "ruleType": "cold_start",
    "values": [
     "Press the cold start button in all the way to the stop. (2025)",
     "Push the cold start button in all the way. (2024)",
+    "Wait 30 seconds between start attempts (2025)",
     "charging time may be longer (2024)",
     "charging time may be longer (2025)",
-    "more starting power (2024)",
-    "wait for 30 seconds (2025)"
+    "more starting power (2024)"
    ],
    "members": [
     "gasgas-ec-450f-2024-eu-om",
@@ -1614,18 +1567,6 @@
   },
   {
    "family": "gasgas es 350",
-   "ruleType": "salt_wash",
-   "values": [
-    "cold water (2024)",
-    "salted roads (2025)"
-   ],
-   "members": [
-    "gasgas-es-350-2024-us-om",
-    "gasgas-es-350-2025-us-om"
-   ]
-  },
-  {
-   "family": "gasgas es 350",
    "ruleType": "cold_start",
    "values": [
     "30 seconds (2024)",
@@ -1634,6 +1575,18 @@
     "Wait 30 seconds between start attempts (2025)",
     "charging time may be longer (2024)",
     "longer (2025)"
+   ],
+   "members": [
+    "gasgas-es-350-2024-us-om",
+    "gasgas-es-350-2025-us-om"
+   ]
+  },
+  {
+   "family": "gasgas es 350",
+   "ruleType": "salt_wash",
+   "values": [
+    "cold water (2024)",
+    "salted roads (2025)"
    ],
    "members": [
     "gasgas-es-350-2024-us-om",
@@ -1778,43 +1731,15 @@
    "family": "honda adv160",
    "ruleType": "wet_interval",
    "values": [
-    "Apply the brakes while riding at low speed to help them dry (2024)",
-    "Apply the brakes while riding at low speed to help them dry (2026)",
     "Service more frequently when riding in unusually wet or dust (2025)",
+    "apply the brakes while riding at low speed to help them dry (2024)",
     "apply the brakes while riding at low speed to help them dry (2025)",
+    "apply the brakes while riding at low speed to help them dry (2026)",
     "more frequently (2024)",
     "more frequently when riding in rain, at full throttle, or af (2024)",
+    "more frequently when riding in rain, at full throttle, or af (2025)",
     "more frequently when riding in rain, at full throttle, or af (2026)",
-    "rain, at full throttle, or after the vehicle is washed or ov (2025)",
     "service more frequently (2026)"
-   ],
-   "members": [
-    "honda-adv160-2024-us-om",
-    "honda-adv160-2025-us-om",
-    "honda-adv160-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda adv160",
-   "ruleType": "heat_limit",
-   "values": [
-    "--- (2024)",
-    "122°F (50°C) flashes (2025)",
-    "122°F (50°C) flashes (2026)"
-   ],
-   "members": [
-    "honda-adv160-2024-us-om",
-    "honda-adv160-2025-us-om",
-    "honda-adv160-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda adv160",
-   "ruleType": "dust_interval",
-   "values": [
-    "more frequently (2025)",
-    "more frequently (2026)",
-    "unusually wet or dusty areas (2024)"
    ],
    "members": [
     "honda-adv160-2024-us-om",
@@ -1840,6 +1765,31 @@
    ]
   },
   {
+   "family": "honda adv160",
+   "ruleType": "dust_interval",
+   "values": [
+    "more frequently (2025)",
+    "more frequently (2026)",
+    "unusually wet or dusty areas (2024)"
+   ],
+   "members": [
+    "honda-adv160-2024-us-om",
+    "honda-adv160-2025-us-om",
+    "honda-adv160-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda adv350a",
+   "ruleType": "salt_wash",
+   "values": [
+    "road salt (2025)",
+    "wash your vehicle thoroughly (2025)"
+   ],
+   "members": [
+    "honda-adv350a-2025-eu-om"
+   ]
+  },
+  {
    "family": "honda adv350a",
    "ruleType": "wet_interval",
    "values": [
@@ -1849,28 +1799,6 @@
    ],
    "members": [
     "honda-adv350a-2025-eu-om"
-   ]
-  },
-  {
-   "family": "honda adv350a",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminium parts regularly (2025)",
-    "wash your vehicle thoroughly (2025)"
-   ],
-   "members": [
-    "honda-adv350a-2025-eu-om"
-   ]
-  },
-  {
-   "family": "honda adv750",
-   "ruleType": "wet_interval",
-   "values": [
-    "Service more frequently (2025)",
-    "when riding in rain, at full throttle, or after the vehicle  (2025)"
-   ],
-   "members": [
-    "honda-adv750-2025-eu-om"
    ]
   },
   {
@@ -1896,15 +1824,14 @@
    ]
   },
   {
-   "family": "honda africa twin",
+   "family": "honda adv750",
    "ruleType": "wet_interval",
    "values": [
     "Service more frequently (2025)",
-    "Service more frequently when riding in rain, at full throttl (2025)",
-    "ridden in the rain or often at full throttle (2025)"
+    "when riding in rain, at full throttle, or after the vehicle  (2025)"
    ],
    "members": [
-    "honda-africa-twin-2025-us-om"
+    "honda-adv750-2025-eu-om"
    ]
   },
   {
@@ -1919,23 +1846,15 @@
    ]
   },
   {
-   "family": "honda africa twin sports es",
+   "family": "honda africa twin",
    "ruleType": "wet_interval",
    "values": [
-    "Service more frequently (2025)",
     "Service more frequently if ridden in the rain or often at fu (2025)",
-    "Service more frequently when riding in rain, at full throttl (2026)",
-    "more frequently if your vehicle is ridden in the rain or oft (2026)",
-    "rain (2024)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2024)",
-    "service more frequently (2024)",
-    "service more frequently (2025)",
-    "service more frequently (2026)"
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "service more frequently (2025)"
    ],
    "members": [
-    "honda-africa-twin-adventure-sports-es-dct-2024-us-om",
-    "honda-africa-twin-adventure-sports-es-dct-2025-us-om",
-    "honda-africa-twin-adventure-sports-es-dct-2026-us-om"
+    "honda-africa-twin-2025-us-om"
    ]
   },
   {
@@ -1970,14 +1889,23 @@
    ]
   },
   {
-   "family": "honda c125a cub",
-   "ruleType": "salt_wash",
+   "family": "honda africa twin sports es",
+   "ruleType": "wet_interval",
    "values": [
-    "Clean aluminium parts regularly (2025)",
-    "wash your vehicle thoroughly after riding on coastal, treate (2025)"
+    "Service more frequently if ridden in the rain or often at fu (2024)",
+    "Service more frequently if ridden in the rain or often at fu (2025)",
+    "more frequently if your vehicle is ridden in the rain or oft (2026)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2024)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
+    "service more frequently (2024)",
+    "service more frequently (2025)",
+    "service more frequently (2026)"
    ],
    "members": [
-    "honda-c125a-super-cub-2025-eu-om"
+    "honda-africa-twin-adventure-sports-es-dct-2024-us-om",
+    "honda-africa-twin-adventure-sports-es-dct-2025-us-om",
+    "honda-africa-twin-adventure-sports-es-dct-2026-us-om"
    ]
   },
   {
@@ -1986,6 +1914,17 @@
    "values": [
     "more frequently (2025)",
     "riding in rain, at full throttle, or after the vehicle is wa (2025)"
+   ],
+   "members": [
+    "honda-c125a-super-cub-2025-eu-om"
+   ]
+  },
+  {
+   "family": "honda c125a cub",
+   "ruleType": "salt_wash",
+   "values": [
+    "Clean aluminium parts regularly (2025)",
+    "wash your vehicle thoroughly after riding on coastal, treate (2025)"
    ],
    "members": [
     "honda-c125a-super-cub-2025-eu-om"
@@ -2004,6 +1943,20 @@
   },
   {
    "family": "honda cb1000 hornet",
+   "ruleType": "salt_wash",
+   "values": [
+    "Clean aluminum parts regularly (2025)",
+    "Clean aluminum parts regularly (2026)",
+    "coastal, treated, muddy, or dusty roads (2025)",
+    "coastal, treated, muddy, or dusty roads (2026)"
+   ],
+   "members": [
+    "honda-cb1000-hornet-sp-2025-us-om",
+    "honda-cb1000-hornet-sp-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda cb1000 hornet",
    "ruleType": "dust_interval",
    "values": [
     "more frequently (2026)",
@@ -2015,25 +1968,11 @@
    ]
   },
   {
-   "family": "honda cb1000 hornet",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminum parts regularly (2025)",
-    "Clean aluminum parts regularly (2026)",
-    "coastal, treated, muddy, or dusty roads (2026)",
-    "more often (2025)"
-   ],
-   "members": [
-    "honda-cb1000-hornet-sp-2025-us-om",
-    "honda-cb1000-hornet-sp-2026-us-om"
-   ]
-  },
-  {
    "family": "honda cb1000f",
    "ruleType": "salt_wash",
    "values": [
     "Clean aluminum parts regularly (2026)",
-    "more often (2026)"
+    "coastal, treated, muddy, or dusty roads (2026)"
    ],
    "members": [
     "honda-cb1000f-2026-us-om"
@@ -2044,7 +1983,7 @@
    "ruleType": "salt_wash",
    "values": [
     "Clean aluminium parts regularly (2026)",
-    "more often (2026)"
+    "coastal, treated, muddy, or dusty roads (2026)"
    ],
    "members": [
     "honda-cb1000f-cb1000s-2026-eu-om"
@@ -2063,31 +2002,15 @@
   },
   {
    "family": "honda cb300r",
-   "ruleType": "dust_interval",
-   "values": [
-    "Service more frequently (2025)",
-    "Service more frequently when riding in unusually wet or dust (2024)",
-    "service more frequently when riding in unusually wet or dust (2026)",
-    "unusually wet or dusty areas (2024)"
-   ],
-   "members": [
-    "honda-cb300r-2024-us-om",
-    "honda-cb300r-2026-us-om",
-    "honda-cb300r-abs-2024-us-om",
-    "honda-cb300r-abs-2025-us-om"
-   ]
-  },
-  {
-   "family": "honda cb300r",
    "ruleType": "salt_wash",
    "values": [
     "Clean aluminum parts regularly (2024)",
     "Clean aluminum parts regularly (2025)",
     "Clean aluminum parts regularly (2026)",
-    "after riding on coastal or treated roads (2024)",
     "coastal, treated, muddy, or dusty roads (2024)",
     "road salt (2024)",
     "wash your motorcycle thoroughly after riding on coastal or t (2026)",
+    "wash your vehicle thoroughly after riding on coastal or trea (2024)",
     "wash your vehicle thoroughly after riding on coastal or trea (2025)"
    ],
    "members": [
@@ -2106,7 +2029,24 @@
     "more frequently (2026)",
     "riding in rain, at full throttle, or after the vehicle is wa (2024)",
     "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "service more frequently (2024)",
     "service more frequently (2025)"
+   ],
+   "members": [
+    "honda-cb300r-2024-us-om",
+    "honda-cb300r-2026-us-om",
+    "honda-cb300r-abs-2024-us-om",
+    "honda-cb300r-abs-2025-us-om"
+   ]
+  },
+  {
+   "family": "honda cb300r",
+   "ruleType": "dust_interval",
+   "values": [
+    "Service more frequently when riding in unusually wet or dust (2024)",
+    "service more frequently when riding in unusually wet or dust (2026)",
+    "unusually wet or dusty areas (2024)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "honda-cb300r-2024-us-om",
@@ -2152,25 +2092,11 @@
    "family": "honda cb500f",
    "ruleType": "wet_interval",
    "values": [
-    "more frequently when riding in unusually wet or dusty areas (2025)",
-    "rain (2025)"
+    "more frequently when riding in rain, at full throttle, or af (2025)",
+    "more frequently when riding in unusually wet or dusty areas (2025)"
    ],
    "members": [
     "honda-cb500f-2025-us-om"
-   ]
-  },
-  {
-   "family": "honda cb500fa",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminium parts regularly (2024)",
-    "Clean aluminium parts regularly (2026)",
-    "after riding on coastal, treated roads and muddy and dusty r (2024)",
-    "wash your vehicle thoroughly after riding on coastal, treate (2026)"
-   ],
-   "members": [
-    "honda-cb500fa-2024-eu-om",
-    "honda-cb500fa-2026-eu-om"
    ]
   },
   {
@@ -2188,15 +2114,17 @@
    ]
   },
   {
-   "family": "honda cb650r",
-   "ruleType": "wet_interval",
+   "family": "honda cb500fa",
+   "ruleType": "salt_wash",
    "values": [
-    "more frequently (2024)",
-    "service more frequently (2023)"
+    "Clean aluminium parts regularly (2024)",
+    "Clean aluminium parts regularly (2026)",
+    "after riding on coastal, treated roads and muddy and dusty r (2024)",
+    "wash your vehicle thoroughly after riding on coastal, treate (2026)"
    ],
    "members": [
-    "honda-cb650r-2023-eu-om",
-    "honda-cb650r-2024-eu-om"
+    "honda-cb500fa-2024-eu-om",
+    "honda-cb500fa-2026-eu-om"
    ]
   },
   {
@@ -2207,6 +2135,18 @@
     "Clean aluminium parts regularly (2024)",
     "more often (2024)",
     "wash your vehicle thoroughly after riding on coastal or trea (2023)"
+   ],
+   "members": [
+    "honda-cb650r-2023-eu-om",
+    "honda-cb650r-2024-eu-om"
+   ]
+  },
+  {
+   "family": "honda cb650r",
+   "ruleType": "wet_interval",
+   "values": [
+    "more frequently (2024)",
+    "service more frequently (2023)"
    ],
    "members": [
     "honda-cb650r-2023-eu-om",
@@ -2228,10 +2168,10 @@
   },
   {
    "family": "honda cb650rac",
-   "ruleType": "dust_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "Service more frequently when riding in unusually wet or dust (2024)",
-    "more frequently (2024)"
+    "Clean aluminium parts regularly (2024)",
+    "coastal, treated roads, muddy or dusty roads (2024)"
    ],
    "members": [
     "honda-cb650rac-2024-eu-om"
@@ -2239,10 +2179,10 @@
   },
   {
    "family": "honda cb650rac",
-   "ruleType": "salt_wash",
+   "ruleType": "dust_interval",
    "values": [
-    "Clean aluminium parts regularly (2024)",
-    "coastal, treated roads, muddy or dusty roads (2024)"
+    "Service more frequently when riding in unusually wet or dust (2024)",
+    "more frequently (2024)"
    ],
    "members": [
     "honda-cb650rac-2024-eu-om"
@@ -2294,17 +2234,6 @@
   },
   {
    "family": "honda cbf125m",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminium parts regularly (2024)",
-    "Wash your vehicle thoroughly after riding on coastal, treate (2024)"
-   ],
-   "members": [
-    "honda-cbf125m-2024-eu-om"
-   ]
-  },
-  {
-   "family": "honda cbf125m",
    "ruleType": "wet_interval",
    "values": [
     "Service more frequently (2024)",
@@ -2327,14 +2256,14 @@
    ]
   },
   {
-   "family": "honda cbf125na cb125r",
+   "family": "honda cbf125m",
    "ruleType": "salt_wash",
    "values": [
-    "Clean aluminium parts regularly (2025)",
-    "more often (2025)"
+    "Clean aluminium parts regularly (2024)",
+    "Wash your vehicle thoroughly after riding on coastal, treate (2024)"
    ],
    "members": [
-    "honda-cbf125na-cb125r-2025-eu-om"
+    "honda-cbf125m-2024-eu-om"
    ]
   },
   {
@@ -2349,12 +2278,23 @@
    ]
   },
   {
-   "family": "honda cbr1000rr",
-   "ruleType": "heat_limit",
+   "family": "honda cbf125na cb125r",
+   "ruleType": "salt_wash",
    "values": [
-    "122 °C (2024)",
-    "132 °C (2025)",
-    "High coolant temperature indicator lights; “269°F (132°C)” f (2026)"
+    "Clean aluminium parts regularly (2025)",
+    "more often (2025)"
+   ],
+   "members": [
+    "honda-cbf125na-cb125r-2025-eu-om"
+   ]
+  },
+  {
+   "family": "honda cbr1000rr",
+   "ruleType": "dust_interval",
+   "values": [
+    "Service more frequently (2024)",
+    "more frequently (2025)",
+    "more frequently (2026)"
    ],
    "members": [
     "honda-cbr1000rr-abs-2024-us-om",
@@ -2394,25 +2334,13 @@
    ]
   },
   {
-   "family": "honda cbr1000rr",
-   "ruleType": "dust_interval",
-   "values": [
-    "Service more frequently (2024)",
-    "more frequently (2025)",
-    "more frequently (2026)"
-   ],
-   "members": [
-    "honda-cbr1000rr-abs-2024-us-om",
-    "honda-cbr1000rr-abs-2025-us-om",
-    "honda-cbr1000rr-abs-2026-us-om"
-   ]
-  },
-  {
    "family": "honda cbr1000rr fireblade",
-   "ruleType": "dust_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "Service more frequently when riding in unusually wet or dust (2026)",
-    "more frequently (2025)"
+    "Clean aluminum parts regularly (2025)",
+    "Clean aluminum parts regularly (2026)",
+    "Wash your vehicle thoroughly after riding on coastal, treate (2026)",
+    "wash your vehicle thoroughly after riding on coastal or trea (2025)"
    ],
    "members": [
     "honda-cbr1000rr-r-fireblade-sp-2025-us-om",
@@ -2435,12 +2363,10 @@
   },
   {
    "family": "honda cbr1000rr fireblade",
-   "ruleType": "salt_wash",
+   "ruleType": "dust_interval",
    "values": [
-    "Clean aluminum parts regularly (2025)",
-    "Clean aluminum parts regularly (2026)",
-    "Wash your vehicle thoroughly after riding on coastal, treate (2026)",
-    "wash your vehicle thoroughly after riding on coastal or trea (2025)"
+    "Service more frequently when riding in unusually wet or dust (2026)",
+    "more frequently (2025)"
    ],
    "members": [
     "honda-cbr1000rr-r-fireblade-sp-2025-us-om",
@@ -2467,20 +2393,6 @@
    ],
    "members": [
     "honda-cbr500r-2025-us-om"
-   ]
-  },
-  {
-   "family": "honda cbr600rr",
-   "ruleType": "dust_interval",
-   "values": [
-    "Service more frequently when riding in unusually wet or dust (2026)",
-    "more frequently (2025)",
-    "more frequently (2026)"
-   ],
-   "members": [
-    "honda-cbr600rr-2026-us-om",
-    "honda-cbr600rr-abs-2025-us-om",
-    "honda-cbr600rr-abs-2026-us-om"
    ]
   },
   {
@@ -2515,28 +2427,16 @@
   },
   {
    "family": "honda cbr600rr",
-   "ruleType": "heat_limit",
+   "ruleType": "dust_interval",
    "values": [
-    "132 °C (2026)",
-    "High coolant temperature indicator lights (2025)",
-    "High coolant temperature indicator lights; “ ” (°F) /“ ” (°C (2026)"
+    "Service more frequently when riding in unusually wet or dust (2026)",
+    "more frequently (2025)",
+    "more frequently (2026)"
    ],
    "members": [
     "honda-cbr600rr-2026-us-om",
     "honda-cbr600rr-abs-2025-us-om",
     "honda-cbr600rr-abs-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda cbr650r",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2023)",
-    "unusually wet or dusty areas (2022)"
-   ],
-   "members": [
-    "honda-cbr650r-2022-us-om",
-    "honda-cbr650r-2023-us-om"
    ]
   },
   {
@@ -2554,15 +2454,15 @@
    ]
   },
   {
-   "family": "honda cbr650r",
+   "family": "honda cbr650r e clutch",
    "ruleType": "dust_interval",
    "values": [
-    "more often (2023)",
-    "unusually wet or dusty areas (2022)"
+    "more frequently (2026)",
+    "service more frequently (2025)"
    ],
    "members": [
-    "honda-cbr650r-2022-us-om",
-    "honda-cbr650r-2023-us-om"
+    "honda-cbr650r-e-clutch-2025-us-om",
+    "honda-cbr650r-e-clutch-2026-us-om"
    ]
   },
   {
@@ -2580,15 +2480,14 @@
    ]
   },
   {
-   "family": "honda cbr650r e clutch",
-   "ruleType": "dust_interval",
+   "family": "honda cbr650ra rac cb650ra rac",
+   "ruleType": "salt_wash",
    "values": [
-    "more frequently (2026)",
-    "service more frequently (2025)"
+    "Clean aluminium parts regularly (2026)",
+    "coastal, treated, muddy, or dusty roads (2026)"
    ],
    "members": [
-    "honda-cbr650r-e-clutch-2025-us-om",
-    "honda-cbr650r-e-clutch-2026-us-om"
+    "honda-cbr650ra-rac-cb650ra-rac-2026-eu-om"
    ]
   },
   {
@@ -2603,23 +2502,11 @@
    ]
   },
   {
-   "family": "honda cbr650ra rac cb650ra rac",
+   "family": "honda cl500a",
    "ruleType": "salt_wash",
    "values": [
-    "Clean aluminium parts regularly (2026)",
-    "coastal, treated, muddy, or dusty roads (2026)"
-   ],
-   "members": [
-    "honda-cbr650ra-rac-cb650ra-rac-2026-eu-om"
-   ]
-  },
-  {
-   "family": "honda cl500a",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
-    "unusually wet or dusty areas (2025)"
+    "Clean aluminium parts regularly (2025)",
+    "wash thoroughly after riding on coastal, treated, muddy or d (2025)"
    ],
    "members": [
     "honda-cl500a-2025-eu-om"
@@ -2638,10 +2525,11 @@
   },
   {
    "family": "honda cl500a",
-   "ruleType": "salt_wash",
+   "ruleType": "wet_interval",
    "values": [
-    "Clean aluminium parts regularly (2025)",
-    "wash thoroughly after riding on coastal, treated, muddy or d (2025)"
+    "more frequently (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "honda-cl500a-2025-eu-om"
@@ -2649,11 +2537,10 @@
   },
   {
    "family": "honda cmx1100",
-   "ruleType": "wet_interval",
+   "ruleType": "dust_interval",
    "values": [
-    "more frequently when riding in unusually wet or dusty areas (2025)",
-    "riding in rain (2025)",
-    "service more frequently (2025)"
+    "service more frequently (2025)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "honda-cmx1100-2025-eu-om"
@@ -2672,24 +2559,14 @@
   },
   {
    "family": "honda cmx1100",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
-    "service more frequently (2025)",
-    "unusually wet or dusty areas (2025)"
+    "more frequently when riding in unusually wet or dusty areas (2025)",
+    "riding in rain (2025)",
+    "service more frequently (2025)"
    ],
    "members": [
     "honda-cmx1100-2025-eu-om"
-   ]
-  },
-  {
-   "family": "honda cmx500",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminium parts regularly (2025)",
-    "wash your vehicle thoroughly (2025)"
-   ],
-   "members": [
-    "honda-cmx500-2025-eu-om"
    ]
   },
   {
@@ -2704,11 +2581,22 @@
    ]
   },
   {
-   "family": "honda crf1100 africa twin",
-   "ruleType": "dust_interval",
+   "family": "honda cmx500",
+   "ruleType": "salt_wash",
    "values": [
-    "more frequently (2026)",
-    "unusually wet or dusty areas (2026)"
+    "Clean aluminium parts regularly (2025)",
+    "wash your vehicle thoroughly (2025)"
+   ],
+   "members": [
+    "honda-cmx500-2025-eu-om"
+   ]
+  },
+  {
+   "family": "honda crf1100 africa twin",
+   "ruleType": "salt_wash",
+   "values": [
+    "Clean aluminium parts regularly (2026)",
+    "coastal, treated, muddy, or dusty roads (2026)"
    ],
    "members": [
     "honda-crf1100-africa-twin-2026-eu-om"
@@ -2727,13 +2615,32 @@
   },
   {
    "family": "honda crf1100 africa twin",
-   "ruleType": "salt_wash",
+   "ruleType": "dust_interval",
    "values": [
-    "Clean aluminium parts regularly (2026)",
-    "coastal, treated, muddy, or dusty roads (2026)"
+    "more frequently (2026)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "honda-crf1100-africa-twin-2026-eu-om"
+   ]
+  },
+  {
+   "family": "honda crf110f",
+   "ruleType": "wet_interval",
+   "values": [
+    "Service more frequently (2025)",
+    "more frequently (2025)",
+    "more frequently (2026)",
+    "ridden in the rain or often at full throttle (2025)",
+    "ridden in the rain or often at full throttle (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)",
+    "wet or dusty conditions (2025)"
+   ],
+   "members": [
+    "honda-crf110f-2025-eu-om",
+    "honda-crf110f-2025-us-om",
+    "honda-crf110f-2026-us-om"
    ]
   },
   {
@@ -2753,28 +2660,10 @@
   },
   {
    "family": "honda crf110f",
-   "ruleType": "wet_interval",
-   "values": [
-    "Service more frequently (2025)",
-    "Service the air cleaner more frequently if you ride in unusu (2025)",
-    "more frequently (2026)",
-    "ridden in the rain or often at full throttle (2025)",
-    "ridden in the rain or often at full throttle (2026)",
-    "unusually wet or dusty areas (2026)",
-    "wet or dusty conditions (2025)"
-   ],
-   "members": [
-    "honda-crf110f-2025-eu-om",
-    "honda-crf110f-2025-us-om",
-    "honda-crf110f-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda crf110f",
    "ruleType": "cold_start",
    "values": [
+    "freezing temperatures and direct sunlight (2025)",
     "freezing temperatures and direct sunlight (2026)",
-    "more often (2025)",
     "protected from freezing temperatures and direct sunlight (2025)",
     "protected from freezing temperatures and direct sunlight (2026)"
    ],
@@ -2782,17 +2671,6 @@
     "honda-crf110f-2025-eu-om",
     "honda-crf110f-2025-us-om",
     "honda-crf110f-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda crf125f",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2025)",
-    "rain or often at full throttle (2025)"
-   ],
-   "members": [
-    "honda-crf125f-2025-eu-om"
    ]
   },
   {
@@ -2808,29 +2686,26 @@
    ]
   },
   {
-   "family": "honda crf125f big wheel",
+   "family": "honda crf125f",
    "ruleType": "wet_interval",
    "values": [
-    "more frequently (2026)",
-    "rain or often at full throttle (2025)",
-    "ridden in the rain or often at full throttle (2026)",
-    "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)",
-    "wet or dusty conditions (2025)"
+    "more frequently (2025)",
+    "rain or often at full throttle (2025)"
    ],
    "members": [
-    "honda-crf125f-big-wheel-2025-us-om",
-    "honda-crf125f-big-wheel-2026-us-om"
+    "honda-crf125f-2025-eu-om"
    ]
   },
   {
    "family": "honda crf125f big wheel",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
-    "Service more frequently when ridden in wet or dusty conditio (2025)",
+    "more frequently (2025)",
+    "more frequently (2026)",
+    "ridden in the rain or often at full throttle (2025)",
+    "ridden in the rain or often at full throttle (2026)",
     "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)",
-    "wet or dusty conditions (2026)"
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "honda-crf125f-big-wheel-2025-us-om",
@@ -2841,10 +2716,24 @@
    "family": "honda crf125f big wheel",
    "ruleType": "cold_start",
    "values": [
+    "freezing temperatures (2025)",
     "freezing temperatures (2026)",
-    "freezing temperatures and direct sunlight (2025)",
-    "protected from freezing temperatures (2026)",
-    "unheated area, free of dampness, away from sunlight, with a  (2025)"
+    "protected from freezing temperatures (2025)",
+    "protected from freezing temperatures (2026)"
+   ],
+   "members": [
+    "honda-crf125f-big-wheel-2025-us-om",
+    "honda-crf125f-big-wheel-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda crf125f big wheel",
+   "ruleType": "dust_interval",
+   "values": [
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)",
+    "wet or dusty conditions (2025)",
+    "wet or dusty conditions (2026)"
    ],
    "members": [
     "honda-crf125f-big-wheel-2025-us-om",
@@ -2866,8 +2755,8 @@
    "family": "honda crf150r expert",
    "ruleType": "salt_wash",
    "values": [
-    "rinse it as soon as possible after the event, dry it, and ap (2026)",
-    "road salt (2026)"
+    "road salt (2026)",
+    "sea air or salt water (2026)"
    ],
    "members": [
     "honda-crf150r-expert-2026-us-om"
@@ -2877,8 +2766,8 @@
    "family": "honda crf150r us om e761e3",
    "ruleType": "salt_wash",
    "values": [
-    "rinse it as soon as possible after the event, dry it, and ap (2025)",
-    "road salt (2025)"
+    "road salt (2025)",
+    "sea air or salt water (2025)"
    ],
    "members": [
     "honda-crf150r-2025-us-om-e761e3"
@@ -2897,10 +2786,11 @@
   },
   {
    "family": "honda crf250f",
-   "ruleType": "cold_start",
+   "ruleType": "wet_interval",
    "values": [
-    "freezing temperatures (2025)",
-    "protected from freezing temperatures and direct sunlight (2025)"
+    "if your motorcycle is ridden in the rain or often at full th (2025)",
+    "unusually wet or dusty areas (2025)",
+    "wet or dusty conditions (2025)"
    ],
    "members": [
     "honda-crf250f-2025-us-om"
@@ -2908,11 +2798,10 @@
   },
   {
    "family": "honda crf250f",
-   "ruleType": "wet_interval",
+   "ruleType": "cold_start",
    "values": [
-    "if your motorcycle is ridden in the rain or often at full th (2025)",
-    "unusually wet or dusty areas (2025)",
-    "wet or dusty conditions (2025)"
+    "freezing temperatures (2025)",
+    "protected from freezing temperatures and direct sunlight (2025)"
    ],
    "members": [
     "honda-crf250f-2025-us-om"
@@ -2944,10 +2833,10 @@
    "family": "honda crf250r",
    "ruleType": "salt_wash",
    "values": [
+    "Remove stains from the aluminium frame using Scotch Brite Ha (2025)",
+    "Remove stains from the aluminium frame using Scotch Brite Ha (2026)",
     "rinse it as soon as possible after the event, dry it, and ap (2025)",
-    "rinse it as soon as possible after the event, dry it, and ap (2026)",
-    "road salt (2025)",
-    "road salt (2026)"
+    "rinse it as soon as possible after the event, dry it, and ap (2026)"
    ],
    "members": [
     "honda-crf250r-2025-eu-om",
@@ -2958,7 +2847,7 @@
    "family": "honda crf250rwe us om 35dcf0",
    "ruleType": "salt_wash",
    "values": [
-    "Clean the aluminum frame when exposed to road salt. (2026)",
+    "Clean the aluminum frame to remove stains caused by dust, mu (2026)",
     "rinse it as soon as possible after the event, dry it, and ap (2026)"
    ],
    "members": [
@@ -2970,26 +2859,10 @@
    "ruleType": "salt_wash",
    "values": [
     "Clean the aluminum frame to remove stains caused by dust, mu (2025)",
-    "sea air or salt water (2025)"
+    "rinse it as soon as possible after the event, dry it, and ap (2025)"
    ],
    "members": [
     "honda-crf250rwe-2025-us-om-c3e229"
-   ]
-  },
-  {
-   "family": "honda crf300l rally",
-   "ruleType": "wet_interval",
-   "values": [
-    "Service more frequently (2025)",
-    "Service more frequently (2026)",
-    "more frequently (2025)",
-    "ridden in the rain or often at full throttle (2026)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2026)"
-   ],
-   "members": [
-    "honda-crf300l-rally-2025-us-om",
-    "honda-crf300l-rally-2026-us-om"
    ]
   },
   {
@@ -3008,10 +2881,14 @@
   },
   {
    "family": "honda crf300l rally",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
-    "more frequently (2025)",
-    "unusually wet or dusty areas (2026)"
+    "Service more frequently (2025)",
+    "Service more frequently (2026)",
+    "ridden in the rain or often at full throttle (2025)",
+    "ridden in the rain or often at full throttle (2026)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2026)"
    ],
    "members": [
     "honda-crf300l-rally-2025-us-om",
@@ -3022,10 +2899,10 @@
    "family": "honda crf450r",
    "ruleType": "salt_wash",
    "values": [
+    "Remove stains from the aluminium frame using Scotch Brite Ha (2025)",
     "Remove stains from the aluminium frame using Scotch Brite Ha (2026)",
     "rinse it as soon as possible after the event, dry it, and ap (2025)",
-    "rinse it as soon as possible after the event, dry it, and ap (2026)",
-    "road salt (2025)"
+    "rinse it as soon as possible after the event, dry it, and ap (2026)"
    ],
    "members": [
     "honda-crf450r-2025-eu-om",
@@ -3033,24 +2910,12 @@
    ]
   },
   {
-   "family": "honda crf450rl",
-   "ruleType": "dust_interval",
-   "values": [
-    "Service more frequently when riding in unusually wet or dust (2025)",
-    "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "honda-crf450rl-2025-us-om",
-    "honda-crf450rl-2026-us-om"
-   ]
-  },
-  {
    "family": "honda crf450rl us om 9f459a",
    "ruleType": "salt_wash",
    "values": [
+    "Clean the frame using a wet sponge and a mild detergent, the (2026)",
     "after riding on coastal or treated roads (2026)",
-    "rinse it as soon as possible after the event, dry it, and ap (2026)",
-    "road salt (2026)"
+    "rinse it as soon as possible after the event, dry it, and ap (2026)"
    ],
    "members": [
     "honda-crf450rl-2026-us-om-9f459a"
@@ -3061,8 +2926,8 @@
    "ruleType": "salt_wash",
    "values": [
     "Clean the frame using a wet sponge and a mild detergent, the (2025)",
-    "rinse it as soon as possible after the event, dry it, and ap (2025)",
-    "wash thoroughly after riding on coastal or treated roads (2025)"
+    "after riding on coastal or treated roads (2025)",
+    "rinse it as soon as possible after the event, dry it, and ap (2025)"
    ],
    "members": [
     "honda-crf450rl-2025-us-om-d8f239"
@@ -3103,30 +2968,6 @@
    ]
   },
   {
-   "family": "honda crf450x",
-   "ruleType": "wet_interval",
-   "values": [
-    "service more frequently (2025)",
-    "wet or dusty conditions (2026)"
-   ],
-   "members": [
-    "honda-crf450x-2025-us-om",
-    "honda-crf450x-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda crf450x",
-   "ruleType": "dust_interval",
-   "values": [
-    "clean (2025)",
-    "service more frequently (2026)"
-   ],
-   "members": [
-    "honda-crf450x-2025-us-om",
-    "honda-crf450x-2026-us-om"
-   ]
-  },
-  {
    "family": "honda crf450x us om 60cffb",
    "ruleType": "dust_interval",
    "values": [
@@ -3150,6 +2991,17 @@
   },
   {
    "family": "honda crf450x us om 8d5c4e",
+   "ruleType": "salt_wash",
+   "values": [
+    "Clean the frame using a wet sponge and a mild detergent, the (2025)",
+    "Rinse it as soon as possible after the event, dry it, and ap (2025)"
+   ],
+   "members": [
+    "honda-crf450x-2025-us-om-8d5c4e"
+   ]
+  },
+  {
+   "family": "honda crf450x us om 8d5c4e",
    "ruleType": "dust_interval",
    "values": [
     "after every moto for dusty riding condition (2025)",
@@ -3160,14 +3012,20 @@
    ]
   },
   {
-   "family": "honda crf450x us om 8d5c4e",
-   "ruleType": "salt_wash",
+   "family": "honda crf50f",
+   "ruleType": "dust_interval",
    "values": [
-    "Clean the aluminum frame after contact with road salt using  (2025)",
-    "Rinse it as soon as possible after the event, dry it, and ap (2025)"
+    "Service more frequently when ridden in wet or dusty conditio (2025)",
+    "dusty conditions (2025)",
+    "dusty conditions (2026)",
+    "service the air cleaner more frequently (2025)",
+    "service the air cleaner more frequently (2026)",
+    "very dusty conditions (2025)"
    ],
    "members": [
-    "honda-crf450x-2025-us-om-8d5c4e"
+    "honda-crf50f-2025-eu-om",
+    "honda-crf50f-2025-us-om",
+    "honda-crf50f-2026-us-om"
    ]
   },
   {
@@ -3188,8 +3046,8 @@
    "family": "honda crf50f",
    "ruleType": "wet_interval",
    "values": [
+    "more frequently (2025)",
     "more frequently (2026)",
-    "unusually wet or dusty areas (2025)",
     "wet or dusty conditions (2025)"
    ],
    "members": [
@@ -3199,20 +3057,15 @@
    ]
   },
   {
-   "family": "honda crf50f",
+   "family": "honda dax 125",
    "ruleType": "dust_interval",
    "values": [
-    "Service more frequently when ridden in wet or dusty conditio (2025)",
-    "Service the air cleaner more frequently (2025)",
-    "dusty conditions (2026)",
-    "more frequently when ridden in wet or dusty conditions (2025)",
-    "service the air cleaner more frequently (2026)",
-    "very dusty conditions (2025)"
+    "more frequently (2026)",
+    "service more frequently (2025)"
    ],
    "members": [
-    "honda-crf50f-2025-eu-om",
-    "honda-crf50f-2025-us-om",
-    "honda-crf50f-2026-us-om"
+    "honda-dax-125-2025-us-om",
+    "honda-dax-125-2026-us-om"
    ]
   },
   {
@@ -3231,23 +3084,11 @@
   },
   {
    "family": "honda dax 125",
-   "ruleType": "dust_interval",
-   "values": [
-    "more frequently (2026)",
-    "service more frequently (2025)"
-   ],
-   "members": [
-    "honda-dax-125-2025-us-om",
-    "honda-dax-125-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda dax 125",
    "ruleType": "wet_interval",
    "values": [
     "Service more frequently (2025)",
     "Service more frequently (2026)",
-    "more frequently (2025)",
+    "rain (2025)",
     "rain (2026)"
    ],
    "members": [
@@ -3280,17 +3121,6 @@
   },
   {
    "family": "honda gb350s",
-   "ruleType": "wet_interval",
-   "values": [
-    "rain (2025)",
-    "service more frequently (2025)"
-   ],
-   "members": [
-    "honda-gb350s-2025-eu-om"
-   ]
-  },
-  {
-   "family": "honda gb350s",
    "ruleType": "salt_wash",
    "values": [
     "Clean aluminium parts regularly (2025)",
@@ -3301,14 +3131,14 @@
    ]
   },
   {
-   "family": "honda gold wing airbag",
-   "ruleType": "cold_start",
+   "family": "honda gb350s",
+   "ruleType": "wet_interval",
    "values": [
-    "freezing temperatures (2025)",
-    "protected from freezing temperatures and direct sunlight (2025)"
+    "rain (2025)",
+    "service more frequently (2025)"
    ],
    "members": [
-    "honda-gold-wing-airbag-2025-us-om"
+    "honda-gb350s-2025-eu-om"
    ]
   },
   {
@@ -3334,11 +3164,22 @@
    ]
   },
   {
+   "family": "honda gold wing airbag",
+   "ruleType": "cold_start",
+   "values": [
+    "freezing temperatures (2025)",
+    "protected from freezing temperatures and direct sunlight (2025)"
+   ],
+   "members": [
+    "honda-gold-wing-airbag-2025-us-om"
+   ]
+  },
+  {
    "family": "honda gold wing tour",
    "ruleType": "salt_wash",
    "values": [
     "Clean aluminum parts regularly (2025)",
-    "coastal or treated roads (2025)"
+    "after riding on coastal or treated roads (2025)"
    ],
    "members": [
     "honda-gold-wing-tour-2025-us-om"
@@ -3348,22 +3189,11 @@
    "family": "honda gold wing tour",
    "ruleType": "wet_interval",
    "values": [
-    "more frequently (2025)",
-    "unusually wet or dusty areas (2025)"
+    "rain or full throttle (2025)",
+    "service more frequently (2025)"
    ],
    "members": [
     "honda-gold-wing-tour-2025-us-om"
-   ]
-  },
-  {
-   "family": "honda gold wing tour airbag 50th anniversary",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminum parts regularly (2025)",
-    "wash your vehicle thoroughly after riding on coastal, treate (2025)"
-   ],
-   "members": [
-    "honda-gold-wing-tour-airbag-dct-50th-anniversary-2025-us-om"
    ]
   },
   {
@@ -3378,14 +3208,14 @@
    ]
   },
   {
-   "family": "honda gold wing tour airbag automatic",
-   "ruleType": "wet_interval",
+   "family": "honda gold wing tour airbag 50th anniversary",
+   "ruleType": "salt_wash",
    "values": [
-    "Service more frequently when riding in rain or at full throt (2026)",
-    "more frequently when riding in rain, at full throttle, or af (2026)"
+    "Clean aluminum parts regularly (2025)",
+    "wash your vehicle thoroughly after riding on coastal, treate (2025)"
    ],
    "members": [
-    "honda-gold-wing-tour-airbag-automatic-dct-2026-us-om"
+    "honda-gold-wing-tour-airbag-dct-50th-anniversary-2025-us-om"
    ]
   },
   {
@@ -3394,6 +3224,17 @@
    "values": [
     "Clean aluminum parts regularly (2026)",
     "coastal, treated, muddy, or dusty roads (2026)"
+   ],
+   "members": [
+    "honda-gold-wing-tour-airbag-automatic-dct-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda gold wing tour airbag automatic",
+   "ruleType": "wet_interval",
+   "values": [
+    "Service more frequently when riding in rain or at full throt (2026)",
+    "rain (2026)"
    ],
    "members": [
     "honda-gold-wing-tour-airbag-automatic-dct-2026-us-om"
@@ -3426,28 +3267,8 @@
    "ruleType": "dust_interval",
    "values": [
     "Service more frequently (2022)",
-    "more frequently (2025)",
     "unusually wet or dusty areas (2025)",
     "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "honda-grom-2022-us-om",
-    "honda-grom-2025-us-om",
-    "honda-grom-abs-2025-us-om",
-    "honda-grom-abs-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda grom",
-   "ruleType": "wet_interval",
-   "values": [
-    "Service more frequently (2022)",
-    "more frequently when riding in rain, at full throttle, or af (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2022)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
-    "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)",
-    "when riding in rain, at full throttle, or after the vehicle  (2025)"
    ],
    "members": [
     "honda-grom-2022-us-om",
@@ -3463,7 +3284,6 @@
     "Clean aluminum parts regularly (2022)",
     "Clean aluminum parts regularly (2025)",
     "Clean aluminum parts regularly (2026)",
-    "coastal, treated roads, muddy or dusty roads (2025)",
     "coastal, treated, muddy, or dusty roads (2026)",
     "more often (2025)",
     "wash your vehicle thoroughly after riding on coastal or trea (2022)"
@@ -3476,15 +3296,21 @@
    ]
   },
   {
-   "family": "honda honda wn7",
-   "ruleType": "cold_start",
+   "family": "honda grom",
+   "ruleType": "wet_interval",
    "values": [
-    "charging is not possible (2026)",
-    "charging times will be slower (2026)",
-    "freezing (2026)"
+    "Service more frequently (2022)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2022)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
-    "honda-honda-wn7-2026-eu-om"
+    "honda-grom-2022-us-om",
+    "honda-grom-2025-us-om",
+    "honda-grom-abs-2025-us-om",
+    "honda-grom-abs-2026-us-om"
    ]
   },
   {
@@ -3499,17 +3325,15 @@
    ]
   },
   {
-   "family": "honda metropolitan",
-   "ruleType": "wet_interval",
+   "family": "honda honda wn7",
+   "ruleType": "cold_start",
    "values": [
-    "Service more frequently (2025)",
-    "more frequently when riding in rain, at full throttle, or af (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
-    "service more frequently (2026)"
+    "charging is not possible (2026)",
+    "charging times will be slower (2026)",
+    "freezing (2026)"
    ],
    "members": [
-    "honda-metropolitan-2025-us-om",
-    "honda-metropolitan-2026-us-om"
+    "honda-honda-wn7-2026-eu-om"
    ]
   },
   {
@@ -3527,17 +3351,17 @@
    ]
   },
   {
-   "family": "honda monkey",
+   "family": "honda metropolitan",
    "ruleType": "wet_interval",
    "values": [
-    "more frequently (2025)",
-    "more frequently when riding in rain, at full throttle, or af (2026)",
-    "rain (2025)",
-    "unusually wet or dusty areas (2026)"
+    "Service more frequently (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
+    "service more frequently (2026)"
    ],
    "members": [
-    "honda-monkey-2026-us-om",
-    "honda-monkey-abs-2025-us-om"
+    "honda-metropolitan-2025-us-om",
+    "honda-metropolitan-2026-us-om"
    ]
   },
   {
@@ -3555,39 +3379,17 @@
    ]
   },
   {
-   "family": "honda montesa cota 301rr",
-   "ruleType": "dust_interval",
+   "family": "honda monkey",
+   "ruleType": "wet_interval",
    "values": [
-    "after riding in dusty areas (2026)",
-    "dusty areas (2025)"
+    "more frequently (2025)",
+    "rain (2025)",
+    "rain (2026)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
-    "honda-montesa-cota-301rr-2025-us-om",
-    "honda-montesa-cota-301rr-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda montesa cota 4rt 260r",
-   "ruleType": "cold_start",
-   "values": [
-    "Hard starting at a low temperature (2025)",
-    "low temperature (2026)"
-   ],
-   "members": [
-    "honda-montesa-cota-4rt-260r-2025-us-om",
-    "honda-montesa-cota-4rt-260r-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda montesa cota 4rt 260r",
-   "ruleType": "dust_interval",
-   "values": [
-    "Check the air cleaner (2025)",
-    "Check the air cleaner after riding in dusty area (2026)"
-   ],
-   "members": [
-    "honda-montesa-cota-4rt-260r-2025-us-om",
-    "honda-montesa-cota-4rt-260r-2026-us-om"
+    "honda-monkey-2026-us-om",
+    "honda-monkey-abs-2025-us-om"
    ]
   },
   {
@@ -3614,12 +3416,12 @@
   },
   {
    "family": "honda navi",
-   "ruleType": "salt_wash",
+   "ruleType": "wet_interval",
    "values": [
-    "Clean aluminum parts regularly (2025)",
-    "Clean aluminum parts regularly (2026)",
-    "wash your vehicle thoroughly after riding on coastal, treate (2025)",
-    "wash your vehicle thoroughly after riding on coastal, treate (2026)"
+    "more frequently (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "honda-navi-2025-us-om",
@@ -3628,12 +3430,12 @@
   },
   {
    "family": "honda navi",
-   "ruleType": "wet_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "more frequently (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2026)",
-    "unusually wet or dusty areas (2026)"
+    "Clean aluminum parts regularly (2025)",
+    "Clean aluminum parts regularly (2026)",
+    "wash your vehicle thoroughly after riding on coastal, treate (2025)",
+    "wash your vehicle thoroughly after riding on coastal, treate (2026)"
    ],
    "members": [
     "honda-navi-2025-us-om",
@@ -3659,20 +3461,6 @@
   },
   {
    "family": "honda nc750x",
-   "ruleType": "dust_interval",
-   "values": [
-    "Service more frequently (2025)",
-    "Service more frequently (2026)",
-    "more frequently (2025)"
-   ],
-   "members": [
-    "honda-nc750x-2025-eu-om",
-    "honda-nc750x-dct-2025-us-om",
-    "honda-nc750x-dct-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda nc750x",
    "ruleType": "wet_interval",
    "values": [
     "more frequently (2025)",
@@ -3689,11 +3477,24 @@
    ]
   },
   {
-   "family": "honda nsc110",
-   "ruleType": "wet_interval",
+   "family": "honda nc750x",
+   "ruleType": "dust_interval",
    "values": [
-    "Service more frequently when riding in unusually wet or dust (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "Service more frequently (2025)",
+    "Service more frequently (2026)",
+    "more frequently (2025)"
+   ],
+   "members": [
+    "honda-nc750x-2025-eu-om",
+    "honda-nc750x-dct-2025-us-om",
+    "honda-nc750x-dct-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda nsc110",
+   "ruleType": "dust_interval",
+   "values": [
+    "more frequently (2025)",
     "service more frequently (2025)"
    ],
    "members": [
@@ -3713,13 +3514,25 @@
   },
   {
    "family": "honda nsc110",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
-    "more frequently (2025)",
+    "Service more frequently when riding in unusually wet or dust (2025)",
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
     "service more frequently (2025)"
    ],
    "members": [
     "honda-nsc110-2025-eu-om"
+   ]
+  },
+  {
+   "family": "honda nss125ad",
+   "ruleType": "salt_wash",
+   "values": [
+    "road salt (2025)",
+    "wash your vehicle thoroughly (2025)"
+   ],
+   "members": [
+    "honda-nss125ad-2025-eu-om"
    ]
   },
   {
@@ -3729,17 +3542,6 @@
     "Service more frequently when riding in unusually wet or dust (2025)",
     "apply the brakes while riding at low speed to help them dry (2025)",
     "riding in rain, at full throttle, or after the vehicle is wa (2025)"
-   ],
-   "members": [
-    "honda-nss125ad-2025-eu-om"
-   ]
-  },
-  {
-   "family": "honda nss125ad",
-   "ruleType": "salt_wash",
-   "values": [
-    "road salt (2025)",
-    "wash your vehicle thoroughly (2025)"
    ],
    "members": [
     "honda-nss125ad-2025-eu-om"
@@ -3781,18 +3583,6 @@
   },
   {
    "family": "honda nss750",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2025)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
-    "unusually wet or dusty areas (2025)"
-   ],
-   "members": [
-    "honda-nss750-2025-eu-om"
-   ]
-  },
-  {
-   "family": "honda nss750",
    "ruleType": "dust_interval",
    "values": [
     "Service more frequently (2025)",
@@ -3803,21 +3593,15 @@
    ]
   },
   {
-   "family": "honda nt1100",
+   "family": "honda nss750",
    "ruleType": "wet_interval",
    "values": [
-    "Service more frequently when riding in rain, at full throttl (2025)",
     "more frequently (2025)",
-    "more frequently (2026)",
-    "rain (2025)",
-    "ridden in the rain or often at full throttle (2026)",
-    "service more frequently (2025)",
-    "unusually wet or dusty areas (2026)"
+    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
-    "honda-nt1100-2025-eu-om",
-    "honda-nt1100-dct-2025-us-om",
-    "honda-nt1100-dct-2026-us-om"
+    "honda-nss750-2025-eu-om"
    ]
   },
   {
@@ -3842,6 +3626,24 @@
    "ruleType": "dust_interval",
    "values": [
     "Service more frequently (2025)",
+    "service more frequently (2025)",
+    "unusually wet or dusty areas (2026)"
+   ],
+   "members": [
+    "honda-nt1100-2025-eu-om",
+    "honda-nt1100-dct-2025-us-om",
+    "honda-nt1100-dct-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda nt1100",
+   "ruleType": "wet_interval",
+   "values": [
+    "Service more frequently when riding in rain, at full throttl (2025)",
+    "Service more frequently when riding in rain, at full throttl (2026)",
+    "more frequently (2025)",
+    "rain (2025)",
+    "ridden in the rain or often at full throttle (2026)",
     "service more frequently (2025)",
     "unusually wet or dusty areas (2026)"
    ],
@@ -3895,12 +3697,10 @@
   },
   {
    "family": "honda rebel 1100",
-   "ruleType": "salt_wash",
+   "ruleType": "dust_interval",
    "values": [
-    "Clean aluminum parts regularly (2025)",
-    "Clean aluminum parts regularly (2026)",
-    "coastal, treated, muddy or dusty roads (2025)",
-    "coastal, treated, muddy, or dusty roads (2026)"
+    "service more frequently (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "honda-rebel-1100-dct-se-2025-us-om",
@@ -3909,10 +3709,12 @@
   },
   {
    "family": "honda rebel 1100",
-   "ruleType": "dust_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "service more frequently (2025)",
-    "unusually wet or dusty areas (2026)"
+    "Clean aluminum parts regularly (2025)",
+    "Clean aluminum parts regularly (2026)",
+    "coastal, treated, muddy or dusty roads (2025)",
+    "coastal, treated, muddy, or dusty roads (2026)"
    ],
    "members": [
     "honda-rebel-1100-dct-se-2025-us-om",
@@ -3942,22 +3744,6 @@
    ],
    "members": [
     "honda-rebel-300-e-clutch-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda rebel 500",
-   "ruleType": "dust_interval",
-   "values": [
-    "more frequently (2025)",
-    "more frequently (2026)",
-    "service more frequently (2025)",
-    "unusually wet or dusty areas (2021)"
-   ],
-   "members": [
-    "honda-rebel-500-2021-us-om",
-    "honda-rebel-500-2025-us-om",
-    "honda-rebel-500-abs-se-2025-us-om",
-    "honda-rebel-500-se-2026-us-om"
    ]
   },
   {
@@ -3997,6 +3783,21 @@
    ]
   },
   {
+   "family": "honda rebel 500",
+   "ruleType": "dust_interval",
+   "values": [
+    "more frequently (2026)",
+    "service more frequently (2025)",
+    "unusually wet or dusty areas (2021)"
+   ],
+   "members": [
+    "honda-rebel-500-2021-us-om",
+    "honda-rebel-500-2025-us-om",
+    "honda-rebel-500-abs-se-2025-us-om",
+    "honda-rebel-500-se-2026-us-om"
+   ]
+  },
+  {
    "family": "honda ruckus",
    "ruleType": "wet_interval",
    "values": [
@@ -4020,20 +3821,6 @@
   },
   {
    "family": "honda scl500",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2025)",
-    "more frequently (2026)",
-    "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "honda-scl500-2025-us-om",
-    "honda-scl500-2026-us-om"
-   ]
-  },
-  {
-   "family": "honda scl500",
    "ruleType": "salt_wash",
    "values": [
     "coastal, treated, muddy or dusty roads (2025)",
@@ -4048,14 +3835,27 @@
   },
   {
    "family": "honda scl500",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
+    "more frequently (2025)",
     "more frequently (2026)",
-    "service more frequently (2025)"
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "honda-scl500-2025-us-om",
     "honda-scl500-2026-us-om"
+   ]
+  },
+  {
+   "family": "honda sh125 sh150",
+   "ruleType": "salt_wash",
+   "values": [
+    "Clean aluminium parts regularly (2026)",
+    "coastal, treated, muddy, or dusty roads (2026)"
+   ],
+   "members": [
+    "honda-sh125-sh150-2026-eu-om"
    ]
   },
   {
@@ -4065,17 +3865,6 @@
     "Apply the brakes while riding at low speed to help them dry. (2026)",
     "riding in rain, at full throttle, or after the vehicle is wa (2026)",
     "service more frequently (2026)"
-   ],
-   "members": [
-    "honda-sh125-sh150-2026-eu-om"
-   ]
-  },
-  {
-   "family": "honda sh125 sh150",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminium parts regularly (2026)",
-    "coastal, treated, muddy, or dusty roads (2026)"
    ],
    "members": [
     "honda-sh125-sh150-2026-eu-om"
@@ -4106,10 +3895,10 @@
   },
   {
    "family": "honda shadow",
-   "ruleType": "salt_wash",
+   "ruleType": "dust_interval",
    "values": [
-    "Clean aluminum parts regularly (2025)",
-    "Wash the motorcycle thoroughly after riding on coastal or tr (2025)"
+    "Service more frequently (2025)",
+    "Service more frequently when riding in rain, at full throttl (2025)"
    ],
    "members": [
     "honda-shadow-rs-2025-us-om"
@@ -4128,24 +3917,13 @@
   },
   {
    "family": "honda shadow",
-   "ruleType": "dust_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "Service more frequently (2025)",
-    "Service more frequently when riding in rain, at full throttl (2025)"
+    "Clean aluminum parts regularly (2025)",
+    "Wash the motorcycle thoroughly after riding on coastal or tr (2025)"
    ],
    "members": [
     "honda-shadow-rs-2025-us-om"
-   ]
-  },
-  {
-   "family": "honda st125a",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean aluminium parts regularly (2025)",
-    "coastal, treated, muddy or dusty roads (2025)"
-   ],
-   "members": [
-    "honda-st125a-2025-eu-om"
    ]
   },
   {
@@ -4160,17 +3938,14 @@
    ]
   },
   {
-   "family": "honda trail125",
-   "ruleType": "wet_interval",
+   "family": "honda st125a",
+   "ruleType": "salt_wash",
    "values": [
-    "more frequently (2026)",
-    "rain (2025)",
-    "rain (2026)",
-    "unusually wet or dusty areas (2025)"
+    "Clean aluminium parts regularly (2025)",
+    "coastal, treated, muddy or dusty roads (2025)"
    ],
    "members": [
-    "honda-trail125-2025-us-om",
-    "honda-trail125-2026-us-om"
+    "honda-st125a-2025-eu-om"
    ]
   },
   {
@@ -4189,10 +3964,12 @@
   },
   {
    "family": "honda trail125",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
-    "Service more frequently (2026)",
-    "more frequently (2025)"
+    "rain (2025)",
+    "rain (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "honda-trail125-2025-us-om",
@@ -4268,12 +4045,10 @@
   },
   {
    "family": "honda xl750",
-   "ruleType": "wet_interval",
+   "ruleType": "dust_interval",
    "values": [
-    "Service more frequently (2025)",
-    "deposit level can be seen in the transparent section of the  (2026)",
-    "more frequently (2026)",
-    "more frequently when riding in rain, at full throttle, or af (2025)"
+    "Service more frequently (2026)",
+    "service more frequently (2025)"
    ],
    "members": [
     "honda-xl750-2025-eu-om",
@@ -4282,10 +4057,12 @@
   },
   {
    "family": "honda xl750",
-   "ruleType": "dust_interval",
+   "ruleType": "wet_interval",
    "values": [
-    "Service more frequently (2026)",
-    "service more frequently (2025)"
+    "Service more frequently (2025)",
+    "deposit level can be seen in the transparent section of the  (2025)",
+    "deposit level can be seen in the transparent section of the  (2026)",
+    "more frequently (2026)"
    ],
    "members": [
     "honda-xl750-2025-eu-om",
@@ -4337,7 +4114,7 @@
    "ruleType": "wet_interval",
    "values": [
     "Service more frequently when riding in unusually wet or dust (2026)",
-    "more frequently (2025)",
+    "rain (2025)",
     "rain (2026)",
     "rain or often at full throttle (2026)",
     "ridden in the rain or often at full throttle (2025)",
@@ -4373,6 +4150,20 @@
   },
   {
    "family": "honda z125ma",
+   "ruleType": "wet_interval",
+   "values": [
+    "more frequently (2025)",
+    "more frequently (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
+   ],
+   "members": [
+    "honda-z125ma-2025-eu-om",
+    "honda-z125ma-2026-eu-om"
+   ]
+  },
+  {
+   "family": "honda z125ma",
    "ruleType": "salt_wash",
    "values": [
     "Clean aluminium parts regularly (2025)",
@@ -4386,32 +4177,6 @@
    ]
   },
   {
-   "family": "honda z125ma",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2025)",
-    "more frequently (2026)",
-    "riding in rain, at full throttle, or after the vehicle is wa (2025)",
-    "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "honda-z125ma-2025-eu-om",
-    "honda-z125ma-2026-eu-om"
-   ]
-  },
-  {
-   "family": "husqvarna 250",
-   "ruleType": "salt_wash",
-   "values": [
-    "Brake carefully several times to remove salt from the brake  (2026)",
-    "cold water (2024)"
-   ],
-   "members": [
-    "husqvarna-fe-250-2024-eu-om",
-    "husqvarna-fe-250-2026-eu-om"
-   ]
-  },
-  {
    "family": "husqvarna 250",
    "ruleType": "cold_start",
    "values": [
@@ -4422,6 +4187,18 @@
     "do not try again, and check the vehicle for other faults ins (2026)",
     "longer (2024)",
     "wait for 30 seconds between attempts (2026)"
+   ],
+   "members": [
+    "husqvarna-fe-250-2024-eu-om",
+    "husqvarna-fe-250-2026-eu-om"
+   ]
+  },
+  {
+   "family": "husqvarna 250",
+   "ruleType": "salt_wash",
+   "values": [
+    "Brake carefully several times to remove salt from the brake  (2026)",
+    "cold water (2024)"
    ],
    "members": [
     "husqvarna-fe-250-2024-eu-om",
@@ -4602,9 +4379,9 @@
    "family": "husqvarna fc 250 rockstar",
    "ruleType": "cold_start",
    "values": [
+    "30 seconds (2024)",
     "Push the cold start button in all the way. (2024)",
-    "The charging time may be longer at low temperatures. (2024)",
-    "wait for 30 seconds (2024)"
+    "The charging time may be longer at low temperatures. (2024)"
    ],
    "members": [
     "husqvarna-fc-250-rockstar-edition-2024-us-om"
@@ -4677,8 +4454,8 @@
    "family": "husqvarna fs 450",
    "ruleType": "cold_start",
    "values": [
+    "20 °C (2025)",
     "20 °C (2026)",
-    "Press the cold start button in all the way to the stop. (2025)",
     "Press the start button for 5 seconds, and wait 30 seconds be (2025)",
     "Press the start button for 5 seconds, and wait 30 seconds be (2026)"
    ],
@@ -4700,10 +4477,12 @@
   },
   {
    "family": "husqvarna norden 901 expedition",
-   "ruleType": "heat_limit",
+   "ruleType": "salt_wash",
    "values": [
-    "55 °C (2025)",
-    "The display can heat up considerably; do not touch the combi (2026)"
+    "Brake carefully several times to remove salt from the brake  (2026)",
+    "cold water (2025)",
+    "cold water (2026)",
+    "thoroughly clean the vehicle with cold water and dry it well (2025)"
    ],
    "members": [
     "husqvarna-norden-901-expedition-2025-eu-om",
@@ -4713,12 +4492,10 @@
   },
   {
    "family": "husqvarna norden 901 expedition",
-   "ruleType": "salt_wash",
+   "ruleType": "heat_limit",
    "values": [
-    "Brake carefully several times to remove salt from the brake  (2026)",
-    "cold water (2025)",
-    "cold water (2026)",
-    "thoroughly clean the vehicle with cold water and dry it well (2025)"
+    "55 °C (2025)",
+    "The display can heat up considerably; do not touch the combi (2026)"
    ],
    "members": [
     "husqvarna-norden-901-expedition-2025-eu-om",
@@ -4838,14 +4615,10 @@
   },
   {
    "family": "husqvarna te 125",
-   "ruleType": "cold_start",
+   "ruleType": "salt_wash",
    "values": [
-    "10 °C … 20 °C (50.0 °F … 68.0 °F) (2026)",
-    "Press the cold start button in all the way to the stop. (2025)",
-    "Press the cold start button in all the way to the stop. (2026)",
-    "Press the start button for 5 seconds, and wait 30 seconds be (2025)",
-    "Press the start button for 5 seconds, and wait 30 seconds be (2026)",
-    "when the motorcycle is not being used; every 6 months (2025)"
+    "cold water (2025)",
+    "wash the brake calipers and brake pads with cold water and d (2026)"
    ],
    "members": [
     "husqvarna-te-125-2025-eu-om",
@@ -4854,10 +4627,14 @@
   },
   {
    "family": "husqvarna te 125",
-   "ruleType": "salt_wash",
+   "ruleType": "cold_start",
    "values": [
-    "cold water (2025)",
-    "wash the brake calipers and brake pads with cold water and d (2026)"
+    "10 °C … 20 °C (50.0 °F … 68.0 °F) (2026)",
+    "Press the cold start button in all the way to the stop. (2025)",
+    "Press the cold start button in all the way to the stop. (2026)",
+    "Press the start button for 5 seconds, and wait 30 seconds be (2025)",
+    "Press the start button for 5 seconds, and wait 30 seconds be (2026)",
+    "when the motorcycle is not being used; every 6 months (2025)"
    ],
    "members": [
     "husqvarna-te-125-2025-eu-om",
@@ -4968,8 +4745,8 @@
    "family": "ktm 125 duke",
    "ruleType": "salt_wash",
    "values": [
-    "Brake carefully several times to remove salt from the brake  (2026)",
     "brake carefully several times to remove salt from the brake  (2025)",
+    "brake carefully several times to remove salt from the brake  (2026)",
     "cold water (2024)",
     "cold water (2025)",
     "cold water (2026)"
@@ -4995,60 +4772,22 @@
    ]
   },
   {
-   "family": "ktm 125 enduro",
-   "ruleType": "salt_wash",
-   "values": [
-    "clean with cold water and dry (2026)",
-    "thoroughly clean the vehicle with cold water and dry it well (2025)"
-   ],
-   "members": [
-    "ktm-125-enduro-r-2025-eu-om",
-    "ktm-125-enduro-r-2026-eu-om"
-   ]
-  },
-  {
-   "family": "ktm 125 smc",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean the brake calipers and brake linings with cold water a (2026)",
-    "after every trip on salted roads (2025)"
-   ],
-   "members": [
-    "ktm-125-smc-r-2025-eu-om",
-    "ktm-125-smc-r-2026-eu-om"
-   ]
-  },
-  {
    "family": "ktm 125 sx",
    "ruleType": "cold_start",
    "values": [
     "3 months (2024)",
+    "3 months (2025)",
     "Press the cold start button in all the way to the stop. (2026)",
     "Press the start button for 5 seconds, and wait 30 seconds be (2024)",
     "Press the start button for 5 seconds, and wait 30 seconds be (2025)",
     "Push the cold start button in all the way. (2024)",
-    "below that of lead batteries (2026)",
-    "several attempts at starting may be necessary to warm-up the (2025)",
-    "when the motorcycle is not being used 3 months (2025)"
+    "Push the cold start button in all the way. (2025)",
+    "below that of lead batteries (2026)"
    ],
    "members": [
     "ktm-125-sx-2024-eu-om",
     "ktm-125-sx-2025-eu-om",
     "ktm-125-sx-2026-us-om"
-   ]
-  },
-  {
-   "family": "ktm 1290",
-   "ruleType": "heat_limit",
-   "values": [
-    "55 °C (2024)",
-    "display gets hot (2024)"
-   ],
-   "members": [
-    "ktm-1290-super-adventure-r-2024-eu-om",
-    "ktm-1290-super-adventure-r-2024-us-om",
-    "ktm-1290-super-adventure-s-2024-eu-om",
-    "ktm-1290-super-adventure-s-2024-us-om"
    ]
   },
   {
@@ -5067,10 +4806,10 @@
   },
   {
    "family": "ktm 1290",
-   "ruleType": "wet_interval",
+   "ruleType": "heat_limit",
    "values": [
-    "tire tread depth (2024)",
-    "wet surfaces (2024)"
+    "55 °C (2024)",
+    "display gets hot (2024)"
    ],
    "members": [
     "ktm-1290-super-adventure-r-2024-eu-om",
@@ -5093,12 +4832,10 @@
   },
   {
    "family": "ktm 1390",
-   "ruleType": "dust_interval",
+   "ruleType": "oil_grade_band",
    "values": [
-    "Check and replace the air filter more frequently, possibly e (2026)",
-    "Check the air filter regularly and replace if necessary. (2026)",
-    "dusty operating conditions (2026)",
-    "possibly even daily (2026)"
+    "SAE10W/50 (2026)",
+    "SAE5W/40 (2026)"
    ],
    "members": [
     "ktm-1390-super-adventure-r-2026-eu-om",
@@ -5109,10 +4846,10 @@
   },
   {
    "family": "ktm 1390",
-   "ruleType": "heat_limit",
+   "ruleType": "dust_interval",
    "values": [
-    "55 °C (2026)",
-    "Do not touch the combination instrument with bare hands (2026)"
+    "Check and replace the air filter more frequently, possibly e (2026)",
+    "dusty operating conditions (2026)"
    ],
    "members": [
     "ktm-1390-super-adventure-r-2026-eu-om",
@@ -5137,16 +4874,40 @@
   },
   {
    "family": "ktm 1390",
-   "ruleType": "oil_grade_band",
+   "ruleType": "heat_limit",
    "values": [
-    "SAE10W/50 (2026)",
-    "SAE5W/40 (2026)"
+    "55 °C (2026)",
+    "Do not touch the combination instrument with bare hands (2026)"
    ],
    "members": [
     "ktm-1390-super-adventure-r-2026-eu-om",
     "ktm-1390-super-adventure-r-2026-us-om",
     "ktm-1390-super-adventure-s-2026-eu-om",
     "ktm-1390-super-adventure-s-evo-2026-eu-om"
+   ]
+  },
+  {
+   "family": "ktm 1390 duke",
+   "ruleType": "oil_grade_band",
+   "values": [
+    "SAE10W/50 (2024)",
+    "SAE10W/50 (2025)",
+    "SAE10W/50 (2026)",
+    "SAE5W/40 (2024)",
+    "SAE5W/40 (2025)",
+    "SAE5W/40 (2026)"
+   ],
+   "members": [
+    "ktm-1390-super-duke-r-2024-eu-om",
+    "ktm-1390-super-duke-r-2025-eu-om",
+    "ktm-1390-super-duke-r-2026-eu-om",
+    "ktm-1390-super-duke-r-evo-2024-eu-om",
+    "ktm-1390-super-duke-r-evo-2025-eu-om",
+    "ktm-1390-super-duke-r-evo-2025-us-om",
+    "ktm-1390-super-duke-r-evo-2026-eu-om",
+    "ktm-1390-super-duke-r-evo-2026-us-om",
+    "ktm-1390-super-duke-rr-2026-eu-om",
+    "ktm-1390-super-duke-rr-track-2026-eu-om"
    ]
   },
   {
@@ -5180,31 +4941,8 @@
     "Do not touch the combination instrument with bare hands (2025)",
     "Do not touch the combination instrument with bare hands (2026)",
     "display gets hot (2024)",
+    "the display in particular can heat up considerably (2025)",
     "the display in particular can heat up considerably (2026)"
-   ],
-   "members": [
-    "ktm-1390-super-duke-r-2024-eu-om",
-    "ktm-1390-super-duke-r-2025-eu-om",
-    "ktm-1390-super-duke-r-2026-eu-om",
-    "ktm-1390-super-duke-r-evo-2024-eu-om",
-    "ktm-1390-super-duke-r-evo-2025-eu-om",
-    "ktm-1390-super-duke-r-evo-2025-us-om",
-    "ktm-1390-super-duke-r-evo-2026-eu-om",
-    "ktm-1390-super-duke-r-evo-2026-us-om",
-    "ktm-1390-super-duke-rr-2026-eu-om",
-    "ktm-1390-super-duke-rr-track-2026-eu-om"
-   ]
-  },
-  {
-   "family": "ktm 1390 duke",
-   "ruleType": "oil_grade_band",
-   "values": [
-    "SAE10W/50 (2024)",
-    "SAE10W/50 (2025)",
-    "SAE10W/50 (2026)",
-    "SAE5W/40 (2024)",
-    "SAE5W/40 (2025)",
-    "SAE5W/40 (2026)"
    ],
    "members": [
     "ktm-1390-super-duke-r-2024-eu-om",
@@ -5231,25 +4969,12 @@
    ]
   },
   {
-   "family": "ktm 200 duke",
-   "ruleType": "salt_wash",
-   "values": [
-    "cold water (2025)",
-    "used on salted roads (2026)"
-   ],
-   "members": [
-    "ktm-200-duke-2025-ar-om",
-    "ktm-200-duke-2026-ph-om"
-   ]
-  },
-  {
    "family": "ktm 250 duke",
-   "ruleType": "heat_limit",
+   "ruleType": "dust_interval",
    "values": [
-    "55 °C (2025)",
-    "Do not touch the combination instrument with bare hands (2026)",
-    "Do not touch the combination instrument with bare hands in t (2026)",
-    "display gets hot (2025)"
+    "Clean the dust boots of the fork legs. (2025)",
+    "more often (2025)",
+    "more often (2026)"
    ],
    "members": [
     "ktm-250-duke-2025-eu-om",
@@ -5275,11 +5000,12 @@
   },
   {
    "family": "ktm 250 duke",
-   "ruleType": "dust_interval",
+   "ruleType": "heat_limit",
    "values": [
-    "Clean the dust boots of the fork legs. (2025)",
-    "more often (2025)",
-    "more often (2026)"
+    "55 °C (2025)",
+    "Do not touch the combination instrument with bare hands (2026)",
+    "Do not touch the combination instrument with bare hands in t (2026)",
+    "display gets hot (2025)"
    ],
    "members": [
     "ktm-250-duke-2025-eu-om",
@@ -5441,11 +5167,7 @@
     "Check the air filter regularly and replace if necessary. (2025)",
     "Check the air filter regularly and replace if necessary. (2026)",
     "check and replace the air filter more frequently, possibly e (2025)",
-    "check and replace the air filter more frequently, possibly e (2026)",
-    "check regularly and replace if necessary (2025)",
-    "dusty operating conditions (2026)",
-    "regularly and replace if necessary (2025)",
-    "replace if necessary (2026)"
+    "check and replace the air filter more frequently, possibly e (2026)"
    ],
    "members": [
     "ktm-390-adventure-2024-eu-om",
@@ -5467,8 +5189,7 @@
     "55 °C (2026)",
     "Do not touch the combination instrument with bare hands (2025)",
     "Do not touch the combination instrument with bare hands (2026)",
-    "Do not touch the combination instrument with bare hands in t (2026)",
-    "Do not touch the combination instrument with bare hands. (2025)",
+    "display can heat up considerably (2025)",
     "display can heat up considerably (2026)"
    ],
    "members": [
@@ -5519,21 +5240,6 @@
   },
   {
    "family": "ktm 390 enduro",
-   "ruleType": "salt_wash",
-   "values": [
-    "cold water (2025)",
-    "cold water (2026)",
-    "thoroughly clean the vehicle with cold water and dry it well (2026)"
-   ],
-   "members": [
-    "ktm-390-enduro-r-2025-eu-om",
-    "ktm-390-enduro-r-2025-us-om",
-    "ktm-390-enduro-r-2026-eu-om",
-    "ktm-390-enduro-r-2026-us-om"
-   ]
-  },
-  {
-   "family": "ktm 390 enduro",
    "ruleType": "dust_interval",
    "values": [
     "Check the air filter regularly and replace if necessary. (2025)",
@@ -5549,18 +5255,19 @@
    ]
   },
   {
-   "family": "ktm 390 smc",
+   "family": "ktm 390 enduro",
    "ruleType": "salt_wash",
    "values": [
-    "Clean the brake calipers, brake linings, and vehicle with co (2025)",
     "cold water (2025)",
-    "salted roads (2026)"
+    "cold water (2026)",
+    "thoroughly clean the vehicle with cold water and dry it well (2025)",
+    "thoroughly clean the vehicle with cold water and dry it well (2026)"
    ],
    "members": [
-    "ktm-390-smc-r-2025-eu-om",
-    "ktm-390-smc-r-2025-us-om",
-    "ktm-390-smc-r-2026-eu-om",
-    "ktm-390-smc-r-2026-us-om"
+    "ktm-390-enduro-r-2025-eu-om",
+    "ktm-390-enduro-r-2025-us-om",
+    "ktm-390-enduro-r-2026-eu-om",
+    "ktm-390-enduro-r-2026-us-om"
    ]
   },
   {
@@ -5682,15 +5389,13 @@
   },
   {
    "family": "ktm 790",
-   "ruleType": "salt_wash",
+   "ruleType": "heat_limit",
    "values": [
-    "Brake carefully several times to remove salt from the brake  (2026)",
-    "clean the vehicle with cold water and dry it well (2025)",
-    "clean with cold water (2025)",
-    "cold water (2025)",
-    "cold water (2026)",
-    "road salt (2026)",
-    "salted roads (2025)"
+    "Do not touch the combination instrument with bare hands (2026)",
+    "Do not touch the combination instrument with bare hands in t (2025)",
+    "Do not touch the combination instrument with bare hands. (2026)",
+    "display (2025)",
+    "display gets hot (2025)"
    ],
    "members": [
     "ktm-790-adventure-2025-eu-om",
@@ -5703,13 +5408,15 @@
   },
   {
    "family": "ktm 790",
-   "ruleType": "heat_limit",
+   "ruleType": "salt_wash",
    "values": [
-    "Do not touch the combination instrument with bare hands (2026)",
-    "Do not touch the combination instrument with bare hands in t (2025)",
-    "Do not touch the combination instrument with bare hands. (2026)",
-    "display (2025)",
-    "display gets hot (2025)"
+    "Brake carefully several times to remove salt from the brake  (2026)",
+    "clean the vehicle with cold water and dry it well (2025)",
+    "clean with cold water (2025)",
+    "cold water (2025)",
+    "cold water (2026)",
+    "road salt (2026)",
+    "salted roads (2025)"
    ],
    "members": [
     "ktm-790-adventure-2025-eu-om",
@@ -5802,10 +5509,10 @@
   },
   {
    "family": "ktm 890 rally",
-   "ruleType": "salt_wash",
+   "ruleType": "dust_interval",
    "values": [
-    "Brake carefully several times to remove salt from the brake  (2026)",
-    "cold water (2026)"
+    "Check the air filter regularly and replace if necessary. (2026)",
+    "possibly even daily (2026)"
    ],
    "members": [
     "ktm-890-adventure-r-rally-2026-eu-om"
@@ -5813,10 +5520,10 @@
   },
   {
    "family": "ktm 890 rally",
-   "ruleType": "dust_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "Check the air filter regularly and replace if necessary. (2026)",
-    "possibly even daily (2026)"
+    "Brake carefully several times to remove salt from the brake  (2026)",
+    "cold water (2026)"
    ],
    "members": [
     "ktm-890-adventure-r-rally-2026-eu-om"
@@ -5835,10 +5542,11 @@
   },
   {
    "family": "ktm 990 duke",
-   "ruleType": "salt_wash",
+   "ruleType": "heat_limit",
    "values": [
-    "Brake carefully several times to remove salt from the brake  (2026)",
-    "cold water (2026)"
+    "55 °C (2026)",
+    "ambient temperature (2026)",
+    "display can heat up considerably (2026)"
    ],
    "members": [
     "ktm-990-duke-2026-eu-om",
@@ -5848,11 +5556,10 @@
   },
   {
    "family": "ktm 990 duke",
-   "ruleType": "heat_limit",
+   "ruleType": "salt_wash",
    "values": [
-    "55 °C (2026)",
-    "ambient temperature (2026)",
-    "display can heat up considerably (2026)"
+    "Brake carefully several times to remove salt from the brake  (2026)",
+    "cold water (2026)"
    ],
    "members": [
     "ktm-990-duke-2026-eu-om",
@@ -5924,11 +5631,15 @@
   },
   {
    "family": "yamaha mt07",
-   "ruleType": "salt_wash",
+   "ruleType": "wet_interval",
    "values": [
-    "Do not use hard water or salt water since it is harmful to t (2025)",
-    "clean the vehicle thoroughly to remove road salt and avoid c (2024)",
-    "salt water (2024)"
+    "after riding in the rain or near the sea (2024)",
+    "after washing the motorcycle, riding in the rain or riding i (2024)",
+    "after washing the motorcycle, riding in the rain or riding i (2025)",
+    "more frequently (2024)",
+    "rain or near the sea (2025)",
+    "unusually wet or dusty areas (2024)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "yamaha-mt07-2024-eu-om",
@@ -5937,15 +5648,12 @@
   },
   {
    "family": "yamaha mt07",
-   "ruleType": "wet_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "after riding in the rain or near the sea (2024)",
-    "after washing the motorcycle, riding in the rain or riding i (2024)",
-    "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "more frequently (2024)",
-    "unusually wet or dusty areas (2024)",
-    "unusually wet or dusty areas (2025)",
-    "wash the vehicle (2025)"
+    "Clean the vehicle thoroughly after driving on salted roads t (2025)",
+    "Do not use hard water or salt water since it is harmful to t (2024)",
+    "Do not use hard water or salt water since it is harmful to t (2025)",
+    "clean the vehicle thoroughly to remove road salt and avoid c (2024)"
    ],
    "members": [
     "yamaha-mt07-2024-eu-om",
@@ -5969,7 +5677,7 @@
    "ruleType": "salt_wash",
    "values": [
     "Clean the vehicle thoroughly after driving on salted roads t (2025)",
-    "salt water (2025)"
+    "Do not use hard water or salt water since it is harmful to t (2025)"
    ],
    "members": [
     "yamaha-mt07-y-amt-2025-eu-om"
@@ -5977,11 +5685,14 @@
   },
   {
    "family": "yamaha mt09",
-   "ruleType": "salt_wash",
+   "ruleType": "wet_interval",
    "values": [
-    "Clean the vehicle thoroughly to remove road salt and avoid c (2024)",
-    "Do not use hard water or salt water (2025)",
-    "salt water (2024)"
+    "after riding in the rain or near the sea (2024)",
+    "after riding in the rain or near the sea (2025)",
+    "after washing the motorcycle, riding in the rain or riding i (2024)",
+    "after washing the motorcycle, riding in the rain or riding i (2025)",
+    "unusually wet or dusty areas (2024)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "yamaha-mt09-2024-eu-om",
@@ -5990,98 +5701,57 @@
    ]
   },
   {
-   "family": "yamaha mt09",
+   "family": "yamaha mt09 y amt",
+   "ruleType": "wet_interval",
+   "values": [
+    "after riding in the rain or near the sea (2024)",
+    "after riding in the rain or near the sea (2025)",
+    "after washing the motorcycle, riding in the rain or riding i (2024)",
+    "after washing the motorcycle, riding in the rain or riding i (2025)",
+    "unusually wet or dusty areas (2024)",
+    "unusually wet or dusty areas (2025)"
+   ],
+   "members": [
+    "yamaha-mt09-y-amt-2024-eu-om",
+    "yamaha-mt09-y-amt-2025-eu-om"
+   ]
+  },
+  {
+   "family": "yamaha mt09 y amt",
+   "ruleType": "salt_wash",
+   "values": [
+    "Do not use hard water or salt water (2025)",
+    "salt water (2024)"
+   ],
+   "members": [
+    "yamaha-mt09-y-amt-2024-eu-om",
+    "yamaha-mt09-y-amt-2025-eu-om"
+   ]
+  },
+  {
+   "family": "yamaha mt09 y amt eu om ae5028",
    "ruleType": "wet_interval",
    "values": [
     "after riding in the rain or near the sea (2024)",
     "after washing the motorcycle, riding in the rain or riding i (2024)",
-    "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "unusually wet or dusty areas (2024)",
-    "unusually wet or dusty areas (2025)",
-    "wash the vehicle (2024)",
-    "wash the vehicle (2025)"
-   ],
-   "members": [
-    "yamaha-mt09-2024-eu-om",
-    "yamaha-mt09-2025-eu-om",
-    "yamaha-mt09-sp-2024-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha mt09",
-   "ruleType": "dust_interval",
-   "values": [
-    "Replace more frequently when riding in unusually wet or dust (2024)",
-    "replace more frequently (2025)"
-   ],
-   "members": [
-    "yamaha-mt09-2024-eu-om",
-    "yamaha-mt09-2025-eu-om",
-    "yamaha-mt09-sp-2024-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha mt09 y amt",
-   "ruleType": "dust_interval",
-   "values": [
-    "replace more frequently (2025)",
     "unusually wet or dusty areas (2024)"
    ],
    "members": [
-    "yamaha-mt09-y-amt-2024-eu-om",
-    "yamaha-mt09-y-amt-2025-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha mt09 y amt",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean the vehicle thoroughly to remove road salt and avoid c (2024)",
-    "Do not use hard water or salt water (2025)",
-    "salt water (2024)"
-   ],
-   "members": [
-    "yamaha-mt09-y-amt-2024-eu-om",
-    "yamaha-mt09-y-amt-2025-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha mt09 y amt",
-   "ruleType": "wet_interval",
-   "values": [
-    "after washing the motorcycle, riding in the rain or riding i (2024)",
-    "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "unusually wet or dusty areas (2024)",
-    "unusually wet or dusty areas (2025)",
-    "wash the vehicle (2024)",
-    "wash the vehicle (2025)"
-   ],
-   "members": [
-    "yamaha-mt09-y-amt-2024-eu-om",
-    "yamaha-mt09-y-amt-2025-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha mt09 y amt eu om ae5028",
-   "ruleType": "salt_wash",
-   "values": [
-    "Clean the vehicle thoroughly to remove road salt and avoid c (2024)",
-    "Do not use hard water or salt water (2024)"
-   ],
-   "members": [
     "yamaha-mt09-y-amt-2024-eu-om-ae5028"
    ]
   },
   {
-   "family": "yamaha mt09 y amt eu om ae5028",
+   "family": "yamaha mt10",
    "ruleType": "wet_interval",
    "values": [
+    "after riding in the rain or near the sea (2024)",
     "after washing the motorcycle, riding in the rain or riding i (2024)",
-    "unusually wet or dusty areas (2024)",
-    "wash the vehicle (2024)"
+    "rain or near the sea (2024)",
+    "unusually wet or dusty areas (2024)"
    ],
    "members": [
-    "yamaha-mt09-y-amt-2024-eu-om-ae5028"
+    "yamaha-mt10-2024-eu-om",
+    "yamaha-mt10-sp-2024-eu-om"
    ]
   },
   {
@@ -6098,34 +5768,6 @@
    ]
   },
   {
-   "family": "yamaha mt10",
-   "ruleType": "wet_interval",
-   "values": [
-    "after riding in the rain or near the sea (2024)",
-    "after washing the motorcycle, riding in the rain or riding i (2024)",
-    "unusually wet or dusty areas (2024)",
-    "wash the vehicle (2024)"
-   ],
-   "members": [
-    "yamaha-mt10-2024-eu-om",
-    "yamaha-mt10-sp-2024-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha mt125",
-   "ruleType": "heat_limit",
-   "values": [
-    "Hi Temp (2025)",
-    "Hi Temp (2026)",
-    "High Temp (2024)"
-   ],
-   "members": [
-    "yamaha-mt125-2024-eu-om",
-    "yamaha-mt125-2025-eu-om",
-    "yamaha-mt125-2026-eu-om"
-   ]
-  },
-  {
    "family": "yamaha mt125",
    "ruleType": "wet_interval",
    "values": [
@@ -6135,9 +5777,23 @@
     "after washing the motorcycle, riding in the rain or riding i (2024)",
     "after washing the motorcycle, riding in the rain or riding i (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2026)",
-    "more frequently (2025)",
     "unusually wet or dusty areas (2024)",
+    "unusually wet or dusty areas (2025)",
     "unusually wet or dusty areas (2026)"
+   ],
+   "members": [
+    "yamaha-mt125-2024-eu-om",
+    "yamaha-mt125-2025-eu-om",
+    "yamaha-mt125-2026-eu-om"
+   ]
+  },
+  {
+   "family": "yamaha mt125",
+   "ruleType": "heat_limit",
+   "values": [
+    "Hi Temp (2025)",
+    "Hi Temp (2026)",
+    "High Temp (2024)"
    ],
    "members": [
     "yamaha-mt125-2024-eu-om",
@@ -6170,20 +5826,6 @@
    ]
   },
   {
-   "family": "yamaha pw50",
-   "ruleType": "dust_interval",
-   "values": [
-    "unusually dusty areas (2025)",
-    "unusually wet or dusty areas (2024)",
-    "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "yamaha-pw50-2024-eu-om",
-    "yamaha-pw50-2025-eu-om",
-    "yamaha-pw50-2026-eu-om"
-   ]
-  },
-  {
    "family": "yamaha r7",
    "ruleType": "dust_interval",
    "values": [
@@ -6203,10 +5845,10 @@
     "after riding in the rain or near the sea (2024)",
     "after washing the motorcycle, riding in the rain or riding i (2024)",
     "after washing the motorcycle, riding in the rain or riding i (2026)",
+    "rain or near the sea (2026)",
     "replace the air filter element more frequently (2026)",
     "unusually wet or dusty areas (2024)",
-    "unusually wet or dusty areas (2026)",
-    "wash the vehicle (2026)"
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "yamaha-r7-2024-eu-om",
@@ -6232,10 +5874,10 @@
    "values": [
     "after washing the motorcycle, riding in the rain or riding i (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2026)",
-    "more frequently when riding in unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)",
-    "wash the vehicle (2025)",
-    "wash the vehicle (2026)"
+    "rain or near the sea (2025)",
+    "rain or near the sea (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "yamaha-r9-2025-eu-om",
@@ -6248,8 +5890,8 @@
    "values": [
     "Clean the vehicle thoroughly after driving on salted roads t (2025)",
     "Clean the vehicle thoroughly after driving on salted roads t (2026)",
-    "Do not use hard water or salt water (2026)",
-    "salt water (2025)"
+    "salt water (2025)",
+    "salt water (2026)"
    ],
    "members": [
     "yamaha-r9-2025-eu-om",
@@ -6262,8 +5904,19 @@
    "values": [
     "after washing the motorcycle, riding in the rain or riding i (2025)",
     "rain or dusty areas (2025)",
-    "unusually wet or dusty areas (2025)",
-    "wash the vehicle (2025)"
+    "rain or near the sea (2025)",
+    "replace more frequently (2025)"
+   ],
+   "members": [
+    "yamaha-tenere-700-2025-eu-om"
+   ]
+  },
+  {
+   "family": "yamaha tenere 700",
+   "ruleType": "dust_interval",
+   "values": [
+    "more frequently (2025)",
+    "often ride in the rain or dusty areas (2025)"
    ],
    "members": [
     "yamaha-tenere-700-2025-eu-om"
@@ -6275,17 +5928,6 @@
    "values": [
     "Clean the vehicle thoroughly after driving on salted roads t (2025)",
     "Do not use hard water or salt water since it is harmful to t (2025)"
-   ],
-   "members": [
-    "yamaha-tenere-700-2025-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha tenere 700",
-   "ruleType": "dust_interval",
-   "values": [
-    "often ride in the rain or dusty areas (2025)",
-    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "yamaha-tenere-700-2025-eu-om"
@@ -6297,8 +5939,19 @@
    "values": [
     "after washing the motorcycle, riding in the rain or riding i (2025)",
     "rain or dusty areas (2025)",
-    "unusually wet or dusty areas (2025)",
-    "wash the vehicle (2025)"
+    "rain or near the sea (2025)",
+    "replace more frequently (2025)"
+   ],
+   "members": [
+    "yamaha-tenere-700-2025-eu-om-463967"
+   ]
+  },
+  {
+   "family": "yamaha tenere 700 eu om 463967",
+   "ruleType": "dust_interval",
+   "values": [
+    "more frequently (2025)",
+    "often ride in the rain or dusty areas (2025)"
    ],
    "members": [
     "yamaha-tenere-700-2025-eu-om-463967"
@@ -6316,14 +5969,16 @@
    ]
   },
   {
-   "family": "yamaha tenere 700 eu om 463967",
-   "ruleType": "dust_interval",
+   "family": "yamaha tenere 700 rally",
+   "ruleType": "wet_interval",
    "values": [
-    "often ride in the rain or dusty areas (2025)",
-    "unusually wet or dusty areas (2025)"
+    "after washing the motorcycle, riding in the rain or riding i (2025)",
+    "more frequently (2025)",
+    "rain or near the sea (2025)",
+    "replace more frequently (2025)"
    ],
    "members": [
-    "yamaha-tenere-700-2025-eu-om-463967"
+    "yamaha-tenere-700-rally-edition-2025-eu-om"
    ]
   },
   {
@@ -6332,19 +5987,6 @@
    "values": [
     "more frequently (2025)",
     "often ride in the rain or dusty areas (2025)"
-   ],
-   "members": [
-    "yamaha-tenere-700-rally-edition-2025-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha tenere 700 rally",
-   "ruleType": "wet_interval",
-   "values": [
-    "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "more frequently (2025)",
-    "replace more frequently (2025)",
-    "wash the vehicle (2025)"
    ],
    "members": [
     "yamaha-tenere-700-rally-edition-2025-eu-om"
@@ -6370,9 +6012,9 @@
     "after washing the motorcycle, riding in the rain or riding i (2026)",
     "often ride in the rain (2025)",
     "often ride the rain or dusty areas (2026)",
+    "rain or near the sea (2026)",
     "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)",
-    "wash the vehicle (2026)"
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "yamaha-tenere-700-world-raid-2025-eu-om",
@@ -6412,10 +6054,10 @@
    "values": [
     "after washing the motorcycle, riding in the rain or riding i (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2026)",
+    "rain or near the sea (2025)",
+    "rain or near the sea (2026)",
     "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)",
-    "wash the vehicle (2025)",
-    "wash the vehicle (2026)"
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "yamaha-tracer-7-2025-eu-om",
@@ -6444,8 +6086,8 @@
    "family": "yamaha tracer 9",
    "ruleType": "wet_interval",
    "values": [
+    "after riding in the rain or near the sea (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "rain or near the sea (2025)",
     "unusually wet or dusty areas (2025)"
    ],
    "members": [
@@ -6465,10 +6107,11 @@
   },
   {
    "family": "yamaha tracer 9 eu om 6f399b",
-   "ruleType": "salt_wash",
+   "ruleType": "wet_interval",
    "values": [
-    "Clean the vehicle thoroughly after driving on salted roads t (2025)",
-    "Do not use hard water or salt water since it is harmful to t (2025)"
+    "after riding in the rain or near the sea (2025)",
+    "after washing the motorcycle, riding in the rain or riding i (2025)",
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "yamaha-tracer-9-gt-2025-eu-om-6f399b"
@@ -6476,11 +6119,10 @@
   },
   {
    "family": "yamaha tracer 9 eu om 6f399b",
-   "ruleType": "wet_interval",
+   "ruleType": "salt_wash",
    "values": [
-    "after riding in the rain or near the sea (2025)",
-    "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "unusually wet or dusty areas (2025)"
+    "Clean the vehicle thoroughly after driving on salted roads t (2025)",
+    "Do not use hard water or salt water since it is harmful to t (2025)"
    ],
    "members": [
     "yamaha-tracer-9-gt-2025-eu-om-6f399b"
@@ -6490,9 +6132,9 @@
    "family": "yamaha tracer 9 eu om 90739a",
    "ruleType": "wet_interval",
    "values": [
+    "after riding in the rain or near the sea (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "unusually wet or dusty areas (2025)",
-    "wash the vehicle (2025)"
+    "unusually wet or dusty areas (2025)"
    ],
    "members": [
     "yamaha-tracer-9-gt-2025-eu-om-90739a"
@@ -6530,41 +6172,6 @@
    ],
    "members": [
     "yamaha-tracer-9-gt-y-amt-2025-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha tt r110e",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently if riding in unusually wet or dusty areas (2026)",
-    "unusually wet areas (2025)"
-   ],
-   "members": [
-    "yamaha-tt-r110e-2025-eu-om",
-    "yamaha-tt-r110e-2026-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha tt r50e",
-   "ruleType": "wet_interval",
-   "values": [
-    "more frequently (2025)",
-    "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "yamaha-tt-r50e-2025-eu-om",
-    "yamaha-tt-r50e-2026-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha wr125r",
-   "ruleType": "dust_interval",
-   "values": [
-    "unusually dusty areas (2026)",
-    "unusually wet or dusty areas (2026)"
-   ],
-   "members": [
-    "yamaha-wr125r-2026-eu-om"
    ]
   },
   {
@@ -6581,12 +6188,23 @@
    ]
   },
   {
+   "family": "yamaha wr125r",
+   "ruleType": "dust_interval",
+   "values": [
+    "unusually dusty areas (2026)",
+    "unusually wet or dusty areas (2026)"
+   ],
+   "members": [
+    "yamaha-wr125r-2026-eu-om"
+   ]
+  },
+  {
    "family": "yamaha wr250f",
    "ruleType": "cold_start",
    "values": [
-    "0 °C (2026)",
+    "-10 °C (2026)",
     "Avoid charging the battery (2025)",
-    "Do not check the battery (2026)",
+    "Avoid charging the battery (2026)",
     "maximum riding distance per full charge becomes shorter (2026)"
    ],
    "members": [
@@ -6599,9 +6217,8 @@
    "ruleType": "cold_start",
    "values": [
     "-10 °C (2026)",
-    "Do not check the battery (2026)",
-    "avoid charging the battery (2025)",
-    "charging (2026)",
+    "Avoid charging the battery (2025)",
+    "Avoid charging the battery (2026)",
     "maximum riding distance per full charge becomes shorter (2026)"
    ],
    "members": [
@@ -6617,20 +6234,8 @@
     "after riding in the rain or near the sea (2026)",
     "after washing the motorcycle, riding in the rain or riding i (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2026)",
-    "more frequently (2026)",
-    "replace more frequently in unusually wet or dusty areas (2025)"
-   ],
-   "members": [
-    "yamaha-xsr125-2025-eu-om",
-    "yamaha-xsr125-2026-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha xsr125",
-   "ruleType": "salt_wash",
-   "values": [
-    "Do not use hard water or salt water since it is harmful to t (2026)",
-    "salt water (2025)"
+    "more frequently (2025)",
+    "more frequently (2026)"
    ],
    "members": [
     "yamaha-xsr125-2025-eu-om",
@@ -6664,8 +6269,9 @@
    "family": "yamaha yz250f",
    "ruleType": "cold_start",
    "values": [
-    "0 °C (2025)",
-    "0 °C (2026)",
+    "-10 °C (2026)",
+    "Do not charge the battery (2025)",
+    "Do not charge the battery (2026)",
     "maximum riding distance per full charge becomes shorter (2026)"
    ],
    "members": [
@@ -6677,8 +6283,9 @@
    "family": "yamaha yz450f",
    "ruleType": "cold_start",
    "values": [
+    "-10 °C (2026)",
+    "Do not charge the battery (2025)",
     "Do not charge the battery (2026)",
-    "charging (2025)",
     "maximum riding distance per full charge becomes shorter (2026)"
    ],
    "members": [
@@ -6687,29 +6294,29 @@
    ]
   },
   {
-   "family": "yamaha yz65",
-   "ruleType": "wet_interval",
-   "values": [
-    "after riding in the rain or near the sea (2026)",
-    "wash the vehicle after riding in the rain or near the sea (2025)"
-   ],
-   "members": [
-    "yamaha-yz65-2025-eu-om",
-    "yamaha-yz65-2026-eu-om"
-   ]
-  },
-  {
    "family": "yamaha yz85",
    "ruleType": "wet_interval",
    "values": [
-    "cleaned or replaced more frequently (2025)",
     "rain or near the sea (2025)",
-    "unusually wet or dusty areas (2026)",
-    "wash the vehicle after riding in the rain or near the sea (2026)"
+    "rain or near the sea (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "yamaha-yz85-2025-eu-om",
     "yamaha-yz85-2026-eu-om"
+   ]
+  },
+  {
+   "family": "yamaha yzf r1",
+   "ruleType": "wet_interval",
+   "values": [
+    "after washing the motorcycle, riding in the rain or riding i (2025)",
+    "rain or near the sea (2025)",
+    "unusually wet or dusty areas (2025)"
+   ],
+   "members": [
+    "yamaha-yzf-r1-2025-eu-om"
    ]
   },
   {
@@ -6724,15 +6331,19 @@
    ]
   },
   {
-   "family": "yamaha yzf r1",
+   "family": "yamaha yzf r125",
    "ruleType": "wet_interval",
    "values": [
+    "after riding in the rain or near the sea (2025)",
     "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "rain or near the sea (2025)",
-    "unusually wet or dusty areas (2025)"
+    "after washing the motorcycle, riding in the rain or riding i (2026)",
+    "rain or near the sea (2026)",
+    "unusually wet or dusty areas (2025)",
+    "unusually wet or dusty areas (2026)"
    ],
    "members": [
-    "yamaha-yzf-r1-2025-eu-om"
+    "yamaha-yzf-r125-2025-eu-om",
+    "yamaha-yzf-r125-2026-eu-om"
    ]
   },
   {
@@ -6755,22 +6366,6 @@
     "Clean the vehicle thoroughly after driving on salted roads t (2026)",
     "Do not use salt water (2026)",
     "salt water (2025)"
-   ],
-   "members": [
-    "yamaha-yzf-r125-2025-eu-om",
-    "yamaha-yzf-r125-2026-eu-om"
-   ]
-  },
-  {
-   "family": "yamaha yzf r125",
-   "ruleType": "wet_interval",
-   "values": [
-    "after riding in the rain or near the sea (2025)",
-    "after washing the motorcycle, riding in the rain or riding i (2025)",
-    "after washing the motorcycle, riding in the rain or riding i (2026)",
-    "rain or near the sea (2026)",
-    "unusually wet or dusty areas (2025)",
-    "unusually wet or dusty areas (2026)"
    ],
    "members": [
     "yamaha-yzf-r125-2025-eu-om",

@@ -3,6 +3,9 @@ import * as Q from "../ttm.js";
 import { loadAsk, ask, fetchJobPages, contextWindow } from "../ask.js";
 import {
   cachedRatio,
+  docStatus,
+  forget,
+  onDoc,
   pageCount,
   pageRatio,
   preloadPage,
@@ -26,6 +29,15 @@ const DRAW_MS = 70;
 /** Above this many sheets the column is virtualised: far canvases are handed back. */
 const VIRTUAL_MIN = 12;
 const MODE_KEY = "hb.pages.";
+/** Widest bitmap we will rasterise a zoomed sheet at, in CSS px (times DPR, capped at 2). */
+const MAX_RASTER = 1600;
+/** Zoom is quantised before it reaches the rasteriser, so a pinch is not 60 re-renders. */
+const ZOOM_STEP = 0.5;
+const ZOOM_SETTLE = 220;
+/** Nothing on screen and nothing moving for this long is a failure, not a spinner. */
+const STALL_MS = 25000;
+const RING_R = 22;
+const RING_C = 2 * Math.PI * RING_R;
 
 /* ---------- module state ---------- */
 
@@ -40,6 +52,7 @@ let climateBtn = null;
 let micBtn = null;
 let askBtn = null;
 let barEl = null;
+let actsEl = null;
 let viewEl = null;
 let padEl = null;
 let colEl = null;
@@ -74,6 +87,15 @@ let seenIo = null;
 let ro = null;
 let seenAmount = new Map();
 let drawTimer = 0;
+
+let ring = null;
+let ringHost = null;
+let docOff = null;
+let ensureBusy = false;
+let stallTimer = 0;
+let zoomTimer = 0;
+let boxW = 0;
+let boxH = 0;
 
 let zoom = ZOOM_MIN;
 let zoomW = 0;
@@ -263,7 +285,13 @@ function build(root) {
     text: "Cond",
   });
 
-  barEl.append(backBtn, coverEl, titleEl, stampEl, modeBtn, micBtn, askBtn, climateBtn, partsBtn);
+  // The bar carries only identity and position — which manual, which chapter, which page.
+  // It is never hidden, so no gesture can leave the reader without an answer to "where am I".
+  barEl.append(backBtn, coverEl, titleEl, stampEl);
+
+  // Everything you do sits in a thumb row at the bottom, 44 px targets, one handed.
+  actsEl = el("div", { class: "book-acts" });
+  actsEl.append(modeBtn, askBtn, micBtn, climateBtn, partsBtn);
 
   viewEl = el("div", { class: "page-view" });
   padEl = el("div", { class: "page-pad" });
@@ -288,7 +316,7 @@ function build(root) {
   askHits = el("div", { class: "ask-hits" });
   askSheet.append(askInput, askBar, askHits);
 
-  root.append(barEl, viewEl, stripEl, outlineEl, askSheet);
+  root.append(barEl, viewEl, outlineEl, stripEl, actsEl, askSheet);
 
   backBtn.addEventListener("click", onBack);
   coverEl.addEventListener("click", onContents);
@@ -319,6 +347,11 @@ function onBack() {
 
 /* ---------- immersive ---------- */
 
+/**
+ * Immersive gives the page the bottom chrome back. It never touches the top bar: the founder's
+ * report was "the top bar very often does not display", and the cause was a single stray tap
+ * putting the reader in here with no chrome at all and nothing left to tap but the page.
+ */
 function setImmersive(on) {
   immersive = Boolean(on);
   if (rootEl) rootEl.classList.toggle("immersive", immersive);
@@ -389,14 +422,52 @@ function paintModeBtn() {
   modeBtn.classList.toggle("is-on", on);
 }
 
+/* ---------- the bar ---------- */
+
+/**
+ * The only writer of the bar. Everything that can change what it says — the job arriving, the
+ * manual arriving after it, a page change, the all-pages toggle, the contents view — ends here,
+ * so the bar can never be left holding the previous manual's chapter or an empty title.
+ */
+function paintBar() {
+  if (!barEl) return;
+  const manualTitle = String((manualRec && manualRec.title) || "");
+  const jobTitle = String((jobRec && (jobRec.chapter || jobRec.title)) || "");
+  const trail = current == null ? [] : trailFor(outlineNodes(manualRec || {}), current);
+  const here = trail.length ? trail[trail.length - 1] : jobTitle || manualTitle;
+  titleEl.textContent = here;
+  titleEl.setAttribute("title", trail.length ? trail.join(" · ") : manualTitle || here);
+
+  const total = totalPages || pages[pages.length - 1] || 0;
+  const show = current != null && pages.length > 0;
+  stampEl.hidden = !show;
+  if (show) {
+    stampEl.replaceChildren(
+      el("span", { class: "p", text: "p." }),
+      el("b", { text: String(current) }),
+      el("span", { class: "m", text: total ? `/${total}` : "" }),
+    );
+  }
+
+  coverEl.classList.toggle("is-back", outline.length > 0);
+  coverEl.hidden = !hasThumb && outline.length === 0;
+  paintModeBtn();
+}
+
 function toggleMode() {
   if (!(totalPages > 1)) return;
   const at = current;
+  const was = scrollMark();
   mode = mode === "all" ? "relevant" : "all";
   writeMode(jobRec && jobRec.manualId, mode);
   paintModeBtn();
-  if (mode === "all") setPages(allList(), { strip: readList, at: at || readList[0] });
-  else setPages(readList.slice(), { strip: readList, at: nearestRelevant(at) });
+  // Same page, same place on it: the toggle changes what is around you, never where you are.
+  const keep = was && was.page === at ? was.f : 0;
+  if (mode === "all") setPages(allList(), { strip: readList, at: at || readList[0], offset: keep });
+  else {
+    const near = nearestRelevant(at);
+    setPages(readList.slice(), { strip: readList, at: near, offset: near === at ? keep : 0 });
+  }
 }
 
 /* ---------- paint ---------- */
@@ -404,16 +475,26 @@ function toggleMode() {
 async function paint(job) {
   const my = enterGen;
   jobRec = job;
-  manualRec = (await Q.manual(job.manualId)) || {};
-  if (my !== enterGen) return;
-  fileUrl = manualRec.file ? Q.asset(manualRec.file) : "";
-  outline = flatten(outlineNodes(manualRec), 0, []);
+  manualRec = {};
+  outline = [];
+  hasThumb = false;
+  fileUrl = "";
   marks = markMap(job);
   readList = readingPages(job);
+  totalPages = 0;
+  current = readList[0] ?? null;
+  // The job already names its chapter and its first page, so the bar is correct on the first
+  // frame instead of blank until GET /manuals/{id} answers — or forever, if that call fails.
+  paintBar();
+
+  const made = await Q.manual(job.manualId);
+  if (my !== enterGen) return;
+  manualRec = made || {};
+  fileUrl = manualRec.file ? Q.asset(manualRec.file) : "";
+  outline = flatten(outlineNodes(manualRec), 0, []);
   totalPages = Number(manualRec.pages) || 0;
   mode = totalPages > 1 ? readMode(job.manualId) : "relevant";
 
-  titleEl.textContent = manualRec.title || "";
   const cover = coverEl.firstElementChild;
   const thumb = Q.thumbUrl(job.manualId, 1);
   hasThumb = Boolean(thumb);
@@ -421,11 +502,12 @@ async function paint(job) {
   if (thumb) cover.src = thumb;
   cover.alt = manualRec.title || "";
 
-  paintModeBtn();
   setPages(mode === "all" ? allList() : readList.slice(), {
     strip: readList,
     at: readList[0],
   });
+  watchDoc(fileUrl);
+  if (!fileUrl) ensureFile(job);
   syncVoice(job);
   syncAsk(job);
 
@@ -435,11 +517,30 @@ async function paint(job) {
       .then((n) => {
         if (my !== enterGen || !(n > 0)) return;
         totalPages = n;
-        paintModeBtn();
-        setCurrent(current || readList[0]);
+        paintBar();
       })
       .catch(() => {});
   }
+}
+
+/** Where the viewport sits inside a sheet, as a fraction of it — survives a rebuild. */
+function scrollMark() {
+  if (!viewEl || current == null) return null;
+  const rec = sheets.get(current);
+  if (!rec) return null;
+  const h = rec.host.offsetHeight || 1;
+  return { page: current, f: (viewEl.scrollTop - sheetTop(rec)) / h };
+}
+
+function sheetTop(rec) {
+  return (
+    rec.host.getBoundingClientRect().top - viewEl.getBoundingClientRect().top + viewEl.scrollTop
+  );
+}
+
+function scrollToSheet(rec, fraction) {
+  const f = Number.isFinite(fraction) ? fraction : 0;
+  viewEl.scrollTop = Math.max(0, sheetTop(rec) + f * (rec.host.offsetHeight || 0));
 }
 
 function setPages(list, opts) {
@@ -457,13 +558,10 @@ function setPages(list, opts) {
   outlineEl.hidden = !empty;
   viewEl.hidden = empty;
   stripEl.hidden = empty || strip.length === 0;
-  coverEl.classList.toggle("is-back", outline.length > 0);
-  coverEl.hidden = !hasThumb && outline.length === 0;
   if (empty) {
     paintOutline();
-    stampEl.hidden = true;
-    titleEl.textContent = manualRec.title || "";
-    titleEl.setAttribute("title", manualRec.title || "");
+    paintBar();
+    syncLoad();
     return;
   }
 
@@ -475,21 +573,22 @@ function setPages(list, opts) {
   observe();
   const at = opts && opts.at != null && own.has(opts.at) ? opts.at : pages[0];
   setCurrent(at);
-  if (at !== pages[0]) {
-    const rec = sheets.get(at);
-    if (rec) rec.host.scrollIntoView({ block: "start" });
-  }
+  // scrollIntoView() also walks the ancestors and can shove the whole shell around; the
+  // container is right here, so set its scrollTop and keep the offset inside the page too.
+  const rec = sheets.get(at);
+  if (rec) scrollToSheet(rec, opts && opts.offset);
   if (fileUrl) {
     pageRatio(fileUrl, pages[0])
       .then((r) => {
         baseRatio = r;
-        for (const rec of sheets.values()) {
-          if (!ratios.has(rec.page)) rec.host.style.aspectRatio = `1 / ${r}`;
+        for (const rec2 of sheets.values()) {
+          if (!ratios.has(rec2.page)) rec2.host.style.aspectRatio = `1 / ${r}`;
         }
         measure();
       })
       .catch(() => {});
   }
+  syncLoad();
 }
 
 function paintOutline() {
@@ -538,6 +637,7 @@ function releaseSheets() {
     window.clearTimeout(drawTimer);
     drawTimer = 0;
   }
+  hideRing();
   for (const rec of sheets.values()) releaseCanvas(rec.canvas);
   sheets = new Map();
   chips = new Map();
@@ -679,9 +779,19 @@ function drop(rec) {
   }
 }
 
+/**
+ * The bitmap width a sheet wants right now. At zoom 1 that is the sheet; zoomed in it is the
+ * sheet times the (quantised) zoom, so a magnified page is re-rasterised instead of being a
+ * blown-up thumbnail. Capped so a 3x pinch on a wide screen cannot ask for a 10k canvas.
+ */
+function wantW() {
+  const step = zoom <= ZOOM_MIN ? 1 : Math.round(zoom / ZOOM_STEP) * ZOOM_STEP;
+  return Math.max(120, Math.min(Math.round(sheetW * step), MAX_RASTER));
+}
+
 async function drawPdf(rec) {
   if (!fileUrl) return;
-  const want = Math.round(sheetW);
+  const want = wantW();
   if (rec.drawn === want) return;
   rec.drawn = want;
   const my = enterGen;
@@ -704,8 +814,10 @@ async function drawPdf(rec) {
     }
     rec.host.classList.add("is-ready");
     ink(rec);
+    syncLoad();
   } catch {
     rec.drawn = 0;
+    syncLoad();
   }
 }
 
@@ -721,6 +833,7 @@ function onImgLoad(rec) {
   }
   rec.host.classList.add("is-ready");
   ink(rec);
+  syncLoad();
 }
 
 function onImgError(rec) {
@@ -752,14 +865,22 @@ function ink(rec) {
 /* ---------- layout ---------- */
 
 function measure() {
-  if (!viewEl || pages.length === 0) return;
-  const boxW = viewEl.clientWidth;
-  const boxH = viewEl.clientHeight;
-  if (boxW <= 0) return;
-  const next = Math.max(
-    120,
-    Math.min(boxW - 8, Math.floor((boxH - 12) / baseRatio) || MAX_W, MAX_W),
-  );
+  if (!viewEl || (pages.length === 0 && !colEl.firstElementChild)) return;
+  const w = viewEl.clientWidth;
+  const h = viewEl.clientHeight;
+  if (w <= 0) return;
+  // A rotation while zoomed leaves the pad sized for the old viewport, so the column ends up
+  // scrolled off its own container. Fit first, then measure.
+  if ((w !== boxW || h !== boxH) && zoom > ZOOM_MIN) {
+    boxW = w;
+    boxH = h;
+    resetZoom();
+  }
+  boxW = w;
+  boxH = h;
+  // Fit: never wider than the viewport (so nothing scrolls sideways on a phone) and never
+  // taller than it either, where the height is the tighter of the two.
+  const next = Math.max(120, Math.min(w - 8, Math.floor((h - 12) / baseRatio) || MAX_W, MAX_W));
   if (next === sheetW) return;
   sheetW = next;
   colEl.style.setProperty("--sheet-w", `${sheetW}px`);
@@ -787,16 +908,8 @@ function setCurrent(n) {
     });
   }
 
-  stampEl.hidden = false;
-  stampEl.replaceChildren(
-    el("span", { class: "p", text: "p." }),
-    el("b", { text: String(n) }),
-    el("span", { class: "m", text: `/${totalPages || pages[pages.length - 1]}` }),
-  );
-
-  const trail = trailFor(outlineNodes(manualRec), n);
-  titleEl.textContent = trail.length ? trail[trail.length - 1] : manualRec.title || "";
-  titleEl.setAttribute("title", trail.length ? trail.join(" · ") : manualRec.title || "");
+  paintBar();
+  syncLoad();
 
   set({ page: n });
   emit("page", { n });
@@ -809,7 +922,7 @@ function setCurrent(n) {
       im.decoding = "async";
       im.src = url;
     } else if (fileUrl) {
-      preloadPage(fileUrl, next, Math.round(sheetW));
+      preloadPage(fileUrl, next, wantW());
     }
   }
 }
@@ -817,8 +930,8 @@ function setCurrent(n) {
 function jump(n) {
   const rec = sheets.get(n);
   if (!rec) return;
-  applyZoom(ZOOM_MIN, 0, 0);
-  rec.host.scrollIntoView({ behavior: "smooth", block: "start" });
+  resetZoom();
+  viewEl.scrollTo({ top: sheetTop(rec), behavior: "smooth" });
   setCurrent(n);
 }
 
@@ -848,6 +961,20 @@ function applyZoom(next, px, py) {
   viewEl.classList.toggle("zoomed", to > ZOOM_MIN);
   viewEl.scrollLeft = cx * to - (px - rect.left);
   viewEl.scrollTop = cy * to - (py - rect.top);
+  settleZoom();
+}
+
+/**
+ * A scaled canvas is a magnified bitmap, so a zoomed page goes soft. Once the gesture stops,
+ * whatever is still on screen is rasterised again at the zoomed width. Debounced, because a
+ * pinch is sixty applyZoom() calls and none of them should reach pdf.js.
+ */
+function settleZoom() {
+  if (zoomTimer) window.clearTimeout(zoomTimer);
+  zoomTimer = window.setTimeout(() => {
+    zoomTimer = 0;
+    for (const rec of sheets.values()) if (rec.near) draw(rec);
+  }, ZOOM_SETTLE);
 }
 
 function resetZoom() {
@@ -934,6 +1061,207 @@ function onDouble(e) {
   cancelTap();
   if (Date.now() - touchAt < 700) return;
   applyZoom(zoom > ZOOM_MIN ? ZOOM_MIN : ZOOM_DOUBLE, e.clientX, e.clientY);
+}
+
+/* ---------- loading ---------- */
+
+/**
+ * The 3D stage's ring, on a page-shaped sheet. Same classes, same three states — spin while the
+ * size is unknown, a real percentage once the file reports one, and a quiet tap-to-retry when it
+ * does not arrive — so the app has one loading language and the reader adds no second one.
+ */
+function makeRing() {
+  const wrap = el("div", { class: "viewer3d-load page-load", role: "progressbar" });
+  wrap.setAttribute("aria-label", "Loading the manual");
+  wrap.innerHTML =
+    `<svg class="viewer3d-load-ring" viewBox="0 0 56 56" aria-hidden="true">` +
+    `<circle class="viewer3d-load-track" cx="28" cy="28" r="${RING_R}"></circle>` +
+    `<circle class="viewer3d-load-arc" cx="28" cy="28" r="${RING_R}"` +
+    ` stroke-dasharray="${RING_C.toFixed(1)}" stroke-dashoffset="${(RING_C * 0.75).toFixed(1)}"></circle>` +
+    `</svg><b class="viewer3d-load-pct"></b>`;
+  const arc = wrap.querySelector(".viewer3d-load-arc");
+  const pct = wrap.querySelector(".viewer3d-load-pct");
+  let retry = null;
+  wrap.addEventListener("click", () => {
+    const again = retry;
+    retry = null;
+    if (again) again();
+  });
+  return {
+    el: wrap,
+    set(fraction) {
+      if (!Number.isFinite(fraction)) return this.spin();
+      wrap.classList.add("is-known");
+      wrap.classList.remove("is-failed");
+      retry = null;
+      const value = Math.max(0, Math.min(1, fraction));
+      arc.setAttribute("stroke-dashoffset", (RING_C * (1 - value)).toFixed(1));
+      pct.textContent = `${Math.round(value * 100)}%`;
+      wrap.setAttribute("aria-valuenow", String(Math.round(value * 100)));
+    },
+    spin() {
+      wrap.classList.remove("is-known", "is-failed");
+      retry = null;
+      wrap.removeAttribute("aria-valuenow");
+      arc.setAttribute("stroke-dashoffset", (RING_C * 0.75).toFixed(1));
+      pct.textContent = "";
+    },
+    fail(again) {
+      retry = typeof again === "function" ? again : null;
+      wrap.classList.remove("is-known");
+      wrap.classList.add("is-failed");
+      wrap.removeAttribute("aria-valuenow");
+      arc.setAttribute("stroke-dashoffset", "0");
+      pct.textContent = "";
+    },
+    failed() {
+      return wrap.classList.contains("is-failed");
+    },
+  };
+}
+
+/**
+ * Before the job and the manual have even arrived there is nothing to shape a sheet from, so
+ * the reader opens on one A4 placeholder carrying the ring. Every later state replaces it.
+ */
+function bootSkeleton() {
+  releaseSheets();
+  pages = [];
+  outlineEl.hidden = true;
+  viewEl.hidden = false;
+  stripEl.hidden = true;
+  const host = el("article", { class: "page-sheet" });
+  host.style.aspectRatio = `1 / ${baseRatio || 1.4142}`;
+  colEl.append(host);
+  measure();
+  showRing(host);
+  ring.spin();
+  armStall();
+}
+
+/** The sheet the ring belongs on: the one being read, else the first one. */
+function ringSheet() {
+  if (!pages.length) return null;
+  return sheets.get(current) || sheets.get(pages[0]) || null;
+}
+
+function showRing(host) {
+  if (!ring) ring = makeRing();
+  if (ringHost !== host) {
+    ringHost = host;
+    host.append(ring.el);
+  }
+}
+
+function hideRing() {
+  if (ring && ring.el.parentNode) ring.el.remove();
+  ringHost = null;
+  if (stallTimer) {
+    window.clearTimeout(stallTimer);
+    stallTimer = 0;
+  }
+}
+
+/** Nothing has painted and nothing is moving: stop pretending, offer the retry. */
+function armStall() {
+  if (stallTimer) return;
+  stallTimer = window.setTimeout(() => {
+    stallTimer = 0;
+    if (ring && ringHost && !ring.failed()) ring.fail(retryDoc);
+  }, STALL_MS);
+}
+
+/** The ring lives only while the sheet under it is still blank. */
+function syncLoad() {
+  const rec = ringSheet();
+  if (!rec || rec.host.classList.contains("is-ready")) {
+    hideRing();
+    return;
+  }
+  showRing(rec.host);
+  armStall();
+  if (fileUrl) paintDoc(docStatus(fileUrl));
+  else if (!ensureBusy) ring.fail(() => jobRec && ensureFile(jobRec));
+}
+
+function paintDoc(info) {
+  if (!ring || !ringHost) return;
+  if (!info || info.status === "failed") {
+    ring.fail(retryDoc);
+    return;
+  }
+  if (info.status === "loading" && info.total > 0) {
+    ring.set(info.loaded / info.total);
+    return;
+  }
+  // open, but this page has not been rasterised yet — the size is unknowable, so: spin.
+  if (!ring.failed()) ring.spin();
+}
+
+function watchDoc(url) {
+  if (docOff) {
+    docOff();
+    docOff = null;
+  }
+  if (!url) return;
+  docOff = onDoc(url, (info) => {
+    if (!ringHost) return;
+    paintDoc(info);
+    if (info.status === "loading" || info.status === "ready") armStall();
+  });
+}
+
+function retryDoc() {
+  if (!fileUrl) {
+    if (jobRec) ensureFile(jobRec);
+    else enterScreen();
+    return;
+  }
+  forget(fileUrl);
+  for (const rec of sheets.values()) rec.drawn = 0;
+  if (ring) ring.spin();
+  armStall();
+  queueDraw();
+}
+
+/**
+ * The manual is known but its file is not indexed yet. /manuals/ensure runs the same pipeline
+ * the Confirm screen uses and reports pages done out of pages total, so the ring shows the
+ * ingest rather than a spinner that means nothing.
+ */
+async function ensureFile(job) {
+  if (ensureBusy || !job || !job.bikeId) return;
+  ensureBusy = true;
+  const my = enterGen;
+  if (ring) ring.spin();
+  armStall();
+  let made = null;
+  try {
+    made = await Q.ensureManual(job.bikeId, (info) => {
+      if (my !== enterGen || !ring) return;
+      const total = Number(info && info.pages) || 0;
+      const done = Number(info && info.done) || 0;
+      if (total > 0) ring.set(done / total);
+      else ring.spin();
+      armStall();
+    });
+  } catch {
+    made = null;
+  }
+  ensureBusy = false;
+  if (my !== enterGen) return;
+  if (made && made.file) {
+    manualRec = made;
+    fileUrl = Q.asset(made.file);
+    outline = flatten(outlineNodes(manualRec), 0, []);
+    totalPages = Number(manualRec.pages) || totalPages;
+    watchDoc(fileUrl);
+    paintBar();
+    for (const rec of sheets.values()) rec.drawn = 0;
+    queueDraw();
+    return;
+  }
+  if (ring) ring.fail(() => ensureFile(job));
 }
 
 /* ---------- voice ---------- */
@@ -1153,30 +1481,39 @@ async function runAsk() {
 
 /* ---------- screen ---------- */
 
+async function enterScreen() {
+  if (!state.bikeId) {
+    bounce("identify");
+    return;
+  }
+  if (!state.jobId) {
+    bounce("pick");
+    return;
+  }
+  const my = ++enterGen;
+  setImmersive(false);
+  if (docOff) {
+    docOff();
+    docOff = null;
+  }
+  ensureBusy = false;
+  // One A4 placeholder with the ring on it, from the first frame: the job itself is a fetch.
+  bootSkeleton();
+  const job = await Q.jobById(state.jobId);
+  if (my !== enterGen) return;
+  if (!job) {
+    bounce("pick");
+    return;
+  }
+  await paint(job);
+}
+
 registerScreen("book", {
   mount(root) {
     build(root);
   },
 
-  async enter() {
-    if (!state.bikeId) {
-      bounce("identify");
-      return;
-    }
-    if (!state.jobId) {
-      bounce("pick");
-      return;
-    }
-    const my = ++enterGen;
-    setImmersive(false);
-    const job = await Q.jobById(state.jobId);
-    if (my !== enterGen) return;
-    if (!job) {
-      bounce("pick");
-      return;
-    }
-    await paint(job);
-  },
+  enter: enterScreen,
 
   /** Back pops the reader's own layers first, so no tap can strand the Back affordance. */
   back() {
@@ -1198,5 +1535,14 @@ registerScreen("book", {
     closeAsk();
     setImmersive(false);
     resetZoom();
+    hideRing();
+    if (docOff) {
+      docOff();
+      docOff = null;
+    }
+    if (zoomTimer) {
+      window.clearTimeout(zoomTimer);
+      zoomTimer = 0;
+    }
   },
 });

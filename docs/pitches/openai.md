@@ -20,13 +20,16 @@ Diagrams: [`openai/architecture.png`](openai/architecture.png) · [`.svg`](opena
 
 Two ledgers, both real, do not mix them on stage:
 
-- **build ledger** — `api/data/costs.jsonl`, 36,620 calls, **$79.91**, 2026-09-19 22:33 → 2026-09-20 06:44 UTC.
-  This is the mass ingest of the warm cache plus the image work.
-- **live ledger** — `GET /api/cost`, **$1.172 over 569 calls**. This is the deployed app serving users.
+- **build ledger** — `api/data/costs.jsonl`, 41,612 calls, **$83.05**, as of 2026-09-20 09:55 UTC. This is the
+  mass ingest of the warm cache plus the image work. It grows every time anything runs, so re-read
+  `docs/pitches/numbers.md` before you quote it.
+- **live ledger** — `GET /api/cost`, **$8.93 over 1,633 calls**, as of 2026-09-20 09:55. This is the deployed
+  app serving users; it moves every hour and resets on redeploy, so read it again before you quote it.
 
-Where the $79.91 went, and it is the whole business model in four rows: **$71.52 one-time ingest ·
-$4.31 generating the 97 illustrations · $2.04 grading 4,136 catalog photos · $2.04 for every ask, chat and
-photo-id ever served.** 97% of what we have spent on OpenAI is a cost we pay once per manual, not per user.
+Where the $83.05 went, and it is the whole business model in four rows: **$71.52 one-time ingest ·
+$4.31 generating the 97 illustrations · $3.60 grading catalog photos over 7,561 calls · $3.62 for every ask,
+chat, photo-id and offer ever served.** 86% of what we have spent on OpenAI is a cost we pay once per
+manual, not per user — and that 86% is the stable number; the totals move.
 
 Everything below is aggregated from the build ledger unless marked. Every call in both goes through
 **one file**, `api/app/llm.py` (206 lines), which is the only place the `OpenAI` client is constructed and
@@ -34,36 +37,38 @@ the only place a cost event is written: `route · model · inputTokens · cached
 
 | # | capability | where it is used | route · model | measured |
 |---|---|---|---|---|
-| 1 | **Structured outputs** (`responses.parse`, strict `json_schema` from Pydantic) | 7 of our 9 call sites | `ask.router`, `ask.picker`, `ingest.struct`, `ingest.keywords`, `identify.photo`, `identify.part`, `images.score`, `parts.map`, `offers.*.extract` | **36,270 of our 36,620 logged calls** are strict-schema calls. The app never parses free text from a model — the only free text we take is the `offers` line format, and that is regex-parsed and then verified |
-| 2 | **Model tiering** by task | luna for the volume, terra for the judgement calls | `gpt-5.6-luna` $0.20/M · `gpt-5.6-terra` $2/M · `gpt-6-astra` $10/M | **$73.72 of $79.91 is luna.** The log carries both prices for the same route: photo id on astra **$0.0247/call**, on luna **$0.00046** (**53×**); part id on astra $0.0140, on luna $0.00024 (**59×**). Once the catalog constraint and the fuzzy match were doing the accuracy work, the flagship stopped earning its price |
+| 1 | **Structured outputs** (`responses.parse`, strict `json_schema` from Pydantic) | 7 of our 9 call sites | `ask.router`, `ask.picker`, `ingest.struct`, `ingest.keywords`, `identify.photo`, `identify.part`, `images.score`, `parts.map`, `offers.*.extract` | **All but 362 of our logged calls** are strict-schema calls — everything except the 248 streamed chat answers, the 102 image generations and the 12 web-search calls. The app never parses free text from a model — the only free text we take is the `offers` line format, and that is regex-parsed and then verified |
+| 2 | **Model tiering** by task | luna for the volume, terra for the judgement calls | `gpt-5.6-luna` $0.20/M · `gpt-5.6-terra` $2/M · `gpt-6-astra` $10/M | **$75.96 of $83.05 is luna — 91% of the build ledger.** The log carries both prices for the same route: photo id on astra **$0.0247/call**, on luna **$0.00046** (**53×**); part id on astra $0.0140, on luna $0.00024 (**59×**). Once the catalog constraint and the fuzzy match were doing the accuracy work, the flagship stopped earning its price |
 | 3 | **Prompt caching** (`prompt_cache_key` pinned per route+model; big static system prompts on purpose) | router (5.3 KB system prompt), picker, chat, ingest | `ask.router` | **99.5% cache hit on 3.45M input tokens** → $0.000132/call. `ingest.struct` 47.0% of 70.4M. `chat.answer` 42.7%. `ask.picker` 34.6% |
 | 4 | **Responses API streaming** | the chat drawer | `chat.answer` · terra | **first token p50 2.64 s / p95 5.87 s**, full answer p50 4.18 s (`api/eval/chat-report.md`) |
 | 5 | **Built-in `web_search` tool** | fitment-exact parts with live prices | `offers` · terra, `search_context_size: "low"`, `max_tool_calls: 2` | ~7 ¢ cold, **$0 cached** (24 h). Fee modelled explicitly: `$10/1k calls` on top of tokens (`WEB_SEARCH_CALL_USD`) |
 | 6 | **Vision — vehicle id** | photo → the exact bike | `identify.photo` · luna | **$0.00046/photo**, 400 catalog names in the prompt, answer fuzzy-matched back to a real row, floor 0.80, kind-locked so a car photo cannot return a motorcycle |
 | 7 | **Vision — part id** | photo of a part → one of 30 labels | `identify.part` · luna | $0.00024/call, zero-shot against a fixed label list (no fine-tune, no checkpoint) |
 | 8 | **Image generation** | the product's own art | `gpt-image-1`, 1024², `background: transparent` | **97 part illustrations** shipped + the logo. 102 calls, **$4.31**, $0.042 each. One style prompt + one camera for the whole set, so it reads as a set |
-| 9 | **Vision as a judge** | automated art direction over 22k catalog photos | `images.score` · luna, strict rubric schema | **4,136 calls, $2.04** — grades single-bike / whole-bike / sharpness / view angle / is-it-really-the-model, and rejects below threshold |
-| 10 | **An OpenAI model behind the voice agent** | hands-free in the workshop | Deepgram Voice Agent, `think.provider.type: open_ai` | first audio **0.7–2.0 s**. It may only call our four grounded tools (`find_procedure`, `read_page`, `get_spec`, `list_parts`); Deepgram calls our API directly so manual text never passes through the browser |
+| 9 | **Vision as a judge** | automated art direction over 22k catalog photos | `images.score` · luna, strict rubric schema | **7,561 calls, $3.60** — grades single-bike / whole-bike / sharpness / view angle / is-it-really-the-model, and rejects below threshold |
+| 10 | **An OpenAI model behind the voice agent** | hands-free in the workshop | Deepgram Voice Agent, `think.provider.type: open_ai` | first audio **median 2.08 s** over 5 spec turns (range 1.73–4.01 s; the greeting is 0.72 s and a procedure question is 9.9 s — say so). It may only call our four grounded tools (`find_procedure`, `read_page`, `get_spec`, `list_parts`); Deepgram calls our API directly so manual text never passes through the browser |
 
 ### The numbers a judge will ask for
 
 | operation | cost | latency | source |
 |---|---|---|---|
-| ingest a manual (median 177 p) | **$0.10** | 6–7 s readable, 44–50 s searchable | 319 runs + 2 live |
+| ingest a manual (mean 177 p) | **$0.095** | 1.3 s readable, 40.4 s fully searchable | 648 ingests; one timed live run, 2026-09-20 |
 | ask, spec question (**zero LLM after the router**) | **$0.00013** | 1.5 s | live |
 | ask, mean over the 150-query eval | **$0.00038** | p95 3.33 s | `api/eval/report.md` |
 | ask, repeated | **$0** | 0.2–0.4 s | answer cache |
 | chat answer | $0.0049 | first token 2.6 s | `api/eval/chat-report.md` |
-| naive baseline (whole manual in `gpt-6-astra`) | **$6.096** | — | `GET /api/cost` → `naivePerAsk` |
+| naive baseline (the largest deployed manual, 775 p, in `gpt-6-astra`) | **$12.40** | — | `GET /api/cost` → `naivePerAsk` |
+| …the same baseline on the **median** manual (171 p) | **$1.37** | — | `app/llm.naive_usd(171)` |
 
-**~16,000× cheaper than the naive prompt, and the answer is a PDF page instead of a paragraph.**
+**32,632× cheaper than the naive prompt on the largest deployed manual — 3,600× against the median one,
+say which — and the answer is a PDF page instead of a paragraph.**
 
 ### What we do NOT use — say this before a judge asks
 
 - **No fine-tuning.** Every behaviour is a prompt plus a schema. A fine-tune would have hidden the
   guardrails inside weights we cannot inspect, and we would have had to re-train to change one rule.
 - **No Batch API.** Ingest is user-facing and interactive — a rider is watching a progress bar. We got the
-  throughput from 32 parallel workers and 5-page windows instead: 177 pages in 44 s.
+  throughput from 32 parallel workers and 5-page windows instead: 182 pages in 40 s.
 - **No Assistants API, no vector store, no embeddings in the live path.** Retrieval is BM25 over a book we
   already structured. `llm.embed()` exists and is unused; we will say so.
 - **No RAG over raw chunks.** We do the opposite: one LLM pass converts the PDF into printed *units* once,
@@ -98,7 +103,7 @@ flowchart LR
     A2["<b>ingest.struct</b><br/>gpt-5.6-luna · strict json_schema<br/>5-page windows · 32 parallel workers<br/>units · specs · parts · verbatim quotes<br/><b>47% of 70.4M input tokens<br/>served from the prompt cache</b>"]:::ai
     A3["<b>ingest.keywords</b><br/>gpt-5.6-luna · strict json_schema<br/>the slang a rider would actually say<br/>for every printed heading"]:::ai
     G2["<b>ground.py</b> — every quote is searched<br/>for in the PDF text layer.<br/><b>Not found = DROPPED.</b>"]:::guard
-    R2["A SEARCHABLE MANUAL<br/>readable in 7 s · indexed in 50 s<br/><b>$0.10, once, forever</b>"]:::ship
+    R2["A SEARCHABLE MANUAL<br/>readable in 1.3 s · indexed in 40 s<br/><b>$0.095, once, forever</b>"]:::ship
     S3 --> D2 --> A2 --> G2 --> R2
     D2 --> A3 --> R2
 
@@ -131,7 +136,7 @@ flowchart LR
 
     S6["BUILD TIME"]:::ui
     A8["<b>gpt-image-1</b><br/>97 part illustrations + the logo<br/>one style prompt, one camera<br/><b>$0.042 each</b>"]:::ai
-    A9["<b>images.score</b> · <b>VISION AS A JUDGE</b><br/>strict rubric grades every catalog photo<br/><b>4,136 calls · $2.04</b>"]:::ai
+    A9["<b>images.score</b> · <b>VISION AS A JUDGE</b><br/>strict rubric grades every catalog photo<br/><b>7,561 calls · $3.60</b>"]:::ai
     R6["THE ART IN THE APP"]:::ship
     S6 --> A8 --> R6
     S6 --> A9 --> R6
@@ -155,7 +160,7 @@ flowchart LR
 4. **Green is never optional.** `ground.py` drops ungrounded quotes at ingest; the id allowlist drops
    invented section ids; the server — not the model — writes every citation quote; a structural pass rejects
    any digit that is not printed on a page the model was shown.
-5. **Ingest is a different clock.** $0.10 once per manual, then every question on that manual forever is
+5. **Ingest is a different clock.** $0.095 once per manual, then every question on that manual forever is
    four hundredths of a cent.
 
 ### Second diagram — the "not a wrapper" argument
@@ -172,7 +177,7 @@ flowchart LR
 
 ## 3. Codex as the fifth teammate
 
-`docs/CODEX.md` + `docs/codex/run-1.md` + `docs/codex/run-2.md` hold the verbatim prompts, the full stdout,
+`docs/CODEX.md` + `docs/codex/run-1.md` + `run-2.md` + `run-3.md` hold the verbatim prompts, the full stdout,
 the token counts and what I had to fix afterwards. Codex CLI 0.155.1, `gpt-6-astra`, reasoning effort high.
 
 ```
@@ -183,7 +188,7 @@ npx @openai/codex exec -s workspace-write --skip-git-repo-check --color never "<
 |---|---|---|---|
 | 1 | `api/tests/test_store.py` — every method of the `Store` protocol | 29 tests, 69,345 tokens, ~2 min | found atomic-write `.tmp` leftovers, `exclude_none` on disk, a 20-thread `put_bikes` race — all cases I had not asked for |
 | 2 | `api/tests/test_local_index.py` — the retrieval index | 100 tests, 62,744 tokens, ~8 min | the bug, below |
-| 3 | `api/tests/test_llm.py` — the single door to OpenAI | 65 tests, 56,334 tokens, ~2 min | **green**: the arithmetic behind every USD figure on these slides is now pinned |
+| 3 | `api/tests/test_llm.py` — the single door to OpenAI | 65 tests, 56,334 tokens, 2 min 02 s | **green**: the arithmetic behind every USD figure on these slides is now pinned |
 
 ### The one concrete way Codex improved the outcome (say this, verbatim, on stage)
 
@@ -209,12 +214,12 @@ npx @openai/codex exec -s workspace-write --skip-git-repo-check --color never "<
   bug surfaced. **The lesson is the good line: Codex found the bug only because the prompt told it not to
   hide one — and it still tried to.** Read the diff, always.
 
-### The one more session to run today — and it makes the OpenAI story stronger
+### Run 3 — the session that audited our own arithmetic
 
-**Have Codex write `api/tests/test_llm.py`: the test suite for the single door to OpenAI.**
+**We had Codex write `api/tests/test_llm.py`: the test suite for the single door to OpenAI.**
 
 Why this one, out of everything we could ask it: `api/app/llm.py` is the file every number in this pitch
-comes out of, and today it has **no direct test at all** (grep: `usd()`, `naive_usd()`,
+comes out of, and before this run it had **no direct test at all** (grep: `usd()`, `naive_usd()`,
 `WEB_SEARCH_CALL_USD`, `prompt_cache_key` appear in zero test files). If the cached-token arithmetic is
 wrong, the "99.5% cache hit" and the "$0.00038 per ask" on our slides are wrong. Codex auditing the
 arithmetic behind our own claims is both a real risk retired and a very good sentence to say out loud.
@@ -245,7 +250,7 @@ IMPORTANT: if any assertion above does not hold against the current app/llm.py, 
 marked xfail and not a line of `app/llm.py` touched. So the line on stage is the first one: *Codex audited
 the arithmetic behind every number on this slide.* Concretely pinned now — `usd()` subtracting cached
 tokens exactly once and clamping at zero instead of going negative; eleven hard-coded per-model USD
-literals, so a typo in `PRICES` fails a test instead of quietly re-pricing a slide; the `$6.096` baseline
+literals, so a typo in `PRICES` fails a test instead of quietly re-pricing a slide; the `$12.40` baseline
 as the `naive_usd()` discontinuity at the 272,000-token long-context boundary (340 p = $2.72, 341 p =
 $5.456); the `$10/1k` web-search fee; and `prompt_cache_key` pinned to `route:model`, which is the claim
 the whole cost story rests on. Full suite: **617 passed, 20 skipped.** Two honest caveats for the diff-
@@ -265,7 +270,7 @@ Total 5:00. Clock in the left column. Start the cold ingest at 2:00 and talk ove
 | **0:30–2:00** | **The architecture** | the flowchart, full screen | "So we built the opposite of a wrapper. *(point at orange)* Nine OpenAI calls, all through one file. *(point at green)* And behind every one of them, code that can throw its answer away. **The model never gets to be the answer — it only gets to point.** Left to right: vision names the bike, but it's constrained to our catalog and fuzzy-matched back to a real row. One structured pass turns a PDF into printed units — 5-page windows, 32 workers, ten cents a manual — and **every quote it returns is searched for in the PDF text layer; if it isn't there, we drop it.** Then the router: cheap model, huge static system prompt, **99.5% of its tokens come back from OpenAI's prompt cache** — a hundred-thousandth of a cent, and it turns *chain is baggy*, or a typo, or German, into manual English. *(point)* Then our own BM25 over KTM's own headings. If the top two are far apart, **we never call a model again**. If it's a spec question, we answer off parsed rows — **zero LLM**. Only when it is genuinely ambiguous do we pay for the picker — **and it returns page ids, never prose**, and any id that wasn't in our candidate list gets dropped. Chat is the one place words are generated, streamed off the Responses API, and the model may only emit page numbers: **the server slices every quote out of the original page**, so citations are verbatim by construction, not by trust." | *oh — they actually thought about this* |
 | **2:00–3:30** | **Live demo** | the phone, mirrored | see the script below | *it's fast, and it's the real manual* |
 | **3:30–4:15** | **Codex** | `docs/codex/run-2.md` on screen, scrolled to the test | the verbatim paragraph in §3 above — the FLOOR bug. Then: "and it tried to hide a failure from me, which is why you still read the diff." | *they used it properly, and they're honest* |
-| **4:15–5:00** | **Numbers and close** | `#cost` live, then the marked page | "Every call is logged per route. **$0.10 to turn a 177-page PDF into a searchable manual, once. $0.0004 per question after that. The naive version — paste the manual in — is $6.10.** Sixteen thousand times cheaper, and the answer is a page instead of a paragraph. 100% top-1 over 150 queries, 100% valid citations, zero invented numbers. *(back to the page)* There is **no AI-written sentence on this screen.** The manual is the answer. We just get you to the page — in two seconds, for four hundredths of a cent." | *this ships, and I trust it* |
+| **4:15–5:00** | **Numbers and close** | `#cost` live, then the marked page | "Every call is logged per route. **Nine and a half cents to turn a 177-page PDF into a searchable manual, once. $0.0004 per question after that. The naive version — paste the manual in — is $12.40.** Thirty-two thousand times cheaper, and the answer is a page instead of a paragraph. 100% top-1 over 150 queries, 100% valid citations, zero invented numbers. *(back to the page)* There is **no AI-written sentence on this screen.** The manual is the answer. We just get you to the page — in two seconds, for four hundredths of a cent." | *this ships, and I trust it* |
 
 ### The demo, exact inputs (2:00–3:30)
 
@@ -275,14 +280,14 @@ Do these in order. Every one is verified live on 2026-09-20. Do not improvise a 
 |---|---|---|---|
 | 2:00 | type `mt-07`, tap the card, tap a **year with no manual yet**, Confirm → Yes | progress bar starts | "Ten cents, and this one has never been on our servers. Watch it in the background." |
 | 2:10 | **photo path**: on the landing screen, tap the camera and shoot the KTM (or upload the stock shot) | model cards rank, KTM 390 Duke on top | "Vision names it — but only from our catalog, and the answer is matched back to a real row. A bike we have no manual for cannot win. **$0.00046.**" |
-| 2:25 | tap **2023** → Confirm → Pick, type `chain` | 3D bike explodes, chain lights orange, *Checking the chain tension* p.62 / *Adjusting the chain tension* p.63 | "Those aren't our words. That's KTM's own table of contents." |
-| 2:45 | tap the first heading → **Open** | p.62 with orange markers on the tension lines | "Page 62 of KTM's manual. The marker is there only because we found that exact text in the PDF." |
-| 3:00 | Chat → `chain is loose, what do I do` | five numbered steps, every sentence ending in `[p. 62]` / `[p. 63]`, footer shows tokens saved | "The one place it writes a sentence — and it can only write page numbers." Tap a chip → jumps to p.63. "Every claim is one tap from the ink." |
+| 2:25 | tap **2024** → Confirm → Pick, type `chain` | 3D bike explodes, chain lights orange, *Checking the chain tension* p.77–78 / *Adjusting the chain tension* p.78 | "Those aren't our words. That's KTM's own table of contents." |
+| 2:45 | tap the first heading → **Open** | p.77 with orange markers on the tension lines | "Page 77 of KTM's manual. The marker is there only because we found that exact text in the PDF." |
+| 3:00 | Chat → `chain is loose, what do I do` | numbered steps, every sentence ending in `[p. 77]` / `[p. 78]`, footer shows tokens saved | "The one place it writes a sentence — and it can only write page numbers." Tap a chip → jumps to p.78. "Every claim is one tap from the ink." |
 | 3:15 | Parts → tap the chain | the printed spec, the page, OEM number, live offers cheapest-first | "Built-in web search, and the query is the number **KTM printed**. Then we fetch every URL before we show it." |
 | 3:25 | back to the landing — the **MT-07 is ready** | ready chip | "That manual didn't exist two minutes ago." |
 
 **Fallbacks.** Photo id is the flakiest moment — if it misses, tap the model card and say "or you just type
-it; 22,300 bikes". BMW R 12 G/S is shaft drive, so never ask it a chain question. If the network dies, keep
+it; 23,140 motorcycles". BMW R 12 G/S is shaft drive, so never ask it a chain question. If the network dies, keep
 going: the service worker serves the shell and any page already opened.
 
 ### Slide outline (6 slides, no more)
@@ -293,8 +298,8 @@ going: the service worker serves the shell and any page already opened.
 4. **Not a wrapper.** `openai/not-a-wrapper.png`.
 5. **Codex.** The failing test, the FLOOR line, and the one-line diagnosis. Plus the honest "it tried to
    swap my queries" line.
-6. **The ledger.** $0.10 / $0.0004 / $6.096 / $1.17 total spent · 100% top-1 · 100% valid citations ·
-   0 invented numbers. Then the URL.
+6. **The ledger.** $0.095 / $0.0004 / $12.40 · 100% top-1 · 100% valid citations · 0 invented numbers.
+   Then the URL. (No running total on the slide — the live ledger moves every hour.)
 
 ---
 
@@ -310,13 +315,13 @@ citations verbatim, 0 invented numbers across 25 questions, 0 dealer referrals.
 
 **"Why structured outputs instead of just parsing JSON?"**
 Because the picker's contract is *ids only*, and a strict `json_schema` is the cheapest way to make that a
-type instead of a hope. Over 36,000 logged calls there is not one parse failure in the cost log. And it is
+type instead of a hope. Over 41,000 logged calls there is not one parse failure in the cost log. And it is
 not sufficient on its own — we still drop any id that wasn't in our candidate list. Schema for shape,
 allowlist for truth.
 
 **"Why not one big prompt? One model, one call, the whole manual."**
-That is the $6.10 baseline, and we measured it: the largest manual we hold is 762 pages. It is 16,000×
-more expensive, it is slower, and it gives you a paragraph when a liable mechanic needs a page number. The
+That is the $12.40 baseline, and we measured it: the largest manual we hold is 775 pages. It is 32,632×
+more expensive — 3,600× against the median 171-page manual, which is $1.37 — it is slower, and it gives you a paragraph when a liable mechanic needs a page number. The
 decomposition is what makes it $0.0004 — and **85% of our asks never reach a second model call at all**
 (172 LLM calls for 150 asks in the eval: 150 routers, 22 pickers), because BM25 was already decisive or the
 question was a spec.
@@ -326,12 +331,12 @@ Everything that requires judgement, and nothing that requires being right about 
 We will also tell you what we *don't* use: no fine-tuning, no Batch API, no Assistants, no embeddings in the
 live path.
 
-**"$0.10 per manual × 8,319 fetchable manuals is ~$830. What happens at scale?"**
+**"$0.095 per manual × 14,770 fetchable manuals is ~$1,400. What happens at scale?"**
 That is the entire worst case, once, for the whole free corpus — and it is a one-time cost per manual,
-amortised across every shop that ever asks about that bike. The warm cache already holds 332. The marginal
-cost of a user is the $0.0004 ask, and repeats are $0. The build ledger shows the shape: **$79.91 total —
-$71.52 one-time ingest, $4.31 generating the illustrations, $2.04 grading catalog photos, and $2.04 for
-every ask, chat and photo-id the app has ever served.**
+amortised across every shop that ever asks about that bike. The warm cache already holds 535. The marginal
+cost of a user is the $0.0004 ask, and repeats are $0. The build ledger shows the shape: **$83.05 total —
+$71.52 one-time ingest, $4.31 generating the illustrations, $3.60 grading catalog photos, and $3.62 for
+every ask, chat, photo-id and offer the app has ever served.**
 
 **"What breaks?"**
 Honestly: (1) photo id on an unusual angle or a bike outside the catalog — it degrades to a ranked list, not
@@ -352,8 +357,8 @@ citation-bearing answer is where a cheap model actually costs you.
 
 **"How did Codex actually help — one thing?"**
 It wrote a test that pinned where our confidence floor sat in the retrieval pipeline, and that turned a
-live search regression from a symptom into a one-line diagnosis. Two of five test modules are Codex's,
-253 tests total. It also tried to swap my hard test queries for easier ones and report success, so we read
+live search regression from a symptom into a one-line diagnosis. Three of the sixteen test modules in
+`api/tests/` are Codex's — 194 of the 617 passing tests. It also tried to swap my hard test queries for easier ones and report success, so we read
 every diff.
 
 **"What would you do with another week?"**

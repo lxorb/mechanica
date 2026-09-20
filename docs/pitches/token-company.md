@@ -2,7 +2,7 @@
 
 **5 minutes.** The one claim: *the AI was never not-good-enough for this mechanic. It was too expensive to use.*
 
-Every number below is measured. Sources: `api/data/costs.jsonl` (36,958 billed calls), `api/eval/report.md`,
+Every number below is measured. Sources: `api/data/costs.jsonl` (41,612 billed calls as of 2026-09-20 09:55), `api/eval/report.md`,
 `api/eval/report-baseline.md`, `api/eval/chat-report.md`, `api/docs/CHAT-RESEARCH.md`, and the live
 `GET /api/cost` + `GET /api/cost/ttc`. Regenerate the whole table with:
 
@@ -18,15 +18,17 @@ Full output: [`token-company/cost-report.md`](token-company/cost-report.md) · r
 
 | | |
 |---|---|
-| naive (500-page workshop manual, flagship, every question) | **$8.005 / question** |
-| the founder's own lived bill | **~$4 / question** |
+| naive, OUR measured worst case — the largest **deployed** manual (775 p) in the flagship | **$12.40 / question** |
+| naive, the **median** deployed manual (171 p) | **$1.37 / question** |
+| naive, modelled on **his** 500-page workshop manual | **$8.005 / question** |
+| **his own lived bill** when he tried it — his number, not ours, on his manual | **~$4 / question** |
 | ours — the default path (question → the manual's pages) | **$0.00038 / ask** |
-| ours — worst case (a written answer with citations) | **$0.0042–0.0049 / answer** |
-| x-factor | **952x–21,000x** |
-| tokens removed before the prompt was ever billed (bear-2 + stripping) | **31.2%** eval · **31.4%** live now |
+| ours — worst case (a written answer with citations) | **$0.0041–0.0049 / answer** |
+| x-factor, our $12.40 worst case against our $0.00038 ask | **32,632x** — and **3,600x** against the $1.37 median |
+| tokens removed before the prompt was ever billed (bear-2 + stripping) | **31.2%** eval · **29.1% over 10 calls** on the live replica now |
 | his month at 40 questions/day | **$4,800 → $5.04**, and $5.04 is the worst case |
 
-$1 buys the naive stack **one eighth of a question**. It buys us **2,632**.
+$1 buys the naive stack **one twelfth of a question** at our measured $12.40 worst case. It buys us **2,632**.
 
 ---
 
@@ -50,12 +52,11 @@ At 40 questions a day that is **$160/day, $4,800/month**. That is not an accurac
 
 | manual | pages | prompt tokens | naive `gpt-6-astra` | whole manual in `gpt-5.6-luna` |
 |---|---|---|---|---|
-| KTM 390 Duke 2023 (our demo bike) | 128 | 102,400 | $1.029 | $0.0206 |
-| median manual in our catalog | 170 | 136,000 | $1.365 | $0.0273 |
+| KTM 390 Duke 2024 (our demo bike) | 143 | 114,400 | $1.144 | $0.0229 |
+| **median deployed manual** | 171 | 136,800 | **$1.37** | $0.0274 |
 | BMW R 12 G/S 2026 | 270 | 216,000 | $2.165 | $0.0433 |
-| largest in our catalog | 381 | 304,800 **(2x)** | $6.101 | $0.1220 |
 | his 500-page workshop manual | 500 | 400,000 **(2x)** | **$8.005** | $0.1601 |
-| largest in the **deployed** catalog (live `/api/cost` reports the $; pages back-derived) | ~775 | ~620,000 **(2x)** | **$12.40** | — |
+| **largest in the deployed catalog** (live `/api/cost` reports this as `naivePerAsk`) | 775 | 620,000 **(2x)** | **$12.40** | — |
 
 800 tokens/page and the >272,000-token 2x rule are `api/app/llm.py`. Output is 100 tokens at each model's
 output price. **Assumption to disclose if asked:** we apply the 2x surcharge to the `luna` column too. If it
@@ -91,7 +92,7 @@ eval the mix is cheaper: **$0.00038**. Both are in the report; quote whichever, 
 
 BM25 over the manual's own sections, **in process, zero LLM, zero embeddings, zero vector DB**
 (`api/app/search/local.py`). The prompt carries **2,314 tokens** instead of 136,000–400,000.
-The mechanic doesn't want prose anyway — he wants **page 62**.
+The mechanic doesn't want prose anyway — he wants **page 77**.
 
 ### Slide B — the cheapest call is the one not made
 
@@ -149,9 +150,9 @@ place the other levers cannot touch: the printed page that must go into the prom
   **581 tokens per answer**.
 - At `gpt-5.6-terra` fresh input that is **$0.00116/answer — 21.7% of the chat bill**
   ($0.00536 → $0.00420), on top of everything else.
-- Live `/api/cost/ttc`, read 2026-09-20 08:50 UTC: 2,538 → 1,742, **31.4% saved** (`ttc.chat` 34.6%,
-  `ttc.picker` 27.0%). That counter is **in-memory per replica** and resets on deploy, so read it fresh
-  before the pitch — it is a live meter, not a stored total.
+- Live `/api/cost/ttc`, read 2026-09-20 09:42 UTC: 8,811 → 6,247, **29.1% saved over 10 calls**. That
+  counter is **in-memory per replica** and resets on deploy, so a low number means a fresh replica, not a
+  worse compressor. Read it fresh before the pitch and quote the 31.2% eval figure on stage.
 
 **Why one call and not one per page:** the API allows **60 requests/minute** (undocumented — we found it by
 getting 429'd). Per-page compression would have capped the whole product at ten chats a minute. So the
@@ -160,9 +161,10 @@ prompt is fenced `PAGE 62 … PAGE 63 …`, compressed in one call, and split ba
 ### Slide F — pay once, not per question
 
 On-demand ingest: **$0.0951 per manual**, mean over **648 real ingests** (mean 177 pages, 114,565 pages
-total, **$0.538 per 1,000 pages**). Readable in 6–7 s, fully searchable in 44–50 s.
+total, **$0.538 per 1,000 pages**). Readable in **1.3 s**, fully searchable in **40.4 s** on the timed live run.
 That is **7% of ONE naive question**, and it
-then answers every question about that bike forever. 508 manuals in the catalog cost **$48 total, once**.
+then answers every question about that bike forever. The 535 manuals in the deployed catalog cost about
+**$51 total, once**.
 
 ---
 
@@ -203,10 +205,10 @@ Two tabs. Phone mirrored.
 
 | # | do | expect | say |
 |---|---|---|---|
-| 1 | Tab 2: `https://mechanica.emilvinu.ch/api/cost/ttc` — read `tokensIn` / `tokensOut` / `savedPct` aloud | e.g. `2,538 → 1,742, 31.4%`; **may be all zeroes on a fresh replica — that is fine, it just means step 5 starts from 0** | "That counter is bear-2's, live in production." |
-| 2 | Tab 1: KTM 390 Duke 2023 → **Chat** → type exactly `chain is loose, what do I do` | numbered steps, every sentence ending `[p. 62]` / `[p. 63]` | "Up to six pages of KTM's own text went in. They got compressed on the way." |
+| 1 | Tab 2: `https://mechanica.emilvinu.ch/api/cost/ttc` — read `tokensIn` / `tokensOut` / `savedPct` aloud | e.g. `8,811 → 6,247, 29.1%` over 10 calls; **may be all zeroes on a fresh replica — that is fine, it just means step 5 starts from 0** | "That counter is bear-2's, live in production." |
+| 2 | Tab 1: KTM 390 Duke 2024 → **Chat** → type exactly `chain is loose, what do I do` | numbered steps, every sentence ending `[p. 77]` / `[p. 78]` | "Up to six pages of KTM's own text went in. They got compressed on the way." |
 | 3 | point at the chat footer | **`N tokens saved`** (~600–950 for this question) | "Those tokens were never billed." |
-| 4 | tap the `[p. 63]` chip | Book jumps to p.63, orange markers on the printed lines | "The model only ever wrote a page number. The server sliced that quote out of the **original** page, not out of the compressed text. Verbatim by construction." |
+| 4 | tap the `[p. 78]` chip | Book jumps to p.78, orange markers on the printed lines | "The model only ever wrote a page number. The server sliced that quote out of the **original** page, not out of the compressed text. Verbatim by construction." |
 | 5 | Tab 2: reload `/api/cost/ttc` | `tokensIn`, `tokensOut`, `tokensSaved`, `calls` all moved | "Same request, counters moved, citation still exact." |
 | 6 | Tab 1: `#cost` | `total · per ask · naive per ask · calls` | "Four hundredths of a cent an ask. Pasting the manual in is $12.40." |
 
@@ -268,7 +270,7 @@ At 1,000 mechanics: **$1.64M/month → $5,040/month** worst case, **$456/month**
 does not scale with mechanics — it scales with distinct manuals, and there are only so many motorcycles.
 
 > *"He stopped using AI because one question cost four dollars. His whole month now costs five — and the
-> answer he gets is page 62 of KTM's own manual, not our paraphrase of it. The compression is why the one
+> answer he gets is page 77 of KTM's own manual, not our paraphrase of it. The compression is why the one
 > place we do write a sentence is still affordable, and the page fences are why that sentence can still
 > point at the exact line of ink."*
 
@@ -307,8 +309,8 @@ degrades to *more expensive*, never to *slower than the timeout* and never to *w
 **What is the cost at 1,000 mechanics?**
 1.2M questions/month. **$5,040/month** if every one of them is a full chat answer; **$456/month** on the
 default ask path. The naive stack at the same volume is **$1.64M/month, $19.7M/year**. The part that
-doesn't scale linearly is ingest: 508 manuals cost **$48, once**, shared by every shop — there are ~13,500
-distinct free official manuals in the registry, so the whole world's catalog is roughly **$1,280, once**.
+doesn't scale linearly is ingest: 535 manuals cost about **$51, once**, shared by every shop — there are
+**14,770** distinct free English PDFs we can reach, so the whole reachable corpus is roughly **$1,400, once**.
 
 **bear-2's pricing is "you only pay for the tokens compression removes" — so what does it cost you?**
 There is no public $/M, so we log it as `usd = 0` and count the saving in **tokens** instead, in a separate

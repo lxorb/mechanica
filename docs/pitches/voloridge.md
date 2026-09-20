@@ -9,6 +9,11 @@ hourly weather and global air quality. Spec: `docs/pitches/voloridge/spec.md`. S
 Every number below is measured on 2026-09-20 and traceable to a file or an endpoint. Numbers marked
 † are only claimable **after** the build; everything else is already true.
 
+**Status, say it before a judge asks:** Climate Fit is **built, deploying**. `api/app/climate/` is in the
+repo and wired into `main.py`, and `/api/climate/*` answers on the live host — but the deployed replica
+carries no climatology yet, so `POST /api/climate/fit` returns `no climatology` today. Demo it locally, and
+say that sentence rather than let a judge find it.
+
 ---
 
 ## 0:00 – 1:30 · The product
@@ -26,8 +31,9 @@ parts come up with live prices. Chat and voice are grounded: the model may emit 
 the **server** slices the quote out of the original page. It cannot invent a torque figure, because
 it is never allowed to type one.
 
-Measured: **$0.0003–0.005 per question** against a **$6.10** naive baseline — about 1,500× cheaper —
-first token in ~2.5 s, 100% valid citations, 0 invented numbers across the eval.
+Measured: **$0.00038 per ask** and **$0.0041** for a written chat answer, against a **$12.40** naive
+baseline — the largest deployed manual read to the flagship once per question, so **32,632× cheaper**
+(3,600× against the $1.37 median manual). First token in ~2.6 s, 100% valid citations, 0 invented numbers.
 
 *(Live: type "KTM 1390 Super Adventure R 2026", one tap, the page is on screen.)*
 
@@ -81,14 +87,14 @@ We copy no manuals at crawl time. `RegistryEntry` has no field that could hold o
 
 > **Feel:** they turned unstructured documents into something you could actually query.
 
-From **532 live manuals · 95,365 pages** we extracted, grounded, and stored:
+From **535 live manuals · 95,914 pages** we extracted, grounded, and stored:
 
-- **90,955 sections** with per-block page coordinates,
+- **91,388 sections** with per-block page coordinates,
 - **431,292 highlights** — normalised rectangles over the real page,
 - **137,379 typed specs** — `torque | capacity | clearance | pressure | grade | size | electrical`,
   each with a page number and a **character-for-character quote**.
 
-Cost for the whole corpus: **$61.61**, $0.095 per manual, ~50 s to searchable. The grounding gate is
+Cost for the whole corpus: **$61.61**, $0.095 per manual, **40.4 s** to searchable on the timed live run. The grounding gate is
 the load-bearing part: a quote that cannot be found in the PDF text layer is dropped, and the log
 says how many. On this corpus, **290 of 110,094 sections dropped (0.3%) and 0 of 431,292 highlights
 discarded.**
@@ -124,7 +130,7 @@ flowchart TB
 
   H --> ING["ingest: PyMuPDF text layer<br/>+ per-block coords"]
   ING --> GR["grounding gate<br/>quote must exist in the page"]
-  GR --> CORP["532 manuals · 95,365 pages<br/>137,379 specs · 431,292 highlights"]
+  GR --> CORP["535 manuals · 95,914 pages<br/>137,379 specs · 431,292 highlights"]
 
   subgraph rb["rule extraction — the new dataset"]
     CORP --> A["Pass A: deterministic regex<br/>8 rule types, zero cost"]
@@ -150,15 +156,21 @@ flowchart TB
 
 Three things worth a sentence each:
 
-- **600 GB in, 4 MB out.** We never store the archive. Each station-year `.gz` is reduced **in the
-  stream** to one row: hours below −35/−30/−25/−20/−10/0, hours above 35/40, freeze–thaw cycles,
-  min, max, mean. 12,776 stations × 6 years ≈ 76,000 objects ≈ 45 GB streamed → a 4 MB table that
-  ships inside the container.
-- **The cleaning is small and decisive.** ISD puts a quality code at character 93. Across 284
-  station-years and 3,003,373 readings, only **0.12%** are flagged suspect or erroneous, and the
-  annual minimum moves at **1.4%** of stations — but at one Russian station in our sample it moves
-  from **−25.1 °C to −21.5 °C**, which flips the antifreeze verdict from breached to fine. A
-  0.12% cleaning step decides the answer. That is the whole challenge in one line.
+- **600 GB in, 4.34 MB out — built, not projected.** We never store the archive. Each station-year
+  `.gz` is reduced **in the stream** to one row: the share of readings below
+  5/0/−5/−10/−15/−20/−25/−30/−35/−40 °C and above 30/35/40/45 °C, freeze–thaw days, min, max,
+  mean, p01, p99. The 2024 sweep is **done**: 12,585 stations attempted, **12,225 station-years
+  reduced**, **4,260 MB streamed**, **121,751,290 observations parsed**, in **537 s** at 48 threads
+  from Switzerland — 7.9 MB/s. Out the other end: `climatology.json`, **4.34 MB over 10,715
+  stations** (1,701 dropped for fewer than 2,000 quality-passed readings). One year, not six, and we
+  say so. (`api/data/climate/isd-2024.jsonl`, `docs/CLIMATE.md`.)
+- **The cleaning is small and decisive.** ISD puts a quality code at character 93. Re-running the
+  reduction with that filter switched off, over **400 station-years**: only **0.12%** of readings
+  are flagged suspect or erroneous and only **6 of 400** annual minima move at all — but at Russian
+  station `263240-99999` the 2024 minimum is **−21.5 °C with the filter and −25.1 °C without it**,
+  so the filter is the only thing between a mechanic and a false "action needed" against the
+  −25 °C floor. A 0.12% cleaning step decides the answer. That is the whole challenge in one line,
+  and it ships as a report: `api/data/climate/quality_ablation.json`.
 - **The join is where we actually got burned.** Our first pass matched stations **by name**:
   "Boston" landed on a **buoy**, "Moscow" on Moscow **Idaho**, and "Chicago" on a Canadian station
   reporting **−46.9 °C**. The shipped join is geodesic, filters the 16,885 stations that stopped
@@ -170,19 +182,31 @@ Three things worth a sentence each:
 
 > **Feel:** oh. That is genuinely surprising, and it matters.
 
-**One number, nine markets.** Of our 508 stored spec files, **206 manuals print an antifreeze floor.
-Every single one prints −25 °C.** EU 100, US 69, worldwide 26, plus Argentina, Japan, China, Brazil,
-the Philippines. Four makes, three model years, **zero variance**. Somebody in Austria typed −25 °C
-once, and it shipped to every market on earth.
+**One number, nine markets.** The shipped extractor, run over all **529 stored page files**:
+**227 manuals print an antifreeze floor, and all 227 print −25 °C**, on 1,028 distinct pages.
+EU 108, US 77, worldwide 30, plus Argentina, Japan, China, Brazil, the Philippines and RW. Four
+makes, model years 2006–2026, **spread 0.0000 — zero variance**. (The earlier 206 came from the 508
+*spec* files; same finding, smaller denominator — both scripts are in the repo.) Somebody in Austria
+typed −25 °C once, and it shipped to every market on earth.
 
-**How often is that wrong?** Random sample, seed 11, of the 12,776 stations still reporting:
-250 had a 2024 file, 210 had ≥ 2,000 quality-passed observations, **48 of them — 22.9% — went below
-−25 °C during 2024.** 82.4 MB streamed, 2,384,890 observations parsed, in about three minutes on a
-laptop. A second independent sample gave 22.6%: the estimate is stable.
+It is the outlier in the other direction too: of the eight rule types we extract, `antifreeze_floor`
+is the **only** one with a spread of 0.0. Cold-start, dusty, wet, salt and heat clauses spread
+0.74–0.85 across makes. The one rule the whole industry agrees on is the one that is wrong for a
+fifth of the planet's weather stations. (`api/data/climate/anomalies.json`.)
 
-And the unexpected part: the breaching countries are Russia, the US, Canada, Norway, Finland,
-Kazakhstan — **and Fiji and Bolivia.** Those are *altitude* stations, not latitude ones. The manual's
-single number fails on the vertical axis too, which is why `altitude` became its own rule type.
+**How often is that wrong?** We no longer have to sample — the whole 2024 population is built.
+**2,215 of 10,715 usable station-years (20.7%) recorded a temperature below −25 °C in 2024.**
+Below −20 °C: 27.4%. Below −30 °C: 14.0%. Below −35 °C: 9.1%.
+
+The seeded 260-station draw we quoted before (seed 11) reproduces **exactly** off the rebuilt data —
+210 usable, **48 breaching, 22.9%** — so the estimator was unbiased and the population number is the
+one to use now. (`docs/pitches/voloridge/findings.md`, regenerated by `findings.py`.)
+
+And the unexpected part: **113 of the breaching stations sit above 1,500 m** — Tibetan-plateau
+stations at 4,613 m and 4,535 m, a US station at 4,113 m, Tajikistan at 3,940 m. Those are *altitude*
+stations, not latitude ones. The manual's single number fails on the vertical axis too, which is why
+`altitude` became its own rule type. (Careful with NOAA's `CTRY` column while reading that table: it
+is the archive's own code and it collides — `CH` covers both ZUERICH-FLUNTERN and WUDAOLIANG.)
 
 **The rule that is already personalised, and nobody notices.** KTM does print a temperature-banded
 oil grade — *"Engine oil grade at ambient temperature ≥ 0 °C: SAE 10W/50; < 0 °C: SAE 5W/40"*,
@@ -215,28 +239,34 @@ repo — `docs/pitches/voloridge/isd_probe.py`, run it yourself.
 1. **KTM 1390 Super Adventure R 2026** → the manual opens.
 2. Tap **Conditions**, type **Minneapolis** →
    `MINNEAPOLIS–ST PAUL INTERNATIONAL · 10.8 km · 13,760 observations in 2024`
-   - `OIL — action needed · 20.7% of 2024's readings below 0 °C · your manual, p. 215: SAE 5W/40`
-   - `COOLANT — ok · coldest 2024 reading −22.2 °C · floor −25 °C, p. 215`
+   - `ENGINE OIL GRADE — action needed · 20.7% of readings below 0 °C (~1,816 h/yr) · p. 215`
+   - `ANTIFREEZE PROTECTION — watch · coldest 2024 reading −22.2 °C · floor −25 °C · p. 215`
+     (measured: 2.8 °C of margin renders `borderline`, not `ok` — the built system is stricter than
+     the script we wrote for this slide)
+   - `ROAD SALT / SEA AIR — action needed · 20.7% below 0 °C, 68 freeze–thaw days/yr · p. 207`
 3. Change one field to **International Falls, MN** →
    `COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 215`
 4. **Tap the coolant row.** The PDF opens on p. 215 with *"Antifreeze protection to at least −25 °C"*
    highlighted. **KTM said it. We only worked out that it applies to you.**
 5. Change to **Bangkok** — every cold rule goes grey and the dust rule lights up. The negative
    control is part of the demo on purpose.
-6. Last screen: *206 manuals. 9 markets. One number.* And next to it: **22.9%**.
+6. Last screen: *227 manuals. 9 markets. One number.* And next to it: **20.7%**.
+   Screenshots of every step above: `docs/pitches/voloridge/shots/`.
 
 The close: the manual is still the only thing we show you. What the manufacturer could never print is
 **whether the rule is about you** — and that took 600 GB of somebody else's data to answer, reduced
-to 4 MB, for zero tokens and thirty milliseconds a look.
+to 4.34 MB, for zero tokens and **3–6 ms** a look (measured warm; the first call in a process also
+loads the table, ~120 ms).
 
 ---
 
 ## Q&A — the hard ones
 
 **Is your station sample biased?**
-Yes, and in a knowable direction. ISD station density is heavy in the US, Russia and Canada and thin
-across Africa and South Asia, so a station-weighted 22.9% is **not** "22.9% of riders". It is
-"22.9% of the world's actively reporting weather stations". To make a rider-weighted claim we would
+Yes, and in a knowable direction. It is no longer a sample — it is all 10,715 usable 2024
+station-years — but ISD station density is heavy in the US, Russia and Canada and thin across Africa
+and South Asia, so a station-weighted 20.7% is **not** "20.7% of riders". It is
+"20.7% of the world's actively reporting weather stations". To make a rider-weighted claim we would
 need to weight by registrations — we do not have that data, so we do not make that claim. What the
 per-user product does is not statistical at all: it is one station, named, with its distance printed.
 
@@ -257,18 +287,18 @@ hand-labelled 20-manual held-out set with published precision and recall†. If 
 grounded, it does not exist.
 
 **600 GB — did you actually process it, or a toy slice?**
-The reducer is real and the arithmetic is honest: 12,776 stations × 6 years ≈ 76,000 objects ≈ 45 GB
-gzipped, streamed and reduced in-stream to ~4 MB, never stored. On this laptop we measured 82.4 MB /
-250 objects / 2.38 M observations in about three minutes over public HTTPS; from Switzerland the full
-sweep is ~7 hours, and in us-east-1 on the instances you offered at the booth it is well under an
-hour. We will tell you exactly which slice shipped rather than implying we swept it all.
+One full year, all of it, and we will not imply more. Measured on this laptop over public HTTPS:
+**12,225 station-years, 4,260 MB streamed, 121,751,290 observations parsed, 537 s at 48 threads**,
+reduced in-stream to a **4.34 MB** table that is committed. Nothing raw was written to disk. Six
+years (2019–2024) is the same command with `--years 2019:2024` — about 26 GB and an hour here,
+minutes in us-east-1 on the instances you offered at the booth. The shipped slice is 2024.
 
 **Why not just call a weather API?**
 Because the question is not "what is the temperature". It is "how many hours per year is this
 location below the threshold this manufacturer printed, and how bad was the worst year" — a
 multi-year distribution, not a reading. That needs the archive. It also needs to be free and offline
-at request time: the verdict costs 0 tokens and ~30 ms because the whole climatology is 4 MB in
-memory.
+at request time: the verdict costs 0 tokens and **3–6 ms measured** because the whole climatology is
+4.34 MB in memory.
 
 **Is this reproducible?**
 `docs/pitches/voloridge/isd_probe.py`, seed 11, anonymous HTTPS, no AWS account, no key. Both figures
@@ -281,10 +311,10 @@ is "the manufacturer printed X; your location measured Y". Joining NHTSA complai
 this would give the outcome side, and it is the obvious next dataset — it is just not on your curated
 list, and we would rather ship one honest join than two hand-wavy ones.
 
-**Scale: what happens at 27,751 vehicles instead of 659?**
+**Scale: what happens at 27,751 vehicles instead of 662?**
 The climatology does not grow — it is per station, not per vehicle. The rulebook is per *manual*, and
-one manual covers many model years, so it grows with ingests, not with the catalog: 532 manuals
-already cover 659 vehicles, and the registry has 28,200 distinct PDFs behind 53,557 rows. At
+one manual covers many model years, so it grows with ingests, not with the catalog: 535 manuals
+already cover 662 vehicles, and the registry has 28,200 distinct PDFs behind 53,557 rows. At
 $0.095/manual and ~$0.0017 of rule extraction per manual, the full free-and-fetchable set is a
 three-figure spend, not an architectural problem.
 
@@ -292,8 +322,11 @@ three-figure spend, not an architectural problem.
 Three things, all still in the repo's history. **One:** the name-based station join — "Chicago" on a
 Canadian station at −46.9 °C, "Boston" on a buoy, "Moscow" in Idaho. Fixed with geodesics and a
 printed distance. **Two:** we shipped the first reduction without the ISD quality filter. It only
-moves 0.12% of readings, which is exactly why it is easy to skip — and it still flips one station in
-our sample from breached to fine. **Three:** one spec file is corrupt on disk right now,
+moves 0.12% of readings, which is exactly why it is easy to skip — and it still flips
+`263240-99999` from breached to fine. **Two and a half:** the first regex for the antifreeze floor
+read `−45 … −25 °C` as a promise of −45 °C. It is a mixing *range*, and the guaranteed floor is the
+weakest end. 188 manuals were briefly wrong in the safe-looking direction, which is the worse
+direction: it would have told a mechanic in Fargo that he was fine. **Three:** one spec file is corrupt on disk right now,
 `yamaha-tracer-9-gt-2025-eu-om-90739a.json`, trailing bytes after the JSON document. We found it
 because the analysis crashed on it, which is the argument for running the analysis over the whole
 corpus instead of a sample.
@@ -305,12 +338,18 @@ corpus instead of a sample.
 | claim | source |
 |---|---|
 | 53,557 rows · 28,200 URLs · 84 hosts · 27,751 vehicles · 13,537 with a manual | `api/data/registry.json`, `api/data/bikes.json` |
-| 532 manuals · 95,365 pages · 90,955 sections · 659 vehicles | `GET https://mechanica.emilvinu.ch/api/manuals` |
+| 535 manuals · 95,914 pages · 91,388 sections · 662 vehicles | `GET https://mechanica.emilvinu.ch/api/manuals` |
 | 137,379 specs · 431,292 highlights · 648 done / 80 error / 24 duplicate / 21 suspicious · $61.61 | `api/data/mass_report.jsonl` |
-| 107,452 specs locally · 206 manuals × −25 °C × 9 markets | `docs/pitches/voloridge/antifreeze_scan.py` over `api/data/specs/*.json` |
+| 107,452 specs locally · 206 manuals × −25 °C × 9 markets (spec corpus) | `docs/pitches/voloridge/antifreeze_scan.py` over `api/data/specs/*.json` |
+| 227 manuals × −25 °C × 9 markets · 1,028 pages · spread 0.0000 (page corpus) | `docs/pitches/voloridge/findings.py` → `findings.md`; `api/data/climate/anomalies.json` |
+| 3,056 rules · 519/529 manuals · 93,932 pages · 29 dropped by grounding · $0.67 | `api/data/climate/rules_report.json` (route `climate.extract`, `gpt-5.6-luna`, cap $15) |
+| 12,225 station-years · 4,260 MB streamed · 121,751,290 obs · 537 s · 4.34 MB out | `api/tools/climate_build.py --isd --years 2024 --threads 48`, `api/data/climate/isd-2024.jsonl` |
+| 2,215/10,715 (20.7%) below −25 °C in 2024; 27.4/14.0/9.1% at −20/−30/−35 | `docs/pitches/voloridge/findings.md` |
+| 0.12% readings flagged · 6/400 minima moved · `263240-99999` −21.5 vs −25.1 °C | `api/data/climate/quality_ablation.json` (`--ablation --limit 400`) |
+| verdicts 3–6 ms warm · 0 tokens · every row carries a page | `api/tests/test_climate.py`, `docs/pitches/voloridge/shots/` |
 | 522/529 manuals with an environment clause; the clause-family table | full scan of `api/data/pages/*.json`, 93,932 pages |
-| 29,661 stations · 12,776 active · 22.9% below −25 °C · 82.4 MB · 2,384,890 obs | `docs/pitches/voloridge/isd_probe.py` (seed 11) |
+| 29,661 stations · 12,776 active · 22.9% below −25 °C in the seeded 260-draw | `docs/pitches/voloridge/isd_probe.py` (seed 11); reproduced off the full build in `findings.md` |
 | per-city share of readings below 0 °C | `isd_probe.py cities` |
 | 8 docKinds and why | `api/app/registry/doctype.py` |
 | 17 unreachable makes, per-portal war stories | `docs/MANUALS.md` |
-| $0.0003–0.005 per ask · $6.096 naive · 100% valid citations | `docs/ARCHITECTURE.md`, `api/eval/report.md`, `GET /api/cost` |
+| $0.00038 per ask · $0.0041 per chat answer · $12.40 naive (775 p) · 100% valid citations | `docs/ARCHITECTURE.md`, `api/eval/report.md`, `GET /api/cost` |

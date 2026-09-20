@@ -75,7 +75,10 @@ function load() {
   Promise.resolve()
     .then(() => cost())
     .then((sum) => {
-      if (token !== gen || !sum || !cells) return;
+      // Paint whenever the meter is still on screen. Keying this to a counter that close()
+      // also bumps meant a single stray route event dropped the only answer and left every cell "—".
+      if (!sum || !cells || !veil || veil.hidden) return;
+      void token;
       const asks = Number(sum.asks) || 0;
       const total = Number(sum.total) || 0;
       const values = [

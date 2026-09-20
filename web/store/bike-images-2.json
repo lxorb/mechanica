@@ -865,6 +865,30 @@
     "via": "alias",
     "aliasOf": "bmw|f-800-gs-trophy"
   },
+  "bmw|f-800-r": {
+    "image": "store/img/bikes2/bmw-f-800-r.webp",
+    "thumb": "store/img/bikes2/bmw-f-800-r.thumb.webp",
+    "title": "Paris - Salon de la moto 2011 - BMW - F 800 R - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_R_-_001.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/bmw-f-800-r.hero.webp"
+  },
+  "bmw|f-800-r-sport": {
+    "image": "store/img/bikes2/bmw-f-800-r.webp",
+    "thumb": "store/img/bikes2/bmw-f-800-r.thumb.webp",
+    "hero": "store/img/bikes2/bmw-f-800-r.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - BMW - F 800 R - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_R_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "bmw|f-800-r"
+  },
   "bmw|f-800-st-touring": {
     "image": "store/img/bikes/bmw-f-800-st.webp",
     "thumb": "store/img/bikes/bmw-f-800-st-thumb.webp",
@@ -1474,6 +1498,18 @@
     "via": "alias",
     "aliasOf": "bmw|r-1250-gs"
   },
+  "bmw|r-1250-rt": {
+    "image": "store/img/bikes2/bmw-r-1250-rt.webp",
+    "thumb": "store/img/bikes2/bmw-r-1250-rt.thumb.webp",
+    "title": "06-2024 BMW R1250 RT front.jpg",
+    "author": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:06-2024_BMW_R1250_RT_front.jpg",
+    "via": "category",
+    "view": "front",
+    "score": 6.0,
+    "hero": "store/img/bikes2/bmw-r-1250-rt.hero.webp"
+  },
   "bmw|r-18-b": {
     "image": "store/img/bikes/bmw-r-18.webp",
     "thumb": "store/img/bikes/bmw-r-18-thumb.webp",
@@ -1826,6 +1862,18 @@
     "via": "alias",
     "aliasOf": "can-am|spyder-f3"
   },
+  "can-am|spyder-rs": {
+    "image": "store/img/bikes2/can-am-spyder-rs.webp",
+    "thumb": "store/img/bikes2/can-am-spyder-rs.thumb.webp",
+    "title": "BRP Can-Am Spyder rs - Flickr - Joost J. Bakker IJmuiden.jpg",
+    "author": "Joost J. Bakker",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BRP_Can-Am_Spyder_rs_-_Flickr_-_Joost_J._Bakker_IJmuiden.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/can-am-spyder-rs.hero.webp"
+  },
   "chrysler|pacifica-hybrid": {
     "image": "store/img/bikes/chrysler-pacifica.webp",
     "thumb": "store/img/bikes/chrysler-pacifica-thumb.webp",
@@ -2072,6 +2120,42 @@
     "via": "alias",
     "aliasOf": "ducati|diavel"
   },
+  "ducati|icon": {
+    "image": "store/img/bikes2/ducati-icon.webp",
+    "thumb": "store/img/bikes2/ducati-icon.thumb.webp",
+    "title": "Ducati Scrambler Icon 803 CC – Hamburger Motorrad Tage 2015 01.jpg",
+    "author": "Frank Schwichtenberg",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Scrambler_Icon_803_CC_%E2%80%93_Hamburger_Motorrad_Tage_2015_01.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/ducati-icon.hero.webp"
+  },
+  "ducati|icon-dark": {
+    "image": "store/img/bikes2/ducati-icon.webp",
+    "thumb": "store/img/bikes2/ducati-icon.thumb.webp",
+    "hero": "store/img/bikes2/ducati-icon.hero.webp",
+    "title": "Ducati Scrambler Icon 803 CC – Hamburger Motorrad Tage 2015 01.jpg",
+    "author": "Frank Schwichtenberg",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Scrambler_Icon_803_CC_%E2%80%93_Hamburger_Motorrad_Tage_2015_01.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|icon"
+  },
+  "ducati|monster": {
+    "image": "store/img/bikes2/ducati-monster.webp",
+    "thumb": "store/img/bikes2/ducati-monster.thumb.webp",
+    "title": "Ducati Monster in 2024.jpg",
+    "author": "Nicholas Gemini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_in_2024.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/ducati-monster.hero.webp"
+  },
   "ducati|monster-1000-dark-i.e.": {
     "image": "store/img/bikes/ducati-monster-1000.webp",
     "thumb": "store/img/bikes/ducati-monster-1000-thumb.webp",
@@ -2142,6 +2226,66 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_1100_Evo_front.jpg",
     "via": "alias",
     "aliasOf": "ducati|monster-1100"
+  },
+  "ducati|monster-1200": {
+    "image": "store/img/bikes2/ducati-monster-1200.webp",
+    "thumb": "store/img/bikes2/ducati-monster-1200.thumb.webp",
+    "title": "2014 Ducati Monster 1200.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
+    "via": "category",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/ducati-monster-1200.hero.webp"
+  },
+  "ducati|monster-1200-25°-anniversario": {
+    "image": "store/img/bikes2/ducati-monster-1200.webp",
+    "thumb": "store/img/bikes2/ducati-monster-1200.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster-1200.hero.webp",
+    "title": "2014 Ducati Monster 1200.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ducati|monster-1200"
+  },
+  "ducati|monster-1200-r": {
+    "image": "store/img/bikes2/ducati-monster-1200.webp",
+    "thumb": "store/img/bikes2/ducati-monster-1200.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster-1200.hero.webp",
+    "title": "2014 Ducati Monster 1200.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ducati|monster-1200"
+  },
+  "ducati|monster-1200-s": {
+    "image": "store/img/bikes2/ducati-monster-1200.webp",
+    "thumb": "store/img/bikes2/ducati-monster-1200.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster-1200.hero.webp",
+    "title": "2014 Ducati Monster 1200.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ducati|monster-1200"
+  },
+  "ducati|monster-1200-s-stripe": {
+    "image": "store/img/bikes2/ducati-monster-1200.webp",
+    "thumb": "store/img/bikes2/ducati-monster-1200.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster-1200.hero.webp",
+    "title": "2014 Ducati Monster 1200.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ducati|monster-1200-s"
   },
   "ducati|monster-620-dark": {
     "image": "store/img/bikes/ducati-monster-620.webp",
@@ -2256,6 +2400,30 @@
     "via": "alias",
     "aliasOf": "ducati|monster-900-i.e."
   },
+  "ducati|monster-diesel": {
+    "image": "store/img/bikes2/ducati-monster.webp",
+    "thumb": "store/img/bikes2/ducati-monster.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster.hero.webp",
+    "title": "Ducati Monster in 2024.jpg",
+    "author": "Nicholas Gemini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_in_2024.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|monster"
+  },
+  "ducati|monster-plus": {
+    "image": "store/img/bikes2/ducati-monster.webp",
+    "thumb": "store/img/bikes2/ducati-monster.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster.hero.webp",
+    "title": "Ducati Monster in 2024.jpg",
+    "author": "Nicholas Gemini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_in_2024.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|monster"
+  },
   "ducati|monster-s2r-dark": {
     "image": "store/img/bikes/ducati-monster-s2r.webp",
     "thumb": "store/img/bikes/ducati-monster-s2r-thumb.webp",
@@ -2307,6 +2475,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:2003_Ducati_S4R_1003_testaretta_engined_monster.jpg",
     "via": "alias",
     "aliasOf": "ducati|monster-s4r"
+  },
+  "ducati|monster-senna": {
+    "image": "store/img/bikes2/ducati-monster.webp",
+    "thumb": "store/img/bikes2/ducati-monster.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster.hero.webp",
+    "title": "Ducati Monster in 2024.jpg",
+    "author": "Nicholas Gemini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_in_2024.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|monster"
+  },
+  "ducati|monster-sp": {
+    "image": "store/img/bikes2/ducati-monster.webp",
+    "thumb": "store/img/bikes2/ducati-monster.thumb.webp",
+    "hero": "store/img/bikes2/ducati-monster.hero.webp",
+    "title": "Ducati Monster in 2024.jpg",
+    "author": "Nicholas Gemini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_in_2024.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|monster"
   },
   "ducati|multistrada-1000-ds": {
     "image": "store/img/bikes/ducati-multistrada-1000.webp",
@@ -2597,6 +2789,174 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_955_Panigale_V2_(IMG_9845).jpg",
     "via": "alias",
     "aliasOf": "ducati|panigale-v2"
+  },
+  "ducati|panigale-v4": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp"
+  },
+  "ducati|panigale-v4-lamborghini": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-martin-2023-racing-replica": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-r": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-s": {
+    "image": "store/img/bikes2/ducati-panigale-v4-s.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4-s.thumb.webp",
+    "title": "Ducati Panigale V4 S Corse.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_S_Corse.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ducati-panigale-v4-s.hero.webp"
+  },
+  "ducati|panigale-v4-s-carbon": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4-s"
+  },
+  "ducati|panigale-v4-s-carbon-pro": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4-s-carbon"
+  },
+  "ducati|panigale-v4-s-corse": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4-s"
+  },
+  "ducati|panigale-v4-sp": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-sp2": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-sp2-30°-anniversario-916": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4-sp2"
+  },
+  "ducati|panigale-v4-speciale": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-superleggera-v4": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
+  },
+  "ducati|panigale-v4-tricolore-italia": {
+    "image": "store/img/bikes2/ducati-panigale-v4.webp",
+    "thumb": "store/img/bikes2/ducati-panigale-v4.thumb.webp",
+    "hero": "store/img/bikes2/ducati-panigale-v4.hero.webp",
+    "title": "Ducati Panigale V4 Las Vegas.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_Las_Vegas.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "ducati|panigale-v4"
   },
   "ducati|scrambler-desert-sled-fasthouse": {
     "image": "store/img/bikes/ducati-scrambler-desert-sled.webp",
@@ -3233,6 +3593,42 @@
     "via": "alias",
     "aliasOf": "gmc|sierra"
   },
+  "harley-davidson|dyna": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp"
+  },
+  "harley-davidson|dyna-fat-bob": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|dyna"
+  },
+  "harley-davidson|dyna-fat-bob-dark-custom": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|dyna-fat-bob"
+  },
   "harley-davidson|dyna-low-rider-s": {
     "image": "store/img/bikes/harley-davidson-dyna-low-rider.webp",
     "thumb": "store/img/bikes/harley-davidson-dyna-low-rider-thumb.webp",
@@ -3273,6 +3669,54 @@
     "via": "alias",
     "aliasOf": "harley-davidson|dyna-street-bob"
   },
+  "harley-davidson|dyna-super-glide": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|dyna"
+  },
+  "harley-davidson|dyna-super-glide-sport": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|dyna-super-glide"
+  },
+  "harley-davidson|dyna-super-glide-t-sport": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|dyna-super-glide"
+  },
+  "harley-davidson|dyna-switchback": {
+    "image": "store/img/bikes2/harley-davidson-dyna.webp",
+    "thumb": "store/img/bikes2/harley-davidson-dyna.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-dyna.hero.webp",
+    "title": "2002 Harley Davidson Dyna Wideglide TwinCam 88.jpg",
+    "author": "Mossirl64",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley_Davidson_Dyna_Wideglide_TwinCam_88.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|dyna"
+  },
   "harley-davidson|heritage-softail-classic-injection": {
     "image": "store/img/bikes/harley-davidson-heritage-softail-classic.webp",
     "thumb": "store/img/bikes/harley-davidson-heritage-softail-classic-thumb.webp",
@@ -3292,6 +3736,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Livewire_at_Motorcycle_Live_2014_01.jpg",
     "via": "alias",
     "aliasOf": "harley-davidson|livewire"
+  },
+  "harley-davidson|pan-america": {
+    "image": "store/img/bikes2/harley-davidson-pan-america.webp",
+    "thumb": "store/img/bikes2/harley-davidson-pan-america.thumb.webp",
+    "title": "Harley-Davidson Pan America (2023).jpg",
+    "author": "Olinone",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Pan_America_(2023).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-pan-america.hero.webp"
+  },
+  "harley-davidson|police": {
+    "image": "store/img/bikes2/harley-davidson-police.webp",
+    "thumb": "store/img/bikes2/harley-davidson-police.thumb.webp",
+    "title": "Harley Davidson Road King Police Special - California Highway Patrol (5222809352).jpg",
+    "author": "sv1ambo",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_King_Police_Special_-_California_Highway_Patrol_(5222809352).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-police.hero.webp"
   },
   "harley-davidson|road-king-fire-rescue": {
     "image": "store/img/bikes/harley-davidson-road-king.webp",
@@ -3314,6 +3782,186 @@
     "via": "alias",
     "aliasOf": "harley-davidson|road-king"
   },
+  "harley-davidson|sidecar": {
+    "image": "store/img/bikes2/harley-davidson-sidecar.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sidecar.thumb.webp",
+    "title": "Harley-Davidson with side car (1920) jm64198.jpg",
+    "author": "joergens.mi",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_with_side_car_(1920)_jm64198.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-sidecar.hero.webp"
+  },
+  "harley-davidson|softail": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp"
+  },
+  "harley-davidson|softail-blackline": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-blackline-dark-custom": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-blackline"
+  },
+  "harley-davidson|softail-breakout": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-breakout-special-edition": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-breakout"
+  },
+  "harley-davidson|softail-deuce-injection": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-fat-bob": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-fat-bob-dark-custom": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-fat-bob"
+  },
+  "harley-davidson|softail-fat-boy": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-fat-boy-lo": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-fat-boy"
+  },
+  "harley-davidson|softail-fat-boy-s": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-fat-boy"
+  },
+  "harley-davidson|softail-fat-boy-special": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-fat-boy"
+  },
+  "harley-davidson|softail-low-rider": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-low-rider-s": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-low-rider"
+  },
   "harley-davidson|softail-slim-s": {
     "image": "store/img/bikes/harley-davidson-softail-slim.webp",
     "thumb": "store/img/bikes/harley-davidson-softail-slim-thumb.webp",
@@ -3323,6 +3971,66 @@
     "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Softail_Slim_2018.jpg",
     "via": "alias",
     "aliasOf": "harley-davidson|softail-slim"
+  },
+  "harley-davidson|softail-springer": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-standard": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-street-bob": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail"
+  },
+  "harley-davidson|softail-street-bob-dark-custom": {
+    "image": "store/img/bikes2/harley-davidson-softail.webp",
+    "thumb": "store/img/bikes2/harley-davidson-softail.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-softail.hero.webp",
+    "title": "2013 Harley Davidson Softtail Slim (8344193123).jpg",
+    "author": "Chris from Surrey, British Columbia, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Harley_Davidson_Softtail_Slim_(8344193123).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|softail-street-bob"
+  },
+  "harley-davidson|sportster": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp"
   },
   "harley-davidson|sportster-forty-eight-dark-custom": {
     "image": "store/img/bikes/harley-davidson-sportster-forty-eight.webp",
@@ -3354,6 +4062,102 @@
     "via": "alias",
     "aliasOf": "harley-davidson|sportster-iron-883"
   },
+  "harley-davidson|sportster-rh": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster"
+  },
+  "harley-davidson|sportster-roadster": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster"
+  },
+  "harley-davidson|sportster-roadster-dark-custom": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster-roadster"
+  },
+  "harley-davidson|sportster-s": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster"
+  },
+  "harley-davidson|sportster-seventy-two": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster"
+  },
+  "harley-davidson|sportster-seventy-two-dark-custom": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster-seventy-two"
+  },
+  "harley-davidson|sportster-superlow": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster"
+  },
+  "harley-davidson|sportster-xl": {
+    "image": "store/img/bikes2/harley-davidson-sportster.webp",
+    "thumb": "store/img/bikes2/harley-davidson-sportster.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-sportster.hero.webp",
+    "title": "2002 Harley-Davidson Sportster.jpg",
+    "author": "CJ Schmit",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Harley-Davidson_Sportster.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "harley-davidson|sportster"
+  },
   "harley-davidson|street-750-dark-custom": {
     "image": "store/img/bikes/harley-davidson-street-750.webp",
     "thumb": "store/img/bikes/harley-davidson-street-750-thumb.webp",
@@ -3384,6 +4188,30 @@
     "via": "alias",
     "aliasOf": "harley-davidson|street-bob"
   },
+  "harley-davidson|touring": {
+    "image": "store/img/bikes2/harley-davidson-touring.webp",
+    "thumb": "store/img/bikes2/harley-davidson-touring.thumb.webp",
+    "title": "Harley Davidson 103 (12404704533).jpg",
+    "author": "Bob Adams from George, South Africa",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_103_(12404704533).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-touring.hero.webp"
+  },
+  "harley-davidson|trike": {
+    "image": "store/img/bikes2/harley-davidson-trike.webp",
+    "thumb": "store/img/bikes2/harley-davidson-trike.thumb.webp",
+    "title": "Old Harley davidson trike pic1.JPG",
+    "author": "AlfvanBeem",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Old_Harley_davidson_trike_pic1.JPG",
+    "via": "search",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/harley-davidson-trike.hero.webp"
+  },
   "harley-davidson|ultra-limited-low": {
     "image": "store/img/bikes/harley-davidson-ultra-limited.webp",
     "thumb": "store/img/bikes/harley-davidson-ultra-limited-thumb.webp",
@@ -3393,6 +4221,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Woman_Returning_on_Harley-Davidson_Ultra_Limited_-_Las_Vegas_Ride_for_Kids_2019.jpg",
     "via": "alias",
     "aliasOf": "harley-davidson|ultra-limited"
+  },
+  "harley-davidson|vrsc": {
+    "image": "store/img/bikes2/harley-davidson-vrsc.webp",
+    "thumb": "store/img/bikes2/harley-davidson-vrsc.thumb.webp",
+    "title": "Harley 5-06.jpg",
+    "author": "Unknown",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_5-06.jpg",
+    "via": "wikipedia",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/harley-davidson-vrsc.hero.webp"
   },
   "harley-davidson|xl-883-sportster-883": {
     "image": "store/img/bikes/harley-davidson-xl-883-sportster.webp",
@@ -3413,6 +4253,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_XL_883_N_Sportster_2011_(15762289430).jpg",
     "via": "alias",
     "aliasOf": "harley-davidson|xl-883-sportster"
+  },
+  "hero|hf-deluxe": {
+    "image": "store/img/bikes2/hero-hf-deluxe.webp",
+    "thumb": "store/img/bikes2/hero-hf-deluxe.thumb.webp",
+    "title": "Hero HF 100 (left side).jpg",
+    "author": "LeopardLakya",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hero_HF_100_(left_side).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/hero-hf-deluxe.hero.webp"
+  },
+  "hero|hf-deluxe-flex": {
+    "image": "store/img/bikes2/hero-hf-deluxe.webp",
+    "thumb": "store/img/bikes2/hero-hf-deluxe.thumb.webp",
+    "hero": "store/img/bikes2/hero-hf-deluxe.hero.webp",
+    "title": "Hero HF 100 (left side).jpg",
+    "author": "LeopardLakya",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hero_HF_100_(left_side).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "hero|hf-deluxe"
+  },
+  "hero|hf-deluxe-pro": {
+    "image": "store/img/bikes2/hero-hf-deluxe.webp",
+    "thumb": "store/img/bikes2/hero-hf-deluxe.thumb.webp",
+    "hero": "store/img/bikes2/hero-hf-deluxe.hero.webp",
+    "title": "Hero HF 100 (left side).jpg",
+    "author": "LeopardLakya",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hero_HF_100_(left_side).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "hero|hf-deluxe"
   },
   "hero|karizma-zmr": {
     "image": "store/img/bikes/hero-karizma.webp",
@@ -3843,6 +4719,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2021_Honda_CB1000R_Black_Edition.jpg",
     "via": "alias",
     "aliasOf": "honda|cb1000r"
+  },
+  "honda|cb125f": {
+    "image": "store/img/bikes2/honda-cb125f.webp",
+    "thumb": "store/img/bikes2/honda-cb125f.thumb.webp",
+    "title": "CB 125 F in Pakistan.jpg",
+    "author": "Hasan HH",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CB_125_F_in_Pakistan.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-cb125f.hero.webp"
   },
   "honda|cb125r-neo-sports-cafe": {
     "image": "store/img/bikes/honda-cb125r.webp",
@@ -5048,6 +5936,18 @@
     "via": "alias",
     "aliasOf": "honda|crf450x"
   },
+  "honda|crf80f": {
+    "image": "store/img/bikes2/honda-crf80f.webp",
+    "thumb": "store/img/bikes2/honda-crf80f.thumb.webp",
+    "title": "2010 Honda CRF80F at the 2009 Seattle International Motorcycle Show 1.jpg",
+    "author": "Dbratland",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2010_Honda_CRF80F_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-crf80f.hero.webp"
+  },
   "honda|crosstourer-highlander": {
     "image": "store/img/bikes/honda-crosstourer.webp",
     "thumb": "store/img/bikes/honda-crosstourer-thumb.webp",
@@ -5954,6 +6854,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:My_Best_Buddy_Honda_VT1100_Shadow_Aero.jpg",
     "via": "alias",
     "aliasOf": "honda|shadow-aero"
+  },
+  "honda|shadow-phantom": {
+    "image": "store/img/bikes2/honda-shadow-phantom.webp",
+    "thumb": "store/img/bikes2/honda-shadow-phantom.thumb.webp",
+    "title": "Honda SHADOW Phantom 750 at the TMS 2009.JPG",
+    "author": "PekePON",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-shadow-phantom.hero.webp"
+  },
+  "honda|shadow-phantom-abs": {
+    "image": "store/img/bikes2/honda-shadow-phantom.webp",
+    "thumb": "store/img/bikes2/honda-shadow-phantom.thumb.webp",
+    "hero": "store/img/bikes2/honda-shadow-phantom.hero.webp",
+    "title": "Honda SHADOW Phantom 750 at the TMS 2009.JPG",
+    "author": "PekePON",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|shadow-phantom"
   },
   "honda|shadow-rs": {
     "image": "store/img/bikes2/honda-shadow-rs.webp",
@@ -7327,6 +8251,54 @@
     "via": "alias",
     "aliasOf": "kawasaki|1400-gtr"
   },
+  "kawasaki|concours": {
+    "image": "store/img/bikes2/kawasaki-concours.webp",
+    "thumb": "store/img/bikes2/kawasaki-concours.thumb.webp",
+    "title": "1996 Kawasaki ZG1000 Concours 1983 Honda CB550 Nighthawk 2001 Aprilia Futura NMUSAF 26Sept09 (14598284114).jpg",
+    "author": "Valder137",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1996_Kawasaki_ZG1000_Concours_1983_Honda_CB550_Nighthawk_2001_Aprilia_Futura_NMUSAF_26Sept09_(14598284114).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-concours.hero.webp"
+  },
+  "kawasaki|concours-14": {
+    "image": "store/img/bikes2/kawasaki-concours-14.webp",
+    "thumb": "store/img/bikes2/kawasaki-concours-14.thumb.webp",
+    "title": "2010 Kawasaki Concours 14 at the 2009 Seattle International Motorcycle Show 2.jpg",
+    "author": "Dbratland",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2010_Kawasaki_Concours_14_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-concours-14.hero.webp"
+  },
+  "kawasaki|concours-14-1400-gtr": {
+    "image": "store/img/bikes2/kawasaki-concours-14.webp",
+    "thumb": "store/img/bikes2/kawasaki-concours-14.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-concours-14.hero.webp",
+    "title": "2010 Kawasaki Concours 14 at the 2009 Seattle International Motorcycle Show 2.jpg",
+    "author": "Dbratland",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2010_Kawasaki_Concours_14_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|concours-14"
+  },
+  "kawasaki|concours-14-abs": {
+    "image": "store/img/bikes2/kawasaki-concours-14.webp",
+    "thumb": "store/img/bikes2/kawasaki-concours-14.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-concours-14.hero.webp",
+    "title": "2010 Kawasaki Concours 14 at the 2009 Seattle International Motorcycle Show 2.jpg",
+    "author": "Dbratland",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2010_Kawasaki_Concours_14_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|concours-14"
+  },
   "kawasaki|d-tracker-x-final-edition": {
     "image": "store/img/bikes/kawasaki-d-tracker-x.webp",
     "thumb": "store/img/bikes/kawasaki-d-tracker-x-thumb.webp",
@@ -7368,6 +8340,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_ER6f.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|er-6f"
+  },
+  "kawasaki|er-6n": {
+    "image": "store/img/bikes2/kawasaki-er-6n.webp",
+    "thumb": "store/img/bikes2/kawasaki-er-6n.thumb.webp",
+    "title": "Paris - Salon de la moto 2011 - Kawasaki - ER-6N - 006.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_ER-6N_-_006.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-er-6n.hero.webp"
   },
   "kawasaki|estrella-final-edition": {
     "image": "store/img/bikes/kawasaki-estrella.webp",
@@ -7485,6 +8469,78 @@
     "via": "alias",
     "aliasOf": "kawasaki|klx230"
   },
+  "kawasaki|klx250": {
+    "image": "store/img/bikes2/kawasaki-klx250.webp",
+    "thumb": "store/img/bikes2/kawasaki-klx250.thumb.webp",
+    "title": "Klx250.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Klx250.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-klx250.hero.webp"
+  },
+  "kawasaki|klx250-camo": {
+    "image": "store/img/bikes2/kawasaki-klx250.webp",
+    "thumb": "store/img/bikes2/kawasaki-klx250.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-klx250.hero.webp",
+    "title": "Klx250.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Klx250.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "kawasaki|klx250"
+  },
+  "kawasaki|klx250-final-edition": {
+    "image": "store/img/bikes2/kawasaki-klx250.webp",
+    "thumb": "store/img/bikes2/kawasaki-klx250.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-klx250.hero.webp",
+    "title": "Klx250.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Klx250.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "kawasaki|klx250"
+  },
+  "kawasaki|klx250r": {
+    "image": "store/img/bikes2/kawasaki-klx250.webp",
+    "thumb": "store/img/bikes2/kawasaki-klx250.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-klx250.hero.webp",
+    "title": "Klx250.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Klx250.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "kawasaki|klx250"
+  },
+  "kawasaki|klx250s": {
+    "image": "store/img/bikes2/kawasaki-klx250s.webp",
+    "thumb": "store/img/bikes2/kawasaki-klx250s.thumb.webp",
+    "title": "KLX250S 2009.jpg",
+    "author": "armycopter",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KLX250S_2009.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-klx250s.hero.webp"
+  },
+  "kawasaki|klx250sf": {
+    "image": "store/img/bikes2/kawasaki-klx250s.webp",
+    "thumb": "store/img/bikes2/kawasaki-klx250s.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-klx250s.hero.webp",
+    "title": "KLX250S 2009.jpg",
+    "author": "armycopter",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KLX250S_2009.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|klx250s"
+  },
   "kawasaki|kx-250-f": {
     "image": "store/img/bikes/kawasaki-kx-250.webp",
     "thumb": "store/img/bikes/kawasaki-kx-250-thumb.webp",
@@ -7514,6 +8570,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_KX450F_Tokyo_Motor_Show_2013.JPG",
     "via": "alias",
     "aliasOf": "kawasaki|kx-450-f"
+  },
+  "kawasaki|kx250f": {
+    "image": "store/img/bikes2/kawasaki-kx250f.webp",
+    "thumb": "store/img/bikes2/kawasaki-kx250f.thumb.webp",
+    "title": "International Motocross, Downpatrick, August 2011 (011).JPG",
+    "author": "Ardfern",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:International_Motocross,_Downpatrick,_August_2011_(011).JPG",
+    "via": "wikipedia",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-kx250f.hero.webp"
+  },
+  "kawasaki|kx250fx": {
+    "image": "store/img/bikes2/kawasaki-kx250f.webp",
+    "thumb": "store/img/bikes2/kawasaki-kx250f.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-kx250f.hero.webp",
+    "title": "International Motocross, Downpatrick, August 2011 (011).JPG",
+    "author": "Ardfern",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:International_Motocross,_Downpatrick,_August_2011_(011).JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|kx250f"
   },
   "kawasaki|kx450-sr": {
     "image": "store/img/bikes/kawasaki-kx450.webp",
@@ -7554,6 +8634,54 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_KX450_used_by_Kassie_Boone_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|kx450"
+  },
+  "kawasaki|kx500": {
+    "image": "store/img/bikes2/kawasaki-kx500.webp",
+    "thumb": "store/img/bikes2/kawasaki-kx500.thumb.webp",
+    "title": "Kawasaki KX 500.jpg",
+    "author": "Robert Tadlock from Westminster",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_KX_500.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.0,
+    "hero": "store/img/bikes2/kawasaki-kx500.hero.webp"
+  },
+  "kawasaki|kx80": {
+    "image": "store/img/bikes2/kawasaki-kx80.webp",
+    "thumb": "store/img/bikes2/kawasaki-kx80.thumb.webp",
+    "title": "Photo-annonce-kawasaki-kx 5fd9d7e7465c5735352059(1).jpg",
+    "author": "Annonimous77",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Photo-annonce-kawasaki-kx_5fd9d7e7465c5735352059(1).jpg",
+    "via": "wikipedia",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/kawasaki-kx80.hero.webp"
+  },
+  "kawasaki|ninja-1000": {
+    "image": "store/img/bikes2/kawasaki-ninja-1000.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-1000.thumb.webp",
+    "title": "Kawasaki ninja1000(2012).JPG",
+    "author": "Missile shot",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_ninja1000(2012).JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-1000.hero.webp"
+  },
+  "kawasaki|ninja-1000-abs": {
+    "image": "store/img/bikes2/kawasaki-ninja-1000.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-1000.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-1000.hero.webp",
+    "title": "Kawasaki ninja1000(2012).JPG",
+    "author": "Missile shot",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_ninja1000(2012).JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-1000"
   },
   "kawasaki|ninja-1000sx-performance": {
     "image": "store/img/bikes/kawasaki-ninja-1000sx.webp",
@@ -7940,6 +9068,173 @@
     "via": "alias",
     "aliasOf": "kawasaki|ninja-h2-sx"
   },
+  "kawasaki|ninja-h2r": {
+    "image": "store/img/bikes2/kawasaki-ninja-h2r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-h2r.thumb.webp",
+    "title": "2015 Kawasaki Ninja H2 (17568452590).jpg",
+    "author": "Daniel Hartwig from San Mateo, CA, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Kawasaki_Ninja_H2_(17568452590).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-h2r.hero.webp"
+  },
+  "kawasaki|ninja-zx-10r": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp"
+  },
+  "kawasaki|ninja-zx-10r-(zx1000-c1)": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r"
+  },
+  "kawasaki|ninja-zx-10r-abs": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r"
+  },
+  "kawasaki|ninja-zx-10r-abs-30th-anniversary": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r-abs"
+  },
+  "kawasaki|ninja-zx-10r-abs-krt": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r-abs"
+  },
+  "kawasaki|ninja-zx-10r-abs-se": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r-abs"
+  },
+  "kawasaki|ninja-zx-10r-krt": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r"
+  },
+  "kawasaki|ninja-zx-10r-krt-edition": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r-krt"
+  },
+  "kawasaki|ninja-zx-10r-krt-replica": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r-krt"
+  },
+  "kawasaki|ninja-zx-10r-se": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10r.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10r.hero.webp",
+    "title": "Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg",
+    "author": "Morio",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|ninja-zx-10r"
+  },
+  "kawasaki|ninja-zx-10rr": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-10rr.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-10rr.thumb.webp",
+    "title": "Kawasaki Ninja ZX-10RR 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10RR_2026.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-10rr.hero.webp"
+  },
+  "kawasaki|ninja-zx-11": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-11.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-11.thumb.webp",
+    "title": "Kawasaki ZZR1100 01.jpg",
+    "author": "The original uploader was Mombas at English Wikipedia .",
+    "license": "CC BY 2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_ZZR1100_01.jpg",
+    "via": "wikipedia",
+    "view": "three_quarter",
+    "score": 9.5
+  },
+  "kawasaki|ninja-zx-12r": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-12r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-12r.thumb.webp",
+    "title": "Kawasaki ZX-12R Bj. 2001.jpg",
+    "author": "uploader was Maggus 1978 at de.wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_ZX-12R_Bj._2001.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-12r.hero.webp"
+  },
   "kawasaki|ninja-zx-14r-abs": {
     "image": "store/img/bikes/kawasaki-ninja-zx-14r.webp",
     "thumb": "store/img/bikes/kawasaki-ninja-zx-14r-thumb.webp",
@@ -8102,6 +9397,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-6R_KRT_2020_SideView.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|ninja-zx-6r"
+  },
+  "kawasaki|ninja-zx-7": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-7.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-7.thumb.webp",
+    "title": "Kawasaki Ninja ZX-7 1991.jpg",
+    "author": "PekePON",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-7_1991.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-7.hero.webp"
   },
   "kawasaki|prairie-360-4x4": {
     "image": "store/img/bikes/kawasaki-prairie-360.webp",
@@ -8388,6 +9695,18 @@
     "via": "alias",
     "aliasOf": "kawasaki|vn-900"
   },
+  "kawasaki|voyager-xii": {
+    "image": "store/img/bikes2/kawasaki-voyager-xii.webp",
+    "thumb": "store/img/bikes2/kawasaki-voyager-xii.thumb.webp",
+    "title": "Peter en ik werkend aan voyager.jpg",
+    "author": "Dontwalk at Dutch Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Peter_en_ik_werkend_aan_voyager.jpg",
+    "via": "wikipedia",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-voyager-xii.hero.webp"
+  },
   "kawasaki|vulcan-1500-classic": {
     "image": "store/img/bikes/kawasaki-vulcan-1500.webp",
     "thumb": "store/img/bikes/kawasaki-vulcan-1500-thumb.webp",
@@ -8428,6 +9747,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:2003_Kawasaki_Vulcan_1500_Meanstreak.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|vulcan-1500"
+  },
+  "kawasaki|vulcan-1700-voyager": {
+    "image": "store/img/bikes2/kawasaki-vulcan-1700-voyager.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-1700-voyager.thumb.webp",
+    "title": "Kawasaki Vulcan 1700 V-Twin (12578186333).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_1700_V-Twin_(12578186333).jpg",
+    "via": "search",
+    "view": "side",
+    "score": 6.0,
+    "hero": "store/img/bikes2/kawasaki-vulcan-1700-voyager.hero.webp"
+  },
+  "kawasaki|vulcan-1700-voyager-abs": {
+    "image": "store/img/bikes2/kawasaki-vulcan-1700-voyager.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-1700-voyager.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-vulcan-1700-voyager.hero.webp",
+    "title": "Kawasaki Vulcan 1700 V-Twin (12578186333).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_1700_V-Twin_(12578186333).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "kawasaki|vulcan-1700-voyager"
   },
   "kawasaki|vulcan-2000-classic": {
     "image": "store/img/bikes/kawasaki-vulcan-2000.webp",
@@ -8488,6 +9831,66 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_vulcan_800_mod%C3%A8le_1999,_bi-ton_noire_et_vanille.JPG",
     "via": "alias",
     "aliasOf": "kawasaki|vulcan-800"
+  },
+  "kawasaki|vulcan-900-classic": {
+    "image": "store/img/bikes2/kawasaki-vulcan-900-classic.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-900-classic.thumb.webp",
+    "title": "Kawasaki Vulcan 900 (11498857165).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_900_(11498857165).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-vulcan-900-classic.hero.webp"
+  },
+  "kawasaki|vulcan-900-classic-lt": {
+    "image": "store/img/bikes2/kawasaki-vulcan-900-classic.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-900-classic.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-vulcan-900-classic.hero.webp",
+    "title": "Kawasaki Vulcan 900 (11498857165).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_900_(11498857165).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|vulcan-900-classic"
+  },
+  "kawasaki|vulcan-900-classic-se": {
+    "image": "store/img/bikes2/kawasaki-vulcan-900-classic.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-900-classic.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-vulcan-900-classic.hero.webp",
+    "title": "Kawasaki Vulcan 900 (11498857165).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_900_(11498857165).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|vulcan-900-classic"
+  },
+  "kawasaki|vulcan-900-classic-special-edition": {
+    "image": "store/img/bikes2/kawasaki-vulcan-900-classic.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-900-classic.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-vulcan-900-classic.hero.webp",
+    "title": "Kawasaki Vulcan 900 (11498857165).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_900_(11498857165).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|vulcan-900-classic"
+  },
+  "kawasaki|vulcan-900-custom": {
+    "image": "store/img/bikes2/kawasaki-vulcan-900-custom.webp",
+    "thumb": "store/img/bikes2/kawasaki-vulcan-900-custom.thumb.webp",
+    "title": "2009-02-14 Kawasaki Vulcan 900 Custom and Yamaha FZ6.jpg",
+    "author": "Ildar Sagdejev ( Specious )",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009-02-14_Kawasaki_Vulcan_900_Custom_and_Yamaha_FZ6.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-vulcan-900-custom.hero.webp"
   },
   "kawasaki|vulcan-s-abs": {
     "image": "store/img/bikes/kawasaki-vulcan-s.webp",
@@ -8974,6 +10377,90 @@
     "via": "alias",
     "aliasOf": "kawasaki|z800"
   },
+  "kawasaki|z900": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp"
+  },
+  "kawasaki|z900-(70-kw)": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|z900"
+  },
+  "kawasaki|z900-70kw": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|z900"
+  },
+  "kawasaki|z900-abs": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|z900"
+  },
+  "kawasaki|z900-performance": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|z900"
+  },
+  "kawasaki|z900-se": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|z900"
+  },
+  "kawasaki|z900-se-performance": {
+    "image": "store/img/bikes2/kawasaki-z900.webp",
+    "thumb": "store/img/bikes2/kawasaki-z900.thumb.webp",
+    "hero": "store/img/bikes2/kawasaki-z900.hero.webp",
+    "title": "Z9002020.jpg",
+    "author": "THEJECUTIVO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Z9002020.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "kawasaki|z900-se"
+  },
   "kawasaki|z900rs": {
     "image": "store/img/bikes2/kawasaki-z900rs.webp",
     "thumb": "store/img/bikes2/kawasaki-z900rs.thumb.webp",
@@ -9133,6 +10620,90 @@
     "via": "alias",
     "aliasOf": "kawasaki|zzr1400"
   },
+  "ktm|1190-rc8-r": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "via": "family",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp"
+  },
+  "ktm|1190-rc8-r-akrapovic": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|1190-rc8-r"
+  },
+  "ktm|1190-rc8-r-akrapovic-limited-edition": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|1190-rc8-r-akrapovic"
+  },
+  "ktm|1190-rc8-r-race-specs": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|1190-rc8-r"
+  },
+  "ktm|1190-rc8-r-red-bull": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|1190-rc8-r"
+  },
+  "ktm|1190-rc8-r-red-bull-limited-edition": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|1190-rc8-r-red-bull"
+  },
+  "ktm|1190-rc8-r-track": {
+    "image": "store/img/bikes2/ktm-1190-rc8-r.webp",
+    "thumb": "store/img/bikes2/ktm-1190-rc8-r.thumb.webp",
+    "hero": "store/img/bikes2/ktm-1190-rc8-r.hero.webp",
+    "title": "KTM 1190 RC8 R (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1190_RC8_R_(1).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|1190-rc8-r"
+  },
   "ktm|125-sx-tyla-rattery": {
     "image": "store/img/bikes/ktm-125-sx.webp",
     "thumb": "store/img/bikes/ktm-125-sx-thumb.webp",
@@ -9203,6 +10774,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Moscow,_KTM_Duke_200,_July_2026_01.jpg",
     "via": "alias",
     "aliasOf": "ktm|200-duke"
+  },
+  "ktm|200-exc": {
+    "image": "store/img/bikes2/ktm-200-exc.webp",
+    "thumb": "store/img/bikes2/ktm-200-exc.thumb.webp",
+    "title": "Ktm 200 exc with powerparts tokyo motorcycle show 2014.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ktm_200_exc_with_powerparts_tokyo_motorcycle_show_2014.JPG",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/ktm-200-exc.hero.webp"
   },
   "ktm|250-exc": {
     "image": "store/img/bikes2/ktm-250-exc.webp",
@@ -10277,6 +11860,18 @@
     "via": "alias",
     "aliasOf": "ktm|990-super-duke"
   },
+  "ktm|rc-200": {
+    "image": "store/img/bikes2/ktm-rc-200.webp",
+    "thumb": "store/img/bikes2/ktm-rc-200.thumb.webp",
+    "title": "Motor KTM di IIMS 2019.jpg",
+    "author": "F1fans",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Motor_KTM_di_IIMS_2019.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/ktm-rc-200.hero.webp"
+  },
   "ktm|rc-390-2016-(euro-4)": {
     "image": "store/img/bikes/ktm-rc-390.webp",
     "thumb": "store/img/bikes/ktm-rc-390-thumb.webp",
@@ -10898,6 +12493,42 @@
     "via": "alias",
     "aliasOf": "mv-agusta|dragster-800-rr"
   },
+  "mv-agusta|f3-675": {
+    "image": "store/img/bikes2/mv-agusta-f3-675.webp",
+    "thumb": "store/img/bikes2/mv-agusta-f3-675.thumb.webp",
+    "title": "Mv Agusta F3.jpg",
+    "author": "Klaus Nahr",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mv_Agusta_F3.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/mv-agusta-f3-675.hero.webp"
+  },
+  "mv-agusta|f3-675-oro": {
+    "image": "store/img/bikes2/mv-agusta-f3-675.webp",
+    "thumb": "store/img/bikes2/mv-agusta-f3-675.thumb.webp",
+    "hero": "store/img/bikes2/mv-agusta-f3-675.hero.webp",
+    "title": "Mv Agusta F3.jpg",
+    "author": "Klaus Nahr",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mv_Agusta_F3.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "mv-agusta|f3-675"
+  },
+  "mv-agusta|f3-675-rc": {
+    "image": "store/img/bikes2/mv-agusta-f3-675.webp",
+    "thumb": "store/img/bikes2/mv-agusta-f3-675.thumb.webp",
+    "hero": "store/img/bikes2/mv-agusta-f3-675.hero.webp",
+    "title": "Mv Agusta F3.jpg",
+    "author": "Klaus Nahr",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mv_Agusta_F3.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "mv-agusta|f3-675"
+  },
   "mv-agusta|f3-800-competizione": {
     "image": "store/img/bikes/mv-agusta-f3-800.webp",
     "thumb": "store/img/bikes/mv-agusta-f3-800-thumb.webp",
@@ -11018,6 +12649,66 @@
     "source": "https://commons.wikimedia.org/wiki/File:2021_MV_Agusta_Superveloce_800.jpg",
     "via": "alias",
     "aliasOf": "mv-agusta|superveloce-800"
+  },
+  "mv-agusta|turismo-veloce-800": {
+    "image": "store/img/bikes2/mv-agusta-turismo-veloce-800.webp",
+    "thumb": "store/img/bikes2/mv-agusta-turismo-veloce-800.thumb.webp",
+    "title": "MV Agusta Turismo Veloce 800 HMT 2015.jpeg",
+    "author": "San Andreas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_HMT_2015.jpeg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/mv-agusta-turismo-veloce-800.hero.webp"
+  },
+  "mv-agusta|turismo-veloce-800-r": {
+    "image": "store/img/bikes2/mv-agusta-turismo-veloce-800.webp",
+    "thumb": "store/img/bikes2/mv-agusta-turismo-veloce-800.thumb.webp",
+    "hero": "store/img/bikes2/mv-agusta-turismo-veloce-800.hero.webp",
+    "title": "MV Agusta Turismo Veloce 800 HMT 2015.jpeg",
+    "author": "San Andreas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_HMT_2015.jpeg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "mv-agusta|turismo-veloce-800"
+  },
+  "mv-agusta|turismo-veloce-800-rc": {
+    "image": "store/img/bikes2/mv-agusta-turismo-veloce-800.webp",
+    "thumb": "store/img/bikes2/mv-agusta-turismo-veloce-800.thumb.webp",
+    "hero": "store/img/bikes2/mv-agusta-turismo-veloce-800.hero.webp",
+    "title": "MV Agusta Turismo Veloce 800 HMT 2015.jpeg",
+    "author": "San Andreas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_HMT_2015.jpeg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "mv-agusta|turismo-veloce-800"
+  },
+  "mv-agusta|turismo-veloce-800-rc-scs": {
+    "image": "store/img/bikes2/mv-agusta-turismo-veloce-800.webp",
+    "thumb": "store/img/bikes2/mv-agusta-turismo-veloce-800.thumb.webp",
+    "hero": "store/img/bikes2/mv-agusta-turismo-veloce-800.hero.webp",
+    "title": "MV Agusta Turismo Veloce 800 HMT 2015.jpeg",
+    "author": "San Andreas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_HMT_2015.jpeg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "mv-agusta|turismo-veloce-800"
+  },
+  "mv-agusta|turismo-veloce-800-rosso": {
+    "image": "store/img/bikes2/mv-agusta-turismo-veloce-800.webp",
+    "thumb": "store/img/bikes2/mv-agusta-turismo-veloce-800.thumb.webp",
+    "hero": "store/img/bikes2/mv-agusta-turismo-veloce-800.hero.webp",
+    "title": "MV Agusta Turismo Veloce 800 HMT 2015.jpeg",
+    "author": "San Andreas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_HMT_2015.jpeg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "mv-agusta|turismo-veloce-800"
   },
   "nissan|juke-hybrid": {
     "image": "store/img/bikes/nissan-juke.webp",
@@ -11634,6 +13325,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Boulevard_M109R_on_Seacliff_Drive_during_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
     "via": "alias",
     "aliasOf": "suzuki|boulevard-m109r"
+  },
+  "suzuki|burgman-125": {
+    "image": "store/img/bikes2/suzuki-burgman-125.webp",
+    "thumb": "store/img/bikes2/suzuki-burgman-125.thumb.webp",
+    "title": "2024 Suzuki Burgman Street 125 GL.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Suzuki_Burgman_Street_125_GL.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/suzuki-burgman-125.hero.webp"
+  },
+  "suzuki|burgman-125-g": {
+    "image": "store/img/bikes2/suzuki-burgman-125.webp",
+    "thumb": "store/img/bikes2/suzuki-burgman-125.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-burgman-125.hero.webp",
+    "title": "2024 Suzuki Burgman Street 125 GL.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Suzuki_Burgman_Street_125_GL.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "suzuki|burgman-125"
+  },
+  "suzuki|burgman-125-street": {
+    "image": "store/img/bikes2/suzuki-burgman-125.webp",
+    "thumb": "store/img/bikes2/suzuki-burgman-125.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-burgman-125.hero.webp",
+    "title": "2024 Suzuki Burgman Street 125 GL.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Suzuki_Burgman_Street_125_GL.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "suzuki|burgman-125"
   },
   "suzuki|burgman-200-abs": {
     "image": "store/img/bikes/suzuki-burgman-200.webp",
@@ -12330,6 +14057,30 @@
     "via": "alias",
     "aliasOf": "suzuki|gsx-s1000f"
   },
+  "suzuki|gsx-s1000gt": {
+    "image": "store/img/bikes2/suzuki-gsx-s1000gt.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s1000gt.thumb.webp",
+    "title": "Suzuki GSX-S1000GT left front view at the Display booth of SUZUKIMOTOR in Hamamatsu Station Shinkansen concourse October 23, 2022.jpg",
+    "author": "Hunini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S1000GT_left_front_view_at_the_Display_booth_of_SUZUKIMOTOR_in_Hamamatsu_Station_Shinkansen_concourse_October_23,_2022.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/suzuki-gsx-s1000gt.hero.webp"
+  },
+  "suzuki|gsx-s1000gt-plus": {
+    "image": "store/img/bikes2/suzuki-gsx-s1000gt.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s1000gt.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-gsx-s1000gt.hero.webp",
+    "title": "Suzuki GSX-S1000GT left front view at the Display booth of SUZUKIMOTOR in Hamamatsu Station Shinkansen concourse October 23, 2022.jpg",
+    "author": "Hunini",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S1000GT_left_front_view_at_the_Display_booth_of_SUZUKIMOTOR_in_Hamamatsu_Station_Shinkansen_concourse_October_23,_2022.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "suzuki|gsx-s1000gt"
+  },
   "suzuki|gsx-s125-gp": {
     "image": "store/img/bikes/suzuki-gsx-s125.webp",
     "thumb": "store/img/bikes/suzuki-gsx-s125-thumb.webp",
@@ -12339,6 +14090,54 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S125_side_view.jpg",
     "via": "alias",
     "aliasOf": "suzuki|gsx-s125"
+  },
+  "suzuki|gsx-s750": {
+    "image": "store/img/bikes2/suzuki-gsx-s750.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s750.thumb.webp",
+    "title": "GSX-S750.jpg",
+    "author": "Jamie Hicken",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-S750.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/suzuki-gsx-s750.hero.webp"
+  },
+  "suzuki|gsx-s750-abs": {
+    "image": "store/img/bikes2/suzuki-gsx-s750.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s750.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-gsx-s750.hero.webp",
+    "title": "GSX-S750.jpg",
+    "author": "Jamie Hicken",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-S750.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "suzuki|gsx-s750"
+  },
+  "suzuki|gsx-s750-z": {
+    "image": "store/img/bikes2/suzuki-gsx-s750.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s750.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-gsx-s750.hero.webp",
+    "title": "GSX-S750.jpg",
+    "author": "Jamie Hicken",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-S750.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "suzuki|gsx-s750"
+  },
+  "suzuki|gsx-s750-zero-by-officine-design": {
+    "image": "store/img/bikes2/suzuki-gsx-s750.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-s750.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-gsx-s750.hero.webp",
+    "title": "GSX-S750.jpg",
+    "author": "Jamie Hicken",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-S750.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "suzuki|gsx-s750"
   },
   "suzuki|gsx250r-abs": {
     "image": "store/img/bikes/suzuki-gsx250r.webp",
@@ -12459,6 +14258,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Hayabusa_in_Athens_on_10-15-2023.jpg",
     "via": "alias",
     "aliasOf": "suzuki|hayabusa"
+  },
+  "suzuki|intruder-c800": {
+    "image": "store/img/bikes2/suzuki-intruder-c800.webp",
+    "thumb": "store/img/bikes2/suzuki-intruder-c800.thumb.webp",
+    "title": "Suzuki Intruder C800 trike (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_C800_trike_(1).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/suzuki-intruder-c800.hero.webp"
+  },
+  "suzuki|katana": {
+    "image": "store/img/bikes2/suzuki-katana.webp",
+    "thumb": "store/img/bikes2/suzuki-katana.thumb.webp",
+    "title": "Suzuki Katana 1000.jpg",
+    "author": "AlbertoSossella",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Katana_1000.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/suzuki-katana.hero.webp"
   },
   "suzuki|rm85l": {
     "image": "store/img/bikes/suzuki-rm85.webp",
@@ -12720,6 +14543,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_V-Strom_1000_(2014).jpeg",
     "via": "alias",
     "aliasOf": "suzuki|v-strom-1000"
+  },
+  "suzuki|v-strom-250": {
+    "image": "store/img/bikes2/suzuki-v-strom-250.webp",
+    "thumb": "store/img/bikes2/suzuki-v-strom-250.thumb.webp",
+    "title": "CA3I0053.jpg",
+    "author": "Pzj70v",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CA3I0053.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/suzuki-v-strom-250.hero.webp"
+  },
+  "suzuki|v-strom-250-abs": {
+    "image": "store/img/bikes2/suzuki-v-strom-250.webp",
+    "thumb": "store/img/bikes2/suzuki-v-strom-250.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-v-strom-250.hero.webp",
+    "title": "CA3I0053.jpg",
+    "author": "Pzj70v",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CA3I0053.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "suzuki|v-strom-250"
   },
   "suzuki|v-strom-650-abs": {
     "image": "store/img/bikes/suzuki-v-strom-650.webp",
@@ -13198,6 +15045,150 @@
     "source": "https://commons.wikimedia.org/wiki/File:Triumph_Bonneville_T100_Black_in_Athens_on_10-24-2023.jpg",
     "via": "alias",
     "aliasOf": "triumph|bonneville-t100"
+  },
+  "triumph|bonneville-t120": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp"
+  },
+  "triumph|bonneville-t120-(euro-5b)": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
+  },
+  "triumph|bonneville-t120-ace": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
+  },
+  "triumph|bonneville-t120-black": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
+  },
+  "triumph|bonneville-t120-black-(euro-5b)": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120-black"
+  },
+  "triumph|bonneville-t120-black-dgr-limited-edition": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120-black"
+  },
+  "triumph|bonneville-t120-black-gold-line": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120-black"
+  },
+  "triumph|bonneville-t120-bud-ekins": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
+  },
+  "triumph|bonneville-t120-diamond": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
+  },
+  "triumph|bonneville-t120-diamond-edition": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120-diamond"
+  },
+  "triumph|bonneville-t120-elvis-edition": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
+  },
+  "triumph|bonneville-t120-gold-line": {
+    "image": "store/img/bikes2/triumph-bonneville-t120.webp",
+    "thumb": "store/img/bikes2/triumph-bonneville-t120.thumb.webp",
+    "hero": "store/img/bikes2/triumph-bonneville-t120.hero.webp",
+    "title": "1966 Triumph Bonneville T120 TT.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1966_Triumph_Bonneville_T120_TT.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "triumph|bonneville-t120"
   },
   "triumph|bonneville-t214-se": {
     "image": "store/img/bikes/triumph-bonneville-t214.webp",
@@ -14390,6 +16381,30 @@
     "via": "alias",
     "aliasOf": "triumph|trident-660"
   },
+  "triumph|trophy-1200": {
+    "image": "store/img/bikes2/triumph-trophy-1200.webp",
+    "thumb": "store/img/bikes2/triumph-trophy-1200.thumb.webp",
+    "title": "Triumph Trophy 1200, green.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Trophy_1200,_green.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/triumph-trophy-1200.hero.webp"
+  },
+  "triumph|trophy-900": {
+    "image": "store/img/bikes2/triumph-trophy-900.webp",
+    "thumb": "store/img/bikes2/triumph-trophy-900.thumb.webp",
+    "title": "Triumph Trophy 3.JPG",
+    "author": "Dédélembrouille",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Trophy_3.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/triumph-trophy-900.hero.webp"
+  },
   "triumph|trophy-se": {
     "image": "store/img/bikes/triumph-trophy.webp",
     "thumb": "store/img/bikes/triumph-trophy-thumb.webp",
@@ -14450,6 +16465,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:TVS_XL100_motorbike.jpg",
     "via": "alias",
     "aliasOf": "tvs|tvs-xl100"
+  },
+  "victory|tour": {
+    "image": "store/img/bikes2/victory-tour.webp",
+    "thumb": "store/img/bikes2/victory-tour.thumb.webp",
+    "title": "Liesel 08-10 Victory Vision Tour Stilfserhoch.jpg",
+    "author": "User:Liesel",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Liesel_08-10_Victory_Vision_Tour_Stilfserhoch.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/victory-tour.hero.webp"
   },
   "victory|vision-tour": {
     "image": "store/img/bikes/victory-vision.webp",
@@ -14612,6 +16639,77 @@
     "via": "alias",
     "aliasOf": "yamaha|aerox"
   },
+  "yamaha|ag200f": {
+    "image": "store/img/bikes2/yamaha-ag200f.webp",
+    "thumb": "store/img/bikes2/yamaha-ag200f.thumb.webp",
+    "title": "Yamaha AG 200 2017 model.jpg",
+    "author": "Gatobarato",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_AG_200_2017_model.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-ag200f.hero.webp"
+  },
+  "yamaha|ag200fe": {
+    "image": "store/img/bikes2/yamaha-ag200f.webp",
+    "thumb": "store/img/bikes2/yamaha-ag200f.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-ag200f.hero.webp",
+    "title": "Yamaha AG 200 2017 model.jpg",
+    "author": "Gatobarato",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_AG_200_2017_model.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|ag200f"
+  },
+  "yamaha|bolt": {
+    "image": "store/img/bikes2/yamaha-bolt.webp",
+    "thumb": "store/img/bikes2/yamaha-bolt.thumb.webp",
+    "title": "2014 Yamaha XVS950CU Bolt.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_XVS950CU_Bolt.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-bolt.hero.webp"
+  },
+  "yamaha|bolt-c-spec": {
+    "image": "store/img/bikes2/yamaha-bolt.webp",
+    "thumb": "store/img/bikes2/yamaha-bolt.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-bolt.hero.webp",
+    "title": "2014 Yamaha XVS950CU Bolt.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_XVS950CU_Bolt.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|bolt"
+  },
+  "yamaha|bolt-r-spec": {
+    "image": "store/img/bikes2/yamaha-bolt-r-spec.webp",
+    "thumb": "store/img/bikes2/yamaha-bolt-r-spec.thumb.webp",
+    "title": "2014 Yamaha Star Bolt 2014-07-15 03-04.jpg",
+    "author": "User:Aenglert89",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_Star_Bolt_2014-07-15_03-04.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5
+  },
+  "yamaha|bw's-125": {
+    "image": "store/img/bikes2/yamaha-bw-s-125.webp",
+    "thumb": "store/img/bikes2/yamaha-bw-s-125.thumb.webp",
+    "title": "2024 Yamaha BWS 125 motorcycle.jpg",
+    "author": "Cosmic Console",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Yamaha_BWS_125_motorcycle.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-bw-s-125.hero.webp"
+  },
   "yamaha|crux-r": {
     "image": "store/img/bikes/yamaha-crux.webp",
     "thumb": "store/img/bikes/yamaha-crux-thumb.webp",
@@ -14621,6 +16719,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Crux_R.JPG",
     "via": "alias",
     "aliasOf": "yamaha|crux"
+  },
+  "yamaha|cygnus-x": {
+    "image": "store/img/bikes2/yamaha-cygnus-x.webp",
+    "thumb": "store/img/bikes2/yamaha-cygnus-x.thumb.webp",
+    "title": "Taiwan Yamaha Cygnus-X in Ximending 20120714.jpg",
+    "author": "Solomon203",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Taiwan_Yamaha_Cygnus-X_in_Ximending_20120714.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-cygnus-x.hero.webp"
   },
   "yamaha|diversion-f": {
     "image": "store/img/bikes/yamaha-diversion.webp",
@@ -14743,6 +16853,30 @@
     "via": "alias",
     "aliasOf": "yamaha|fjr-1300"
   },
+  "yamaha|fjr1300": {
+    "image": "store/img/bikes2/yamaha-fjr1300.webp",
+    "thumb": "store/img/bikes2/yamaha-fjr1300.thumb.webp",
+    "title": "Yamaha FJR 1300 - parking.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300_-_parking.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-fjr1300.hero.webp"
+  },
+  "yamaha|fjr1300-abs": {
+    "image": "store/img/bikes2/yamaha-fjr1300.webp",
+    "thumb": "store/img/bikes2/yamaha-fjr1300.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fjr1300.hero.webp",
+    "title": "Yamaha FJR 1300 - parking.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300_-_parking.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fjr1300"
+  },
   "yamaha|fjr1300ae": {
     "image": "store/img/bikes/yamaha-fjr1300a.webp",
     "thumb": "store/img/bikes/yamaha-fjr1300a-thumb.webp",
@@ -14776,6 +16910,30 @@
     "via": "alias",
     "aliasOf": "yamaha|fjr1300a"
   },
+  "yamaha|fjr1300es": {
+    "image": "store/img/bikes2/yamaha-fjr1300.webp",
+    "thumb": "store/img/bikes2/yamaha-fjr1300.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fjr1300.hero.webp",
+    "title": "Yamaha FJR 1300 - parking.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300_-_parking.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fjr1300"
+  },
+  "yamaha|fz": {
+    "image": "store/img/bikes2/yamaha-fz.webp",
+    "thumb": "store/img/bikes2/yamaha-fz.thumb.webp",
+    "title": "2014 Yamaha FZ-09.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_FZ-09.JPG",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-fz.hero.webp"
+  },
   "yamaha|fz-6-fazer": {
     "image": "store/img/bikes/yamaha-fz-6.webp",
     "thumb": "store/img/bikes/yamaha-fz-6-thumb.webp",
@@ -14785,6 +16943,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Fz_6_2004.jpg",
     "via": "alias",
     "aliasOf": "yamaha|fz-6"
+  },
+  "yamaha|fz-blue-flex": {
+    "image": "store/img/bikes2/yamaha-fz.webp",
+    "thumb": "store/img/bikes2/yamaha-fz.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fz.hero.webp",
+    "title": "2014 Yamaha FZ-09.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_FZ-09.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fz"
+  },
+  "yamaha|fz-rave": {
+    "image": "store/img/bikes2/yamaha-fz.webp",
+    "thumb": "store/img/bikes2/yamaha-fz.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-fz.hero.webp",
+    "title": "2014 Yamaha FZ-09.JPG",
+    "author": "Dennis Bratland",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_FZ-09.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|fz"
   },
   "yamaha|fz-s-fi": {
     "image": "store/img/bikes/yamaha-fz-s.webp",
@@ -14826,6 +17008,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_FZ1_FAZER_GT_2011_Tokyo_Motor_Show.jpg",
     "via": "alias",
     "aliasOf": "yamaha|fz1-fazer"
+  },
+  "yamaha|fz16": {
+    "image": "store/img/bikes2/yamaha-fz16.webp",
+    "thumb": "store/img/bikes2/yamaha-fz16.thumb.webp",
+    "title": "Yamaha FZ 16 Midship (12422843463).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_FZ_16_Midship_(12422843463).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-fz16.hero.webp"
   },
   "yamaha|fz6-abs": {
     "image": "store/img/bikes/yamaha-fz6.webp",
@@ -15117,6 +17311,66 @@
     "via": "alias",
     "aliasOf": "yamaha|jog"
   },
+  "yamaha|jupiter-mx-king": {
+    "image": "store/img/bikes2/yamaha-jupiter-mx-king.webp",
+    "thumb": "store/img/bikes2/yamaha-jupiter-mx-king.thumb.webp",
+    "title": "Yamaha Jupiter MX King 150 - Jakarta Fair 2016 - June 21 2016.jpg",
+    "author": "Wilzz99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Jupiter_MX_King_150_-_Jakarta_Fair_2016_-_June_21_2016.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-jupiter-mx-king.hero.webp"
+  },
+  "yamaha|jupiter-mx-king-monster-energy": {
+    "image": "store/img/bikes2/yamaha-jupiter-mx-king.webp",
+    "thumb": "store/img/bikes2/yamaha-jupiter-mx-king.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-jupiter-mx-king.hero.webp",
+    "title": "Yamaha Jupiter MX King 150 - Jakarta Fair 2016 - June 21 2016.jpg",
+    "author": "Wilzz99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Jupiter_MX_King_150_-_Jakarta_Fair_2016_-_June_21_2016.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|jupiter-mx-king"
+  },
+  "yamaha|jupiter-mx-king-movistar": {
+    "image": "store/img/bikes2/yamaha-jupiter-mx-king.webp",
+    "thumb": "store/img/bikes2/yamaha-jupiter-mx-king.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-jupiter-mx-king.hero.webp",
+    "title": "Yamaha Jupiter MX King 150 - Jakarta Fair 2016 - June 21 2016.jpg",
+    "author": "Wilzz99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Jupiter_MX_King_150_-_Jakarta_Fair_2016_-_June_21_2016.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|jupiter-mx-king"
+  },
+  "yamaha|jupiter-rc": {
+    "image": "store/img/bikes2/yamaha-jupiter-rc.webp",
+    "thumb": "store/img/bikes2/yamaha-jupiter-rc.thumb.webp",
+    "title": "2008 Yamaha Jupiter MX 135LC (20210916).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2008_Yamaha_Jupiter_MX_135LC_(20210916).jpg",
+    "via": "search",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-jupiter-rc.hero.webp"
+  },
+  "yamaha|jupiter-z1": {
+    "image": "store/img/bikes2/yamaha-jupiter-z1.webp",
+    "thumb": "store/img/bikes2/yamaha-jupiter-z1.thumb.webp",
+    "title": "Yamaha Jupiter Z1 - Jakarta Fair 2016 - June 21 2016.jpg",
+    "author": "Wilzz99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Jupiter_Z1_-_Jakarta_Fair_2016_-_June_21_2016.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-jupiter-z1.hero.webp"
+  },
   "yamaha|majesty-400-abs": {
     "image": "store/img/bikes/yamaha-majesty-400.webp",
     "thumb": "store/img/bikes/yamaha-majesty-400-thumb.webp",
@@ -15138,6 +17392,18 @@
     "via": "alias",
     "aliasOf": "yamaha|majesty"
   },
+  "yamaha|mio-m3": {
+    "image": "store/img/bikes2/yamaha-mio-m3.webp",
+    "thumb": "store/img/bikes2/yamaha-mio-m3.thumb.webp",
+    "title": "2014 Yamaha Mio M3 125 (20211007).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_Mio_M3_125_(20211007).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-mio-m3.hero.webp"
+  },
   "yamaha|mio-m3-125-aks-sss": {
     "image": "store/img/bikes/yamaha-mio-m3-125.webp",
     "thumb": "store/img/bikes/yamaha-mio-m3-125-thumb.webp",
@@ -15147,6 +17413,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_Mio_M3_125_(20200720).jpg",
     "via": "alias",
     "aliasOf": "yamaha|mio-m3-125"
+  },
+  "yamaha|mt": {
+    "image": "store/img/bikes2/yamaha-mt.webp",
+    "thumb": "store/img/bikes2/yamaha-mt.thumb.webp",
+    "title": "HK ALC 鴨脷洲 Ap Lei Chau 大街 Main Street January 2021 SS2 091.jpg",
+    "author": "Hoypiwoo Summ",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HK_ALC_%E9%B4%A8%E8%84%B7%E6%B4%B2_Ap_Lei_Chau_%E5%A4%A7%E8%A1%97_Main_Street_January_2021_SS2_091.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-mt.hero.webp"
   },
   "yamaha|mt-03-(660cc)": {
     "image": "store/img/bikes/yamaha-mt-03.webp",
@@ -15495,6 +17773,42 @@
     "via": "alias",
     "aliasOf": "yamaha|mt09"
   },
+  "yamaha|mt-10": {
+    "image": "store/img/bikes2/yamaha-mt-10.webp",
+    "thumb": "store/img/bikes2/yamaha-mt-10.thumb.webp",
+    "title": "Yamaha MT-10 (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-10_(1).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-mt-10.hero.webp"
+  },
+  "yamaha|mt-10-sp": {
+    "image": "store/img/bikes2/yamaha-mt-10-sp.webp",
+    "thumb": "store/img/bikes2/yamaha-mt-10-sp.thumb.webp",
+    "title": "Yamaha MT-10.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-10.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-mt-10-sp.hero.webp"
+  },
+  "yamaha|mt-10-tourer-edition": {
+    "image": "store/img/bikes2/yamaha-mt-10.webp",
+    "thumb": "store/img/bikes2/yamaha-mt-10.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt-10.hero.webp",
+    "title": "Yamaha MT-10 (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-10_(1).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|mt-10"
+  },
   "yamaha|mt-125-abs": {
     "image": "store/img/bikes/yamaha-mt-125.webp",
     "thumb": "store/img/bikes/yamaha-mt-125-thumb.webp",
@@ -15504,6 +17818,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-125_(1).jpg",
     "via": "alias",
     "aliasOf": "yamaha|mt-125"
+  },
+  "yamaha|mt-15": {
+    "image": "store/img/bikes2/yamaha-mt-15.webp",
+    "thumb": "store/img/bikes2/yamaha-mt-15.thumb.webp",
+    "title": "Yamaha M-Slaz 150 (MT-15).jpg",
+    "author": "M.rJirapat",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_M-Slaz_150_(MT-15).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-mt-15.hero.webp"
+  },
+  "yamaha|mt-15-ver-2.0": {
+    "image": "store/img/bikes2/yamaha-mt-15.webp",
+    "thumb": "store/img/bikes2/yamaha-mt-15.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-mt-15.hero.webp",
+    "title": "Yamaha M-Slaz 150 (MT-15).jpg",
+    "author": "M.rJirapat",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_M-Slaz_150_(MT-15).jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|mt-15"
+  },
+  "yamaha|mt-25": {
+    "image": "store/img/bikes2/yamaha-mt-25.webp",
+    "thumb": "store/img/bikes2/yamaha-mt-25.thumb.webp",
+    "title": "2016 Yamaha MT-25.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_MT-25.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-mt-25.hero.webp"
   },
   "yamaha|mt07": {
     "image": "store/img/bikes2/yamaha-mt07.webp",
@@ -15701,6 +18051,18 @@
     "via": "alias",
     "aliasOf": "yamaha|nmax-neo"
   },
+  "yamaha|nozza-grande": {
+    "image": "store/img/bikes2/yamaha-nozza-grande.webp",
+    "thumb": "store/img/bikes2/yamaha-nozza-grande.thumb.webp",
+    "title": "Yamaha nozza grande ltf125 YCP.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_nozza_grande_ltf125_YCP.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-nozza-grande.hero.webp"
+  },
   "yamaha|r1-gytr": {
     "image": "store/img/bikes/yamaha-r1.webp",
     "thumb": "store/img/bikes/yamaha-r1-thumb.webp",
@@ -15730,6 +18092,50 @@
     "source": "https://commons.wikimedia.org/wiki/File:1998_Yamaha_YZF-R1_in_the_Yamaha_Communication_Plaza.JPG",
     "via": "alias",
     "aliasOf": "yamaha|r1"
+  },
+  "yamaha|r125": {
+    "image": "store/img/bikes2/yamaha-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-r125.thumb.webp",
+    "title": "Yamaha YZF-R125.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5
+  },
+  "yamaha|r125-70th-anniversary": {
+    "image": "store/img/bikes2/yamaha-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-r125.thumb.webp",
+    "title": "Yamaha YZF-R125.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r125"
+  },
+  "yamaha|r125-abs": {
+    "image": "store/img/bikes2/yamaha-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-r125.thumb.webp",
+    "title": "Yamaha YZF-R125.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r125"
+  },
+  "yamaha|r125-world-gp-60th-anniversary": {
+    "image": "store/img/bikes2/yamaha-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-r125.thumb.webp",
+    "title": "Yamaha YZF-R125.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r125"
   },
   "yamaha|r15-2pl": {
     "image": "store/img/bikes/yamaha-r15.webp",
@@ -15890,6 +18296,54 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_r15_v2_blue.jpg",
     "via": "alias",
     "aliasOf": "yamaha|r15"
+  },
+  "yamaha|r25": {
+    "image": "store/img/bikes2/yamaha-r25.webp",
+    "thumb": "store/img/bikes2/yamaha-r25.thumb.webp",
+    "title": "Yamaha YZF-R25 Tokyo Motor Show 2013.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R25_Tokyo_Motor_Show_2013.JPG",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-r25.hero.webp"
+  },
+  "yamaha|r25-abs": {
+    "image": "store/img/bikes2/yamaha-r25-abs.webp",
+    "thumb": "store/img/bikes2/yamaha-r25-abs.thumb.webp",
+    "title": "2015 Yamaha YZF-R25.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_YZF-R25.JPG",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-r25-abs.hero.webp"
+  },
+  "yamaha|r25-movistar": {
+    "image": "store/img/bikes2/yamaha-r25.webp",
+    "thumb": "store/img/bikes2/yamaha-r25.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r25.hero.webp",
+    "title": "Yamaha YZF-R25 Tokyo Motor Show 2013.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R25_Tokyo_Motor_Show_2013.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r25"
+  },
+  "yamaha|r25-tech3": {
+    "image": "store/img/bikes2/yamaha-r25.webp",
+    "thumb": "store/img/bikes2/yamaha-r25.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r25.hero.webp",
+    "title": "Yamaha YZF-R25 Tokyo Motor Show 2013.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R25_Tokyo_Motor_Show_2013.JPG",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r25"
   },
   "yamaha|r3-abs": {
     "image": "store/img/bikes/yamaha-r3.webp",
@@ -16726,6 +19180,42 @@
     "via": "alias",
     "aliasOf": "yamaha|tracer-9"
   },
+  "yamaha|tt-r125": {
+    "image": "store/img/bikes2/yamaha-tt-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-tt-r125.thumb.webp",
+    "title": "2007 Yamaha TT-R125L image 1.jpg",
+    "author": "2geriatrics2furious",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_image_1.jpg",
+    "via": "wikipedia",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-tt-r125.hero.webp"
+  },
+  "yamaha|tt-r125-lw": {
+    "image": "store/img/bikes2/yamaha-tt-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-tt-r125.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-tt-r125.hero.webp",
+    "title": "2007 Yamaha TT-R125L image 1.jpg",
+    "author": "2geriatrics2furious",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_image_1.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|tt-r125"
+  },
+  "yamaha|tt-r125-lw-e": {
+    "image": "store/img/bikes2/yamaha-tt-r125.webp",
+    "thumb": "store/img/bikes2/yamaha-tt-r125.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-tt-r125.hero.webp",
+    "title": "2007 Yamaha TT-R125L image 1.jpg",
+    "author": "2geriatrics2furious",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_image_1.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|tt-r125-lw"
+  },
   "yamaha|tw200e": {
     "image": "store/img/bikes/yamaha-tw200.webp",
     "thumb": "store/img/bikes/yamaha-tw200-thumb.webp",
@@ -17380,6 +19870,18 @@
     "via": "alias",
     "aliasOf": "yamaha|xt250"
   },
+  "yamaha|xt660r": {
+    "image": "store/img/bikes2/yamaha-xt660r.webp",
+    "thumb": "store/img/bikes2/yamaha-xt660r.thumb.webp",
+    "title": "Yamaha XT 660 (2622181655).jpg",
+    "author": "André Banyai",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660_(2622181655).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-xt660r.hero.webp"
+  },
   "yamaha|xt660z-abs": {
     "image": "store/img/bikes/yamaha-xt660z.webp",
     "thumb": "store/img/bikes/yamaha-xt660z-thumb.webp",
@@ -17895,6 +20397,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_YZF-R15.JPG",
     "via": "alias",
     "aliasOf": "yamaha|yzf-r15"
+  },
+  "yamaha|yzf-r1m": {
+    "image": "store/img/bikes2/yamaha-yzf-r1m.webp",
+    "thumb": "store/img/bikes2/yamaha-yzf-r1m.thumb.webp",
+    "title": "Yamaha Motobot Ver.2 Tokyo Motor Show 2017 PB031807.jpg",
+    "author": "Kestrel",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Motobot_Ver.2_Tokyo_Motor_Show_2017_PB031807.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-yzf-r1m.hero.webp"
+  },
+  "yamaha|yzf-r1m-world-gp": {
+    "image": "store/img/bikes2/yamaha-yzf-r1m.webp",
+    "thumb": "store/img/bikes2/yamaha-yzf-r1m.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-yzf-r1m.hero.webp",
+    "title": "Yamaha Motobot Ver.2 Tokyo Motor Show 2017 PB031807.jpg",
+    "author": "Kestrel",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Motobot_Ver.2_Tokyo_Motor_Show_2017_PB031807.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|yzf-r1m"
   },
   "yamaha|yzf-r3-abs": {
     "image": "store/img/bikes/yamaha-yzf-r3.webp",

@@ -16,6 +16,7 @@ Built 2026-09-20. Every number below is measured on this machine unless it says 
 | `api/data/climate/isd-2024.jsonl` | one reduced row per station-year | 3.5 MB | `--isd` |
 | `api/data/climate/climatology.json` | merged per-station record the runtime reads | 4.34 MB | `--climatology` |
 | `api/data/climate/rules/{manualId}.json` | the extracted rulebook, one file per manual | ~1 MB total | `--rules` |
+| `api/data/climate/extract_cache.json` | pass B answers keyed by `sha256(ruleType\|window)` | — | `--rules --model` |
 | `api/data/climate/rules_report.json` | per-manual counts, drops, model spend | — | `--rules` |
 | `api/data/climate/anomalies.json` · `families.json` | the cross-OEM table and the audited model-family clusters | — | `--anomalies` |
 | `api/data/climate/quality_ablation.json` | the quality-code ablation, shipped as a report | — | `--ablation` |
@@ -85,6 +86,20 @@ and WUDAOLIANG (4,613 m, Tibetan plateau). Reports print the raw code, never a g
   invented threshold is a seized engine, so a rule that fails this is dropped and counted in
   `rules_report.json`.
 
+Measured over the whole corpus (`api/data/climate/rules_report.json`):
+
+| | |
+|---|---|
+| manuals scanned / with at least one rule | **529 / 519** |
+| pages scanned | **93,932** |
+| rules kept | **3,056** — antifreeze 1,028 · salt 605 · wet 446 · cold-start 361 · dust 301 · oil band 170 · heat 142 · altitude 3 |
+| candidate windows sent to the model | **2,031** (one per rule type per page, never a whole page) |
+| model rules dropped by pass C | **29** |
+| spend on route `climate.extract` | **$0.67** of a **$15** cap, `gpt-5.6-luna` |
+| wall clock | **453 s** at 16 threads; a rerun is **$0.00** off the cache |
+
+Pass A alone — antifreeze, oil band and altitude, which is the whole demo path — costs **$0**.
+
 Two clause shapes worth knowing, both of which broke a naive regex:
 
 - the value is on the **next line**: `Antifreeze protection to at\nleast: −25 °C`;
@@ -130,7 +145,14 @@ there is no distance to report.
 `web/counter/js/climate.js` + `web/counter/css/climate.css`. One overlay, registered with `bus.js`
 so it gets its own history entry (`#book+conditions`) and the header Back, the hardware Back and
 Escape all close it first. Opened from the **Cond** button in the Book bar, next to Parts; the
-`breached` rows also render as a strip above the Parts rows.
+`breached` rows also render as a strip above the Parts rows. The namespace is `.cf-*`, not `.cv-*`:
+`css/chat-ui.css` already owns several unscoped `.cv-` rules (`.cv-foot`, `.cv-head`, `.cv-x`) and
+they leak.
+
+Screenshots of every step, taken against a local API by driving the real app in headless Chrome:
+`docs/pitches/voloridge/shots/` — Book, Conditions at Minneapolis and International Falls, the
+Bangkok negative control (0/4 breached), the tap that opens p. 215, the Parts strip, and the
+geolocation path that prints the 10.8 km station distance.
 
 Each row is a claim, a number and a page:
 

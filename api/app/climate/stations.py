@@ -161,6 +161,12 @@ def _share_above(row: dict, c: float) -> tuple[float, int]:
     return share, t
 
 
+def _step(bucket: float, wanted: float | None) -> str:
+    """The station-years are reduced at fixed thresholds. When the printed rule asks for a value
+    between two of them, say which one answered rather than pretend the numbers line up."""
+    return "" if wanted is None or bucket == wanted else f" (nearest measured step {bucket:g} °C)"
+
+
 def _hours(share: float) -> float:
     return round(share * HOURS_PER_YEAR, 0)
 
@@ -188,7 +194,7 @@ def evaluate(rule: ClimateRule, row: dict, km: float) -> ClimateVerdict:
             status = "borderline"
         else:
             status = "ok"
-        exact = "" if bucket == rule.thresholdC else f" (nearest measured step {bucket} °C)"
+        exact = _step(bucket, rule.thresholdC)
         if status == "breached":
             evidence = (f"{readings:,} readings below {bucket} °C (~{_hours(share):.0f} h/yr), "
                         f"low {worst:g} °C at {name}, {years}{exact}")
@@ -214,14 +220,14 @@ def evaluate(rule: ClimateRule, row: dict, km: float) -> ClimateVerdict:
         share, readings, bucket = _share_below(row, rule.thresholdC)
         status = "breached" if share >= FIRE_SHARE else ("borderline" if share > 0 else "ok")
         evidence = (f"{readings:,} readings below {bucket} °C (~{_hours(share):.0f} h/yr) "
-                    f"at {name}, {years}")
+                    f"at {name}, {years}{_step(bucket, rule.thresholdC)}")
         return ClimateVerdict(**base, status=status, evidence=evidence, magnitude=_hours(share))
 
     if rule.ruleType == "heat_limit" and rule.thresholdC is not None:
         share, bucket = _share_above(row, rule.thresholdC)
         status = "breached" if share >= FIRE_SHARE else ("borderline" if share > 0 else "ok")
         evidence = (f"{share * 100:.1f}% of readings above {bucket} °C (~{_hours(share):.0f} h/yr) "
-                    f"at {name}, {years}")
+                    f"at {name}, {years}{_step(bucket, rule.thresholdC)}")
         return ClimateVerdict(**base, status=status, evidence=evidence, magnitude=_hours(share))
 
     if rule.ruleType == "altitude" and rule.thresholdM is not None:

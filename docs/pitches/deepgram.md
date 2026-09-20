@@ -95,8 +95,8 @@ it, and that transcript arrives **on the same millisecond as the first byte of a
 ## 1:30 — The demo (exact utterances)
 
 **Setup on stage:** the bike is the **KTM 390 Duke 2024** — 143 printed pages, one of the **535 manuals**
-already warm (`GET /api/manuals`, 2026-09-20). (Any of 8,319 free official manuals works; a bike nobody has ever asked for opens in ~7 s and is
-fully searchable in ~50 s for ~$0.10. If a judge names a bike, do that — but not on the clock.)
+already warm (`GET /api/manuals`, 2026-09-20). (Any of **14,770** free official manuals works; a bike nobody has ever asked for is readable in **1.3 s**
+and fully searchable in **40.4 s** for **$0.095**. If a judge names a bike, do that — but not on the clock.)
 Tap **VOICE**. The greeting is *"I see you're looking at the KTM 390 Duke 2024."* — **724 ms after the
 socket opens**.
 
@@ -300,7 +300,8 @@ covers a number.** General steps carry no figures; only the printed pages do.
 **$0.075 per connected minute** on Deepgram's hosted-LLM tier — STT, LLM and TTS bundled, billed on socket
 time rather than per turn, and the socket exists only between the two taps on VOICE. A typical spec
 question is a ~10-second session: **about 1.2 cents**. For comparison, the same question typed into our chat
-costs $0.0049, and the naive "paste the whole manual into a flagship model" baseline is **$6.10**. The
+costs $0.0049, and the naive "paste the whole manual into a flagship model" baseline is **$12.40** on the
+largest deployed manual ($1.37 on the median one — say which). The
 Cloudflare Worker in the middle bills CPU time, not socket duration, so proxying is effectively free.
 
 **"Why not OpenAI Realtime?"**
@@ -323,12 +324,13 @@ answers from memory in a basement.
 
 **"What happens if Deepgram is down, or the key is missing?"**
 `GET /api/voice/config` reports `deepgram: false` and the VOICE button does not render — no dead button, no
-mystery failure. The dictation path (`web/counter/js/deepgram.js`, flux over `/ws/deepgram/listen`) falls
+mystery failure. (Today it reports `deepgram: true`: the key is a Cloudflare Worker secret and the agent is
+live.) The dictation path (`web/counter/js/deepgram.js`, flux over `/ws/deepgram/listen`) falls
 back to the browser's own Web Speech (`speech.js`, identical interface), and typing has always worked.
 
 **"Did you just wrap an API?"**
-The wrapping is four `Settings` fields. The product is everything the tools return: 39,119 registry rows
-across 33 makes, 8,319 free official PDFs we can fetch, a per-page text layer with block coordinates, a
+The wrapping is four `Settings` fields. The product is everything the tools return: 53,557 registry rows
+across 80 makes, 14,770 distinct free English PDFs we can fetch, a per-page text layer with block coordinates, a
 router that rewrites rider slang into the manual's vocabulary, and the rule that a quote is sliced out of
 the original page by the *server* so citations are verbatim by construction rather than by trusting a
 model. The voice is a two-second door onto that. Take the index away and the same `Settings` message

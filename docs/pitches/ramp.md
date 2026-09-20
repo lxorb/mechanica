@@ -342,8 +342,8 @@ And when the manual doesn't cover the job, it says the manual doesn't cover the 
 gap. The failure mode that scares me is the opposite one — a *wrong page* — and that's the one the design
 makes visible: the heading says *Checking the front brake fluid level* and he asked about the chain, and he
 knows in half a second. When a chatbot is wrong it's wrong in a sentence that reads exactly like the right
-one. We also deliberately don't touch the paid service manuals — our registry lists about
-70 of them and we have indexed none. For those, a shop points us at the copy it already bought.
+one. We also deliberately don't touch the paid service manuals — our registry lists
+182 service rows, 15 of them paid, subscription or dealer-login only, and we have indexed none. For those, a shop points us at the copy it already bought.
 
 **6. "Why now? The PDFs and the models both existed last year."**
 The PDFs did. The economics didn't. Reading a 500-page manual end to end to a flagship model is 400,000
@@ -409,6 +409,7 @@ Internal, measured:
 - `api/eval/report.md` — 150 queries: top-1 **100%**, p95 **3.33 s**, mean **$0.00038** an ask.
 - `api/eval/chat-report.md` — first token p50 **2.64 s**; **100%** of quotes verbatim; 31.2% of tokens stripped before billing.
 - `docs/pitches/token-company/cost-report.md` — the savings ladder, $1.365 → $0.00038, and the monthly-bill table.
-- live `GET /api/cost` on 2026-09-20 — **$6.14** total over 1,550 model calls, `naivePerAsk` **$12.40**.
+- live `GET /api/cost`, read 2026-09-20 09:55 — **$8.93** total over 1,633 model calls (it moves every
+  hour and resets on redeploy), `naivePerAsk` **$12.40**.
 - live latency runs on 2026-09-20 — VIN 0.11 s, photo 5.01/5.80/7.66 s, ask 1.46/1.54/1.59/2.98/4.37 s,
   repeat ask 0.075/0.179 s, PDF first range 0.24 s.

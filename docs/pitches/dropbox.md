@@ -20,7 +20,7 @@ Three angles were considered. Scores are 1–5.
 
 | angle | fit to "chaos → order" | fit to *Dropbox* | judge appeal | build | verdict |
 |---|---|---|---|---|---|
-| **(a) the registry as chaos→order** — 53,557 rows, 84 portals, 4,081 rows a portal filed as a handbook that are not | **5** | **1** | 3 | 1 (done already) | **opening only** |
+| **(a) the registry as chaos→order** — 53,557 rows, 84 portals, 4,081 **owner-typed** rows a portal filed as a handbook that are not | **5** | **1** | 3 | 1 (done already) | **opening only** |
 | **(b) the shop's own folder** — a workshop drops its PDFs in Dropbox, we index them page-exact next to the OEM manual | 4 | **5** | **5** | 3 | **primary** |
 | **(c) Dropbox as the archive / shared links to customers** | 2 | 3 | 2 | 3 | **no** |
 
@@ -74,7 +74,7 @@ Fetched 2026-09-20 from `github.com/dropbox/dropbox-api-spec/files.stone` and
 Screen: [`dropbox/chaos-to-order.svg`](dropbox/chaos-to-order.svg), then
 [`dropbox/rows-per-portal.svg`](dropbox/rows-per-portal.svg).
 
-> "A friend of mine runs a motorcycle workshop. He spends about a fifth of his week not fixing bikes —
+> "A friend of mine runs his own motorcycle workshop in Germany. He spends about a fifth of his week not fixing bikes —
 > looking for a page.
 >
 > So we went and indexed every manual a manufacturer publishes. **Fifty-three thousand five hundred
@@ -178,7 +178,7 @@ guarantees and not a watered-down version of them.
 |---|---|---|---|
 | 1 | **Mechanica** | Don't trust the AI. Trust the manual. | — |
 | 2 | **53,557 rows. 84 portals.** | Every one a different shape. | `dropbox/rows-per-portal.svg` |
-| 3 | **What a portal calls a handbook** | 4,081 rows typed *owner* that are a brochure, a warranty insert, an infotainment guide. | table from `dropbox/registry-report.md` |
+| 3 | **What a portal calls a handbook** | 4,081 rows typed *owner* that are a brochure, a warranty insert, an infotainment guide — counted over **every** row, in every language and access level. | table from `dropbox/registry-report.md` |
 | 4 | **Order** | 14,770 fetchable PDFs · 13,537 vehicles · one page. | `dropbox/chaos-to-order.svg` |
 | 5 | **And it is the wrong document** | 182 service manuals. 15 not free. BMW: **EUR 9 / hour**. | the four rows of the access table |
 | 6 | **He already owns it** | It is a PDF in a folder, next to 400 scans. | photo of a shop folder / Dropbox screenshot |
@@ -233,8 +233,9 @@ ingests is cached in our blob storage so the browser can render the page. For a 
 container is his, and a per-tenant key is the next thing I would build.
 
 **4. "How does this scale? Ten thousand shops, ten thousand folders."**
-The per-shop cost is the interesting number and it is small: **$0.096 median to ingest a manual**
-(773 manuals, `api/data/mass_report.jsonl`), **once**, and **$0.00038** per question after that. A shop
+The per-shop cost is the interesting number and it is small: **$0.0972 median to ingest a manual**
+(648 real ingests in `api/data/mass_report.jsonl` — the file has 773 lines, the rest are error, duplicate
+or suspicious), **once**, and **$0.00038** per question after that. A shop
 with a hundred documents is a **ten-dollar** one-time cost. The scaling risk is not money, it is
 **cursors and duplicates**: one cursor per folder, and the `content_hash` check means the same Haynes
 PDF sitting in five hundred shops' folders is ingested — well, today, five hundred times, and that is
@@ -245,7 +246,8 @@ honours it with a backoff ladder.
 
 **5. "Is it live right now?"**
 The upload path is live and always has been — `POST /api/ingest/upload`, and the button on a bike with
-no free manual. The folder sync is **written, tested and not connected**: 32 tests against a mocked
+no free manual. The folder sync is **built, deploying**: the router is in `api/app/main.py`, but the deployed replica
+predates it, so `/api/dropbox/*` is not in the live OpenAPI yet. 32 tests against a mocked
 Dropbox covering list, continue, pagination, cursor reset, download, the `%PDF` check, duplicates by
 content hash, the unmatched path, `429` with `retry_after`, the noauth longpoll, the webhook challenge
 and its HMAC. It needs one token in `agent-secrets/dropbox.txt` and it starts on the next boot. I would
@@ -277,7 +279,7 @@ line. Nothing else was touched.
 | portals | **84** | same |
 | makes | **80** | same |
 | rows naming a file another row already names | **25,357** | 53,557 − 28,200 distinct URLs |
-| rows typed `owner` that are not a handbook | **4,081** | `registry/doctype.py` over every row |
+| rows typed `owner` that are not a handbook | **4,081** | `registry/doctype.py` over **every** row, every language, every access level. The free-English subset — the rows we would actually fetch — is **1,489**. Say which one you mean |
 | …from Triumph's portal alone | **3,030** | same, by site |
 | distinct free English PDFs we can fetch | **14,770** | `_ingestable()` over the registry |
 | vehicles with a free official manual | **13,537** of 27,751 | `api/data/bikes.json`, live `GET /api/catalog` |

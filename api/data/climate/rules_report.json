@@ -1,23 +1,23 @@
 {
  "manuals": 529,
- "withRules": 517,
+ "withRules": 519,
  "rules": 3056,
- "rulesDropped": 26,
+ "rulesDropped": 29,
  "pages": 93932,
  "candidates": 2031,
- "modelCalls": 1881,
+ "modelCalls": 1884,
  "modelRules": 1855,
  "byType": {
-  "salt_wash": 607,
-  "cold_start": 360,
+  "salt_wash": 605,
+  "cold_start": 361,
   "heat_limit": 142,
   "antifreeze_floor": 1028,
-  "dust_interval": 299,
-  "wet_interval": 447,
+  "dust_interval": 301,
+  "wet_interval": 446,
   "altitude": 3,
   "oil_grade_band": 170
  },
- "usd": 0.6743,
+ "usd": 0.0,
  "budget": 15.0,
  "budgetReached": false,
  "model": "gpt-5.6-luna",
@@ -1007,8 +1007,8 @@
    "dropped": 0
   },
   "honda-rebel-500-2025-us-om": {
-   "rules": 7,
-   "dropped": 0
+   "rules": 6,
+   "dropped": 1
   },
   "honda-rebel-500-abs-se-2025-us-om": {
    "rules": 6,
@@ -1440,14 +1440,14 @@
   },
   "ktm-1290-super-adventure-r-2024-eu-om": {
    "rules": 12,
-   "dropped": 1
+   "dropped": 0
   },
   "ktm-1290-super-adventure-r-2024-us-om": {
-   "rules": 13,
+   "rules": 12,
    "dropped": 0
   },
   "ktm-1290-super-adventure-s-2024-eu-om": {
-   "rules": 13,
+   "rules": 12,
    "dropped": 0
   },
   "ktm-1290-super-adventure-s-2024-us-om": {
@@ -1455,7 +1455,7 @@
    "dropped": 0
   },
   "ktm-1290-super-duke-gt-2024-eu-om": {
-   "rules": 11,
+   "rules": 12,
    "dropped": 0
   },
   "ktm-1290-super-duke-gt-2024-us-om": {
@@ -1891,16 +1891,16 @@
    "dropped": 0
   },
   "yamaha-mt07-2025-eu-om": {
-   "rules": 7,
-   "dropped": 1
+   "rules": 8,
+   "dropped": 0
   },
   "yamaha-mt07-y-amt-2025-eu-om": {
    "rules": 8,
    "dropped": 0
   },
   "yamaha-mt09-2024-eu-om": {
-   "rules": 6,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-mt09-2025-eu-om": {
    "rules": 5,
@@ -1911,12 +1911,12 @@
    "dropped": 1
   },
   "yamaha-mt09-y-amt-2024-eu-om": {
-   "rules": 6,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-mt09-y-amt-2024-eu-om-ae5028": {
-   "rules": 6,
-   "dropped": 0
+   "rules": 5,
+   "dropped": 1
   },
   "yamaha-mt09-y-amt-2025-eu-om": {
    "rules": 5,
@@ -2031,8 +2031,8 @@
    "dropped": 0
   },
   "yamaha-tt-r110e-2026-eu-om": {
-   "rules": 1,
-   "dropped": 1
+   "rules": 2,
+   "dropped": 0
   },
   "yamaha-tt-r50e-2025-eu-om": {
    "rules": 2,
@@ -2052,15 +2052,15 @@
   },
   "yamaha-wr250f-2026-eu-om": {
    "rules": 4,
-   "dropped": 0
+   "dropped": 1
   },
   "yamaha-wr450f-2025-eu-om": {
    "rules": 1,
    "dropped": 1
   },
   "yamaha-wr450f-2026-eu-om": {
-   "rules": 5,
-   "dropped": 0
+   "rules": 4,
+   "dropped": 1
   },
   "yamaha-xsr125-2025-eu-om": {
    "rules": 5,
@@ -2079,7 +2079,7 @@
    "dropped": 0
   },
   "yamaha-yz125-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "yamaha-yz250-2025-eu-om": {
@@ -2087,7 +2087,7 @@
    "dropped": 0
   },
   "yamaha-yz250-2026-eu-om": {
-   "rules": 0,
+   "rules": 1,
    "dropped": 0
   },
   "yamaha-yz250f-2025-eu-om": {
@@ -2095,7 +2095,7 @@
    "dropped": 1
   },
   "yamaha-yz250f-2026-eu-om": {
-   "rules": 3,
+   "rules": 4,
    "dropped": 1
   },
   "yamaha-yz450f-2025-eu-om": {
@@ -2103,7 +2103,7 @@
    "dropped": 1
   },
   "yamaha-yz450f-2026-eu-om": {
-   "rules": 3,
+   "rules": 4,
    "dropped": 1
   },
   "yamaha-yz65-2025-eu-om": {
@@ -2139,5 +2139,5 @@
    "dropped": 0
   }
  },
- "seconds": 452.6
+ "seconds": 45.4
 }

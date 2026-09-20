@@ -115,7 +115,7 @@ function row(verdict, onPage) {
   const rule = verdict.rule || {};
   const page = Number(rule.page) || 0;
   const node = h("button", {
-    class: "cv-row",
+    class: "cf-row",
     type: "button",
     "data-status": verdict.status,
     "data-page": String(page),
@@ -124,16 +124,16 @@ function row(verdict, onPage) {
   node.append(
     h(
       "div",
-      { class: "cv-head" },
-      h("b", { class: "cv-name", text: rule.name || rule.ruleType || "" }),
-      h("span", { class: "cv-flag", text: STATUS[verdict.status] || verdict.status })
+      { class: "cf-head" },
+      h("b", { class: "cf-name", text: rule.name || rule.ruleType || "" }),
+      h("span", { class: "cf-flag", text: STATUS[verdict.status] || verdict.status })
     ),
-    h("p", { class: "cv-claim", text: verdict.claim || rule.quote || "" }),
+    h("p", { class: "cf-claim", text: verdict.claim || rule.quote || "" }),
     h(
       "div",
-      { class: "cv-foot" },
-      h("span", { class: "cv-fact", text: verdict.evidence || "" }),
-      page ? h("span", { class: "stamp cv-page", text: `p. ${page}` }) : null
+      { class: "cf-foot" },
+      h("span", { class: "cf-fact", text: verdict.evidence || "" }),
+      page ? h("span", { class: "stamp cf-page", text: `p. ${page}` }) : null
     )
   );
   return node;
@@ -183,7 +183,7 @@ function node() {
   const found = document.querySelector('[data-overlay="conditions"]');
   if (found) return found;
   const sheet = h("div", {
-    class: "ov-sheet cv-sheet",
+    class: "ov-sheet cf-sheet",
     role: "dialog",
     "aria-modal": "true",
     "aria-label": "Conditions",
@@ -201,9 +201,9 @@ function mount(host) {
 
   const title = h(
     "div",
-    { class: "cv-title" },
+    { class: "cf-title" },
     h("b", { text: "Conditions" }),
-    h("span", { class: "cv-station" })
+    h("span", { class: "cf-station" })
   );
   const x = h("button", {
     class: "ov-x",
@@ -213,7 +213,7 @@ function mount(host) {
     on: { click: () => closeOverlay() },
   });
   const input = h("input", {
-    class: "cv-q",
+    class: "cf-q",
     type: "search",
     placeholder: "City",
     "aria-label": "City",
@@ -228,9 +228,9 @@ function mount(host) {
       },
     },
   });
-  const body = h("div", { class: "ov-body cv-body" });
-  root.append(h("header", { class: "ov-head cv-head" }, title, x), h("div", { class: "cv-bar" }, input), body);
-  els = { station: title.querySelector(".cv-station"), input, body };
+  const body = h("div", { class: "ov-body cf-body" });
+  root.append(h("header", { class: "ov-head cf-head" }, title, x), h("div", { class: "cf-bar" }, input), body);
+  els = { station: title.querySelector(".cf-station"), input, body };
 }
 
 function onPlace() {
@@ -246,7 +246,7 @@ function paint(fit, id) {
   els.body.replaceChildren();
   if (!fit) {
     els.station.textContent = "";
-    els.body.append(h("p", { class: "cv-empty", text: place ? "No station" : "Type a city" }));
+    els.body.append(h("p", { class: "cf-empty", text: place ? "No station" : "Type a city" }));
     return;
   }
   const st = fit.station || {};
@@ -257,15 +257,15 @@ function paint(fit, id) {
     .join(" · ");
   const list = (fit.verdicts || []).slice().sort((a, b) => ORDER[a.status] - ORDER[b.status]);
   if (!list.length) {
-    els.body.append(h("p", { class: "cv-empty", text: "No rules in this manual" }));
+    els.body.append(h("p", { class: "cf-empty", text: "No rules in this manual" }));
     return;
   }
   els.body.append(
     h(
       "div",
-      { class: "cv-tally" },
-      h("span", { class: "stamp cv-count", text: `${fit.breached}/${fit.checked}` }),
-      h("span", { class: "cv-tallyword", text: "breached" })
+      { class: "cf-tally" },
+      h("span", { class: "stamp cf-count", text: `${fit.breached}/${fit.checked}` }),
+      h("span", { class: "cf-tallyword", text: "breached" })
     )
   );
   for (const v of list) els.body.append(row(v, (page) => openPage(page, id)));
@@ -309,7 +309,7 @@ export function openConditions() {
  * stays empty - not "loading" - while there is nothing to say.
  */
 export function strip() {
-  const host = h("div", { class: "cv-strip", hidden: true });
+  const host = h("div", { class: "cf-strip", hidden: true });
   const fill = (fit, id) => {
     host.replaceChildren();
     const list = (fit && fit.verdicts ? fit.verdicts : []).filter((v) => v.status === "breached");
@@ -321,14 +321,14 @@ export function strip() {
         h(
           "button",
           {
-            class: "cv-chip",
+            class: "cf-chip",
             type: "button",
             "data-status": v.status,
             on: { click: () => page && openPage(page, id) },
           },
           h("b", { text: (v.rule && v.rule.name) || "" }),
-          h("span", { class: "cv-chipfact", text: v.evidence || "" }),
-          page ? h("span", { class: "stamp cv-page", text: `p. ${page}` }) : null
+          h("span", { class: "cf-chipfact", text: v.evidence || "" }),
+          page ? h("span", { class: "stamp cf-page", text: `p. ${page}` }) : null
         )
       );
     }

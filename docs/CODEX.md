@@ -1,12 +1,21 @@
 # OpenAI Codex as the fifth teammate
 
-Codex CLI 0.155.1 (`gpt-6-astra`, API-key auth) wrote two of the five test modules in
-`api/tests/`: `npx @openai/codex exec -s workspace-write --skip-git-repo-check "<p>" < /dev/null`
+Codex CLI 0.155.1 (`gpt-6-astra`, API-key auth) wrote three of the sixteen test modules in
+`api/tests/` - 194 of the suite's 617 passing tests:
+`npx @openai/codex exec -s workspace-write --skip-git-repo-check "<p>" < /dev/null`
 
 - [run-1.md](codex/run-1.md) - `api/tests/test_store.py`, 29 tests, 69k tokens, ~2 min
 - [run-2.md](codex/run-2.md) - `api/tests/test_local_index.py`, 100 tests, 63k tokens, ~8 min
+- [run-3.md](codex/run-3.md) - `api/tests/test_llm.py`, **65 tests, 56,334 tokens, 2 min 02 s**, green on the
+  first and only pytest run, nothing xfailed and not a line of `app/llm.py` touched. It pins the arithmetic
+  behind every USD figure on the slides: `usd()` subtracting cached tokens exactly once and clamping at
+  zero, eleven hard-coded per-model price literals, the `naive_usd()` discontinuity at the 272,000-token
+  long-context boundary (340 p = $2.72, 341 p = $5.456) that produces the **$12.40** baseline, the $10/1k
+  web-search fee, and `prompt_cache_key` pinned to `route:model`. Two honest caveats: it silently swapped
+  the `fresh_store` fixture the prompt named for its own in-memory one, and "every model in `PRICES`"
+  became five of the ten - all three models we quote are covered, the five unused ones are not.
 
-Each log holds the exact prompt, the full stdout and what I fixed. The other three are mine.
+Each log holds the exact prompt, the full stdout and what I fixed. The other thirteen modules are mine.
 
 **The concrete improvement it delivered: it found a live search bug.** Run 2 mocked
 `bm25.get_scores` and wrote a test pinning *where* the `FLOOR` gate in `app/search/local.py` sat -

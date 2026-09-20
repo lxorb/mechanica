@@ -1,9 +1,10 @@
 /* The reader runs fullscreen: counter.css folds the ticket bar and the rail away for
-   [data-here="book"], and everything the reader needs sits in its own 34 px bar. */
+   [data-here="book"]. Two rows of chrome, and only two: the top bar says where you are
+   (manual, chapter, page) and never leaves; the bottom rows are what you do, under the thumb. */
 
 [data-screen="book"] [data-root] {
   --mark: rgba(232, 93, 4, 0.34);
-  --bar-h: 34px;
+  --bar-h: 44px;
   display: flex;
   flex-direction: column;
   height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
@@ -13,12 +14,12 @@
   background: var(--ink);
 }
 
-/* ---------- thin bar ---------- */
+/* ---------- the bar: identity and position only ---------- */
 
 [data-screen="book"] .book-bar {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   flex: 0 0 auto;
   height: var(--bar-h);
   min-height: var(--bar-h);
@@ -27,9 +28,13 @@
   color: #fff;
 }
 
-/* Immersive: one tap takes the bar and the strip away, the next brings them back. */
-[data-screen="book"] [data-root].immersive .book-bar,
-[data-screen="book"] [data-root].immersive .page-strip {
+/**
+ * Immersive gives the page the bottom rows back, one tap on and one tap off. The top bar is
+ * never part of it: a stray tap must never be able to leave the reader with no chapter, no page
+ * number and no way out.
+ */
+[data-screen="book"] [data-root].immersive .page-strip,
+[data-screen="book"] [data-root].immersive .book-acts {
   display: none;
 }
 
@@ -38,8 +43,8 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  width: 30px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -62,19 +67,35 @@
 }
 
 [data-screen="book"] .bar-back {
-  width: 34px;
-  font-size: 1.5rem;
-  padding-bottom: 3px;
+  font-size: 1.6rem;
+  padding-bottom: 4px;
+}
+
+/* ---------- the thumb row: everything you do ---------- */
+
+[data-screen="book"] .book-acts {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 2px 6px 4px;
+  background: var(--ink);
+}
+
+[data-screen="book"] .book-acts .bar-btn {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 44px;
+  height: auto;
+  min-height: 44px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
 }
 
 [data-screen="book"] .bar-word {
-  width: auto;
-  min-width: 40px;
-  padding: 0 8px;
-  border: 2px solid rgba(255, 255, 255, 0.55);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.66rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -86,15 +107,21 @@
   color: #fff;
 }
 
+/* 44 px of tap, a 28 x 34 plate of ink inside it — the target stays a thumb, the mark stays small. */
 [data-screen="book"] .book-cover {
-  width: 24px;
-  height: 28px;
-  border: 2px solid rgba(255, 255, 255, 0.55);
+  position: relative;
   background: transparent;
   overflow: hidden;
 }
 
-[data-screen="book"] .book-cover.is-back {
+[data-screen="book"] .book-cover::before {
+  content: "";
+  position: absolute;
+  inset: 5px 8px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+[data-screen="book"] .book-cover.is-back::before {
   border-color: var(--yellow);
 }
 
@@ -103,16 +130,21 @@
 }
 
 /* No page thumbnails (PDF-only manual): the cover reads as a contents mark. */
-[data-screen="book"] .book-cover.is-plain {
+[data-screen="book"] .book-cover.is-plain::after {
+  content: "";
+  position: absolute;
+  inset: 5px 8px;
   background:
-    linear-gradient(#fff 0 0) 50% 26% / 62% 2px no-repeat,
-    linear-gradient(#fff 0 0) 50% 50% / 62% 2px no-repeat,
-    linear-gradient(#fff 0 0) 50% 74% / 42% 2px no-repeat;
+    linear-gradient(#fff 0 0) 50% 28% / 58% 2px no-repeat,
+    linear-gradient(#fff 0 0) 50% 50% / 58% 2px no-repeat,
+    linear-gradient(#fff 0 0) 50% 72% / 38% 2px no-repeat;
 }
 
 [data-screen="book"] .book-cover img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 5px 8px;
+  width: auto;
+  height: auto;
   object-fit: cover;
   display: block;
 }
@@ -122,8 +154,8 @@
   min-width: 0;
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.78rem;
-  line-height: 1.1;
+  font-size: 0.92rem;
+  line-height: 1.15;
   letter-spacing: 0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -136,16 +168,16 @@
   align-items: baseline;
   gap: 1px;
   flex: 0 0 auto;
-  padding: 0 4px;
+  padding: 0 6px;
   white-space: nowrap;
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
 }
 
 [data-screen="book"] .book-stamp b {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   line-height: 1;
   letter-spacing: 0;
 }
@@ -202,6 +234,41 @@
   display: block;
 }
 
+/**
+ * A sheet that has not painted yet. The box is already the page's real aspect ratio, so this is
+ * a page-shaped placeholder and not a hole: the paper tone the app uses everywhere, with one
+ * slow sweep across it. Scrolling a 143-page manual never shows blank white, and nothing moves
+ * when the canvas lands — the box was already the right size.
+ */
+[data-screen="book"] .page-sheet:not(.is-ready) {
+  background:
+    linear-gradient(100deg, transparent 38%, rgba(232, 93, 4, 0.1) 50%, transparent 62%),
+    var(--paper);
+  background-size: 260% 100%, 100% 100%;
+  animation: page-sweep 1.3s linear infinite;
+}
+
+@keyframes page-sweep {
+  from {
+    background-position: 130% 0, 0 0;
+  }
+  to {
+    background-position: -130% 0, 0 0;
+  }
+}
+
+/* The ring rides on the sheet being read, so the progress is on the page it belongs to. */
+[data-screen="book"] .page-load {
+  z-index: 4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-screen="book"] .page-sheet:not(.is-ready) {
+    background: var(--paper);
+    animation: none;
+  }
+}
+
 [data-screen="book"] .page-sheet.ask-flash {
   outline: 3px solid var(--orange);
   outline-offset: -3px;
@@ -243,8 +310,8 @@
   align-items: center;
   gap: 6px;
   flex: 0 0 auto;
-  height: 44px;
-  min-height: 44px;
+  height: 48px;
+  min-height: 48px;
   padding: 0 6px;
   background: var(--ink);
   overflow-x: auto;
@@ -261,8 +328,8 @@
 
 [data-screen="book"] .strip-chip {
   flex: 0 0 auto;
-  min-width: 40px;
-  height: 32px;
+  min-width: 44px;
+  height: 44px;
   padding: 0 8px;
   border: 2px solid var(--card);
   background: transparent;
