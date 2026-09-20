@@ -53,6 +53,16 @@ REGIONS: dict[str, tuple[str, str, str]] = {
 }
 
 
+# Motopub is Honda's whole powersports catalogue, so a national portal also lists ATVs and
+# side-by-sides - AHM (Australia) filed a TRX500FM2 under model year 5019, which is how it was
+# noticed. The product is motorcycles and cars, so these never become rows: a quad indexed here
+# would derive a catalog "motorcycle" nothing can honestly answer for.
+NOT_A_MOTORCYCLE = re.compile(
+    r"(?i)(?:^|)(?:trx\d|fourtrax|four\s*trax|rancher|foreman|rubicon|recon|rincon|sportrax|"
+    r"pioneer|talon|big\s*red|muv\d|sxs\d|atc\d|atv|utv|side\s*by\s*side)"
+)
+
+
 def _region(c: httpx.Client, code: str) -> Iterator[RegistryEntry]:
     market, lang, label = REGIONS[code]
     xhr = {"X-Requested-With": "XMLHttpRequest", "Referer": f"{BASE}/{code}"}
@@ -68,6 +78,10 @@ def _region(c: httpx.Client, code: str) -> Iterator[RegistryEntry]:
         # Motopub answers 5019 for at least one 19YM file; an impossible year is skipped, not guessed at.
         return [(str(model), str(y)) for y in plausible_years(seen)]
 
+    quads = [m for m in models if NOT_A_MOTORCYCLE.search(str(m))]
+    if quads:
+        log.info("honda_intl %s: skipping %d non-motorcycle model(s): %s", code, len(quads), ", ".join(map(str, quads[:8])))
+    models = [m for m in models if not NOT_A_MOTORCYCLE.search(str(m))]
     todo = [pair for group in pmap(years, models) for pair in group]
 
     def manual(pair: tuple[str, str]) -> tuple[str, str, str] | None:

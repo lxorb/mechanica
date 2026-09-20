@@ -8,7 +8,19 @@ import urllib.parse
 from collections.abc import Iterable
 
 from ..models import RegistryEntry
-from ._http import GOOGLEBOT_UA, client, get_json, get_text, keep_lang, log, pmap, post_json, slug, years_in
+from ._http import (
+    GOOGLEBOT_UA,
+    client,
+    get_json,
+    get_text,
+    keep_lang,
+    log,
+    plausible_years,
+    pmap,
+    post_json,
+    slug,
+    years_in,
+)
 
 US = "https://powersports.honda.com"
 US_SITE = "powersports.honda.com"
@@ -109,7 +121,7 @@ def honda_us() -> Iterable[RegistryEntry]:
         for pairs in pmap(load, chunks):
             for meta, block in pairs:
                 trim = (block or {}).get("trimName") or f"{meta['year']} {meta['family']}"
-                years = years_in(str(meta.get("year") or "")) or years_in(trim)
+                years = plausible_years(years_in(str(meta.get("year") or "")) or years_in(trim))
                 model = re.sub(r"^\s*(?:19|20)\d{2}\s*", "", trim).strip() or meta["family"]
                 for doc in (block or {}).get("listing", []):
                     url = (doc or {}).get("url")
@@ -136,6 +148,15 @@ def honda_us() -> Iterable[RegistryEntry]:
         log.info("honda_us: %d entries", len(seen))
 
 
+# Motopub is Honda's whole powersports catalogue, so a distributor also lists ATVs and side-by-sides.
+# The product is motorcycles and cars, so those never become rows - see honda_intl.NOT_A_MOTORCYCLE,
+# which is the same pattern for the same portal.
+NOT_A_MOTORCYCLE = re.compile(
+    r"(?i)(?:^|)(?:trx\d|fourtrax|four\s*trax|rancher|foreman|rubicon|recon|rincon|sportrax|"
+    r"pioneer|talon|big\s*red|muv\d|sxs\d|atc\d|atv|utv|side\s*by\s*side)"
+)
+
+
 def _region(c, code: str) -> Iterable[RegistryEntry]:
     """One Motopub distributor: model names, the model years behind each, then the PDF on each page."""
     market, lang, label = REGIONS[code]
@@ -149,8 +170,14 @@ def _region(c, code: str) -> Iterable[RegistryEntry]:
         quoted = urllib.parse.quote(str(model), safe="")
         rows = get_json(c, f"{EU}/ajax/get_data_model_code/{code}//{quoted}//om", headers=xhr)
         found = {str((r or {}).get("model_year") or "") for r in rows or []}
-        return [(str(model), y) for y in sorted(found) if y.isdigit()]
+        # Motopub prints its own typos: AHM filed a 19YM guide under model year 5019. An impossible
+        # year is skipped rather than guessed at - it would mint a catalog vehicle for year 5019.
+        return [(str(model), str(y)) for y in plausible_years(found)]
 
+    quads = [m for m in models if NOT_A_MOTORCYCLE.search(str(m))]
+    if quads:
+        log.info("honda_eu %s: skipping %d non-motorcycle model(s): %s", code, len(quads), ", ".join(map(str, quads[:8])))
+    models = [m for m in models if not NOT_A_MOTORCYCLE.search(str(m))]
     todo = [p for group in pmap(years, models) for p in group]
 
     def manual(pair: tuple[str, str]):

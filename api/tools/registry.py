@@ -147,13 +147,16 @@ def by_kind(entries: list[RegistryEntry], bikes: list[Bike]) -> None:
 
 def _bad_years(entry: RegistryEntry) -> list[object]:
     """The year values on this row that cannot be a model year: anything outside MODEL_YEARS
-    (1900-2032), which is also what catches a truncated one - Yamaha EU has shipped "201" next to
-    2011-2016, and Honda's Motopub answers "5019" for a 19YM file. Both portals print these; a year
-    that survives here is one a vehicle id can be built from."""
+    (1885 .. this year + 2), which is also what catches a truncated one - Yamaha EU has shipped
+    "201" next to 2011-2016, and Honda's Motopub answers "5019" for a 19YM file. Both portals print
+    these; a year that survives here is one a vehicle id can be built from.
+
+    The floor is 1885 and not 1950 on purpose: Harley's archive publishes handbooks back to 1903,
+    and those seven rows are the oldest genuine manuals in the registry."""
     return [y for y in entry.years if not isinstance(y, int) or y not in MODEL_YEARS]
 
 
-def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int, list[tuple[str, list[object]]]]:
+def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int, list[tuple[str, str, list[object], bool]]]:
     """Validated rows of one fragment, keyed by id, the count that failed validation, and the rows
     refused for carrying an impossible model year.
 
@@ -168,7 +171,7 @@ def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int, list[tupl
     items = raw.get("entries") if isinstance(raw, dict) else raw
     rows: dict[str, RegistryEntry] = {}
     bad = 0
-    refused: list[tuple[str, list[object]]] = []
+    refused: list[tuple[str, str, list[object], bool]] = []
     for item in items if isinstance(items, list) else []:
         try:
             entry = RegistryEntry.model_validate(item)
@@ -179,8 +182,12 @@ def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int, list[tupl
             continue
         off = _bad_years(entry)
         if off:
-            refused.append((entry.id, off))
-            continue
+            # Reject the value, not the row: three of the four Yamaha rows that carried a truncated
+            # "201" also carried six good years, and dropping them whole cost real coverage.
+            refused.append((entry.site, entry.id, off, len(entry.years) > len(off)))
+            entry.years = [y for y in entry.years if y not in off]
+            if not entry.years:
+                continue  # nothing left to file it under; the adapter has to be fixed
         rows[entry.id] = entry
     return rows, bad, refused
 
@@ -244,7 +251,7 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     merged: list[tuple[str, int, int, int]] = []
     incoming: dict[str, RegistryEntry] = {}
     fragments: dict[str, dict[str, RegistryEntry]] = {}
-    rejected: list[tuple[str, str, list[object]]] = []
+    rejected: list[tuple[str, str, str, list[object], bool]] = []
     skip = {s.strip().lower().removesuffix(".json") for s in (args.skip or [])}
     replace = {s.strip().lower().removesuffix(".json") for s in (args.replace or [])}
     for path in sorted(FRAGMENTS.glob("*.json")):
@@ -258,8 +265,7 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         fragments[path.stem.lower()] = rows
         incoming.update(rows)
         merged.append((path.name, len(rows), fresh, bad))
-        for eid, off in refused:
-            rejected.append((path.name, eid, off))
+        rejected += [(path.name, *r) for r in refused]
 
     known_rows = store.registry()
     for name, rows in sorted(fragments.items()):  # a wholesale re-key reads as an addition otherwise
@@ -322,12 +328,14 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
             spread = "  ".join(f"{k} {n}" for k, n in sorted(kinds.items(), key=lambda kv: -kv[1]))
             print(f"    {site:<34}{spread}")
     if rejected:
-        print(f"  REFUSED {len(rejected)} row(s) for an impossible model year (outside {MODEL_YEARS.start}-{MODEL_YEARS.stop - 1}):")
-        for name, eid, off in rejected[:40]:
-            print(f"    {name:<28} {eid[:64]:<64} {off}")
+        kept = sum(1 for r in rejected if r[4])
+        print(f"  IMPOSSIBLE MODEL YEAR on {len(rejected)} row(s) (outside {MODEL_YEARS.start}-{MODEL_YEARS.stop - 1}): "
+              f"the value is dropped, {kept} row(s) keep their other years, {len(rejected) - kept} row(s) had none left")
+        for name, site, eid, off, survives in rejected[:40]:
+            print(f"    {site:<30} {off!s:<18} {'kept' if survives else 'DROPPED':<8} {eid[:52]:<52} {name}")
         if len(rejected) > 40:
             print(f"    ... and {len(rejected) - 40} more")
-        print("    fix the adapter that parsed them; they are not in the registry.")
+        print("    the raw value comes from the site named above - fix that adapter, this check only contains it.")
     for name, kept, fresh, bad in merged:
         print(f"  {name:<28} {kept:>6} rows, {fresh:>6} new" + (f", {bad} invalid" if bad else ""))
     if not merged:

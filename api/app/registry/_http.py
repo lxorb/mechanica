@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime
 import logging
 import os
 import re
@@ -160,7 +161,17 @@ def slug(*parts: object) -> str:
     return re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9]+", "-", raw.lower())).strip("-")
 
 
-MODEL_YEARS = range(1900, 2033)
+# 1885 is the Daimler Reitwagen; the top is two model years ahead of today, which is as far as any
+# OEM publishes. Harley's archive really does reach back to 1903, so a 1950 floor would erase the
+# oldest genuine manuals in the registry.
+FIRST_MODEL_YEAR = 1885
+
+
+def model_years() -> range:
+    return range(FIRST_MODEL_YEAR, datetime.date.today().year + 3)
+
+
+MODEL_YEARS = model_years()
 
 
 def plausible_years(years: Iterable[object]) -> list[int]:

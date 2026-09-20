@@ -227,3 +227,35 @@ mis-probed. And stop guessing paths: go `robots.txt` → declared sitemaps → t
    `/owners/vehicle-support/manuals.html` 404s, so the entry point has to be found another way.
 4. **Do not re-open** Yamaha, Kawasaki, Suzuki, Honda, Harley-Davidson, Triumph, Aprilia or
    Moto Guzzi on a hunch. Eight docstrings say why, and cycle 2 re-confirmed two of them.
+
+### Cycle 2, second half — the year audit closed out
+
+`docs/registry/BADYEARS.md` (read-only audit by another agent) reported "124 impossible-year rows".
+**It was 124 year *values* across 7 rows, and all 7 are genuine** — Harley's historical archive,
+1903–1949. Re-measured against the live file: **0 rows** outside 1885 … today + 2, **0** with a
+non-four-digit year. Nothing was retracted for a year, and nothing should be.
+
+* **Bound is `1885 … today + 2`** — `FIRST_MODEL_YEAR` + `model_years()` in `_http.py`, computed,
+  not hardcoded (`range(1885, 2029)` today). A 1950 floor would have deleted the oldest genuine
+  manuals in the database; the top is two model years ahead, which is as far as any OEM publishes.
+* **`merge-fragments` now rejects the value, not the row.** `_bad_years()` strips any year outside
+  the bound, the row keeps its sane years, and only a row with nothing left is dropped. Every
+  offender is printed **per site with the raw value** — `site | [201] | kept | id | fragment` — so
+  an upstream typo (Honda `5019`) reads differently from an adapter bug (Yamaha `201`). Proven with
+  a poisoned fragment: the `[201, 2011, 2012]` row merged as `[2011, 2012]`, the `[5019]`-only row
+  was dropped, and neither was silently discarded.
+* **Both live faults fixed at the source.** `yamaha.py::yamaha_eu` filtered on `str(y).isdigit()`
+  and let `"201"` become the row id; `honda.py::_region` (the EU/Motopub walk — `honda_intl.py` has
+  the same function and got the same fix) took `model_year` verbatim. Both now go through
+  `plausible_years()`. Honda's US listing is clamped too.
+* **Honda no longer leaks quads.** `NOT_A_MOTORCYCLE` in `honda.py` and `honda_intl.py` drops TRX /
+  FourTrax / Rancher / Foreman / Rubicon / Recon / Rincon / Pioneer / Talon / Big Red / MUV / SXS /
+  ATC models before they are ever queried, and logs what it skipped. It removes **0 rows today** —
+  the only one that had been indexed was the `TRX500FM2 5019` row already retracted — so this is a
+  guard against re-introduction on the next crawl, in line with the founder's "motorcycles and cars
+  only". Verified: `TRX500FM2  E`, `Pioneer 1000`, `Talon 1000X` skip; `CBR1000RR-R`, `CRF450R`,
+  `NC750X` keep.
+* Tests: **170 passed, 13 skipped** across registry, catalog, store, cars and API.
+
+Final cycle-2 state: **53,575 rows, 24,223 free English owner PDFs, 14,780 distinct files,
+27,761 vehicles, 13,547 with a `manualUrl`**, 0 impossible years, Harley's 7 archive rows intact.
