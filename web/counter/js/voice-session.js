@@ -153,9 +153,32 @@ function ensureOrb() {
       userDock = orb.isCompact() ? "full" : "compact";
       applyDock(userDock);
     },
+    onMute: (on) => mute(on),
     onLeave: stop,
   });
   return orb;
+}
+
+/**
+ * The microphone off, and nothing else off.
+ *
+ * A workshop is not a quiet room: an impact wrench, a radio, a colleague on the phone. "Mute"
+ * here means the shop stops being heard — the track is disabled at the source, so Deepgram
+ * receives silence and there is no path left by which a frame could reach it. It deliberately
+ * does NOT stop the answer in flight and does not close anything: muting yourself is not
+ * hanging up, and a mute that cut the sentence you were listening to would be the opposite of
+ * what it is for. Nothing is persisted; the next session starts listening.
+ */
+export function mute(on) {
+  if (!live) return false;
+  const now = live.mute(on === undefined ? !live.muted() : on);
+  if (orb) orb.setMuted(now);
+  shout({ kind: "mute", muted: now });
+  return now;
+}
+
+export function muted() {
+  return Boolean(live && live.muted());
 }
 
 /* ------------------------------------------------------------------ the page */
@@ -343,6 +366,18 @@ function wire() {
       bikeId: detail.bikeId ?? ctx.bikeId ?? busState.bikeId,
       bike: detail.bike ?? ctx.bike,
     });
+  });
+
+  // M for mute, while voice is open and he is not typing into something. One key, because the
+  // phone is on the bench and the laptop in the corner of the shop is where the second pair of
+  // hands is. Never a shortcut when there is no session: M is a letter first.
+  window.addEventListener("keydown", (e) => {
+    if (!live || e.key !== "m" || e.metaKey || e.ctrlKey || e.altKey) return;
+    const at = document.activeElement;
+    const tag = at && at.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || (at && at.isContentEditable)) return;
+    e.preventDefault();
+    mute();
   });
 
   // A socket nobody is listening to still bills by the minute, and a phone that keeps its

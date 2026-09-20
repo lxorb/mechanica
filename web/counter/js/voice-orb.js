@@ -33,11 +33,17 @@
  * that fills instead, which moves nothing. The state word still changes, which is the part that
  * actually carries the meaning.
  *
- * mountOrb(host, {levels, onInterrupt, onLeave, onToggle})
- *   -> {setState, setLine, setDock, chip, isCompact, el, destroy}
+ * MUTE. A 44 px toggle beside the orb in both sizes, and the M key while voice is open. It stops
+ * the shop being heard, not the agent being heard: the answer in flight keeps playing and the
+ * next one still arrives. Three signals say so at once — the icon grows a slash, the word under
+ * the orb becomes MUTED, and the disc stops moving, because it is no longer being told anything.
+ *
+ * mountOrb(host, {levels, onInterrupt, onLeave, onToggle, onMute})
+ *   -> {setState, setLine, setDock, setMuted, chip, isCompact, isMuted, el, destroy}
  *   levels()      -> {mic, out} in 0..1, pulled once a frame; the session owns the meters
  *   onInterrupt() tapped while the agent was talking - stop it
  *   onToggle()    tapped while it was not - the other size
+ *   onMute(on)    the mute toggle, or M
  *   onLeave()     the x, or a long press on the orb - leave voice mode
  */
 
@@ -78,6 +84,39 @@ function el(tag, attrs = {}) {
 }
 
 const CHEVRON = "M6 9l6 6 6-6";
+const MIC = ["M9 4.5a3 3 0 0 1 6 0V11a3 3 0 0 1-6 0Z", "M5 11a7 7 0 0 0 14 0", "M12 18v2.5"];
+/** The slash. Drawn, not implied: a mic icon that only changes colour reads as "selected". */
+const SLASH = "M4 3.5 20 20.5";
+
+function svgIcon(ds, width = 2.4) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  for (const d of ds) {
+    const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    p.setAttribute("fill", "none");
+    p.setAttribute("stroke", "currentColor");
+    p.setAttribute("stroke-width", String(width));
+    p.setAttribute("stroke-linecap", "square");
+    p.setAttribute("d", d);
+    svg.append(p);
+  }
+  return svg;
+}
+
+function micGlyph() {
+  const svg = svgIcon(MIC);
+  const slash = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  slash.setAttribute("class", "vo-slash");
+  slash.setAttribute("fill", "none");
+  slash.setAttribute("stroke", "currentColor");
+  slash.setAttribute("stroke-width", "2.6");
+  slash.setAttribute("stroke-linecap", "square");
+  slash.setAttribute("d", SLASH);
+  svg.append(slash);
+  return svg;
+}
 
 /**
  * The stylesheet comes with the module rather than with a <link> in index.html or an @import in
@@ -102,11 +141,17 @@ export function mountOrb(host, opts = {}) {
   const onInterrupt = typeof opts.onInterrupt === "function" ? opts.onInterrupt : () => {};
   const onLeave = typeof opts.onLeave === "function" ? opts.onLeave : () => {};
   const onToggle = typeof opts.onToggle === "function" ? opts.onToggle : () => {};
+  const onMute = typeof opts.onMute === "function" ? opts.onMute : () => {};
+  const onPage = typeof opts.onPage === "function" ? opts.onPage : () => {};
 
   const wrap = el("div", { class: "vo is-full", hidden: "" });
-  // The whole overlay is one live region: the state word is what a screen reader needs, and it is
-  // the only thing that changes often enough to be worth announcing.
-  const line = el("div", { class: "vo-line", "aria-hidden": "true" });
+  // THE COLUMN. Voice is not audio-only: a torque you heard once and a torque you can read are
+  // not the same fact, and a procedure spoken aloud is gone the moment it is said. So every turn
+  // is also written, above the orb, newest at the bottom where his eye already is.
+  const feed = el("div", { class: "vo-feed", role: "log", "aria-live": "polite", "aria-label": "Conversation" });
+  // The docked one-liner: the last thing the agent said, beside the orb. Tapping it opens the
+  // column again.
+  const line = el("div", { class: "vo-line", role: "button", tabindex: "0" });
   const orb = el("button", {
     type: "button",
     class: "vo-orb",
@@ -120,6 +165,17 @@ export function mountOrb(host, opts = {}) {
   // beside the orb, gone before it is clutter. He heard it; this is so he can check he did.
   const chipEl = el("div", { class: "vo-chip", "aria-hidden": "true" });
 
+  // MUTE. The one control that is present in both sizes, because "stop listening to my shop" is
+  // the thing you want fastest and you want it whether the orb is filling the screen or sitting
+  // in the corner. It does not stop the answer: the agent keeps talking, and you keep hearing it.
+  const mute = el("button", {
+    type: "button",
+    class: "vo-mute",
+    "aria-label": "Mute the microphone",
+    "aria-pressed": "false",
+  });
+  mute.append(micGlyph(), el("span", { class: "vo-mute-word", text: "Mute" }));
+
   const back = el("button", { type: "button", class: "vo-back", "aria-label": "Dock the orb" });
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 24 24");
@@ -132,7 +188,7 @@ export function mountOrb(host, opts = {}) {
   svg.append(path);
   back.append(svg, document.createTextNode("Manual"));
 
-  wrap.append(line, orb, state, chipEl, shut, back);
+  wrap.append(feed, line, orb, state, chipEl, shut, mute, back);
   host.append(wrap);
 
   let raf = 0;
@@ -144,6 +200,7 @@ export function mountOrb(host, opts = {}) {
   let held = false;
   let t0 = 0;
   let chipTimer = 0;
+  let muted = false;
 
   /* ---------------------------------------------------------- the loop */
 
@@ -240,7 +297,48 @@ export function mountOrb(host, opts = {}) {
     onToggle();
   });
 
+  mute.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onMute(!muted);
+  });
+
+  // Docked, the one line beside the orb is the whole column folded up. Tapping it unfolds it.
+  const expand = (event) => {
+    if (!compact) return;
+    event.preventDefault();
+    onToggle();
+  };
+  line.addEventListener("click", expand);
+  line.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") expand(event);
+  });
+
   /* ---------------------------------------------------------- the face */
+
+  /**
+   * The mic is off. The disc stops reacting to a level it is no longer being given, the word
+   * under it says MUTED, and the icon grows a slash — three signals, because a mechanic who
+   * thinks he is being heard and is not will say a whole sentence to nobody.
+   */
+  function setMuted(on) {
+    muted = Boolean(on);
+    wrap.classList.toggle("is-muted", muted);
+    mute.setAttribute("aria-pressed", muted ? "true" : "false");
+    mute.setAttribute("aria-label", muted ? "Unmute the microphone" : "Mute the microphone");
+    mute.querySelector(".vo-mute-word").textContent = muted ? "Muted" : "Mute";
+    paintWord();
+    if (muted) mic = 0;
+  }
+
+  /** The state word, or MUTED over it: what the mic is doing outranks what the agent is doing. */
+  function paintWord() {
+    if (muted && value !== "closed") {
+      state.textContent = "Muted";
+      return;
+    }
+    state.textContent = WORDS[value] || "";
+  }
 
   /** Full screen, or a companion in the corner. One transform apart; nothing remounts. */
   function setDock(mode) {
@@ -258,14 +356,16 @@ export function mountOrb(host, opts = {}) {
     value = name;
     orb.classList.toggle("is-thinking", name === "thinking");
     orb.classList.toggle("is-speaking", name === "speaking");
-    state.textContent = WORDS[name] || "";
+    paintWord();
     const on = name !== "closed";
     wrap.hidden = !on;
     if (on) run();
     else {
       halt();
       setDock("full");
+      setMuted(false);
       chip("");
+      clear();
       line.classList.remove("is-on");
       line.textContent = "";
       orb.style.setProperty("--s", "1");
@@ -275,11 +375,107 @@ export function mountOrb(host, opts = {}) {
     }
   }
 
-  /** One line, one line only: the last thing either of them said. */
+  /** One line, one line only: the last thing either of them said, for the docked orb. */
   function setLine(text) {
     const clean = String(text || "").trim();
     line.textContent = clean;
     line.classList.toggle("is-on", Boolean(clean));
+  }
+
+  /* ---------------------------------------------------------- the column */
+
+  function atBottom() {
+    return feed.scrollHeight - feed.scrollTop - feed.clientHeight < 48;
+  }
+
+  function toBottom() {
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  /**
+   * One turn, written. `part` is every sentence after the first of the same breath — the model
+   * emits one ConversationText per sentence, and a two-sentence answer is one answer.
+   *
+   * Following stops the moment he scrolls up: he is reading something, and a column that yanks
+   * itself to the bottom while a man is reading a torque is a column he will stop trusting.
+   */
+  function say(role, text, part) {
+    const clean = String(text || "").trim();
+    if (!clean) return;
+    working(false);
+    const stick = atBottom();
+    const agent = role !== "user";
+    const last = feed.lastElementChild;
+    if (part && agent && last && last.classList.contains("is-agent")) {
+      const body = last.querySelector(".vo-said");
+      if (body) {
+        body.textContent = `${body.textContent} ${clean}`.trim();
+        if (stick) toBottom();
+        return;
+      }
+    }
+    const turn = el("div", { class: `vo-turn ${agent ? "is-agent" : "is-user"}` });
+    turn.append(el("p", { class: "vo-said", text: clean }));
+    feed.append(turn);
+    if (stick) toBottom();
+  }
+
+  /**
+   * The manual's own steps, verbatim, under the answer that named them, with the page they are
+   * printed on as a chip that opens it. These arrive from show_page's `steps` — the agent hands
+   * over the printed lines rather than the client guessing where a sentence breaks.
+   */
+  function steps(page, list, highlight) {
+    const rows = (Array.isArray(list) ? list : []).map((s) => String(s || "").trim()).filter(Boolean);
+    if (!rows.length && !page) return;
+    working(false);
+    const stick = atBottom();
+    let turn = feed.lastElementChild;
+    if (!turn || !turn.classList.contains("is-agent")) {
+      turn = el("div", { class: "vo-turn is-agent" });
+      feed.append(turn);
+    }
+    if (rows.length) {
+      const ol = el("ol", { class: "vo-steps" });
+      for (const row of rows) ol.append(el("li", { text: row }));
+      turn.append(ol);
+    }
+    const n = Math.floor(Number(page) || 0);
+    if (n > 0) {
+      const chip = el("button", {
+        type: "button",
+        class: "vo-page",
+        "aria-label": `Open page ${n}`,
+        text: highlight ? `p. ${n} · ${String(highlight).slice(0, 40)}` : `p. ${n}`,
+      });
+      chip.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        onPage(n);
+      });
+      turn.append(chip);
+    }
+    if (stick) toBottom();
+  }
+
+  /**
+   * A lookup is running. One quiet line rather than a spinner: it says what is happening in the
+   * words the agent would use, and it is replaced by the answer rather than sitting under it.
+   */
+  function working(on) {
+    const has = feed.querySelector(".vo-working");
+    if (!on) {
+      if (has) has.remove();
+      return;
+    }
+    if (has) return;
+    const stick = atBottom();
+    feed.append(el("p", { class: "vo-working", text: "checking the manual…" }));
+    if (stick) toBottom();
+  }
+
+  function clear() {
+    feed.replaceChildren();
   }
 
   /** "p. 85 · DOT four" — the figure, where it is printed, and then gone. */
@@ -309,8 +505,10 @@ export function mountOrb(host, opts = {}) {
     setState,
     setLine,
     setDock,
+    setMuted,
     chip,
     isCompact: () => compact,
+    isMuted: () => muted,
     el: wrap,
     destroy,
   };

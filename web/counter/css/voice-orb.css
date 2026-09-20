@@ -52,6 +52,10 @@
      thumb row and writes this, so the orb is above the buttons and not on them. */
   --dock-gap: 24px;
   --dock-scale: 0.42;
+  /* The disc's diameter, named so the docked line and the mute button can reserve exactly
+     the space it takes at --dock-scale instead of guessing at a number that drifts. */
+  --orb-size: 168px;
+  --dock-size: calc(var(--orb-size) * var(--dock-scale));
   /* The screen behind is still there, still scrollable, just behind a veil of paper. */
   background: color-mix(in srgb, var(--bg, var(--paper, #ece7dc)) 88%, transparent);
   -webkit-backdrop-filter: blur(2px);
@@ -98,8 +102,8 @@
   --g: 0;
   position: relative;
   flex: 0 0 auto;
-  width: 168px;
-  height: 168px;
+  width: var(--orb-size);
+  height: var(--orb-size);
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -259,6 +263,80 @@
   color: #fff;
 }
 
+/* ---------- mute ----------
+ *
+ * The only control that survives the dock, because "stop listening to my shop" is the thing you
+ * want fastest and you want it at either size. Top right in full, beside the orb when docked. */
+
+.vo-mute {
+  position: absolute;
+  top: calc(8px + env(safe-area-inset-top));
+  right: calc(8px + env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  border: 3px solid var(--fg, var(--ink, #141414));
+  border-radius: 0;
+  background: var(--card, #fff);
+  color: var(--fg, var(--ink, #141414));
+  cursor: pointer;
+  appearance: none;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s linear, color 0.18s linear, transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.vo-mute svg {
+  display: block;
+  width: 19px;
+  height: 19px;
+}
+
+.vo-mute-word {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.42rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Unmuted, the slash is not drawn at all — an icon that is always there and only changes colour
+   reads as "selected", not as "off". */
+.vo-mute .vo-slash {
+  opacity: 0;
+}
+
+.vo.is-muted .vo-mute {
+  background: var(--accent, var(--orange, #e85d04));
+  color: var(--accent-ink, #fff);
+  border-color: var(--line, var(--ink, #141414));
+}
+
+.vo.is-muted .vo-mute .vo-slash {
+  opacity: 1;
+}
+
+.vo-mute:focus-visible {
+  outline: 3px solid var(--fg, var(--ink, #141414));
+  outline-offset: 3px;
+}
+
+/* A muted disc is a still disc: it is not being told a level any more, and a breath on a dead
+   microphone is the single most dishonest thing this screen could draw. */
+.vo.is-muted .vo-orb::before {
+  transform: scale(1);
+  filter: saturate(0.25);
+}
+
+.vo.is-muted .vo-orb::after {
+  opacity: 0.12;
+}
+
 /* The chevron: the manual is behind the orb and this is how you say so. Tapping it is the same
    command as tapping the orb — dock, and keep listening. */
 .vo-back {
@@ -311,6 +389,14 @@
   pointer-events: none;
 }
 
+/* Mute stays. It rides down with the orb, to its left, still 44 px. */
+.vo.is-compact .vo-mute {
+  top: auto;
+  bottom: calc(var(--dock-gap) + env(safe-area-inset-bottom));
+  right: calc(16px + env(safe-area-inset-right));
+  transform: translateX(calc(-1 * var(--dock-size) - 10px));
+}
+
 .vo.is-compact .vo-orb {
   transform: translate(
       calc(50vw - 50% * var(--dock-scale) - 16px - env(safe-area-inset-right)),
@@ -325,7 +411,7 @@
 .vo.is-compact .vo-line {
   position: absolute;
   left: 12px;
-  right: calc(16px + 88px);
+  right: calc(28px + var(--dock-size) + env(safe-area-inset-right));
   bottom: calc(var(--dock-gap) + 14px + env(safe-area-inset-bottom));
   width: auto;
   max-width: none;
@@ -339,7 +425,7 @@
 
 .vo.is-compact .vo-chip {
   left: 12px;
-  right: calc(16px + 88px);
+  right: calc(28px + var(--dock-size) + env(safe-area-inset-right));
   bottom: calc(var(--dock-gap) + 58px + env(safe-area-inset-bottom));
   max-width: none;
   transform: translate(0, 8px);
@@ -353,12 +439,8 @@
 /* ---------- 390x844 ---------- */
 
 @media (max-height: 700px), (max-width: 360px) {
-  .vo-orb {
-    width: 132px;
-    height: 132px;
-  }
-
   .vo {
+    --orb-size: 132px;
     --dock-scale: 0.46;
   }
 
@@ -375,12 +457,8 @@
 /* ---------- desktop ---------- */
 
 @media (min-width: 980px) {
-  .vo-orb {
-    width: 208px;
-    height: 208px;
-  }
-
   .vo {
+    --orb-size: 208px;
     --dock-scale: 0.38;
   }
 

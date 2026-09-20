@@ -103,6 +103,177 @@ async function openVoiceView(page) {
   });
 }
 
+/**
+ * ONE SESSION, THE WHOLE JOB. The Deepgram socket is stubbed in the page (JSON only - the loop
+ * and the audio are web/tools/voice-echo.mjs's business), a real session is started through
+ * voice-session.js, and then the app is walked from Pick to Book underneath it. What is being
+ * asserted is the thing that was broken: the session, the microphone and the orb all survive a
+ * screen change, because none of them belong to a screen any more.
+ *
+ * The reader's own bar is measured here too, before and after the viewport grows the way iOS
+ * Safari's does when the URL bar collapses mid-scroll - that is where "I don't see the top bar
+ * in pdf mode" comes from, and a fixed bar has to be at the top in both.
+ */
+async function liveAcrossScreens(page, width, height) {
+  const seen = await page.evaluate(async () => {
+    const heard = [];
+    window.addEventListener("mechanica:voice", (e) => heard.push(e.detail));
+    window.__heard = heard;
+
+    class Stub {
+      static OPEN = 1;
+      constructor() {
+        this.readyState = 0;
+        this.binaryType = "blob";
+        window.__sock = this;
+        setTimeout(() => {
+          this.readyState = 1;
+          if (this.onopen) this.onopen({});
+        }, 5);
+      }
+      json(m) {
+        if (this.onmessage) this.onmessage({ data: JSON.stringify(m) });
+      }
+      send(data) {
+        if (typeof data !== "string") return;
+        let msg = {};
+        try {
+          msg = JSON.parse(data);
+        } catch {
+          return;
+        }
+        if (msg.type !== "Settings") return;
+        this.json({ type: "Welcome", request_id: "orb-shots" });
+        this.json({ type: "SettingsApplied" });
+      }
+      answer() {
+        this.json({ type: "ConversationText", role: "assistant", content: "Page 85, DOT four or DOT five point one." });
+      }
+      close() {
+        this.readyState = 3;
+      }
+      addEventListener() {}
+      removeEventListener() {}
+    }
+    const real = window.WebSocket;
+    window.WebSocket = Stub;
+
+    const agent = await import("/counter/js/voice-deepgram.js");
+    agent.tuning.settings = {
+      url: "wss://stub/agent",
+      sampleRate: 24000,
+      pages: 320,
+      settings: { type: "Settings" },
+    };
+    const voice = await import("/counter/js/voice-session.js");
+    window.__voice = voice;
+
+    await voice.start({ manualId: "ktm-390-duke-2024-om-en", bikeId: "ktm-390-duke-2024", bike: "KTM 390 Duke 2024" });
+    await new Promise((r) => setTimeout(r, 300));
+    const host = document.querySelectorAll(".vo-host").length;
+    const startedFull = !document.querySelector(".vo").classList.contains("is-compact");
+
+    // The manual opens. This is the exact moment the old build hung up. The reader has no API
+    // behind it on this server, so it is mounted and entered directly: what is being measured
+    // here is the shell it draws and the session that has to survive arriving at it.
+    const bus = await import("/counter/js/bus.js");
+    await import("/counter/js/screens/book.js");
+    let went = "";
+    const section = document.querySelector('[data-screen="book"]');
+    // Pick is still settling its own chat overlay when the first go() lands, and the history
+    // step that closes the overlay walks the app back onto #pick. Ask twice; a mechanic tapping
+    // MANUAL does the same thing.
+    for (let tries = 0; tries < 4 && section.hidden; tries += 1) {
+      try {
+        bus.go("book");
+      } catch (err) {
+        went = String((err && err.message) || err);
+      }
+      await new Promise((r) => setTimeout(r, 300));
+    }
+    await new Promise((r) => setTimeout(r, 300));
+    const shown = Boolean(section && !section.hidden);
+    if (!shown) {
+      went = `${went} hash=${location.hash} bike=${bus.state.bikeId} on=${[...document.querySelectorAll("section[data-screen]")]
+        .filter((s) => !s.hidden)
+        .map((s) => s.getAttribute("data-screen"))
+        .join(",")}`;
+    }
+    const dockedOnBook = document.querySelector(".vo").classList.contains("is-compact");
+    const stillLive = voice.isLive();
+
+    // And an answer that names a page reaches the reader from wherever it was standing. The
+    // answer goes down the same socket a real one does, so it takes the same path through
+    // voice-deepgram's ConversationText handling as a live turn.
+    const before = heard.length;
+    if (window.__sock) window.__sock.answer();
+    await new Promise((r) => setTimeout(r, 250));
+    const page = heard.slice(before).find((d) => d.kind === "page");
+    const mutedNow = voice.mute(true);
+    const unmuted = voice.mute(false);
+
+    window.WebSocket = real;
+    return {
+      host,
+      startedFull,
+      dockedOnBook,
+      stillLive,
+      turned: page ? page.page : 0,
+      muteWorks: mutedNow === true && unmuted === false,
+      heard: heard.length,
+      went,
+      shown,
+    };
+  });
+
+  // Geometry: the docked orb against the reader's thumb row, and the reader's own bar.
+  const geo = await page.evaluate(() => {
+    const disc = document.querySelector(".vo-orb");
+    const acts = document.querySelector(".book-acts");
+    const bar = document.querySelector('[data-screen="book"] .book-bar');
+    const box = disc.getBoundingClientRect();
+    const barBox = bar ? bar.getBoundingClientRect() : null;
+    return {
+      gap: acts ? Math.round(acts.getBoundingClientRect().top - box.bottom) : null,
+      bar: barBox ? [Math.round(barBox.top), Math.round(barBox.height), Math.round(barBox.width)] : null,
+      barFixed: bar ? getComputedStyle(bar).position : "",
+    };
+  });
+
+  // iOS Safari's URL bar collapsing is a viewport height change, nothing else. Reproduce it.
+  await page.setViewport({ width, height: Math.round(height * 0.79), deviceScaleFactor: 2 });
+  await page.evaluate(() => new Promise((r) => setTimeout(r, 200)));
+  const short = await page.evaluate(() => {
+    const bar = document.querySelector('[data-screen="book"] .book-bar');
+    if (!bar) return null;
+    const b = bar.getBoundingClientRect();
+    return [Math.round(b.top), Math.round(b.height), Math.round(b.width)];
+  });
+  await page.setViewport({ width, height, deviceScaleFactor: 2 });
+  await page.evaluate(() => new Promise((r) => setTimeout(r, 200)));
+  const grown = await page.evaluate(() => {
+    const bar = document.querySelector('[data-screen="book"] .book-bar');
+    if (!bar) return null;
+    const b = bar.getBoundingClientRect();
+    const view = document.querySelector('[data-screen="book"] .page-view');
+    return {
+      box: [Math.round(b.top), Math.round(b.height), Math.round(b.width)],
+      // The column has to start below the bar, or the bar is over the page rather than above it.
+      clear: view ? Math.round(view.getBoundingClientRect().top) >= Math.round(b.bottom) : true,
+    };
+  });
+
+  return Object.assign(seen, {
+    gap: geo.gap,
+    clearsActs: geo.gap == null || geo.gap >= 0,
+    bar: geo.bar,
+    barVisible: Boolean(geo.bar) && geo.bar[0] === 0 && geo.bar[1] >= 44 && geo.barFixed === "fixed",
+    barGrown: { short, grown: grown && grown.box },
+    barAfterResize:
+      Boolean(short) && short[0] === 0 && short[1] >= 44 && Boolean(grown) && grown.box[0] === 0 && grown.clear,
+  });
+}
+
 async function run() {
   const puppeteer = (await import(`file:///${PUPPETEER.split("\\").join("/")}`)).default;
   const { server, port } = await serve();
@@ -178,7 +349,12 @@ async function run() {
       host.className = "vo-host";
       document.body.append(host);
       window.__host = host;
-      const orb = mountOrb(host, { levels: () => ({ mic: level, out: level }) });
+      const orb = mountOrb(host, {
+        levels: () => ({ mic: level, out: level }),
+        // voice-session.js's own handler, inlined: the chevron and the tap are the same command.
+        onToggle: () => orb.setDock(orb.isCompact() ? "full" : "compact"),
+        onMute: (on) => orb.setMuted(on),
+      });
       window.__orb = orb;
       window.__setLevel = (v) => {
         level = v;
@@ -202,6 +378,12 @@ async function run() {
         JSON.stringify(shift.before) === JSON.stringify(shift.after),
       `no layout shift entering or leaving voice mode ${JSON.stringify(shift.before)}`
     );
+    const fixed = await page.evaluate(() => {
+      const s = getComputedStyle(window.__host);
+      return { pos: s.position, z: Number(s.zIndex), onBody: window.__host.parentElement === document.body };
+    });
+    say(fixed.pos === "fixed" && fixed.onBody && fixed.z >= 60,
+      `the orb's home is a fixed layer on <body> (${fixed.pos}, z ${fixed.z})`);
 
     // Headless parks requestAnimationFrame until the compositor has had work for a while, so the
     // first second after a page settles is 8-15 fps and says nothing about the orb. Spin a second
@@ -312,20 +494,51 @@ async function run() {
       await page.screenshot({ path: join(SHOTS, `${state}-${label}.png`) });
     }
 
-    // the chevron hands the conversation back without hanging up
-    const peeked = await page.evaluate(async () => {
+    // 4. the dock: one transform, still a target, still listening, nothing underneath moves
+    const docked = await page.evaluate(async () => {
       const root = window.__orb.el;
+      const disc = root.querySelector(".vo-orb");
+      const page = document.querySelector(".cv-body");
+      const boxOf = (el) => {
+        const r = el.getBoundingClientRect();
+        return [r.x, r.y, r.width, r.height].map((n) => Math.round(n));
+      };
       window.__orb.setState("listening");
+      window.__orb.setLine("Page 78, one hundred newton metres.");
+      await new Promise((r) => setTimeout(r, 120));
+      const under = boxOf(page);
+      // The chevron is the same command as the tap.
       root.querySelector(".vo-back").click();
       await new Promise((r) => setTimeout(r, 420));
+      const box = disc.getBoundingClientRect();
       return {
-        peeking: window.__orb.isPeeking(),
+        compact: window.__orb.isCompact(),
         stillRunning: !root.hidden,
         veilGone: getComputedStyle(root).backgroundColor === "rgba(0, 0, 0, 0)",
+        size: Math.round(Math.min(box.width, box.height)),
+        right: Math.round(window.innerWidth - box.right),
+        bottom: Math.round(window.innerHeight - box.bottom),
+        onScreen: box.right <= window.innerWidth + 1 && box.bottom <= window.innerHeight + 1 && box.top >= 0,
+        lineOn: getComputedStyle(root.querySelector(".vo-line")).opacity !== "0",
+        under,
+        underNow: boxOf(page),
+        // The dock must be transform and opacity only: a transition on width or top is a
+        // transition the compositor cannot carry and the page underneath can feel.
+        animates: getComputedStyle(disc).transitionProperty,
+        ms: getComputedStyle(disc).transitionDuration,
       };
     });
-    say(peeked.peeking && peeked.stillRunning && peeked.veilGone, "the chevron shows the conversation and the session stays up");
-    await page.screenshot({ path: join(SHOTS, `peek-${label}.png`) });
+    say(docked.compact && docked.stillRunning && docked.veilGone, "the chevron docks the orb and the session stays up");
+    say(docked.size >= 44, `docked, it is still a target (${docked.size} px)`);
+    say(docked.onScreen && docked.right >= 8 && docked.bottom >= 8,
+      `docked, it is inside the screen (${docked.right} px from the right, ${docked.bottom} from the bottom)`);
+    say(docked.lineOn, "and the transcript line came with it");
+    say(docked.animates === "transform" && docked.ms === "0.18s",
+      `the dock is one 180 ms transform (${docked.animates} ${docked.ms})`);
+    say(JSON.stringify(docked.under) === JSON.stringify(docked.underNow),
+      `the page underneath did not move ${JSON.stringify(docked.under)}`);
+    await page.screenshot({ path: join(SHOTS, `docked-${label}.png`) });
+    await page.evaluate(() => window.__orb.setDock("full"));
 
     // reduced motion: no breath, no ripple, the level becomes a ring
     await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
@@ -357,7 +570,7 @@ async function run() {
     // swap. Workshop is the :root default; Night and Paper are the two furthest from it.
     for (const theme of ["night", "paper"]) {
       const painted = await page.evaluate(async (id) => {
-        window.__orb.peek(false);
+        window.__orb.setDock("full");
         document.documentElement.setAttribute("data-theme", id);
         const chat = document.querySelector(".cv-body deep-chat");
         try {
@@ -392,20 +605,83 @@ async function run() {
     }
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "workshop"));
 
-    // and it unmounts clean
-    // pick.js quietly mounts a chat view of its own once the manual resolves, so what is asserted
-    // is that OURS leaves nothing behind, not that the page ends up empty.
-    const gone = await page.evaluate(() => {
-      const before = { orbs: document.querySelectorAll(".vo").length, views: document.querySelectorAll(".cv").length };
+    // Everything above drove a hand-mounted orb with no socket behind it, because motion and
+    // colour are worth measuring on their own. Take it away before the real session starts, so
+    // "how many orbs are on this page" keeps having an answer.
+    await page.evaluate(() => {
       window.__orb.destroy();
-      window.__chat.destroy();
-      const after = { orbs: document.querySelectorAll(".vo").length, views: document.querySelectorAll(".cv").length };
-      return { before, after, detached: !document.contains(window.__orb.el) };
+      window.__host.remove();
     });
-    say(
-      gone.detached && gone.after.orbs === gone.before.orbs - 2 && gone.after.views === gone.before.views - 1,
-      `unmounts clean: our orb, and the chat view's own orb with it (${JSON.stringify(gone.before)} -> ${JSON.stringify(gone.after)})`
-    );
+
+    // 5. across the app: one session, the socket stubbed, Pick -> Book -> a page turn
+    const across = await liveAcrossScreens(page, width, height);
+    say(across.host === 1, `a session makes exactly one fixed host (${across.host})`);
+    say(across.startedFull, "opened from the chat it is full screen");
+    say(across.shown, `the reader is on screen${across.went ? ` (${across.went})` : ""}`);
+    say(across.dockedOnBook, "and the moment the manual is up it docks itself");
+    say(across.stillLive, "the session survived the screen change");
+    say(across.turned === 85, `the answer turned the reader to the page it named (p. ${across.turned})`);
+    say(across.clearsActs, `docked, it clears the reader's thumb row (${across.gap} px above it)`);
+    say(across.barVisible, `and the reader's own bar is still at the top (${JSON.stringify(across.bar)})`);
+    say(across.barAfterResize, `it is still there when the URL bar collapses (${JSON.stringify(across.barGrown)})`);
+    say(across.muteWorks, "mute disables the mic track and unmute gives it back");
+    await page.screenshot({ path: join(SHOTS, `book-docked-${label}.png`) });
+
+    // the mute toggle, at both sizes
+    const mutedShot = await page.evaluate(async () => {
+      const voice = window.__voice;
+      voice.dock("full");
+      voice.mute(true);
+      await new Promise((r) => setTimeout(r, 300));
+      const btn = document.querySelector(".vo-mute");
+      const box = btn.getBoundingClientRect();
+      return {
+        pressed: btn.getAttribute("aria-pressed"),
+        word: document.querySelector(".vo-state").textContent,
+        slash: Number(getComputedStyle(btn.querySelector(".vo-slash")).opacity),
+        size: Math.round(Math.min(box.width, box.height)),
+        onScreen: box.top >= 0 && box.right <= window.innerWidth + 1,
+      };
+    });
+    say(mutedShot.pressed === "true", "the mute toggle reports itself pressed");
+    say(mutedShot.word === "Muted", `the word under the orb says Muted (${mutedShot.word})`);
+    say(mutedShot.slash === 1, "and the mic icon grew a slash");
+    say(mutedShot.size >= 44 && mutedShot.onScreen, `the mute target is ${mutedShot.size} px and on screen`);
+    await page.screenshot({ path: join(SHOTS, `muted-${label}.png`) });
+    const mutedDock = await page.evaluate(async () => {
+      window.__voice.dock("compact");
+      await new Promise((r) => setTimeout(r, 300));
+      const btn = document.querySelector(".vo-mute");
+      const disc = document.querySelector(".vo-orb").getBoundingClientRect();
+      const box = btn.getBoundingClientRect();
+      return {
+        size: Math.round(Math.min(box.width, box.height)),
+        clear: Math.round(disc.left - box.right) >= 0,
+        onScreen: box.left >= 0 && box.bottom <= window.innerHeight + 1,
+      };
+    });
+    say(mutedDock.size >= 44 && mutedDock.onScreen, `docked, mute is still ${mutedDock.size} px and on screen`);
+    say(mutedDock.clear, "and it does not sit under the orb");
+    await page.screenshot({ path: join(SHOTS, `muted-docked-${label}.png`) });
+    await page.evaluate(() => {
+      window.__voice.mute(false);
+      window.__voice.dock("full");
+    });
+
+    // and it ends clean: nothing listening, nothing left running, no zombie socket
+    const gone = await page.evaluate(() => {
+      const before = document.querySelectorAll(".vo").length;
+      window.__voice.stop();
+      window.__chat.destroy();
+      const orb = document.querySelector(".vo");
+      return {
+        before,
+        orbs: document.querySelectorAll(".vo").length,
+        hidden: !orb || orb.hidden === true,
+        live: window.__voice.isLive(),
+      };
+    });
+    say(!gone.live && gone.hidden, `ends clean: nothing live, the orb is put away (${gone.before} orb)`);
 
     say(errors.length === 0, `no console errors${errors.length ? ": " + errors.slice(0, 3).join(" | ") : ""}`);
     await page.close();

@@ -138,7 +138,11 @@ const SPOKEN_PAGE = /\bpages?\s+(\d{1,4})\b/i;
  * web/tools/voice-echo.mjs can run the loop and the fix against the same stub, the same audio
  * and the same VAD and attribute the difference to one thing. Nothing in the app writes it.
  */
-export const tuning = { guard: true };
+export const tuning = {
+  guard: true,
+  /** A Settings message to use instead of asking the API for one. Harness only. */
+  settings: null,
+};
 
 const WORKLET = `class Tap extends AudioWorkletProcessor {
   process(inputs) {
@@ -458,6 +462,7 @@ export async function start(opts = {}) {
     withheld: 0, // frames the guard kept out of the socket, for the harness
     sent: 0, // frames that did go up
     settings: null, // what getUserMedia actually applied
+    muted: false, // the rider shut the mic himself; the track is disabled, not a flag we consult
   };
   current = session;
 
@@ -490,8 +495,34 @@ export async function start(opts = {}) {
       status(session, "listening", say);
       return true;
     },
+    /**
+     * MUTE. Not a flag this file checks on every frame - the track itself is disabled, which is
+     * the only kind of mute worth offering in a workshop: a disabled track produces silence at
+     * the source, so Deepgram receives silence, the agent cannot hear the shop, and there is no
+     * code path left that could accidentally forward a frame. The agent keeps talking and the
+     * answer stays audible, because muting the room is not the same as hanging up.
+     */
+    mute(on) {
+      const want = Boolean(on);
+      for (const track of (session.stream && session.stream.getAudioTracks()) || []) {
+        track.enabled = !want;
+      }
+      session.muted = want;
+      // A muted mic is a mic with no voice in it. Everything the guard measured about the room
+      // is now about a room it cannot hear, so it starts again when he unmutes.
+      session.level = 0;
+      session.env = 0;
+      session.loudMs = 0;
+      if (!want) {
+        session.echoTurn = false;
+        session.echoMs = 0;
+        session.echoPeak = 0;
+      }
+      return session.muted;
+    },
+    muted: () => Boolean(session.muted),
     speaking: () => Boolean(session.play && session.play.busy()),
-    level: () => session.level,
+    level: () => (session.muted ? 0 : session.level),
     out: () => (session.play ? session.play.level() : 0),
     status: () => session.status,
     /** Everything the echo harness and VOICE.md quote. Not used by the UI. */
@@ -561,10 +592,15 @@ async function run(session, opts, say) {
   status(session, "connecting", say);
 
   const relay = proxy("/ws/deepgram/agent");
-  const [config, token] = await Promise.all([
-    T.voiceSettings(opts.manualId, opts.bikeId),
-    relay ? null : T.deepgramToken(),
-  ]);
+  // web/tools/orb-shots.mjs drives a whole session against a stubbed socket on a server that has
+  // no API behind it; everywhere else this is null and the Settings message comes from the API,
+  // which is the only place it is ever allowed to come from.
+  const [config, token] = tuning.settings
+    ? [tuning.settings, { scheme: "token", key: "harness" }]
+    : await Promise.all([
+        T.voiceSettings(opts.manualId, opts.bikeId),
+        relay ? null : T.deepgramToken(),
+      ]);
   if (session.dead) return;
   if (!config || !config.settings) throw new Error("no agent settings");
   session.pages = Number(config.pages) || 0;
