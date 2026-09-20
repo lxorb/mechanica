@@ -1348,10 +1348,18 @@ def main() -> int:
                 snapshot = (stats["done"], stats["hit"], stats["attempted"], spend["usd"])
             if gone:
                 print(f"  - {gone} entries dropped: their photo is gone", flush=True)
-            write_outputs(entries)
-            _, titles = first_pass()  # the other agent is still claiming files
+            filled_now, titles = first_pass()  # the other agent is still working
             with lock:
                 used.update(titles)
+                # Its new photos are new family photos, and a family photo covers
+                # every variant key under it. Re-aliasing here turns the other
+                # agent's ongoing run into coverage for free -- no request, no
+                # token, no byte -- and re-homes the keys whose parent it dropped.
+                fresh = alias_pass(all_models, entries, filled_now) if not args.no_alias else 0
+            if fresh:
+                stats["alias_live"] += fresh
+                print(f"  ~ {fresh} variant keys aliased onto new first-pass photos", flush=True)
+            write_outputs(entries)
             last_save[0] = time.monotonic()
             print(
                 f"  ..{tag} {snapshot[0]}/{len(models)} tried, {len(entries)} images, "

@@ -33,13 +33,14 @@ environment-conditional clause, and not one of them knows where the vehicle is.
 
 **Technical Excellence.** Three hard, different problems in one pipeline: fixed-width binary-ish
 parsing of a 600 GB archive reduced to ~4 MB; grounded clause→typed-rule extraction over 95,365
-pages where a hallucinated threshold is a safety bug; and two geospatial joins (lat/lon → 12,774
+pages where a hallucinated threshold is a safety bug; and two geospatial joins (lat/lon → 12,776
 active stations, station ↔ OpenAQ location ≤ 25 km).
 
 **Insight.** Already measured before writing a line of the feature (see `spec.md` §7): **every one of
 the 206 manuals in our corpus that prints an antifreeze floor prints the same number, −25 °C — across
-9 markets including US, CA-adjacent, JP, CN, BR, AR, PH.** A random sample of 217 ISD stations that
-report into 2025 says **22.6% of them went below that in 2024 alone.** One European number, shipped
+9 markets including US, CA-adjacent, JP, CN, BR, AR, PH.** A random sample of the 12,776 ISD stations that
+still report says **22.9% of them (48 of 210 with enough good observations) went below that in 2024
+alone** - reproducible with `isd_probe.py sample 260`, seed 11. One European number, shipped
 worldwide, wrong for roughly a fifth of the planet's weather stations.
 
 **Execution.** It lands on a screen we already have (Book/Parts), in the shape the product already
@@ -54,7 +55,7 @@ patterns hidden inside it. This challenge is about both.").
 
 - Not a maintenance-prediction model. We surface the manufacturer's own printed rule and the measured
   climate; we never invent an interval.
-- No causal claim. "22.6% of sampled stations breached the printed floor" is an exposure statistic,
+- No causal claim. "22.9% of sampled stations breached the printed floor" is an exposure statistic,
   not a failure rate. We have no failure data and we say so.
 - Station sample is station-weighted, not vehicle-weighted or population-weighted. ISD is dense in
   the US, Russia and Canada and thin in Africa. Stated in the Q&A, not hidden.

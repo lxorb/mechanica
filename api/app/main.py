@@ -18,6 +18,7 @@ from . import identify as identify_mod
 from . import ingest as ingest_mod
 from . import ondemand
 from . import voice
+from . import voice_elevenlabs
 from .config import settings
 from .llm import naive_usd
 from .models import (
@@ -54,6 +55,7 @@ app.add_middleware(
     expose_headers=["Accept-Ranges", "Content-Range", "Content-Length", "Content-Encoding"],
 )
 app.include_router(voice.router)
+app.include_router(voice_elevenlabs.router)
 app.include_router(cost_ttc.router)
 
 

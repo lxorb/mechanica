@@ -3,7 +3,8 @@
 **Mechanica** · <https://mechanica.emilvinu.ch> · repo `C:\Users\me\trustthemanual`
 Feature for this sponsor: **Climate Fit** — the manual's own rules, resolved against 600 GB of NOAA
 hourly weather and global air quality. Spec: `docs/pitches/voloridge/spec.md`. Scored alternatives:
-`docs/pitches/voloridge/ideas.md`. Working reducer: `docs/pitches/voloridge/isd_probe.py`.
+`docs/pitches/voloridge/ideas.md`. Working code behind the two findings:
+`docs/pitches/voloridge/isd_probe.py` (NOAA reducer) and `docs/pitches/voloridge/antifreeze_scan.py`.
 
 Every number below is measured on 2026-09-20 and traceable to a file or an endpoint. Numbers marked
 † are only claimable **after** the build; everything else is already true.
@@ -153,14 +154,17 @@ Three things worth a sentence each:
   stream** to one row: hours below −35/−30/−25/−20/−10/0, hours above 35/40, freeze–thaw cycles,
   min, max, mean. 12,776 stations × 6 years ≈ 76,000 objects ≈ 45 GB streamed → a 4 MB table that
   ships inside the container.
-- **The cleaning step is not decoration.** ISD puts a quality code at character 93. Leave codes
-  2/3/6/7/9 in and Minneapolis's 2024 minimum comes back as **−46.9 °C** instead of **−22.2 °C**.
-  That is our own first-pass bug, and it is the clearest demonstration in the whole project that the
-  hard part is not obtaining data.
-- **Every join is auditable.** lat/lon → station is haversine over 12,776 rows and we **print the
-  distance**. Anything beyond 50 km renders `unknown`, never `ok`. Model-family clustering for the
-  drift analysis writes its clusters **with their members** to `families.json` so a human can see a
-  bad merge. No silent fuzzy matching anywhere.
+- **The cleaning is small and decisive.** ISD puts a quality code at character 93. Across 284
+  station-years and 3,003,373 readings, only **0.12%** are flagged suspect or erroneous, and the
+  annual minimum moves at **1.4%** of stations — but at one Russian station in our sample it moves
+  from **−25.1 °C to −21.5 °C**, which flips the antifreeze verdict from breached to fine. A
+  0.12% cleaning step decides the answer. That is the whole challenge in one line.
+- **The join is where we actually got burned.** Our first pass matched stations **by name**:
+  "Boston" landed on a **buoy**, "Moscow" on Moscow **Idaho**, and "Chicago" on a Canadian station
+  reporting **−46.9 °C**. The shipped join is geodesic, filters the 16,885 stations that stopped
+  reporting (29,661 → 12,776), and **prints the distance** — anything past 50 km renders `unknown`,
+  never `ok`. Model-family clustering writes its clusters **with their members** to `families.json`
+  so a human can audit a bad merge. No silent fuzzy matching anywhere.
 
 ### 3:45 – 4:30 · What we found
 
@@ -212,10 +216,10 @@ repo — `docs/pitches/voloridge/isd_probe.py`, run it yourself.
 2. Tap **Conditions**, type **Minneapolis** →
    `MINNEAPOLIS–ST PAUL INTERNATIONAL · 10.8 km · 13,760 observations in 2024`
    - `OIL — action needed · 20.7% of 2024's readings below 0 °C · your manual, p. 215: SAE 5W/40`
-   - `COOLANT — ok · coldest 2024 reading −22.2 °C · floor −25 °C, p. 158`
+   - `COOLANT — ok · coldest 2024 reading −22.2 °C · floor −25 °C, p. 215`
 3. Change one field to **International Falls, MN** →
-   `COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 158`
-4. **Tap the coolant row.** The PDF opens on p. 158 with *"Antifreeze protection to at least −25 °C"*
+   `COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 215`
+4. **Tap the coolant row.** The PDF opens on p. 215 with *"Antifreeze protection to at least −25 °C"*
    highlighted. **KTM said it. We only worked out that it applies to you.**
 5. Change to **Bangkok** — every cold rule goes grey and the dust rule lights up. The negative
    control is part of the demo on purpose.
@@ -285,11 +289,14 @@ $0.095/manual and ~$0.0017 of rule extraction per manual, the full free-and-fetc
 three-figure spend, not an architectural problem.
 
 **What did you get wrong?**
-Three things, all in the repo: the name-based station join (fixed with geodesics), the missing ISD
-quality-code filter (−46.9 °C instead of −22.2 °C), and one spec file that is still corrupt on disk —
+Three things, all still in the repo's history. **One:** the name-based station join — "Chicago" on a
+Canadian station at −46.9 °C, "Boston" on a buoy, "Moscow" in Idaho. Fixed with geodesics and a
+printed distance. **Two:** we shipped the first reduction without the ISD quality filter. It only
+moves 0.12% of readings, which is exactly why it is easy to skip — and it still flips one station in
+our sample from breached to fine. **Three:** one spec file is corrupt on disk right now,
 `yamaha-tracer-9-gt-2025-eu-om-90739a.json`, trailing bytes after the JSON document. We found it
-because the analysis pass crashed on it, which is the argument for running the analysis over the whole
-corpus rather than a sample.
+because the analysis crashed on it, which is the argument for running the analysis over the whole
+corpus instead of a sample.
 
 ---
 
@@ -300,7 +307,7 @@ corpus rather than a sample.
 | 53,557 rows · 28,200 URLs · 84 hosts · 27,751 vehicles · 13,537 with a manual | `api/data/registry.json`, `api/data/bikes.json` |
 | 532 manuals · 95,365 pages · 90,955 sections · 659 vehicles | `GET https://mechanica.emilvinu.ch/api/manuals` |
 | 137,379 specs · 431,292 highlights · 648 done / 80 error / 24 duplicate / 21 suspicious · $61.61 | `api/data/mass_report.jsonl` |
-| 107,452 specs locally · 206 manuals × −25 °C × 9 markets | `api/data/specs/*.json` |
+| 107,452 specs locally · 206 manuals × −25 °C × 9 markets | `docs/pitches/voloridge/antifreeze_scan.py` over `api/data/specs/*.json` |
 | 522/529 manuals with an environment clause; the clause-family table | full scan of `api/data/pages/*.json`, 93,932 pages |
 | 29,661 stations · 12,776 active · 22.9% below −25 °C · 82.4 MB · 2,384,890 obs | `docs/pitches/voloridge/isd_probe.py` (seed 11) |
 | per-city share of readings below 0 °C | `isd_probe.py cities` |

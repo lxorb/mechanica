@@ -47,3 +47,19 @@ Flat geometric vector logo mark, app icon, minimal and bold, designed to stay le
 
 10 images. 2031 text input tokens, 41600 image output tokens.
 gpt-image-1: $5 / 1M text input, $40 / 1M image output -> **$1.67** total.
+
+## part-piston.png
+
+Flat geometric vector app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, at most four distinct shapes, every stroke at least one tenth of the icon width, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. The whole image is exactly one motorcycle part and nothing else: a piston with its connecting rod seen straight from the side: a solid ink piston crown with two thick orange piston-ring bars across it, the ink rod tapering down to a round big end with a white hole.
+
+## part-sparkplug.png
+
+Flat geometric vector app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, at most four distinct shapes, every stroke at least one tenth of the icon width, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. The whole image is exactly one motorcycle part and nothing else: a spark plug standing upright: a solid ink hexagon body, a white ceramic insulator above it wearing one thick orange band, a small ink terminal nut on top and a short ink ground-electrode hook below.
+
+## part-sprocket.png
+
+Flat geometric vector app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, at most four distinct shapes, every stroke at least one tenth of the icon width, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. The whole image is exactly one motorcycle part and nothing else: a rear drive sprocket seen straight on: a bold ink toothed ring with eight blunt square teeth, a solid orange hub in the middle with four round white lightening holes.
+
+## part-brakedisc.png
+
+Flat geometric vector app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, at most four distinct shapes, every stroke at least one tenth of the icon width, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. The whole image is exactly one motorcycle part and nothing else: a brake disc seen straight on: a bold ink outer ring with eight round white holes, a solid orange hub, and one thick ink brake pad clamping the top of the ring.

@@ -23,6 +23,7 @@ and the JSON this API already returns goes back to the model as the function res
 
 import json
 import os
+import re
 from urllib.parse import quote
 
 import httpx
@@ -228,8 +229,8 @@ def deepgram_token():
 # ---------------------------------------------------------------- the voice agent
 
 
-def _label(manual: Manual, bike_id: str | None) -> str:
-    """"KTM 390 Duke 2024" — the bike the agent is standing in front of."""
+def _bike(manual: Manual, bike_id: str | None):
+    """The registry row for the bike on the lift, or the manual's own first bike."""
     store = get_store()
     rec = store.bike(bike_id) if bike_id else None
     if rec is None:
@@ -237,6 +238,11 @@ def _label(manual: Manual, bike_id: str | None) -> str:
             rec = store.bike(candidate)
             if rec is not None:
                 break
+    return rec
+
+
+def _label(manual: Manual, rec) -> str:
+    """"KTM 390 Duke 2024" — the bike the agent is standing in front of."""
     if rec is None:
         return manual.title
     return " ".join(str(x) for x in (rec.make, rec.model, rec.year) if x not in (None, ""))
@@ -284,6 +290,105 @@ def _digest(manual: Manual) -> str:
         lines.append(line)
         used += len(line) + 1
     return "\n".join(lines)
+
+
+# ---------------------------------------------------------------- keyterm prompting
+#
+# `agent.listen.provider.keyterms` is the Voice Agent's own spelling of keyterm prompting
+# (developers.deepgram.com/docs/configure-voice-agent, same feature as the repeated `keyterm=`
+# query parameter on wss://api.deepgram.com/v2/listen). Flux and nova-3 take it; nova-2 does not.
+# Deepgram caps it at 100 terms / 500 tokens per request and asks for a multi-word phrase as one
+# array element, not word by word.
+#
+# A workshop is the worst room a transcriber ever works in, and the words a mechanic says there are
+# exactly the ones a general model has no reason to expect: "swingarm pivot", "wheel spindle",
+# "preload adjuster", "DOT 4", "telltale", "CVT". They are not guesses — the manual on screen has
+# already been indexed, so its part names, its printed spec names, its section headings and the
+# rider phrasings each section was indexed under are all on this server. Pick the bike and the
+# transcriber is primed with that bike's vocabulary before the first word is spoken.
+
+KEYTERM_MAX = 100
+# Deepgram's ceiling is 500 tokens; an English term here runs about 1.4 tokens per word, so a
+# character budget well under that is the cheap way to stay inside it without a tokenizer.
+KEYTERM_CHARS = 1200
+KEYTERM_WORDS = 5
+
+# Manual headings are instructions ("Checking the engine oil level"); the term is the noun phrase.
+_VERB = re.compile(
+    r"^(?:check(?:ing)?|chang(?:e|ing)|adjust(?:ing)?|clean(?:ing)?|remov(?:e|ing)|install(?:ing)?|"
+    r"mount(?:ing)?|replac(?:e|ing)|inspect(?:ing)?|add(?:ing)?|top(?:ping)? up|set(?:ting)?|"
+    r"charg(?:e|ing)|drain(?:ing)?|bleed(?:ing)?|lubricat(?:e|ing)|servic(?:e|ing)|fill(?:ing)?|"
+    r"test(?:ing)?|measur(?:e|ing)|read(?:ing)?|prepar(?:e|ing)|align(?:ing)?|tighten(?:ing)?)"
+    r"\s+(?:that\s+)?(?:the\s+)?",
+    re.I,
+)
+_PAREN = re.compile(r"\s*\([^)]*\)")
+_TRIM = re.compile(r"^[\s\-–—:,.]+|[\s\-–—:,.]+$")
+
+
+def _term(raw: str) -> str:
+    """One keyterm out of one piece of manual vocabulary, or "" when it is not a term.
+
+    "Engine oil (SAE 15W/50)" -> "Engine oil"; "Nut, rear wheel spindle" -> "rear wheel spindle Nut"
+    (the manual's index inverts the head noun, a mechanic does not); "Checking the chain tension"
+    -> "chain tension". Case is kept: KTM, DOT and SAE are read back as printed.
+    """
+    text = " ".join(_PAREN.sub("", str(raw or "")).split())
+    if "," in text:
+        head, _, tail = text.partition(",")
+        if head.strip() and tail.strip():
+            text = f"{tail.strip()} {head.strip()}"
+    text = _TRIM.sub("", _VERB.sub("", text))
+    words = text.split()
+    if not words or len(words) > KEYTERM_WORDS or len(text) < 3:
+        return ""
+    # A term is words and figures, not punctuation a transcriber would never hear.
+    if not any(w[:1].isalpha() for w in words):
+        return ""
+    return text
+
+
+def _keyterms(manual: Manual, bike, rec) -> list[str]:
+    """This bike's spoken vocabulary, best first, capped at what Deepgram accepts.
+
+    Order matters, because the cap truncates: the manual's own printed nouns come before the
+    rider phrasings, which come before the generic catalogue. The bike's own name leads — an
+    agent that mishears "390 Duke" has already lost the thread.
+    """
+    sources: list[str] = [bike]
+    sources += [p.name for p in manual.parts]
+    try:
+        sources += [s.name for s in get_store().specs(manual.id)]
+    except Exception:  # noqa: BLE001 - a manual with no spec index still gets its other terms
+        pass
+    for section in manual.sections:
+        sources += list(section.keywords or [])
+    sources += [s.title for s in manual.sections]
+    try:
+        from . import parts_catalog
+
+        for entry in parts_catalog.parts_for(parts_catalog.profile_of(rec)):
+            sources.append(entry.name)
+            sources += list(entry.synonyms or [])
+    except Exception:  # noqa: BLE001 - the taxonomy is a bonus on top of the manual's own words
+        pass
+
+    out: list[str] = []
+    seen: set[str] = set()
+    used = 0
+    for raw in sources:
+        term = _term(raw)
+        low = term.lower()
+        if not term or low in seen:
+            continue
+        if used + len(term) + 1 > KEYTERM_CHARS:
+            break
+        seen.add(low)
+        out.append(term)
+        used += len(term) + 1
+        if len(out) >= KEYTERM_MAX:
+            break
+    return out
 
 
 def _prompt(manual: Manual, bike: str, digest: str) -> str:
@@ -421,13 +526,16 @@ def agent_settings(manualId: str, bikeId: str | None = None):
     socket, forwards `settings` unchanged, and handles exactly one function itself (show_page).
     """
     manual = _manual(manualId)
-    bike = _label(manual, bikeId)
+    rec = _bike(manual, bikeId)
+    bike = _label(manual, rec)
     digest = _digest(manual)
+    keyterms = _keyterms(manual, bike, rec)
     return {
         "url": AGENT_WS,
         "sampleRate": AGENT_RATE,
         "manualId": manual.id,
         "bike": bike,
+        "keyterms": len(keyterms),
         "settings": {
             "type": "Settings",
             "audio": {
@@ -436,7 +544,7 @@ def agent_settings(manualId: str, bikeId: str | None = None):
             },
             "agent": {
                 "language": "en",
-                "listen": {"provider": dict(LISTEN)},
+                "listen": {"provider": dict(LISTEN, keyterms=keyterms)},
                 "think": {
                     "provider": {"type": "open_ai", "model": THINK_MODEL},
                     "prompt": _prompt(manual, bike, digest),

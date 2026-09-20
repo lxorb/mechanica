@@ -1725,6 +1725,17 @@
     "via": "alias",
     "aliasOf": "bmw|s-1000-xr-sport"
   },
+  "cadillac|escalade-iql": {
+    "image": "store/img/bikes/cadillac-escalade.webp",
+    "thumb": "store/img/bikes/cadillac-escalade-thumb.webp",
+    "hero": "store/img/bikes/cadillac-escalade-hero.webp",
+    "title": "CADILLAC ESCALADE China (5).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_ESCALADE_China_(5).jpg",
+    "via": "alias",
+    "aliasOf": "cadillac|escalade"
+  },
   "can-am|2014-spyder-rt-ce-homologated": {
     "image": "store/img/bikes/can-am-2014-spyder-rt.webp",
     "thumb": "store/img/bikes/can-am-2014-spyder-rt-thumb.webp",
@@ -1815,6 +1826,17 @@
     "via": "alias",
     "aliasOf": "can-am|spyder-f3"
   },
+  "chrysler|pacifica-hybrid": {
+    "image": "store/img/bikes/chrysler-pacifica.webp",
+    "thumb": "store/img/bikes/chrysler-pacifica-thumb.webp",
+    "hero": "store/img/bikes/chrysler-pacifica-hero.webp",
+    "title": "CHRYSLER PACIFICA (RU) SELF-DRVING TEST CAR IN CHINA.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CHRYSLER_PACIFICA_(RU)_SELF-DRVING_TEST_CAR_IN_CHINA.jpg",
+    "via": "alias",
+    "aliasOf": "chrysler|pacifica"
+  },
   "citroen|c3-cc2eu": {
     "image": "store/img/bikes/citroen-c3.webp",
     "thumb": "store/img/bikes/citroen-c3-thumb.webp",
@@ -1824,6 +1846,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_Aircross,_IAA_2017,_Frankfurt_(1Y7A3195).jpg",
     "via": "alias",
     "aliasOf": "citroen|c3"
+  },
+  "dodge|charger-srt": {
+    "image": "store/img/bikes/dodge-charger.webp",
+    "thumb": "store/img/bikes/dodge-charger-thumb.webp",
+    "hero": "store/img/bikes/dodge-charger-hero.webp",
+    "title": "Dodge Charger Hirschaid-20220709-RM-113717.jpg",
+    "author": "Ermell",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dodge_Charger_Hirschaid-20220709-RM-113717.jpg",
+    "via": "alias",
+    "aliasOf": "dodge|charger"
   },
   "ducati|1198-r-corse-special-edition": {
     "image": "store/img/bikes/ducati-1198.webp",
@@ -2766,36 +2799,6 @@
     "via": "alias",
     "aliasOf": "ford|escape"
   },
-  "ford|explorer-sport": {
-    "image": "store/img/bikes/ford-explorer.webp",
-    "thumb": "store/img/bikes/ford-explorer-thumb.webp",
-    "title": "Ford Explorer EV IAA 2023 1X7A0565.jpg",
-    "author": "Alexander-93",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ford_Explorer_EV_IAA_2023_1X7A0565.jpg",
-    "via": "alias",
-    "aliasOf": "ford|explorer"
-  },
-  "ford|explorer-sport-trac": {
-    "image": "store/img/bikes/ford-explorer.webp",
-    "thumb": "store/img/bikes/ford-explorer-thumb.webp",
-    "title": "Ford Explorer EV IAA 2023 1X7A0565.jpg",
-    "author": "Alexander-93",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ford_Explorer_EV_IAA_2023_1X7A0565.jpg",
-    "via": "alias",
-    "aliasOf": "ford|explorer"
-  },
-  "ford|f-150-heritage": {
-    "image": "store/img/bikes/ford-f-150.webp",
-    "thumb": "store/img/bikes/ford-f-150-thumb.webp",
-    "title": "Ford F-150 XL SuperCrew -- 03-10-2010.jpg",
-    "author": "IFCAR",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Ford_F-150_XL_SuperCrew_--_03-10-2010.jpg",
-    "via": "alias",
-    "aliasOf": "ford|f-150"
-  },
   "ford|f-250-heavy-duty": {
     "image": "store/img/bikes/ford-f-250.webp",
     "thumb": "store/img/bikes/ford-f-250-thumb.webp",
@@ -3196,6 +3199,39 @@
     "source": "https://commons.wikimedia.org/wiki/File:2024_Genesis_G70_Track_Taxi_Nordschleife.jpg",
     "via": "alias",
     "aliasOf": "genesis|g70"
+  },
+  "genesis|gv70-ev": {
+    "image": "store/img/bikes/genesis-gv70.webp",
+    "thumb": "store/img/bikes/genesis-gv70-thumb.webp",
+    "hero": "store/img/bikes/genesis-gv70-hero.webp",
+    "title": "Genesis GV70 IAA 2021 1X7A0228.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV70_IAA_2021_1X7A0228.jpg",
+    "via": "alias",
+    "aliasOf": "genesis|gv70"
+  },
+  "genesis|gv80-coupe": {
+    "image": "store/img/bikes/genesis-gv80.webp",
+    "thumb": "store/img/bikes/genesis-gv80-thumb.webp",
+    "hero": "store/img/bikes/genesis-gv80-hero.webp",
+    "title": "2024 Genesis GV80 Sport T AWD Auto 2.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Genesis_GV80_Sport_T_AWD_Auto_2.jpg",
+    "via": "alias",
+    "aliasOf": "genesis|gv80"
+  },
+  "gmc|sierra-ev": {
+    "image": "store/img/bikes/gmc-sierra.webp",
+    "thumb": "store/img/bikes/gmc-sierra-thumb.webp",
+    "hero": "store/img/bikes/gmc-sierra-hero.webp",
+    "title": "1999 GMC Sierra 2500, Front Left, 02-18-2021.jpg",
+    "author": "SsmIntrigue",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1999_GMC_Sierra_2500,_Front_Left,_02-18-2021.jpg",
+    "via": "alias",
+    "aliasOf": "gmc|sierra"
   },
   "harley-davidson|dyna-low-rider-s": {
     "image": "store/img/bikes/harley-davidson-dyna-low-rider.webp",
@@ -4508,6 +4544,17 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "honda|cmx500"
+  },
+  "honda|cr-v-hybrid": {
+    "image": "store/img/bikes/honda-cr-v.webp",
+    "thumb": "store/img/bikes/honda-cr-v-thumb.webp",
+    "hero": "store/img/bikes/honda-cr-v-hero.webp",
+    "title": "2018 Honda CR-V (RW MY18) +Sport 2WD wagon (2018-10-22) 02.jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Honda_CR-V_(RW_MY18)_%2BSport_2WD_wagon_(2018-10-22)_02.jpg",
+    "via": "alias",
+    "aliasOf": "honda|cr-v"
   },
   "honda|crf1000l-adventure-sports": {
     "image": "store/img/bikes/honda-crf1000l.webp",
@@ -6545,6 +6592,17 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "husqvarna|te-250"
+  },
+  "hyundai|elantra-hybrid": {
+    "image": "store/img/bikes/hyundai-elantra.webp",
+    "thumb": "store/img/bikes/hyundai-elantra-thumb.webp",
+    "hero": "store/img/bikes/hyundai-elantra-hero.webp",
+    "title": "Hyundai Elantra Langdong Facelift Shishi 02 2022-05-20.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Elantra_Langdong_Facelift_Shishi_02_2022-05-20.jpg",
+    "via": "alias",
+    "aliasOf": "hyundai|elantra"
   },
   "hyundai|sonata-plugin-hybrid": {
     "image": "store/img/bikes/hyundai-sonata.webp",
@@ -9958,6 +10016,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(6000_x_4000).jpg",
     "via": "alias",
     "aliasOf": "ktm|990-adventure"
+  },
+  "ktm|990-duke": {
+    "image": "store/img/bikes2/ktm-990-duke.webp",
+    "thumb": "store/img/bikes2/ktm-990-duke.thumb.webp",
+    "title": "KTM 990 Super Duke.JPG",
+    "author": "This illustration was made by DaiFh . Please credit : DaiFh / Wikimedia Commons Feedback welcome on my french Wp account",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Super_Duke.JPG",
+    "via": "search",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ktm-990-duke.hero.webp"
+  },
+  "ktm|990-duke-r": {
+    "image": "store/img/bikes2/ktm-990-duke.webp",
+    "thumb": "store/img/bikes2/ktm-990-duke.thumb.webp",
+    "hero": "store/img/bikes2/ktm-990-duke.hero.webp",
+    "title": "KTM 990 Super Duke.JPG",
+    "author": "This illustration was made by DaiFh . Please credit : DaiFh / Wikimedia Commons Feedback welcome on my french Wp account",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Super_Duke.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|990-duke"
+  },
+  "ktm|990-duke-rr": {
+    "image": "store/img/bikes2/ktm-990-duke.webp",
+    "thumb": "store/img/bikes2/ktm-990-duke.thumb.webp",
+    "hero": "store/img/bikes2/ktm-990-duke.hero.webp",
+    "title": "KTM 990 Super Duke.JPG",
+    "author": "This illustration was made by DaiFh . Please credit : DaiFh / Wikimedia Commons Feedback welcome on my french Wp account",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Super_Duke.JPG",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|990-duke"
   },
   "ktm|990-super-duke-black": {
     "image": "store/img/bikes/ktm-990-super-duke.webp",
@@ -15577,6 +15671,54 @@
     "via": "alias",
     "aliasOf": "yamaha|r6"
   },
+  "yamaha|r7": {
+    "image": "store/img/bikes2/yamaha-r7.webp",
+    "thumb": "store/img/bikes2/yamaha-r7.thumb.webp",
+    "title": "2021 Yamaha YZF-R7.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_YZF-R7.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-r7.hero.webp"
+  },
+  "yamaha|r7-35kw": {
+    "image": "store/img/bikes2/yamaha-r7.webp",
+    "thumb": "store/img/bikes2/yamaha-r7.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r7.hero.webp",
+    "title": "2021 Yamaha YZF-R7.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_YZF-R7.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r7"
+  },
+  "yamaha|r7-70th-anniversary": {
+    "image": "store/img/bikes2/yamaha-r7.webp",
+    "thumb": "store/img/bikes2/yamaha-r7.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r7.hero.webp",
+    "title": "2021 Yamaha YZF-R7.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_YZF-R7.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r7"
+  },
+  "yamaha|r7-world-gp-60th-anniversary": {
+    "image": "store/img/bikes2/yamaha-r7.webp",
+    "thumb": "store/img/bikes2/yamaha-r7.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-r7.hero.webp",
+    "title": "2021 Yamaha YZF-R7.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_YZF-R7.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|r7"
+  },
   "yamaha|royal-star-boulevard": {
     "image": "store/img/bikes/yamaha-royal-star.webp",
     "thumb": "store/img/bikes/yamaha-royal-star-thumb.webp",
@@ -17082,6 +17224,61 @@
     "via": "search",
     "view": "side",
     "score": 7.0
+  },
+  "yamaha|yz125-70th-anniversary": {
+    "image": "store/img/bikes2/yamaha-yz125.webp",
+    "thumb": "store/img/bikes2/yamaha-yz125.thumb.webp",
+    "title": "Yamaha YZ125 Motorcycle.jpg",
+    "author": "Goygoo",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|yz125"
+  },
+  "yamaha|yz125-monster-energy": {
+    "image": "store/img/bikes2/yamaha-yz125.webp",
+    "thumb": "store/img/bikes2/yamaha-yz125.thumb.webp",
+    "title": "Yamaha YZ125 Motorcycle.jpg",
+    "author": "Goygoo",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|yz125"
+  },
+  "yamaha|yz125-monster-energy-edition": {
+    "image": "store/img/bikes2/yamaha-yz125.webp",
+    "thumb": "store/img/bikes2/yamaha-yz125.thumb.webp",
+    "title": "Yamaha YZ125 Motorcycle.jpg",
+    "author": "Goygoo",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|yz125"
+  },
+  "yamaha|yz125-monster-energy-racing": {
+    "image": "store/img/bikes2/yamaha-yz125.webp",
+    "thumb": "store/img/bikes2/yamaha-yz125.thumb.webp",
+    "title": "Yamaha YZ125 Motorcycle.jpg",
+    "author": "Goygoo",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|yz125-monster-energy"
+  },
+  "yamaha|yz125x": {
+    "image": "store/img/bikes2/yamaha-yz125.webp",
+    "thumb": "store/img/bikes2/yamaha-yz125.thumb.webp",
+    "title": "Yamaha YZ125 Motorcycle.jpg",
+    "author": "Goygoo",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|yz125"
   },
   "yamaha|yz250": {
     "image": "store/img/bikes2/yamaha-yz250.webp",

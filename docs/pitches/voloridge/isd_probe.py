@@ -11,7 +11,10 @@ What it proves:
       https://noaa-isd-pds.s3.amazonaws.com/data/2024/{USAF}-{WBAN}-2024.gz
   * the fixed-width parse: air temperature is 1-based chars 88-92 (so Python [87:92]), signed,
     tenths of a degree C, "+9999" = missing, and char 93 ([92:93]) is the quality code - 2,3,6,7,9
-    are erroneous/suspect and must be dropped or the minima are junk.
+    are erroneous/suspect. Measured over 284 cached station-years / 3,003,373 readings: only 0.12%
+    are flagged and only 1.4% of station-years have their annual minimum move - but at station
+    263240-99999 the 2024 minimum moves from -25.1 C to -21.5 C, which flips the antifreeze verdict.
+    Small effect, decisive outcome; keep the filter.
   * a whole station-year is ~0.1-1.0 MB gzipped and reduces to one row.
 
 Usage:
@@ -72,7 +75,7 @@ def num(row: dict, key: str) -> float | None:
 
 
 def active(rows: list[dict], since: str = "20250101") -> list[dict]:
-    """Stations still reporting. 12,774 of 29,661 as of 2026-09-20 - the rest are historical."""
+    """Stations still reporting. 12,776 of 29,661 as of 2026-09-20 - the rest are historical."""
     return [
         r for r in rows
         if r["END"] >= since and num(r, "LAT") is not None and num(r, "LON") is not None
@@ -158,7 +161,7 @@ def cmd_cities() -> None:
 
 def cmd_sample(k: int) -> None:
     rows = active(history())
-    random.seed(11)  # the seed behind the 22.6% in the pitch - keep it to reproduce
+    random.seed(11)  # the seed behind the 22.9% in the pitch - keep it to reproduce
     picked = random.sample(rows, k)
 
     def work(r: dict):

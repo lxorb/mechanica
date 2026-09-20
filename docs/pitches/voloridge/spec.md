@@ -65,8 +65,10 @@ an environment the manual cannot see.**
 - Record layout (1-based character positions, from the ISD format document): air temperature
   **88–92** signed tenths of °C with `+9999` = missing, **93** = quality code; dew point 94–98;
   sea-level pressure 100–104; wind 61–63 / 66–69. In Python: `line[87:92]`, quality `line[92:93]`.
-  **Quality codes `2,3,6,7,9` must be dropped** — leave them in and the 2024 minimum for a US airport
-  comes back as −46.9 °C. (Measured: an unfiltered pass produced exactly that artefact.)
+  **Quality codes `2,3,6,7,9` must be dropped.** Measured over 284 cached station-years and
+  3,003,373 readings: only **0.12%** carry a suspect/erroneous code and only **1.4%** of station-years
+  have their annual minimum move at all — but at Russian station `263240-99999` the 2024 minimum moves
+  from **−25.1 °C to −21.5 °C**, which flips the antifreeze verdict. Small effect, decisive outcome.
 - Working reducer: `docs/pitches/voloridge/isd_probe.py` — run it, it is the real thing.
 
 ### OpenAQ — **[curated]**
@@ -107,7 +109,7 @@ run over page text and spec quotes. Emits candidate windows with page number and
 |---|---|---|
 | `antifreeze_floor` | `antifreeze protection (to at least)?` near a signed `°C`/`°F` | threshold °C |
 | `oil_grade_band` | `ambient temperature` within 120 chars of `SAE \d{1,2}W[-/]\d{2}` and a `[≥><≤]\s*-?\d+ ?°C` | (threshold °C, comparator, grade) |
-| `dust_interval` | `dust(y)?|sandy` within 200 chars of an interval (`\d[\d.,]* ?(km|mi|miles|hours|h)\b`) or of `more (frequently|often)` | base interval + "more often" flag |
+| `dust_interval` | `dust(y)?\|sandy` within 200 chars of an interval (`\d[\d.,]* ?(km\|mi\|miles\|hours\|h)\b`) or of `more (frequently\|often)` | base interval + "more often" flag |
 | `wet_interval` | `wet\|muddy\|rain` in the same shape | same |
 | `salt_wash` | `road salt\|salted road\|sea air\|coastal` near an imperative verb (`clean\|wash\|rinse\|lubricate`) | none (boolean rule) |
 | `cold_start` | `below \d+ ?°C\|freezing` near `start\|warm(-\| )up\|battery` | threshold °C |
@@ -311,7 +313,7 @@ page:
 COOLANT          breached
 Your manual: antifreeze protection to at least -25 °C.
 Your station: FALLS INTERNATIONAL AIRPORT, 4.6 km - 108 readings below that in 2024, low -30.6 C.
-                                                        -> Manual p. 158
+                                                        -> Manual p. 215
 ```
 
 Tapping the row does what every other row in this app does: opens the PDF at that page with the
@@ -332,8 +334,14 @@ antifreeze floor, and every single one prints −25 °C.** By market: EU 100, US
 JP 1, PH 1, CN 1, BR 1. Zero variance across 9 markets, 4 makes and 3 model years. Reproduce:
 
 ```bash
-api/.venv/Scripts/python -c "import json,glob,re,collections; ..."   # the grep is in section 10
+api/.venv/Scripts/python docs/pitches/voloridge/antifreeze_scan.py
+# distinct antifreeze floors: [('-25', 206)]
+# by market: eu 100, us 69, ww 26, rw 4, ar 3, jp 1, ph 1, cn 1, br 1
 ```
+
+Watch the minus sign: the PDFs print U+2212 and U+2013, never ASCII `-`. A scan for `"-25"` finds a
+fraction of them — one of several places where this corpus's text layer is not the character you
+would type, and a trap the rule extractor's regexes must handle everywhere.
 
 **Finding 2 — how often that number is wrong.** `isd_probe.py sample 260`, seed 11, against the
 12,776 stations still reporting: 250 had a 2024 file, 210 had ≥ 2,000 quality-passed observations,
@@ -347,8 +355,10 @@ type in §3.1.
 
 **Finding 3 — the rule that is already personalised, and nobody notices.** KTM prints a
 temperature-banded oil grade: *"Engine oil grade at ambient temperature ≥ 0 °C — SAE 10W/50; at
-ambient temperature < 0 °C — SAE 5W/40"* (**KTM 1390 Super Adventure R 2026 US, p. 215**; same table
-in 1290 Super Adventure S 2024 US p. 166 and 1390 Super Duke RR 2026 EU p. 183). Nearest-station
+ambient temperature < 0 °C — SAE 5W/40"* — **KTM 1390 Super Adventure R 2026 US, p. 215**. That same
+page also prints *"Antifreeze protection to at least: −25 °C"*, and the full lubricant chart is on
+pp. 239–240, which is why the demo bike shows both verdicts against one page. The same table appears
+in 1290 Super Adventure S 2024 US p. 166 and 1390 Super Duke RR 2026 EU p. 183. Nearest-station
 join, 2024 (`isd_probe.py cities`, measured):
 
 | city | station | km | share of 2024 readings below 0 °C | what p. 215 says |
@@ -381,9 +391,12 @@ p. 216 says *"roads are salted or near the ocean"*.)
 4. **Join-quality histogram.** Publish the distribution of nearest-station distance across the demo
    set and across 1,000 random populated coordinates. Any verdict from a station > 50 km away is
    rendered `unknown`, not `ok`.
-5. **Quality-code ablation.** Re-run one station with the ISD quality filter disabled and show the
-   minimum moving from −22.2 °C to −46.9 °C. It is the cleanest one-slide proof that the cleaning
-   step is doing real work — and it is a mistake we actually made on the first pass.
+5. **Quality-code ablation, as a shipped report.** Re-run the reduction with the filter disabled and
+   publish the diff: measured on the cached sample, 0.12% of readings flagged, 1.4% of station-years
+   with a moved minimum, and one station (`263240-99999`, 2024) whose verdict flips from breached to
+   fine. Keep this in `rules_report.json` — the honest version is more convincing than an
+   exaggerated one. **Do not repeat the −46.9 °C figure as a quality-filter result**: that number
+   came from the name-based station join landing on the wrong station, a different bug (item 4).
 6. **Reproducibility.** Seed 11, fixed station list, `isd_probe.py` in the repo, and every threshold
    in a constant, not a literal in a loop.
 
@@ -392,16 +405,20 @@ p. 216 says *"roads are salted or near the ocean"*.)
 ## 8. Demo moment (exact inputs)
 
 1. Type **KTM 1390 Super Adventure R 2026** in the search box → confirm.
+   **Pin the US manual** (`ktm-1390-super-adventure-r-2026-us-om`, 247 p.): that one vehicle maps to
+   two warm manuals, and the page numbers differ by market — the antifreeze floor is p. 215 in the US
+   manual and pp. 194/212 in the EU one, same −25 °C. A verdict is per *manual*, never per vehicle,
+   and the UI must name which manual it read.
 2. The manual opens. Tap **Conditions**. The browser has already granted location, so the strip is
    populated before the tap finishes animating.
 3. Set location to **Minneapolis** (typed, so it is deterministic on stage):
    `MINNEAPOLIS-ST PAUL INTERNATIONAL, 10.8 km · 13,760 observations in 2024`.
    - `OIL — action needed · 20.7% of 2024's readings below 0 °C · your manual, p. 215: SAE 5W/40`
-   - `COOLANT — ok · coldest 2024 observation −22.2 °C · floor −25 °C, p. 158`
+   - `COOLANT — ok · coldest 2024 observation −22.2 °C · floor −25 °C, p. 215`
 4. Change the location to **International Falls, MN** — one field, no reload.
-   - `COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 158`
+   - `COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 215`
    - `OIL — action needed · 34.6% of the year below 0 °C · p. 215`
-5. Tap the coolant row. The PDF opens on p. 158 with *"Antifreeze protection to at least −25 °C"*
+5. Tap the coolant row. The PDF opens on p. 215 with *"Antifreeze protection to at least −25 °C"*
    highlighted. **The manufacturer said it; we only worked out that it applies to you.**
 6. Change to **Bangkok**: every cold rule goes grey, and the dust rule lights up from OpenAQ. The
    negative control is part of the demo, on purpose.
