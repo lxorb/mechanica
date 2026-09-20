@@ -209,3 +209,50 @@ honours it, which is what turned pass 2 from 200 models into 27 real ones.
 3. The Harley registry-document rows (113) are still in the catalog and still at
    the top of every bike gap list. `--keys` filters them, but the list a human
    reads still shows them. They want deleting from `api/data/bikes.json`.
+
+---
+
+## Cycle 5 - 2026-09-20, ~55 min (mixed, --top 900 then --top 2200)
+
+| | families | rows |
+|---|---|---|
+| overall | 4,194 -> **4,391** (+197) of 8,788 | 19,212 -> **19,965** (+753) of 30,324 |
+| motorcycles | 3,518 -> **3,648** (+130) of 7,755 | 14,104 -> **14,476** (+372) of 23,945 |
+| manual-bearing bikes | 1,790 -> **1,872** (+82) of 3,910 | 9,818 -> **10,046** (+228) of 15,688 |
+| cars | 676 -> **743** (+67) of 1,033 | 5,108 -> **5,489** (+381) of 6,379 |
+
+**194 new photos** (own tiles 468 -> 627), $0.31 of `images.score`.
+`lookupImage` now resolves **21,130/30,389 rows (69.5%)** and 55.0% of models -
+past half the catalog on both measures for the first time.
+
+**The deep list is the best run yet.** `--top 900` left 313 real targets after the
+miss cache and returned **137 photos at 44%**; the follow-on `--top 2200` left
+1,405 targets and returned 57 more at 20% before the clock. Cycle 3's lesson holds
+and sharpens: generate wide, let the cache subtract, and work what is left - do not
+regenerate narrow.
+
+**Source ranking, mixed traffic, this cycle:** model categories 208/334 passed (55
+hits), search 130/271 (43), makecat 69/126 (31), family 5/10, wikipedia 7/16.
+Model categories are back on top for mixed traffic; `makecat` stays the motorcycle
+specialist it was in cycle 4.
+
+### Size budget is the next wall, not the sources
+
+**117 MB of the 150 MB budget is used**, up from 88 MB at the start of the cycle -
+this cycle alone spent 29 MB. At the current ~150 KB per model (1280 hero + 640 +
+160) the remaining 33 MB buys roughly **another 220 photos, i.e. about one more
+good cycle**, and the run will then stop on `stopped_for_budget` rather than on
+the clock. Three ways out, cheapest first, none of them taken without a decision:
+
+1. **Drop the 1280 hero for tail models** and keep it only where a model has many
+   catalog rows. The hero is ~60% of the bytes and `identify.js` only uses it on
+   the desktop wide grid.
+2. **Re-encode the existing 627 heroes at a lower ceiling** (they are capped at
+   130 KB now; 90 KB would reclaim ~15 MB and is a one-off pass).
+3. **Raise the budget.** 250 MB would carry roughly four more cycles at this rate.
+
+**Next (cycle 6 is motorcycles-only).**
+1. Decide the size question above before the cycle starts, or it will stop early.
+2. `--kind bike --top 2500`, makecat on, no `--retry-misses`.
+3. `makecat` across the open manual-bearing lane is still untried and still the
+   most promising sweep that is not the gap list.

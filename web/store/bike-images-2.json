@@ -2551,6 +2551,18 @@
     "score": 9.0,
     "hero": "store/img/bikes2/dodge-durango.hero.webp"
   },
+  "ducati|1100": {
+    "image": "store/img/bikes2/ducati-1100.webp",
+    "thumb": "store/img/bikes2/ducati-1100.thumb.webp",
+    "title": "Ducati Monster 1100 S.jpg",
+    "author": "Stefan Eissing from Münster, Germany",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_1100_S.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/ducati-1100.hero.webp"
+  },
   "ducati|1198-r-corse-special-edition": {
     "image": "store/img/bikes/ducati-1198.webp",
     "thumb": "store/img/bikes/ducati-1198-thumb.webp",
@@ -6960,6 +6972,18 @@
     "via": "alias",
     "aliasOf": "honda|cb1300"
   },
+  "honda|cb150x": {
+    "image": "store/img/bikes2/honda-cb150x.webp",
+    "thumb": "store/img/bikes2/honda-cb150x.thumb.webp",
+    "title": "2021 Honda CB150X (20211117).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Honda_CB150X_(20211117).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cb150x.hero.webp"
+  },
   "honda|cb223s": {
     "image": "store/img/bikes2/honda-cb223s.webp",
     "thumb": "store/img/bikes2/honda-cb223s.thumb.webp",
@@ -8668,6 +8692,18 @@
     "via": "alias",
     "aliasOf": "honda|crf300l"
   },
+  "honda|crf450l": {
+    "image": "store/img/bikes2/honda-crf450l.webp",
+    "thumb": "store/img/bikes2/honda-crf450l.thumb.webp",
+    "title": "CRF450RL.jpg",
+    "author": "RussMcD",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CRF450RL.jpg",
+    "via": "wikipedia",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-crf450l.hero.webp"
+  },
   "honda|crf450r": {
     "image": "store/img/bikes2/honda-crf450r.webp",
     "thumb": "store/img/bikes2/honda-crf450r.thumb.webp",
@@ -9180,6 +9216,18 @@
     "via": "alias",
     "aliasOf": "honda|fit-shuttle"
   },
+  "honda|forza-350": {
+    "image": "store/img/bikes2/honda-forza-350.webp",
+    "thumb": "store/img/bikes2/honda-forza-350.thumb.webp",
+    "title": "2022 Honda Forza 350 Standard.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Honda_Forza_350_Standard.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-forza-350.hero.webp"
+  },
   "honda|forza-ex": {
     "image": "store/img/bikes/honda-forza.webp",
     "thumb": "store/img/bikes/honda-forza-thumb.webp",
@@ -9258,6 +9306,18 @@
     "via": "alias",
     "aliasOf": "honda|fury"
   },
+  "honda|future-125": {
+    "image": "store/img/bikes2/honda-future-125.webp",
+    "thumb": "store/img/bikes2/honda-future-125.thumb.webp",
+    "title": "Future 125 FI.jpg",
+    "author": "Baoothersks",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Future_125_FI.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 6.0,
+    "hero": "store/img/bikes2/honda-future-125.hero.webp"
+  },
   "honda|gb250-clubman": {
     "image": "store/img/bikes2/honda-gb250-clubman.webp",
     "thumb": "store/img/bikes2/honda-gb250-clubman.thumb.webp",
@@ -9269,6 +9329,18 @@
     "view": "side",
     "score": 7.5,
     "hero": "store/img/bikes2/honda-gb250-clubman.hero.webp"
+  },
+  "honda|gb350": {
+    "image": "store/img/bikes2/honda-gb350-c.webp",
+    "thumb": "store/img/bikes2/honda-gb350-c.thumb.webp",
+    "hero": "store/img/bikes2/honda-gb350-c.hero.webp",
+    "title": "Honda GB350 (cropped).jpg",
+    "author": "AVMOTO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_GB350_(cropped).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|gb350-c"
   },
   "honda|gb350,-gb350-s": {
     "image": "store/img/bikes2/honda-gb350-gb350-s.webp",
@@ -10536,6 +10608,18 @@
     "via": "alias",
     "aliasOf": "honda|sh-125i"
   },
+  "honda|sh-150": {
+    "image": "store/img/bikes2/honda-sh-150.webp",
+    "thumb": "store/img/bikes2/honda-sh-150.thumb.webp",
+    "title": "Honda SH150.jpg",
+    "author": "phototram",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_SH150.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-sh-150.hero.webp"
+  },
   "honda|sh-150i-sport": {
     "image": "store/img/bikes/honda-sh-150i.webp",
     "thumb": "store/img/bikes/honda-sh-150i-thumb.webp",
@@ -10758,6 +10842,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "honda|smart-dio"
+  },
+  "honda|sonic-150r": {
+    "image": "store/img/bikes2/honda-sonic-150r.webp",
+    "thumb": "store/img/bikes2/honda-sonic-150r.thumb.webp",
+    "title": "2017 Honda Sonic 150R (20211010).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Honda_Sonic_150R_(20211010).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-sonic-150r.hero.webp"
   },
   "honda|spacy125": {
     "image": "store/img/bikes2/honda-spacy125.webp",
@@ -11524,6 +11620,30 @@
     "view": "side",
     "score": 9.5,
     "hero": "store/img/bikes2/honda-wave-alpha.hero.webp"
+  },
+  "honda|wave-rsx": {
+    "image": "store/img/bikes2/honda-wave-rsx.webp",
+    "thumb": "store/img/bikes2/honda-wave-rsx.thumb.webp",
+    "title": "Honda wave.jpg",
+    "author": "Vovax",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_wave.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-wave-rsx.hero.webp"
+  },
+  "honda|wave-rsx-fi": {
+    "image": "store/img/bikes2/honda-wave-rsx.webp",
+    "thumb": "store/img/bikes2/honda-wave-rsx.thumb.webp",
+    "hero": "store/img/bikes2/honda-wave-rsx.hero.webp",
+    "title": "Honda wave.jpg",
+    "author": "Vovax",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_wave.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|wave-rsx"
   },
   "honda|xl700v-transalp-abs": {
     "image": "store/img/bikes/honda-xl700v-transalp.webp",
@@ -12821,6 +12941,66 @@
     "via": "alias",
     "aliasOf": "indian|springfield"
   },
+  "indian|super-chief": {
+    "image": "store/img/bikes2/indian-super-chief.webp",
+    "thumb": "store/img/bikes2/indian-super-chief.thumb.webp",
+    "title": "The rearview of Indian Motorcycle Super Chief Limited mid-year 2023.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:The_rearview_of_Indian_Motorcycle_Super_Chief_Limited_mid-year_2023.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/indian-super-chief.hero.webp"
+  },
+  "indian|super-chief-abs": {
+    "image": "store/img/bikes2/indian-super-chief.webp",
+    "thumb": "store/img/bikes2/indian-super-chief.thumb.webp",
+    "hero": "store/img/bikes2/indian-super-chief.hero.webp",
+    "title": "The rearview of Indian Motorcycle Super Chief Limited mid-year 2023.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:The_rearview_of_Indian_Motorcycle_Super_Chief_Limited_mid-year_2023.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|super-chief"
+  },
+  "indian|super-chief-dark-horse": {
+    "image": "store/img/bikes2/indian-super-chief.webp",
+    "thumb": "store/img/bikes2/indian-super-chief.thumb.webp",
+    "hero": "store/img/bikes2/indian-super-chief.hero.webp",
+    "title": "The rearview of Indian Motorcycle Super Chief Limited mid-year 2023.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:The_rearview_of_Indian_Motorcycle_Super_Chief_Limited_mid-year_2023.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|super-chief"
+  },
+  "indian|vintage": {
+    "image": "store/img/bikes2/indian-vintage.webp",
+    "thumb": "store/img/bikes2/indian-vintage.thumb.webp",
+    "title": "Indian Chief Vintage, 2014.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_Chief_Vintage,_2014.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/indian-vintage.hero.webp"
+  },
+  "indian|vintage-dark-horse": {
+    "image": "store/img/bikes2/indian-vintage.webp",
+    "thumb": "store/img/bikes2/indian-vintage.thumb.webp",
+    "hero": "store/img/bikes2/indian-vintage.hero.webp",
+    "title": "Indian Chief Vintage, 2014.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_Chief_Vintage,_2014.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|vintage"
+  },
   "infiniti|q50-hybrid": {
     "image": "store/img/bikes/infiniti-q50.webp",
     "thumb": "store/img/bikes/infiniti-q50-thumb.webp",
@@ -14041,6 +14221,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2016_Kawasaki_Ninja_ZX-14R_KGTW.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|ninja-zx-14r"
+  },
+  "kawasaki|ninja-zx-25r": {
+    "image": "store/img/bikes2/kawasaki-ninja-zx-25r.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-zx-25r.thumb.webp",
+    "title": "2022 Kawasaki Ninja ZX-25R ABS SE 250 (20221105).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Kawasaki_Ninja_ZX-25R_ABS_SE_250_(20221105).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-zx-25r.hero.webp"
   },
   "kawasaki|ninja-zx-6r-636-abs": {
     "image": "store/img/bikes/kawasaki-ninja-zx-6r-636.webp",
@@ -15744,6 +15936,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:KTM_Super_Duke_1290_R_(1).jpg",
     "via": "alias",
     "aliasOf": "ktm|1290-super-duke-r"
+  },
+  "ktm|1290-super-duke-rr": {
+    "image": "store/img/bikes2/ktm-1290-super-duke-rr.webp",
+    "thumb": "store/img/bikes2/ktm-1290-super-duke-rr.thumb.webp",
+    "title": "KTM 1290 Super Duke R, right view.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1290_Super_Duke_R,_right_view.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/ktm-1290-super-duke-rr.hero.webp"
   },
   "ktm|200-duke-ng": {
     "image": "store/img/bikes/ktm-200-duke.webp",
@@ -25393,6 +25597,30 @@
     "view": "three_quarter",
     "score": 8.5,
     "hero": "store/img/bikes2/yamaha-grand-filano-hybrid-neo.hero.webp"
+  },
+  "yamaha|grand-filano-lux": {
+    "image": "store/img/bikes2/yamaha-grand-filano-lux.webp",
+    "thumb": "store/img/bikes2/yamaha-grand-filano-lux.thumb.webp",
+    "title": "2015 Yamaha Grand Filano 125 (20150604).jpg",
+    "author": "オーバードライブ83",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_Grand_Filano_125_(20150604).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-grand-filano-lux.hero.webp"
+  },
+  "yamaha|grand-filano-neo": {
+    "image": "store/img/bikes2/yamaha-grand-filano-neo.webp",
+    "thumb": "store/img/bikes2/yamaha-grand-filano-neo.thumb.webp",
+    "title": "Yamaha Grand Filano in Indonesia - Jambi City, JA.jpg",
+    "author": "Firzafp",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Grand_Filano_in_Indonesia_-_Jambi_City,_JA.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-grand-filano-neo.hero.webp"
   },
   "yamaha|grizzly-700-eps": {
     "image": "store/img/bikes/yamaha-grizzly-700.webp",
