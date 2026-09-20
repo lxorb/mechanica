@@ -89,8 +89,15 @@ function stashed() {
 /**
  * Only a bike the roster can still resolve is restored — offline the roster is the bundled one, and
  * a bikeId it does not carry would put a screen in front of a vehicle it cannot name.
+ *
+ * This has to run before the screen modules are imported, not in firstGo(): bus.js routes from the
+ * hash the moment the first screen registers itself, and with state.bikeId still empty that route
+ * rewrites #book to #identify — after which firstGo() has nothing left to read.
  */
 function revive() {
+  const hash = splitHash(location.hash).screen || "identify";
+  if (hash === "identify" || !SCREENS.includes(hash)) return false;
+  if (state.bikeId != null && state.bikeId !== "") return false;
   const spot = stashed();
   if (!spot || !spot.bikeId || !Q.bike(spot.bikeId)) return false;
   const patch = {};
@@ -102,7 +109,6 @@ function revive() {
 function firstGo() {
   const hash = splitHash(location.hash).screen || "identify";
   const id = SCREENS.includes(hash) ? hash : "identify";
-  if (id !== "identify" && (state.bikeId == null || state.bikeId === "")) revive();
   if (id !== "identify" && (state.bikeId == null || state.bikeId === "")) {
     go("identify", { replace: true });
     return;
@@ -161,6 +167,7 @@ async function boot() {
   });
 
   window.Q = await pickStore();
+  revive();
 
   for (const id of [...SCREENS, ...OVERLAYS]) {
     try {

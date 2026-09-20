@@ -199,7 +199,10 @@ async function run() {
   const base = `http://127.0.0.1:${port}`;
   const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
   const sharp = (await import(`file:///${SHARP.replace(/\\/g, "/")}`)).default;
-  const browser = await puppeteer.launch({
+  // One browser per viewport, not one for the whole run: twenty pages of software-rasterised
+  // WebGL in a single process ends in `Page.captureScreenshot: Internal error`, which is not a
+  // finding about the themes.
+  const launch = () => puppeteer.launch({
     executablePath: CHROME,
     headless: "new",
     args: [
@@ -215,6 +218,7 @@ async function run() {
   for (const theme of themes) {
     const tiles = [];
     for (const view of VIEWS) {
+      const browser = await launch();
       const page = await browser.newPage();
       await page.setViewport({ width: view.width, height: view.height, deviceScaleFactor: 1 });
       const errors = [];
@@ -239,22 +243,30 @@ async function run() {
           problems += 1;
           console.log(`  !! ${theme}/${view.id}/${name}: ${String(error.message).slice(0, 90)}`);
         }
-        // Capturing a page with a live WebGL canvas fails sporadically under swiftshader; the
-        // next frame is always fine, so one retry is the whole fix.
+        // Capturing a page with a live WebGL canvas fails sporadically under swiftshader. Usually
+        // the next frame is fine; when it is not, a lost frame is reported and the run carries on
+        // — losing nine good stops to one bad capture would be the worse trade.
         let raw = null;
-        for (let tries = 0; tries < 3 && !raw; tries += 1) {
+        for (let tries = 0; tries < 4 && !raw; tries += 1) {
           try {
-            raw = await page.screenshot({ encoding: "binary" });
+            raw = await page.screenshot({ encoding: "binary", captureBeyondViewport: false });
           } catch (error) {
-            if (tries === 2) throw error;
-            await nap(900);
+            if (tries === 3) {
+              problems += 1;
+              console.log(`  !! ${theme}/${view.id}/${name}: capture lost — ${String(error.message).slice(0, 60)}`);
+            } else {
+              await nap(1200);
+            }
           }
         }
-        const shot = Buffer.from(raw);
+        const shot = raw
+          ? Buffer.from(raw)
+          : await sharp({ create: { width: view.width, height: view.height, channels: 4, background: "#7a1020" } })
+            .png().toBuffer();
         const applied = await page.evaluate(() => ({
           attr: document.documentElement.getAttribute("data-theme"),
           meta: document.querySelector('meta[name="theme-color"]')?.getAttribute("content"),
-        }));
+        })).catch(() => ({ attr: theme, meta: null }));
         if (applied.attr !== theme && !args.includes("--baseline")) {
           console.log(`  !! ${theme}/${view.id}/${name}: data-theme=${applied.attr}`);
           problems += 1;
@@ -277,11 +289,11 @@ async function run() {
         console.log(`  ok ${theme}/${view.id} — ${STOPS.length} stops, 0 console errors`);
       }
       await page.close();
+      await browser.close();
     }
     await contactSheet(sharp, theme, tiles);
   }
 
-  await browser.close();
   server.close();
   console.log(problems ? `\n${problems} problem(s)` : "\nall clean");
   process.exitCode = problems ? 1 : 0;

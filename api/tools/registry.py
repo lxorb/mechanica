@@ -39,7 +39,7 @@ from app.registry import (
     select,
     verify,
 )
-from app.registry._http import client, request, slug
+from app.registry._http import MODEL_YEARS, client, request, slug
 from app.store import get_store
 
 BIKEZ = "https://raw.githubusercontent.com/AtharvBeDiff/AI-MECHANIC/main/all_bikez_curated.csv"
@@ -145,25 +145,44 @@ def by_kind(entries: list[RegistryEntry], bikes: list[Bike]) -> None:
         )
 
 
-def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int]:
-    """Validated rows of one fragment, keyed by id, plus the count that failed validation."""
+def _bad_years(entry: RegistryEntry) -> list[object]:
+    """The year values on this row that cannot be a model year: anything outside MODEL_YEARS
+    (1900-2032), which is also what catches a truncated one - Yamaha EU has shipped "201" next to
+    2011-2016, and Honda's Motopub answers "5019" for a 19YM file. Both portals print these; a year
+    that survives here is one a vehicle id can be built from."""
+    return [y for y in entry.years if not isinstance(y, int) or y not in MODEL_YEARS]
+
+
+def _read_fragment(path: Path) -> tuple[dict[str, RegistryEntry], int, list[tuple[str, list[object]]]]:
+    """Validated rows of one fragment, keyed by id, the count that failed validation, and the rows
+    refused for carrying an impossible model year.
+
+    A refused row is never folded in and never silently discarded: it is returned so the merge can
+    name it, because an out-of-range year mints a catalog vehicle nothing will ever match (a
+    "Yamaha XJ6F 201") and the fix belongs in the adapter that parsed it, not here."""
     try:
         raw = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         print(f"  {path.name:<28} unreadable: {type(exc).__name__}: {exc}", file=sys.stderr)
-        return {}, 0
+        return {}, 0, []
     items = raw.get("entries") if isinstance(raw, dict) else raw
     rows: dict[str, RegistryEntry] = {}
     bad = 0
+    refused: list[tuple[str, list[object]]] = []
     for item in items if isinstance(items, list) else []:
         try:
             entry = RegistryEntry.model_validate(item)
         except ValidationError:
             bad += 1
             continue
-        if entry.url:
-            rows[entry.id] = entry
-    return rows, bad
+        if not entry.url:
+            continue
+        off = _bad_years(entry)
+        if off:
+            refused.append((entry.id, off))
+            continue
+        rows[entry.id] = entry
+    return rows, bad, refused
 
 
 def _rewrite(store, entries: list[RegistryEntry] | None = None, bikes: list[Bike] | None = None) -> None:
@@ -225,6 +244,7 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
     merged: list[tuple[str, int, int, int]] = []
     incoming: dict[str, RegistryEntry] = {}
     fragments: dict[str, dict[str, RegistryEntry]] = {}
+    rejected: list[tuple[str, str, list[object]]] = []
     skip = {s.strip().lower().removesuffix(".json") for s in (args.skip or [])}
     replace = {s.strip().lower().removesuffix(".json") for s in (args.replace or [])}
     for path in sorted(FRAGMENTS.glob("*.json")):
@@ -233,11 +253,13 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         if path.stem.lower() in skip:
             print(f"  {path.name:<28} skipped")
             continue
-        rows, bad = _read_fragment(path)
+        rows, bad, refused = _read_fragment(path)
         fresh = sum(1 for eid in rows if eid not in before and eid not in incoming)
         fragments[path.stem.lower()] = rows
         incoming.update(rows)
         merged.append((path.name, len(rows), fresh, bad))
+        for eid, off in refused:
+            rejected.append((path.name, eid, off))
 
     known_rows = store.registry()
     for name, rows in sorted(fragments.items()):  # a wholesale re-key reads as an addition otherwise
@@ -299,6 +321,13 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         for site, kinds in sorted(mixed.items(), key=lambda kv: -sum(kv[1].values())):
             spread = "  ".join(f"{k} {n}" for k, n in sorted(kinds.items(), key=lambda kv: -kv[1]))
             print(f"    {site:<34}{spread}")
+    if rejected:
+        print(f"  REFUSED {len(rejected)} row(s) for an impossible model year (outside {MODEL_YEARS.start}-{MODEL_YEARS.stop - 1}):")
+        for name, eid, off in rejected[:40]:
+            print(f"    {name:<28} {eid[:64]:<64} {off}")
+        if len(rejected) > 40:
+            print(f"    ... and {len(rejected) - 40} more")
+        print("    fix the adapter that parsed them; they are not in the registry.")
     for name, kept, fresh, bad in merged:
         print(f"  {name:<28} {kept:>6} rows, {fresh:>6} new" + (f", {bad} invalid" if bad else ""))
     if not merged:

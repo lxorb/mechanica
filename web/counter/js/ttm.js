@@ -304,29 +304,114 @@ async function loadBundle() {
   }
 }
 
-/** "KTM", "390 Duke" -> "ktm|390-duke": the key shape of web/store/bike-images.json. */
-function imageKey(make, model) {
-  const part = (v) =>
-    String(v ?? "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/\p{M}/gu, "")
-      .replace(/[\s-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  return `${part(make)}|${part(model)}`;
+/** "KTM" / "390 Duke" -> "ktm" / "390-duke": the key shape of web/store/bike-images.json. */
+function slugPart(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[\s_/.]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
-/** Trailing variant words an image set rarely distinguishes: "F 900 R ABS" -> "F 900 R". */
-const VARIANT = /[\s-]+(abs|r|s|se|le|sp|gt|rs|rr|x|eu|us|a|dct)$/i;
+/**
+ * Trailing tokens that name a trim, not a model: "MT-09 SP" is an MT-09 in a photo, "F 900 R ABS"
+ * is an F 900 R. Deliberately no "classic", "sport" or "touring" - those are model lines of their own.
+ */
+const TRIM = new Set([
+  "abs", "dct", "a", "e", "f", "i", "r", "s", "x", "ie", "efi", "le", "se", "sp", "sps", "rr", "rs",
+  "gt", "gts", "eu", "us", "usa", "euro", "my", "std", "standard", "base", "pro", "plus", "premium",
+  "special", "limited", "edition", "anniversary", "cafe",
+]);
+const PAREN_TAIL = /[\s-]*[([][^)\]]*[)\]]\s*$/;
+const YEAR_TAIL = /[\s-]+(?:19|20)\d{2}$/;
+/** "r1m" -> "r1", "cb500f" -> "cb500", "z900rs" -> "z900": letters riding on a displacement. */
+const AFTER_DIGITS = /(\d)[a-z]{1,3}$/;
 
-function lookupImage(map, make, model) {
-  let name = String(model ?? "");
-  for (let i = 0; i < 4; i++) {
-    const hit = map[imageKey(make, name)];
+function digitsOf(value) {
+  return (String(value).match(/\d+/g) || []).join("-");
+}
+
+/**
+ * The normalisation ladder for one model name, closest spelling first. Every rung keeps the model's
+ * digit runs exactly as they were - that is the whole guard against handing a YZF-R6 the R1's photo,
+ * or a CB500F the CB650's. A rung that would change a digit is dropped rather than tried.
+ *
+ *   YZF-R1M          -> yzf-r1m, yzf-r1
+ *   MT-09 SP         -> mt-09-sp, mt-09
+ *   Z900RS Cafe      -> z900rs-cafe, z900rs, z900
+ *   Civic (FK8) 2020 -> civic-fk8-2020, civic
+ */
+function modelLadder(model) {
+  const raw = String(model ?? "").toLowerCase();
+  // "(FK8)" and a model year on the end are packaging, not the model - and they are stripped before
+  // the digit rule is fixed, or a chassis code in brackets would count as the model's size.
+  const bare = raw.replace(PAREN_TAIL, "").replace(YEAR_TAIL, "").trim() || raw;
+  const digits = digitsOf(bare);
+  const seen = new Set();
+  const out = [];
+  const push = (value, always = false) => {
+    const key = slugPart(value);
+    if (!key || seen.has(key) || (!always && digitsOf(key) !== digits)) return;
+    seen.add(key);
+    out.push(key);
+  };
+
+  push(raw, true); // the spelling the catalog actually has is always worth one lookup
+  push(bare, true);
+
+  let tokens = bare.split(/[\s\-_/.]+/).filter(Boolean);
+  for (let i = 0; i < 3 && tokens.length > 1; i++) {
+    if (!TRIM.has(tokens[tokens.length - 1])) break;
+    tokens = tokens.slice(0, -1);
+    push(tokens.join(" "));
+  }
+
+  let tail = tokens.join(" ");
+  for (let i = 0; i < 2; i++) {
+    const shorter = tail.replace(AFTER_DIGITS, "$1").trim();
+    if (shorter === tail || !shorter) break;
+    push(shorter);
+    tail = shorter;
+  }
+  return out;
+}
+
+/** Separator-blind index of the image map, so "YZF R1" and "YZFR1" both find "yzf-r1". */
+let flatMap = null;
+let flatFor = null;
+
+function flatten(map) {
+  if (flatFor === map && flatMap) return flatMap;
+  const index = Object.create(null);
+  for (const key of Object.keys(map)) {
+    const flat = key.replace(/-/g, "");
+    if (!(flat in index)) index[flat] = map[key];
+  }
+  flatFor = map;
+  flatMap = index;
+  return index;
+}
+
+/**
+ * One model row -> its photo entry, or null. Exported for web/tools/images-coverage.mjs, which
+ * measures how many catalog rows this reaches and writes the misses to docs/qa/images-gaps.md;
+ * screens never call it - they read `bike.image` / `bike.thumb` / `bike.hero`.
+ *
+ * Both image files are already merged into one map by loadImageMap(), with bike-images.json winning
+ * every key it shares with bike-images-2.json, so walking the ladder once over the merged map keeps
+ * that precedence and still prefers an exact match in the second file over a trimmed match in the
+ * first - which is what a "file 1 first, then file 2" pass would get backwards.
+ */
+export function lookupImage(map, make, model) {
+  if (!map) return null;
+  const mk = slugPart(make);
+  const flat = flatten(map);
+  const flatMake = mk.replace(/-/g, "");
+  for (const name of modelLadder(model)) {
+    const hit = map[`${mk}|${name}`] || flat[`${flatMake}|${name.replace(/-/g, "")}`];
     if (hit) return hit;
-    const shorter = name.replace(VARIANT, "");
-    if (shorter === name || !shorter) return null;
-    name = shorter;
   }
   return null;
 }

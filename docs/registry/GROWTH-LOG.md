@@ -117,3 +117,113 @@ car rows 8,923 (7,779 / 6,434 / 4,611 / 4,113). 85 sites, 81 makes.
 `-k "registry or catalog or bike or doctype or car"`). The full suite has 8 pre-existing failures
 in `test_offers.py` (one LLM-cost assertion) and `test_voice_agent.py` / `test_voice_elevenlabs.py`
 (prompt wording) — other agents' surfaces, untouched by this cycle and failing before it.
+
+---
+
+## Cycle 2 — 2026-09-20
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 53,576 | **53,575** | −1 |
+| free English owner PDFs | 24,224 | **24,223** | −1 |
+| distinct PDF files | 14,781 | **14,780** | −1 |
+| catalog vehicles | 27,765 | **27,761** | −4 |
+| …with a `manualUrl` | 13,551 | **13,547** | −4 |
+
+A correctness cycle, not a growth one: the only movement is the five impossible-year rows coming
+out. **No new source landed.** Read the gap table and the leads below before starting cycle 3 —
+the reason this cycle found nothing is written down there, and it is not bad luck.
+
+### Done
+
+* **Year clamp.** `plausible_years()` in `_http.py` keeps only 1900–2032 and is now applied in
+  `yamaha.py` (the EU feed ships a truncated `201` alongside 2011–2016) and `honda_intl.py`
+  (Motopub answers `5019` for a `19YM` file). Both portals print these; neither is our parsing.
+  `registry.json` and `bikes.json` now contain **zero** impossible years, verified.
+* **The five junk rows retracted** — `badyear.drop.json`, plus `--replace yamaha-eu` against a new
+  `yamaha-eu.json` fragment so the four Yamaha handbooks come back re-keyed under their real years
+  instead of being lost. Only the Honda `TRX500FM2 5019` row is gone for good: its year is
+  unknowable from the portal and the file is an ATV guide anyway.
+* **Lincoln: checked and not reachable.** `cars_ford.py` has always listed Lincoln in `BRANDS`; the
+  reason it yields nothing is that `lincoln.com/support/owner-manuals-details/owner-manuals-library`
+  **404s** — Ford's library has 73 nameplates and every one is a Ford. Also checked: every
+  `/support/owner-manuals*/<model>/<year>` shape on lincoln.com 404s; `/support/owner-manuals/` is an
+  AEM React app whose "Owner Manuals Sitemap" is a client route with no server URL; the
+  `support/sitemap.txt` in `robots.txt` returns zero bytes and `sitemap.xml` is a Word-wrapped XML
+  blob; and Lincoln slugs on ford.com (`navigator`, `aviator`, `nautilus`) return the empty
+  fallback page — 1,198,5xx bytes, **0 documents**, against 1,205,948 bytes and 4 for `mustang`.
+  Lincoln PDFs do sit on `fordservicecontent.com`, but nothing public enumerates their names, and
+  guessing file names is not enumeration. **Do not re-attempt without a new entry point.**
+
+### The gap table (catalog vehicles with no `manualUrl`) — start cycle 3 from this
+
+Motorcycles, worst first. "same model" = the registry already has a free English PDF for that exact
+make+model at a *different* year; "normalise" = it would match if model names were compared with
+punctuation and case stripped; "unknown" = no free English PDF exists for that model at any year.
+
+| make | missing | have | same model | normalise | unknown | state of the source |
+|---|---|---|---|---|---|---|
+| Yamaha | 2,518 | 2,849 | 301 | 284 | 1,933 | library mined out (344 base codes probed, 30 carry bikes) |
+| Kawasaki | 2,398 | 64 | 520 | 88 | 1,790 | US KTIVS catalogue is the whole reachable set; rest are flipbooks |
+| Suzuki | 2,060 | 34 | 17 | 71 | 1,972 | every national site walked; JP + DE only, UK is VIN |
+| Honda | 1,944 | 1,271 | 423 | 136 | 1,385 | 41 Motopub codes, 479 candidates tried |
+| Harley-Davidson | 1,375 | 9 | 43 | 0 | 1,332 | per-file guest `viewToken`, no static URL |
+| Aprilia | 721 | 0 | 0 | 0 | 721 | `manuals.aprilia.com` is a lead form, PDF arrives by e-mail |
+| Triumph | 542 | 816 | 113 | 7 | 422 | 12 of 15 doc types 404 without a subscription |
+| Ducati | 415 | 376 | 39 | 2 | 374 | Contentful, headful browser; pre-2015 not published |
+| BMW | 359 | 478 | 165 | 40 | 154 | only `BA-SPRACHE` 00/01 mapped |
+| Moto Guzzi | 347 | 0 | 0 | 0 | 347 | same lead form as Aprilia |
+| GasGas 302 · KTM 280 · Husqvarna 251 · Royal Enfield 184 · QJ 15 · LiveWire 5 | | | 234 | 63 | 720 | |
+
+Cars: Opel 170 (0 have), Land Rover 76, Jaguar 54, Fiat 49, Tesla 43, Peugeot 26, Alfa 23,
+Citroën 17, Jeep 12, Lancia 12, Dacia 10, Mercedes 3, DS 2, Volvo 1.
+
+**What the table says, and it is the finding of this cycle:** roughly **11,000 of the 14,214**
+missing vehicles are models for which *no free English PDF exists anywhere we can reach* — the six
+biggest motorcycle makes are each individually exhausted, with a module docstring proving it. Only
+two pools are actually addressable without a new OEM:
+
+* **~1,855 vehicles** whose exact model already has a free English PDF at a neighbouring year.
+  These are real gaps in the OEM's own publishing, not ours — do **not** stretch a 2017 handbook
+  over a 2015 bike; that is inventing a claim the manufacturer never made.
+* **~690 vehicles** that would match on a punctuation-and-case-insensitive comparison
+  (`Multistrada V4S` vs `Multistrada V4 S`, `FC250` vs `FC 250`, `R Nine T` vs `R nineT`).
+  This one is legitimate and is the **single cheapest four-figure-ish win left**: it needs an alias
+  key in `pdf_index()`/`bikes_from_registry()`, not a crawl. It changes `_pick` semantics, so it
+  wants a test per make and the founder's nod before it ships.
+
+### Tried this cycle and empty — do not re-walk
+
+* **Lincoln**, in full, as above.
+* **Polestar** — `polestar.com/<cc>/manual/<model>/<year>/` is a real, enumerable manual browser
+  (20 markets, model + year in the path) but it is an HTML reader like Tesla's. The page's
+  "Downloads" tab is a client route: `/uk/manual/polestar-2/2027/downloads` 404s, as do the 2021,
+  2025 and 2026 shapes. No PDF found. Worth one more look only if the downloads route is recovered
+  from the app bundle.
+* **robots/sitemap sweep, 12 car makes** — mg.co.uk, byd.com, polestar.com, rivian.com,
+  lucidmotors.com, isuzu.co.uk, tatamotors.com, auto.mahindra.com, vauxhall.co.uk, haval.com.au,
+  mgmotor.eu, omoda.com.au: not one owner's-manual PDF in any declared sitemap. Only
+  `auto.mahindra.com/customer-awareness/owner-s-manual` exists as a page (200, 272 KB) and it
+  renders its list client-side with no PDF in the document.
+* **Direct manual paths, 10 car makes** — mg.co.uk, isuzuutes.com.au, vauxhall.co.uk,
+  marutisuzuki.com, kgm.co.uk, lucidmotors.com, cars.tatamotors.com, bydauto.co.uk: every
+  `/owners/manuals`-shaped path 404s.
+
+**Method note for cycle 3, learned the hard way twice:** probe with the *default* crawler UA, not
+`BROWSER_UA`. Akamai on `ford.com`/`fordservicecontent.com` silently drops a Chrome UA, which is
+what made Lincoln and several others look unreachable in cycle 1's sweep when they were merely
+mis-probed. And stop guessing paths: go `robots.txt` → declared sitemaps → the page, or don't go.
+
+### Next leads, best first
+
+1. **The normalisation alias, ~690 vehicles.** Cheapest real win on the board, no HTTP at all.
+   Needs a decision because it changes what `_pick()` may answer with.
+2. **New makes that publish English PDFs and have no adapter yet** — none of these were reached
+   this cycle and all are unproven: MG, BYD, Polestar (PDF route), Rivian, Lucid, Isuzu, Tata,
+   Mahindra, KGM/SsangYong, Great Wall/Haval, Omoda/Jaecoo, Chery, VinFast. Each needs its real
+   support URL found first (their public sitemaps do not declare the support tree).
+3. **Vauxhall** is the one with a known 170-vehicle payoff: Opel has 468 rows and **zero** free
+   English PDFs because the PSA asset hosts serve FR/DE. Vauxhall is Opel in English. Its
+   `/owners/vehicle-support/manuals.html` 404s, so the entry point has to be found another way.
+4. **Do not re-open** Yamaha, Kawasaki, Suzuki, Honda, Harley-Davidson, Triumph, Aprilia or
+   Moto Guzzi on a hunch. Eight docstrings say why, and cycle 2 re-confirmed two of them.

@@ -42,6 +42,8 @@ class Settings:
     deepgram_api_key = _secret("DEEPGRAM_API_KEY", "deepgram.txt")
     ttc_api_key = _secret("TTC_API_KEY", "ttc.txt")
     dropbox_token = _secret("DROPBOX_TOKEN", "dropbox.txt")
+    # Gate on POST /ingest, the one route that fetches an operator-supplied URL. None = closed.
+    admin_token = _secret("ADMIN_TOKEN", "admin.txt")
     model_chat = os.getenv("MODEL_CHAT", "gpt-5.6-terra")
     model_offers = os.getenv("MODEL_OFFERS", "gpt-5.6-terra")
     model_image = os.getenv("MODEL_IMAGE", "gpt-image-1")

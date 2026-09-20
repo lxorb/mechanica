@@ -1,7 +1,8 @@
 /**
  * The voice orb — the round thing in the middle while voice mode is live. Owner: voice agent.
- * Pairs with js/voice-orb.js, mounted by js/chat-ui.js. Pulled in by css/screens/pick.css next to
- * chat-ui.css, so index.html (another agent's file) needs no line.
+ * Pairs with js/voice-orb.js, which mounts the orb AND injects this file: it is the only module
+ * that needs it and the only one that knows where it lives, so neither index.html nor another
+ * agent's screen CSS carries a line for it.
  *
  * WHY A DISC AND NOT A BUTTON. Voice mode is not a mode of the chat, it is the whole screen: both
  * hands are on the bike and nobody is aiming at a 44px target in a corner. So the orb is centred,
@@ -12,11 +13,17 @@
  * the compositor does the rest, so a running orb costs no layout and no paint. The three states
  * differ only in what drives those two numbers — breath, ripple, or the agent's own output level.
  *
- * NO LAYOUT SHIFT. The orb is position:fixed over the whole view and the transcript stays mounted
- * and scrollable underneath it; entering and leaving voice mode adds and removes nothing from the
- * flow. `.vo-dim` fades the conversation behind it instead of unmounting it.
+ * NO LAYOUT SHIFT. The orb is absolutely placed over the conversation, which stays mounted and
+ * scrollable underneath it, so entering and leaving voice mode adds nothing to the flow and takes
+ * nothing out of it - asserted, before/during/after, by web/tools/orb-shots.mjs. It covers the
+ * conversation and not the header, so Back and the chat's own x are still reachable while voice
+ * is running, and `.is-peek` hands the transcript back without hanging up.
  *
- * Tokens only, from css/counter.css: --orange (the accent), --ink, --paper, --card, --rule.
+ * TOKENS. css/counter.css is the token floor and css/themes.css swaps it wholesale, so every
+ * colour here is a token and the orb changes livery with the rest of the app for free. The names
+ * moved under the theme agent's refactor (--orange -> --accent, --ink -> --fg/--line, --paper ->
+ * --bg), so each one carries the old name as a fallback and a literal behind that: this file has
+ * to render correctly whichever of the two floors it is loaded next to.
  */
 
 /* The one rule in here that reaches outside the orb: the orb is absolutely placed over the
@@ -37,7 +44,7 @@
   gap: 0;
   padding: 16px;
   /* The conversation is still there, still scrollable, just behind a veil of paper. */
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  background: color-mix(in srgb, var(--bg, var(--paper, #ece7dc)) 88%, transparent);
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   /* Nothing here is a scroll container: the chevron hands the scroll back to the transcript. */
@@ -61,7 +68,7 @@
   font-size: 0.92rem;
   line-height: 1.3;
   text-align: center;
-  color: var(--ink);
+  color: var(--fg, var(--ink, #141414));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -99,7 +106,9 @@
   inset: 0;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--card) 70%, var(--orange)) 0%, var(--orange) 62%, color-mix(in srgb, var(--orange) 76%, var(--ink)) 100%);
+    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(circle at 50% 118%, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 52%),
+    var(--accent, var(--orange, #e85d04));
   transform: scale(var(--s));
   will-change: transform;
 }
@@ -111,7 +120,7 @@
   position: absolute;
   inset: -34px;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--orange) 46%, transparent) 0%, transparent 68%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent, var(--orange, #e85d04)) 46%, transparent) 0%, transparent 68%);
   opacity: var(--g);
   transform: scale(calc(0.86 + var(--s) * 0.18));
   will-change: transform, opacity;
@@ -119,7 +128,7 @@
 }
 
 .vo-orb:focus-visible {
-  outline: 3px solid var(--ink);
+  outline: 3px solid var(--fg, var(--ink, #141414));
   outline-offset: 8px;
 }
 
@@ -128,7 +137,7 @@
 .vo-ring {
   position: absolute;
   inset: 0;
-  border: 3px solid var(--orange);
+  border: 3px solid var(--accent, var(--orange, #e85d04));
   border-radius: 50%;
   opacity: 0;
   transform: scale(1);
@@ -169,7 +178,7 @@
   letter-spacing: 0.1em;
   line-height: 1;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--fg, var(--ink, #141414));
 }
 
 /* ---------- leave, and the way back to the conversation ---------- */
@@ -177,16 +186,16 @@
 .vo-x {
   position: absolute;
   top: 8px;
-  right: 8px;
+  left: 8px;
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--fg, var(--ink, #141414));
   border-radius: 0;
-  background: var(--card);
-  color: var(--ink);
+  background: var(--card, #fff);
+  color: var(--fg, var(--ink, #141414));
   font-family: Barlow, system-ui, sans-serif;
   font-size: 1.1rem;
   line-height: 1;
@@ -195,7 +204,7 @@
 }
 
 .vo-x:active {
-  background: var(--orange);
+  background: var(--accent, var(--orange, #e85d04));
   color: #fff;
 }
 
@@ -211,7 +220,7 @@
   padding: 0 14px;
   border: 0;
   background: none;
-  color: var(--ink);
+  color: var(--fg, var(--ink, #141414));
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.68rem;
@@ -316,12 +325,12 @@
     opacity: 1;
     border: 0;
     inset: -14px;
-    background: conic-gradient(var(--ink) calc(var(--lvl) * 360deg), color-mix(in srgb, var(--ink) 16%, transparent) 0);
+    background: conic-gradient(var(--fg, var(--ink, #141414)) calc(var(--lvl) * 360deg), color-mix(in srgb, var(--fg, var(--ink, #141414)) 16%, transparent) 0);
     -webkit-mask: radial-gradient(circle, transparent 0 calc(50% - 5px), #000 calc(50% - 5px));
     mask: radial-gradient(circle, transparent 0 calc(50% - 5px), #000 calc(50% - 5px));
   }
 
   .vo-orb.is-thinking .vo-ring:first-child {
-    background: repeating-conic-gradient(var(--ink) 0 12deg, transparent 12deg 24deg);
+    background: repeating-conic-gradient(var(--fg, var(--ink, #141414)) 0 12deg, transparent 12deg 24deg);
   }
 }
