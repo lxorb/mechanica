@@ -576,7 +576,7 @@ async function run() {
   const { server, port } = await serve(state);
   const base = `http://127.0.0.1:${port}`;
   const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
-  const browser = await puppeteer.launch({
+  const launch = () => puppeteer.launch({
     executablePath: CHROME,
     headless: "new",
     // Software-rasterised WebGL blocks the renderer for seconds at a time while the 3D
@@ -587,12 +587,16 @@ async function run() {
       "--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream",
     ],
   });
+  let browser = await launch();
 
   let passed = 0;
   let failed = 0;
   for (const [name, fn, opts] of CHECKS) {
     if (only && !name.includes(only)) continue;
     if (!only && opts && opts.optIn) continue;
+    // Twenty walks of a software-rasterised WebGL stage on a loaded box can take Chrome down
+    // with it. That is not a finding about the app, so the next check gets a fresh browser.
+    if (!browser.connected) browser = await launch();
     const page = await browser.newPage();
     await page.setViewport(view);
     const noise = [];
@@ -620,10 +624,10 @@ async function run() {
       passed += 1;
       console.log(`ok ${name}`);
     }
-    await page.close();
+    await page.close().catch(() => {});
   }
 
-  await browser.close();
+  await browser.close().catch(() => {});
   server.close();
   console.log(`\n${passed} passed, ${failed} failed`);
   process.exitCode = failed ? 1 : 0;

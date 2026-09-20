@@ -136,8 +136,8 @@
 
   --accent: #ffd100;
   --accent-ink: #141000;
-  --accent-2: #ff5a2b;
-  --accent-2-ink: #170500;
+  --accent-2: #ffd100;      /* one accent: the founder saw orange buttons as unthemed */
+  --accent-2-ink: #141000;
   --match: #ffd100;
   --match-ink: #141000;
 
