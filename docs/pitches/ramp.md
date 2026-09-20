@@ -216,7 +216,7 @@ and he showed me the conservative version of both.*
 > That's the product, and it's measured, today, on the live site.*
 >
 > *And forty-six cents a month to run it. The entire thing — every manual we've indexed, every question
-> anyone has ever asked it — has cost **six dollars and fourteen cents**.*
+> anyone has ever asked it — has cost **thirteen dollars and eighty cents**.*
 >
 > *He won't use AI because it's right ninety-five percent of the time and he signs for the five. So we
 > built the thing that never answers. Don't trust the AI. Trust the manual. We just get you to the page."*

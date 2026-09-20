@@ -19,7 +19,9 @@ the thing that never answers.
 
 ## What it does
 Pick your exact vehicle from **30,409** — 24,026 motorcycles and 6,383 cars — by typing it, photographing
-it, or scanning the VIN. **18,564** of them already carry a free official manual. Never seen that bike? We
+it, or scanning the VIN, and **69.5%** of them show you a photo of the bike. **18,564** already carry a free
+official manual; **4,643** of those are the manufacturer's manual in another language, because no English one
+exists for that vehicle, and 25 are PDFs we rendered from a publisher that only ships its manual as a web app. Never seen that bike? We
 fetch its manual from the manufacturer: **readable in 1.3 seconds, fully searchable in 40 seconds, for nine
 and a half cents.** **14,865** distinct free English PDFs are reachable; **543** are already indexed —
 97,230 printed pages, 92,682 grounded sections.
@@ -80,7 +82,7 @@ marker is only there because we found that exact text in KTM's PDF.
 **OpenAI — build something ambitious with the API, with Codex as your teammate** —
 [`docs/pitches/openai.md`](pitches/openai.md). Ten OpenAI capabilities carry the product and every one of
 them is followed by a line of our code that can throw its answer away: structured outputs everywhere, model
-tiering, prompt caching at 99.5% on the router, Responses streaming, built-in `web_search`, vision for
+tiering, prompt caching at 99.7% on the router, Responses streaming, built-in `web_search`, vision for
 vehicle and part id, image generation, vision as a judge. Codex wrote three of our sixteen test modules and
 found a live retrieval bug by pinning where the confidence floor sat ([`docs/CODEX.md`](CODEX.md)). The demo
 moment is the architecture flowchart: orange is an API call, green is the guardrail that can discard it.

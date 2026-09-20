@@ -18,6 +18,8 @@ present, and do not type a number that is not in that file.
 | free official manuals we can fetch | **14,865 distinct PDFs** (24,324 free English owner's-manual rows) | `registry.json`, `_ingestable()` |
 | registry | 99,338 rows, 82 makes, 90 portals, 186 service rows (14 not free) | `GET /api/registry` |
 | catalog | **30,409 vehicles** — 24,026 motorcycles, 6,383 cars — **18,564** with a free manual | `GET /api/catalog` |
+| …of those manuals | **4,643** are official but not in English (no English one exists for that vehicle); **25** rows / 24 files are PDFs we rendered from a web-only manual, all Lexus | `GET /api/catalog` |
+| catalog photos | **69.5%** of rows, 55.0% of distinct models | `docs/qa/images-gaps.md` |
 | warm cache | **543 manuals**, 97,230 pages, 92,682 sections, 670 vehicles | `GET /api/manuals` |
 | cold bike → readable manual | **1.3 s to open, 40.4 s fully searchable** | timed live run, KTM 390 Duke 2014, 182 p, 2026-09-20 |
 | ingest cost | **$0.095** per manual (mean over 648 real ingests, mean 177 pages) | `api/data/mass_report.jsonl` |

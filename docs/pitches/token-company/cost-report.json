@@ -1,10 +1,10 @@
 {
   "log": "C:\\Users\\me\\trustthemanual\\api\\data\\costs.jsonl",
-  "calls": 41960,
+  "calls": 44521,
   "catalog": {
-    "manuals": 535,
-    "mean": 179.27850467289718,
-    "median": 171,
+    "manuals": 543,
+    "mean": 179.060773480663,
+    "median": 170,
     "max": 775,
     "min": 9
   },
@@ -22,22 +22,22 @@
     {
       "route": "ask.picker",
       "model": "gpt-5.6-terra",
-      "calls": 293,
-      "meanIn": 1293.5290102389079,
-      "cachedPct": 36.24288925710547,
-      "meanOut": 38.88054607508533,
-      "usdPerCall": 0.002209762457337886,
-      "usd": 0.6474604000000006
+      "calls": 482,
+      "meanIn": 1528.6203319502074,
+      "cachedPct": 63.56069191566175,
+      "meanOut": 41.68257261410788,
+      "usdPerCall": 0.001808548547717843,
+      "usd": 0.8717204000000003
     },
     {
       "route": "ask.router",
       "model": "gpt-5.6-luna",
-      "calls": 1291,
-      "meanIn": 3155.2594887683967,
-      "cachedPct": 99.54608389960329,
-      "meanOut": 55.44384198295894,
-      "usdPerCall": 0.00013221580170410534,
-      "usd": 0.1706906
+      "calls": 2349,
+      "meanIn": 3304.8429118773947,
+      "cachedPct": 99.70760301715454,
+      "meanOut": 52.77394636015325,
+      "usdPerCall": 0.000131164980842912,
+      "usd": 0.3081065400000003
     },
     {
       "route": "chat.answer",
@@ -82,12 +82,12 @@
     {
       "route": "identify.photo",
       "model": "gpt-5.6-luna",
-      "calls": 26,
-      "meanIn": 2979.346153846154,
-      "cachedPct": 63.723325974981606,
-      "meanOut": 231.15384615384616,
-      "usdPerCall": 0.0005315169230769231,
-      "usd": 0.01381944
+      "calls": 115,
+      "meanIn": 1897.7826086956522,
+      "cachedPct": 22.61770029095741,
+      "meanOut": 334.39130434782606,
+      "usdPerCall": 0.0007035638260869569,
+      "usd": 0.08090984000000004
     },
     {
       "route": "identify.photo",
@@ -112,12 +112,12 @@
     {
       "route": "images.score",
       "model": "gpt-5.6-luna",
-      "calls": 7627,
-      "meanIn": 773.5019011406844,
-      "cachedPct": 0.10426309081499971,
-      "meanOut": 271.3031336043005,
-      "usdPerCall": 0.00048011897469516364,
-      "usd": 3.661867420000013
+      "calls": 8681,
+      "meanIn": 843.6571823522636,
+      "cachedPct": 2.515173841733267,
+      "meanOut": 308.92431747494527,
+      "usdPerCall": 0.0005356211173827917,
+      "usd": 4.649726920000014
     },
     {
       "route": "ingest.keywords",
@@ -142,12 +142,62 @@
     {
       "route": "offers",
       "model": "gpt-5.6-terra",
-      "calls": 12,
-      "meanIn": 21340.833333333332,
-      "cachedPct": 21.531492834550352,
-      "meanOut": 1108.9166666666667,
-      "usdPerCall": 0.07521766666666667,
-      "usd": 0.9026120000000001
+      "calls": 44,
+      "meanIn": 17155.090909090908,
+      "cachedPct": 26.477298019140886,
+      "meanOut": 894.5,
+      "usdPerCall": 0.060959122727272726,
+      "usd": 2.6822014
+    },
+    {
+      "route": "offers.fast",
+      "model": "gpt-5.6-luna",
+      "calls": 33,
+      "meanIn": 13113.848484848484,
+      "cachedPct": 35.60520107127095,
+      "meanOut": 620.6363636363636,
+      "usdPerCall": 0.021011923636363637,
+      "usd": 0.69339348
+    },
+    {
+      "route": "offers.fast.extract",
+      "model": "gpt-5.6-luna",
+      "calls": 6,
+      "meanIn": 663.1666666666666,
+      "cachedPct": 0.0,
+      "meanOut": 48.5,
+      "usdPerCall": 0.00019083333333333333,
+      "usd": 0.001145
+    },
+    {
+      "route": "offers.probe",
+      "model": "gpt-5.4-mini",
+      "calls": 5,
+      "meanIn": 9199.4,
+      "cachedPct": 36.73283040198274,
+      "meanOut": 607.2,
+      "usdPerCall": 0.02535099,
+      "usd": 0.12675495
+    },
+    {
+      "route": "offers.probe",
+      "model": "gpt-5.6-luna",
+      "calls": 11,
+      "meanIn": 13079.363636363636,
+      "cachedPct": 29.141673559319678,
+      "meanOut": 510.8181818181818,
+      "usdPerCall": 0.02072459454545455,
+      "usd": 0.22797054000000003
+    },
+    {
+      "route": "offers.probe",
+      "model": "gpt-5.6-terra",
+      "calls": 4,
+      "meanIn": 15172.5,
+      "cachedPct": 30.636019113527762,
+      "meanOut": 1226.25,
+      "usdPerCall": 0.05669315,
+      "usd": 0.2267726
     },
     {
       "route": "probe.picker",
@@ -158,6 +208,26 @@
       "meanOut": 31.9375,
       "usdPerCall": 0.0016057041666666671,
       "usd": 0.07707380000000003
+    },
+    {
+      "route": "probe.pk2",
+      "model": "gpt-5.6-luna",
+      "calls": 40,
+      "meanIn": 1996.1,
+      "cachedPct": 72.63288412404188,
+      "meanOut": 25.125,
+      "usdPerCall": 0.0001684015,
+      "usd": 0.00673606
+    },
+    {
+      "route": "probe.pk2",
+      "model": "gpt-5.6-terra",
+      "calls": 40,
+      "meanIn": 1996.1,
+      "cachedPct": 82.10134762787436,
+      "meanOut": 26.575,
+      "usdPerCall": 0.0013612149999999998,
+      "usd": 0.05444859999999999
     },
     {
       "route": "probe.router",
@@ -184,23 +254,23 @@
     "byOperation": [
       {
         "operation": "ask (router + picker)",
-        "n": 293,
-        "meanIn": 3801.40614334471,
-        "cachedPct": 77.90928810248049,
-        "meanOut": 107.60409556313994,
-        "meanUsd": 0.0023450956313993175,
-        "medianUsd": 0.00257536,
-        "usd": 0.68711302
+        "n": 482,
+        "meanIn": 4420.60580912863,
+        "cachedPct": 87.15732433736387,
+        "meanOut": 104.1390041493776,
+        "meanUsd": 0.0019432629460580913,
+        "medianUsd": 0.00179019,
+        "usd": 0.93665274
       },
       {
         "operation": "ask (router only)",
-        "n": 750,
-        "meanIn": 3297.848,
-        "cachedPct": 99.63277062294361,
-        "meanOut": 51.230666666666664,
-        "meanUsd": 0.00012961368,
-        "medianUsd": 0.00012913999999999997,
-        "usd": 0.09721025999999999
+        "n": 1619,
+        "meanIn": 3399.5633106856085,
+        "cachedPct": 99.77217943735461,
+        "meanOut": 49.93390982087708,
+        "meanUsd": 0.00012930604076590488,
+        "medianUsd": 0.00012969999999999998,
+        "usd": 0.20934648
       },
       {
         "operation": "chat",
@@ -234,13 +304,13 @@
       },
       {
         "operation": "identify.photo:gpt-5.6-luna",
-        "n": 26,
-        "meanIn": 2979.346153846154,
-        "cachedPct": 63.723325974981606,
-        "meanOut": 231.15384615384616,
-        "meanUsd": 0.0005315169230769231,
-        "medianUsd": 0.00051288,
-        "usd": 0.01381944
+        "n": 115,
+        "meanIn": 1897.7826086956522,
+        "cachedPct": 22.61770029095741,
+        "meanOut": 334.39130434782606,
+        "meanUsd": 0.0007035638260869565,
+        "medianUsd": 0.0006958,
+        "usd": 0.08090984
       },
       {
         "operation": "identify.photo:gpt-6-astra",
@@ -253,34 +323,34 @@
         "usd": 0.19729
       }
     ],
-    "asks": 1043,
-    "asksWithPicker": 293,
-    "asksZeroPicker": 750,
-    "zeroPickerPct": 71.90795781399808,
+    "asks": 2101,
+    "asksWithPicker": 482,
+    "asksZeroPicker": 1619,
+    "zeroPickerPct": 77.05854355069015,
     "orphans": {
       "picker": 0,
       "chat": 0
     },
-    "askMeanUsd": 0.0007519878044103547
+    "askMeanUsd": 0.0005454541742027606
   },
   "caching": [
     {
       "route": "ask.picker",
       "model": "gpt-5.6-terra",
-      "calls": 293,
-      "hitPct": 36.24288925710547,
-      "usdPaid": 0.6474604000000006,
-      "usdSaved": 0.24725160000000002,
-      "usdWithout": 0.8947120000000006
+      "calls": 482,
+      "hitPct": 63.56069191566175,
+      "usdPaid": 0.8717204000000003,
+      "usdSaved": 0.8429616,
+      "usdWithout": 1.7146820000000003
     },
     {
       "route": "ask.router",
       "model": "gpt-5.6-luna",
-      "calls": 1291,
-      "hitPct": 99.54608389960329,
-      "usdPaid": 0.1706906,
-      "usdSaved": 0.7298910000000001,
-      "usdWithout": 0.9005816000000001
+      "calls": 2349,
+      "hitPct": 99.70760301715454,
+      "usdPaid": 0.3081065400000003,
+      "usdSaved": 1.3932678600000001,
+      "usdWithout": 1.7013744000000004
     },
     {
       "route": "chat.answer",
@@ -321,11 +391,11 @@
     {
       "route": "identify.photo",
       "model": "gpt-5.6-luna",
-      "calls": 26,
-      "hitPct": 63.723325974981606,
-      "usdPaid": 0.01381944,
+      "calls": 115,
+      "hitPct": 22.61770029095741,
+      "usdPaid": 0.08090984000000004,
       "usdSaved": 0.008885160000000001,
-      "usdWithout": 0.022704600000000002
+      "usdWithout": 0.08979500000000004
     },
     {
       "route": "identify.photo",
@@ -348,11 +418,11 @@
     {
       "route": "images.score",
       "model": "gpt-5.6-luna",
-      "calls": 7627,
-      "hitPct": 0.10426309081499971,
-      "usdPaid": 3.661867420000013,
-      "usdSaved": 0.0011071800000000001,
-      "usdWithout": 3.662974600000013
+      "calls": 8681,
+      "hitPct": 2.515173841733267,
+      "usdPaid": 4.649726920000014,
+      "usdSaved": 0.03315708,
+      "usdWithout": 4.682884000000014
     },
     {
       "route": "ingest.keywords",
@@ -375,11 +445,56 @@
     {
       "route": "offers",
       "model": "gpt-5.6-terra",
-      "calls": 12,
-      "hitPct": 21.531492834550352,
-      "usdPaid": 0.9026120000000001,
-      "usdSaved": 0.099252,
-      "usdWithout": 1.001864
+      "calls": 44,
+      "hitPct": 26.477298019140886,
+      "usdPaid": 2.6822014,
+      "usdSaved": 0.3597426,
+      "usdWithout": 3.041944
+    },
+    {
+      "route": "offers.fast",
+      "model": "gpt-5.6-luna",
+      "calls": 33,
+      "hitPct": 35.60520107127095,
+      "usdPaid": 0.69339348,
+      "usdSaved": 0.027735120000000002,
+      "usdWithout": 0.7211286
+    },
+    {
+      "route": "offers.fast.extract",
+      "model": "gpt-5.6-luna",
+      "calls": 6,
+      "hitPct": 0.0,
+      "usdPaid": 0.001145,
+      "usdSaved": 0.0,
+      "usdWithout": 0.001145
+    },
+    {
+      "route": "offers.probe",
+      "model": "gpt-5.4-mini",
+      "calls": 5,
+      "hitPct": 36.73283040198274,
+      "usdPaid": 0.12675495,
+      "usdSaved": 0.011404800000000001,
+      "usdWithout": 0.13815975
+    },
+    {
+      "route": "offers.probe",
+      "model": "gpt-5.6-luna",
+      "calls": 11,
+      "hitPct": 29.141673559319678,
+      "usdPaid": 0.22797054000000003,
+      "usdSaved": 0.007546860000000001,
+      "usdWithout": 0.23551740000000002
+    },
+    {
+      "route": "offers.probe",
+      "model": "gpt-5.6-terra",
+      "calls": 4,
+      "hitPct": 30.636019113527762,
+      "usdPaid": 0.2267726,
+      "usdSaved": 0.0334674,
+      "usdWithout": 0.26023999999999997
     },
     {
       "route": "probe.picker",
@@ -389,6 +504,24 @@
       "usdPaid": 0.07707380000000003,
       "usdSaved": 0.1258002,
       "usdWithout": 0.20287400000000003
+    },
+    {
+      "route": "probe.pk2",
+      "model": "gpt-5.6-luna",
+      "calls": 40,
+      "hitPct": 72.63288412404188,
+      "usdPaid": 0.00673606,
+      "usdSaved": 0.010438740000000002,
+      "usdWithout": 0.017174800000000004
+    },
+    {
+      "route": "probe.pk2",
+      "model": "gpt-5.6-terra",
+      "calls": 40,
+      "hitPct": 82.10134762787436,
+      "usdPaid": 0.05444859999999999,
+      "usdSaved": 0.11799540000000001,
+      "usdWithout": 0.17244400000000001
     },
     {
       "route": "probe.router",
@@ -411,46 +544,46 @@
   ],
   "baselines": {
     "KTM 390 Duke 2023 (demo)": 1.029,
-    "median manual in our catalog": 1.373,
+    "median manual in our catalog": 1.365,
     "BMW R 12 G/S 2026 (demo)": 2.165,
     "largest manual in our catalog": 12.405,
     "the founder's 500-page workshop manual": 8.005
   },
-  "askUsd": 0.0007519878044103547,
+  "askUsd": 0.0005454541742027606,
   "askUsdEval": 0.00038,
   "chatUsd": 0.004200348870967742,
   "ladder": [
     [
       "0 \u00b7 naive: whole manual, flagship, every question",
-      "$1.3730",
-      "$1.3730",
+      "$1.3650",
+      "$1.3650",
       "1x",
-      "171-page manual x 800 tok in gpt-6-astra"
+      "170-page manual x 800 tok in gpt-6-astra"
     ],
     [
       "1 \u00b7 + prompt-cache the manual (best case for that design)",
-      "$0.1418",
-      "$0.1418",
+      "$0.1410",
+      "$0.1410",
       "10x",
       "cached-input price, app/llm.py PRICES"
     ],
     [
       "2 \u00b7 page retrieval instead of whole manual (still flagship)",
-      "$0.04667",
+      "$0.04388",
       "$0.02821",
-      "49x (chat)",
+      "48x (chat)",
       "logged token counts re-priced at gpt-6-astra"
     ],
     [
       "3 \u00b7 + model tiering (luna router / terra picker + chat)",
-      "$0.001721",
+      "$0.001626",
       "$0.005845",
       "4.8x vs rung 2",
       "same tokens, our models, cache ignored"
     ],
     [
       "4 \u00b7 + prompt caching + spec path + picker gating + compression",
-      "$0.000752",
+      "$0.000545",
       "$0.004200",
       "1.4x vs rung 3",
       "what the log actually billed"
@@ -465,15 +598,15 @@
   ],
   "monthly": {
     "naive, whole manual, flagship": {
-      "median": 1647.6,
+      "median": 1638.0,
       "big": 9606.000000000002
     },
     "naive + prompt cache (best case for that design)": {
-      "median": 170.16000000000003,
+      "median": 169.2,
       "big": 966.0000000000001
     },
     "reasonable, whole manual in gpt-5.6-luna": {
-      "median": 32.976,
+      "median": 32.784,
       "big": 192.144
     },
     "ours, every question a chat answer (worst case)": {
@@ -481,8 +614,8 @@
       "big": 5.0404186451612905
     },
     "ours, every question an ask, whole-log mix": {
-      "median": 0.9023853652924256,
-      "big": 0.9023853652924256
+      "median": 0.6545450090433127,
+      "big": 0.6545450090433127
     },
     "ours, every question an ask, 150-query eval mix": {
       "median": 0.456,
@@ -491,24 +624,27 @@
   },
   "live": {
     "cost": {
-      "total": 8.927875,
-      "count": 1633,
+      "total": 13.80021132,
+      "count": 2182,
       "byRoute": {
-        "ask.router": 0.013023779999999997,
-        "ask.picker": 0.06821999999999996,
-        "identify.photo": 0.014364680000000001,
-        "ingest.struct": 2.5199925400000023,
-        "ingest.keywords": 0.35816859999999995,
-        "chat.answer": 0.10818799999999999,
-        "offers": 5.8444123999999995,
-        "offers.extract": 0.0015049999999999998
+        "ask.router": 0.022666539999999992,
+        "ask.picker": 0.09913499999999996,
+        "identify.photo": 0.01805816,
+        "ingest.struct": 3.169646520000003,
+        "ingest.keywords": 0.4872105999999997,
+        "chat.answer": 0.15463860000000001,
+        "offers": 9.485851199999999,
+        "offers.extract": 0.0021721999999999996,
+        "offers.fast": 0.35972010000000004,
+        "offers.fast.extract": 0.000562,
+        "identify.part": 0.0005504
       },
       "byModel": {
-        "gpt-5.6-luna": 2.907054600000005,
-        "gpt-5.6-terra": 6.020820399999998
+        "gpt-5.6-luna": 4.060586520000007,
+        "gpt-5.6-terra": 9.739624799999996
       },
       "naivePerAsk": 12.4,
-      "asks": 130
+      "asks": 187
     },
     "ttc": {
       "model": "bear-2",

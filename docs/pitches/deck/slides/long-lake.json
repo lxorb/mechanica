@@ -185,7 +185,7 @@
       ],
       "defs": [
         {
-          "n": "84",
+          "n": "90",
           "d": "portals — distinct row.site in registry.json, the adapter's own name for the publisher portal (measured)."
         },
         {
@@ -257,15 +257,15 @@
           "sub": "an ask against the same 775-page manual read to a model once"
         },
         {
-          "value": "535 manuals",
+          "value": "543 manuals",
           "label": "what the corpus cost",
-          "sub": "95,914 pages · 91,388 sections · the live API has spent $8.93 as of 2026-09-20 09:55"
+          "sub": "97,230 pages · 92,682 sections · the live API has spent $13.80 as of 2026-09-20 15:40"
         }
       ],
       "notes": [
         "*Say the two numbers and shut up.* Do not say \"thirty-two thousand times cheaper\". Say \"twelve dollars forty\" and \"six ten-thousandths of a dollar\" and let them divide. Operators trust arithmetic they did themselves.",
         "Cycle time, error rate, unit cost — that is their bullet #4, in their order.",
-        "Never quote the live ledger without the timestamp. It moved $8.08 → $8.93 in thirteen minutes on the day these files were written."
+        "Never quote the live ledger without the timestamp. It moved $13.80 → $13.80 in thirteen minutes on the day these files were written."
       ],
       "defs": [
         {
@@ -300,20 +300,20 @@
           "d": "naive $/question on that same manual — live GET /api/cost → naivePerAsk (measured)."
         },
         {
-          "n": "535",
+          "n": "543",
           "d": "manuals indexed and searchable now — live GET /api/manuals (measured)."
         },
         {
-          "n": "95,914",
+          "n": "97,230",
           "d": "printed pages behind them (measured)."
         },
         {
-          "n": "91,388",
+          "n": "92,682",
           "d": "sections indexed (measured)."
         },
         {
-          "n": "$8.93",
-          "d": "what the DEPLOYED app has spent — live GET /api/cost over 1,633 calls, 2026-09-20. Moves every hour, resets on redeploy (measured)."
+          "n": "$13.80",
+          "d": "what the DEPLOYED app has spent — live GET /api/cost over 2,182 calls, 2026-09-20. Moves every hour, resets on redeploy (measured)."
         }
       ]
     },
@@ -353,7 +353,7 @@
             "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
             "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
             "Never quote a running ledger total without the date beside it.",
-            "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual. Distinct fetchable PDFs is 14,770.",
+            "Never call 18,564 \"manuals\" — it is vehicles carrying a free manual. Distinct fetchable PDFs is 14,865.",
             "There is no checkout. \"Live prices\", never \"buy\"."
           ]
         }

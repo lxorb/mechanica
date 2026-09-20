@@ -71,7 +71,7 @@
       ],
       "notes": [
         "Recognition: this is a real person, not a market. Thirty seconds, no more.",
-        "Say ~he says~. His ~$4 is his bill on his manual; our measured naive worst case is $12.40 and our median $1.37. Never blend them.",
+        "Say ~he says~. His ~$4 is his bill on his manual; our measured naive worst case is $12.40 and our median $1.36. Never blend them.",
         "Then straight into the flowchart — that is the slide this pitch is built on."
       ],
       "defs": [
@@ -178,8 +178,8 @@
           "src": "openai.md"
         },
         {
-          "n": "99.5%",
-          "d": "ask.router prompt-cache hit rate on 3.45M input tokens → $0.000132/call.",
+          "n": "99.7%",
+          "d": "ask.router prompt-cache hit rate on 3.45M input tokens → $0.000131/call.",
           "src": "openai.md"
         },
         {
@@ -254,7 +254,7 @@
         [
           "Prompt caching, pinned per route+model",
           "ask.router",
-          "*99.5%* hit on 3.45M input tokens → $0.000132 a call"
+          "*99.7%* hit on 3.45M input tokens → $0.000131 a call"
         ],
         [
           "Responses API streaming",
@@ -300,8 +300,8 @@
       ],
       "defs": [
         {
-          "n": "99.5%",
-          "d": "ask.router prompt-cache hit on 3.45M input tokens → $0.000132/call.",
+          "n": "99.7%",
+          "d": "ask.router prompt-cache hit on 3.45M input tokens → $0.000131/call.",
           "src": "openai.md"
         },
         {
@@ -352,7 +352,7 @@
         {
           "value": "$12.40",
           "label": "the naive version: paste the manual in",
-          "sub": "the largest deployed manual, 775 pages · $1.37 on the median 171-page one"
+          "sub": "the largest deployed manual, 775 pages · $1.36 on the median 170-page one"
         },
         {
           "value": "100% / 0",
@@ -387,20 +387,20 @@
           "d": "naive $/question, largest deployed manual — naive_usd(775), billed 2× past the 272k long-context line (measured)."
         },
         {
-          "n": "$1.37",
-          "d": "naive $/question, median deployed manual — naive_usd(171), no 2× (computed)."
+          "n": "$1.36",
+          "d": "naive $/question, median deployed manual — naive_usd(170), no 2× (computed)."
         },
         {
           "n": "775",
           "d": "largest manual deployed, in pages (measured)."
         },
         {
-          "n": "171",
+          "n": "170",
           "d": "median manual, in pages (computed)."
         },
         {
           "n": "32,632x",
-          "d": "ours vs naive per question — $12.40 / $0.00038. Against the MEDIAN manual it is 3,600× — say which (computed)."
+          "d": "ours vs naive per question — $12.40 / $0.00038. Against the MEDIAN manual it is 3,579× — say which (computed)."
         },
         {
           "n": "100% of 43",
@@ -434,15 +434,15 @@
             "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
             "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
             "Never quote a running ledger total without the date beside it. Prefer not quoting it.",
-            "Never call 13,537 \"manuals\" — distinct fetchable PDFs is 14,770.",
-            "Never call 4,081 and 1,489 the same number.",
+            "Never call 18,564 \"manuals\" — distinct fetchable PDFs is 14,865.",
+            "Never call 6,244 and 1,507 the same number.",
             "There is no checkout. \"Live prices\", never \"buy\"."
           ]
         }
       ],
       "notes": [
         "Presenter-only. The audience sees the end card.",
-        "Photo id is the flakiest demo moment. If it misses: tap the model card and say \"or you just type it; 23,140 motorcycles.\""
+        "Photo id is the flakiest demo moment. If it misses: tap the model card and say \"or you just type it; 24,026 motorcycles.\""
       ]
     }
   ]

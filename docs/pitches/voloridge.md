@@ -137,6 +137,7 @@ flowchart TB
 
   R1 -- "extracts" --> R2 -- "resolves" --> R3
 
+  %% into R3 FIT
   classDef ends fill:#141414,stroke:#e85d04,stroke-width:3px,color:#ece7dc
   classDef ours fill:#ece7dc,stroke:#141414,stroke-width:3px,color:#141414
   classDef them fill:#e85d04,stroke:#8f3a02,stroke-width:3px,color:#ffffff

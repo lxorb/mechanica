@@ -75,7 +75,9 @@ These are claims that would be **false today**. Check this list the morning of.
 - Never quote a **running ledger total** without the date beside it. `GET /api/cost` moved from $13.80 to
   $13.80 in thirteen minutes on the day these files were written. Prefer not quoting it.
 - Never call **18,564** "manuals" — it is *vehicles carrying a free manual*. Distinct fetchable PDFs is
-  **14,865**. Never call **6,244** and **1,507** the same number: owner-typed over every row vs the
+  **14,865**. And **4,643** of those 18,564 are an official manual in **another language** (Japanese mostly)
+  because no English one exists for that vehicle — never present them as English manuals; **25** rows point at
+  a PDF **we rendered** from Lexus's web-only manual, which is their text but not literally their file. Never call **6,244** and **1,507** the same number: owner-typed over every row vs the
   free-English subset.
 - There is **no checkout**. "Live prices", never "buy".
 

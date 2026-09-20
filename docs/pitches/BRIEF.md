@@ -20,7 +20,7 @@ a generated discrepancy list — every figure in every pitch that contradicts it
 
 Read its §11 before you write a sentence: three words have two honest counts each, and mixing them is how
 nine pitches ended up with nine answers. *manuals we can reach* (14,865 distinct PDFs) is not *vehicles with
-a manual* (18,564). *mislabelled rows* is 6,244 owner-typed or 1,507 free-English — different questions.
+a manual* (18,564) — and 4,643 of those 18,564 are a non-English fallback, 25 a PDF we rendered ourselves. *mislabelled rows* is 6,244 owner-typed or 1,507 free-English — different questions.
 *naive $/question* is $12.40 (largest deployed manual) or $1.36 (median), and the friend's ~$4 is neither.
 
 **The ten to memorise** (2026-09-20; re-run before you present):
@@ -28,10 +28,11 @@ a manual* (18,564). *mislabelled rows* is 6,244 owner-typed or 1,507 free-Englis
 | number | say it as | definition |
 |---|---|---|
 | **30,409** | vehicles you can pick | rows in `GET /api/catalog` |
-| **18,564** | with a free official manual | catalog rows carrying a `manualUrl` |
+| **18,564** | with a free official manual | catalog rows carrying a `manualUrl` — **4,643** of them in another language, because no English manual exists for that vehicle |
 | **99,338 / 84** | registry rows, publisher portals | rows in `registry.json`; distinct `site` |
 | **14,865** | distinct free English PDFs | distinct URLs of ingestable rows |
 | **543** | manuals already indexed | rows in `GET /api/manuals` |
+| **69.5%** | catalog rows that show a photo | `docs/qa/images-gaps.md`, via `lookupImage` |
 | **40.4 s / $0.095** | a cold manual becomes searchable | timed ingest; mean over 648 ingests |
 | **$0.00038** | our cost per question | eval cost-log delta over 150 |
 | **$12.40** | naive cost per question | `naive_usd(775)`, largest deployed manual |

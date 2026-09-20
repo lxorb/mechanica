@@ -406,7 +406,7 @@
           "src": "openai.md"
         },
         {
-          "n": "99.5%",
+          "n": "99.7%",
           "d": "ask.router prompt-cache hit rate.",
           "src": "token-company/cost-report.md"
         },
@@ -655,7 +655,7 @@
       "image": "general/05-book.png",
       "notes": [
         "The last slide is the marked KTM page. No logo, no bullets.",
-        "If you quote the total spend, say the timestamp with it: the deployed app had spent $8.93 over 1,633 model calls at 2026-09-20 09:55, and it moves every hour.",
+        "If you quote the total spend, say the timestamp with it: the deployed app had spent $13.80 over 2,182 model calls at 2026-09-20 15:40, and it moves every hour.",
         "Do not quote a live ledger total without a timestamp. It is the easiest thing in this deck to get caught on."
       ],
       "defs": [
@@ -670,8 +670,8 @@
           "src": "ramp/numbers.md"
         },
         {
-          "n": "$8.93",
-          "d": "what the deployed app has spent — live GET /api/cost over 1,633 calls, 2026-09-20 09:55. Moves every hour (measured)."
+          "n": "$13.80",
+          "d": "what the deployed app has spent — live GET /api/cost over 2,182 calls, 2026-09-20 15:40. Moves every hour (measured)."
         }
       ]
     },
@@ -696,15 +696,15 @@
             "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram.",
             "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
             "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
-            "Never call 13,537 \"manuals\" — distinct fetchable PDFs is 14,770.",
-            "Never call 4,081 and 1,489 the same number.",
+            "Never call 18,564 \"manuals\" — distinct fetchable PDFs is 14,865.",
+            "Never call 6,244 and 1,507 the same number.",
             "There is no checkout. \"Live prices\", never \"buy\"."
           ]
         }
       ],
       "notes": [
         "Presenter-only. The audience sees the end card.",
-        "ramp.md's closing line quotes a running total of $6.14; numbers.md reports $8.93 at 2026-09-20 09:55. Quote numbers.md, with the timestamp — or do not quote a total at all."
+        "ramp.md's closing line quotes a running total of $6.14; numbers.md reports $13.80 at 2026-09-20 15:40. Quote numbers.md, with the timestamp — or do not quote a total at all."
       ]
     }
   ]

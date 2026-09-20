@@ -129,13 +129,13 @@ Five routes, two price tiers: vision-id, router and structurer on `luna` ($0.20/
 
 | route | cache hit rate | $ paid | $ without the cache |
 |---|---|---|---|
-| `ask.router` (1,113 calls) | **99.5%** | $0.1471 | $0.7656 |
+| `ask.router` (2,349 calls) | **99.7%** | $0.3081 | $1.7014 |
 | `chat.answer` (248 calls) | 42.7% | $1.0079 | $1.4494 |
-| `ask.picker` (286 calls) | 34.6% | $0.6349 | $0.8627 |
+| `ask.picker` (482 calls) | 63.6% | $0.8717 | $1.7147 |
 | `ingest.struct` (27,364 calls) | 47.0% | $64.91 | $70.87 |
 
 The router's system prompt is a 3,000-token vocabulary translator — rider slang, typos, five languages —
-pinned with `prompt_cache_key` per route+model (`api/app/llm.py::stream`). **99.5% of it is served cached at
+pinned with `prompt_cache_key` per route+model (`api/app/llm.py::stream`). **99.7% of it is served cached at
 1/10th price.** A big prompt is cheap when it never changes; the expensive tokens are the ones that do.
 
 ### Slide E — compression, where nothing else could reach
@@ -164,7 +164,7 @@ On-demand ingest: **$0.0951 per manual**, mean over **648 real ingests** (mean 1
 total, **$0.538 per 1,000 pages**). Readable in **1.3 s**, fully searchable in **40.4 s** on the timed live run.
 That is **7% of ONE naive question**, and it
 then answers every question about that bike forever. The 543 manuals in the deployed catalog cost about
-**$51 total, once**.
+**$52 total, once**.
 
 ---
 
@@ -289,7 +289,7 @@ every digit in an answer is checked against the printed pages, and the ones that
 **Why not just use a smaller model everywhere?**
 Two of five routes already are, and two more went that way after measurement — `identify.photo` moved off
 the flagship for a **46x** saving, `identify.part` for **59x**. The router runs on `gpt-5.6-luna` at
-$0.000132 a call. The picker and chat stay on `gpt-5.6-terra` because those two touch the manual's own
+$0.000131 a call. The picker and chat stay on `gpt-5.6-terra` because those two touch the manual's own
 printed text, and the failure modes are *a wrong page id* and *a dropped torque figure* — the 5% the
 mechanic is liable for. Our cost problem was never the model tier; it was **400,000 tokens**. Note the
 honest column in the opening table: the whole manual in the *cheapest* model is still $0.08–0.16 a question,
@@ -307,7 +307,7 @@ degrades to *more expensive*, never to *slower than the timeout* and never to *w
 **What is the cost at 1,000 mechanics?**
 1.2M questions/month. **$5,040/month** if every one of them is a full chat answer; **$456/month** on the
 default ask path. The naive stack at the same volume is **$1.64M/month, $19.7M/year**. The part that
-doesn't scale linearly is ingest: 543 manuals cost about **$51, once**, shared by every shop — there are
+doesn't scale linearly is ingest: 543 manuals cost about **$52, once**, shared by every shop — there are
 **14,865** distinct free English PDFs we can reach, so the whole reachable corpus is roughly **$1,400, once**.
 
 **bear-2's pricing is "you only pay for the tokens compression removes" — so what does it cost you?**

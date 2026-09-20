@@ -35,10 +35,8 @@
  * demo           title, line?, rows: [{ do, see }]
  * qa             title, groups: [{ label, items: [ "…" ] }]   — set "presenterOnly": true
  *
- * flow = { w?, legend?: [{tone,label}], bands: [ { label?, tone?, labelColor?, rows: [ {
- *   items: [{ tone, t, sub }], labels?: [verb…] (one per arrow, items.length-1),
- *   downLabel?: verb (the arrow from the row above), gap?, link?: "none", down?: true, caption? } ] } ] }
- * tones: paper · white · orange · green · ink · yellow · ghost. "|" in t/sub forces a line break.
+ * flow — see docs/pitches/deck/lane.mjs, which draws it. Rows of boxes, one verb per arrow.
+ * tones: paper (ours) · orange (the sponsor) · ink (the mechanic and the manual page).
  *
  * Inline markup in any string: *bold*  ~orange~
  * Every number on a slide is listed in `defs` as { n, d, src? }. Without src the figure must
@@ -50,6 +48,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { laneMarkup } from "./lane.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PITCHES = resolve(HERE, "..");
@@ -129,169 +128,12 @@ function fontFaces() {
 
 /* --------------------------------------------------------------- diagram */
 
-/** The same three classes the mermaid sources use: ink ends, paper for ours, accent for theirs. */
-const TONES = {
-  paper: { fill: "#ece7dc", stroke: "#141414", text: "#141414", sub: "#4a453d" },
-  white: { fill: "#ffffff", stroke: "#141414", text: "#141414", sub: "#4a453d" },
-  grey: { fill: "#ffffff", stroke: "#b3a996", text: "#141414", sub: "#4a453d" },
-  orange: { fill: "#e85d04", stroke: "#8f3a02", text: "#ffffff", sub: "#ffe0cb" },
-  green: { fill: "#d8f1e3", stroke: "#1b7a55", text: "#0d3b2a", sub: "#215f47" },
-  ink: { fill: "#141414", stroke: "#e85d04", text: "#ece7dc", sub: "#b5ad9e" },
-  yellow: { fill: "#ffe600", stroke: "#a89400", text: "#141414", sub: "#4a453d" },
-  ghost: { fill: "none", stroke: "#b3a996", text: "#4a453d", sub: "#6b6357" },
-};
-
-const TITLE_SIZE = 30, TITLE_LH = 37, SUB_SIZE = 17.5, SUB_LH = 23;
-
-function wrap(text, width, size, ratio) {
-  const max = Math.max(6, Math.floor((width - 30) / (size * ratio)));
-  const lines = [];
-  for (const chunk of String(text).split("|")) {
-    let line = "";
-    for (const word of chunk.trim().split(/\s+/)) {
-      if (!line) { line = word; continue; }
-      if ((line + " " + word).length <= max) line += " " + word;
-      else { lines.push(line); line = word; }
-    }
-    if (line) lines.push(line);
-  }
-  return lines;
-}
-
-/** Narrow boxes get smaller type rather than a five-line title. */
-function itemLayout(item, width) {
-  const k = width < 175 ? 0.80 : width < 215 ? 0.87 : width < 265 ? 0.94 : 1;
-  const ts = TITLE_SIZE * k, ss = SUB_SIZE * k, tlh = TITLE_LH * k, slh = SUB_LH * k;
-  const t = wrap(item.t || "", width, ts, 0.53);
-  const s = item.sub ? wrap(item.sub, width, ss, 0.50) : [];
-  const h = 20 + t.length * tlh + (s.length ? 8 + s.length * slh : 0) + 20;
-  return { t, s, ts, ss, tlh, slh, h: Math.max(84, h) };
-}
-
-function drawItem(item, x, y, w, h, lay) {
-  const tone = TONES[item.tone || "white"] || TONES.white;
-  const cx = x + w / 2;
-  const block = lay.t.length * lay.tlh + (lay.s.length ? 8 + lay.s.length * lay.slh : 0);
-  let ty = y + (h - block) / 2 + lay.ts * 0.82;
-  const body = lay.t.map((l) => {
-    const line = `<text x="${cx}" y="${ty.toFixed(1)}" text-anchor="middle" font-size="${lay.ts.toFixed(1)}" font-weight="700" fill="${tone.text}">${esc(l)}</text>`;
-    ty += lay.tlh;
-    return line;
-  });
-  if (lay.s.length) {
-    ty = y + (h - block) / 2 + lay.t.length * lay.tlh + 8 + lay.ss * 0.82;
-    for (const l of lay.s) {
-      body.push(`<text x="${cx}" y="${ty.toFixed(1)}" text-anchor="middle" font-size="${lay.ss.toFixed(1)}" fill="${tone.sub}">${esc(l)}</text>`);
-      ty += lay.slh;
-    }
-  }
-  const dash = item.tone === "ghost" ? ' stroke-dasharray="7 6"' : "";
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${tone.fill}" stroke="${tone.stroke}" stroke-width="3"${dash}/>` + body.join("");
-}
-
-/** Every arrow carries one verb. The gap a row is drawn with is sized so it always fits. */
-const EDGE_SIZE = 19;
-const edgeWidth = (label) => (label ? String(label).length * EDGE_SIZE * 0.52 + 34 : 0);
-
-function arrow(x, y, len, label) {
-  const x2 = x + len;
-  const line = `<path d="M${x} ${y} H${x2 - 9}" stroke="#141414" stroke-width="2.5"/>`
-    + `<path d="M${x2} ${y} l-11 -6 v12 z" fill="#141414"/>`;
-  if (!label) return line;
-  return `<text x="${((x + x2) / 2).toFixed(1)}" y="${(y - 12).toFixed(1)}" text-anchor="middle"`
-    + ` font-size="${EDGE_SIZE}" font-weight="600" fill="#4a453d">${esc(label)}</text>` + line;
-}
-
-function down(x, y, h, label) {
-  const line = `<path d="M${x} ${y} V${y + h - 12}" stroke="#141414" stroke-width="2.5"/>`
-    + `<path d="M${x} ${y + h} l-7 -13 h14 z" fill="#141414"/>`;
-  if (!label) return line;
-  return `<text x="${x + 15}" y="${(y + h / 2 + 7).toFixed(1)}" font-size="${EDGE_SIZE}"`
-    + ` font-weight="600" fill="#4a453d">${esc(label)}</text>` + line;
-}
-
-function flowSvg(flow) {
-  const W = flow.w || 1440;
-  const bands = flow.bands || [{ rows: flow.rows }];
-  const parts = [];
-  let y = 0;
-
-  if (flow.legend && flow.legend.length) {
-    const gap = 26;
-    let lx = 0;
-    const chips = [];
-    for (const l of flow.legend) {
-      const tone = TONES[l.tone] || TONES.white;
-      const w = 20 + String(l.label).length * 9.2;
-      chips.push({ tone, label: l.label, w });
-      lx += w + gap;
-    }
-    let x = Math.max(0, (W - (lx - gap)) / 2);
-    for (const c of chips) {
-      parts.push(`<rect x="${x}" y="${y}" width="16" height="16" rx="4" fill="${c.tone.fill}" stroke="${c.tone.stroke}" stroke-width="2"/>`
-        + `<text x="${x + 24}" y="${y + 13.5}" font-size="17" font-weight="600" fill="#141414">${esc(c.label)}</text>`);
-      x += c.w + 26;
-    }
-    y += 34;
-  }
-
-  bands.forEach((band, bi) => {
-    const hasLabel = !!band.label;
-    const padX = band.label || band.tone ? 18 : 0;
-    const top = y;
-    let iy = y + (hasLabel ? 40 : 0) + (band.label || band.tone ? 14 : 0);
-
-    // Every box on a chart is the same width — the longest row sets the column, shorter rows are
-    // centred in it — so a two-item row does not blow up into two half-slide slabs.
-    const cols = Math.max(...(band.rows || []).map((r) => (r.items || []).length), 1);
-    // One gap for the whole band, wide enough for the longest verb on any arrow in it.
-    const bandGap = Math.max(...(band.rows || []).map((r) =>
-      Math.max(r.gap ?? 42, ...(r.labels || []).map(edgeWidth), 0)), 42);
-
-    (band.rows || []).forEach((row, ri) => {
-      const items = row.items || [];
-      const n = items.length;
-      const gap = bandGap;
-      const inner = W - padX * 2 - 24;
-      const iw = (inner - gap * (cols - 1)) / cols;
-      const lays = items.map((it) => itemLayout(it, iw));
-      const rh = Math.max(...lays.map((l) => l.h));
-      let x = padX + 12 + (inner - (n * iw + gap * (n - 1))) / 2;
-      items.forEach((it, i) => {
-        parts.push(drawItem(it, x, iy, iw, rh, lays[i]));
-        if (i < n - 1 && row.link !== "none") {
-          parts.push(arrow(x + iw + 8, iy + rh / 2, gap - 16, (row.labels || [])[i]));
-        }
-        x += iw + gap;
-      });
-      if (row.caption) {
-        parts.push(`<text x="${W / 2}" y="${iy + rh + 22}" text-anchor="middle" font-size="17" font-style="italic" fill="#4a453d">${esc(row.caption)}</text>`);
-        iy += 26;
-      }
-      var nextRow = band.rows[ri + 1];
-      if (nextRow && nextRow.down) { parts.push(down(W / 2, iy + rh + 8, 40, nextRow.downLabel)); iy += 40; }
-      iy += rh + (ri < band.rows.length - 1 ? 20 : 0);
-    });
-
-    const bh = iy - top + (band.label || band.tone ? 16 : 0);
-    if (band.label || band.tone) {
-      const tone = TONES[band.tone || "ghost"] || TONES.ghost;
-      parts.unshift(`<rect x="0" y="${top}" width="${W}" height="${bh}" rx="14" fill="none" stroke="${tone.stroke}" stroke-width="2" stroke-dasharray="8 7" opacity=".85"/>`);
-      if (hasLabel) {
-        parts.unshift(`<text x="20" y="${top + 28}" font-family="Big Shoulders Display, Barlow, sans-serif" font-size="27" font-weight="800" letter-spacing="1.4" fill="${band.labelColor || "#141414"}">${esc(band.label.toUpperCase())}</text>`);
-      }
-    }
-    y = top + bh;
-    if (bi < bands.length - 1) {
-      const midY = y + 16;
-      parts.push(`<path d="M${W / 2} ${y + 4} V${midY + 12}" stroke="#141414" stroke-width="2.5" opacity=".55"/>`
-        + `<path d="M${W / 2} ${midY + 24} l-7 -12 h14 z" fill="#141414" opacity=".55"/>`);
-      y = midY + 30;
-    }
-  });
-
-  return `<svg viewBox="0 0 ${W} ${Math.ceil(y)}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" font-family="Barlow, system-ui, sans-serif" role="img">${parts.join("")}</svg>`;
-}
+/**
+ * Diagram slides are drawn by `lane.mjs`, the same renderer that writes the nine standalone
+ * .svg/.png beside the pitches — so a chart is identical in the deck and in the repo. Without a
+ * browser here, text widths come from lane.mjs's character estimate, which it rounds up.
+ */
+const flowSvg = (flow) => laneMarkup(flow);
 
 function inlineSvgFile(rel) {
   const file = resolve(PITCHES, rel);
@@ -899,7 +741,8 @@ h1{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-si
 .pd-list[open] summary{color:var(--orange)}
 .pd{margin:14px 0 22px;background:#fff;border:2px solid #ddd5c4}
 .pd-svg{padding:14px;overflow:auto;max-height:78vh}
-.pd-svg svg{display:block;width:100%;height:auto}
+/* On a phone a 1440-wide lane chart shrinks to illegible type, so it scrolls instead. */
+.pd-svg svg{display:block;width:100%;min-width:900px;height:auto}
 .pd figcaption{border-top:2px solid #ddd5c4;padding:11px 14px;font-size:16px;line-height:1.4;color:#3b362e}
 .pd figcaption b{display:block;font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:700;font-size:16px;
   letter-spacing:.11em;text-transform:uppercase;color:var(--orange);margin-bottom:3px}

@@ -79,7 +79,7 @@ Start the slow thing first (0:20) and talk over it. Every input is literal: type
 | **3:40–3:50** | tap the **mic**, say `how much engine oil does it take` | it answers out loud and turns the page itself | "Hands covered in oil, bike on the lift. He talks; it reads him the manual's own number and shows him the page." | *That's a workshop, not a website.* |
 | **3:50–4:05** | go back — the **MT-07** from 0:20 is ready. Tap it, type `oil` | the page | "That manual did not exist on our servers four minutes ago. Nearly fifteen thousand free official manuals — any of them, fetched and searchable in under a minute, for ten cents." | *So the catalogue isn't the limit.* |
 | **4:05–4:35** | phone down | — | "Why now: the manufacturers put these PDFs online for free, and they're unusable — two hundred pages, no search worth the name. Reading one to a model end to end costs dollars a question. Reading only the page that answers costs four hundredths of a cent. That gap is the whole product, and it only opened in the last year." | *The timing is real, not a pitch.* |
-| **4:35–5:00** | — | the marked page | "Today: twenty-seven thousand vehicles, five hundred and thirty-five manuals already indexed, and the whole thing has cost under ten dollars to run. Every number I gave you is on the live site right now. And there is not one AI-written sentence on this screen. Don't trust the AI. Trust the manual — we just get you to the page." | *I want to show this to someone who turns wrenches.* |
+| **4:35–5:00** | — | the marked page | "Today: thirty thousand vehicles, eighteen and a half thousand of them with the official manual attached, five hundred and forty-three already indexed — and the whole thing has cost under fifteen dollars to run. Every number I gave you is on the live site right now. And there is not one AI-written sentence on this screen. Don't trust the AI. Trust the manual — we just get you to the page." | *I want to show this to someone who turns wrenches.* |
 
 **Running short?** Cut 2:45–2:55 (ALL) and 3:40–3:50 (voice), in that order. Never cut the page at
 2:20 or the chat at 3:15 — one is the proof, the other is the objection-killer.
@@ -220,6 +220,9 @@ Say **measured** or **his number** out loud. Never round up.
 |---|---|---|
 | vehicles you can pick | **30,409** — 24,026 motorcycles, 6,383 cars, 79 makes | live `GET /api/catalog` |
 | …with a free official manual attached | **18,564** | same |
+| …of those, an official manual in another language | **4,643** — set only when no English one exists (ja 2,664, id 404, th 348…) | same |
+| …of those, a PDF we rendered from the publisher's web-only manual | **25** rows, 24 files, all Lexus | same |
+| vehicles that show a photo | **69.5%** of rows (55.0% of distinct models) | `docs/qa/images-gaps.md` |
 | manuals we can reach | **99,338** registry rows across 82 makes; **14,865** distinct free English PDFs | live `GET /api/registry` |
 | manuals already indexed | **543** | live `GET /api/manuals` |
 | brand-new manual → readable | **1.3 s** | live run, KTM 390 Duke 2014, 182 p, 2026-09-20 |

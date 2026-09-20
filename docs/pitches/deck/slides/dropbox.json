@@ -13,7 +13,7 @@
     },
     {
       "t": "0:45",
-      "do": "Order. 14,770 fetchable PDFs, 13,537 vehicles."
+      "do": "Order. 14,865 fetchable PDFs, 18,564 vehicles."
     },
     {
       "t": "1:00",
@@ -50,32 +50,32 @@
       "notes": [
         "\"A friend of mine runs his own motorcycle workshop in Germany. He spends about a fifth of his week not fixing bikes — looking for a page.\"",
         "*Start the PDF drop now* and let the ingest run underneath the chaos slides — same trick as the general pitch. It is the same 40–50 s as any cold manual.",
-        "Check the actual track text at the venue. If it is not about chaos→order, cut the chaos slides to ten seconds: \"we indexed 53,557 manuals from 84 portals — and none of them is the one a professional needs.\""
+        "Check the actual track text at the venue. If it is not about chaos→order, cut the chaos slides to ten seconds: \"we indexed 99,338 manuals from 90 portals — and none of them is the one a professional needs.\""
       ]
     },
     {
       "kind": "diagram",
       "at": "0:10",
-      "title": "53,557 rows. 84 portals.",
+      "title": "99,338 rows. 90 portals.",
       "caption": "Every one of them a different shape.",
       "svgFile": "dropbox/rows-per-portal.svg",
       "notes": [
         "\"So we went and indexed every manual a manufacturer publishes. Fifty-three thousand five hundred and fifty-seven rows, across eighty-four different portals.\"",
         "Twenty-five thousand of those rows point at a file another row already named.",
-        "*Do not say \"53,557 manuals\"* — they are rows, and 25,357 of them are the same file under another year. Say rows, then say 14,770 distinct PDFs. The honesty is the pitch."
+        "*Do not say \"99,338 manuals\"* — they are rows, and 48,962 of them are the same file under another year. Say rows, then say 14,865 distinct PDFs. The honesty is the pitch."
       ],
       "defs": [
         {
-          "n": "53,557",
+          "n": "99,338",
           "d": "registry rows — len(registry.json), one row per (make, model, year, market, document) (measured)."
         },
         {
-          "n": "84",
+          "n": "90",
           "d": "portals — distinct row.site (measured)."
         },
         {
-          "n": "25,357",
-          "d": "rows naming a file another row already names — 53,557 − 28,200 distinct URLs (computed)."
+          "n": "48,962",
+          "d": "rows naming a file another row already names — 99,338 − 50,376 distinct URLs (computed)."
         }
       ]
     },
@@ -84,7 +84,7 @@
       "at": "0:30",
       "dense": true,
       "title": "What a portal calls a handbook",
-      "line": "4,081 rows arrive typed *owner* and are a brochure, a warranty insert, or the infotainment guide — counted over *every* row, in every language and access level.",
+      "line": "6,244 rows arrive typed *owner* and are a brochure, a warranty insert, or the infotainment guide — counted over *every* row, in every language and access level.",
       "head": [
         "what it actually is",
         "rows"
@@ -96,15 +96,15 @@
       "rows": [
         [
           "infotainment guide",
-          "2,793"
+          "3,632"
         ],
         [
           "supplement",
-          "578"
+          "1,767"
         ],
         [
           "quickstart",
-          "479"
+          "572"
         ],
         [
           "spec sheet",
@@ -122,40 +122,40 @@
           "CFMOTO TLS-resets from outside its region · Beta needs a VIN"
         ]
       ],
-      "note": "The free-English subset — the rows we would actually fetch — is *1,489*. *Say which one you mean.* `doctype.py` classifies 8 document kinds from the URL and title alone, never by downloading.",
+      "note": "The free-English subset — the rows we would actually fetch — is *1,507*. *Say which one you mean.* `doctype.py` classifies 8 document kinds from the URL and title alone, never by downloading.",
       "notes": [
         "*This slide is the laugh.* Say \"the Gold Wing brochure is filed next to the owner's manual\" and let it land. It is the single most human illustration of the mess.",
-        "Never call 4,081 and 1,489 the same number: owner-typed over every row vs the free-English subset.",
+        "Never call 6,244 and 1,507 the same number: owner-typed over every row vs the free-English subset.",
         "Piaggio calls the owner's manual a \"use and maintenance booklet\", so any classifier that greps *maintenance* drags every Piaggio handbook into the service bucket."
       ],
       "defs": [
         {
-          "n": "4,081",
+          "n": "6,244",
           "d": "mislabelled rows, owner-typed — row.type=='owner' and doctype.classify_doc(url, title) != 'owner', over ALL rows in every language and access level (measured)."
         },
         {
-          "n": "1,489",
+          "n": "1,507",
           "d": "mislabelled rows, free-English — the same test restricted to rows we would actually fetch. A SUBSET question (measured)."
         },
         {
-          "n": "2,793",
+          "n": "3,632",
           "d": "…of which infotainment (measured)."
         },
         {
-          "n": "578",
+          "n": "1,767",
           "d": "…of which supplement (measured)."
         },
         {
-          "n": "479",
+          "n": "572",
           "d": "…of which quickstart (measured)."
         },
         {
-          "n": "159",
+          "n": "183",
           "d": "…of which spec (measured)."
         },
         {
-          "n": "3,030",
-          "d": "of the 4,081, the rows from Triumph's portal alone.",
+          "n": "3,435",
+          "d": "of the 6,244 owner-typed mislabels, the rows from Triumph's portal alone.",
           "src": "dropbox.md"
         },
         {
@@ -168,24 +168,24 @@
       "kind": "diagram",
       "at": "0:45",
       "title": "Order",
-      "caption": "14,770 fetchable PDFs · 13,537 vehicles · one page.",
+      "caption": "14,865 fetchable PDFs · 18,564 vehicles · one page.",
       "svgFile": "dropbox/chaos-to-order.svg",
       "notes": [
         "\"That is the chaos. We turned it into fourteen thousand seven hundred and seventy fetchable PDFs and thirteen thousand five hundred and thirty-seven vehicles that open on the right page.\"",
         "Then the turn, and go quiet: *\"And it is still the wrong document.\"*",
-        "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual."
+        "Never call 18,564 \"manuals\" — it is vehicles carrying a free manual."
       ],
       "defs": [
         {
-          "n": "14,770",
+          "n": "14,865",
           "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable rows (computed)."
         },
         {
-          "n": "13,537",
+          "n": "18,564",
           "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs."
         },
         {
-          "n": "27,751",
+          "n": "30,409",
           "d": "vehicles you can pick (measured)."
         }
       ]
@@ -401,7 +401,7 @@
       ],
       "defs": [
         {
-          "n": "53,557",
+          "n": "99,338",
           "d": "registry rows (measured). Say *rows*, never manuals."
         }
       ]
@@ -419,7 +419,7 @@
             "Do not demo the Chooser — it needs TTM_DROPBOX_APP_KEY and the button hides itself.",
             "Do not say we host or re-publish manufacturer PDFs, and do not promise customer-facing shared links.",
             "Do not say cross-tenant dedupe exists — the content hash is stored, the dedupe is not built.",
-            "Do not say \"53,557 manuals\". They are rows. Then say 14,770 distinct PDFs."
+            "Do not say \"99,338 manuals\". They are rows. Then say 14,865 distinct PDFs."
           ]
         },
         {
@@ -429,8 +429,8 @@
             "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
             "Climate Fit is \"built, deploying\", not deployed.",
             "Never quote a running ledger total without the date beside it.",
-            "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual.",
-            "Never call 4,081 and 1,489 the same number.",
+            "Never call 18,564 \"manuals\" — it is vehicles carrying a free manual.",
+            "Never call 6,244 and 1,507 the same number.",
             "There is no checkout. \"Live prices\", never \"buy\"."
           ]
         }

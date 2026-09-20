@@ -81,7 +81,7 @@ Screen: [`dropbox/chaos-to-order.svg`](dropbox/chaos-to-order.svg), then
 > and fifty-seven rows, across eighty-four different portals.** Every one of them a different shape.
 > Twenty-five thousand of those rows point at a file another row already named. Four thousand and
 > eighty-one arrive labelled *owner's manual* and are a brochure, a warranty insert, or the
-> infotainment guide — Triumph's portal alone ships three thousand of those. Seventeen manufacturers we
+> infotainment guide — Triumph's portal alone ships three and a half thousand of those. Seventeen manufacturers we
 > walked to the end and wrote off: CFMOTO TLS-resets from outside its region, Beta needs a VIN.
 >
 > That is the chaos. We turned it into **fourteen thousand seven hundred and seventy** fetchable PDFs
@@ -281,7 +281,7 @@ line. Nothing else was touched.
 | makes | **80** | same |
 | rows naming a file another row already names | **48,962** | 99,338 − 50,376 distinct URLs |
 | rows typed `owner` that are not a handbook | **6,244** | `registry/doctype.py` over **every** row, every language, every access level. The free-English subset — the rows we would actually fetch — is **1,507**. Say which one you mean |
-| …from Triumph's portal alone | **3,030** | same, by site |
+| …from Triumph's portal alone | **3,435** | same, by site |
 | distinct free English PDFs we can fetch | **14,865** | `_ingestable()` over the registry |
 | vehicles with a free official manual | **18,564** of 30,409 | `api/data/bikes.json`, live `GET /api/catalog` |
 | service-manual rows | **186** — 172 free, 7 paid, 5 dealer, 2 subscription | registry, `docs/MANUALS.md` |
