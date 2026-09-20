@@ -1,6 +1,6 @@
 // Stamped by deploy/web.sh on every deploy (git sha + time), so each release installs a fresh
 // worker, drops the previous caches and takes over every open tab.
-const VERSION = "abd57da0-202609201432";
+const VERSION = "7c832bb3-202609201435";
 const SHELL = `mechanica-shell-${VERSION}`;
 const RUNTIME = `mechanica-runtime-${VERSION}`;
 const DATA = `mechanica-data-${VERSION}`;
@@ -412,6 +412,15 @@ async function shellNetworkFirst(request) {
  * shell and claims the page — and app.js reloads on that claim. The navigation above is still
  * network first, so the reload that follows a deploy lands on the new page immediately.
  */
+/**
+ * Scripts, styles and the bundled roster/photo indexes: NETWORK FIRST, with the cache as the
+ * fallback after a short wait. Stale-while-revalidate here meant every deploy showed up one
+ * load late, which the founder read as "caching is way too strong". The edge answers these
+ * with max-age=0 + ETag, so online this is one conditional request per file (a 304 when nothing
+ * changed); on a slow or dead network the last good copy is served after SHELL_WAIT_MS.
+ */
+const SHELL_WAIT_MS = 2500;
+
 async function shellCacheFirst(event, request) {
   const cache = await caches.open(SHELL);
   const cached = await cache.match(request, { ignoreSearch: true });
@@ -419,12 +428,12 @@ async function shellCacheFirst(event, request) {
     .then(async (response) => {
       if (shouldShellCache(request, response)) await cache.put(request, response.clone());
       return response;
-    })
-    .catch((err) => {
-      if (cached) return cached;
-      throw err;
     });
   if (!cached) return fresh;
+  const timeout = new Promise((resolve) => setTimeout(() => resolve(null), SHELL_WAIT_MS));
+  const first = await Promise.race([fresh.catch(() => null), timeout]);
+  if (first) return first;
+  // network slow or gone: serve the cached copy now, let the fetch finish filling the cache
   event.waitUntil(fresh.catch(() => {}));
   return cached;
 }
