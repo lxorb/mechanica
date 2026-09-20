@@ -10,6 +10,7 @@ Purpose: validate the UX. "Don't trust the AI. Trust the manual. We just get you
 4. Three steps only: bike → question → pages. Back is always one tap.
 5. Mobile first (390×844), thumb-reachable controls at the bottom, 44px min tap targets, works one-handed with dirty hands. Also fine on desktop.
 6. Fast. No spinners longer than a page render. No fake "thinking" delays.
+7. Audience: professional mechanics. Nothing in the product ever says "see your dealer" or "have a workshop do it". When an owner's manual defers to a dealer, we say the manual does not include the procedure and still give every value it prints.
 
 ## Visual
 - Dark app chrome (--bg), light PDF sheet, one accent (--accent, orange) for the marker and the primary action only.
