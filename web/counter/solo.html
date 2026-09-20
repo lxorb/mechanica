@@ -60,8 +60,9 @@
       ? modelFor({ make: bike.split(" ")[0], model: bike.split(" ").slice(1).join(" ") })
       : params.get("model") || "yzf-2021";
 
+    const env = params.get("env");
     const viewer = mount(host, target, {
-      environment: params.get("env") === "off" ? false : undefined,
+      environment: env === "off" ? false : env || undefined,
       debug: true,
       onUpgrade: () => {
         if (params.get("explode")) viewer.explode(true, Number(params.get("explode")) || 1);

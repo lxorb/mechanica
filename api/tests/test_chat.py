@@ -133,11 +133,12 @@ def test_a_real_job_with_no_matching_page_still_gets_an_answer(monkeypatch):
     """The policy change: only "not about this motorcycle" refuses. A job the index simply missed must
     still reach the model, which then gives general steps with nothing to cite."""
     monkeypatch.setattr(chat.get_index(), "query", lambda *a, **k: [])
-    stream = fake_stream(lambda user: f"{chat.GENERAL}
-1. Drain the old fluid.
-2. Refill and bleed.")
+    steps = chat.GENERAL + "\n1. Drain the old fluid.\n2. Refill and bleed."
+    stream = fake_stream(lambda user: steps)
     monkeypatch.setattr(chat.llm, "stream", stream)
+
     done = frames(chat.answer(KTM, [{"role": "user", "content": "change the brake fluid"}]))[-1]
+
     assert done["answer"].startswith(chat.GENERAL)
     assert "No printed page" in stream.seen["user"]
 
@@ -354,3 +355,34 @@ def test_the_prompt_forbids_dealer_advice_and_safety_boilerplate(monkeypatch):
     assert "authorised workshop" in system and "NEVER tell the reader" in system
     assert "safety boilerplate" in system
     assert chat.GENERAL in system
+
+
+def test_unverified_numbers_catches_an_invented_torque():
+    """General STEPS are now allowed, a general NUMBER never is. This is the guard behind that line."""
+    pages = {77: "Chain tension 10 mm. Tightening torque rear wheel spindle 100 Nm."}
+    assert chat._unverified_numbers("Set chain tension to 10 mm [p. 77].", pages) == []
+    assert chat._unverified_numbers("Torque the spindle to 100 Nm [p. 77].", pages) == []
+    assert chat._unverified_numbers("Torque the spindle to 95 Nm [p. 77].", pages) == ["95"]
+
+
+def test_step_numbers_and_cited_pages_are_not_invented_values():
+    pages = {12: "Remove the seat."}
+    answer = chat.GENERAL + "\n1. Drain the fluid.\n2. Refill.\n3. Bleed the line.\nOpen: [p. 12]"
+    assert chat._unverified_numbers(answer, pages) == []
+
+
+def test_a_printed_value_counts_however_it_is_written():
+    """0.5 may be printed as 0.50, and a decimal comma is the same number as a decimal point."""
+    pages = {9: "Quantity for topping up 0.5 l. Clearance 0,10 mm."}
+    assert chat._unverified_numbers("Top up 0.50 l [p. 9] at 0.10 mm [p. 9].", pages) == []
+
+
+def test_done_frame_flags_invented_numbers_only_when_there_are_some(monkeypatch):
+    clean = fake_stream(lambda user: f"Yes [p. {offered_pages(user)[0]}].")
+    monkeypatch.setattr(chat.llm, "stream", clean)
+    done = frames(chat.answer(KTM, [{"role": "user", "content": "chain is loose"}]))[-1]
+    assert "unverifiedNumbers" not in done, "the happy path keeps the frame shape the UI already reads"
+
+    monkeypatch.setattr(chat.llm, "stream", fake_stream(lambda user: "Torque to 4242 Nm [p. 77]."))
+    done = frames(chat.answer(KTM, [{"role": "user", "content": "chain is loose"}]))[-1]
+    assert done["unverifiedNumbers"] == ["4242"]

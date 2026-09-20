@@ -240,6 +240,11 @@ Rejection rules.
   that prints an actual procedure, a tolerance or a torque for the same job. Take it only when nothing else
   covers the job, and when the technical-data or tightening-torque table prints figures for that job, lead with
   the table instead.
+- A standard job that this owner manual does not fully print - brake fluid change, brake pad change, chain
+  replacement, valve clearance, fork oil, coolant change - is NOT an empty answer. The mechanic still needs
+  somewhere to open: return the closest printed pages, which are the level check, the inspection, the
+  technical-data table and the tightening torques for the parts that job touches. Empty stays reserved for a
+  question that is not about this motorcycle at all.
 - Drop a candidate that shares only a generic word with the question: fork oil for an engine-oil question, brake
   fluid for a brake-pad question, the service schedule for a job the rider is doing right now, a torque table for
   a question that names no fastener.

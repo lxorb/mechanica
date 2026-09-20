@@ -225,6 +225,19 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
         incoming.update(rows)
         merged.append((path.name, len(rows), fresh, bad))
 
+    known_rows = store.registry()
+    for name, rows in sorted(fragments.items()):  # a wholesale re-key reads as an addition otherwise
+        if name in replace or not rows:
+            continue
+        fresh_ids = sum(1 for eid in rows if eid not in before)
+        if fresh_ids <= len(rows) // 10:
+            continue
+        scope = {(e.site, kind_of(e)) for e in rows.values()}
+        indexed = {e.url for e in known_rows if (e.site, kind_of(e)) in scope}
+        if indexed and not ({e.url for e in rows.values()} - indexed):
+            replace.add(name)  # new ids, no new files: the fragment re-keyed what it already had
+            print(f"  {name}: {fresh_ids}/{len(rows)} ids new but no new files -> replacing its scope")
+
     drop: set[str] = set()
     for name in sorted(replace):
         rows = fragments.get(name)

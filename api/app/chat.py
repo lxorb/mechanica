@@ -49,7 +49,10 @@ MAX_QUOTE = 240
 QUOTE_LINES = 3
 NOT_COVERED = "Not in this manual."
 
-CITE = re.compile(r"\[p\.\s*(\d+)\]")
+# Accepts [p. 84], [pp. 68-69] and [pp. 68, 69]: the model reaches for all three, and a citation the
+# pattern misses is both a lost page chip and a false "invented number".
+CITE = re.compile(r"\[pp?\.\s*([0-9][0-9,;\s–—-]*)\]")
+PAGE_NUM = re.compile(r"\d+")
 MARKER = re.compile(r"PAGE (\d+)")
 
 # Owner manuals pad every job with "consult an authorised workshop". The reader here is a mechanic with
@@ -62,7 +65,12 @@ DEALER = re.compile(r"\b(?:dealer|retailer|workshop|specialist|service cent(?:re
 SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z(])")
 # Below this a page is boilerplate with nothing printed on it, so it loses its slot to a page that prints something.
 MIN_SUBSTANTIVE = 200
-NO_PROCEDURE = "The owner's manual does not include this procedure."
+GENERAL = "General procedure, not printed in this manual:"
+
+# Every number the model writes must be copied off a printed page. These let the check ignore the two
+# kinds of digit that are legitimately the model's own: the step number, and the page inside a citation.
+NUMBER = re.compile(r"\d+(?:[.,]\d+)?")
+STEP = re.compile(r"^\s*\d+[.)]\s", re.M)
 
 SYSTEM = f"""You answer one question from a professional motorcycle mechanic who has this bike on the lift,
 using ONLY the printed pages of that motorcycle's own manual. The pages are given to you below as numbered
@@ -92,24 +100,31 @@ Now it's your turn. Rules for your answer:
   most jobs with that referral; it is the one thing in the sources you must not pass on.
 - NEVER add safety boilerplate: no "for your safety", no "if you are unsure", no "improper work can cause
   accidents", no warnings or disclaimers of your own. The reader knows the risks of the job.
-- Two different "no" answers, and picking the wrong one is a real error:
-  "{NOT_COVERED}" is ONLY for a question that is not about servicing this motorcycle at all - tuning,
-  aftermarket parts, riding technique, prices, other vehicles, small talk.
-  "{NO_PROCEDURE}" is for a genuine job on this motorcycle that this owner's manual does not detail -
-  valve clearance, throttle-body synchronisation, steering-head bearing play, fork oil, chain replacement
-  and the like. Owner manuals hand those to a workshop instead of printing them; you say the manual does
-  not include the procedure, and you NEVER answer such a question with "{NOT_COVERED}".
-- After "{NO_PROCEDURE}", STILL give every specification, value, interval, tolerance, fill quantity and
-  tool the sources print FOR THAT JOB, each with its [p. N] - the wear limit, the clearance, the service
-  interval, the tightening torque of the fasteners the job touches. That is the useful answer: the numbers,
-  without the referral. If the sources print nothing for the job, the one sentence on its own is the answer.
-  Still never reach for a figure belonging to a different job to pad it out.
+- Refuse with "{NOT_COVERED}" ONLY when the question is not about servicing or operating THIS motorcycle:
+  riding technique, tuning, aftermarket parts, prices, insurance, routes, other vehicles, small talk. That
+  is the only refusal you have. Anything a mechanic would actually do to this bike gets a real answer.
+- An owner's manual does not fully print most standard jobs - brake fluid change, brake pad change, chain
+  replacement, valve clearance check, fork oil, coolant change, the details of an oil change. NEVER refuse
+  one of those and never call it "{NOT_COVERED}". Answer it in three parts, in this order:
+  1. The line "{GENERAL}" and then 3 to 6 terse steps of standard workshop practice for a motorcycle of
+     this type. Imperative, one clause per step, name the tool. These steps are your own general knowledge,
+     so they carry NO NUMBERS AT ALL beyond the step number itself - no torque, no capacity, no interval,
+     no wear limit, no "two turns", no "30 minutes". If a step needs a figure, say which figure is needed
+     ("to the printed torque") and let part 2 supply it.
+  2. Then the printed figures: every specification, fluid grade, capacity, torque, interval, tolerance and
+     wear limit the sources print for this job, one per line, each with its [p. N].
+  3. Then the pages to open, as a short line starting "Open:" followed by bare [p. N] citations for the
+     check or level sections closest to the job.
+  If the sources print no figure at all for the job, keep parts 1 and 3 and say plainly that the manual
+  prints no figures for it. Never reach for a figure belonging to a different job to pad part 2.
 - If a torque, clearance, capacity, pressure or interval for the job is printed ANYWHERE in the sources,
   including a technical-data or tightening-torque table on another page, surface it and cite that page.
-- Never invent a number. Torque figures, capacities, pressures, clearances, grades, fuse ratings, part
-  designations and intervals may only be repeated if they are printed in a source, with that source cited. If
-  the reader asks for a figure that no source prints, say the manual does not print it and cite nothing for it.
-  A wrong torque figure breaks a motorcycle; guessing one is the single worst thing you can do here.
+- EVERY number anywhere in your answer must be copied from a source and carry a [p. N]. The only digits you
+  may write that are your own are the step numbers in part 1. No torque, capacity, pressure, clearance,
+  grade, fuse rating, part designation or interval may appear unless it is printed in a source and cited. If
+  the reader asks for a figure no source prints, say the manual does not print it and cite nothing for it.
+  A wrong torque figure breaks a motorcycle; guessing one is the single worst thing you can do here. Giving
+  general steps is now allowed; giving a general NUMBER never is.
 - Never carry a figure over from another motorcycle, from another section, or from your own knowledge.
 - The sources have been machine-compressed, so their grammar and punctuation may be damaged. Read them for
   meaning; write your own clean sentences. Never copy a mangled fragment and never mention the compression.
@@ -141,14 +156,16 @@ def _history(messages: list[dict]) -> list[dict]:
     return out
 
 
-def _pages_for(manual_id: str, question: str) -> list[int]:
-    """Router rephrasings -> BM25 sections -> the distinct printed pages behind them, best section first."""
+def _pages_for(manual_id: str, question: str) -> tuple[list[int], bool]:
+    """(pages, is about this motorcycle). Router rephrasings -> BM25 sections -> the printed pages behind
+    them, best section first. The flag is the ONLY thing that may produce a refusal: a real job with no
+    matching page still gets a general-procedure answer, it just gets one with nothing to cite."""
     manual = get_store().manual(manual_id)
     if manual is None:
-        return []
+        return [], False
     route = ask_mod._route(question)
     if route.intent == "unknown":
-        return []
+        return [], False
     sections = {s.id: s for s in manual.sections}
     hits = [h for h in get_index().query(manual_id, route.queries, route.components, k=CANDIDATES) if h.sectionId in sections]
     ordered: list[int] = []
@@ -157,7 +174,7 @@ def _pages_for(manual_id: str, question: str) -> list[int]:
         for page in range(section.pageStart, section.pageEnd + 1):
             if page not in ordered:
                 ordered.append(page)
-    return ordered[:MAX_PAGES]
+    return ordered[:MAX_PAGES], True
 
 
 def _split(compressed: str, pages: list[int]) -> dict[int, str] | None:
@@ -267,14 +284,35 @@ def _citations(answer: str, question: str, original: dict[int, str]) -> list[dic
     out: list[dict] = []
     seen: set[int] = set()
     for match in CITE.finditer(answer):
-        page = int(match.group(1))
-        if page in seen or page not in original:
-            continue
-        seen.add(page)
-        quote = _quote(original[page], answer, question)
-        if quote:
-            out.append({"page": page, "quote": quote})
+        for found in PAGE_NUM.findall(match.group(1)):
+            page = int(found)
+            if page in seen or page not in original:
+                continue
+            seen.add(page)
+            quote = _quote(original[page], answer, question)
+            if quote:
+                out.append({"page": page, "quote": quote})
     return out
+
+
+def _unverified_numbers(answer: str, original: dict[int, str]) -> list[str]:
+    """Numbers in the answer that are printed on none of the pages it was given.
+
+    The model may now write general procedure steps out of its own knowledge, so this is the guard that
+    keeps the old promise intact underneath the new freedom: general STEPS are allowed, a general NUMBER
+    never is. Step numbers and the page numbers inside [p. N] are the model's own and are excluded.
+    """
+    printed = " ".join(" ".join(text.split()) for text in original.values()).replace(",", ".")
+    text = STEP.sub(" ", CITE.sub(" ", answer))
+    loose: list[str] = []
+    for match in NUMBER.finditer(text):
+        token = match.group(0).replace(",", ".")
+        # 0.50 may be printed as 0.5, and 2.0 as 2, so a trimmed form counts as printed too.
+        trimmed = token.rstrip("0").rstrip(".") if "." in token else token
+        if token in printed or (trimmed and trimmed in printed):
+            continue
+        loose.append(match.group(0))
+    return sorted(set(loose))
 
 
 def _frame(**payload) -> str:
@@ -293,18 +331,20 @@ def answer(manual_id: str, messages: list[dict]) -> Iterator[str]:
         return
 
     try:
-        pages = _pages_for(manual_id, question)
+        pages, servicing = _pages_for(manual_id, question)
         original, compressed, before, after = _passages(manual_id, pages) if pages else ({}, {}, 0, 0)
     except Exception:
-        original, compressed, before, after = {}, {}, 0, 0
+        original, compressed, before, after, servicing = {}, {}, 0, 0, True
     saved = max(0, before - after)
 
-    # Nothing printed in this manual matches: that is the answer, and it costs nothing to give.
-    if not compressed:
+    # The only refusal left: the question is not about servicing this motorcycle. Costs nothing to give.
+    # A real job whose pages the index missed still gets an answer - general steps with nothing to cite.
+    if not servicing:
         yield from _plain(NOT_COVERED, saved)
         return
 
-    user = f"{_context(compressed)}Question: {question}\nAnswer: "
+    sources = _context(compressed) if compressed else "No printed page of this manual matched the question.\n"
+    user = f"{sources}Question: {question}\nAnswer: "
     parts: list[str] = []
     usage = {"usd": 0.0, "tokensIn": 0}
     try:
@@ -329,11 +369,21 @@ def answer(manual_id: str, messages: list[dict]) -> Iterator[str]:
             return
 
     text = "".join(parts).strip() or NOT_COVERED
+    citations = _citations(text, question, original)
+    if not citations and original and text != NOT_COVERED:
+        chips = " ".join(f"[p. {page}]" for page in list(original)[:3])
+        tail = f"{chr(10)}Open: {chips}"
+        yield _frame(type="token", text=tail)
+        text += tail
+        citations = _citations(text, question, original)
+    # Only present when it is non-empty, so the happy-path frame keeps the shape the UI already reads.
+    loose = _unverified_numbers(text, original)
     yield _frame(
         type="done",
         answer=text,
-        citations=_citations(text, question, original),
+        citations=citations,
         usd=round(float(usage.get("usd", 0.0)), 6),
         tokensIn=int(usage.get("tokensIn", 0)),
         tokensSaved=saved,
+        **({"unverifiedNumbers": loose} if loose else {}),
     )

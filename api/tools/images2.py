@@ -796,7 +796,12 @@ class Shot(BaseModel):
     )
     single_bike: bool = Field(description="exactly one vehicle is the subject")
     whole_bike_visible: bool = Field(description="the entire vehicle is inside the frame, not cropped")
-    people_or_other_bikes: bool = Field(description="people, or other vehicles, take up a noticeable part of the frame")
+    people_or_other_bikes: bool = Field(
+        description=(
+            "people or other vehicles OBSCURE this one, or take up more of the frame than it does. "
+            "A bystander at the edge of a car park, or a bike parked behind, is not enough"
+        )
+    )
     clean_background: Literal[0, 1, 2, 3] = Field(description="0 cluttered showroom or crowd, 3 plain road, wall or studio")
     sharpness: Literal[0, 1, 2, 3] = Field(description="0 blurry or tiny, 3 crisp and well exposed")
     view: Literal["side", "three_quarter", "front", "rear", "top", "other"] = Field(
@@ -811,11 +816,14 @@ class Shots(BaseModel):
 RATER_SYSTEM = (
     "You grade candidate photographs for a vehicle catalogue. Each tile has to show one "
     "whole vehicle that an owner can recognise at a glance: the vehicle filling the frame, "
-    "shot from outside, nothing cluttering it. Judge only what you can see. A cabin, a "
-    "dashboard, an engine bay or a close-up of one part is subject=interior/engine/detail, "
-    "never whole_vehicle. Be strict about people_or_other_bikes: a crowded show stand, a "
-    "parked row, or someone sitting in or on the vehicle all count as true. Return exactly "
-    "one entry per image, in order, using the index given in the prompt."
+    "shot from outside. Judge only what you can see. A cabin, a dashboard, an engine bay "
+    "or a close-up of one part is subject=interior/engine/detail, never whole_vehicle. "
+    "These are photographs taken in the world, not studio shots: a bystander at the edge "
+    "of the frame, a bike parked behind, a show stand, a street -- none of that makes the "
+    "photo unusable, so score it down through clean_background rather than flagging "
+    "people_or_other_bikes. Flag that only when something really does hide the vehicle or "
+    "crowd it out, or when someone is sitting in or on it. Return exactly one entry per "
+    "image, in order, using the index given in the prompt."
 )
 
 # A motorcycle reads best in profile; a car reads best from a front corner, which is how
@@ -834,7 +842,6 @@ def passes(s: Shot) -> bool:
         and s.single_bike
         and s.whole_bike_visible
         and not s.people_or_other_bikes
-        and s.clean_background >= 1
         and s.sharpness >= 2
     )
 

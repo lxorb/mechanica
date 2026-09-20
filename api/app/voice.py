@@ -43,17 +43,34 @@ TOKEN_TTL = 600
 
 AGENT_WS = "wss://agent.deepgram.com/v1/agent/converse"
 AGENT_RATE = 24000
-LISTEN_MODEL = "nova-3"
-SPEAK_MODEL = "aura-2-thalia-en"
+
+# Flux (listen v2) has end-of-turn detection inside the model instead of a silence timer, and
+# `eager_eot_threshold` lets it start the LLM before the rider has finished the sentence, throwing
+# the speculative turn away on TurnResumed. Measured against nova-3 on "how much engine oil does
+# it take?", spoken into the socket at real speed: 1.35 s to the first byte of the answer's audio
+# against 1.97 s. eot_timeout_ms is the silence fallback - 2 s, not the 5 s default, because a
+# mechanic's question ends when it ends.
+LISTEN = {
+    "type": "deepgram",
+    "version": "v2",
+    "model": "flux-general-en",
+    "eot_threshold": 0.7,
+    "eager_eot_threshold": 0.4,
+    "eot_timeout_ms": 2000,
+}
+# Aura-2. Deepgram describes asteria as "clear, confident, knowledgeable" and thalia as
+# "energetic, enthusiastic"; this assistant reads torque figures to someone holding a spanner,
+# so knowledgeable wins. Measured within noise of thalia and a second faster than luna.
+SPEAK_MODEL = "aura-2-asteria-en"
 # One of the models Deepgram lists for think.provider.type "open_ai", and NOT a reasoning one.
 # Deepgram drives think through /v1/chat/completions with reasoning_effort set, which OpenAI
 # rejects outright the moment function tools are attached ("Function tools with reasoning_effort
 # are not supported ... use /v1/responses or set reasoning_effort to 'none'") - so the app's own
-# gpt-5.6-* models close the socket with FAILED_TO_THINK here. Verified live: gpt-4.1-mini calls
-# find_procedure then read_page and answers off page 114. Small on purpose too: every answer is
-# one or two sentences read back out of a function result, and a voice turn is judged on the
-# silence before it.
-THINK_MODEL = os.getenv("MODEL_VOICE", "gpt-4.1-mini")
+# gpt-5.6-* models close the socket with FAILED_TO_THINK here.
+# Of what is left, gpt-4.1 is both the strongest and, measured on the KTM, the fastest: it picks
+# the one right function and answers in a sentence, where the mini and 4o take an extra hop and
+# pad the reply. 1.35 s to first audio against 2.37 s (mini) and 1.83 s (4o).
+THINK_MODEL = os.getenv("MODEL_VOICE", "gpt-4.1")
 DIGEST_CHARS = 1500
 
 
@@ -401,7 +418,7 @@ def agent_settings(manualId: str, bikeId: str | None = None):
             },
             "agent": {
                 "language": "en",
-                "listen": {"provider": {"type": "deepgram", "model": LISTEN_MODEL}},
+                "listen": {"provider": dict(LISTEN)},
                 "think": {
                     "provider": {"type": "open_ai", "model": THINK_MODEL},
                     "prompt": _prompt(manual, bike, digest),

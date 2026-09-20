@@ -26,7 +26,7 @@ from app.store import get_store  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 TARGETS = {"citations": 0.95, "grounded": 0.95, "saved": 0.30, "ttft": 4.0}
-CITE = re.compile(r"\[p\.\s*(\d+)\]")
+CITE = chat.CITE  # one pattern for both, so the eval cannot disagree with the server about a citation
 MASK = "␟"  # a character no manual prints, so masking a citation cannot collide with the text
 # What counts as a claim: any sentence of four words or more. Deliberately blunt - a verb list
 # let "Loosen the rear wheel nut and the adjuster nuts" through uncounted, which flatters the score.
@@ -78,7 +78,16 @@ def page_text(manual_id: str) -> dict[int, str]:
     return {p.page: p.text for p in get_store().pages(manual_id)}
 
 
-STATUS = (chat.NOT_COVERED, chat.NO_PROCEDURE)
+STATUS = (chat.NOT_COVERED,)
+# The five jobs an owner manual hands to a workshop. They must now come back as general steps +
+# printed values + page chips, never as a refusal.
+UNDERDOCUMENTED = {
+    "valve clearance spec",
+    "how do I sync the throttle bodies",
+    "steering head bearing play check",
+    "fork oil change",
+    "when does the chain need replacing",
+}
 
 
 def claims(answer: str) -> list[tuple[str, bool]]:
@@ -87,12 +96,21 @@ def claims(answer: str) -> list[tuple[str, bool]]:
     The marker is masked before splitting: `[p. 78]` ends in a full stop after "p", so a naive sentence
     split cuts the citation off the claim it belongs to and scores a perfectly grounded answer at 0 %.
     """
-    masked = CITE.sub(lambda m: f"{MASK}{m.group(1)}{MASK}", answer)
+    body = answer
+    if chat.GENERAL in body:
+        # General-procedure steps are declared NOT to come from the manual, so they are not claims that
+        # should carry a [p. N]. Counting them would score the new policy as a grounding regression.
+        body = "\n".join(
+            line
+            for line in body.split("\n")
+            if not line.strip().startswith(chat.GENERAL) and not re.match(r"^\s*\d+[.)]\s", line)
+        )
+    masked = CITE.sub(lambda m: f"{MASK}{m.group(1)}{MASK}", body)
     out: list[tuple[str, bool]] = []
-    for sentence in re.split(r"(?<=[.!?])\s+|\n+", masked):
+    for sentence in re.split(r"(?<=[.!?])\s+(?=[A-Z(])", masked):
         sentence = sentence.strip()
         cited = MASK in sentence
-        bare = re.sub(rf"{MASK}\d+{MASK}", "", sentence).strip(" .;,")
+        bare = re.sub(rf"{MASK}[^{MASK}]*{MASK}", "", sentence).strip(" .;,")
         if not bare:
             # A fragment that is nothing but citations: the model wrote "... taut. [p. 77]", so the
             # citation belongs to the sentence before it, not to a claim of its own.
@@ -125,9 +143,11 @@ def run_one(manual_id: str, question: str, pages: dict[int, str]) -> dict:
 
     answer = done.get("answer", "")
     citations = done.get("citations", [])
-    covered = answer.strip() in (chat.NOT_COVERED, chat.NO_PROCEDURE)
+    covered = answer.strip() == chat.NOT_COVERED
 
     referrals = sorted({m.group(0).lower() for m in REFERRAL.finditer(answer)})
+    cited_text = {c["page"]: pages.get(c["page"], "") for c in citations}
+    invented = chat._unverified_numbers(answer, cited_text) if citations else chat._unverified_numbers(answer, {})
     stated = claims(answer) if not covered else []
     grounded = [s for s, cited in stated if cited]
     valid = [c for c in citations if c.get("quote") and c["quote"] in pages.get(c.get("page", -1), "")]
@@ -139,6 +159,9 @@ def run_one(manual_id: str, question: str, pages: dict[int, str]) -> dict:
         "error": error,
         "notCovered": covered,
         "referrals": referrals,
+        "invented": invented,
+        "general": chat.GENERAL in answer,
+        "chips": len({c["page"] for c in citations}),
         "claims": len(stated),
         "groundedClaims": len(grounded),
         "citations": len(citations),
@@ -165,7 +188,7 @@ def summarise(rows: list[dict], compression: dict) -> dict:
         "n": len(rows),
         "answered": len(answered),
         "notCovered": sum(r["notCovered"] for r in rows),
-        "noProcedure": sum(r["answer"].strip().startswith(chat.NO_PROCEDURE) for r in rows),
+        "generalAnswers": sum(r["general"] for r in rows),
         "errors": [f"{r['question']}: {r['error']}" for r in rows if r["error"]],
         "groundingRate": grounded / claim_count if claim_count else 0.0,
         "claims": claim_count,
@@ -173,6 +196,19 @@ def summarise(rows: list[dict], compression: dict) -> dict:
         "citations": cited,
         "uncitedAnswers": [r["question"] for r in answered if not r["citations"]],
         "referralAnswers": [f"{r['question']}: {', '.join(r['referrals'])}" for r in rows if r["referrals"]],
+        "inventedAnswers": [f"{r['question']}: {', '.join(r['invented'])}" for r in rows if r["invented"]],
+        "underDocumentedBad": [
+            f"{r['question']}: " + ", ".join(
+                filter(None, [
+                    "" if (r["general"] or r["citations"]) else "neither general steps nor printed values",
+                    "" if r["chips"] else "no page chips",
+                    "refused" if r["notCovered"] else "",
+                ])
+            )
+            for r in rows
+            if r["question"] in UNDERDOCUMENTED
+            and not (not r["notCovered"] and r["chips"] and (r["general"] or r["citations"]))
+        ],
         "tokensBefore": before,
         "tokensAfter": after,
         "tokensSavedPct": (before - after) / before if before else 0.0,
@@ -193,6 +229,11 @@ def verdict(s: dict) -> dict:
         "tokens saved by TTC >= 30 %": (s["tokensSavedPct"] >= TARGETS["saved"], f"{s['tokensSavedPct']:.1%}"),
         "p50 time to first token <= 4 s": (s["ttftP50"] <= TARGETS["ttft"], f"{s['ttftP50']:.2f} s"),
         "no answer sends a mechanic to a dealer": (not s["referralAnswers"], f"{len(s['referralAnswers'])} of {s['n']}"),
+        "no invented numbers": (not s["inventedAnswers"], f"{len(s['inventedAnswers'])} of {s['n']}"),
+        "under-documented jobs answered with steps + pages": (
+            not s["underDocumentedBad"],
+            f"{len(UNDERDOCUMENTED) - len(s['underDocumentedBad'])} of {len(UNDERDOCUMENTED)}",
+        ),
     }
 
 
@@ -211,8 +252,8 @@ def report(rows: list[dict], s: dict, checks: dict, compression: dict) -> str:
     lines += [
         "",
         "## Totals",
-        f"- {s['n']} questions, {s['answered']} answered from the manual, {s['notCovered']} declined, "
-        f"{s['noProcedure']} \"manual does not include this procedure\"",
+        f"- {s['n']} questions, {s['answered']} answered, {s['notCovered']} declined as not about this bike, "
+        f"{s['generalAnswers']} carried general steps the manual does not print",
         f"- grounding: {s['groundingRate']:.1%} of {s['claims']} claim sentences carry a [p. N]",
         f"- citations: {s['citations']} returned, {s['citationValidity']:.1%} verbatim on the page they name",
         f"- TTC: {s['tokensBefore']} tokens in -> {s['tokensAfter']} out, {s['tokensSavedPct']:.1%} saved "
@@ -235,6 +276,10 @@ def report(rows: list[dict], s: dict, checks: dict, compression: dict) -> str:
         )
     if s["errors"]:
         lines += ["", "## Errors", *[f"- {e}" for e in s["errors"]]]
+    if s["inventedAnswers"]:
+        lines += ["", "## Numbers not printed on the cited pages", *[f"- {a}" for a in s["inventedAnswers"]]]
+    if s["underDocumentedBad"]:
+        lines += ["", "## Under-documented jobs answered wrongly", *[f"- {a}" for a in s["underDocumentedBad"]]]
     if s["referralAnswers"]:
         lines += ["", "## Answers that referred the mechanic elsewhere", *[f"- {a}" for a in s["referralAnswers"]]]
     if s["uncitedAnswers"]:
@@ -272,7 +317,7 @@ def main() -> int:
     for i, (manual_id, question) in enumerate(cases, 1):
         row = run_one(manual_id, question, pages[manual_id])
         rows.append(row)
-        mark = "D" if row["referrals"] else ("x" if row["error"] else ("." if row["citations"] or row["notCovered"] else "o"))
+        mark = "N" if row["invented"] else "D" if row["referrals"] else ("x" if row["error"] else ("." if row["citations"] or row["notCovered"] else "o"))
         print(f"{mark} {i:2}/{len(cases)} {row['ttft']:5.2f}s {question}", flush=True)
 
     compression = ttc.stats()

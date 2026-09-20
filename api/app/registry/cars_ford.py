@@ -41,16 +41,17 @@ THROTTLE = Throttle(2.0)
 def _pretty(model: str) -> str:
     """The slug spends '-' on two jobs. 'super-duty' is two words; 'f-150' and 'e-transit' are one
     name. A part that is a single letter or a number keeps the hyphen, everything else gets a space."""
-    parts = [p for p in model.split("-") if p]
+    # The library spells the same truck both ways, `f150` and `f-150-heritage`. Normalise to one.
+    parts = [p for p in re.sub(r"\b([a-z])(\d)", r"\1-\2", model).split("-") if p]
     out = ""
     for i, part in enumerate(parts):
         word = part.upper() if part.isdigit() or len(part) == 1 else part.capitalize()
         if not out:
             out = word
-        elif len(part) == 1 or part.isdigit() or len(parts[i - 1]) == 1 or parts[i - 1].isdigit():
-            out += "-" + word
+        elif part.isdigit() or len(part) == 1 or (i == 1 and len(parts[0]) == 1):
+            out += "-" + word  # F-150, Mach-E, E-Transit
         else:
-            out += " " + word
+            out += " " + word  # F-150 Lightning, Super Duty
     return out
 
 

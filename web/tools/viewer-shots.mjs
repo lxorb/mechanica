@@ -212,6 +212,68 @@ async function sheet(names) {
   console.log(`\n${tiles.length} tiles -> ${out}`);
 }
 
+/** one sheet per viewport of every environment, so the four can be compared side by side. */
+async function envs(list) {
+  const { server, port } = await serve();
+  const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
+  const sharp = (await import(`file:///${SHARP.replace(/\\/g, "/")}`)).default;
+  const browser = await puppeteer.launch({
+    executablePath: CHROME, headless: "new",
+    args: ["--no-sandbox", "--enable-unsafe-swiftshader", "--use-gl=angle", "--hide-scrollbars"],
+  });
+  mkdirSync(SHOTS, { recursive: true });
+  for (const [vpName, vw, vh] of [["phone", 390, 844], ["desktop", 1280, 800]]) {
+    const tiles = [];
+    for (const [name, query] of list) {
+      const page = await browser.newPage();
+      await page.setViewport({ width: vw, height: vh, deviceScaleFactor: 1 });
+      try {
+        await page.goto(`http://127.0.0.1:${port}/counter/solo.html?${query}`, { waitUntil: "load", timeout: 40000 });
+        await page.waitForFunction(
+          () => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready",
+          { timeout: 70000 },
+        ).catch(() => {});
+        await new Promise((r) => setTimeout(r, 3800));
+        const shot = Buffer.from(await page.screenshot({ encoding: "binary" }));
+        const stats = await sharp(shot).resize(64, 64, { fit: "fill" }).raw().toBuffer({ resolveWithObject: true });
+        let sum = 0;
+        let n = 0;
+        for (let i = 0; i < stats.data.length; i += stats.info.channels) {
+          sum += (stats.data[i] * 0.2126 + stats.data[i + 1] * 0.7152 + stats.data[i + 2] * 0.0722) / 255;
+          n += 1;
+        }
+        const swatches = await page.evaluate(() => document.querySelectorAll(".viewer3d-env").length);
+        tiles.push({ name, buffer: shot });
+        console.log(`  ${vpName.padEnd(8)} ${name.padEnd(26)} mean ${(sum / n).toFixed(3)}  swatches ${swatches}`);
+      } catch (error) {
+        console.log(`  !! ${vpName} ${name}: ${error.message.slice(0, 70)}`);
+      }
+      await page.close();
+    }
+    if (!tiles.length) continue;
+    const CW = Math.round(vw / 2);
+    const CH = Math.round(vh / 2);
+    const cols = 4;
+    const rows = Math.ceil(tiles.length / cols);
+    const composed = await Promise.all(tiles.map(async (tile, i) => ({
+      input: await sharp(tile.buffer).resize(CW, CH, { fit: "fill" }).composite([{
+        input: Buffer.from(
+          `<svg width="${CW}" height="22"><rect width="${CW}" height="22" fill="#141414"/>` +
+          `<text x="6" y="16" font-family="monospace" font-size="12" fill="#fff">${tile.name}</text></svg>`),
+        top: 0, left: 0,
+      }]).png().toBuffer(),
+      left: (i % cols) * CW,
+      top: Math.floor(i / cols) * CH,
+    })));
+    const out = join(SHOTS, `env-${vpName}.png`);
+    await sharp({ create: { width: cols * CW, height: rows * CH, channels: 3, background: "#222" } })
+      .composite(composed).png().toFile(out);
+    console.log(`  -> ${out}`);
+  }
+  await browser.close();
+  server.close();
+}
+
 /** default / exploded / focused, both viewports, with a luminance reading per tile. */
 async function states3(models) {
   const { server, port } = await serve();
@@ -336,6 +398,14 @@ async function main() {
    * Each tile also carries the measured mean luminance of the model against its backdrop, so
    * "too dark" is a number in the log rather than an argument about a screenshot.
    */
+  // --envs: every environment, with one exact and one generic model, at both viewports
+  if (process.argv.includes("--envs")) {
+    const ENVS = ["auto_service", "garage", "studio_small_09", "empty_warehouse_01"];
+    const MODELS = [["yzf", "model=yzf-2021"], ["naked", "model=generic/naked"]];
+    const list = [];
+    for (const env of ENVS) for (const [m, q] of MODELS) list.push([`${env} ${m}`, `${q}&env=${env}`]);
+    return envs(list);
+  }
   if (process.argv.includes("--states3")) {
     const dir = join(WEB, "store", "models", "generic");
     const generics = readdirSync(dir)

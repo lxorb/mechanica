@@ -1045,8 +1045,8 @@ const roomCache = new Map();
  * its floor sits exactly at the vehicle's wheels. Floor height is read from the geometry — the
  * lowest large horizontal extent — rather than assumed to be y = 0, because it rarely is.
  */
-async function loadRoom(THREE, file, radius) {
-  const key = `${file}:${radius.toFixed(2)}`;
+async function loadRoom(THREE, file, radius, height) {
+  const key = `${file}:${radius.toFixed(2)}:${height.toFixed(2)}`;
   if (roomCache.has(key)) return roomCache.get(key);
   const job = (async () => {
     const url = new URL(`../../store/models/env/${file}`, import.meta.url).href;
@@ -1069,13 +1069,29 @@ async function loadRoom(THREE, file, radius) {
     const size = box.getSize(new THREE.Vector3());
     const centre = box.getCenter(new THREE.Vector3());
 
-    // a garage bay is roughly six motorcycles wide; that ratio is what makes the room read as a
-    // room rather than as a warehouse the bike has been lost in
-    const scale = (radius * 12) / Math.max(size.x, size.z, 1e-3);
+    /**
+     * Scale by the room's HEIGHT, not its footprint.
+     *
+     * garage-interior.glb is 19 x 2.6 x 20 — a wide, low room, which is what a garage is. Scaling
+     * its footprint to a sensible multiple of the vehicle put the ceiling at 1.5 units while the
+     * camera orbits at about 3, so the camera sat above the roof looking down through it and the
+     * panel filled with white shapes. Matching the ceiling to roughly twice the vehicle's height
+     * fixes both ends at once: the bike stands in a room with headroom, and the footprint that
+     * comes with it is far larger than anywhere the camera can reach.
+     */
+    const roomHeight = Math.max(size.y, 1e-3);
+    const scale = (height * 2.2) / roomHeight;
     root.scale.setScalar(scale);
+    // floor exactly at the vehicle's wheels, vehicle in the middle of the open area
     root.position.set(-centre.x * scale, -box.min.y * scale, -centre.z * scale);
     root.updateMatrixWorld(true);
-    return { root, dispose: () => { concrete.dispose(); } };
+    const placed = new THREE.Box3().setFromObject(root);
+    return {
+      root,
+      // how far the camera may go before it is inside a wall or through the ceiling
+      limit: Math.min(placed.max.y * 0.9, Math.min(placed.max.x, placed.max.z) * 0.8),
+      dispose: () => { concrete.dispose(); },
+    };
   })();
   roomCache.set(key, job);
   job.catch(() => roomCache.delete(key));
@@ -1708,12 +1724,14 @@ function createScene(THREE, host, initialModel, opts) {
       renderer.toneMappingExposure = BASE_EXPOSURE + exposureLift;
 
       if (entry.scene) {
-        const built = await loadRoom(THREE, entry.scene, model.radius);
+        const built = await loadRoom(THREE, entry.scene, model.radius, Math.max(model.size.y, 0.4));
         if (disposed || token !== envToken) return;
         room = built;
         scene.add(room.root);
         scene.background = null;
         scene.backgroundBlurriness = 0;
+        // you cannot orbit through a wall you can see
+        if (controls && room.limit > model.radius) controls.maxDistance = Math.min(controls.maxDistance, room.limit);
       } else {
         setBackdrop(loaded.background);
         // the 8k, when it arrives, replaces the 4k in place — same framing, more pixels

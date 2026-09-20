@@ -209,15 +209,28 @@ def _mock(vin: str, bikes: list[Bike]) -> Bike | None:
     return None
 
 
-def _decode(vin: str) -> tuple[str, str, int]:
+def _vpic_kind(row: dict) -> str | None:
+    """vPIC decodes the vehicle type for almost every VIN even when it cannot name the model, and that
+    is the one thing that keeps a Civic VIN from coming back as a list of Rebels."""
+    blob = f"{row.get('VehicleType') or ''} {row.get('BodyClass') or ''}".upper()
+    if re.search(r"MOTORCYCLE|SCOOTER|MOPED|ALL TERRAIN|ATV", blob):
+        return "motorcycle"
+    if re.search(r"PASSENGER CAR|TRUCK|MULTIPURPOSE|MPV|VAN|BUS|SEDAN|COUPE|HATCHBACK|WAGON|PICKUP|SPORT UTILITY|SUV", blob):
+        return "car"
+    return None
+
+
+def _decode(vin: str) -> tuple[str, str, int, str | None]:
     try:
         r = httpx.get(VPIC.format(vin=vin), timeout=8.0)
         r.raise_for_status()
         row = (r.json().get("Results") or [{}])[0]
     except Exception:
-        return "", "", 0
+        return "", "", 0, None
     year = re.sub(r"[^0-9]", "", str(row.get("ModelYear") or ""))
-    return str(row.get("Make") or "").strip(), str(row.get("Model") or "").strip(), int(year) if year else 0
+    make = str(row.get("Make") or "").strip()
+    model = str(row.get("Model") or "").strip()
+    return make, model, int(year) if year else 0, _vpic_kind(row)
 
 
 def vin(vin: str) -> IdentifyResponse:
@@ -228,10 +241,12 @@ def vin(vin: str) -> IdentifyResponse:
         return IdentifyResponse(candidates=[Candidate(bikeId=hit.id, confidence=1.0)], bike=hit)
     if len(value) != 17:
         raise HTTPException(422, "vin must be 17 characters")
-    make, model, year = _decode(value)
+    make, model, year, kind = _decode(value)
     if not make:
         return IdentifyResponse(candidates=[], bike=None)
     same_make = [b for b in bikes if _norm(b.make) == _norm(make)]
+    if kind:  # Honda sells both; a Civic's VIN must not come back as a list of Rebels
+        same_make = [b for b in same_make if _kind(b) == kind] or same_make
     group, _ = _find(make, model, same_make, VIN_FLOOR) if model else ([], 0.0)
     if not group:
         # vPIC decodes Make for almost every motorcycle but Model for almost none.

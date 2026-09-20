@@ -5778,10 +5778,11 @@
   "ktm|640-lc4-enduro": {
     "image": "store/img/bikes/ktm-640-lc4-enduro.webp",
     "thumb": "store/img/bikes/ktm-640-lc4-enduro-thumb.webp",
-    "title": "KTM 640 LC4 Enduro Lippujuhlan päivä 2013.JPG",
-    "author": "MKFI",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_640_LC4_Enduro_Lippujuhlan_p%C3%A4iv%C3%A4_2013.JPG"
+    "title": "KTM LC4 640 Enduro.jpg",
+    "author": "Motophil",
+    "license": "CC BY-SA 2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_LC4_640_Enduro.jpg",
+    "hero": "store/img/bikes/ktm-640-lc4-enduro-hero.webp"
   },
   "ktm|640-lc4-supermoto": {
     "image": "store/img/bikes/ktm-640-lc4-supermoto.webp",
@@ -5813,18 +5814,20 @@
   "ktm|690-duke": {
     "image": "store/img/bikes/ktm-690-duke.webp",
     "thumb": "store/img/bikes/ktm-690-duke-thumb.webp",
-    "title": "KTM 690 Duke 2012.JPG",
-    "author": "Faritan Kixs",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_Duke_2012.JPG"
+    "title": "2018 KTM 690 Duke Left front view.jpg",
+    "author": "KTM AG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_KTM_690_Duke_Left_front_view.jpg",
+    "hero": "store/img/bikes/ktm-690-duke-hero.webp"
   },
   "ktm|690-duke-r": {
     "image": "store/img/bikes/ktm-690-duke-r.webp",
     "thumb": "store/img/bikes/ktm-690-duke-r-thumb.webp",
-    "title": "KTM 690 DUKE R, 2016 (26104571404).jpg",
-    "author": "Iwao from Tokyo, Japan",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_DUKE_R,_2016_(26104571404).jpg"
+    "title": "KTM-690-Duke-R-2016-8.jpg",
+    "author": "KTM AG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM-690-Duke-R-2016-8.jpg",
+    "hero": "store/img/bikes/ktm-690-duke-r-hero.webp"
   },
   "ktm|690-enduro": {
     "image": "store/img/bikes/ktm-690-enduro.webp",
@@ -5844,21 +5847,14 @@
     "source": "https://commons.wikimedia.org/wiki/File:KTM_690_Enduro_R_-2026.png",
     "hero": "store/img/bikes/ktm-690-enduro-r-hero.webp"
   },
-  "ktm|690-rally": {
-    "image": "store/img/bikes/ktm-690-rally.webp",
-    "thumb": "store/img/bikes/ktm-690-rally-thumb.webp",
-    "title": "KTM 690 Dakar Rally 2010 Marc Coma.jpg",
-    "author": "Daniel Peppes Gauer",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_Dakar_Rally_2010_Marc_Coma.jpg"
-  },
   "ktm|690-smc": {
     "image": "store/img/bikes/ktm-690-smc.webp",
     "thumb": "store/img/bikes/ktm-690-smc-thumb.webp",
-    "title": "KTM 690 SMC R ABS 2015.JPG",
-    "author": "Peprovira",
+    "title": "KTM 690 SMC R 90.jpg",
+    "author": "KTM AG",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_SMC_R_ABS_2015.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_SMC_R_90.jpg",
+    "hero": "store/img/bikes/ktm-690-smc-hero.webp"
   },
   "ktm|690-smc-r": {
     "image": "store/img/bikes/ktm-690-smc-r.webp",
@@ -5866,23 +5862,26 @@
     "title": "Kevin Gabriel Harslems KTM SMC R 690 2016.jpg",
     "author": "DarkVortex073",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kevin_Gabriel_Harslems_KTM_SMC_R_690_2016.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Kevin_Gabriel_Harslems_KTM_SMC_R_690_2016.jpg",
+    "hero": "store/img/bikes/ktm-690-smc-r-hero.webp"
   },
   "ktm|790-adventure": {
     "image": "store/img/bikes/ktm-790-adventure.webp",
     "thumb": "store/img/bikes/ktm-790-adventure-thumb.webp",
-    "title": "KTM 790 Adventure İstanbul Municipal Police.jpg",
-    "author": "User:ToprakM",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_790_Adventure_%C4%B0stanbul_Municipal_Police.jpg"
+    "title": "KTM 790 Adventure.jpg",
+    "author": "MDzakovic",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_790_Adventure.jpg",
+    "hero": "store/img/bikes/ktm-790-adventure-hero.webp"
   },
   "ktm|790-duke": {
     "image": "store/img/bikes/ktm-790-duke.webp",
     "thumb": "store/img/bikes/ktm-790-duke-thumb.webp",
-    "title": "KTM Duke 790 2018.jpg",
-    "author": "28pg",
+    "title": "KTM 790 Duke (1).jpg",
+    "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_Duke_790_2018.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_790_Duke_(1).jpg",
+    "hero": "store/img/bikes/ktm-790-duke-hero.webp"
   },
   "ktm|890-adventure": {
     "image": "store/img/bikes/ktm-890-adventure.webp",
@@ -5890,7 +5889,8 @@
     "title": "KTM 890 Adventure.jpg",
     "author": "Siechfred",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_890_Adventure.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_890_Adventure.jpg",
+    "hero": "store/img/bikes/ktm-890-adventure-hero.webp"
   },
   "ktm|890-duke": {
     "image": "store/img/bikes/ktm-890-duke.webp",
@@ -5898,7 +5898,8 @@
     "title": "KTM 890 Duke, Interboot 2020, Friedrichshafen (IB200230).jpg",
     "author": "Matti Blume",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_890_Duke,_Interboot_2020,_Friedrichshafen_(IB200230).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_890_Duke,_Interboot_2020,_Friedrichshafen_(IB200230).jpg",
+    "hero": "store/img/bikes/ktm-890-duke-hero.webp"
   },
   "ktm|950-adventure": {
     "image": "store/img/bikes/ktm-950-adventure.webp",
@@ -5906,7 +5907,8 @@
     "title": "KTM 950 ADVENTURE 2004.jpg",
     "author": "Cowgirlonline",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_950_ADVENTURE_2004.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_950_ADVENTURE_2004.jpg",
+    "hero": "store/img/bikes/ktm-950-adventure-hero.webp"
   },
   "ktm|950-adventure-s": {
     "image": "store/img/bikes/ktm-950-adventure-s.webp",
@@ -5914,15 +5916,8 @@
     "title": "KTM 950 Adventure S (15272421202).jpg",
     "author": "order_242 from Chile",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_950_Adventure_S_(15272421202).jpg"
-  },
-  "ktm|950-super-enduro-r": {
-    "image": "store/img/bikes/ktm-950-super-enduro-r.webp",
-    "thumb": "store/img/bikes/ktm-950-super-enduro-r-thumb.webp",
-    "title": "KTM 950 SuperEnduro R.jpg",
-    "author": "StealthFX",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_950_SuperEnduro_R.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_950_Adventure_S_(15272421202).jpg",
+    "hero": "store/img/bikes/ktm-950-adventure-s-hero.webp"
   },
   "ktm|990-adventure": {
     "image": "store/img/bikes/ktm-990-adventure.webp",
@@ -5930,7 +5925,8 @@
     "title": "KTM 990 Adventure R 2011(6000 x 4000).jpg",
     "author": "F Dekkers",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(6000_x_4000).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(6000_x_4000).jpg",
+    "hero": "store/img/bikes/ktm-990-adventure-hero.webp"
   },
   "ktm|990-adventure-black": {
     "image": "store/img/bikes/ktm-990-adventure-black.webp",
@@ -5938,7 +5934,8 @@
     "title": "KTM 990 Adventure black.jpg",
     "author": "Olinone",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_black.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_black.jpg",
+    "hero": "store/img/bikes/ktm-990-adventure-black-hero.webp"
   },
   "ktm|990-adventure-r": {
     "image": "store/img/bikes/ktm-990-adventure-r.webp",
@@ -5946,7 +5943,8 @@
     "title": "KTM 990 Adventure R 2011(3872 x 2592).jpg",
     "author": "F Dekkers",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(3872_x_2592).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(3872_x_2592).jpg",
+    "hero": "store/img/bikes/ktm-990-adventure-r-hero.webp"
   },
   "ktm|990-adventure-s": {
     "image": "store/img/bikes/ktm-990-adventure-s.webp",
@@ -5954,15 +5952,8 @@
     "title": "KTM 990 Adventure S.jpg",
     "author": "ecphaff",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_S.jpg"
-  },
-  "ktm|990-duke": {
-    "image": "store/img/bikes/ktm-990-duke.webp",
-    "thumb": "store/img/bikes/ktm-990-duke-thumb.webp",
-    "title": "KTM 990 Super Duke.JPG",
-    "author": "This illustration was made by DaiFh . Please credit : DaiFh / Wikimedia Commons Feedback welcome on my french Wp account",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Super_Duke.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_S.jpg",
+    "hero": "store/img/bikes/ktm-990-adventure-s-hero.webp"
   },
   "ktm|990-super-duke": {
     "image": "store/img/bikes/ktm-990-super-duke.webp",
@@ -5970,7 +5961,8 @@
     "title": "KTM 990 Super Duke.jpg",
     "author": "This illustration was made by DaiFh . Please credit : DaiFh / Wikimedia Commons Feedback welcome on my french Wp account",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Super_Duke.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_990_Super_Duke.jpg",
+    "hero": "store/img/bikes/ktm-990-super-duke-hero.webp"
   },
   "ktm|brabus-1300-r": {
     "image": "store/img/bikes/ktm-brabus-1300-r.webp",
@@ -5978,7 +5970,8 @@
     "title": "Brabus 1300 R Edition 23 (54943615747).jpg",
     "author": "Alexandre Prevot from Nancy, France",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Brabus_1300_R_Edition_23_(54943615747).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Brabus_1300_R_Edition_23_(54943615747).jpg",
+    "hero": "store/img/bikes/ktm-brabus-1300-r-hero.webp"
   },
   "ktm|freeride-250-r": {
     "image": "store/img/bikes/ktm-freeride-250-r.webp",
@@ -5986,15 +5979,8 @@
     "title": "KTM 250 Freeride R.jpg",
     "author": "KTM AG",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_250_Freeride_R.jpg"
-  },
-  "ktm|freeride-350": {
-    "image": "store/img/bikes/ktm-freeride-350.webp",
-    "thumb": "store/img/bikes/ktm-freeride-350-thumb.webp",
-    "title": "KTM Freeride 350 2015.JPG",
-    "author": "Peprovira",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_Freeride_350_2015.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_250_Freeride_R.jpg",
+    "hero": "store/img/bikes/ktm-freeride-250-r-hero.webp"
   },
   "ktm|freeride-e": {
     "image": "store/img/bikes/ktm-freeride-e.webp",
@@ -6002,7 +5988,8 @@
     "title": "KTM Freeride E-XC (RGB).jpg",
     "author": "KTM AG",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_Freeride_E-XC_(RGB).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_Freeride_E-XC_(RGB).jpg",
+    "hero": "store/img/bikes/ktm-freeride-e-hero.webp"
   },
   "ktm|freeride-e-xc": {
     "image": "store/img/bikes/ktm-freeride-e-xc.webp",
@@ -6010,7 +5997,8 @@
     "title": "KTM Freeride E-XC.jpg",
     "author": "KTM AG",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_Freeride_E-XC.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_Freeride_E-XC.jpg",
+    "hero": "store/img/bikes/ktm-freeride-e-xc-hero.webp"
   },
   "ktm|rc-125": {
     "image": "store/img/bikes/ktm-rc-125.webp",
@@ -6018,15 +6006,8 @@
     "title": "KTM RC 125 (2017).jpg",
     "author": "Djbeck22",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_RC_125_(2017).jpg"
-  },
-  "ktm|rc-200": {
-    "image": "store/img/bikes/ktm-rc-200.webp",
-    "thumb": "store/img/bikes/ktm-rc-200-thumb.webp",
-    "title": "KTM RC 200.jpg",
-    "author": "Kabu Sawsaw",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_RC_200.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_RC_125_(2017).jpg",
+    "hero": "store/img/bikes/ktm-rc-125-hero.webp"
   },
   "ktm|rc-390": {
     "image": "store/img/bikes/ktm-rc-390.webp",
@@ -6034,39 +6015,17 @@
     "title": "KTM RC390 Photo-1449426468159-d96dbf08f19f 2015.jpg",
     "author": "Andrew Pons",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_RC390_Photo-1449426468159-d96dbf08f19f_2015.jpg"
-  },
-  "ktm|rc16": {
-    "image": "store/img/bikes/ktm-rc16.webp",
-    "thumb": "store/img/bikes/ktm-rc16-thumb.webp",
-    "title": "KTM MotoGP Bike RC16.jpg",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:KTM_MotoGP_Bike_RC16.jpg"
-  },
-  "kymco|super-8-50r": {
-    "image": "store/img/bikes/kymco-super-8-50r.webp",
-    "thumb": "store/img/bikes/kymco-super-8-50r-thumb.webp",
-    "title": "Kymco Super 8 50R 2025.jpg",
-    "author": "AVMOTO",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kymco_Super_8_50R_2025.jpg"
-  },
-  "livewire|s2": {
-    "image": "store/img/bikes/livewire-s2.webp",
-    "thumb": "store/img/bikes/livewire-s2-thumb.webp",
-    "title": "LiveWire Maxi-Scooter S2.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:LiveWire_Maxi-Scooter_S2.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_RC390_Photo-1449426468159-d96dbf08f19f_2015.jpg",
+    "hero": "store/img/bikes/ktm-rc-390-hero.webp"
   },
   "moto-guzzi|1200-sport": {
     "image": "store/img/bikes/moto-guzzi-1200-sport.webp",
     "thumb": "store/img/bikes/moto-guzzi-1200-sport-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - 1200 Sport 8V ABS Corsa - 003.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_1200_Sport_8V_ABS_Corsa_-_003.jpg"
+    "title": "Moto Guzzi 1200 Sport - black.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_1200_Sport_-_black.jpg",
+    "hero": "store/img/bikes/moto-guzzi-1200-sport-hero.webp"
   },
   "moto-guzzi|1200-sport-4v": {
     "image": "store/img/bikes/moto-guzzi-1200-sport-4v.webp",
@@ -6074,15 +6033,8 @@
     "title": "Moto Guzzi 1200 Sport 4V (1).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_1200_Sport_4V_(1).jpg"
-  },
-  "moto-guzzi|1200-sport-abs": {
-    "image": "store/img/bikes/moto-guzzi-1200-sport-abs.webp",
-    "thumb": "store/img/bikes/moto-guzzi-1200-sport-abs-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - 1200 Sport 8V ABS Corsa - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_1200_Sport_8V_ABS_Corsa_-_001.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_1200_Sport_4V_(1).jpg",
+    "hero": "store/img/bikes/moto-guzzi-1200-sport-4v-hero.webp"
   },
   "moto-guzzi|audace": {
     "image": "store/img/bikes/moto-guzzi-audace.webp",
@@ -6090,31 +6042,35 @@
     "title": "Moto Guzzi Audace.jpg",
     "author": "Ichats",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Audace.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Audace.jpg",
+    "hero": "store/img/bikes/moto-guzzi-audace-hero.webp"
   },
   "moto-guzzi|bellagio": {
     "image": "store/img/bikes/moto-guzzi-bellagio.webp",
     "thumb": "store/img/bikes/moto-guzzi-bellagio-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - Bellagio Aquila Nera - 003.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_Bellagio_Aquila_Nera_-_003.jpg"
+    "title": "Moto Guzzi Bellagio Aquila Nera.jpg",
+    "author": "Franken-Guzzista",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Bellagio_Aquila_Nera.jpg",
+    "hero": "store/img/bikes/moto-guzzi-bellagio-hero.webp"
   },
   "moto-guzzi|bellagio-aquila-nera": {
     "image": "store/img/bikes/moto-guzzi-bellagio-aquila-nera.webp",
     "thumb": "store/img/bikes/moto-guzzi-bellagio-aquila-nera-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - Bellagio Aquila Nera - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_Bellagio_Aquila_Nera_-_001.jpg"
+    "title": "Moto Guzzi Bellagio Aquila Nera.jpg",
+    "author": "Franken-Guzzista",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Bellagio_Aquila_Nera.jpg",
+    "hero": "store/img/bikes/moto-guzzi-bellagio-aquila-nera-hero.webp"
   },
   "moto-guzzi|breva-1100": {
     "image": "store/img/bikes/moto-guzzi-breva-1100.webp",
     "thumb": "store/img/bikes/moto-guzzi-breva-1100-thumb.webp",
-    "title": "Moto Guzzi Breva 1100 (1).jpg",
+    "title": "Moto Guzzi Breva 1100 (2).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_1100_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_1100_(2).jpg",
+    "hero": "store/img/bikes/moto-guzzi-breva-1100-hero.webp"
   },
   "moto-guzzi|breva-750": {
     "image": "store/img/bikes/moto-guzzi-breva-750.webp",
@@ -6122,7 +6078,8 @@
     "title": "Moto Guzzi Breva 750 2003.jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_750_2003.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_750_2003.jpg",
+    "hero": "store/img/bikes/moto-guzzi-breva-750-hero.webp"
   },
   "moto-guzzi|breva-850": {
     "image": "store/img/bikes/moto-guzzi-breva-850.webp",
@@ -6130,15 +6087,17 @@
     "title": "Moto Guzzi Breva 850.JPG",
     "author": "Vladimiro Galastri Sethi 79",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_850.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_850.JPG",
+    "hero": "store/img/bikes/moto-guzzi-breva-850-hero.webp"
   },
   "moto-guzzi|breva-v-1100": {
     "image": "store/img/bikes/moto-guzzi-breva-v-1100.webp",
     "thumb": "store/img/bikes/moto-guzzi-breva-v-1100-thumb.webp",
-    "title": "Moto Guzzi Breva V 1100 pannier mounts.jpg",
+    "title": "Moto Guzzi Breva V 1100 (2005) with original touring accessories.jpg",
     "author": "CheminduCret",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_V_1100_pannier_mounts.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_V_1100_(2005)_with_original_touring_accessories.jpg",
+    "hero": "store/img/bikes/moto-guzzi-breva-v-1100-hero.webp"
   },
   "moto-guzzi|california-ev": {
     "image": "store/img/bikes/moto-guzzi-california-ev.webp",
@@ -6146,23 +6105,8 @@
     "title": "Moto Guzzi California EV 80 2002.jpg",
     "author": "Franken-Guzzista",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_EV_80_2002.jpg"
-  },
-  "moto-guzzi|california-stone": {
-    "image": "store/img/bikes/moto-guzzi-california-stone.webp",
-    "thumb": "store/img/bikes/moto-guzzi-california-stone-thumb.webp",
-    "title": "Moto Guzzi California Stone sidecar, V85 TT and Breva V750ie (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Stone_sidecar,_V85_TT_and_Breva_V750ie_(1).jpg"
-  },
-  "moto-guzzi|california-touring": {
-    "image": "store/img/bikes/moto-guzzi-california-touring.webp",
-    "thumb": "store/img/bikes/moto-guzzi-california-touring-thumb.webp",
-    "title": "Moto Guzzi California Customized for Touring.jpg",
-    "author": "Lankyrider",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Customized_for_Touring.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_EV_80_2002.jpg",
+    "hero": "store/img/bikes/moto-guzzi-california-ev-hero.webp"
   },
   "moto-guzzi|california-touring-1400": {
     "image": "store/img/bikes/moto-guzzi-california-touring-1400.webp",
@@ -6170,127 +6114,98 @@
     "title": "Moto Guzzi California Touring 1400 white.jpg",
     "author": "CheminduCret",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Touring_1400_white.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Touring_1400_white.jpg",
+    "hero": "store/img/bikes/moto-guzzi-california-touring-1400-hero.webp"
   },
   "moto-guzzi|california-vintage": {
     "image": "store/img/bikes/moto-guzzi-california-vintage.webp",
     "thumb": "store/img/bikes/moto-guzzi-california-vintage-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - California Vintage - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_California_Vintage_-_002.jpg"
+    "title": "Moto Guzzi California Vintage2.JPG",
+    "author": "No machine-readable author provided. Iberti assumed (based on copyright claims).",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Vintage2.JPG",
+    "hero": "store/img/bikes/moto-guzzi-california-vintage-hero.webp"
   },
   "moto-guzzi|eldorado": {
     "image": "store/img/bikes/moto-guzzi-eldorado.webp",
     "thumb": "store/img/bikes/moto-guzzi-eldorado-thumb.webp",
-    "title": "Moto Guzzi V7 Eldorado.jpg",
-    "author": "El Caganer",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Eldorado.jpg"
+    "title": "Moto Guzzi 1400 Eldorado (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_1400_Eldorado_(1).jpg",
+    "hero": "store/img/bikes/moto-guzzi-eldorado-hero.webp"
   },
   "moto-guzzi|eldorado-1400": {
     "image": "store/img/bikes/moto-guzzi-eldorado-1400.webp",
     "thumb": "store/img/bikes/moto-guzzi-eldorado-1400-thumb.webp",
-    "title": "IMG-20230504-WA0002 Moto Guzzi Eldorado 1400.jpg",
-    "author": "MartWrN1163",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:IMG-20230504-WA0002_Moto_Guzzi_Eldorado_1400.jpg"
+    "title": "Moto Guzzi 1400 Eldorado (1).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_1400_Eldorado_(1).jpg",
+    "hero": "store/img/bikes/moto-guzzi-eldorado-1400-hero.webp"
   },
   "moto-guzzi|griso": {
     "image": "store/img/bikes/moto-guzzi-griso.webp",
     "thumb": "store/img/bikes/moto-guzzi-griso-thumb.webp",
-    "title": "2006 Moto Guzzi Griso 1100(1).JPG",
-    "author": "Stefanobiondo",
+    "title": "Moto Guzzi Griso 8V (2).jpg",
+    "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2006_Moto_Guzzi_Griso_1100(1).JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_8V_(2).jpg",
+    "hero": "store/img/bikes/moto-guzzi-griso-hero.webp"
   },
   "moto-guzzi|griso-1100": {
     "image": "store/img/bikes/moto-guzzi-griso-1100.webp",
     "thumb": "store/img/bikes/moto-guzzi-griso-1100-thumb.webp",
-    "title": "Moto Guzzi Griso 1100 72dpi 03.jpg",
-    "author": "Fabian Sandner",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_1100_72dpi_03.jpg"
-  },
-  "moto-guzzi|griso-1200-8v": {
-    "image": "store/img/bikes/moto-guzzi-griso-1200-8v.webp",
-    "thumb": "store/img/bikes/moto-guzzi-griso-1200-8v-thumb.webp",
-    "title": "Moto Guzzi Griso 1200 8v.jpg",
-    "author": "Guzzista76",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_1200_8v.jpg"
+    "title": "Moto Guzzi Griso 1100 (25668849657).jpg",
+    "author": "RL GNZLZ from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_1100_(25668849657).jpg",
+    "hero": "store/img/bikes/moto-guzzi-griso-1100-hero.webp"
   },
   "moto-guzzi|griso-8v": {
     "image": "store/img/bikes/moto-guzzi-griso-8v.webp",
     "thumb": "store/img/bikes/moto-guzzi-griso-8v-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - Griso 8V - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_Griso_8V_-_002.jpg"
-  },
-  "moto-guzzi|griso-8v-se": {
-    "image": "store/img/bikes/moto-guzzi-griso-8v-se.webp",
-    "thumb": "store/img/bikes/moto-guzzi-griso-8v-se-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - Griso 8V SE - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_Griso_8V_SE_-_001.jpg"
+    "title": "Moto Guzzi Griso 8V (2).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_8V_(2).jpg",
+    "hero": "store/img/bikes/moto-guzzi-griso-8v-hero.webp"
   },
   "moto-guzzi|mgs-01-corsa": {
     "image": "store/img/bikes/moto-guzzi-mgs-01-corsa.webp",
     "thumb": "store/img/bikes/moto-guzzi-mgs-01-corsa-thumb.webp",
-    "title": "Moto Guzzi MGS-01 Corsa.JPG",
-    "author": "Unknown",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_MGS-01_Corsa.JPG"
+    "title": "Moto Guzzi MGS-01 Corsa noBG.jpg",
+    "author": "Quelle: User:Cjp24 / Freisteller, Bildbearbeitung & Retusche von Auge=mit",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_MGS-01_Corsa_noBG.jpg",
+    "hero": "store/img/bikes/moto-guzzi-mgs-01-corsa-hero.webp"
   },
   "moto-guzzi|mgx-21": {
     "image": "store/img/bikes/moto-guzzi-mgx-21.webp",
     "thumb": "store/img/bikes/moto-guzzi-mgx-21-thumb.webp",
-    "title": "Moto Guzzi MGX-21 in museum 3.jpg",
-    "author": "CheminduCret",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_MGX-21_in_museum_3.jpg"
+    "title": "Moto Guzzi MGX-21.jpg",
+    "author": "Guzzista76",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_MGX-21.jpg",
+    "hero": "store/img/bikes/moto-guzzi-mgx-21-hero.webp"
   },
   "moto-guzzi|nevada": {
     "image": "store/img/bikes/moto-guzzi-nevada.webp",
     "thumb": "store/img/bikes/moto-guzzi-nevada-thumb.webp",
-    "title": "Paris - Bonhams 2016 - Millenovecento 36 custom Moto Guzzi 750 cm3 Nevada - 2003 - 001.jpg",
-    "author": "Thesupermat",
+    "title": "Moto Guzzi Nevada Anniversario as custom.JPG",
+    "author": "Tutkamestari",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Millenovecento_36_custom_Moto_Guzzi_750_cm3_Nevada_-_2003_-_001.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_Anniversario_as_custom.JPG",
+    "hero": "store/img/bikes/moto-guzzi-nevada-hero.webp"
   },
   "moto-guzzi|nevada-750": {
     "image": "store/img/bikes/moto-guzzi-nevada-750.webp",
     "thumb": "store/img/bikes/moto-guzzi-nevada-750-thumb.webp",
-    "title": "Paris - Bonhams 2016 - Millenovecento 36 custom Moto Guzzi 750 cm3 Nevada - 2003 - 002.jpg",
-    "author": "Thesupermat",
+    "title": "My Nevada 750.jpg",
+    "author": "Hoagy-dubh",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Millenovecento_36_custom_Moto_Guzzi_750_cm3_Nevada_-_2003_-_002.jpg"
-  },
-  "moto-guzzi|nevada-750-classic": {
-    "image": "store/img/bikes/moto-guzzi-nevada-750-classic.webp",
-    "thumb": "store/img/bikes/moto-guzzi-nevada-750-classic-thumb.webp",
-    "title": "Moto Guzzi Nevada 750 Classic in Mandello.jpg",
-    "author": "CheminduCret",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_750_Classic_in_Mandello.jpg"
-  },
-  "moto-guzzi|nevada-750-club": {
-    "image": "store/img/bikes/moto-guzzi-nevada-750-club.webp",
-    "thumb": "store/img/bikes/moto-guzzi-nevada-750-club-thumb.webp",
-    "title": "Moto Guzzi Nevada 750 Club 1998-1999.jpg",
-    "author": "CheminduCret",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_750_Club_1998-1999.jpg"
-  },
-  "moto-guzzi|nevada-classic-750": {
-    "image": "store/img/bikes/moto-guzzi-nevada-classic-750.webp",
-    "thumb": "store/img/bikes/moto-guzzi-nevada-classic-750-thumb.webp",
-    "title": "Moto Guzzi 750 Nevada Classic.JPG",
-    "author": "Addvisor",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_750_Nevada_Classic.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:My_Nevada_750.jpg",
+    "hero": "store/img/bikes/moto-guzzi-nevada-750-hero.webp"
   },
   "moto-guzzi|norge-1200": {
     "image": "store/img/bikes/moto-guzzi-norge-1200.webp",
@@ -6298,15 +6213,8 @@
     "title": "Moto Guzzi Norge 1200 GT 8V (3).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Norge_1200_GT_8V_(3).jpg"
-  },
-  "moto-guzzi|norge-1200-gt": {
-    "image": "store/img/bikes/moto-guzzi-norge-1200-gt.webp",
-    "thumb": "store/img/bikes/moto-guzzi-norge-1200-gt-thumb.webp",
-    "title": "Moto Guzzi Norge 1200 GT 8V (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Norge_1200_GT_8V_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Norge_1200_GT_8V_(3).jpg",
+    "hero": "store/img/bikes/moto-guzzi-norge-1200-hero.webp"
   },
   "moto-guzzi|norge-1200-gt-8v": {
     "image": "store/img/bikes/moto-guzzi-norge-1200-gt-8v.webp",
@@ -6314,31 +6222,26 @@
     "title": "Moto Guzzi Norge 1200 GT 8V (2).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Norge_1200_GT_8V_(2).jpg"
-  },
-  "moto-guzzi|norge-gt-8v": {
-    "image": "store/img/bikes/moto-guzzi-norge-gt-8v.webp",
-    "thumb": "store/img/bikes/moto-guzzi-norge-gt-8v-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - Norge GT 8V ABS Raid Capo Nord - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_Norge_GT_8V_ABS_Raid_Capo_Nord_-_002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Norge_1200_GT_8V_(2).jpg",
+    "hero": "store/img/bikes/moto-guzzi-norge-1200-gt-8v-hero.webp"
   },
   "moto-guzzi|stelvio": {
     "image": "store/img/bikes/moto-guzzi-stelvio.webp",
     "thumb": "store/img/bikes/moto-guzzi-stelvio-thumb.webp",
-    "title": "Moscow, Moto Guzzi Stelvio (2008) 1200 4V, BMW R1250, Sept 2026 01.jpg",
-    "author": "Retired electrician",
+    "title": "Moto Guzzi Stelvio 2024 left.jpg",
+    "author": "CheminduCret",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Moto_Guzzi_Stelvio_(2008)_1200_4V,_BMW_R1250,_Sept_2026_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Stelvio_2024_left.jpg",
+    "hero": "store/img/bikes/moto-guzzi-stelvio-hero.webp"
   },
   "moto-guzzi|stelvio-1200-4v": {
     "image": "store/img/bikes/moto-guzzi-stelvio-1200-4v.webp",
     "thumb": "store/img/bikes/moto-guzzi-stelvio-1200-4v-thumb.webp",
-    "title": "Moto Guzzi Stelvio 1200 4V.jpg",
-    "author": "Addvisor",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Stelvio_1200_4V.jpg"
+    "title": "Moto Guzzi Stelvio 1200 4v (8883798197).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Stelvio_1200_4v_(8883798197).jpg",
+    "hero": "store/img/bikes/moto-guzzi-stelvio-1200-4v-hero.webp"
   },
   "moto-guzzi|stelvio-1200-ntx": {
     "image": "store/img/bikes/moto-guzzi-stelvio-1200-ntx.webp",
@@ -6346,55 +6249,26 @@
     "title": "Moto Guzzi Stelvio 1200 NTX.jpg",
     "author": "CheminduCret",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Stelvio_1200_NTX.jpg"
-  },
-  "moto-guzzi|v-11-coppa-italia": {
-    "image": "store/img/bikes/moto-guzzi-v-11-coppa-italia.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v-11-coppa-italia-thumb.webp",
-    "title": "Moto Guzzi V11 Coppa Italia (2).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Coppa_Italia_(2).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Stelvio_1200_NTX.jpg",
+    "hero": "store/img/bikes/moto-guzzi-stelvio-1200-ntx-hero.webp"
   },
   "moto-guzzi|v100-mandello": {
     "image": "store/img/bikes/moto-guzzi-v100-mandello.webp",
     "thumb": "store/img/bikes/moto-guzzi-v100-mandello-thumb.webp",
-    "title": "Rosso Magma's Moto guzzi v100 mandello museum 2022 front.jpg",
-    "author": "Zigdax",
+    "title": "Moto Guzzi V100 Mandello 2023 right.jpg",
+    "author": "Benutzer HerzoGuzzi auf https://www.guzzisti.de/forum",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Rosso_Magma's_Moto_guzzi_v100_mandello_museum_2022_front.jpg"
-  },
-  "moto-guzzi|v11-ballabio": {
-    "image": "store/img/bikes/moto-guzzi-v11-ballabio.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v11-ballabio-thumb.webp",
-    "title": "V11Ballabio03 06.jpg",
-    "author": "Serge PIOTIN aka Sergio",
-    "license": "CC BY-SA 2.5",
-    "source": "https://commons.wikimedia.org/wiki/File:V11Ballabio03_06.jpg"
-  },
-  "moto-guzzi|v11-cafe-sport": {
-    "image": "store/img/bikes/moto-guzzi-v11-cafe-sport.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v11-cafe-sport-thumb.webp",
-    "title": "V11CafeSport03 05.jpg",
-    "author": "Serge PIOTIN aka Sergio",
-    "license": "CC BY-SA 2.5",
-    "source": "https://commons.wikimedia.org/wiki/File:V11CafeSport03_05.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V100_Mandello_2023_right.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v100-mandello-hero.webp"
   },
   "moto-guzzi|v11-le-mans": {
     "image": "store/img/bikes/moto-guzzi-v11-le-mans.webp",
     "thumb": "store/img/bikes/moto-guzzi-v11-le-mans-thumb.webp",
-    "title": "Moto Guzzi V11 Le Mans (1).jpg",
-    "author": "Cjp24",
+    "title": "Moto Guzzi V11 Le Mans Tenni.jpg",
+    "author": "Franken-Guzzista",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_(1).jpg"
-  },
-  "moto-guzzi|v11-le-mans-nero-corsa": {
-    "image": "store/img/bikes/moto-guzzi-v11-le-mans-nero-corsa.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v11-le-mans-nero-corsa-thumb.webp",
-    "title": "Moto Guzzi V11 Le Mans Nero Corsa.jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_Nero_Corsa.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_Tenni.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v11-le-mans-hero.webp"
   },
   "moto-guzzi|v11-le-mans-rosso-corsa": {
     "image": "store/img/bikes/moto-guzzi-v11-le-mans-rosso-corsa.webp",
@@ -6402,15 +6276,17 @@
     "title": "Moto Guzzi V11 Le Mans Rosso Corsa (1).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_Rosso_Corsa_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_Rosso_Corsa_(1).jpg",
+    "hero": "store/img/bikes/moto-guzzi-v11-le-mans-rosso-corsa-hero.webp"
   },
   "moto-guzzi|v7-classic": {
     "image": "store/img/bikes/moto-guzzi-v7-classic.webp",
     "thumb": "store/img/bikes/moto-guzzi-v7-classic-thumb.webp",
-    "title": "Moto Guzzi V7 Classic Parked in Front of Wei Yi Dental Clinic 20141119.jpg",
-    "author": "玄史生",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Classic_Parked_in_Front_of_Wei_Yi_Dental_Clinic_20141119.jpg"
+    "title": "Moto Guzzi V7 Classic & Sidecar - Flickr - mick - Lumix.jpg",
+    "author": "Mick from Northamptonshire, England",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Classic_%26_Sidecar_-_Flickr_-_mick_-_Lumix.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-classic-hero.webp"
   },
   "moto-guzzi|v7-ii-stornello": {
     "image": "store/img/bikes/moto-guzzi-v7-ii-stornello.webp",
@@ -6418,15 +6294,8 @@
     "title": "Moto Guzzi V7 II Stornello.jpg",
     "author": "Darcest",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_II_Stornello.jpg"
-  },
-  "moto-guzzi|v7-iii-racer": {
-    "image": "store/img/bikes/moto-guzzi-v7-iii-racer.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v7-iii-racer-thumb.webp",
-    "title": "Moto Guzzi V7 III Racer.jpg",
-    "author": "Corvettec6r",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_III_Racer.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_II_Stornello.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-ii-stornello-hero.webp"
   },
   "moto-guzzi|v7-iii-rough": {
     "image": "store/img/bikes/moto-guzzi-v7-iii-rough.webp",
@@ -6434,7 +6303,8 @@
     "title": "Moto Guzzi V7III Rough.jpg",
     "author": "Rockalore",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7III_Rough.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7III_Rough.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-iii-rough-hero.webp"
   },
   "moto-guzzi|v7-iii-stone": {
     "image": "store/img/bikes/moto-guzzi-v7-iii-stone.webp",
@@ -6442,31 +6312,35 @@
     "title": "Moto Guzzi V7 III Stone.jpg",
     "author": "Luca Boldrini",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_III_Stone.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_III_Stone.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-iii-stone-hero.webp"
   },
   "moto-guzzi|v7-racer": {
     "image": "store/img/bikes/moto-guzzi-v7-racer.webp",
     "thumb": "store/img/bikes/moto-guzzi-v7-racer-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Moto Guzzi - V7 Racer - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_V7_Racer_-_002.jpg"
+    "title": "Moto Guzzi V7 Racer 2.jpg",
+    "author": "https://www.flickr.com/photos/flowizm/",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Racer_2.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-racer-hero.webp"
   },
   "moto-guzzi|v7-special": {
     "image": "store/img/bikes/moto-guzzi-v7-special.webp",
     "thumb": "store/img/bikes/moto-guzzi-v7-special-thumb.webp",
-    "title": "Moto Guzzi V7 Special Ambassador 750cc 1971.jpg",
-    "author": "Montesita",
+    "title": "Moto Guzzi V7 Special 750cc 1971 noBG.jpg",
+    "author": "Quelle: User:Montesita / Freisteller, Bildbearbeitung & Retusche von Auge=mit",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Special_Ambassador_750cc_1971.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Special_750cc_1971_noBG.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-special-hero.webp"
   },
   "moto-guzzi|v7-special-850": {
     "image": "store/img/bikes/moto-guzzi-v7-special-850.webp",
     "thumb": "store/img/bikes/moto-guzzi-v7-special-850-thumb.webp",
-    "title": "Moto Guzzi V7 Special 850 2025.jpg",
-    "author": "JINAN45",
+    "title": "Moto Guzzi V7 850 Special.jpg",
+    "author": "Spectru125gp2",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Special_850_2025.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_850_Special.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-special-850-hero.webp"
   },
   "moto-guzzi|v7-stone": {
     "image": "store/img/bikes/moto-guzzi-v7-stone.webp",
@@ -6474,7 +6348,8 @@
     "title": "Moto Guzzi V7 Stone Gucci-Palace 2023.jpg",
     "author": "CheminduCret",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Stone_Gucci-Palace_2023.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Stone_Gucci-Palace_2023.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v7-stone-hero.webp"
   },
   "moto-guzzi|v85-tt": {
     "image": "store/img/bikes/moto-guzzi-v85-tt.webp",
@@ -6482,47 +6357,17 @@
     "title": "Cruscotto Moto Guzzi V85 TT.jpg",
     "author": "Foleigorsp",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cruscotto_Moto_Guzzi_V85_TT.jpg"
-  },
-  "moto-guzzi|v85-tt-travel": {
-    "image": "store/img/bikes/moto-guzzi-v85-tt-travel.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v85-tt-travel-thumb.webp",
-    "title": "Moto Guzzi V85 TT Travel.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V85_TT_Travel.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Cruscotto_Moto_Guzzi_V85_TT.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v85-tt-hero.webp"
   },
   "moto-guzzi|v9-bobber": {
     "image": "store/img/bikes/moto-guzzi-v9-bobber.webp",
     "thumb": "store/img/bikes/moto-guzzi-v9-bobber-thumb.webp",
-    "title": "Moto Guzzi V9 Bobber Centenario 2021 museum.jpg",
-    "author": "CheminduCret",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V9_Bobber_Centenario_2021_museum.jpg"
-  },
-  "moto-guzzi|v9-roamer": {
-    "image": "store/img/bikes/moto-guzzi-v9-roamer.webp",
-    "thumb": "store/img/bikes/moto-guzzi-v9-roamer-thumb.webp",
-    "title": "Moto Guzzi V9 Roamer 2022.jpg",
-    "author": "CheminduCret",
+    "title": "Moto Guzzi V9 Bobber left noBG.jpg",
+    "author": "Auge=mit",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V9_Roamer_2022.jpg"
-  },
-  "mv-agusta|brutale-1000": {
-    "image": "store/img/bikes/mv-agusta-brutale-1000.webp",
-    "thumb": "store/img/bikes/mv-agusta-brutale-1000-thumb.webp",
-    "title": "2024 MV Agusta Brutale 1000 RS (2).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_MV_Agusta_Brutale_1000_RS_(2).jpg"
-  },
-  "mv-agusta|brutale-1000-rr": {
-    "image": "store/img/bikes/mv-agusta-brutale-1000-rr.webp",
-    "thumb": "store/img/bikes/mv-agusta-brutale-1000-rr-thumb.webp",
-    "title": "2022 MV Agusta Brutale 1000 RR Nürburgring, front right.jpg",
-    "author": "Mr.choppers",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_MV_Agusta_Brutale_1000_RR_N%C3%BCrburgring,_front_right.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V9_Bobber_left_noBG.jpg",
+    "hero": "store/img/bikes/moto-guzzi-v9-bobber-hero.webp"
   },
   "mv-agusta|brutale-1000-rs": {
     "image": "store/img/bikes/mv-agusta-brutale-1000-rs.webp",
@@ -6530,23 +6375,17 @@
     "title": "Mv Agusta Brutale 1000 RS (2021).jpg",
     "author": "Matthb1395",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Mv_Agusta_Brutale_1000_RS_(2021).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Mv_Agusta_Brutale_1000_RS_(2021).jpg",
+    "hero": "store/img/bikes/mv-agusta-brutale-1000-rs-hero.webp"
   },
   "mv-agusta|brutale-800": {
     "image": "store/img/bikes/mv-agusta-brutale-800.webp",
     "thumb": "store/img/bikes/mv-agusta-brutale-800-thumb.webp",
-    "title": "Mv Agusta Brutale 800 (2019).jpg",
-    "author": "Matthb1395",
+    "title": "MV Agusta Brutale 800 Dragster RR noBG.jpg",
+    "author": "Klaus Nahr / Freisteller von Auge=mit",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Mv_Agusta_Brutale_800_(2019).jpg"
-  },
-  "mv-agusta|brutale-800-rr": {
-    "image": "store/img/bikes/mv-agusta-brutale-800-rr.webp",
-    "thumb": "store/img/bikes/mv-agusta-brutale-800-rr-thumb.webp",
-    "title": "MV Agusta Brutale 800 Dragster RR.jpg",
-    "author": "Klaus Nahr",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Brutale_800_Dragster_RR.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Brutale_800_Dragster_RR_noBG.jpg",
+    "hero": "store/img/bikes/mv-agusta-brutale-800-hero.webp"
   },
   "mv-agusta|dragster-800": {
     "image": "store/img/bikes/mv-agusta-dragster-800.webp",
@@ -6554,55 +6393,53 @@
     "title": "2017 MV Agusta Brutale Dragster 800 RC, right side view.jpg",
     "author": "Mr.choppers",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_MV_Agusta_Brutale_Dragster_800_RC,_right_side_view.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2017_MV_Agusta_Brutale_Dragster_800_RC,_right_side_view.jpg",
+    "hero": "store/img/bikes/mv-agusta-dragster-800-hero.webp"
   },
   "mv-agusta|dragster-800-rr": {
     "image": "store/img/bikes/mv-agusta-dragster-800-rr.webp",
     "thumb": "store/img/bikes/mv-agusta-dragster-800-rr-thumb.webp",
-    "title": "MV Agusta Dragster 800 RR (2).jpg",
-    "author": "Cjp24",
+    "title": "MV Agusta Brutale 800 Dragster RR noBG.jpg",
+    "author": "Klaus Nahr / Freisteller von Auge=mit",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Dragster_800_RR_(2).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Brutale_800_Dragster_RR_noBG.jpg",
+    "hero": "store/img/bikes/mv-agusta-dragster-800-rr-hero.webp"
   },
   "mv-agusta|f3-800": {
     "image": "store/img/bikes/mv-agusta-f3-800.webp",
     "thumb": "store/img/bikes/mv-agusta-f3-800-thumb.webp",
-    "title": "MV Agusta - F3 800 Special Edition \"Ago\" (10759967754).jpg",
-    "author": "Decio \"desmodex\"",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_-_F3_800_Special_Edition_%22Ago%22_(10759967754).jpg"
+    "title": "Mercedes-AMG F3 800 2019.jpg",
+    "author": "L33chl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-AMG_F3_800_2019.jpg",
+    "hero": "store/img/bikes/mv-agusta-f3-800-hero.webp"
   },
   "mv-agusta|f4-1000-r": {
     "image": "store/img/bikes/mv-agusta-f4-1000-r.webp",
     "thumb": "store/img/bikes/mv-agusta-f4-1000-r-thumb.webp",
-    "title": "Paris - Bonhams 2017 - MV Agusta F4 1000 R - 2010 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2017_-_MV_Agusta_F4_1000_R_-_2010_-_001.jpg"
+    "title": "MV Agusta F4 1000 R 312.jpg",
+    "author": "Klaus Nahr from Germany",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_F4_1000_R_312.jpg",
+    "hero": "store/img/bikes/mv-agusta-f4-1000-r-hero.webp"
   },
   "mv-agusta|lxp-orioli": {
     "image": "store/img/bikes/mv-agusta-lxp-orioli.webp",
     "thumb": "store/img/bikes/mv-agusta-lxp-orioli-thumb.webp",
-    "title": "MV AGUSTA LXP ORIOLI (2024).jpg",
-    "author": "Matthb1395",
+    "title": "MV Agusta LXP Orioli.jpg",
+    "author": "Calreyn88",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_AGUSTA_LXP_ORIOLI_(2024).jpg"
-  },
-  "mv-agusta|rivale-800": {
-    "image": "store/img/bikes/mv-agusta-rivale-800.webp",
-    "thumb": "store/img/bikes/mv-agusta-rivale-800-thumb.webp",
-    "title": "MV Agusta - Rivale 800 \"urban camo\" Special Edition (10759920586).jpg",
-    "author": "Decio \"desmodex\"",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_-_Rivale_800_%22urban_camo%22_Special_Edition_(10759920586).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_LXP_Orioli.jpg",
+    "hero": "store/img/bikes/mv-agusta-lxp-orioli-hero.webp"
   },
   "mv-agusta|rush-1000": {
     "image": "store/img/bikes/mv-agusta-rush-1000.webp",
     "thumb": "store/img/bikes/mv-agusta-rush-1000-thumb.webp",
-    "title": "MV Agusta Rush 1000 - EICMA 2024.jpg",
-    "author": "Saggittarius A",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Rush_1000_-_EICMA_2024.jpg"
+    "title": "MV AGUSTA RUSH 1000 (2023).jpg",
+    "author": "Matthb1395",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MV_AGUSTA_RUSH_1000_(2023).jpg",
+    "hero": "store/img/bikes/mv-agusta-rush-1000-hero.webp"
   },
   "mv-agusta|stradale-800": {
     "image": "store/img/bikes/mv-agusta-stradale-800.webp",
@@ -6610,15 +6447,8 @@
     "title": "2016 MV AGUSTA STRADALE 800.jpg",
     "author": "一二三渡辺",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_MV_AGUSTA_STRADALE_800.jpg"
-  },
-  "mv-agusta|superveloce-1000-oro": {
-    "image": "store/img/bikes/mv-agusta-superveloce-1000-oro.webp",
-    "thumb": "store/img/bikes/mv-agusta-superveloce-1000-oro-thumb.webp",
-    "title": "MV AGUSTA SUPERVELOCE 1000 SERIE ORO (2024).jpg",
-    "author": "Matthb1395",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_AGUSTA_SUPERVELOCE_1000_SERIE_ORO_(2024).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2016_MV_AGUSTA_STRADALE_800.jpg",
+    "hero": "store/img/bikes/mv-agusta-stradale-800-hero.webp"
   },
   "mv-agusta|superveloce-800": {
     "image": "store/img/bikes/mv-agusta-superveloce-800.webp",
@@ -6626,23 +6456,8 @@
     "title": "2021 MV Agusta Superveloce 800.jpg",
     "author": "DestinationFearFan",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_MV_Agusta_Superveloce_800.jpg"
-  },
-  "mv-agusta|superveloce-800-oro": {
-    "image": "store/img/bikes/mv-agusta-superveloce-800-oro.webp",
-    "thumb": "store/img/bikes/mv-agusta-superveloce-800-oro-thumb.webp",
-    "title": "MV Agusta Superveloce 800 Serie Oro .jpg",
-    "author": "Matthb1395",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Superveloce_800_Serie_Oro_.jpg"
-  },
-  "mv-agusta|turismo-veloce-800": {
-    "image": "store/img/bikes/mv-agusta-turismo-veloce-800.webp",
-    "thumb": "store/img/bikes/mv-agusta-turismo-veloce-800-thumb.webp",
-    "title": "MV Agusta Turismo Veloce 800 HMT 2015.jpeg",
-    "author": "San Andreas",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_HMT_2015.jpeg"
+    "source": "https://commons.wikimedia.org/wiki/File:2021_MV_Agusta_Superveloce_800.jpg",
+    "hero": "store/img/bikes/mv-agusta-superveloce-800-hero.webp"
   },
   "mv-agusta|turismo-veloce-800-lusso": {
     "image": "store/img/bikes/mv-agusta-turismo-veloce-800-lusso.webp",
@@ -6650,7 +6465,8 @@
     "title": "MV Agusta Turismo Veloce 800 Lusso SCS (1).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_Lusso_SCS_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_Lusso_SCS_(1).jpg",
+    "hero": "store/img/bikes/mv-agusta-turismo-veloce-800-lusso-hero.webp"
   },
   "mv-agusta|turismo-veloce-800-scs": {
     "image": "store/img/bikes/mv-agusta-turismo-veloce-800-scs.webp",
@@ -6658,7 +6474,8 @@
     "title": "MV Agusta Turismo Veloce 800 Lusso SCS (2).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_Lusso_SCS_(2).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_Lusso_SCS_(2).jpg",
+    "hero": "store/img/bikes/mv-agusta-turismo-veloce-800-scs-hero.webp"
   },
   "niu|fqi-500": {
     "image": "store/img/bikes/niu-fqi-500.webp",
@@ -6666,15 +6483,8 @@
     "title": "NIU FQi 500.jpg",
     "author": "MotorideSA",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:NIU_FQi_500.jpg"
-  },
-  "niu|fqix": {
-    "image": "store/img/bikes/niu-fqix.webp",
-    "thumb": "store/img/bikes/niu-fqix-thumb.webp",
-    "title": "NIU FQiX 2026.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:NIU_FQiX_2026.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:NIU_FQi_500.jpg",
+    "hero": "store/img/bikes/niu-fqi-500-hero.webp"
   },
   "niu|nqi": {
     "image": "store/img/bikes/niu-nqi.webp",
@@ -6682,23 +6492,8 @@
     "title": "Niu NQI E-Scooter.jpg",
     "author": "Joost J. Bakker IJmuiden",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Niu_NQI_E-Scooter.jpg"
-  },
-  "niu|nqix": {
-    "image": "store/img/bikes/niu-nqix.webp",
-    "thumb": "store/img/bikes/niu-nqix-thumb.webp",
-    "title": "NIU NQiX 2026.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:NIU_NQiX_2026.jpg"
-  },
-  "niu|rqi": {
-    "image": "store/img/bikes/niu-rqi.webp",
-    "thumb": "store/img/bikes/niu-rqi-thumb.webp",
-    "title": "NIU RQi Sport.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:NIU_RQi_Sport.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Niu_NQI_E-Scooter.jpg",
+    "hero": "store/img/bikes/niu-nqi-hero.webp"
   },
   "royal-enfield|500-bullet-classic": {
     "image": "store/img/bikes/royal-enfield-500-bullet-classic.webp",
@@ -6706,15 +6501,8 @@
     "title": "Royal Enfield Bullet Classic 500 with Watsonian Squire Sidecar - 20220205-02 PvE.jpg",
     "author": "Pieter van Everdingen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Classic_500_with_Watsonian_Squire_Sidecar_-_20220205-02_PvE.jpg"
-  },
-  "royal-enfield|bear-650": {
-    "image": "store/img/bikes/royal-enfield-bear-650.webp",
-    "thumb": "store/img/bikes/royal-enfield-bear-650-thumb.webp",
-    "title": "Royal Enfield Bear 650 2026.jpg",
-    "author": "XDVRACE",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bear_650_2026.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Classic_500_with_Watsonian_Squire_Sidecar_-_20220205-02_PvE.jpg",
+    "hero": "store/img/bikes/royal-enfield-500-bullet-classic-hero.webp"
   },
   "royal-enfield|bullet-350": {
     "image": "store/img/bikes/royal-enfield-bullet-350.webp",
@@ -6722,7 +6510,8 @@
     "title": "Royal Enfield Bullet 350 (54832566003).jpg",
     "author": "kishjar? from Moscow, Russia",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_350_(54832566003).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_350_(54832566003).jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-350-hero.webp"
   },
   "royal-enfield|bullet-350-twinspark": {
     "image": "store/img/bikes/royal-enfield-bullet-350-twinspark.webp",
@@ -6730,39 +6519,35 @@
     "title": "Bullet 350 Twinspark.jpg",
     "author": "Vaikoovery",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Bullet_350_Twinspark.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Bullet_350_Twinspark.jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-350-twinspark-hero.webp"
   },
   "royal-enfield|bullet-500": {
     "image": "store/img/bikes/royal-enfield-bullet-500.webp",
     "thumb": "store/img/bikes/royal-enfield-bullet-500-thumb.webp",
-    "title": "Royal Enfield Bullet Classic 500 2015 (34543599102).jpg",
-    "author": "RL GNZLZ from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Classic_500_2015_(34543599102).jpg"
+    "title": "Royal Enfield Bullet 500 - 2002 model.jpg",
+    "author": "Samihasib",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_500_-_2002_model.jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-500-hero.webp"
   },
   "royal-enfield|bullet-500-classic": {
     "image": "store/img/bikes/royal-enfield-bullet-500-classic.webp",
     "thumb": "store/img/bikes/royal-enfield-bullet-500-classic-thumb.webp",
-    "title": "Royal Enfield Bullet 500 Classic (14293584626).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_500_Classic_(14293584626).jpg"
-  },
-  "royal-enfield|bullet-650": {
-    "image": "store/img/bikes/royal-enfield-bullet-650.webp",
-    "thumb": "store/img/bikes/royal-enfield-bullet-650-thumb.webp",
-    "title": "Royal Enfield Bullet 650 2026.jpg",
-    "author": "MotorideSA",
+    "title": "Royal Enfield Bullet Classic 500 with Watsonian Squire Sidecar - 20220205-03 PvE.jpg",
+    "author": "Pieter van Everdingen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_650_2026.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Classic_500_with_Watsonian_Squire_Sidecar_-_20220205-03_PvE.jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-500-classic-hero.webp"
   },
   "royal-enfield|bullet-classic-500": {
     "image": "store/img/bikes/royal-enfield-bullet-classic-500.webp",
     "thumb": "store/img/bikes/royal-enfield-bullet-classic-500-thumb.webp",
-    "title": "Sun shade capture on Royal Enfield Bullet Classic 500.jpg",
-    "author": "Kmuralimech",
+    "title": "Royal Enfield Bullet Classic 500 with Watsonian Squire Sidecar - 20220205-03 PvE.jpg",
+    "author": "Pieter van Everdingen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Sun_shade_capture_on_Royal_Enfield_Bullet_Classic_500.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Classic_500_with_Watsonian_Squire_Sidecar_-_20220205-03_PvE.jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-classic-500-hero.webp"
   },
   "royal-enfield|bullet-electra": {
     "image": "store/img/bikes/royal-enfield-bullet-electra.webp",
@@ -6770,39 +6555,26 @@
     "title": "Royal Enfield Bullet Electra 350, pure black model 03.jpg",
     "author": "Pinakpani",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_03.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_03.jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-electra-hero.webp"
   },
   "royal-enfield|bullet-electra-350": {
     "image": "store/img/bikes/royal-enfield-bullet-electra-350.webp",
     "thumb": "store/img/bikes/royal-enfield-bullet-electra-350-thumb.webp",
-    "title": "Royal Enfield Bullet Electra 350, pure black model 01.jpg",
+    "title": "Royal Enfield Bullet Electra 350, pure black model 05.jpg",
     "author": "Pinakpani",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_01.jpg"
-  },
-  "royal-enfield|bullet-machismo": {
-    "image": "store/img/bikes/royal-enfield-bullet-machismo.webp",
-    "thumb": "store/img/bikes/royal-enfield-bullet-machismo-thumb.webp",
-    "title": "Royal Enfield Bullet Machismo.jpg",
-    "author": "V Malik",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Machismo.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_05.jpg",
+    "hero": "store/img/bikes/royal-enfield-bullet-electra-350-hero.webp"
   },
   "royal-enfield|classic-350": {
     "image": "store/img/bikes/royal-enfield-classic-350.webp",
     "thumb": "store/img/bikes/royal-enfield-classic-350-thumb.webp",
-    "title": "Royal Enfield Bullet 350 Classic, Leh-Manali Highway.jpg",
-    "author": "Yann Forget",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_350_Classic,_Leh-Manali_Highway.jpg"
-  },
-  "royal-enfield|classic-350-signals": {
-    "image": "store/img/bikes/royal-enfield-classic-350-signals.webp",
-    "thumb": "store/img/bikes/royal-enfield-classic-350-signals-thumb.webp",
-    "title": "Royal Enfield méteor 350 \"Classic 350 Signals\".jpg",
-    "author": "Jean-Paul Corlin",
+    "title": "Royal Enfield Classic 350 (2017 Model Year).jpg",
+    "author": "Samihasib",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_m%C3%A9teor_350_%22Classic_350_Signals%22.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_350_(2017_Model_Year).jpg",
+    "hero": "store/img/bikes/royal-enfield-classic-350-hero.webp"
   },
   "royal-enfield|classic-500": {
     "image": "store/img/bikes/royal-enfield-classic-500.webp",
@@ -6810,15 +6582,8 @@
     "title": "Royal Enfield Classic 500 7-4-2017 16-00-29.JPG",
     "author": "Paul Hermans",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_500_7-4-2017_16-00-29.JPG"
-  },
-  "royal-enfield|classic-chrome-500": {
-    "image": "store/img/bikes/royal-enfield-classic-chrome-500.webp",
-    "thumb": "store/img/bikes/royal-enfield-classic-chrome-500-thumb.webp",
-    "title": "Royal Enfield Classic Chrome 500 EFI.jpg",
-    "author": "TTTNIS",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_Chrome_500_EFI.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_500_7-4-2017_16-00-29.JPG",
+    "hero": "store/img/bikes/royal-enfield-classic-500-hero.webp"
   },
   "royal-enfield|classic-signals": {
     "image": "store/img/bikes/royal-enfield-classic-signals.webp",
@@ -6826,31 +6591,26 @@
     "title": "Royal Enfield Classic Signals 350.jpg",
     "author": "Luca Boldrini",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_Signals_350.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_Signals_350.jpg",
+    "hero": "store/img/bikes/royal-enfield-classic-signals-hero.webp"
   },
   "royal-enfield|continental-gt": {
     "image": "store/img/bikes/royal-enfield-continental-gt.webp",
     "thumb": "store/img/bikes/royal-enfield-continental-gt-thumb.webp",
-    "title": "Royal Enfield Continental GT (10759997314).jpg",
-    "author": "Decio \"desmodex\"",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_(10759997314).jpg"
-  },
-  "royal-enfield|continental-gt-650": {
-    "image": "store/img/bikes/royal-enfield-continental-gt-650.webp",
-    "thumb": "store/img/bikes/royal-enfield-continental-gt-650-thumb.webp",
-    "title": "Royal Enfield Continental GT 650.jpg",
-    "author": "Kiranpawar3210",
+    "title": "Royal Enfield Continental GT 535.jpg",
+    "author": "Photogoddle",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_650.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_535.jpg",
+    "hero": "store/img/bikes/royal-enfield-continental-gt-hero.webp"
   },
   "royal-enfield|electra-350": {
     "image": "store/img/bikes/royal-enfield-electra-350.webp",
     "thumb": "store/img/bikes/royal-enfield-electra-350-thumb.webp",
-    "title": "Royal Enfield Bullet Electra 350, pure black model 02.jpg",
+    "title": "Royal Enfield Bullet Electra 350, pure black model 05.jpg",
     "author": "Pinakpani",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_02.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_05.jpg",
+    "hero": "store/img/bikes/royal-enfield-electra-350-hero.webp"
   },
   "royal-enfield|guerrilla-450": {
     "image": "store/img/bikes/royal-enfield-guerrilla-450.webp",
@@ -6858,7 +6618,8 @@
     "title": "Moscow, Royal Enfield Guerrilla 450, July 2026 02-1.jpg",
     "author": "Retired electrician",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Royal_Enfield_Guerrilla_450,_July_2026_02-1.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Royal_Enfield_Guerrilla_450,_July_2026_02-1.jpg",
+    "hero": "store/img/bikes/royal-enfield-guerrilla-450-hero.webp"
   },
   "royal-enfield|himalayan": {
     "image": "store/img/bikes/royal-enfield-himalayan.webp",
@@ -6866,23 +6627,17 @@
     "title": "2022 Royal Enfield Himalayan, rear left (NY).jpg",
     "author": "Mr.choppers",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Royal_Enfield_Himalayan,_rear_left_(NY).jpg"
-  },
-  "royal-enfield|himalayan-450": {
-    "image": "store/img/bikes/royal-enfield-himalayan-450.webp",
-    "thumb": "store/img/bikes/royal-enfield-himalayan-450-thumb.webp",
-    "title": "Royal-Enfield-Himalayan-450.jpg",
-    "author": "Rouv1505",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal-Enfield-Himalayan-450.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Royal_Enfield_Himalayan,_rear_left_(NY).jpg",
+    "hero": "store/img/bikes/royal-enfield-himalayan-hero.webp"
   },
   "royal-enfield|hunter-350": {
     "image": "store/img/bikes/royal-enfield-hunter-350.webp",
     "thumb": "store/img/bikes/royal-enfield-hunter-350-thumb.webp",
-    "title": "Royal Enfield Hunter 350 Rebel balck.png",
+    "title": "Hunter 350 side view India Model.png",
     "author": "Pintu dasaundhi",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Hunter_350_Rebel_balck.png"
+    "source": "https://commons.wikimedia.org/wiki/File:Hunter_350_side_view_India_Model.png",
+    "hero": "store/img/bikes/royal-enfield-hunter-350-hero.webp"
   },
   "royal-enfield|int-650": {
     "image": "store/img/bikes/royal-enfield-int-650.webp",
@@ -6890,47 +6645,44 @@
     "title": "Royal Enfield INT 650 motorcycle.jpg",
     "author": "Hu Nhu",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_INT_650_motorcycle.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_INT_650_motorcycle.jpg",
+    "hero": "store/img/bikes/royal-enfield-int-650-hero.webp"
   },
   "royal-enfield|interceptor": {
     "image": "store/img/bikes/royal-enfield-interceptor.webp",
     "thumb": "store/img/bikes/royal-enfield-interceptor-thumb.webp",
-    "title": "Royal Enfield Interceptor (1).jpg",
-    "author": "Cjp24",
+    "title": "ROYAL ENFIELD Interceptor.jpg",
+    "author": "DEEPAN RAJA .M",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Interceptor_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:ROYAL_ENFIELD_Interceptor.jpg",
+    "hero": "store/img/bikes/royal-enfield-interceptor-hero.webp"
   },
   "royal-enfield|interceptor-650": {
     "image": "store/img/bikes/royal-enfield-interceptor-650.webp",
     "thumb": "store/img/bikes/royal-enfield-interceptor-650-thumb.webp",
-    "title": "Wien Royal Enfield Interceptor 650.jpg",
-    "author": "Andrzej Otrębski",
+    "title": "Royal Enfield Interceptor 650 Jinonice A.jpg",
+    "author": "Mojmir Churavy",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Wien_Royal_Enfield_Interceptor_650.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Interceptor_650_Jinonice_A.jpg",
+    "hero": "store/img/bikes/royal-enfield-interceptor-650-hero.webp"
   },
   "royal-enfield|meteor": {
     "image": "store/img/bikes/royal-enfield-meteor.webp",
     "thumb": "store/img/bikes/royal-enfield-meteor-thumb.webp",
-    "title": "Royal Enfield Super Meteor 1957.JPG",
-    "author": "Thruxton",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_1957.JPG"
+    "title": "Royal Enfield Super Meteor 650 (03).jpg",
+    "author": "iMahesh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(03).jpg",
+    "hero": "store/img/bikes/royal-enfield-meteor-hero.webp"
   },
   "royal-enfield|meteor-350": {
     "image": "store/img/bikes/royal-enfield-meteor-350.webp",
     "thumb": "store/img/bikes/royal-enfield-meteor-350-thumb.webp",
-    "title": "The All New Royal Enfield Meteor 350.jpg",
-    "author": "Alok",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:The_All_New_Royal_Enfield_Meteor_350.jpg"
-  },
-  "royal-enfield|shotgun-650": {
-    "image": "store/img/bikes/royal-enfield-shotgun-650.webp",
-    "thumb": "store/img/bikes/royal-enfield-shotgun-650-thumb.webp",
-    "title": "Moscow, Royal Enfield 650 Shotgun, Mar 2026 01.jpg",
-    "author": "Retired electrician",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Royal_Enfield_650_Shotgun,_Mar_2026_01.jpg"
+    "title": "Royal Enfield Meteor 350.jpg",
+    "author": "Corvettec6r",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Meteor_350.jpg",
+    "hero": "store/img/bikes/royal-enfield-meteor-350-hero.webp"
   },
   "royal-enfield|super-meteor-650": {
     "image": "store/img/bikes/royal-enfield-super-meteor-650.webp",
@@ -6938,23 +6690,26 @@
     "title": "Royal Enfield Super Meteor 650 (02).jpg",
     "author": "iMahesh",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg",
+    "hero": "store/img/bikes/royal-enfield-super-meteor-650-hero.webp"
   },
   "royal-enfield|thunderbird": {
     "image": "store/img/bikes/royal-enfield-thunderbird.webp",
     "thumb": "store/img/bikes/royal-enfield-thunderbird-thumb.webp",
-    "title": "Royal enfield Thunderbird.jpg",
-    "author": "Pavankalyan5239",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_enfield_Thunderbird.jpg"
+    "title": "Re thunderbird.png",
+    "author": "Dprabhu at English Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Re_thunderbird.png",
+    "hero": "store/img/bikes/royal-enfield-thunderbird-hero.webp"
   },
   "suzuki|access-125": {
     "image": "store/img/bikes/suzuki-access-125.webp",
     "thumb": "store/img/bikes/suzuki-access-125-thumb.webp",
-    "title": "Suzuki access 125.jpg",
-    "author": "Pooja0709",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_access_125.jpg"
+    "title": "Suzuki Access 125, 2023.jpg",
+    "author": "Faraz Sualeh",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Access_125,_2023.jpg",
+    "hero": "store/img/bikes/suzuki-access-125-hero.webp"
   },
   "suzuki|address": {
     "image": "store/img/bikes/suzuki-address.webp",
@@ -6962,7 +6717,8 @@
     "title": "Suzuki Address V125S 2.JPG",
     "author": "Rainmaker47",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_2.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_2.JPG",
+    "hero": "store/img/bikes/suzuki-address-hero.webp"
   },
   "suzuki|address-110": {
     "image": "store/img/bikes/suzuki-address-110.webp",
@@ -6970,7 +6726,8 @@
     "title": "Suzuki Address 110 20160704.jpg",
     "author": "Aprilia rs125r",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_110_20160704.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_110_20160704.jpg",
+    "hero": "store/img/bikes/suzuki-address-110-hero.webp"
   },
   "suzuki|address-v100": {
     "image": "store/img/bikes/suzuki-address-v100.webp",
@@ -6978,15 +6735,8 @@
     "title": "Suzuki Address V100 20161202.jpg",
     "author": "Aprilia rs125r",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V100_20161202.jpg"
-  },
-  "suzuki|address-v125": {
-    "image": "store/img/bikes/suzuki-address-v125.webp",
-    "thumb": "store/img/bikes/suzuki-address-v125-thumb.webp",
-    "title": "Japanese SUZUKI Address V125 police scooter.jpg",
-    "author": "PRiMENON",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Japanese_SUZUKI_Address_V125_police_scooter.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V100_20161202.jpg",
+    "hero": "store/img/bikes/suzuki-address-v100-hero.webp"
   },
   "suzuki|address-v125s": {
     "image": "store/img/bikes/suzuki-address-v125s.webp",
@@ -6994,15 +6744,8 @@
     "title": "Suzuki Address V125S 3.JPG",
     "author": "Rainmaker47",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_3.JPG"
-  },
-  "suzuki|address-v125ss": {
-    "image": "store/img/bikes/suzuki-address-v125ss.webp",
-    "thumb": "store/img/bikes/suzuki-address-v125ss-thumb.webp",
-    "title": "Taipei IT Month Suzuki Address V125SS 20131202.jpg",
-    "author": "Solomon203",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Taipei_IT_Month_Suzuki_Address_V125SS_20131202.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_3.JPG",
+    "hero": "store/img/bikes/suzuki-address-v125s-hero.webp"
   },
   "suzuki|address-v50": {
     "image": "store/img/bikes/suzuki-address-v50.webp",
@@ -7010,15 +6753,8 @@
     "title": "Suzuki Address V50 20160824.jpg",
     "author": "Wai1",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V50_20160824.jpg"
-  },
-  "suzuki|avenis": {
-    "image": "store/img/bikes/suzuki-avenis.webp",
-    "thumb": "store/img/bikes/suzuki-avenis-thumb.webp",
-    "title": "2022 Suzuki Avenis 125 (20221105).jpg",
-    "author": "オーバードライブ83",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Suzuki_Avenis_125_(20221105).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Address_V50_20160824.jpg",
+    "hero": "store/img/bikes/suzuki-address-v50-hero.webp"
   },
   "suzuki|avenis-125": {
     "image": "store/img/bikes/suzuki-avenis-125.webp",
@@ -7026,39 +6762,17 @@
     "title": "2023 Suzuki Avenis 125.jpg",
     "author": "Haysnawri10",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Suzuki_Avenis_125.jpg"
-  },
-  "suzuki|ax4": {
-    "image": "store/img/bikes/suzuki-ax4.webp",
-    "thumb": "store/img/bikes/suzuki-ax4-thumb.webp",
-    "title": "Suzuki AX4 (GD115).jpg",
-    "author": "DíazAX4",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_AX4_(GD115).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Suzuki_Avenis_125.jpg",
+    "hero": "store/img/bikes/suzuki-avenis-125-hero.webp"
   },
   "suzuki|b-king": {
     "image": "store/img/bikes/suzuki-b-king.webp",
     "thumb": "store/img/bikes/suzuki-b-king-thumb.webp",
-    "title": "2008 Suzuki B-King at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2008_Suzuki_B-King_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg"
-  },
-  "suzuki|bandit-1200-s": {
-    "image": "store/img/bikes/suzuki-bandit-1200-s.webp",
-    "thumb": "store/img/bikes/suzuki-bandit-1200-s-thumb.webp",
-    "title": "Suzuki Bandit-S 1200 1996.jpg",
-    "author": "Reg Mckenna",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit-S_1200_1996.jpg"
-  },
-  "suzuki|bandit-1200s": {
-    "image": "store/img/bikes/suzuki-bandit-1200s.webp",
-    "thumb": "store/img/bikes/suzuki-bandit-1200s-thumb.webp",
-    "title": "Suzuki Bandit 1200S side.jpg",
-    "author": "Reg Mckenna",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_1200S_side.jpg"
+    "title": "Suzuki BKing.jpg",
+    "author": "Yuichiro Katsumoto",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_BKing.jpg",
+    "hero": "store/img/bikes/suzuki-b-king-hero.webp"
   },
   "suzuki|bandit-1250": {
     "image": "store/img/bikes/suzuki-bandit-1250.webp",
@@ -7066,15 +6780,8 @@
     "title": "2008 Suzuki 1250 Bandit.jpg",
     "author": "wallerdog",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2008_Suzuki_1250_Bandit.jpg"
-  },
-  "suzuki|bandit-1250f-abs": {
-    "image": "store/img/bikes/suzuki-bandit-1250f-abs.webp",
-    "thumb": "store/img/bikes/suzuki-bandit-1250f-abs-thumb.webp",
-    "title": "Suzuki Bandit1250F ABS-2 2011 Tokyo Motor Show.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit1250F_ABS-2_2011_Tokyo_Motor_Show.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2008_Suzuki_1250_Bandit.jpg",
+    "hero": "store/img/bikes/suzuki-bandit-1250-hero.webp"
   },
   "suzuki|bandit-1250s": {
     "image": "store/img/bikes/suzuki-bandit-1250s.webp",
@@ -7082,7 +6789,8 @@
     "title": "Bandit1250S.jpg",
     "author": "zinog",
     "license": "CC BY 2.1 jp",
-    "source": "https://commons.wikimedia.org/wiki/File:Bandit1250S.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Bandit1250S.jpg",
+    "hero": "store/img/bikes/suzuki-bandit-1250s-hero.webp"
   },
   "suzuki|bandit-1250sa": {
     "image": "store/img/bikes/suzuki-bandit-1250sa.webp",
@@ -7090,55 +6798,26 @@
     "title": "Мотоцикл Suzuki Bandit 1250SA.jpg",
     "author": "Dimsav",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%BE%D1%82%D0%BE%D1%86%D0%B8%D0%BA%D0%BB_Suzuki_Bandit_1250SA.jpg"
-  },
-  "suzuki|bandit-600-s": {
-    "image": "store/img/bikes/suzuki-bandit-600-s.webp",
-    "thumb": "store/img/bikes/suzuki-bandit-600-s-thumb.webp",
-    "title": "Suzuki GSG 600 S Bandit K2 2002 Gillo.jpg",
-    "author": "Gillofreak",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSG_600_S_Bandit_K2_2002_Gillo.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%BE%D1%82%D0%BE%D1%86%D0%B8%D0%BA%D0%BB_Suzuki_Bandit_1250SA.jpg",
+    "hero": "store/img/bikes/suzuki-bandit-1250sa-hero.webp"
   },
   "suzuki|bandit-650": {
     "image": "store/img/bikes/suzuki-bandit-650.webp",
     "thumb": "store/img/bikes/suzuki-bandit-650-thumb.webp",
-    "title": "Suzuki 650 Bandit 2006.jpg",
+    "title": "Bandit 650.JPG",
     "author": "Julienlestefanois",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_650_Bandit_2006.jpg"
-  },
-  "suzuki|bandit-650sa": {
-    "image": "store/img/bikes/suzuki-bandit-650sa.webp",
-    "thumb": "store/img/bikes/suzuki-bandit-650sa-thumb.webp",
-    "title": "Suzuki Bandit 650SA - side.jpg",
-    "author": "Schrecke",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_650SA_-_side.jpg"
-  },
-  "suzuki|bandit-gsf650": {
-    "image": "store/img/bikes/suzuki-bandit-gsf650.webp",
-    "thumb": "store/img/bikes/suzuki-bandit-gsf650-thumb.webp",
-    "title": "Suzuki Bandit GSF650 K6.JPG",
-    "author": "Daytonaman955",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_GSF650_K6.JPG"
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bandit_650.JPG",
+    "hero": "store/img/bikes/suzuki-bandit-650-hero.webp"
   },
   "suzuki|bandit-s": {
     "image": "store/img/bikes/suzuki-bandit-s.webp",
     "thumb": "store/img/bikes/suzuki-bandit-s-thumb.webp",
-    "title": "Suzuki Bandit S DSCF4668.jpg",
-    "author": "Addvisor",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_S_DSCF4668.jpg"
-  },
-  "suzuki|birdie-50": {
-    "image": "store/img/bikes/suzuki-birdie-50.webp",
-    "thumb": "store/img/bikes/suzuki-birdie-50-thumb.webp",
-    "title": "Suzuki Birdie 50 Fuel Cock.jpg",
-    "author": "カップメーン",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Birdie_50_Fuel_Cock.jpg"
+    "title": "Suzuki Bandit S (6048869943).jpg",
+    "author": "Nacho from Oviedo, España",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_S_(6048869943).jpg",
+    "hero": "store/img/bikes/suzuki-bandit-s-hero.webp"
   },
   "suzuki|boulevard-c50": {
     "image": "store/img/bikes/suzuki-boulevard-c50.webp",
@@ -7146,31 +6825,26 @@
     "title": "2011 Suzuki VL800 BouleVard C50 (34194642310).jpg",
     "author": "GPS 56 from New Zealand",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2011_Suzuki_VL800_BouleVard_C50_(34194642310).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Suzuki_VL800_BouleVard_C50_(34194642310).jpg",
+    "hero": "store/img/bikes/suzuki-boulevard-c50-hero.webp"
   },
   "suzuki|boulevard-c90": {
     "image": "store/img/bikes/suzuki-boulevard-c90.webp",
     "thumb": "store/img/bikes/suzuki-boulevard-c90-thumb.webp",
-    "title": "Suzuki Boulevard C90 (16884103681).jpg",
-    "author": "Bob Adams from Amanzimtoti, South Africa",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Boulevard_C90_(16884103681).jpg"
+    "title": "Suzuki Boulevard C90 01.jpg",
+    "author": "Maestro_AU",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Boulevard_C90_01.jpg",
+    "hero": "store/img/bikes/suzuki-boulevard-c90-hero.webp"
   },
   "suzuki|boulevard-m109r": {
     "image": "store/img/bikes/suzuki-boulevard-m109r.webp",
     "thumb": "store/img/bikes/suzuki-boulevard-m109r-thumb.webp",
-    "title": "Suzuki Boulevard M109R on Seacliff Drive during Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg",
-    "author": "Chris Woodrich",
+    "title": "Suzuki Boulevard M109R McDonald's VT Rte 5 Lyndonville VT August 2019.jpg",
+    "author": "Artaxerxes",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Boulevard_M109R_on_Seacliff_Drive_during_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg"
-  },
-  "suzuki|boulevard-m50": {
-    "image": "store/img/bikes/suzuki-boulevard-m50.webp",
-    "thumb": "store/img/bikes/suzuki-boulevard-m50-thumb.webp",
-    "title": "Suzuki Boulevard M50 (16883776492).jpg",
-    "author": "Bob Adams from Amanzimtoti, South Africa",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Boulevard_M50_(16883776492).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Boulevard_M109R_McDonald's_VT_Rte_5_Lyndonville_VT_August_2019.jpg",
+    "hero": "store/img/bikes/suzuki-boulevard-m109r-hero.webp"
   },
   "suzuki|boulevard-s40": {
     "image": "store/img/bikes/suzuki-boulevard-s40.webp",
@@ -7178,15 +6852,8 @@
     "title": "Boulevard S40.jpg",
     "author": "Daniel Barcelona",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Boulevard_S40.jpg"
-  },
-  "suzuki|burgman-125-street": {
-    "image": "store/img/bikes/suzuki-burgman-125-street.webp",
-    "thumb": "store/img/bikes/suzuki-burgman-125-street-thumb.webp",
-    "title": "2024 Suzuki Burgman Street 125 GL.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Suzuki_Burgman_Street_125_GL.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Boulevard_S40.jpg",
+    "hero": "store/img/bikes/suzuki-boulevard-s40-hero.webp"
   },
   "suzuki|burgman-200": {
     "image": "store/img/bikes/suzuki-burgman-200.webp",
@@ -7194,7 +6861,8 @@
     "title": "Sinsheim - Złombol 2017 - Suzuki Burgman UH 200 - Polonez Caro - LPULANS - 2017-09-04 16-17-18.jpg",
     "author": "Photographs by Radosław Drożdżewski (User:Zwiadowca21)",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Sinsheim_-_Z%C5%82ombol_2017_-_Suzuki_Burgman_UH_200_-_Polonez_Caro_-_LPULANS_-_2017-09-04_16-17-18.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Sinsheim_-_Z%C5%82ombol_2017_-_Suzuki_Burgman_UH_200_-_Polonez_Caro_-_LPULANS_-_2017-09-04_16-17-18.jpg",
+    "hero": "store/img/bikes/suzuki-burgman-200-hero.webp"
   },
   "suzuki|burgman-400": {
     "image": "store/img/bikes/suzuki-burgman-400.webp",
@@ -7202,15 +6870,17 @@
     "title": "Suzuki Burgman 400 black.jpg",
     "author": "Julian Bond",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_400_black.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_400_black.jpg",
+    "hero": "store/img/bikes/suzuki-burgman-400-hero.webp"
   },
   "suzuki|burgman-650": {
     "image": "store/img/bikes/suzuki-burgman-650.webp",
     "thumb": "store/img/bikes/suzuki-burgman-650-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Suzuki - Burgman 650 - 008.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Suzuki_-_Burgman_650_-_008.jpg"
+    "title": "BURGMAN650 K6.JPG",
+    "author": "©2007 by MMcM Original uploader is MichaelMcMike at de.wikipedia",
+    "license": "CC BY-SA 2.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:BURGMAN650_K6.JPG",
+    "hero": "store/img/bikes/suzuki-burgman-650-hero.webp"
   },
   "suzuki|burgman-650-executive": {
     "image": "store/img/bikes/suzuki-burgman-650-executive.webp",
@@ -7218,15 +6888,8 @@
     "title": "Suzuki Burgman 650 Executive.jpg",
     "author": "Corvettec6r",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_650_Executive.jpg"
-  },
-  "suzuki|burgman-fuel-cell": {
-    "image": "store/img/bikes/suzuki-burgman-fuel-cell.webp",
-    "thumb": "store/img/bikes/suzuki-burgman-fuel-cell-thumb.webp",
-    "title": "Suzuki Burgman Fuel Cell Scooter.jpg",
-    "author": "TTTNIS",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_Fuel_Cell_Scooter.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_650_Executive.jpg",
+    "hero": "store/img/bikes/suzuki-burgman-650-executive-hero.webp"
   },
   "suzuki|burgman-street": {
     "image": "store/img/bikes/suzuki-burgman-street.webp",
@@ -7234,15 +6897,8 @@
     "title": "Suzuki Burgman Street 125.jpg",
     "author": "VonTheGreater26",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_Street_125.jpg"
-  },
-  "suzuki|burgman-street-125-ex": {
-    "image": "store/img/bikes/suzuki-burgman-street-125-ex.webp",
-    "thumb": "store/img/bikes/suzuki-burgman-street-125-ex-thumb.webp",
-    "title": "2023 Suzuki Burgman Street 125 EX.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Suzuki_Burgman_Street_125_EX.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_Street_125.jpg",
+    "hero": "store/img/bikes/suzuki-burgman-street-hero.webp"
   },
   "suzuki|crosscage": {
     "image": "store/img/bikes/suzuki-crosscage.webp",
@@ -7250,15 +6906,8 @@
     "title": "Crosscage - Flickr - yuichirock.jpg",
     "author": "yuichirock from Singapore",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Crosscage_-_Flickr_-_yuichirock.jpg"
-  },
-  "suzuki|dl-1000-v-strom": {
-    "image": "store/img/bikes/suzuki-dl-1000-v-strom.webp",
-    "thumb": "store/img/bikes/suzuki-dl-1000-v-strom-thumb.webp",
-    "title": "Suzuki DL 1000 V-Strom DSCF0385.JPG",
-    "author": "Addvisor",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DL_1000_V-Strom_DSCF0385.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Crosscage_-_Flickr_-_yuichirock.jpg",
+    "hero": "store/img/bikes/suzuki-crosscage-hero.webp"
   },
   "suzuki|dr-650": {
     "image": "store/img/bikes/suzuki-dr-650.webp",
@@ -7266,31 +6915,17 @@
     "title": "Suzuki DR 650 Dakar (SP 41 B).jpg",
     "author": "Dakar64uli",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR_650_Dakar_(SP_41_B).jpg"
-  },
-  "suzuki|dr-650-se": {
-    "image": "store/img/bikes/suzuki-dr-650-se.webp",
-    "thumb": "store/img/bikes/suzuki-dr-650-se-thumb.webp",
-    "title": "Suzuki DR650SE.jpg",
-    "author": "Yitzachmmeyer",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR650SE.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR_650_Dakar_(SP_41_B).jpg",
+    "hero": "store/img/bikes/suzuki-dr-650-hero.webp"
   },
   "suzuki|dr-z-400": {
     "image": "store/img/bikes/suzuki-dr-z-400.webp",
     "thumb": "store/img/bikes/suzuki-dr-z-400-thumb.webp",
-    "title": "2010 Suzuki DRZ400 at the 2009 Seattle International Motorcycle Show 2.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Suzuki_DRZ400_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg"
-  },
-  "suzuki|dr-z-400-s": {
-    "image": "store/img/bikes/suzuki-dr-z-400-s.webp",
-    "thumb": "store/img/bikes/suzuki-dr-z-400-s-thumb.webp",
-    "title": "Suzuki DR-Z400S itansha 20110814.jpg",
-    "author": "Vantey",
+    "title": "Suzuki DR-Z400.jpg",
+    "author": "Farwestern",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR-Z400S_itansha_20110814.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR-Z400.jpg",
+    "hero": "store/img/bikes/suzuki-dr-z-400-hero.webp"
   },
   "suzuki|dr-z-400-sm": {
     "image": "store/img/bikes/suzuki-dr-z-400-sm.webp",
@@ -7298,7 +6933,8 @@
     "title": "2007 Suzuki DRZ-400SM.jpg",
     "author": "Yitzachmmeyer",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2007_Suzuki_DRZ-400SM.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Suzuki_DRZ-400SM.jpg",
+    "hero": "store/img/bikes/suzuki-dr-z-400-sm-hero.webp"
   },
   "suzuki|dr-z400e": {
     "image": "store/img/bikes/suzuki-dr-z400e.webp",
@@ -7306,39 +6942,17 @@
     "title": "NSW Police Suzuki DR-Z400E.jpg",
     "author": "Bidgee",
     "license": "CC BY-SA 3.0 au",
-    "source": "https://commons.wikimedia.org/wiki/File:NSW_Police_Suzuki_DR-Z400E.jpg"
-  },
-  "suzuki|dr-z400s": {
-    "image": "store/img/bikes/suzuki-dr-z400s.webp",
-    "thumb": "store/img/bikes/suzuki-dr-z400s-thumb.webp",
-    "title": "Suzuki DR-Z400S 1 18 Scale Model Motorcycle (51120634616).jpg",
-    "author": "shashin micro 43",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR-Z400S_1_18_Scale_Model_Motorcycle_(51120634616).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:NSW_Police_Suzuki_DR-Z400E.jpg",
+    "hero": "store/img/bikes/suzuki-dr-z400e-hero.webp"
   },
   "suzuki|dr-z400sm": {
     "image": "store/img/bikes/suzuki-dr-z400sm.webp",
     "thumb": "store/img/bikes/suzuki-dr-z400sm-thumb.webp",
-    "title": "Suzuki DRZ400SM black.jpg",
-    "author": "Eliot Phillips",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DRZ400SM_black.jpg"
-  },
-  "suzuki|dr-z4s": {
-    "image": "store/img/bikes/suzuki-dr-z4s.webp",
-    "thumb": "store/img/bikes/suzuki-dr-z4s-thumb.webp",
-    "title": "2025 Suzuki DR-Z4S.jpg",
-    "author": "Chanokchon",
+    "title": "DRZ400SM Supermoto custom onealb96.jpg",
+    "author": "Blake O’Neal",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Suzuki_DR-Z4S.jpg"
-  },
-  "suzuki|dr200": {
-    "image": "store/img/bikes/suzuki-dr200.webp",
-    "thumb": "store/img/bikes/suzuki-dr200-thumb.webp",
-    "title": "Suzuki DR200.JPG",
-    "author": "Meavis",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR200.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:DRZ400SM_Supermoto_custom_onealb96.jpg",
+    "hero": "store/img/bikes/suzuki-dr-z400sm-hero.webp"
   },
   "suzuki|dr650s": {
     "image": "store/img/bikes/suzuki-dr650s.webp",
@@ -7346,7 +6960,8 @@
     "title": "Suzuki DR650S blue.jpg",
     "author": "Gord Webster",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR650S_blue.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR650S_blue.jpg",
+    "hero": "store/img/bikes/suzuki-dr650s-hero.webp"
   },
   "suzuki|gd110": {
     "image": "store/img/bikes/suzuki-gd110.webp",
@@ -7354,31 +6969,17 @@
     "title": "Suzuki AX4 (GD110).jpg",
     "author": "DíazAX4",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_AX4_(GD110).jpg"
-  },
-  "suzuki|gemma": {
-    "image": "store/img/bikes/suzuki-gemma.webp",
-    "thumb": "store/img/bikes/suzuki-gemma-thumb.webp",
-    "title": "Suzuki-Gemma125.JPG",
-    "author": "Ypy31",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki-Gemma125.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_AX4_(GD110).jpg",
+    "hero": "store/img/bikes/suzuki-gd110-hero.webp"
   },
   "suzuki|gixxer": {
     "image": "store/img/bikes/suzuki-gixxer.webp",
     "thumb": "store/img/bikes/suzuki-gixxer-thumb.webp",
-    "title": "Osaka Motor Show 2015 (136) - Suzuki GIXXER.JPG",
-    "author": "Tokumeigakarinoaoshima",
+    "title": "Suzuki Gixxer negra.jpg",
+    "author": "XalD",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(136)_-_Suzuki_GIXXER.JPG"
-  },
-  "suzuki|gixxer-250": {
-    "image": "store/img/bikes/suzuki-gixxer-250.webp",
-    "thumb": "store/img/bikes/suzuki-gixxer-250-thumb.webp",
-    "title": "2021 Suzuki Gixxer SF 250 100th Anniversary MotoGP Edition 01.jpg",
-    "author": "Haysnawri10",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Suzuki_Gixxer_SF_250_100th_Anniversary_MotoGP_Edition_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Gixxer_negra.jpg",
+    "hero": "store/img/bikes/suzuki-gixxer-hero.webp"
   },
   "suzuki|gixxer-sf": {
     "image": "store/img/bikes/suzuki-gixxer-sf.webp",
@@ -7386,15 +6987,8 @@
     "title": "Suzuki Gixxer Sf250 トリトンブルー.jpg",
     "author": "ShunyaIshiwatari",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Gixxer_Sf250_%E3%83%88%E3%83%AA%E3%83%88%E3%83%B3%E3%83%96%E3%83%AB%E3%83%BC.jpg"
-  },
-  "suzuki|gixxer-sf-250": {
-    "image": "store/img/bikes/suzuki-gixxer-sf-250.webp",
-    "thumb": "store/img/bikes/suzuki-gixxer-sf-250-thumb.webp",
-    "title": "2021 Suzuki Gixxer SF 250 100th Anniversary MotoGP Edition 02.jpg",
-    "author": "Haysnawri10",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Suzuki_Gixxer_SF_250_100th_Anniversary_MotoGP_Edition_02.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Gixxer_Sf250_%E3%83%88%E3%83%AA%E3%83%88%E3%83%B3%E3%83%96%E3%83%AB%E3%83%BC.jpg",
+    "hero": "store/img/bikes/suzuki-gixxer-sf-hero.webp"
   },
   "suzuki|gladius": {
     "image": "store/img/bikes/suzuki-gladius.webp",
@@ -7402,7 +6996,8 @@
     "title": "Suzuki SFV 650 Gladius.jpg",
     "author": "Booker3000",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SFV_650_Gladius.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SFV_650_Gladius.jpg",
+    "hero": "store/img/bikes/suzuki-gladius-hero.webp"
   },
   "suzuki|gn-125": {
     "image": "store/img/bikes/suzuki-gn-125.webp",
@@ -7410,23 +7005,8 @@
     "title": "Suzuki GN 125 Seite.JPG",
     "author": "KarleHorn",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GN_125_Seite.JPG"
-  },
-  "suzuki|grasstracker": {
-    "image": "store/img/bikes/suzuki-grasstracker.webp",
-    "thumb": "store/img/bikes/suzuki-grasstracker-thumb.webp",
-    "title": "Grasstracker.jpg",
-    "author": "ウェルワィ",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Grasstracker.jpg"
-  },
-  "suzuki|gs-50": {
-    "image": "store/img/bikes/suzuki-gs-50.webp",
-    "thumb": "store/img/bikes/suzuki-gs-50-thumb.webp",
-    "title": "Motocicleta GS 500.jpg",
-    "author": "Neoredacturus",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Motocicleta_GS_500.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GN_125_Seite.JPG",
+    "hero": "store/img/bikes/suzuki-gn-125-hero.webp"
   },
   "suzuki|gs-500": {
     "image": "store/img/bikes/suzuki-gs-500.webp",
@@ -7434,7 +7014,8 @@
     "title": "Suzuki - GS500e.jpg",
     "author": "PierreSelim",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_-_GS500e.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_-_GS500e.jpg",
+    "hero": "store/img/bikes/suzuki-gs-500-hero.webp"
   },
   "suzuki|gs-500-e": {
     "image": "store/img/bikes/suzuki-gs-500-e.webp",
@@ -7442,7 +7023,8 @@
     "title": "Suzuki GS500E 02.jpg",
     "author": "Steve Cadman",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GS500E_02.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GS500E_02.jpg",
+    "hero": "store/img/bikes/suzuki-gs-500-e-hero.webp"
   },
   "suzuki|gs-500-f": {
     "image": "store/img/bikes/suzuki-gs-500-f.webp",
@@ -7450,39 +7032,26 @@
     "title": "Suzuki GS 500 F.jpg",
     "author": "Doug Boyd",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GS_500_F.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GS_500_F.jpg",
+    "hero": "store/img/bikes/suzuki-gs-500-f-hero.webp"
   },
   "suzuki|gs500": {
     "image": "store/img/bikes/suzuki-gs500.webp",
     "thumb": "store/img/bikes/suzuki-gs500-thumb.webp",
-    "title": "1990 Suzuki GS500E.jpg",
-    "author": "Mark J Sebastian",
+    "title": "Suzuki GS500E 01.jpg",
+    "author": "Steve Cadman",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1990_Suzuki_GS500E.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GS500E_01.jpg",
+    "hero": "store/img/bikes/suzuki-gs500-hero.webp"
   },
   "suzuki|gs500f": {
     "image": "store/img/bikes/suzuki-gs500f.webp",
     "thumb": "store/img/bikes/suzuki-gs500f-thumb.webp",
-    "title": "Suzuki-GS500F-front.jpg",
-    "author": "User:Renamed user 1253",
+    "title": "2007 Suzuki GS500F-001.JPG",
+    "author": "Yogi2795",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki-GS500F-front.jpg"
-  },
-  "suzuki|gsf-1200-bandit": {
-    "image": "store/img/bikes/suzuki-gsf-1200-bandit.webp",
-    "thumb": "store/img/bikes/suzuki-gsf-1200-bandit-thumb.webp",
-    "title": "Suzuki GSF 1200 Bandit 02.JPG",
-    "author": "Addvisor",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSF_1200_Bandit_02.JPG"
-  },
-  "suzuki|gsf-600-s-bandit": {
-    "image": "store/img/bikes/suzuki-gsf-600-s-bandit.webp",
-    "thumb": "store/img/bikes/suzuki-gsf-600-s-bandit-thumb.webp",
-    "title": "Suzuki GSF 600 S Bandit red vl.jpg",
-    "author": "Unknown",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSF_600_S_Bandit_red_vl.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Suzuki_GS500F-001.JPG",
+    "hero": "store/img/bikes/suzuki-gs500f-hero.webp"
   },
   "suzuki|gsr-400": {
     "image": "store/img/bikes/suzuki-gsr-400.webp",
@@ -7490,7 +7059,8 @@
     "title": "2007 Suzuki GSR400 01.jpg",
     "author": "Mytho88",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2007_Suzuki_GSR400_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Suzuki_GSR400_01.jpg",
+    "hero": "store/img/bikes/suzuki-gsr-400-hero.webp"
   },
   "suzuki|gsr-600": {
     "image": "store/img/bikes/suzuki-gsr-600.webp",
@@ -7498,15 +7068,8 @@
     "title": "Suzuki GSR 600 (2006).jpg",
     "author": "JakM1",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR_600_(2006).jpg"
-  },
-  "suzuki|gsr-750": {
-    "image": "store/img/bikes/suzuki-gsr-750.webp",
-    "thumb": "store/img/bikes/suzuki-gsr-750-thumb.webp",
-    "title": "Suzuki GSR 750 Yoshimura.jpg",
-    "author": "TheMalsa",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR_750_Yoshimura.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR_600_(2006).jpg",
+    "hero": "store/img/bikes/suzuki-gsr-600-hero.webp"
   },
   "suzuki|gsr-750-abs": {
     "image": "store/img/bikes/suzuki-gsr-750-abs.webp",
@@ -7514,15 +7077,17 @@
     "title": "GSR750ABS2012.jpg",
     "author": "Ikusei",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:GSR750ABS2012.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:GSR750ABS2012.jpg",
+    "hero": "store/img/bikes/suzuki-gsr-750-abs-hero.webp"
   },
   "suzuki|gsr250": {
     "image": "store/img/bikes/suzuki-gsr250.webp",
     "thumb": "store/img/bikes/suzuki-gsr250-thumb.webp",
-    "title": "2013-10-14.43.Suzuki GSR250.jpg",
+    "title": "2013-10-14.38.Suzuki GSR250.jpg",
     "author": "Douglas Paul Perkins",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2013-10-14.43.Suzuki_GSR250.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2013-10-14.38.Suzuki_GSR250.jpg",
+    "hero": "store/img/bikes/suzuki-gsr250-hero.webp"
   },
   "suzuki|gsr600": {
     "image": "store/img/bikes/suzuki-gsr600.webp",
@@ -7530,7 +7095,8 @@
     "title": "Suzuki GSR 600 Right Side.jpg",
     "author": "Mojmir Churavy",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR_600_Right_Side.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR_600_Right_Side.jpg",
+    "hero": "store/img/bikes/suzuki-gsr600-hero.webp"
   },
   "suzuki|gsr750": {
     "image": "store/img/bikes/suzuki-gsr750.webp",
@@ -7538,23 +7104,17 @@
     "title": "Suzuki GSR750.jpg",
     "author": "TheMalsa",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR750.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSR750.jpg",
+    "hero": "store/img/bikes/suzuki-gsr750-hero.webp"
   },
   "suzuki|gsx-1400": {
     "image": "store/img/bikes/suzuki-gsx-1400.webp",
     "thumb": "store/img/bikes/suzuki-gsx-1400-thumb.webp",
-    "title": "Suzuki GSX1400 Galaxy Silver Metallic (YM6) left side.jpg",
-    "author": "Arno-nl",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX1400_Galaxy_Silver_Metallic_(YM6)_left_side.jpg"
-  },
-  "suzuki|gsx-1400-special-edition": {
-    "image": "store/img/bikes/suzuki-gsx-1400-special-edition.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-1400-special-edition-thumb.webp",
-    "title": "2007TMS SUZUKI GSX1400 Special Edition.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2007TMS_SUZUKI_GSX1400_Special_Edition.jpg"
+    "title": "Suzuki Gsx 1400.jpg",
+    "author": "Levethane",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Gsx_1400.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-1400-hero.webp"
   },
   "suzuki|gsx-750-f": {
     "image": "store/img/bikes/suzuki-gsx-750-f.webp",
@@ -7562,15 +7122,8 @@
     "title": "Suzuki GSX750F 02.jpg",
     "author": "Tim Dobbelaere",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX750F_02.jpg"
-  },
-  "suzuki|gsx-8r": {
-    "image": "store/img/bikes/suzuki-gsx-8r.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-8r-thumb.webp",
-    "title": "Suzuki GSX-8R mit Heckumbau.jpg",
-    "author": "PauleMeister",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8R_mit_Heckumbau.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX750F_02.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-750-f-hero.webp"
   },
   "suzuki|gsx-8s": {
     "image": "store/img/bikes/suzuki-gsx-8s.webp",
@@ -7578,15 +7131,17 @@
     "title": "Suzuki GSX-8S, Auto 2024, Zurich (PANA0820).jpg",
     "author": "Matti Blume",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8S,_Auto_2024,_Zurich_(PANA0820).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8S,_Auto_2024,_Zurich_(PANA0820).jpg",
+    "hero": "store/img/bikes/suzuki-gsx-8s-hero.webp"
   },
   "suzuki|gsx-r-1000": {
     "image": "store/img/bikes/suzuki-gsx-r-1000.webp",
     "thumb": "store/img/bikes/suzuki-gsx-r-1000-thumb.webp",
-    "title": "Suzuki GSX-R 1000 2007-3.jpg",
-    "author": "StealthFX at German Wikipedia ( Original text: StealthFX )",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R_1000_2007-3.jpg"
+    "title": "Suzuki GSX-R1000 in Großbeeren.jpg",
+    "author": "UzeyirMikayil",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R1000_in_Gro%C3%9Fbeeren.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r-1000-hero.webp"
   },
   "suzuki|gsx-r-1000-anniversary": {
     "image": "store/img/bikes/suzuki-gsx-r-1000-anniversary.webp",
@@ -7594,15 +7149,17 @@
     "title": "GSX-R 1000 2010 25th Anniversary Edition.jpg",
     "author": "Loren11",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:GSX-R_1000_2010_25th_Anniversary_Edition.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-R_1000_2010_25th_Anniversary_Edition.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r-1000-anniversary-hero.webp"
   },
   "suzuki|gsx-r-600": {
     "image": "store/img/bikes/suzuki-gsx-r-600.webp",
     "thumb": "store/img/bikes/suzuki-gsx-r-600-thumb.webp",
-    "title": "2004 Suzuki GSX-R 600.JPG",
-    "author": "Stefanobiondo",
+    "title": "1992 Suzuki GSXR-600W.jpg",
+    "author": "DIGDUG74",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Suzuki_GSX-R_600.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:1992_Suzuki_GSXR-600W.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r-600-hero.webp"
   },
   "suzuki|gsx-r-750": {
     "image": "store/img/bikes/suzuki-gsx-r-750.webp",
@@ -7610,15 +7167,17 @@
     "title": "Suzuki GSX-R 750 (custom black; 2004-2005).jpg",
     "author": "Hanyou23",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R_750_(custom_black%3B_2004-2005).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R_750_(custom_black%3B_2004-2005).jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r-750-hero.webp"
   },
   "suzuki|gsx-r1000": {
     "image": "store/img/bikes/suzuki-gsx-r1000.webp",
     "thumb": "store/img/bikes/suzuki-gsx-r1000-thumb.webp",
-    "title": "Suzuki GSX-R1000 front 2011 Tokyo Motor Show.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R1000_front_2011_Tokyo_Motor_Show.jpg"
+    "title": "Suzuki GSX-R1000 in Großbeeren.jpg",
+    "author": "UzeyirMikayil",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R1000_in_Gro%C3%9Fbeeren.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r1000-hero.webp"
   },
   "suzuki|gsx-r1000r": {
     "image": "store/img/bikes/suzuki-gsx-r1000r.webp",
@@ -7626,7 +7185,8 @@
     "title": "GSX-R1000R L7 (2017).jpg",
     "author": "Gsxr53coopers",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:GSX-R1000R_L7_(2017).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-R1000R_L7_(2017).jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r1000r-hero.webp"
   },
   "suzuki|gsx-r125": {
     "image": "store/img/bikes/suzuki-gsx-r125.webp",
@@ -7634,15 +7194,8 @@
     "title": "Gsxr125 Suzuki.png",
     "author": "J&S Accessories",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Gsxr125_Suzuki.png"
-  },
-  "suzuki|gsx-r150": {
-    "image": "store/img/bikes/suzuki-gsx-r150.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-r150-thumb.webp",
-    "title": "2022 Suzuki GSX-R150 Mandalika Limited Edition.jpg",
-    "author": "Haysnawri10",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Suzuki_GSX-R150_Mandalika_Limited_Edition.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Gsxr125_Suzuki.png",
+    "hero": "store/img/bikes/suzuki-gsx-r125-hero.webp"
   },
   "suzuki|gsx-r600": {
     "image": "store/img/bikes/suzuki-gsx-r600.webp",
@@ -7650,7 +7203,8 @@
     "title": "2015 Suzuki GSX-R600.jpg",
     "author": "Heselnut",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Suzuki_GSX-R600.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Suzuki_GSX-R600.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r600-hero.webp"
   },
   "suzuki|gsx-r750": {
     "image": "store/img/bikes/suzuki-gsx-r750.webp",
@@ -7658,39 +7212,26 @@
     "title": "2011 Suzuki GSX-R750.jpg",
     "author": "Muaddib.1402",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2011_Suzuki_GSX-R750.jpg"
-  },
-  "suzuki|gsx-r750-yoshimura": {
-    "image": "store/img/bikes/suzuki-gsx-r750-yoshimura.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-r750-yoshimura-thumb.webp",
-    "title": "Yoshimura Suzuki GSX-R750 1986.jpg",
-    "author": "Rikita",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yoshimura_Suzuki_GSX-R750_1986.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Suzuki_GSX-R750.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-r750-hero.webp"
   },
   "suzuki|gsx-rr": {
     "image": "store/img/bikes/suzuki-gsx-rr.webp",
     "thumb": "store/img/bikes/suzuki-gsx-rr-thumb.webp",
-    "title": "Suzuki GSX-RR MotoGP-2015.JPG",
-    "author": "Alberto-g-rovi",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-RR_MotoGP-2015.JPG"
+    "title": "2015 Suzuki GSX-RR at the Tokyo.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Suzuki_GSX-RR_at_the_Tokyo.JPG",
+    "hero": "store/img/bikes/suzuki-gsx-rr-hero.webp"
   },
   "suzuki|gsx-s1000": {
     "image": "store/img/bikes/suzuki-gsx-s1000.webp",
     "thumb": "store/img/bikes/suzuki-gsx-s1000-thumb.webp",
-    "title": "Osaka Motor Show 2015 (134) - Suzuki GSX-S1000 ABS (EBL-GT79A).JPG",
-    "author": "Tokumeigakarinoaoshima",
+    "title": "Suzuki gsxs1000.jpg",
+    "author": "BDutch",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(134)_-_Suzuki_GSX-S1000_ABS_(EBL-GT79A).JPG"
-  },
-  "suzuki|gsx-s1000-abs": {
-    "image": "store/img/bikes/suzuki-gsx-s1000-abs.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-s1000-abs-thumb.webp",
-    "title": "Osaka Motor Show 2015 (135) - Suzuki GSX-S1000 ABS (EBL-GT79A).JPG",
-    "author": "Tokumeigakarinoaoshima",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(135)_-_Suzuki_GSX-S1000_ABS_(EBL-GT79A).JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_gsxs1000.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-s1000-hero.webp"
   },
   "suzuki|gsx-s1000f": {
     "image": "store/img/bikes/suzuki-gsx-s1000f.webp",
@@ -7698,15 +7239,8 @@
     "title": "GSX-S1000F.jpg",
     "author": "冨山 浩成",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:GSX-S1000F.jpg"
-  },
-  "suzuki|gsx-s1000gt": {
-    "image": "store/img/bikes/suzuki-gsx-s1000gt.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-s1000gt-thumb.webp",
-    "title": "Suzuki GSX-S1000GT left front view at the Display booth of SUZUKIMOTOR in Hamamatsu Station Shinkansen concourse October 23, 2022.jpg",
-    "author": "Hunini",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S1000GT_left_front_view_at_the_Display_booth_of_SUZUKIMOTOR_in_Hamamatsu_Station_Shinkansen_concourse_October_23,_2022.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:GSX-S1000F.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-s1000f-hero.webp"
   },
   "suzuki|gsx-s1000gx": {
     "image": "store/img/bikes/suzuki-gsx-s1000gx.webp",
@@ -7714,7 +7248,8 @@
     "title": "Suzuki GSX-S1000GX - Side View.jpg",
     "author": "BernardVisagie",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S1000GX_-_Side_View.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S1000GX_-_Side_View.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-s1000gx-hero.webp"
   },
   "suzuki|gsx-s125": {
     "image": "store/img/bikes/suzuki-gsx-s125.webp",
@@ -7722,7 +7257,8 @@
     "title": "Suzuki GSX-S125 side view.jpg",
     "author": "Danrok",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S125_side_view.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S125_side_view.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-s125-hero.webp"
   },
   "suzuki|gsx-s125-abs": {
     "image": "store/img/bikes/suzuki-gsx-s125-abs.webp",
@@ -7730,7 +7266,8 @@
     "title": "Suzuki GSX-S125 ABS.jpg",
     "author": "Danrok",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S125_ABS.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S125_ABS.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-s125-abs-hero.webp"
   },
   "suzuki|gsx-s150": {
     "image": "store/img/bikes/suzuki-gsx-s150.webp",
@@ -7738,15 +7275,8 @@
     "title": "Suzuki GSX-S150 2017.jpg",
     "author": "Haysnawri10",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S150_2017.jpg"
-  },
-  "suzuki|gsx-s750": {
-    "image": "store/img/bikes/suzuki-gsx-s750.webp",
-    "thumb": "store/img/bikes/suzuki-gsx-s750-thumb.webp",
-    "title": "Suzuki GSX-S750.jpg",
-    "author": "ShunyaIshiwatari",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S750.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-S150_2017.jpg",
+    "hero": "store/img/bikes/suzuki-gsx-s150-hero.webp"
   },
   "suzuki|gsx1300r-hayabusa": {
     "image": "store/img/bikes/suzuki-gsx1300r-hayabusa.webp",
@@ -7754,23 +7284,17 @@
     "title": "2000 GSX1300R HAYABUSA Pearl Suzuki Deep Blue×Metallic Sonic Silver.jpg",
     "author": "Yama kujira",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2000_GSX1300R_HAYABUSA_Pearl_Suzuki_Deep_Blue%C3%97Metallic_Sonic_Silver.jpg"
-  },
-  "suzuki|gsx250": {
-    "image": "store/img/bikes/suzuki-gsx250.webp",
-    "thumb": "store/img/bikes/suzuki-gsx250-thumb.webp",
-    "title": "Suzuki gsx250 twin liquid.jpg",
-    "author": "Big Guy Car Reviews & More!",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_gsx250_twin_liquid.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2000_GSX1300R_HAYABUSA_Pearl_Suzuki_Deep_Blue%C3%97Metallic_Sonic_Silver.jpg",
+    "hero": "store/img/bikes/suzuki-gsx1300r-hayabusa-hero.webp"
   },
   "suzuki|gsx250r": {
     "image": "store/img/bikes/suzuki-gsx250r.webp",
     "thumb": "store/img/bikes/suzuki-gsx250r-thumb.webp",
-    "title": "Suzuki GSX250R at Yangzhahuandao 20240404164123.jpg",
-    "author": "TurnOnTheNight",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX250R_at_Yangzhahuandao_20240404164123.jpg"
+    "title": "Gsx250r 2023 twin liquid.png",
+    "author": "Webike バイク選び",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Gsx250r_2023_twin_liquid.png",
+    "hero": "store/img/bikes/suzuki-gsx250r-hero.webp"
   },
   "suzuki|gsx650f": {
     "image": "store/img/bikes/suzuki-gsx650f.webp",
@@ -7778,15 +7302,17 @@
     "title": "Suzuki GSX650F, black (2).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX650F,_black_(2).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX650F,_black_(2).jpg",
+    "hero": "store/img/bikes/suzuki-gsx650f-hero.webp"
   },
   "suzuki|gw250": {
     "image": "store/img/bikes/suzuki-gw250.webp",
     "thumb": "store/img/bikes/suzuki-gw250-thumb.webp",
-    "title": "2014 Suzuki GW250.JPG",
-    "author": "Dennis Bratland",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Suzuki_GW250.JPG"
+    "title": "Suzuki gw 250.jpg",
+    "author": "Motard250",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_gw_250.jpg",
+    "hero": "store/img/bikes/suzuki-gw250-hero.webp"
   },
   "suzuki|gz-125": {
     "image": "store/img/bikes/suzuki-gz-125.webp",
@@ -7794,15 +7320,17 @@
     "title": "Suzuki - GZ 125 black r.jpg",
     "author": "Unknown",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_-_GZ_125_black_r.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_-_GZ_125_black_r.jpg",
+    "hero": "store/img/bikes/suzuki-gz-125-hero.webp"
   },
   "suzuki|gz-250": {
     "image": "store/img/bikes/suzuki-gz-250.webp",
     "thumb": "store/img/bikes/suzuki-gz-250-thumb.webp",
-    "title": "Tanque Suzuki GZ250 Marauder.jpg",
-    "author": "Pablo Forcén Soler ( Forcy )",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Tanque_Suzuki_GZ250_Marauder.jpg"
+    "title": "Suzuki GZ 250 Marauder.jpg",
+    "author": "Mywikandi",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GZ_250_Marauder.jpg",
+    "hero": "store/img/bikes/suzuki-gz-250-hero.webp"
   },
   "suzuki|gz-250-marauder": {
     "image": "store/img/bikes/suzuki-gz-250-marauder.webp",
@@ -7810,7 +7338,8 @@
     "title": "Suzuki GZ Marauder 250.jpg",
     "author": "Maquesta",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GZ_Marauder_250.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GZ_Marauder_250.jpg",
+    "hero": "store/img/bikes/suzuki-gz-250-marauder-hero.webp"
   },
   "suzuki|gz250": {
     "image": "store/img/bikes/suzuki-gz250.webp",
@@ -7818,7 +7347,8 @@
     "title": "Suzuki GZ250 Marauder.jpg",
     "author": "Pablo Forcén Soler ( Forcy )",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GZ250_Marauder.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GZ250_Marauder.jpg",
+    "hero": "store/img/bikes/suzuki-gz250-hero.webp"
   },
   "suzuki|hayabusa": {
     "image": "store/img/bikes/suzuki-hayabusa.webp",
@@ -7826,23 +7356,8 @@
     "title": "Suzuki Hayabusa in Athens on 10-15-2023.jpg",
     "author": "George E. Koronaios",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Hayabusa_in_Athens_on_10-15-2023.jpg"
-  },
-  "suzuki|hayabusa-1300": {
-    "image": "store/img/bikes/suzuki-hayabusa-1300.webp",
-    "thumb": "store/img/bikes/suzuki-hayabusa-1300-thumb.webp",
-    "title": "Suzuki Hayabusa 1300.jpg",
-    "author": "StealthFX",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Hayabusa_1300.jpg"
-  },
-  "suzuki|hayabusa-gsx-r-1300": {
-    "image": "store/img/bikes/suzuki-hayabusa-gsx-r-1300.webp",
-    "thumb": "store/img/bikes/suzuki-hayabusa-gsx-r-1300-thumb.webp",
-    "title": "Suzuki GSX-R Hayabusa 1300 (14946647710).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-R_Hayabusa_1300_(14946647710).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Hayabusa_in_Athens_on_10-15-2023.jpg",
+    "hero": "store/img/bikes/suzuki-hayabusa-hero.webp"
   },
   "suzuki|hayabusa-gsx1300r": {
     "image": "store/img/bikes/suzuki-hayabusa-gsx1300r.webp",
@@ -7850,15 +7365,8 @@
     "title": "Suzuki Hayabusa GSX1300R (16883827942).jpg",
     "author": "Bob Adams from Amanzimtoti, South Africa",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Hayabusa_GSX1300R_(16883827942).jpg"
-  },
-  "suzuki|hayate": {
-    "image": "store/img/bikes/suzuki-hayate.webp",
-    "thumb": "store/img/bikes/suzuki-hayate-thumb.webp",
-    "title": "2011 Suzuki Hayate 125 (20210916).jpg",
-    "author": "オーバードライブ83",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2011_Suzuki_Hayate_125_(20210916).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Hayabusa_GSX1300R_(16883827942).jpg",
+    "hero": "store/img/bikes/suzuki-hayabusa-gsx1300r-hero.webp"
   },
   "suzuki|intruder": {
     "image": "store/img/bikes/suzuki-intruder.webp",
@@ -7866,7 +7374,8 @@
     "title": "Suzuki VS 800 Intruder 02.jpg",
     "author": "Addvisor",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_VS_800_Intruder_02.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_VS_800_Intruder_02.jpg",
+    "hero": "store/img/bikes/suzuki-intruder-hero.webp"
   },
   "suzuki|intruder-1400": {
     "image": "store/img/bikes/suzuki-intruder-1400.webp",
@@ -7874,7 +7383,8 @@
     "title": "Suzuki Intruder 1400 (16533819480).jpg",
     "author": "Bob Adams from Amanzimtoti, South Africa",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_1400_(16533819480).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_1400_(16533819480).jpg",
+    "hero": "store/img/bikes/suzuki-intruder-1400-hero.webp"
   },
   "suzuki|intruder-800": {
     "image": "store/img/bikes/suzuki-intruder-800.webp",
@@ -7882,15 +7392,8 @@
     "title": "Suzuki Intruder 800 black.jpg",
     "author": "Helena",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_800_black.jpg"
-  },
-  "suzuki|intruder-c800": {
-    "image": "store/img/bikes/suzuki-intruder-c800.webp",
-    "thumb": "store/img/bikes/suzuki-intruder-c800-thumb.webp",
-    "title": "Suzuki Intruder C800 trike (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_C800_trike_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_800_black.jpg",
+    "hero": "store/img/bikes/suzuki-intruder-800-hero.webp"
   },
   "suzuki|intruder-lc-1500": {
     "image": "store/img/bikes/suzuki-intruder-lc-1500.webp",
@@ -7898,7 +7401,8 @@
     "title": "Suzuki 1500 Intruder LC (12276012226).jpg",
     "author": "Bob Adams from George, South Africa",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_1500_Intruder_LC_(12276012226).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_1500_Intruder_LC_(12276012226).jpg",
+    "hero": "store/img/bikes/suzuki-intruder-lc-1500-hero.webp"
   },
   "suzuki|intruder-lc-250": {
     "image": "store/img/bikes/suzuki-intruder-lc-250.webp",
@@ -7906,23 +7410,17 @@
     "title": "Intruder LC 250.JPG",
     "author": "翠藍硝子の大驟雨",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Intruder_LC_250.JPG"
-  },
-  "suzuki|intruder-m1800": {
-    "image": "store/img/bikes/suzuki-intruder-m1800.webp",
-    "thumb": "store/img/bikes/suzuki-intruder-m1800-thumb.webp",
-    "title": "Suzuki Intruder M1800 DSC00079.JPG",
-    "author": "Museo8bits",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800_DSC00079.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Intruder_LC_250.JPG",
+    "hero": "store/img/bikes/suzuki-intruder-lc-250-hero.webp"
   },
   "suzuki|intruder-m1800r": {
     "image": "store/img/bikes/suzuki-intruder-m1800r.webp",
     "thumb": "store/img/bikes/suzuki-intruder-m1800r-thumb.webp",
-    "title": "Suzuki Intruder M1800R 1.jpg",
-    "author": "Selmoval",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800R_1.jpg"
+    "title": "Suzuki Intruder M1800R.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800R.jpg",
+    "hero": "store/img/bikes/suzuki-intruder-m1800r-hero.webp"
   },
   "suzuki|intruder-m800": {
     "image": "store/img/bikes/suzuki-intruder-m800.webp",
@@ -7930,7 +7428,8 @@
     "title": "Suzuki Intruder M800 (1).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M800_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M800_(1).jpg",
+    "hero": "store/img/bikes/suzuki-intruder-m800-hero.webp"
   },
   "suzuki|jr-50": {
     "image": "store/img/bikes/suzuki-jr-50.webp",
@@ -7938,23 +7437,8 @@
     "title": "JR50 1978 2.JPG",
     "author": "Lukeb1961",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:JR50_1978_2.JPG"
-  },
-  "suzuki|katana": {
-    "image": "store/img/bikes/suzuki-katana.webp",
-    "thumb": "store/img/bikes/suzuki-katana-thumb.webp",
-    "title": "1997 Suzuki Katana GX (rear view), Malang.jpg",
-    "author": "Alex Neman",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1997_Suzuki_Katana_GX_(rear_view),_Malang.jpg"
-  },
-  "suzuki|katana-600": {
-    "image": "store/img/bikes/suzuki-katana-600.webp",
-    "thumb": "store/img/bikes/suzuki-katana-600-thumb.webp",
-    "title": "Black Suzuki Katana 600 side.JPG",
-    "author": "BrokenSphere",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Black_Suzuki_Katana_600_side.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:JR50_1978_2.JPG",
+    "hero": "store/img/bikes/suzuki-jr-50-hero.webp"
   },
   "suzuki|katana-750": {
     "image": "store/img/bikes/suzuki-katana-750.webp",
@@ -7967,10 +7451,11 @@
   "suzuki|let": {
     "image": "store/img/bikes/suzuki-let.webp",
     "thumb": "store/img/bikes/suzuki-let-thumb.webp",
-    "title": "Suzuki Let's 5 in tokyo motorcycle show 2008.jpg",
-    "author": "Dave Brown",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Let's_5_in_tokyo_motorcycle_show_2008.jpg"
+    "title": "Suzuki Let's (2015).jpg",
+    "author": "Masanori Kajiwara",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Let's_(2015).jpg",
+    "hero": "store/img/bikes/suzuki-let-hero.webp"
   },
   "suzuki|lets": {
     "image": "store/img/bikes/suzuki-lets.webp",
@@ -7978,15 +7463,8 @@
     "title": "Suzuki lets2 black.JPG",
     "author": "JR East E231",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_lets2_black.JPG"
-  },
-  "suzuki|lets4": {
-    "image": "store/img/bikes/suzuki-lets4.webp",
-    "thumb": "store/img/bikes/suzuki-lets4-thumb.webp",
-    "title": "Suzuki lets4.jpg",
-    "author": "ラ ばあさん",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_lets4.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_lets2_black.JPG",
+    "hero": "store/img/bikes/suzuki-lets-hero.webp"
   },
   "suzuki|marauder-800": {
     "image": "store/img/bikes/suzuki-marauder-800.webp",
@@ -7994,7 +7472,8 @@
     "title": "Suzuki VZ 800 Marauder 2002.jpg",
     "author": "Muxriddin Azimov",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_VZ_800_Marauder_2002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_VZ_800_Marauder_2002.jpg",
+    "hero": "store/img/bikes/suzuki-marauder-800-hero.webp"
   },
   "suzuki|marauder-gz125": {
     "image": "store/img/bikes/suzuki-marauder-gz125.webp",
@@ -8002,7 +7481,8 @@
     "title": "Suzuki Marauder GZ125.jpg",
     "author": "Thomas Skowron",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Marauder_GZ125.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Marauder_GZ125.jpg",
+    "hero": "store/img/bikes/suzuki-marauder-gz125-hero.webp"
   },
   "suzuki|nex-115": {
     "image": "store/img/bikes/suzuki-nex-115.webp",
@@ -8010,7 +7490,8 @@
     "title": "2021 Suzuki Nex II 115 01.jpg",
     "author": "Haysnawri10",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Suzuki_Nex_II_115_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Suzuki_Nex_II_115_01.jpg",
+    "hero": "store/img/bikes/suzuki-nex-115-hero.webp"
   },
   "suzuki|recursion": {
     "image": "store/img/bikes/suzuki-recursion.webp",
@@ -8020,21 +7501,14 @@
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Recursion_Concept_front-left_2013_Tokyo_Motor_Show.jpg"
   },
-  "suzuki|rm-125": {
-    "image": "store/img/bikes/suzuki-rm-125.webp",
-    "thumb": "store/img/bikes/suzuki-rm-125-thumb.webp",
-    "title": "Suzuki rm 125.jpg",
-    "author": "photo Momcilo Stokanovic",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_rm_125.jpg"
-  },
   "suzuki|rm-z-250": {
     "image": "store/img/bikes/suzuki-rm-z-250.webp",
     "thumb": "store/img/bikes/suzuki-rm-z-250-thumb.webp",
     "title": "Suzuki RM-Z 250.jpg",
     "author": "MotoryzacyjnyŚwir",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_RM-Z_250.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_RM-Z_250.jpg",
+    "hero": "store/img/bikes/suzuki-rm-z-250-hero.webp"
   },
   "suzuki|rm-z-450": {
     "image": "store/img/bikes/suzuki-rm-z-450.webp",
