@@ -143,11 +143,23 @@ def test_a_real_job_with_no_matching_page_still_gets_an_answer(monkeypatch):
     assert "No printed page" in stream.seen["user"]
 
 
-def test_model_that_ignores_the_prompt_still_yields_no_unverified_citation(monkeypatch):
+def test_an_answer_that_cites_nothing_still_gets_page_chips(monkeypatch):
+    """"We just get you to the right page" is the product. If the model cites nothing, the server
+    appends chips for the pages retrieval found, and those citations are quote-verified like any other."""
     monkeypatch.setattr(chat.llm, "stream", fake_stream(lambda user: "Torque it to 48 Nm."))
-    done = frames(chat.answer(KTM, [{"role": "user", "content": "rear axle torque"}]))[-1]
-    assert done["citations"] == [], "an answer with no [p. N] marker must return no citations at all"
-    assert done["answer"] == "Torque it to 48 Nm."
+
+    out = frames(chat.answer(KTM, [{"role": "user", "content": "rear axle torque"}]))
+    done = out[-1]
+
+    assert "Open:" in done["answer"]
+    assert done["answer"].startswith("Torque it to 48 Nm.")
+    assert done["citations"], "the mechanic must still be handed a page to open"
+    for citation in done["citations"]:
+        assert citation["quote"] in page_text(citation["page"])
+    # the chips were streamed, not smuggled into the done frame only
+    assert "".join(f["text"] for f in out[:-1]) == done["answer"]
+    # 48 is printed on no retrieved page, so the guard still reports it
+    assert done["unverifiedNumbers"] == ["48"]
 
 
 def test_prompt_carries_numbered_pages_and_the_grounding_rules(monkeypatch):

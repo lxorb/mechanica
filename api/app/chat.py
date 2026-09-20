@@ -117,6 +117,12 @@ Now it's your turn. Rules for your answer:
      check or level sections closest to the job.
   If the sources print no figure at all for the job, keep parts 1 and 3 and say plainly that the manual
   prints no figures for it. Never reach for a figure belonging to a different job to pad part 2.
+  This holds for a "when" or "how often" question too: if the manual prints no interval or wear limit for
+  the job, say that, give the general steps for checking it, and still list the pages to open. "The manual
+  prints no interval" is an answer; "{NOT_COVERED}" for a real job is not.
+- Sources were given to you because the question names a job or a part of THIS motorcycle. So if there are
+  sources below, the question is on topic by definition and "{NOT_COVERED}" is the wrong answer, however
+  little the pages turn out to print. Always end with the "Open:" line naming the closest pages.
 - If a torque, clearance, capacity, pressure or interval for the job is printed ANYWHERE in the sources,
   including a technical-data or tightening-torque table on another page, surface it and cite that page.
 - EVERY number anywhere in your answer must be copied from a source and carry a [p. N]. The only digits you
@@ -370,7 +376,7 @@ def answer(manual_id: str, messages: list[dict]) -> Iterator[str]:
 
     text = "".join(parts).strip() or NOT_COVERED
     citations = _citations(text, question, original)
-    if not citations and original and text != NOT_COVERED:
+    if not citations and original:
         chips = " ".join(f"[p. {page}]" for page in list(original)[:3])
         tail = f"{chr(10)}Open: {chips}"
         yield _frame(type="token", text=tail)

@@ -31,6 +31,9 @@ MASK = "␟"  # a character no manual prints, so masking a citation cannot colli
 # What counts as a claim: any sentence of four words or more. Deliberately blunt - a verb list
 # let "Loosen the rear wheel nut and the adjuster nuts" through uncounted, which flatters the score.
 CLAIM_WORDS = 4
+# Sentences that state the ABSENCE of printed data, or just list pages to open, assert nothing the
+# manual could be cited for. They are navigation and status, not claims.
+ABSENCE = re.compile(r"(?:prints? no|no .{0,40}(?:is|are) (?:printed|provided|given)|no (?:applicable|relevant|specific) .{0,30}page|^Open[: ])", re.I)
 
 QUESTIONS = [
     ("ktm", "how much oil does it take"),
@@ -117,8 +120,8 @@ def claims(answer: str) -> list[tuple[str, bool]]:
             if cited and out:
                 out[-1] = (out[-1][0], True)
             continue
-        if bare.rstrip(".") in [t.rstrip(".") for t in STATUS]:
-            continue  # a status line states no fact of its own, so it needs no citation
+        if bare.rstrip(".") in [t.rstrip(".") for t in STATUS] or ABSENCE.search(bare):
+            continue  # states no fact the manual could be cited for: a status or navigation line
         if len(bare.split()) >= CLAIM_WORDS:
             out.append((bare, cited))
     return out
