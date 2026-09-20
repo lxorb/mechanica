@@ -17,11 +17,20 @@ def _secret(env: str, file: str) -> str | None:
     return path.read_text(encoding="utf-8").strip() if path.exists() else None
 
 
+def _elastic() -> tuple[str | None, str | None]:
+    url, key = os.getenv("ES_URL") or None, os.getenv("ES_API_KEY") or None
+    path = SECRETS_DIR / "elastic.txt"
+    if (not url or not key) and path.exists():
+        lines = [l.strip() for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        if len(lines) >= 2:
+            url, key = url or lines[0], key or lines[1]
+    return url, key
+
+
 class Settings:
     data_dir = Path(os.getenv("DATA_DIR") or ROOT / "data")
     openai_api_key = _secret("OPENAI_API_KEY", "openai.txt")
-    es_url = os.getenv("ES_URL") or None
-    es_api_key = os.getenv("ES_API_KEY") or None
+    es_url, es_api_key = _elastic()
     mongodb_uri = os.getenv("MONGODB_URI") or None
     azure_storage_connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING") or None
     azure_storage_account = os.getenv("AZURE_STORAGE_ACCOUNT") or None
