@@ -262,6 +262,13 @@
   z-index: 4;
 }
 
+/* The file is not coming. The sweep stops; the ring is now a tap target, and that is the
+   whole error state — a page of apology would be louder than the thing one tap fixes. */
+[data-screen="book"] .page-sheet.is-stalled {
+  animation: none;
+  background: var(--paper);
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-screen="book"] .page-sheet:not(.is-ready) {
     background: var(--paper);

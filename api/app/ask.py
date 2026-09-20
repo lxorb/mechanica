@@ -2,11 +2,16 @@
 
 Never returns prose: the answer is always a list of the manual's own sections.
 Spec intents answer straight from the parsed Spec rows and never pay for a picker call.
+A sentence the rider already said in the manual's own words skips the router too (see `_fast`), and a
+spoken turn (app/voice.py, inside `spoken()`) drops the three things that cost silence (see below).
 """
 
 import re
 import threading
+import time
 from collections import OrderedDict
+from contextlib import contextmanager
+from contextvars import ContextVar
 
 from pydantic import BaseModel
 
@@ -14,6 +19,7 @@ from . import llm, ttc
 from .config import settings
 from .models import AskResponse, Match, Section
 from .search import get_index
+from .search.local import evidence
 from .store import get_store
 
 KINDS = {"torque", "capacity", "clearance", "pressure", "grade", "size", "electrical", "other"}
@@ -26,6 +32,59 @@ CANDIDATES = 6
 PICK_MARGIN = 0.85
 CACHE_MAX = 500
 EFFORT = "low"
+
+# ---------------------------------------------------------------- the rider's own sentence
+#
+# The router exists because riders do not speak in manual vocabulary. Sometimes they already do. When
+# the rider's own words name one printed section outright - a keyword phrase that section was indexed
+# under, or two thirds of its printed title - and the index leaves the runner-up a clear distance
+# behind, there is nothing left for an LLM to translate and the answer is already on the table.
+# Measured on the 150-query eval (api/eval): fires on 38 of the 130 in-scope queries, top-1 right on
+# all 38, and on none of the 20 out-of-scope ones, which still need the router to say "unknown".
+# 1,856-2,568 ms becomes under 10 ms for the questions it takes. The first wrong answer only appears
+# at a margin of 0.95, so 0.80 is chosen with that distance left in front of it.
+FAST_MARGIN = 0.80
+FAST_EVIDENCE = 0.67
+# A question after a printed FIGURE goes to the router whatever it looks like: the router is what feeds
+# the deterministic spec path its printed spec name and kind, and a lexical hit may never stand in for
+# that. Same vocabulary the spec tools themselves rank by (voice.py::KINDS).
+SPEC_CUES = frozenset(
+    "torque torques tighten tightening nm newton lbf capacity quantity volume litre litres liter liters "
+    "pressure bar psi clearance clearances gap play slack backlash thickness depth diameter length limit "
+    "volt volts voltage amp amps ampere fuse watt grade viscosity spec specification size interval "
+    "intervals much many".split()
+)
+
+# ---------------------------------------------------------------- the spoken turn
+#
+# A voice turn is a person standing still with a spanner in one hand, listening to silence. Every
+# millisecond here is audible, and two things this pipeline does for a typed answer are not worth what
+# they cost out loud. Measured on the KTM 390 Duke 2024, 2026-09-20:
+#   - the cost-log scan behind `usd`: nobody hears a dollar figure. 672-753 ms locally, and on the
+#     blob store a document read that every LLM call invalidates as it writes its own cost event.
+#   - The Token Company's compression of the picker's candidate list. It is a cost lever, and out loud
+#     it buys that saving with 274-418 ms of silence.
+# The picker that does run runs at reasoning "none": 1,736 -> 1,055 ms mean, p95 2,538 -> 1,414 ms
+# over 12 ambiguous questions, with the same lead section on all 12.
+#
+# What is NOT here, and why: raising the picker's margin out loud, so it only ran on a genuine tie.
+# Over the 130 in-scope eval queries that was free - the index's own order was top-1 right every time
+# the picker fired - but on a demo utterance the eval does not contain, "how do I get the front wheel
+# off", the index leads with the battery and the picker is the only thing that fixes it. A spoken
+# answer has no page on screen to catch that, so the picker keeps the margin it has.
+VOICE_EFFORT = "none"
+
+_spoken: ContextVar[bool] = ContextVar("ask_spoken", default=False)
+
+
+@contextmanager
+def spoken():
+    """Everything asked inside is a spoken turn. app/voice.py wraps find_procedure in it."""
+    token = _spoken.set(True)
+    try:
+        yield
+    finally:
+        _spoken.reset(token)
 
 
 class Route(BaseModel):
@@ -270,6 +329,7 @@ _cache: "OrderedDict[tuple[str, str], AskResponse]" = OrderedDict()
 _pages: dict[str, dict[int, str]] = {}
 _lock = threading.RLock()
 _WS = re.compile(r"[^a-z0-9]+")
+_WORD = re.compile(r"[a-z0-9]+")
 
 
 def _norm(query: str) -> str:
@@ -314,13 +374,30 @@ def _snippet(manual_id: str, section: Section, chars: int = SNIPPET) -> str:
     return body[:chars]
 
 
-def _spend(store, before: int) -> float:
-    """This ask only. The cost log is shared with ingest and identify, which may write while we run."""
-    events = store.costs()
-    return round(sum(e.usd for e in events[before:] if e.route.startswith("ask.")), 6)
+def _spend(store, since: float) -> float:
+    """This ask only. The cost log is shared with ingest and identify, which may write while we run.
+
+    One read of that log, not two: the old shape took its baseline by reading the whole log before the
+    router ran and read it again to diff, which on the blob store is two document fetches per ask.
+    A CostEvent carries the wall clock it was logged at, so the baseline is free.
+    """
+    return round(sum(e.usd for e in store.costs() if e.ts >= since and e.route.startswith("ask.")), 6)
 
 
-def _route(query: str) -> Route:
+def _fast(manual_id: str, query: str, sections: dict[str, Section]) -> list[str] | None:
+    """The sections the rider's own words already name, or None when the router has work to do."""
+    if SPEC_CUES.intersection(_WORD.findall(query.lower())):
+        return None
+    hits = [h for h in get_index().query(manual_id, [query], None, k=CANDIDATES) if h.sectionId in sections]
+    if not hits or (len(hits) > 1 and hits[1].score > FAST_MARGIN):
+        return None
+    lead = sections[hits[0].sectionId]
+    if evidence(query, lead.title, lead.keywords) < FAST_EVIDENCE:
+        return None
+    return [h.sectionId for h in hits][:MAX_MAIN]
+
+
+def _route(query: str, effort: str = EFFORT) -> Route:
     try:
         route = llm.structured(
             route="ask.router",
@@ -328,7 +405,7 @@ def _route(query: str) -> Route:
             schema=Route,
             system=ROUTER_SYSTEM,
             user=query,
-            reasoning=EFFORT,
+            reasoning=effort,
         )
     except Exception:
         return Route(intent="procedure", components=[], queries=[query], specName=None, specKind=None)
@@ -348,12 +425,24 @@ def _route(query: str) -> Route:
     )
 
 
-def _compress(text: str) -> str:
-    """The Token Company sits between the printed page text and the picker (app/ttc.py)."""
-    return ttc.compress(text, aggressiveness=0.3, route="picker")[0]
+def _compress(text: str, on: bool = True) -> str:
+    """The Token Company sits between the printed page text and the picker (app/ttc.py).
+
+    `on` is false for a spoken turn: compression saves tokens, and the round trip that saves them is
+    274-418 ms of a rider hearing nothing.
+    """
+    return ttc.compress(text, aggressiveness=0.3, route="picker")[0] if on else text
 
 
-def _pick(manual_id: str, query: str, route: Route, order: list[str], sections: dict[str, Section]) -> list[str]:
+def _pick(
+    manual_id: str,
+    query: str,
+    route: Route,
+    order: list[str],
+    sections: dict[str, Section],
+    effort: str = EFFORT,
+    compress: bool = True,
+) -> list[str]:
     lines = []
     for section_id in order:
         section = sections[section_id]
@@ -362,7 +451,7 @@ def _pick(manual_id: str, query: str, route: Route, order: list[str], sections: 
             f"  {_snippet(manual_id, section)}"
         )
     user = f"Question: {query}\nComponents: {', '.join(route.components) or '-'}\n\nCandidates:\n" + _compress(
-        "\n".join(lines)
+        "\n".join(lines), compress
     )
     try:
         pick = llm.structured(
@@ -371,7 +460,7 @@ def _pick(manual_id: str, query: str, route: Route, order: list[str], sections: 
             schema=Pick,
             system=PICKER_SYSTEM,
             user=user,
-            reasoning=EFFORT,
+            reasoning=effort,
         )
     except Exception:
         return order[:MAX_MAIN]
@@ -411,6 +500,33 @@ def _by_spec(manual_id: str, route: Route, sections: dict[str, Section]) -> list
     return [section_id for section_id, _ in ranked][: MAX_MAIN + MAX_RELATED]
 
 
+def _answered(key: tuple[str, str], sections: dict[str, Section], ordered: list[str], intent: str, usd: float) -> AskResponse:
+    matches = [
+        Match(section=sections[section_id], score=round(max(0.1, 1.0 - 0.1 * i), 2))
+        for i, section_id in enumerate(ordered[: MAX_MAIN + MAX_RELATED])
+    ]
+    response = AskResponse(matches=matches, intent=intent, usd=usd)
+    _remember(key, response)
+    return response
+
+
+def warm(manual_id: str) -> None:
+    """Build what this manual's first question would otherwise build while the rider waits.
+
+    The BM25 index and the page map the picker's snippets are sliced out of are both memoised per
+    manual and built on first use - which, unwarmed, is the middle of the first spoken turn. Called
+    off the critical path when a voice session opens (app/voice.py::agent_settings), and idempotent.
+    """
+    try:
+        manual = get_store().manual(manual_id)
+        if manual is None:
+            return
+        get_index().query(manual_id, [manual.title], None, k=1)
+        _page_text(manual_id)
+    except Exception:  # noqa: BLE001 - a warm-up may never break the session it is warming
+        pass
+
+
 def answer(manual_id: str, query: str) -> AskResponse:
     store = get_store()
     manual = store.manual(manual_id)
@@ -422,9 +538,15 @@ def answer(manual_id: str, query: str) -> AskResponse:
     if cached is not None:
         return cached.model_copy(update={"usd": 0.0})
 
-    before = len(store.costs())
     sections = {s.id: s for s in manual.sections}
-    route = _route(query)
+    already = _fast(manual_id, query, sections)
+    if already is not None:
+        # No model was asked anything, so there is no cost log to read and nothing to spend.
+        return _answered(key, sections, already, "procedure", 0.0)
+
+    voice = _spoken.get()
+    started = time.time()
+    route = _route(query, VOICE_EFFORT if voice else EFFORT)
 
     ordered: list[str] = []
     if route.intent == "spec":
@@ -438,12 +560,9 @@ def answer(manual_id: str, query: str) -> AskResponse:
         else:
             # An empty pick means the candidate list was junk, not that the rider gets a blank screen:
             # the router already answers "is this about the bike at all", so fall back to the one best page.
-            ordered = _pick(manual_id, query, route, order, sections) or order[:1]
+            ordered = (
+                _pick(manual_id, query, route, order, sections, VOICE_EFFORT if voice else EFFORT, not voice)
+                or order[:1]
+            )
 
-    matches = [
-        Match(section=sections[section_id], score=round(max(0.1, 1.0 - 0.1 * i), 2))
-        for i, section_id in enumerate(ordered[: MAX_MAIN + MAX_RELATED])
-    ]
-    response = AskResponse(matches=matches, intent=route.intent, usd=_spend(store, before))
-    _remember(key, response)
-    return response
+    return _answered(key, sections, ordered, route.intent, 0.0 if voice else _spend(store, started))

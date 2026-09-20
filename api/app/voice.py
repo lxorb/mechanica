@@ -24,6 +24,7 @@ and the JSON this API already returns goes back to the model as the function res
 import json
 import os
 import re
+import threading
 from itertools import zip_longest
 from urllib.parse import quote
 
@@ -576,6 +577,11 @@ def agent_settings(manualId: str, bikeId: str | None = None):
     bike = _label(manual, rec)
     digest = _digest(manual)
     keyterms = _keyterms(manual, bike, rec)
+    # The first spoken question is the one that would otherwise pay for this manual's BM25 index and
+    # its page map, because both are built on first use. Build them now, off this request's thread,
+    # while the rider is still hearing the greeting - measured, 724 ms of cover for work that is 61 ms
+    # locally and a whole page document on the blob store. Idempotent, and it cannot fail the session.
+    threading.Thread(target=ask_mod.warm, args=(manual.id,), daemon=True).start()
     return {
         "url": AGENT_WS,
         "sampleRate": AGENT_RATE,
@@ -612,7 +618,10 @@ def find_procedure(body: FindBody, manualId: str | None = Query(default=None)):
     manual_id = _pick(body, manualId)
     _manual(manual_id)
     try:
-        answer = ask_mod.answer(manual_id, body.query)
+        # A spoken turn: no cost-log scan for a dollar figure nobody hears, no prompt compression the
+        # rider pays for in silence, and the picker that does run reasons at "none".
+        with ask_mod.spoken():
+            answer = ask_mod.answer(manual_id, body.query)
     except NotImplementedError:
         raise HTTPException(501, "search unavailable") from None
     sections = [

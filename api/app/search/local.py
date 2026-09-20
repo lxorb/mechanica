@@ -158,6 +158,23 @@ def side_of(tokens) -> str | None:
     return found[0] if len(found) == 1 else None
 
 
+def evidence(query: str, title: str, keywords: list[str] | None = None) -> float:
+    """How much of one section's own printed vocabulary the rider's sentence already carries, 0..1.
+
+    Deliberately not a BM25 score. BM25 says which section wins the comparison between sections; this
+    says whether the rider named the thing at all. A rider who says a keyword phrase this section was
+    indexed under, word for word, has named it outright (1.0); otherwise it is the share of the printed
+    title their own words cover. `ask.py` uses it to decide when a sentence needs no LLM to translate it.
+    """
+    spoken = f" {normalize(query)} "
+    sequence = canon(query)
+    for keyword in keywords or []:
+        if f" {normalize(keyword)} " in spoken or contiguous(sequence, canon(keyword)):
+            return 1.0
+    words = set(canon(title))
+    return len(set(sequence) & words) / len(words) if words else 0.0
+
+
 class _Manual:
     def __init__(self, manual: Manual, pages: list[Page], specs: list[Spec]):
         by_page = {p.page: p.text for p in pages}

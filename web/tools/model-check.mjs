@@ -19,14 +19,34 @@
  * web/counter/js/viewer3d.js (BIKE_PARTS / CAR_PARTS) — nothing else has to change.
  */
 
-import { readFileSync, existsSync, statSync } from "node:fs";
+import { readFileSync, existsSync, statSync, readdirSync } from "node:fs";
 import { resolve, dirname, basename, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { matchPart, partsFor, PART_LABELS, MODEL_KEYS } from "../counter/js/viewer3d.js";
+import { matchPart, partsFor, PART_LABELS, MODEL_KEYS, registerGenericParts } from "../counter/js/viewer3d.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MODELS = resolve(HERE, "..", "store", "models");
 const ROOT = resolve(HERE, "..", "..");
+
+/* The browser registers generic/parts.json at boot (see viewer3d.js); do the same here, or every
+ * `generic/<type>` would be checked against the bare BIKE_PARTS table and its per-model `extra`
+ * pins would silently not count. */
+const GENERIC_DIR = resolve(MODELS, "generic");
+const PARTS_JSON = resolve(GENERIC_DIR, "parts.json");
+let genericTable = {};
+if (existsSync(PARTS_JSON)) {
+  genericTable = JSON.parse(readFileSync(PARTS_JSON, "utf8"));
+  registerGenericParts(genericTable);
+}
+
+/** Every key the app can mount: the three exact models plus one per generic/<type>/ folder. */
+const GENERIC_KEYS = existsSync(GENERIC_DIR)
+  ? readdirSync(GENERIC_DIR, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => `generic/${entry.name}`)
+      .sort()
+  : [];
+const ALL_KEYS = [...MODEL_KEYS, ...GENERIC_KEYS];
 
 const args = process.argv.slice(2);
 const flag = (name) => args.includes(`--${name}`);
@@ -148,10 +168,31 @@ function point(m, x, y, z) {
   ];
 }
 
-/** The viewer turns the source models so the front points at +x; report in that frame. */
-const toViewer = ([x, y, z]) => [-z, y, x];
+/**
+ * The viewer turns the source models so the front points at +x; report in that frame.
+ *
+ * The three exact models are all Y-up facing -x, hence a flat -90° about Y. A generic carries its
+ * own `rotate` + `orient` in generic/parts.json and viewer3d.js::orientMatrix() applies them as
+ * rotY(orient) · eulerXYZ(rotate) — mirror that exactly, or every "where" reading for a generic
+ * comes out in the wrong frame and "front" points somewhere else.
+ */
+const rad = (deg) => (deg * Math.PI) / 180;
+const rotY = (deg) => { const c = Math.cos(rad(deg)), s = Math.sin(rad(deg)); return [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]; };
+const rotX = (deg) => { const c = Math.cos(rad(deg)), s = Math.sin(rad(deg)); return [1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]; };
+const rotZ = (deg) => { const c = Math.cos(rad(deg)), s = Math.sin(rad(deg)); return [c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; };
 
-function boxOf(gltf, mesh, matrix) {
+function viewerMatrix(modelKey) {
+  const row = modelKey.startsWith("generic/") ? genericTable[modelKey.slice("generic/".length)] : null;
+  if (!row) return rotY(-90);
+  let matrix = rotY(Number.isFinite(row.orient) ? row.orient : 0);
+  if (Array.isArray(row.rotate) && row.rotate.length === 3) {
+    const [rx, ry, rz] = row.rotate;
+    matrix = multiply(matrix, multiply(rotX(rx), multiply(rotY(ry), rotZ(rz))));
+  }
+  return matrix;
+}
+
+function boxOf(gltf, mesh, matrix, toViewer) {
   const box = [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
   for (const primitive of mesh.primitives || []) {
     const accessor = gltf.accessors[primitive.attributes.POSITION];
@@ -162,7 +203,7 @@ function boxOf(gltf, mesh, matrix) {
         corner & 2 ? accessor.max[1] : accessor.min[1],
         corner & 4 ? accessor.max[2] : accessor.min[2],
       ];
-      const world = toViewer(point(matrix, ...source));
+      const world = point(toViewer, ...point(matrix, ...source));
       for (let i = 0; i < 3; i++) {
         box[i] = Math.min(box[i], world[i]);
         box[i + 3] = Math.max(box[i + 3], world[i]);
@@ -192,6 +233,7 @@ function triangles(gltf, primitive) {
 
 function inspect(file, modelKey) {
   const { gltf, bin, size, glb } = readGltf(file);
+  const toViewer = viewerMatrix(modelKey);
   const nodes = gltf.nodes || [];
   const parents = new Map();
   nodes.forEach((node, i) => (node.children || []).forEach((child) => parents.set(child, i)));
@@ -268,7 +310,7 @@ function inspect(file, modelKey) {
     tris += primitiveTris;
     const key = matchPart(modelKey, ...sources);
     const label = sources.find((name) => !/^Object_\d+$/.test(name)) || sources[0] || `node ${i}`;
-    const box = boxOf(gltf, mesh, matrix);
+    const box = boxOf(gltf, mesh, matrix, toViewer);
     if (box) growBox(whole, box);
     const used = (mesh.primitives || [])
       .map((primitive) => (primitive.material != null && gltf.materials ? gltf.materials[primitive.material].name : ""))
@@ -351,14 +393,40 @@ function report(info) {
       console.log(`  ${entry.label.slice(0, 33).padEnd(34)}${fixed(at(entry)).padEnd(20)}${fixed(span(entry)).padEnd(20)}${entry.key || "-"}`);
     }
   }
+  if (flag("each")) {
+    /* Every mesh node on its own line. This is the view the unnamed Sketchfab uploads need: when
+     * every node is "Object_31" and every group is "vespa_HP.obj.cleaner.materialmerge", the only
+     * two things that still say what a mesh IS are its material and where it sits. Pin what you
+     * find into generic/parts.json `extra` as `^Object_31$`. */
+    const middle = [0, 1, 2].map((i) => (info.whole[i] + info.whole[i + 3]) / 2);
+    const reach = Math.max(...[0, 1, 2].map((i) => (info.whole[i + 3] - info.whole[i]) / 2)) || 1;
+    const at = (box) => [0, 1, 2].map((i) => ((box[i] + box[i + 3]) / 2 - middle[i]) / reach);
+    const span = (box) => [0, 1, 2].map((i) => (box[i + 3] - box[i]) / reach);
+    const fixed = (list) => list.map((n) => (n >= 0 ? " " : "") + n.toFixed(2)).join(" ");
+    console.log("");
+    console.log("  every mesh, viewer frame: +x front, +y up, +z left, units = model half-extent");
+    console.log(`  ${"node".padEnd(14)}${"tris".padStart(7)}  ${"centre x  y  z".padEnd(20)}${"size x  y  z".padEnd(20)}${"part".padEnd(13)}materials`);
+    for (const row of info.rows.filter((entry) => entry.box).sort((a, b) => at(b.box)[0] - at(a.box)[0])) {
+      console.log(`  ${(row.name || `node ${row.node}`).slice(0, 13).padEnd(14)}${count(row.tris).padStart(7)}  ${fixed(at(row.box)).padEnd(20)}${fixed(span(row.box)).padEnd(20)}${(row.key || "-").padEnd(13)}${[...new Set(row.materials)].join(", ")}`);
+    }
+  }
 }
 
 const CATCH_ALL_LABEL = "frame";
 
 /* ------------------------------------------------------------------ main */
 
+/**
+ * The file to read for a key. `scene.gltf` wins when it is there, because the shipped model.glb
+ * is Draco-compressed and Draco hides the skin joints — and on both exact bikes the joints ARE
+ * the group names, so reading the GLB reports 3 groups for a model the browser splits into 16.
+ * `--shipped` forces model.glb (for size / extension checks).
+ */
 function fileFor(key) {
-  for (const name of ["model.glb", "scene.gltf", "scene.glb"]) {
+  const order = flag("shipped")
+    ? ["model.glb", "scene.gltf", "scene.glb"]
+    : ["scene.gltf", "scene.glb", "model.glb"];
+  for (const name of order) {
     const file = resolve(MODELS, key, name);
     if (existsSync(file)) return file;
   }
@@ -367,21 +435,24 @@ function fileFor(key) {
 
 const jobs = [];
 if (!targets.length) {
-  for (const key of MODEL_KEYS) {
+  for (const key of ALL_KEYS) {
     const file = fileFor(key);
     if (file) jobs.push({ file, key });
   }
 } else {
   for (const target of targets) {
-    if (MODEL_KEYS.includes(target)) {
-      const file = fileFor(target);
-      if (!file) { console.error(`no model file for ${target}`); process.exitCode = 1; continue; }
-      jobs.push({ file, key: target });
+    const key = ALL_KEYS.includes(target) ? target
+      : ALL_KEYS.includes(`generic/${target}`) ? `generic/${target}` : null;
+    if (key) {
+      const file = fileFor(key);
+      if (!file) { console.error(`no model file for ${key}`); process.exitCode = 1; continue; }
+      jobs.push({ file, key });
       continue;
     }
     const file = resolve(process.cwd(), target);
     if (!existsSync(file)) { console.error(`not found: ${target}`); process.exitCode = 1; continue; }
-    jobs.push({ file, key: value("model", MODEL_KEYS.find((key) => file.includes(key)) || "yzf-2021") });
+    const guess = ALL_KEYS.find((candidate) => file.replace(/\\/g, "/").includes(`/${candidate}/`));
+    jobs.push({ file, key: value("model", guess || "yzf-2021") });
   }
 }
 
@@ -399,6 +470,22 @@ if (flag("json")) {
     parts: info.rows.reduce((map, row) => { const key = row.key || "UNMATCHED"; map[key] = (map[key] || 0) + 1; return map; }, {}),
     names: info.names.map((entry) => ({ name: entry.label, meshes: entry.meshes, triangles: entry.tris, part: entry.key })),
   })), null, 2));
+} else if (flag("summary")) {
+  /* One line per model: how many groups the viewer would build, and which. This is the number
+   * QA counts — the catch-all "frame" is listed last and marked (*) when nothing named itself
+   * into it, because pickGroup() refuses to select a catch-all group. */
+  console.log("");
+  console.log(`  ${"model".padEnd(20)}${"grp".padStart(4)}  groups (catch-all frame marked *)`);
+  for (const info of results) {
+    const keys = new Map();
+    for (const row of info.rows) {
+      const key = row.key || CATCH_ALL_LABEL;
+      keys.set(key, (keys.get(key) || false) || Boolean(row.key));
+    }
+    const list = [...keys].map(([key, named]) => (key === CATCH_ALL_LABEL && !named ? `${key}*` : key));
+    console.log(`  ${info.modelKey.padEnd(20)}${String(keys.size).padStart(4)}  ${list.join(" ")}`);
+  }
+  console.log("");
 } else {
   results.forEach(report);
   console.log("");
