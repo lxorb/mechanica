@@ -5,6 +5,9 @@ const SVG = "http://www.w3.org/2000/svg";
 const PINCH_MAX = 4;
 const TAP = 10;
 const COVER_PAGE = 1;
+const ALT_LIMIT = 8;
+const FRAME = 1.5;
+const FIT_OFF = 1.34;
 const CHOOSER = "https://www.dropbox.com/static/api/2/dropins.js";
 const els = {};
 
@@ -126,6 +129,25 @@ function preload(src) {
   const img = new Image();
   img.decoding = "async";
   img.src = src;
+}
+
+/**
+ * The catalog photos run from 0.56 to 2.05 wide. A shape close to the 3:2 frame fills it,
+ * centred; anything further off is letterboxed whole (.is-fit -> object-fit: contain)
+ * rather than cropped to a wheel. Mirrors fitArt() in identify.js.
+ */
+function fitArt(img) {
+  const w = img.naturalWidth;
+  const h = img.naturalHeight;
+  if (!w || !h) return;
+  const ratio = w / h;
+  const off = ratio > FRAME ? ratio / FRAME : FRAME / ratio;
+  img.classList.toggle("is-fit", off > FIT_OFF);
+}
+
+function watchArt(img) {
+  img.addEventListener("load", () => fitArt(img));
+  return img;
 }
 
 function bounce() {
@@ -365,20 +387,109 @@ function paintBike(rec) {
   els.bikeImg.alt = label;
   if (main) {
     preload(main);
-    els.bikeImg.src = main;
+    if (els.bikeImg.getAttribute("src") !== main) {
+      els.bikeImg.classList.remove("is-fit");
+      els.bikeImg.src = main;
+    }
+    if (els.bikeImg.complete) fitArt(els.bikeImg);
   } else {
     els.bikeImg.removeAttribute("src");
+    els.bikeImg.classList.remove("is-fit");
   }
 
-  if (shot && src) {
-    els.shotImg.alt = label;
-    els.shotImg.src = shot;
+  // Both pictures: the photo that was handed in sits next to the bike it was recognised as.
+  const split = Boolean(shot && src);
+  els.photo.classList.toggle("is-split", split);
+  if (split) {
+    els.shotImg.alt = "";
+    if (els.shotImg.getAttribute("src") !== shot) {
+      els.shotImg.classList.remove("is-fit");
+      els.shotImg.src = shot;
+    }
+    if (els.shotImg.complete) fitArt(els.shotImg);
     els.shotImg.hidden = false;
   } else {
     els.shotImg.hidden = true;
     els.shotImg.removeAttribute("src");
+    els.shotImg.classList.remove("is-fit");
     els.shotImg.alt = "";
   }
+}
+
+/* ---------------------------------------------------------- alternatives */
+
+/** The other candidates a photo came back with (bus state.altIds / state.altConf). */
+function altList() {
+  const ids = Array.isArray(state.altIds) ? state.altIds : [];
+  const conf = Array.isArray(state.altConf) ? state.altConf : [];
+  const out = [];
+  for (let i = 0; i < ids.length && out.length < ALT_LIMIT; i++) {
+    const rec = bikeOf(ids[i]);
+    if (rec) out.push({ bike: rec, confidence: Number(conf[i]) || 0 });
+  }
+  return out;
+}
+
+function altCard(entry) {
+  const rec = entry.bike;
+  const on = rec.id === state.bikeId;
+  const box = document.createElement("button");
+  box.type = "button";
+  box.className = on ? "card confirm-alt is-on" : "card confirm-alt";
+  box.setAttribute("aria-pressed", String(on));
+  box.setAttribute("aria-label", [rec.make, rec.model, rec.year].filter(Boolean).join(" "));
+
+  const art = document.createElement("span");
+  art.className = "confirm-alt-art";
+  const path = rec.thumb || rec.image;
+  if (path) {
+    const img = watchArt(document.createElement("img"));
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.alt = "";
+    img.src = Q.asset(path);
+    art.append(img);
+  } else {
+    art.classList.add("is-bare");
+  }
+
+  const name = document.createElement("span");
+  name.className = "confirm-alt-name";
+  name.textContent = [rec.make, rec.model].filter(Boolean).join(" ");
+
+  const year = document.createElement("span");
+  year.className = "confirm-alt-year";
+  year.textContent = rec.year == null ? "" : String(rec.year);
+
+  const conf = document.createElement("i");
+  conf.className = "confirm-alt-conf";
+  conf.style.width = `${Math.round(Math.max(0, Math.min(1, entry.confidence)) * 100)}%`;
+
+  box.append(art, name, year, conf);
+  box.addEventListener("click", () => pickAlt(rec.id));
+  return box;
+}
+
+function paintAlts() {
+  const list = altList();
+  els.alts.hidden = list.length < 2;
+  if (list.length < 2) {
+    els.alts.replaceChildren();
+    return;
+  }
+  els.alts.replaceChildren(...list.map(altCard));
+}
+
+function pickAlt(id) {
+  if (working || id === state.bikeId) return;
+  const rec = bikeOf(id);
+  if (!rec) return;
+  gen += 1;
+  set({ bikeId: id });
+  shownBike = rec;
+  paintBike(rec);
+  paintManual(rec);
+  paintAlts();
 }
 
 function clearRef() {
@@ -552,13 +663,13 @@ registerScreen("confirm", {
     const photo = document.createElement("div");
     photo.className = "confirm-photo";
 
-    const bikeImg = document.createElement("img");
+    const bikeImg = watchArt(document.createElement("img"));
     bikeImg.className = "confirm-bike";
     bikeImg.loading = "lazy";
     bikeImg.decoding = "async";
     bikeImg.alt = "";
 
-    const shotImg = document.createElement("img");
+    const shotImg = watchArt(document.createElement("img"));
     shotImg.className = "confirm-shot card";
     shotImg.loading = "lazy";
     shotImg.decoding = "async";
@@ -649,9 +760,13 @@ registerScreen("confirm", {
     no.setAttribute("aria-label", "No");
     no.append(glyph("M5 5l14 14M19 5L5 19"));
     no.addEventListener("click", () => {
-      set({ bikeId: null, photoUrl: null });
+      set({ bikeId: null, photoUrl: null, altIds: [], altConf: [] });
       go("identify");
     });
+
+    const alts = document.createElement("div");
+    alts.className = "confirm-alts";
+    alts.hidden = true;
 
     actions.append(yesSlot, no);
 
@@ -703,7 +818,7 @@ registerScreen("confirm", {
 
     work.append(bar, workTitle);
 
-    body.append(sheet, ref, prompt, actions, source, work, file);
+    body.append(sheet, alts, ref, prompt, actions, source, work, file);
 
     const overlay = document.createElement("div");
     overlay.className = "confirm-overlay";
@@ -750,6 +865,7 @@ registerScreen("confirm", {
       refCap,
       prompt,
       actions,
+      alts,
       yes,
       add,
       none,
@@ -802,6 +918,7 @@ registerScreen("confirm", {
     shownBike = rec;
     paintBike(rec);
     paintManual(rec);
+    paintAlts();
   },
 
   leave() {

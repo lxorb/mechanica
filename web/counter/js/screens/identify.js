@@ -1,43 +1,85 @@
+/**
+ * Step 1 - Identify. Owner: landing agent.
+ * Files: this, ../../css/screens/identify.css, ./confirm.js, ../../css/screens/confirm.css.
+ *
+ * The landing page is a search and nothing else: one big centred field, a camera glyph
+ * inside it, a VIN link under it. index.html and counter.css belong to another agent, so
+ * the landing folds the step rail away through a body class (`id-landing`) instead.
+ *
+ * First keystroke -> model cards: photo, make and model verbatim, the year span, a mark
+ * when a manual exists. Tap a card -> that model's catalog years as chips, unless the
+ * query already pinned a year. A query that pins make + model + year to a single bike
+ * jumps to Confirm on Enter or once it has been the only candidate for 400 ms.
+ * A photo -> /identify/photo -> Confirm with the candidates in state.altIds.
+ * A VIN resolves as you type and jumps at 17 characters.
+ *
+ * Contracts: ../ttm.js (findBikes, bikes, bike, manualState, identifyPhoto, identifyVin,
+ * highlight, asset, online), ../bus.js (state/set/go/emit, the back() hook).
+ */
+
 import { state, set, go, emit, registerScreen } from "../bus.js";
 import * as Q from "../ttm.js";
 import * as vision from "../vision.js";
+import { tokens as splitTokens, fieldTokens } from "../search.js";
 
-const GAP = 8;
-const ROW_H = 96;
-const OVERSCAN = 3;
 const FIND_LIMIT = 2400;
-const ROW_LIMIT = 400;
-const CHIP_LIMIT = 60;
-const MAKE_CHIPS = 24;
-const THIN_ROWS = 8;
+const CARD_LIMIT = 60;
+const CHIP_LIMIT = 80;
+const MAKE_CHIPS = 12;
+const THIN_ROWS = 6;
 const SUGGEST_MS = 150;
 const VIN_MS = 120;
 const VIN_MIN = 6;
 const VIN_MAX = 17;
-const CONF_PIPS = 5;
+const JUMP_MS = 400;
+const ALT_MAX = 8;
 const MATCH_FLOOR = 0.5;
+const YEAR_RE = /^(?:19|20)\d{2}$/;
+const RANK = { ready: 0, ondemand: 1, none: 2 };
+const DASH = "–";
+/** Every picture frame on this screen is 3:2. */
+const FRAME = 1.5;
+/** Past this much off the frame, cover would cut the bike in half: letterbox instead. */
+const FIT_OFF = 1.34;
+
+const SVG = "http://www.w3.org/2000/svg";
 const CAMERA_PATH =
   "M9 4 7.2 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.2L15 4H9zm3 13.2a3.7 3.7 0 1 1 0-7.4 3.7 3.7 0 0 1 0 7.4z";
 const BOOK_PATH =
   "M12 5.2C10.4 4.2 8.2 3.5 6 3.5 4.4 3.5 2.8 3.9 1.5 4.5v14c1.2-.6 2.8-1 4.5-1 2.2 0 4.4.7 6 1.7 1.6-1 3.8-1.7 6-1.7 1.7 0 3.3.4 4.5 1v-14C21.2 3.9 19.6 3.5 18 3.5c-2.2 0-4.4.7-6 1.7z";
-const RANK = { ready: 0, ondemand: 1, none: 2 };
+const BIKE_STROKE = [
+  "M1 16a4 4 0 1 0 8 0 4 4 0 1 0-8 0",
+  "M15 16a4 4 0 1 0 8 0 4 4 0 1 0-8 0",
+  "M5 16l3-5h6l3 5M8 11h7M13 11l2-3h3",
+];
 
 let root;
+let dockEl;
 let searchEl;
+let queryEl;
 let shotEl;
 let shotImg;
-let queryEl;
 let vinBtn;
 let fileEl;
 let progressEl;
 let chipsEl;
-let boardEl;
-let windowEl;
+let gridEl;
+let chooserEl;
+let chooserArt;
+let chooserImg;
+let chooserMake;
+let chooserModel;
+let chooserYears;
 
 let live = false;
-let shownRows = [];
-let rosterRowsCache = null;
+let modelIndex = null;
+let makesCache = null;
 let rosterIds = null;
+
+let rows = [];
+let pin = "";
+let chooserRow = null;
+let landing = false;
 
 let textQ = "";
 let vinQ = "";
@@ -48,7 +90,6 @@ let vinGen = 0;
 let subOn = false;
 
 let photoUrl = null;
-let photoRows = [];
 let photoGen = 0;
 
 let suggestFor = "";
@@ -56,16 +97,15 @@ let suggestBikes = [];
 let suggestTimer = 0;
 let suggestCtl = null;
 
+let jumpTimer = 0;
+let jumpedFor = null;
 let inputRaf = 0;
-let scrollRaf = 0;
-let focusRow = -1;
-let focusChip = -1;
-let lastStart = 0;
 
-const pool = [];
+const cards = [];
+const chips = [];
 const remembered = Object.create(null);
 
-/* roster */
+/* ------------------------------------------------------------------ roster */
 
 function roster() {
   const list = Q.bikes();
@@ -96,32 +136,29 @@ function bikeOfCandidate(entry) {
   return Q.bike(id) || remembered[id] || null;
 }
 
-/* rows */
-
 function norm(value) {
   return String(value ?? "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "");
 }
 
-function group(list, conf) {
+function keyOf(bike) {
+  return `${norm(bike.make)}|${norm(bike.model)}`;
+}
+
+/* ------------------------------------------------- make + model -> one card */
+
+function group(list) {
   const map = new Map();
   for (const bike of list) {
     if (!bike || typeof bike.id !== "string") continue;
-    const key = `${norm(bike.make)}|${norm(bike.model)}`;
+    const key = keyOf(bike);
     let row = map.get(key);
     if (!row) {
-      row = {
-        key,
-        bike,
-        label: `${bike.make ?? ""} ${bike.model ?? ""}`.trim(),
-        years: [],
-        at: new Map(),
-        rank: RANK.none,
-        conf: 0,
-      };
+      row = { key, bike, years: [], at: new Map(), rank: RANK.none, span: "" };
       map.set(key, row);
     }
+    if (!row.bike.thumb && bike.thumb) row.bike = bike;
     const mState = Q.manualState(bike);
     const year = bike.year == null ? "" : String(bike.year);
     const seen = row.at.get(year);
@@ -136,53 +173,416 @@ function group(list, conf) {
       row.years.push(entry);
     }
     if (RANK[mState] < row.rank) row.rank = RANK[mState];
-    if (conf) {
-      const score = conf.get(bike.id) ?? 0;
-      if (score > row.conf) row.conf = score;
-    }
   }
-  const rows = [...map.values()];
-  for (const row of rows) {
+  const out = [...map.values()];
+  for (const row of out) {
     row.years.sort((a, z) => Number(z.year) - Number(a.year));
     if (row.years.length > CHIP_LIMIT) row.years.length = CHIP_LIMIT;
+    const last = row.years[row.years.length - 1];
+    const first = row.years[0];
+    row.span = !first ? "" : row.years.length > 1 ? `${last.year}${DASH}${first.year}` : first.year;
   }
-  return rows;
+  return out;
 }
 
-function rosterRows() {
-  if (rosterRowsCache) return rosterRowsCache;
-  const rows = group(roster());
-  rows.sort((a, z) => a.rank - z.rank);
-  rosterRowsCache = rows;
-  return rows;
+/** Every model in the roster, so a card always carries the model's full year span. */
+function models() {
+  if (modelIndex) return modelIndex;
+  modelIndex = new Map();
+  for (const row of group(roster())) modelIndex.set(row.key, row);
+  return modelIndex;
+}
+
+function makeList() {
+  if (makesCache) return makesCache;
+  const count = new Map();
+  for (const bike of roster()) {
+    if (!bike || !bike.make) continue;
+    const hit = count.get(bike.make) || { n: 0, ready: 0 };
+    hit.n += 1;
+    if (bike.manualId) hit.ready += 1;
+    count.set(bike.make, hit);
+  }
+  makesCache = [...count.entries()]
+    .sort((a, z) => z[1].ready - a[1].ready || z[1].n - a[1].n || a[0].localeCompare(z[0]))
+    .map(([make]) => make);
+  return makesCache;
+}
+
+/* ----------------------------------------------------------- query -> rows */
+
+/** "2023 yamaha yzf" -> {year:"2023", rest:"yamaha yzf"}. A bare 19xx/20xx token only. */
+function parseQuery(text) {
+  const words = String(text ?? "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  let year = "";
+  const rest = [];
+  for (const word of words) {
+    if (!year && YEAR_RE.test(word)) year = word;
+    else rest.push(word);
+  }
+  return { year, rest: rest.join(" ") };
+}
+
+function rowsFor(text) {
+  const { year, rest } = parseQuery(text);
+  const hits = Q.findBikes(rest || text, { limit: FIND_LIMIT }) || [];
+  const extra = suggestFor === text ? suggestBikes : [];
+  const index = models();
+  const seen = new Set();
+  const out = [];
+  for (const bike of extra.length ? hits.concat(extra) : hits) {
+    if (!bike || typeof bike.id !== "string") continue;
+    const key = keyOf(bike);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const row = index.get(key) || group([bike])[0];
+    if (!row) continue;
+    if (year && !row.at.has(year)) continue;
+    out.push(row);
+    if (out.length >= CARD_LIMIT) break;
+  }
+  // Models we can actually hand a manual to come first; relevance orders each group.
+  out.sort((a, z) => a.rank - z.rank);
+  return { year, out };
+}
+
+/** The model's own search tokens, so a whole-word match can be told from a fuzzy one. */
+function tokensOf(row) {
+  if (!row.tset) row.tset = fieldTokens(row.bike).general;
+  return row.tset;
+}
+
+/**
+ * "390 duke" matches KTM 390 Duke on whole tokens and KTM 1390 Super Duke R only on
+ * trigrams; "r1300gs" is the whole folded model of the R 1300 GS and merely a prefix of
+ * the GS Adventure. So a query is only pinned when exactly one model matches every one of
+ * its words outright - anything looser leaves the cards up.
+ */
+function pinnedHit() {
+  if (vinMode || photoUrl || !pin || !rows.length) return null;
+  let cand = rows;
+  if (cand.length > 1) {
+    const qs = splitTokens(parseQuery(textQ).rest);
+    if (!qs.length) return null;
+    cand = rows.filter((row) => {
+      const set = tokensOf(row);
+      return qs.every((t) => set.has(t));
+    });
+  }
+  if (cand.length !== 1) return null;
+  const entry = cand[0].at.get(pin);
+  return entry ? { row: cand[0], entry } : null;
 }
 
 function computeRows() {
-  if (vinMode) return vinHit ? group([vinHit]) : [];
+  if (vinMode) {
+    pin = "";
+    return vinHit ? group([vinHit]) : [];
+  }
   const text = textQ.trim();
   if (!text) {
-    if (photoRows.length) return photoRows;
-    const rows = rosterRows();
-    const id = state.bikeId;
-    if (!id) return rows;
-    const i = rows.findIndex((row) => [...row.at.values()].some((entry) => entry.bike.id === id));
-    if (i <= 0) return rows;
-    const out = rows.slice();
-    out.unshift(out.splice(i, 1)[0]);
-    return out;
+    pin = "";
+    return [];
   }
-  const hits = Q.findBikes(text, { limit: FIND_LIMIT }) || [];
-  const extra = suggestFor === text ? suggestBikes : [];
-  return group(extra.length ? hits.concat(extra) : hits).slice(0, ROW_LIMIT);
+  const { year, out } = rowsFor(text);
+  pin = year;
+  return out;
 }
 
-function bestYear(row) {
-  for (const entry of row.years) if (entry.state === "ready") return entry;
-  for (const entry of row.years) if (entry.state === "ondemand") return entry;
-  return row.years[0] || null;
+/* -------------------------------------------------------------------- dom */
+
+function el(tag, attrs) {
+  const node = document.createElement(tag);
+  if (attrs) {
+    for (const [key, value] of Object.entries(attrs)) {
+      if (value == null || value === false) continue;
+      if (key === "className") node.className = value;
+      else if (key === "text") node.textContent = value;
+      else node.setAttribute(key, value === true ? "" : String(value));
+    }
+  }
+  return node;
 }
 
-/* /catalog/suggest: bikes the API knows and this session has not loaded */
+function svgFill(d, size) {
+  const svg = document.createElementNS(SVG, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("width", String(size));
+  svg.setAttribute("height", String(size));
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  const path = document.createElementNS(SVG, "path");
+  path.setAttribute("fill", "currentColor");
+  path.setAttribute("d", d);
+  svg.append(path);
+  return svg;
+}
+
+function svgStroke(ds) {
+  const svg = document.createElementNS(SVG, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  for (const d of ds) {
+    const path = document.createElementNS(SVG, "path");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "1.5");
+    path.setAttribute("d", d);
+    svg.append(path);
+  }
+  return svg;
+}
+
+function showProgress(on) {
+  progressEl.hidden = !on;
+}
+
+function showShot(url) {
+  if (url) {
+    shotImg.src = url;
+    shotEl.hidden = false;
+  } else {
+    shotImg.removeAttribute("src");
+    shotEl.hidden = true;
+  }
+}
+
+function paintPart(node, value, ranges, offset) {
+  node.replaceChildren();
+  if (!ranges.length) {
+    node.textContent = value;
+    return;
+  }
+  let i = 0;
+  for (const range of ranges) {
+    const a = Math.max(0, range.start - offset);
+    const b = Math.min(value.length, range.end - offset);
+    if (b <= a) continue;
+    if (a > i) node.append(document.createTextNode(value.slice(i, a)));
+    const mark = document.createElement("b");
+    mark.textContent = value.slice(a, b);
+    node.append(mark);
+    i = b;
+  }
+  if (i < value.length) node.append(document.createTextNode(value.slice(i)));
+}
+
+/** Q.highlight works over "make model", so the model's ranges sit one space past make. */
+function paintName(makeEl, modelEl, row, text) {
+  const make = String(row.bike.make ?? "");
+  const model = String(row.bike.model ?? "");
+  const ranges = text && text.trim() ? Q.highlight(row.bike, text) : [];
+  paintPart(makeEl, make, ranges, 0);
+  paintPart(modelEl, model, ranges, make ? make.length + 1 : 0);
+}
+
+/**
+ * The catalog photos run from 0.56 to 2.05 wide: `cover` would crop a portrait shot down
+ * to a wheel and a fairing. Anything close to the 3:2 frame fills it, centred; anything
+ * further off is letterboxed whole onto the paper tile. Nothing is ever stretched.
+ */
+function fitArt(img) {
+  const w = img.naturalWidth;
+  const h = img.naturalHeight;
+  if (!w || !h) return;
+  const ratio = w / h;
+  const off = ratio > FRAME ? ratio / FRAME : FRAME / ratio;
+  img.classList.toggle("is-fit", off > FIT_OFF);
+}
+
+function watchArt(img) {
+  img.addEventListener("load", () => fitArt(img));
+}
+
+function setArt(img, box, bike) {
+  const path = bike && (bike.thumb || bike.image);
+  const src = path ? Q.asset(path) : "";
+  box.classList.toggle("is-bare", !src);
+  if (!src) {
+    img.removeAttribute("src");
+    img.classList.remove("is-fit");
+    img.hidden = true;
+    return;
+  }
+  img.hidden = false;
+  if (img.getAttribute("src") !== src) {
+    img.classList.remove("is-fit");
+    img.setAttribute("src", src);
+  }
+  if (img.complete) fitArt(img);
+}
+
+/* ------------------------------------------------------------------ cards */
+
+function makeCard() {
+  const box = el("button", { type: "button", className: "card id-card" });
+  const art = el("span", { className: "id-art" });
+  const img = el("img", { loading: "lazy", decoding: "async", alt: "" });
+  watchArt(img);
+  const ghost = el("span", { className: "id-ghost", "aria-hidden": "true" });
+  ghost.append(svgStroke(BIKE_STROKE));
+  const flag = el("span", { className: "id-flag", "aria-label": "Manual" });
+  flag.append(svgFill(BOOK_PATH, 12));
+  art.append(img, ghost, flag);
+  const meta = el("span", { className: "id-meta" });
+  const make = el("span", { className: "id-make" });
+  const model = el("span", { className: "id-model" });
+  const span = el("span", { className: "id-span" });
+  meta.append(make, model, span);
+  box.append(art, meta);
+  const rec = { box, art, img, flag, make, model, span, row: null };
+  box.addEventListener("click", () => {
+    if (rec.row) openRow(rec.row);
+  });
+  gridEl.append(box);
+  cards.push(rec);
+  return rec;
+}
+
+function bindCard(rec, row, text) {
+  rec.row = row;
+  rec.box.hidden = false;
+  setArt(rec.img, rec.art, row.bike);
+  rec.flag.hidden = row.rank === RANK.none;
+  rec.flag.className = row.rank === RANK.ready ? "id-flag is-ready" : "id-flag is-ondemand";
+  paintName(rec.make, rec.model, row, text);
+  const hit = Boolean(pin) && row.at.has(pin);
+  rec.span.textContent = hit ? pin : row.span;
+  rec.span.className = hit ? "id-span is-pin" : "id-span";
+  const label = `${row.bike.make ?? ""} ${row.bike.model ?? ""} ${hit ? pin : row.span}`;
+  rec.box.setAttribute("aria-label", label.replace(/\s+/g, " ").trim());
+}
+
+function renderGrid() {
+  const text = vinMode ? "" : textQ;
+  const n = Math.min(rows.length, CARD_LIMIT);
+  for (let i = 0; i < n; i++) {
+    const rec = cards[i] || makeCard();
+    bindCard(rec, rows[i], text);
+  }
+  for (let i = n; i < cards.length; i++) {
+    cards[i].box.hidden = true;
+    cards[i].row = null;
+  }
+  gridEl.hidden = n === 0 || Boolean(chooserRow);
+}
+
+/* ---------------------------------------------------------------- chooser */
+
+function chipAt(i) {
+  let chip = chips[i];
+  if (chip) return chip;
+  chip = el("button", { type: "button", className: "id-year" });
+  chip.addEventListener("click", () => {
+    if (chip.entry) choose(chip.entry);
+  });
+  chips[i] = chip;
+  chooserYears.append(chip);
+  return chip;
+}
+
+/** A model with a manual somewhere can usually be indexed for its other years too. */
+function yearState(row, raw) {
+  return raw.state === "none" && row.rank < RANK.none ? "ondemand" : raw.state;
+}
+
+function renderChooser() {
+  const row = chooserRow;
+  chooserEl.hidden = !row;
+  if (!row) return;
+  setArt(chooserImg, chooserArt, row.bike);
+  chooserMake.textContent = row.bike.make ?? "";
+  chooserModel.textContent = row.bike.model ?? "";
+  const off = !Q.online();
+  const years = row.years;
+  for (let i = 0; i < years.length; i++) {
+    const raw = years[i];
+    const st = yearState(row, raw);
+    const entry = st === raw.state ? raw : { ...raw, state: st };
+    const chip = chipAt(i);
+    chip.hidden = false;
+    chip.entry = entry;
+    chip.textContent = entry.year;
+    chip.className = `id-year is-${entry.state}${entry.year === pin ? " is-pin" : ""}`;
+    chip.disabled = entry.state === "none" && off;
+  }
+  for (let i = years.length; i < chips.length; i++) {
+    chips[i].hidden = true;
+    chips[i].entry = null;
+  }
+}
+
+function openRow(row) {
+  if (!row) return;
+  const hit = pin ? row.at.get(pin) : null;
+  if (hit) {
+    choose({ ...hit, state: yearState(row, hit) });
+    return;
+  }
+  if (row.years.length === 1) {
+    const only = row.years[0];
+    choose({ ...only, state: yearState(row, only) });
+    return;
+  }
+  chooserRow = row;
+  renderChooser();
+  renderGrid();
+  paintChips();
+  syncLanding();
+  signalSub();
+  window.scrollTo(0, 0);
+  const first = chips.find((chip) => chip && !chip.hidden && !chip.disabled);
+  if (first) first.focus({ preventScroll: true });
+}
+
+function closeChooser() {
+  if (!chooserRow) return false;
+  chooserRow = null;
+  renderChooser();
+  renderGrid();
+  paintChips();
+  syncLanding();
+  signalSub();
+  return true;
+}
+
+/* -------------------------------------------------------------- make chips */
+
+function matchingMakes(text) {
+  const head = norm(text);
+  if (!head) return [];
+  const out = makeList().filter((make) => norm(make).startsWith(head));
+  return out.length > 1 ? out.slice(0, MAKE_CHIPS) : [];
+}
+
+function paintChips() {
+  const text = textQ.trim();
+  const show = !vinMode && !photoUrl && !chooserRow && text.length > 0 && roster().length > 0;
+  const list = show ? matchingMakes(text) : [];
+  chipsEl.hidden = list.length === 0;
+  if (!list.length) {
+    chipsEl.replaceChildren();
+    return;
+  }
+  const nodes = [];
+  for (const make of list) {
+    const chip = el("button", { type: "button", className: "btn id-make-chip", text: make });
+    chip.addEventListener("click", () => {
+      textQ = `${make} `;
+      queryEl.value = textQ;
+      queryEl.focus();
+      onQuery();
+    });
+    nodes.push(chip);
+  }
+  chipsEl.replaceChildren(...nodes);
+}
+
+/* -------------------------------------------------- /catalog/suggest top-up */
 
 function scheduleSuggest(text) {
   if (suggestTimer) clearTimeout(suggestTimer);
@@ -195,7 +595,7 @@ function scheduleSuggest(text) {
 }
 
 async function runSuggest(text) {
-  if (shownRows.length >= THIN_ROWS) return;
+  if (rows.length >= THIN_ROWS) return;
   if (suggestCtl) suggestCtl.abort();
   const ctl = new AbortController();
   suggestCtl = ctl;
@@ -216,303 +616,85 @@ async function runSuggest(text) {
   }
   suggestFor = text;
   suggestBikes = fresh;
-  if (fresh.length && !vinMode && textQ.trim() === text.trim()) refreshList(true);
+  if (fresh.length && !vinMode && textQ.trim() === text.trim()) refresh(true);
 }
 
-/* dom */
+/* ------------------------------------------------------------------ paint */
 
-function el(tag, attrs) {
-  const node = document.createElement(tag);
-  if (attrs) {
-    for (const [key, value] of Object.entries(attrs)) {
-      if (value == null || value === false) continue;
-      if (key === "className") node.className = value;
-      else if (key === "text") node.textContent = value;
-      else node.setAttribute(key, value === true ? "" : String(value));
-    }
-  }
-  return node;
+/** Nothing typed, no photo, no chooser: the page is only the field. */
+function syncLanding() {
+  const bare = !chooserRow && !photoUrl && !(vinMode ? vinQ : textQ.trim());
+  if (bare === landing) return;
+  landing = bare;
+  document.body.classList.toggle("id-landing", bare);
 }
 
-function svgPath(d, size) {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("width", String(size));
-  svg.setAttribute("height", String(size));
-  svg.setAttribute("aria-hidden", "true");
-  svg.setAttribute("focusable", "false");
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("fill", "currentColor");
-  path.setAttribute("d", d);
-  svg.append(path);
-  return svg;
-}
-
-function showProgress(on) {
-  progressEl.hidden = !on;
-}
-
-function showShot(url) {
-  if (url) {
-    shotImg.src = url;
-    shotEl.hidden = false;
-  } else {
-    shotImg.removeAttribute("src");
-    shotEl.hidden = true;
-  }
-}
-
-function paintLabel(node, row, text) {
-  const label = row.label;
-  const ranges = text && text.trim() ? Q.highlight(row.bike, text) : [];
-  node.classList.toggle("id-hit", ranges.length > 0);
-  node.replaceChildren();
-  if (!ranges.length) {
-    node.textContent = label;
-    return;
-  }
-  let i = 0;
-  for (const range of ranges) {
-    const a = Math.max(0, range.start);
-    const b = Math.min(label.length, range.end);
-    if (b <= a) continue;
-    if (a > i) node.append(document.createTextNode(label.slice(i, a)));
-    const mark = document.createElement("b");
-    mark.textContent = label.slice(a, b);
-    node.append(mark);
-    i = b;
-  }
-  if (i < label.length) node.append(document.createTextNode(label.slice(i)));
-}
-
-function makeRow() {
-  const box = el("div", { className: "card id-row" });
-  const top = el("div", { className: "id-row-top" });
-  const mark = el("span", { className: "stamp id-mark", "aria-label": "Manual" });
-  mark.append(svgPath(BOOK_PATH, 13));
-  const name = el("span", { className: "id-name" });
-  const conf = el("span", { className: "id-conf", "aria-hidden": "true" });
-  for (let i = 0; i < CONF_PIPS; i++) conf.append(el("i"));
-  top.append(mark, name, conf);
-  const years = el("div", { className: "id-years" });
-  box.append(top, years);
-  windowEl.append(box);
-  return { box, mark, name, conf, years, chips: [] };
-}
-
-function chipOf(rec, i) {
-  let chip = rec.chips[i];
-  if (chip) return chip;
-  chip = el("button", { type: "button", className: "id-year" });
-  chip.addEventListener("click", () => {
-    if (chip.entry) pick(chip.entry.bike, chip.entry.state);
-  });
-  chip.addEventListener("focus", () => {
-    focusRow = Number(rec.box.dataset.index);
-    focusChip = i;
-  });
-  rec.chips[i] = chip;
-  rec.years.append(chip);
-  return chip;
-}
-
-function bindRow(rec, row, index, text) {
-  rec.box.hidden = false;
-  rec.box.dataset.index = String(index);
-  rec.mark.hidden = row.rank !== RANK.ready;
-  paintLabel(rec.name, row, text);
-
-  const pips = Math.round(row.conf * CONF_PIPS);
-  rec.conf.hidden = !row.conf;
-  const lamps = rec.conf.children;
-  for (let i = 0; i < lamps.length; i++) lamps[i].className = i < pips ? "on" : "";
-
-  const years = row.years;
-  const off = !Q.online();
-  for (let i = 0; i < years.length; i++) {
-    const raw = years[i];
-    const state = raw.state === "none" && row.rank < RANK.none ? "ondemand" : raw.state;
-    const entry = state === raw.state ? raw : { ...raw, state };
-    const chip = chipOf(rec, i);
-    chip.hidden = false;
-    chip.entry = entry;
-    chip.textContent = entry.year;
-    chip.className = `id-year is-${entry.state}`;
-    chip.disabled = entry.state === "none" && off;
-  }
-  for (let i = years.length; i < rec.chips.length; i++) rec.chips[i].hidden = true;
-  rec.years.scrollLeft = 0;
-}
-
-function ensurePool(n) {
-  while (pool.length < n) pool.push(makeRow());
-}
-
-function paintWindow() {
-  if (!boardEl || !live) return;
-  const list = shownRows;
-  const total = list.length;
-  const rowH = ROW_H + GAP;
-  boardEl.style.height = total ? `${total * ROW_H + (total - 1) * GAP}px` : "0px";
-
-  if (!total) {
-    lastStart = 0;
-    windowEl.style.transform = "translate3d(0,0,0)";
-    for (const rec of pool) rec.box.hidden = true;
-    return;
-  }
-
-  const boardTop = boardEl.getBoundingClientRect().top + window.scrollY;
-  const relTop = window.scrollY - boardTop;
-  const relBot = relTop + window.innerHeight;
-  let start = Math.floor(relTop / rowH) - OVERSCAN;
-  let end = Math.ceil(relBot / rowH) + OVERSCAN;
-  if (start < 0) start = 0;
-  if (end > total) end = total;
-  if (start > end) start = end;
-
-  windowEl.style.transform = `translate3d(0, ${start * rowH}px, 0)`;
-  const n = end - start;
-  ensurePool(n);
-  lastStart = start;
-
-  const text = vinMode ? "" : textQ;
-  const active = document.activeElement;
-  const keepFocus = active && windowEl.contains(active);
-
-  for (let i = 0; i < pool.length; i++) {
-    if (i >= n) {
-      pool[i].box.hidden = true;
-      continue;
-    }
-    bindRow(pool[i], list[start + i], start + i, text);
-  }
-
-  if (keepFocus && focusRow >= start && focusRow < end) {
-    const rec = pool[focusRow - start];
-    const chip = rec && rec.chips[focusChip];
-    if (chip && !chip.hidden && document.activeElement !== chip) chip.focus({ preventScroll: true });
-  }
-}
-
-function refreshList(keepScroll) {
-  shownRows = computeRows();
-  if (!keepScroll && window.scrollY > 0) window.scrollTo(0, 0);
-  paintWindow();
-  signalSub();
-}
-
-/** VIN, a photo or a typed query are sub-states: the header back button pops them. */
+/** VIN, a photo, the chooser or a typed query are sub-states the header Back pops. */
 function signalSub() {
-  const on = vinMode || Boolean(photoUrl) || textQ.trim().length > 0;
+  const on = vinMode || Boolean(photoUrl) || Boolean(chooserRow) || textQ.trim().length > 0;
   if (on === subOn) return;
   subOn = on;
   emit("substate", { screen: "identify", on });
 }
 
-function backOut() {
-  if (vinMode) {
-    setVinMode(false);
-    return true;
+function refresh(keepScroll) {
+  rows = computeRows();
+  if (chooserRow && !vinMode) {
+    chooserRow = models().get(chooserRow.key) || chooserRow;
+    renderChooser();
   }
-  if (photoUrl) {
-    clearPhoto();
-    paintChips();
-    refreshList();
-    return true;
-  }
-  if (textQ.trim()) {
-    textQ = "";
-    queryEl.value = "";
-    paintChips();
-    refreshList();
-    return true;
-  }
-  return false;
+  renderGrid();
+  syncLanding();
+  signalSub();
+  if (!keepScroll && window.scrollY > 0) window.scrollTo(0, 0);
 }
 
 function scheduleSearch() {
   if (inputRaf) return;
   inputRaf = requestAnimationFrame(() => {
     inputRaf = 0;
-    refreshList();
+    refresh();
+    scheduleJump();
   });
 }
 
-function scheduleScroll() {
-  if (scrollRaf) return;
-  scrollRaf = requestAnimationFrame(() => {
-    scrollRaf = 0;
-    paintWindow();
-  });
-}
+/* ------------------------------------------------------------------ jumps */
 
-/* make chips */
-
-function makeList() {
-  const count = new Map();
-  for (const row of rosterRows()) {
-    const make = row.bike.make;
-    if (!make) continue;
-    const hit = count.get(make) || { n: 0, ready: 0 };
-    hit.n += row.years.length;
-    if (row.rank === RANK.ready) hit.ready += 1;
-    count.set(make, hit);
-  }
-  return [...count.entries()]
-    .sort((a, z) => z[1].ready - a[1].ready || z[1].n - a[1].n || a[0].localeCompare(z[0]))
-    .map(([make]) => make);
-}
-
-function matchingMakes(text) {
-  const head = norm(text);
-  const all = makeList();
-  if (!head) return all.slice(0, MAKE_CHIPS);
-  const out = all.filter((make) => norm(make).startsWith(head));
-  return out.length > 1 ? out.slice(0, MAKE_CHIPS) : [];
-}
-
-function paintChips() {
+function scheduleJump() {
+  if (jumpTimer) clearTimeout(jumpTimer);
+  jumpTimer = 0;
   const text = textQ.trim();
-  // Only while the user is typing: an empty box must not preview makes it did not ask for.
-  const show = !vinMode && !photoUrl && text.length > 0 && roster().length > 0;
-  const list = show ? matchingMakes(text) : [];
-  chipsEl.hidden = list.length === 0;
-  if (!list.length) {
-    chipsEl.replaceChildren();
-    return;
-  }
-  const nodes = [];
-  for (const make of list) {
-    const chip = el("button", { type: "button", className: "btn id-make", text: make });
-    chip.addEventListener("click", () => {
-      textQ = `${make} `;
-      queryEl.value = textQ;
-      queryEl.focus();
-      onQuery();
-    });
-    nodes.push(chip);
-  }
-  chipsEl.replaceChildren(...nodes);
+  if (!text || text === jumpedFor || !pinnedHit()) return;
+  const wanted = text;
+  jumpTimer = setTimeout(() => {
+    jumpTimer = 0;
+    if (!live || textQ.trim() !== wanted) return;
+    const hit = pinnedHit();
+    if (!hit) return;
+    jumpedFor = wanted;
+    choose({ ...hit.entry, state: yearState(hit.row, hit.entry) }, { confirm: true });
+  }, JUMP_MS);
 }
 
-/* actions */
-
-function pick(bike, mState) {
-  if (!bike) return;
-  if (mState === "none" && !Q.online()) return;
+function choose(entry, opts) {
+  if (!entry || !entry.bike) return;
+  const bike = entry.bike;
+  if (entry.state === "none" && !Q.online()) return;
   remember(bike);
   const vin = vinMode && vinHit && vinHit.id === bike.id && vinQ.length >= VIN_MIN ? vinQ : null;
-  set({ bikeId: bike.id, vin });
+  set({ bikeId: bike.id, vin, altIds: (opts && opts.alts) || [] });
   emit("bike", { bikeId: bike.id, vin });
-  go("confirm");
+  // Nothing left to confirm: the year was tapped by hand and the manual is already indexed.
+  const straight = entry.state === "ready" && !photoUrl && !(opts && opts.confirm);
+  go(straight ? "pick" : "confirm");
 }
+
+/* ----------------------------------------------------------------- actions */
 
 function clearPhoto() {
   photoGen += 1;
   if (photoUrl) URL.revokeObjectURL(photoUrl);
   photoUrl = null;
-  photoRows = [];
   if (state.photoUrl) set({ photoUrl: null });
   showShot(null);
   showProgress(false);
@@ -536,6 +718,9 @@ function onQuery() {
   }
   textQ = queryEl.value;
   if (textQ.trim() && photoUrl) clearPhoto();
+  chooserRow = null;
+  renderChooser();
+  jumpedFor = null;
   scheduleSuggest(textQ);
   paintChips();
   scheduleSearch();
@@ -558,11 +743,20 @@ function scheduleVin(clean) {
     } catch {
       return;
     }
-    if (gen !== vinGen) return;
+    if (gen !== vinGen || !live) return;
     vinHit = bikeFromHit(res);
     if (vinHit) remember(vinHit);
-    refreshList(true);
+    refresh(true);
+    // A whole VIN pins make, model and year: nothing is left to choose, so it goes on.
+    if (vinHit && clean.length === VIN_MAX && rows.length === 1) vinGo();
   }, VIN_MS);
+}
+
+function vinGo() {
+  const row = rows[0];
+  if (!row) return;
+  const entry = row.at.get(String(vinHit && vinHit.year != null ? vinHit.year : "")) || row.years[0];
+  if (entry) choose({ ...entry, state: yearState(row, entry) }, { confirm: true });
 }
 
 function bikeFromHit(res) {
@@ -578,10 +772,12 @@ function setVinMode(on) {
   vinMode = on;
   searchEl.classList.toggle("is-vin", on);
   vinBtn.setAttribute("aria-pressed", String(on));
-  queryEl.setAttribute("placeholder", on ? "VIN" : "Search here");
+  queryEl.setAttribute("placeholder", on ? "VIN" : "Search");
   queryEl.setAttribute("enterkeyhint", on ? "done" : "go");
   queryEl.setAttribute("autocapitalize", on ? "characters" : "off");
   queryEl.setAttribute("maxlength", on ? String(VIN_MAX) : "120");
+  chooserRow = null;
+  renderChooser();
   if (on) {
     clearPhoto();
     queryEl.value = vinQ;
@@ -591,7 +787,7 @@ function setVinMode(on) {
   }
   paintChips();
   queryEl.focus();
-  refreshList();
+  refresh();
 }
 
 function candidates(res) {
@@ -630,14 +826,15 @@ async function onFile() {
   const gen = ++photoGen;
   if (photoUrl) URL.revokeObjectURL(photoUrl);
   photoUrl = URL.createObjectURL(file);
-  photoRows = [];
   textQ = "";
   queryEl.value = "";
+  chooserRow = null;
   set({ photoUrl });
   showShot(photoUrl);
   showProgress(true);
   paintChips();
-  refreshList();
+  renderChooser();
+  refresh();
 
   let list = [];
   try {
@@ -646,84 +843,140 @@ async function onFile() {
     list = [];
   }
   if (gen !== photoGen) return;
-
   if (!list.length) list = await localVision(file, gen);
   if (gen !== photoGen) return;
 
-  const conf = new Map();
-  const bikes = [];
+  const picks = [];
+  const seen = new Set();
   for (const entry of list) {
     const bike = bikeOfCandidate(entry);
-    if (!bike) continue;
+    if (!bike || seen.has(bike.id)) continue;
+    seen.add(bike.id);
     remember(bike);
-    bikes.push(bike);
     const score = Number(entry.confidence);
-    conf.set(bike.id, Number.isFinite(score) ? score : 0);
+    picks.push({ bike, confidence: Number.isFinite(score) ? score : 0 });
   }
-  const rows = group(bikes, conf);
-  rows.sort((a, z) => z.conf - a.conf || a.rank - z.rank);
-  photoRows = rows;
   showProgress(false);
-  refreshList();
+  if (!picks.length) {
+    refresh();
+    return;
+  }
+  const alts = picks.slice(0, ALT_MAX);
+  set({ altConf: alts.map((p) => p.confidence) });
+  choose(
+    { bike: alts[0].bike, year: String(alts[0].bike.year ?? ""), state: Q.manualState(alts[0].bike) },
+    { confirm: true, alts: alts.map((p) => p.bike.id) }
+  );
 }
 
-function focusAt(row, col) {
-  if (row < 0 || row >= shownRows.length) return;
-  const years = shownRows[row].years;
-  if (!years.length) return;
-  const i = Math.min(Math.max(0, col), years.length - 1);
-  focusRow = row;
-  focusChip = i;
-  const rowH = ROW_H + GAP;
-  const boardTop = boardEl.getBoundingClientRect().top + window.scrollY;
-  const top = boardTop + row * rowH;
-  if (top < window.scrollY) window.scrollTo(0, Math.max(0, top - GAP));
-  else if (top + ROW_H > window.scrollY + window.innerHeight) {
-    window.scrollTo(0, top + ROW_H - window.innerHeight);
+/* --------------------------------------------------------------- keyboard */
+
+function focusCard(i) {
+  const rec = cards[i];
+  if (!rec || rec.box.hidden) return;
+  rec.box.focus();
+}
+
+function gridCols() {
+  const n = Math.min(rows.length, CARD_LIMIT);
+  if (n < 2) return 1;
+  const top = cards[0].box.offsetTop;
+  let cols = 1;
+  for (let i = 1; i < n; i++) {
+    if (cards[i].box.offsetTop !== top) break;
+    cols += 1;
   }
-  paintWindow();
-  const rec = pool[row - lastStart];
-  const chip = rec && rec.chips[i];
-  if (chip && !chip.hidden) chip.focus({ preventScroll: true });
+  return cols;
+}
+
+function onEnter() {
+  if (vinMode) {
+    if (rows.length) vinGo();
+    return;
+  }
+  const hit = pinnedHit();
+  if (hit) {
+    jumpedFor = textQ.trim();
+    choose({ ...hit.entry, state: yearState(hit.row, hit.entry) }, { confirm: true });
+    return;
+  }
+  if (chooserRow) return;
+  if (rows.length) openRow(rows[0]);
 }
 
 function onRootKey(event) {
   if (event.target === queryEl) {
     if (event.key === "Enter") {
       event.preventDefault();
-      const row = shownRows[0];
-      const entry = row && bestYear(row);
-      if (entry) pick(entry.bike, entry.state);
+      onEnter();
     } else if (event.key === "ArrowDown") {
       event.preventDefault();
-      focusAt(0, 0);
+      if (chooserRow) {
+        const first = chips.find((chip) => chip && !chip.hidden);
+        if (first) first.focus();
+      } else focusCard(0);
     }
     return;
   }
-  if (!event.target.closest || !event.target.closest(".id-year")) return;
-  let row = focusRow;
-  let col = focusChip;
-  if (event.key === "ArrowLeft") col -= 1;
-  else if (event.key === "ArrowRight") col += 1;
-  else if (event.key === "ArrowUp") row -= 1;
-  else if (event.key === "ArrowDown") row += 1;
+  const hit = event.target.closest && event.target.closest(".id-card, .id-year");
+  if (!hit) return;
+  if (hit.classList.contains("id-year")) {
+    const open = chips.filter((chip) => chip && !chip.hidden);
+    let i = open.indexOf(hit);
+    if (i < 0) return;
+    if (event.key === "ArrowLeft") i -= 1;
+    else if (event.key === "ArrowRight") i += 1;
+    else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      queryEl.focus();
+      return;
+    } else return;
+    event.preventDefault();
+    const next = open[Math.min(Math.max(0, i), open.length - 1)];
+    if (next) next.focus();
+    return;
+  }
+  let i = cards.findIndex((rec) => rec.box === hit);
+  if (i < 0) return;
+  const cols = gridCols();
+  if (event.key === "ArrowLeft") i -= 1;
+  else if (event.key === "ArrowRight") i += 1;
+  else if (event.key === "ArrowUp") i -= cols;
+  else if (event.key === "ArrowDown") i += cols;
   else return;
   event.preventDefault();
-  focusAt(row, col);
+  if (i < 0) {
+    queryEl.focus();
+    return;
+  }
+  focusCard(Math.min(i, Math.min(rows.length, CARD_LIMIT) - 1));
 }
 
-function attachLive() {
-  if (live) return;
-  live = true;
-  window.addEventListener("scroll", scheduleScroll, { passive: true });
-  window.addEventListener("resize", scheduleScroll);
+function backOut() {
+  if (closeChooser()) return true;
+  if (vinMode) {
+    setVinMode(false);
+    return true;
+  }
+  if (photoUrl) {
+    clearPhoto();
+    paintChips();
+    refresh();
+    return true;
+  }
+  if (textQ.trim()) {
+    textQ = "";
+    jumpedFor = null;
+    queryEl.value = "";
+    paintChips();
+    refresh();
+    queryEl.focus();
+    return true;
+  }
+  return false;
 }
 
-function detachLive() {
-  live = false;
-  window.removeEventListener("scroll", scheduleScroll);
-  window.removeEventListener("resize", scheduleScroll);
-}
+/* ------------------------------------------------------------------ screen */
 
 registerScreen("identify", {
   mount(mountRoot) {
@@ -743,19 +996,12 @@ registerScreen("identify", {
       spellcheck: "false",
       enterkeyhint: "go",
       maxlength: "120",
-      placeholder: "Search here",
+      placeholder: "Search",
+      "aria-label": "Search",
     });
 
-    vinBtn = el("button", {
-      type: "button",
-      className: "btn btn-icon id-vin",
-      "aria-label": "VIN",
-      "aria-pressed": "false",
-      text: "VIN",
-    });
-
-    const cam = el("button", { type: "button", className: "btn btn-icon", "aria-label": "Photo" });
-    cam.append(svgPath(CAMERA_PATH, 22));
+    const cam = el("button", { type: "button", className: "id-cam", "aria-label": "Photo" });
+    cam.append(svgFill(CAMERA_PATH, 24));
 
     fileEl = el("input", {
       className: "id-file",
@@ -766,17 +1012,42 @@ registerScreen("identify", {
       tabindex: "-1",
     });
 
-    searchEl.append(shotEl, queryEl, vinBtn, cam, fileEl);
+    searchEl.append(shotEl, queryEl, cam, fileEl);
 
     progressEl = el("div", { className: "id-progress", hidden: true });
-    const dock = el("div", { className: "id-dock" });
-    dock.append(searchEl, progressEl);
+
+    vinBtn = el("button", {
+      type: "button",
+      className: "id-vin",
+      "aria-label": "VIN",
+      "aria-pressed": "false",
+      text: "VIN",
+    });
+    const vinLine = el("div", { className: "id-vin-line" });
+    vinLine.append(vinBtn);
+
+    dockEl = el("div", { className: "id-dock" });
+    dockEl.append(searchEl, progressEl, vinLine);
 
     chipsEl = el("div", { className: "id-chips", hidden: true });
-    boardEl = el("div", { className: "id-board" });
-    windowEl = el("div", { className: "id-window" });
-    boardEl.append(windowEl);
-    root.replaceChildren(dock, chipsEl, boardEl);
+
+    chooserEl = el("div", { className: "id-chooser", hidden: true });
+    chooserArt = el("div", { className: "id-chooser-art" });
+    chooserImg = el("img", { loading: "lazy", decoding: "async", alt: "" });
+    watchArt(chooserImg);
+    const ghost = el("span", { className: "id-ghost", "aria-hidden": "true" });
+    ghost.append(svgStroke(BIKE_STROKE));
+    chooserArt.append(chooserImg, ghost);
+    chooserMake = el("span", { className: "id-chooser-make" });
+    chooserModel = el("span", { className: "id-chooser-model" });
+    const head = el("div", { className: "id-chooser-head" });
+    head.append(chooserMake, chooserModel);
+    chooserYears = el("div", { className: "id-chooser-years" });
+    chooserEl.append(chooserArt, head, chooserYears);
+
+    gridEl = el("div", { className: "id-grid", hidden: true });
+
+    root.replaceChildren(dockEl, chipsEl, chooserEl, gridEl);
 
     queryEl.addEventListener("input", onQuery);
     root.addEventListener("keydown", onRootKey);
@@ -785,26 +1056,34 @@ registerScreen("identify", {
     shotEl.addEventListener("click", () => {
       clearPhoto();
       paintChips();
-      refreshList();
+      refresh();
     });
     fileEl.addEventListener("change", onFile);
-
-    if (typeof ResizeObserver === "function") new ResizeObserver(scheduleScroll).observe(boardEl);
   },
 
   enter() {
+    live = true;
     set({ partId: null, jobId: null, systemId: null });
     if (!state.photoUrl) clearPhoto();
     else showShot(photoUrl);
-    attachLive();
+    // Coming back from Confirm must not fire the same jump again.
+    jumpedFor = textQ.trim() || null;
     paintChips();
-    refreshList(true);
+    refresh(true);
+    // bus emits "screen" after enter() returns and app.js clears the header Back on it,
+    // so the sub-state this screen came back to is re-announced one microtask later.
+    queueMicrotask(() => {
+      if (!live) return;
+      subOn = false;
+      signalSub();
+    });
     Promise.resolve(Q.loadCatalog()).then(() => {
       if (!live) return;
       rosterIds = null;
-      rosterRowsCache = null;
+      modelIndex = null;
+      makesCache = null;
       paintChips();
-      refreshList(true);
+      refresh(true);
     });
   },
 
@@ -813,11 +1092,24 @@ registerScreen("identify", {
   },
 
   leave() {
+    live = false;
     if (inputRaf) cancelAnimationFrame(inputRaf);
-    if (scrollRaf) cancelAnimationFrame(scrollRaf);
+    if (jumpTimer) clearTimeout(jumpTimer);
     inputRaf = 0;
-    scrollRaf = 0;
+    jumpTimer = 0;
     showProgress(false);
-    detachLive();
+    document.body.classList.remove("id-landing");
+    landing = false;
   },
 });
+
+if (typeof window !== "undefined") {
+  window.addEventListener("ttm:catalog", () => {
+    rosterIds = null;
+    modelIndex = null;
+    makesCache = null;
+    if (!live) return;
+    paintChips();
+    refresh(true);
+  });
+}

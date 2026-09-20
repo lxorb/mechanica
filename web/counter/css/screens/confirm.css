@@ -20,7 +20,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+}
+
+/* confirm.js flips a photo whose shape is far off the 3:2 frame to a whole letterbox. */
+[data-screen="confirm"] .confirm-bike.is-fit {
+  object-fit: contain;
 }
 
 [data-screen="confirm"] .confirm-shot {
@@ -31,6 +37,133 @@
   height: 96px;
   object-fit: cover;
   z-index: 1;
+}
+
+/* The handed-in photo next to the bike it was recognised as: two 5:4 frames, the shot
+   first. Each half keeps the same rules as every other frame - centred cover, and
+   confirm.js letterboxes a far-off shape onto the ink ground rather than cropping it. */
+[data-screen="confirm"] .confirm-photo.is-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  aspect-ratio: 5 / 2;
+}
+
+[data-screen="confirm"] .confirm-photo.is-split .confirm-bike,
+[data-screen="confirm"] .confirm-photo.is-split .confirm-shot {
+  position: static;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  object-fit: cover;
+  background: var(--ink);
+}
+
+[data-screen="confirm"] .confirm-photo.is-split .confirm-bike.is-fit,
+[data-screen="confirm"] .confirm-photo.is-split .confirm-shot.is-fit {
+  object-fit: contain;
+}
+
+[data-screen="confirm"] .confirm-photo.is-split .confirm-shot {
+  order: -1;
+  border: 0;
+}
+
+/* ---------- other candidates a photo came back with ---------- */
+
+[data-screen="confirm"] .confirm-alts {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 12px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-screen="confirm"] .confirm-alts::-webkit-scrollbar {
+  display: none;
+}
+
+[data-screen="confirm"] .confirm-alt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: 104px;
+  min-height: 44px;
+  padding: 0 0 6px;
+  text-align: left;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+  overflow: hidden;
+}
+
+[data-screen="confirm"] .confirm-alt.is-on {
+  border-color: var(--orange);
+}
+
+[data-screen="confirm"] .confirm-alt-art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-bottom: 3px solid var(--ink);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+[data-screen="confirm"] .confirm-alt.is-on .confirm-alt-art {
+  border-bottom-color: var(--orange);
+}
+
+[data-screen="confirm"] .confirm-alt-art.is-bare {
+  background: repeating-linear-gradient(135deg, var(--card) 0 7px, var(--rule) 7px 14px);
+}
+
+[data-screen="confirm"] .confirm-alt-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+[data-screen="confirm"] .confirm-alt-art img.is-fit {
+  object-fit: contain;
+}
+
+[data-screen="confirm"] .confirm-alt-name {
+  padding: 6px 7px 0;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+[data-screen="confirm"] .confirm-alt-year {
+  padding: 2px 7px 0;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: #6c665a;
+}
+
+[data-screen="confirm"] .confirm-alt-conf {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--orange);
 }
 
 [data-screen="confirm"] .confirm-body {
@@ -240,9 +373,15 @@
     grid-template-columns: minmax(0, 1fr) 140px;
     grid-template-areas:
       "id ref"
+      "alts ref"
       "prompt ref"
       "actions ref";
     align-items: start;
+  }
+
+  [data-screen="confirm"] .confirm-body.has-ref .confirm-alts {
+    grid-area: alts;
+    min-width: 0;
   }
 
   [data-screen="confirm"] .confirm-body.has-ref .confirm-id {
