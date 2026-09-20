@@ -7,17 +7,50 @@
   "angle": "Ten API capabilities, each one followed by our code that can throw its answer away. Codex as the fifth teammate. The only pitch where you talk over a diagram for 90 seconds.",
   "endline": "The manual is the answer. We just get you to the page.",
   "marks": [
-    { "t": "0:00", "do": "The mechanic. 400 h. 95% and $4." },
-    { "t": "0:30", "do": "THE FLOWCHART. 90 seconds. Rehearse the pointing." },
-    { "t": "2:00", "do": "mt-07 → a year with no manual → Yes. Leave it." },
-    { "t": "2:10", "do": "Photo path: shoot the KTM. $0.00053." },
-    { "t": "2:25", "do": "2024 → Pick → type chain." },
-    { "t": "2:45", "do": "Open p.77." },
-    { "t": "3:00", "do": "Chat → chain is loose, what do I do → tap a chip." },
-    { "t": "3:15", "do": "Parts → the chain. Built-in web search." },
-    { "t": "3:25", "do": "The MT-07 is ready." },
-    { "t": "3:30", "do": "Codex: the FLOOR bug, verbatim. Then \"it tried to hide a failure\"." },
-    { "t": "4:15", "do": "#cost live, then back to the marked page. Close." }
+    {
+      "t": "0:00",
+      "do": "The mechanic. 400 h. 95% and $4."
+    },
+    {
+      "t": "0:30",
+      "do": "THE FLOWCHART. 90 seconds. Rehearse the pointing."
+    },
+    {
+      "t": "2:00",
+      "do": "mt-07 → a year with no manual → Yes. Leave it."
+    },
+    {
+      "t": "2:10",
+      "do": "Photo path: shoot the KTM. $0.00053."
+    },
+    {
+      "t": "2:25",
+      "do": "2024 → Pick → type chain."
+    },
+    {
+      "t": "2:45",
+      "do": "Open p.77."
+    },
+    {
+      "t": "3:00",
+      "do": "Chat → chain is loose, what do I do → tap a chip."
+    },
+    {
+      "t": "3:15",
+      "do": "Parts → the chain. Built-in web search."
+    },
+    {
+      "t": "3:25",
+      "do": "The MT-07 is ready."
+    },
+    {
+      "t": "3:30",
+      "do": "Codex: the FLOOR bug, verbatim. Then \"it tried to hide a failure\"."
+    },
+    {
+      "t": "4:15",
+      "do": "#cost live, then back to the marked page. Close."
+    }
   ],
   "slides": [
     {
@@ -25,8 +58,16 @@
       "at": "0:00",
       "kicker": "The mechanic",
       "items": [
-        { "value": "400 h", "label": "a year looking for the right page", "sub": "20% of his working time · EUR 36–48k of billable time. His number." },
-        { "value": "$4", "label": "a question, when he tried an LLM", "sub": "The model had to read a 500-page manual. He is liable for the 5% it gets wrong." }
+        {
+          "value": "400 h",
+          "label": "a year looking for the right page",
+          "sub": "20% of his working time · EUR 36–48k of billable time. His number."
+        },
+        {
+          "value": "$4",
+          "label": "a question, when he tried an LLM",
+          "sub": "The model had to read a 500-page manual. He is liable for the 5% it gets wrong."
+        }
       ],
       "notes": [
         "Recognition: this is a real person, not a market. Thirty seconds, no more.",
@@ -34,10 +75,22 @@
         "Then straight into the flowchart — that is the slide this pitch is built on."
       ],
       "defs": [
-        { "n": "400 h", "d": "20% × 2,000 h — arithmetic on his number and an assumed 2,000-hour year (computed)." },
-        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate (assumed)." },
-        { "n": "EUR 36k-48k", "d": "400 h × EUR 90–120/h (computed)." },
-        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed)." }
+        {
+          "n": "400 h",
+          "d": "20% × 2,000 h — arithmetic on his number and an assumed 2,000-hour year (computed)."
+        },
+        {
+          "n": "20%",
+          "d": "share of his working time spent looking for a page — HIS estimate (assumed)."
+        },
+        {
+          "n": "EUR 36k-48k",
+          "d": "400 h × EUR 90–120/h (computed)."
+        },
+        {
+          "n": "~$4",
+          "d": "what one question cost him when he tried an LLM — HIS bill (assumed)."
+        }
       ]
     },
     {
@@ -47,10 +100,22 @@
       "caption": "The API does the part only a model can do. Our code decides whether the answer is allowed out.",
       "flow": {
         "legend": [
-          { "tone": "orange", "label": "an OpenAI API call — all through app/llm.py" },
-          { "tone": "white", "label": "our deterministic backend — no model, no tokens" },
-          { "tone": "green", "label": "the guardrail that verifies what the model said" },
-          { "tone": "ink", "label": "what the mechanic gets" }
+          {
+            "tone": "orange",
+            "label": "an OpenAI API call — all through app/llm.py"
+          },
+          {
+            "tone": "white",
+            "label": "our deterministic backend — no model, no tokens"
+          },
+          {
+            "tone": "green",
+            "label": "the guardrail that verifies what the model said"
+          },
+          {
+            "tone": "ink",
+            "label": "what the mechanic gets"
+          }
         ],
         "bands": [
           {
@@ -58,43 +123,125 @@
               {
                 "gap": 28,
                 "items": [
-                  { "tone": "paper", "t": "PHOTO of the bike" },
-                  { "tone": "white", "t": "400 catalog names|injected into the prompt", "sub": "zero LLM" },
-                  { "tone": "orange", "t": "identify.photo · VISION", "sub": "luna · strict json_schema · $0.00053 a photo" },
-                  { "tone": "green", "t": "match back to a real|catalog row", "sub": "floor 0.80 · kind-locked: a bike we hold no manual for cannot win" },
-                  { "tone": "ink", "t": "THE EXACT BIKE" }
+                  {
+                    "tone": "paper",
+                    "t": "PHOTO of the bike"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "400 catalog names|injected into the prompt",
+                    "sub": "zero LLM"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "identify.photo · VISION",
+                    "sub": "luna · strict json_schema · $0.00053 a photo"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "match back to a real|catalog row",
+                    "sub": "floor 0.80 · kind-locked: a bike we hold no manual for cannot win"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "THE EXACT BIKE"
+                  }
                 ]
               },
               {
                 "gap": 28,
                 "items": [
-                  { "tone": "paper", "t": "A BIKE NOBODY|HAS ASKED FOR YET" },
-                  { "tone": "white", "t": "OEM PDF · PyMuPDF text layer|+ per-block coordinates", "sub": "zero LLM" },
-                  { "tone": "orange", "t": "ingest.struct", "sub": "luna · 5-page windows · 32 workers · 47% of 70.4M input tokens served from cache" },
-                  { "tone": "green", "t": "ground.py", "sub": "every quote is searched for in the PDF text layer. Not found = DROPPED" },
-                  { "tone": "ink", "t": "A SEARCHABLE MANUAL", "sub": "readable 1.3 s · indexed 40.4 s · $0.095, once, forever" }
+                  {
+                    "tone": "paper",
+                    "t": "A BIKE NOBODY|HAS ASKED FOR YET"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "OEM PDF · PyMuPDF text layer|+ per-block coordinates",
+                    "sub": "zero LLM"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "ingest.struct",
+                    "sub": "luna · 5-page windows · 32 workers · 47% of 70.4M input tokens served from cache"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "ground.py",
+                    "sub": "every quote is searched for in the PDF text layer. Not found = DROPPED"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "A SEARCHABLE MANUAL",
+                    "sub": "readable 1.3 s · indexed 40.4 s · $0.095, once, forever"
+                  }
                 ]
               },
               {
                 "gap": 28,
                 "items": [
-                  { "tone": "paper", "t": "ONE SENTENCE|\"chain is baggy\"" },
-                  { "tone": "orange", "t": "ask.router", "sub": "luna · slang, typos, DE/ES/FR → manual English · 99.5% prompt-cache hit · $0.00013" },
-                  { "tone": "white", "t": "SPEC PATH · BM25", "sub": "parsed spec rows, or BM25 over the manual's own headings — zero LLM, and 85% of asks stop here" },
-                  { "tone": "orange", "t": "ask.picker", "sub": "terra · RETURNS PAGE IDs ONLY, never a word of prose" },
-                  { "tone": "green", "t": "id allowlist", "sub": "an id that was not in the candidate list is dropped" },
-                  { "tone": "ink", "t": "THE OEM PAGE,|LINES MARKED", "sub": "top-1 100% of 130 · p95 3.33 s · $0.00038" }
+                  {
+                    "tone": "paper",
+                    "t": "ONE SENTENCE|\"chain is baggy\""
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "ask.router",
+                    "sub": "luna · slang, typos, DE/ES/FR → manual English · 99.5% prompt-cache hit · $0.00013"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "SPEC PATH · BM25",
+                    "sub": "parsed spec rows, or BM25 over the manual's own headings — zero LLM, and 85% of asks stop here"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "ask.picker",
+                    "sub": "terra · RETURNS PAGE IDs ONLY, never a word of prose"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "id allowlist",
+                    "sub": "an id that was not in the candidate list is dropped"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "THE OEM PAGE,|LINES MARKED",
+                    "sub": "top-1 100% of 130 · p95 3.33 s · $0.00038"
+                  }
                 ]
               },
               {
                 "gap": 28,
                 "items": [
-                  { "tone": "paper", "t": "TAPS CHAT" },
-                  { "tone": "white", "t": "at most 6 printed pages", "sub": "dealer boilerplate stripped · one compression call, −31.2%" },
-                  { "tone": "orange", "t": "chat.answer", "sub": "terra · RESPONSES API STREAMING · the model may only emit [p. N] · first token p50 2.64 s" },
-                  { "tone": "green", "t": "the SERVER slices the quote|out of the ORIGINAL page", "sub": "100% of 43 citations verbatim" },
-                  { "tone": "green", "t": "every digit must be printed|on a page it was given", "sub": "0 invented numbers in 25 answers" },
-                  { "tone": "ink", "t": "EVERY SENTENCE|CARRIES A [p. N]" }
+                  {
+                    "tone": "paper",
+                    "t": "TAPS CHAT"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "at most 6 printed pages",
+                    "sub": "dealer boilerplate stripped · one compression call, −31.2%"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "chat.answer",
+                    "sub": "terra · RESPONSES API STREAMING · the model may only emit [p. N] · first token p50 2.64 s"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "the SERVER slices the quote|out of the ORIGINAL page",
+                    "sub": "100% of 43 citations verbatim"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "every digit must be printed|on a page it was given",
+                    "sub": "0 invented numbers in 25 answers"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "EVERY SENTENCE|CARRIES A [p. N]"
+                  }
                 ]
               }
             ]
@@ -108,19 +255,61 @@
         "Green is never optional. Ingest is a different clock: $0.095 once per manual, then every question on that manual forever is four hundredths of a cent."
       ],
       "defs": [
-        { "n": "$0.00053", "d": "identify.photo on gpt-5.6-luna, per photo — against $0.0247 on the flagship, 46×.", "src": "openai.md" },
-        { "n": "99.5%", "d": "ask.router prompt-cache hit rate on 3.45M input tokens → $0.000132/call.", "src": "openai.md" },
-        { "n": "$0.00013", "d": "ask, spec question — zero LLM after the router.", "src": "openai.md" },
-        { "n": "$0.095", "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests (measured)." },
-        { "n": "1.3 s", "d": "a brand-new manual → readable (measured)." },
-        { "n": "40.4 s", "d": "a brand-new manual → fully searchable (measured)." },
-        { "n": "100% of 130", "d": "right section first, in-scope questions — api/eval/report.md (measured)." },
-        { "n": "3.33 s", "d": "an ask, p95 over 150 queries (measured)." },
-        { "n": "$0.00038", "d": "our $ per ask — eval cost-log delta over 150 controlled queries (measured)." },
-        { "n": "31.2%", "d": "tokens removed before the prompt was billed — 46,501 → 31,977 tok over 23 bear-2 calls, api/eval/chat-report.md (measured)." },
-        { "n": "2.64 s", "d": "chat, first word, p50 (5.87 s p95) — api/eval/chat-report.md (measured)." },
-        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name (measured)." },
-        { "n": "0 · 0", "d": "invented numbers · dealer referrals, of 25 answers (measured)." }
+        {
+          "n": "$0.00053",
+          "d": "identify.photo on gpt-5.6-luna, per photo — against $0.0247 on the flagship, 46×.",
+          "src": "openai.md"
+        },
+        {
+          "n": "99.5%",
+          "d": "ask.router prompt-cache hit rate on 3.45M input tokens → $0.000132/call.",
+          "src": "openai.md"
+        },
+        {
+          "n": "$0.00013",
+          "d": "ask, spec question — zero LLM after the router.",
+          "src": "openai.md"
+        },
+        {
+          "n": "$0.095",
+          "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests (measured)."
+        },
+        {
+          "n": "1.3 s",
+          "d": "a brand-new manual → readable (measured)."
+        },
+        {
+          "n": "40.4 s",
+          "d": "a brand-new manual → fully searchable (measured)."
+        },
+        {
+          "n": "100% of 130",
+          "d": "right section first, in-scope questions — api/eval/report.md (measured)."
+        },
+        {
+          "n": "3.33 s",
+          "d": "an ask, p95 over 150 queries (measured)."
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask — eval cost-log delta over 150 controlled queries (measured)."
+        },
+        {
+          "n": "31.2%",
+          "d": "tokens removed before the prompt was billed — 46,501 → 31,977 tok over 23 bear-2 calls, api/eval/chat-report.md (measured)."
+        },
+        {
+          "n": "2.64 s",
+          "d": "chat, first word, p50 (5.87 s p95) — api/eval/chat-report.md (measured)."
+        },
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name (measured)."
+        },
+        {
+          "n": "0 · 0",
+          "d": "invented numbers · dealer referrals, of 25 answers (measured)."
+        }
       ]
     },
     {
@@ -129,18 +318,62 @@
       "dense": true,
       "title": "Ten capabilities, one door",
       "line": "Every call goes through app/llm.py — the only place the client is constructed and the only place a cost event is written.",
-      "head": ["capability", "route · model", "measured"],
+      "head": [
+        "capability",
+        "route · model",
+        "measured"
+      ],
       "rows": [
-        ["Structured outputs — strict json_schema", "7 of our 9 call sites", "all but 362 logged calls are strict-schema; the app never parses free text"],
-        ["Model tiering by task", "luna $0.20/M · terra $2/M", "photo id 46× cheaper on luna; part id 59×"],
-        ["Prompt caching, pinned per route+model", "ask.router", "*99.5%* hit on 3.45M input tokens → $0.000132 a call"],
-        ["Responses API streaming", "chat.answer · terra", "first token *2.64 s* p50 / 5.87 s p95"],
-        ["Built-in web_search tool", "offers · terra", "~7¢ cold, *$0 cached* · the $10/1k call fee modelled explicitly"],
-        ["Vision — vehicle id", "identify.photo · luna", "*$0.00053* a photo, fuzzy-matched back to a real catalog row"],
-        ["Vision — part id", "identify.part · luna", "$0.00024 a call, zero-shot against a fixed label list"],
-        ["Image generation", "gpt-image-1", "*102 calls, $4.31* — 97 part illustrations + the logo"],
-        ["Vision as a judge", "images.score · luna", "*7,629 calls, $3.66* grading catalog photos against a strict rubric"],
-        ["An OpenAI model behind the voice agent", "think.provider.type: open_ai", "first audio *2.08 s* median over 5 spec turns"]
+        [
+          "Structured outputs — strict json_schema",
+          "7 of our 9 call sites",
+          "all but 362 logged calls are strict-schema; the app never parses free text"
+        ],
+        [
+          "Model tiering by task",
+          "luna $0.20/M · terra $2/M",
+          "photo id 46× cheaper on luna; part id 59×"
+        ],
+        [
+          "Prompt caching, pinned per route+model",
+          "ask.router",
+          "*99.5%* hit on 3.45M input tokens → $0.000132 a call"
+        ],
+        [
+          "Responses API streaming",
+          "chat.answer · terra",
+          "first token *2.64 s* p50 / 5.87 s p95"
+        ],
+        [
+          "Built-in web_search tool",
+          "offers · terra",
+          "~7¢ cold, *$0 cached* · the $10/1k call fee modelled explicitly"
+        ],
+        [
+          "Vision — vehicle id",
+          "identify.photo · luna",
+          "*$0.00053* a photo, fuzzy-matched back to a real catalog row"
+        ],
+        [
+          "Vision — part id",
+          "identify.part · luna",
+          "$0.00024 a call, zero-shot against a fixed label list"
+        ],
+        [
+          "Image generation",
+          "gpt-image-1",
+          "*102 calls, $4.31* — 97 part illustrations + the logo"
+        ],
+        [
+          "Vision as a judge",
+          "images.score · luna",
+          "*thousands of grading calls, a few dollars (grows hourly; see numbers.md)* grading catalog photos against a strict rubric"
+        ],
+        [
+          "An OpenAI model behind the voice agent",
+          "think.provider.type: open_ai",
+          "first audio *2.08 s* median over 5 spec turns"
+        ]
       ],
       "note": "And what we do *not* use, before a judge asks: no fine-tuning · no Batch API · no Assistants, no vector store, no embeddings in the live path. `llm.embed()` exists and is unused — say so.",
       "notes": [
@@ -149,12 +382,28 @@
         "Do not say Elastic is running — ES_URL is unset and it has never been run against a live cluster."
       ],
       "defs": [
-        { "n": "99.5%", "d": "ask.router prompt-cache hit on 3.45M input tokens → $0.000132/call.", "src": "openai.md" },
-        { "n": "2.64 s", "d": "chat, first word, p50 — api/eval/chat-report.md (measured)." },
-        { "n": "$0.00053", "d": "identify.photo on luna, per photo.", "src": "openai.md" },
-        { "n": "102 calls, $4.31", "d": "…of which generating part illustrations — costs.jsonl, route=='illustrations' (gpt-image-1) (measured)." },
-        { "n": "7,629 calls, $3.66", "d": "…of which grading catalog photos — costs.jsonl, route=='images.score'. Keeps growing; quote with the date (measured)." },
-        { "n": "2.08 s", "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)." }
+        {
+          "n": "99.5%",
+          "d": "ask.router prompt-cache hit on 3.45M input tokens → $0.000132/call.",
+          "src": "openai.md"
+        },
+        {
+          "n": "2.64 s",
+          "d": "chat, first word, p50 — api/eval/chat-report.md (measured)."
+        },
+        {
+          "n": "$0.00053",
+          "d": "identify.photo on luna, per photo.",
+          "src": "openai.md"
+        },
+        {
+          "n": "102 calls, $4.31",
+          "d": "…of which generating part illustrations — costs.jsonl, route=='illustrations' (gpt-image-1) (measured)."
+        },
+        {
+          "n": "2.08 s",
+          "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)."
+        }
       ]
     },
     {
@@ -173,20 +422,44 @@
                 "gap": 22,
                 "link": "none",
                 "items": [
-                  { "tone": "white", "t": "PDF text layer|+ coordinates" },
-                  { "tone": "white", "t": "BM25 over the manual's|own printed headings" },
-                  { "tone": "white", "t": "the spec path" },
-                  { "tone": "white", "t": "295-entry parts taxonomy" }
+                  {
+                    "tone": "white",
+                    "t": "PDF text layer|+ coordinates"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "BM25 over the manual's|own printed headings"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "the spec path"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "295-entry parts taxonomy"
+                  }
                 ]
               },
               {
                 "gap": 22,
                 "link": "none",
                 "items": [
-                  { "tone": "white", "t": "answer cache" },
-                  { "tone": "white", "t": "currency conversion" },
-                  { "tone": "white", "t": "URL liveness check" },
-                  { "tone": "white", "t": "highlight geometry" }
+                  {
+                    "tone": "white",
+                    "t": "answer cache"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "currency conversion"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "URL liveness check"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "highlight geometry"
+                  }
                 ]
               }
             ]
@@ -200,9 +473,18 @@
                 "gap": 30,
                 "link": "none",
                 "items": [
-                  { "tone": "orange", "t": "which vehicle|is in the photo" },
-                  { "tone": "orange", "t": "which page ids|answer this sentence" },
-                  { "tone": "orange", "t": "how to phrase what|those pages already print" }
+                  {
+                    "tone": "orange",
+                    "t": "which vehicle|is in the photo"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "which page ids|answer this sentence"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "how to phrase what|those pages already print"
+                  }
                 ]
               }
             ]
@@ -216,10 +498,22 @@
                 "gap": 22,
                 "link": "none",
                 "items": [
-                  { "tone": "green", "t": "quote found in the PDF|text layer, or dropped" },
-                  { "tone": "green", "t": "id in the candidate|list, or dropped" },
-                  { "tone": "green", "t": "citation sliced by the|SERVER out of the page" },
-                  { "tone": "green", "t": "every number printed|on a page it was shown" }
+                  {
+                    "tone": "green",
+                    "t": "quote found in the PDF|text layer, or dropped"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "id in the candidate|list, or dropped"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "citation sliced by the|SERVER out of the page"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "every number printed|on a page it was shown"
+                  }
                 ]
               }
             ]
@@ -231,8 +525,7 @@
         "\"Schema for shape, allowlist for truth.\" Across every logged call in the cost log (tens of thousands, a count that grows hourly, so quote the date if asked) there is not one parse failure.",
         "85% of asks never reach a second model call at all — BM25 was already decisive, or it was a spec question answered off parsed rows with zero LLM calls."
       ],
-      "defs": [
-      ]
+      "defs": []
     },
     {
       "kind": "quote",
@@ -250,10 +543,26 @@
       "at": "4:15",
       "kicker": "The ledger",
       "items": [
-        { "value": "$0.095", "label": "to turn a 177-page PDF into a searchable manual", "sub": "once, forever — 648 real ingests" },
-        { "value": "$0.00038", "label": "every question after that", "sub": "150-query eval · p95 3.33 s · 1.15 LLM calls an ask" },
-        { "value": "$12.40", "label": "the naive version: paste the manual in", "sub": "the largest deployed manual, 775 pages · $1.37 on the median 171-page one" },
-        { "value": "100% / 0", "label": "citations valid · invented numbers", "sub": "100% of 43 quotes verbatim · 100% of 48 claim sentences carry a page · 0 of 25 dealer referrals" }
+        {
+          "value": "$0.095",
+          "label": "to turn a 177-page PDF into a searchable manual",
+          "sub": "once, forever — 648 real ingests"
+        },
+        {
+          "value": "$0.00038",
+          "label": "every question after that",
+          "sub": "150-query eval · p95 3.33 s · 1.15 LLM calls an ask"
+        },
+        {
+          "value": "$12.40",
+          "label": "the naive version: paste the manual in",
+          "sub": "the largest deployed manual, 775 pages · $1.37 on the median 171-page one"
+        },
+        {
+          "value": "100% / 0",
+          "label": "citations valid · invented numbers",
+          "sub": "100% of 43 quotes verbatim · 100% of 48 claim sentences carry a page · 0 of 25 dealer referrals"
+        }
       ],
       "notes": [
         "\"Thirty-two thousand times cheaper against the largest manual, three thousand six hundred against the median — say which — and the answer is a page instead of a paragraph.\"",
@@ -261,17 +570,50 @@
         "Close on the marked page: ~there is no AI-written sentence on this screen. The manual is the answer. We just get you to the page — in two seconds, for four hundredths of a cent.~"
       ],
       "defs": [
-        { "n": "$0.095", "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests, mean 177 pages (measured)." },
-        { "n": "$0.00038", "d": "our $ per ask — eval cost-log delta over 150 controlled queries (measured)." },
-        { "n": "3.33 s", "d": "an ask, p95 (measured)." },
-        { "n": "1.15", "d": "LLM calls per ask — 172 calls / 150 asks, so 85% of asks never pay for a picker (computed)." },
-        { "n": "$12.40", "d": "naive $/question, largest deployed manual — naive_usd(775), billed 2× past the 272k long-context line (measured)." },
-        { "n": "$1.37", "d": "naive $/question, median deployed manual — naive_usd(171), no 2× (computed)." },
-        { "n": "775", "d": "largest manual deployed, in pages (measured)." },
-        { "n": "171", "d": "median manual, in pages (computed)." },
-        { "n": "32,632x", "d": "ours vs naive per question — $12.40 / $0.00038. Against the MEDIAN manual it is 3,600× — say which (computed)." },
-        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name (measured)." },
-        { "n": "100% of 48", "d": "chat claim sentences carrying a page number (measured)." }
+        {
+          "n": "$0.095",
+          "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests, mean 177 pages (measured)."
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask — eval cost-log delta over 150 controlled queries (measured)."
+        },
+        {
+          "n": "3.33 s",
+          "d": "an ask, p95 (measured)."
+        },
+        {
+          "n": "1.15",
+          "d": "LLM calls per ask — 172 calls / 150 asks, so 85% of asks never pay for a picker (computed)."
+        },
+        {
+          "n": "$12.40",
+          "d": "naive $/question, largest deployed manual — naive_usd(775), billed 2× past the 272k long-context line (measured)."
+        },
+        {
+          "n": "$1.37",
+          "d": "naive $/question, median deployed manual — naive_usd(171), no 2× (computed)."
+        },
+        {
+          "n": "775",
+          "d": "largest manual deployed, in pages (measured)."
+        },
+        {
+          "n": "171",
+          "d": "median manual, in pages (computed)."
+        },
+        {
+          "n": "32,632x",
+          "d": "ours vs naive per question — $12.40 / $0.00038. Against the MEDIAN manual it is 3,600× — say which (computed)."
+        },
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name (measured)."
+        },
+        {
+          "n": "100% of 48",
+          "d": "chat claim sentences carrying a page number (measured)."
+        }
       ]
     },
     {
