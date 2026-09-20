@@ -1176,6 +1176,60 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG",
     "hero": "store/img/bikes/bmw-s-1000-xr-hero.webp"
   },
+  "buick|enclave": {
+    "image": "store/img/bikes/buick-enclave.webp",
+    "thumb": "store/img/bikes/buick-enclave-thumb.webp",
+    "kind": "car",
+    "title": "Buick Enclave Sanming 01 2022-08-12.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Buick_Enclave_Sanming_01_2022-08-12.jpg"
+  },
+  "cadillac|escalade": {
+    "image": "store/img/bikes/cadillac-escalade.webp",
+    "thumb": "store/img/bikes/cadillac-escalade-thumb.webp",
+    "kind": "car",
+    "title": "2009 Cadillac Escalade.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009_Cadillac_Escalade.jpg"
+  },
+  "cadillac|lyriq": {
+    "image": "store/img/bikes/cadillac-lyriq.webp",
+    "thumb": "store/img/bikes/cadillac-lyriq-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac Lyriq, Motortreff Bella Italia 2024, Munich (P1190457).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Lyriq,_Motortreff_Bella_Italia_2024,_Munich_(P1190457).jpg"
+  },
+  "cadillac|lyriq-v": {
+    "image": "store/img/bikes/cadillac-lyriq-v.webp",
+    "thumb": "store/img/bikes/cadillac-lyriq-v-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac Lyriq-V 002.jpg",
+    "author": "JustAnotherCarDesigner",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Lyriq-V_002.jpg"
+  },
+  "cadillac|optiq": {
+    "image": "store/img/bikes/cadillac-optiq.webp",
+    "thumb": "store/img/bikes/cadillac-optiq-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac Optiq Auto Zuerich 2025 DSC 3328.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Optiq_Auto_Zuerich_2025_DSC_3328.jpg"
+  },
+  "cadillac|vistiq": {
+    "image": "store/img/bikes/cadillac-vistiq.webp",
+    "thumb": "store/img/bikes/cadillac-vistiq-thumb.webp",
+    "kind": "car",
+    "title": "2026 Cadillac Vistiq Sport 900e4 in Stellar Black, front left.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Cadillac_Vistiq_Sport_900e4_in_Stellar_Black,_front_left.jpg"
+  },
   "can-am|2014-spyder-rt": {
     "image": "store/img/bikes/can-am-2014-spyder-rt.webp",
     "thumb": "store/img/bikes/can-am-2014-spyder-rt-thumb.webp",
@@ -1220,6 +1274,114 @@
     "license": "CC0",
     "source": "https://commons.wikimedia.org/wiki/File:CanAm_Spyder_RT_(51826170573).jpg",
     "hero": "store/img/bikes/can-am-spyder-rt-hero.webp"
+  },
+  "chevrolet|blazer-ev": {
+    "image": "store/img/bikes/chevrolet-blazer-ev.webp",
+    "thumb": "store/img/bikes/chevrolet-blazer-ev-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Blazer EV RS eAWD (2024) (53619432081).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Blazer_EV_RS_eAWD_(2024)_(53619432081).jpg"
+  },
+  "chevrolet|bolt": {
+    "image": "store/img/bikes/chevrolet-bolt.webp",
+    "thumb": "store/img/bikes/chevrolet-bolt-thumb.webp",
+    "kind": "car",
+    "title": "2017 Chevrolet Bolt EV Premier front 6.20.18.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Bolt_EV_Premier_front_6.20.18.jpg"
+  },
+  "chevrolet|corvette": {
+    "image": "store/img/bikes/chevrolet-corvette.webp",
+    "thumb": "store/img/bikes/chevrolet-corvette-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Corvette C8 IAA 2021 1X7A0156.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_C8_IAA_2021_1X7A0156.jpg"
+  },
+  "chevrolet|engine": {
+    "image": "store/img/bikes/chevrolet-engine.webp",
+    "thumb": "store/img/bikes/chevrolet-engine-thumb.webp",
+    "kind": "car",
+    "title": "1985 Chevrolet Corvette L98 Engine.jpg",
+    "author": "Jared.annis",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1985_Chevrolet_Corvette_L98_Engine.jpg"
+  },
+  "chevrolet|equinox": {
+    "image": "store/img/bikes/chevrolet-equinox.webp",
+    "thumb": "store/img/bikes/chevrolet-equinox-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Equinox III facelift IMG002.jpg",
+    "author": "Zotyefan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Equinox_III_facelift_IMG002.jpg"
+  },
+  "chevrolet|equinox-ev": {
+    "image": "store/img/bikes/chevrolet-equinox-ev.webp",
+    "thumb": "store/img/bikes/chevrolet-equinox-ev-thumb.webp",
+    "kind": "car",
+    "title": "2026 Chevrolet Equinox EV.jpg",
+    "author": "BuickCentury04",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Chevrolet_Equinox_EV.jpg"
+  },
+  "chevrolet|express": {
+    "image": "store/img/bikes/chevrolet-express.webp",
+    "thumb": "store/img/bikes/chevrolet-express-thumb.webp",
+    "kind": "car",
+    "title": "2024 Chevrolet Express LT 3500 Extended, 12-29-2025.jpg",
+    "author": "2000chevymontecarlo",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_Express_LT_3500_Extended,_12-29-2025.jpg"
+  },
+  "chevrolet|silverado": {
+    "image": "store/img/bikes/chevrolet-silverado.webp",
+    "thumb": "store/img/bikes/chevrolet-silverado-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet C-K Silverado Hirschaid 2022-20220709-RM-110037.jpg",
+    "author": "Ermell",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_C-K_Silverado_Hirschaid_2022-20220709-RM-110037.jpg"
+  },
+  "chevrolet|silverado-hd": {
+    "image": "store/img/bikes/chevrolet-silverado-hd.webp",
+    "thumb": "store/img/bikes/chevrolet-silverado-hd-thumb.webp",
+    "kind": "car",
+    "title": "2025 Chevrolet Silverado HD Crew Cab.jpg",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Chevrolet_Silverado_HD_Crew_Cab.jpg"
+  },
+  "chevrolet|suburban": {
+    "image": "store/img/bikes/chevrolet-suburban.webp",
+    "thumb": "store/img/bikes/chevrolet-suburban-thumb.webp",
+    "kind": "car",
+    "title": "2024 Chevrolet Suburban 5.3 Z71 V8, rear left, 06-21-2024.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_Suburban_5.3_Z71_V8,_rear_left,_06-21-2024.jpg"
+  },
+  "chevrolet|tahoe": {
+    "image": "store/img/bikes/chevrolet-tahoe.webp",
+    "thumb": "store/img/bikes/chevrolet-tahoe-thumb.webp",
+    "kind": "car",
+    "title": "2015 Chevrolet Tahoe LT 5.3L front 3.24.19.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Chevrolet_Tahoe_LT_5.3L_front_3.24.19.jpg"
+  },
+  "chevrolet|traverse": {
+    "image": "store/img/bikes/chevrolet-traverse.webp",
+    "thumb": "store/img/bikes/chevrolet-traverse-thumb.webp",
+    "kind": "car",
+    "title": "2017 Chevrolet Traverse LS AWD, 08-14-2022.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Traverse_LS_AWD,_08-14-2022.jpg"
   },
   "ducati|1198": {
     "image": "store/img/bikes/ducati-1198.webp",
@@ -1868,6 +2030,87 @@
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:GASGAS_TXT_PRO_250.JPG",
     "hero": "store/img/bikes/gasgas-txt-pro-250-hero.webp"
+  },
+  "genesis|g80": {
+    "image": "store/img/bikes/genesis-g80.webp",
+    "thumb": "store/img/bikes/genesis-g80-thumb.webp",
+    "kind": "car",
+    "title": "Genesis G80 (RG3) IAA 2021 1X7A0161.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_G80_(RG3)_IAA_2021_1X7A0161.jpg"
+  },
+  "genesis|gv60": {
+    "image": "store/img/bikes/genesis-gv60.webp",
+    "thumb": "store/img/bikes/genesis-gv60-thumb.webp",
+    "kind": "car",
+    "title": "Genesis GV60 Classic-Gala 2022 1X7A0245.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV60_Classic-Gala_2022_1X7A0245.jpg"
+  },
+  "genesis|gv60-magma": {
+    "image": "store/img/bikes/genesis-gv60-magma.webp",
+    "thumb": "store/img/bikes/genesis-gv60-magma-thumb.webp",
+    "kind": "car",
+    "title": "Genesis GV60 Magma Concept Auto Zuerich 2024 DSC 6588.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV60_Magma_Concept_Auto_Zuerich_2024_DSC_6588.jpg"
+  },
+  "genesis|gv70": {
+    "image": "store/img/bikes/genesis-gv70.webp",
+    "thumb": "store/img/bikes/genesis-gv70-thumb.webp",
+    "kind": "car",
+    "title": "Genesis GV70 IAA 2021 1X7A0228.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV70_IAA_2021_1X7A0228.jpg"
+  },
+  "genesis|gv80": {
+    "image": "store/img/bikes/genesis-gv80.webp",
+    "thumb": "store/img/bikes/genesis-gv80-thumb.webp",
+    "kind": "car",
+    "title": "Genesis GV80 IAA 2021 1X7A0230.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV80_IAA_2021_1X7A0230.jpg"
+  },
+  "gmc|acadia": {
+    "image": "store/img/bikes/gmc-acadia.webp",
+    "thumb": "store/img/bikes/gmc-acadia-thumb.webp",
+    "kind": "car",
+    "title": "2013 GMC Acadia front 4.27.18.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_GMC_Acadia_front_4.27.18.jpg"
+  },
+  "gmc|savana": {
+    "image": "store/img/bikes/gmc-savana.webp",
+    "thumb": "store/img/bikes/gmc-savana-thumb.webp",
+    "kind": "car",
+    "title": "2007 GMC Savana 2500 Cargo 4.8L, front 7.7.19.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2007_GMC_Savana_2500_Cargo_4.8L,_front_7.7.19.jpg"
+  },
+  "gmc|terrain": {
+    "image": "store/img/bikes/gmc-terrain.webp",
+    "thumb": "store/img/bikes/gmc-terrain-thumb.webp",
+    "kind": "car",
+    "title": "2010 GMC Terrain SLT2 FWD.jpg",
+    "author": "Jim Hudson Buick/Pontiac/GMC/Saab, http://www.jimhudsonsuperstore.com/",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2010_GMC_Terrain_SLT2_FWD.jpg"
+  },
+  "gmc|yukon": {
+    "image": "store/img/bikes/gmc-yukon.webp",
+    "thumb": "store/img/bikes/gmc-yukon-thumb.webp",
+    "kind": "car",
+    "title": "2021 GMC Yukon XL rear view.jpg",
+    "author": "2007DodgeRam",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_GMC_Yukon_XL_rear_view.jpg"
   },
   "harley-davidson|breakout": {
     "image": "store/img/bikes/harley-davidson-breakout.webp",
@@ -3039,6 +3282,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CMX500_Rebel_Portray.jpg",
     "hero": "store/img/bikes/honda-cmx500-rebel-hero.webp"
   },
+  "honda|cr-v": {
+    "image": "store/img/bikes/honda-cr-v.webp",
+    "thumb": "store/img/bikes/honda-cr-v-thumb.webp",
+    "kind": "car",
+    "title": "2018 Honda CR-V (RW MY18) +Sport 2WD wagon (2018-10-22) 02.jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Honda_CR-V_(RW_MY18)_%2BSport_2WD_wagon_(2018-10-22)_02.jpg"
+  },
   "honda|crf1000": {
     "image": "store/img/bikes/honda-crf1000.webp",
     "thumb": "store/img/bikes/honda-crf1000-thumb.webp",
@@ -3677,6 +3929,15 @@
     "license": "CC BY 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:1999_Honda_Pantheon_150_ABS.jpg",
     "hero": "store/img/bikes/honda-pantheon-150-hero.webp"
+  },
+  "honda|passport": {
+    "image": "store/img/bikes/honda-passport.webp",
+    "thumb": "store/img/bikes/honda-passport-thumb.webp",
+    "kind": "car",
+    "title": "2026 Honda Passport RTL, front right, 06-07-2025.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Honda_Passport_RTL,_front_right,_06-07-2025.jpg"
   },
   "honda|pcx": {
     "image": "store/img/bikes/honda-pcx.webp",
@@ -4541,6 +4802,60 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Husqvarna_Vitpilen_701_(2).jpg",
     "hero": "store/img/bikes/husqvarna-vitpilen-701-hero.webp"
+  },
+  "hyundai|elantra-hybrid": {
+    "image": "store/img/bikes/hyundai-elantra-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-elantra-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Elantra Hybrid Limited (2024) (53625589026).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Elantra_Hybrid_Limited_(2024)_(53625589026).jpg"
+  },
+  "hyundai|kona": {
+    "image": "store/img/bikes/hyundai-kona.webp",
+    "thumb": "store/img/bikes/hyundai-kona-thumb.webp",
+    "kind": "car",
+    "title": "2018 Hyundai Kona SE 1.0.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Hyundai_Kona_SE_1.0.jpg"
+  },
+  "hyundai|santa-fe": {
+    "image": "store/img/bikes/hyundai-santa-fe.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Santa Fe, GIMS 2018, Le Grand-Saconnex (1X7A1735).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Santa_Fe,_GIMS_2018,_Le_Grand-Saconnex_(1X7A1735).jpg"
+  },
+  "hyundai|santa-fe-hybrid": {
+    "image": "store/img/bikes/hyundai-santa-fe-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Santa Fe (MX5) Hybrid Automesse Ludwigsburg 2024 IMG 1448.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Santa_Fe_(MX5)_Hybrid_Automesse_Ludwigsburg_2024_IMG_1448.jpg"
+  },
+  "hyundai|sonata": {
+    "image": "store/img/bikes/hyundai-sonata.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-thumb.webp",
+    "kind": "car",
+    "title": "HYUNDAI SONATA EF China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_EF_China.jpg"
+  },
+  "hyundai|sonata-hybrid": {
+    "image": "store/img/bikes/hyundai-sonata-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "HYUNDAI SONATA HYBRID (LF) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_HYBRID_(LF)_China.jpg"
   },
   "indian|2025-indian-motorcycle": {
     "image": "store/img/bikes/indian-2025-indian-motorcycle.webp",
@@ -6017,6 +6332,51 @@
     "license": "CC0",
     "source": "https://commons.wikimedia.org/wiki/File:KTM_RC390_Photo-1449426468159-d96dbf08f19f_2015.jpg",
     "hero": "store/img/bikes/ktm-rc-390-hero.webp"
+  },
+  "land-rover|defender": {
+    "image": "store/img/bikes/land-rover-defender.webp",
+    "thumb": "store/img/bikes/land-rover-defender-thumb.webp",
+    "kind": "car",
+    "title": "Land Rover Defender 110 First Edition 2020 - rear.jpg",
+    "author": "DeFacto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Defender_110_First_Edition_2020_-_rear.jpg"
+  },
+  "land-rover|discovery": {
+    "image": "store/img/bikes/land-rover-discovery.webp",
+    "thumb": "store/img/bikes/land-rover-discovery-thumb.webp",
+    "kind": "car",
+    "title": "Land Rover Discovery 5, IAA 2017, Frankfurt (1Y7A3088).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Discovery_5,_IAA_2017,_Frankfurt_(1Y7A3088).jpg"
+  },
+  "land-rover|range-rover": {
+    "image": "store/img/bikes/land-rover-range-rover.webp",
+    "thumb": "store/img/bikes/land-rover-range-rover-thumb.webp",
+    "kind": "car",
+    "title": "Land Rover Range Rover Evoque Convertible 2016 - side.jpg",
+    "author": "DeFacto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Range_Rover_Evoque_Convertible_2016_-_side.jpg"
+  },
+  "land-rover|range-rover-sport": {
+    "image": "store/img/bikes/land-rover-range-rover-sport.webp",
+    "thumb": "store/img/bikes/land-rover-range-rover-sport-thumb.webp",
+    "kind": "car",
+    "title": "2005 Land Rover Range Rover Sport (L320 MY06) TDV6 wagon (2015-12-07) 01.jpg",
+    "author": "OSX",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2005_Land_Rover_Range_Rover_Sport_(L320_MY06)_TDV6_wagon_(2015-12-07)_01.jpg"
+  },
+  "mitsubishi|rvr": {
+    "image": "store/img/bikes/mitsubishi-rvr.webp",
+    "thumb": "store/img/bikes/mitsubishi-rvr-thumb.webp",
+    "kind": "car",
+    "title": "2013 Mitsubishi RVR 12-02-2019.jpg",
+    "author": "SsmIntrigue",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Mitsubishi_RVR_12-02-2019.jpg"
   },
   "moto-guzzi|1200-sport": {
     "image": "store/img/bikes/moto-guzzi-1200-sport.webp",
@@ -7755,6 +8115,51 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_XF650_Freewind.jpg",
     "hero": "store/img/bikes/suzuki-xf-650-freewind-hero.webp"
   },
+  "toyota|4runner": {
+    "image": "store/img/bikes/toyota-4runner.webp",
+    "thumb": "store/img/bikes/toyota-4runner-thumb.webp",
+    "kind": "car",
+    "title": "2017 Toyota 4Runner (N280) DSC 2927.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Toyota_4Runner_(N280)_DSC_2927.jpg"
+  },
+  "toyota|86": {
+    "image": "store/img/bikes/toyota-86.webp",
+    "thumb": "store/img/bikes/toyota-86-thumb.webp",
+    "kind": "car",
+    "title": "Toyota 86 Hakone.jpg",
+    "author": "DestinationFearFan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_86_Hakone.jpg"
+  },
+  "toyota|bz": {
+    "image": "store/img/bikes/toyota-bz.webp",
+    "thumb": "store/img/bikes/toyota-bz-thumb.webp",
+    "kind": "car",
+    "title": "2026 Toyota bZ Woodland au SIAM 2026 -- arrière.JPG",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Toyota_bZ_Woodland_au_SIAM_2026_--_arri%C3%A8re.JPG"
+  },
+  "toyota|corolla": {
+    "image": "store/img/bikes/toyota-corolla.webp",
+    "thumb": "store/img/bikes/toyota-corolla-thumb.webp",
+    "kind": "car",
+    "title": "Toyota Corolla Trek Hybrid Genf 2019 1Y7A5587.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Trek_Hybrid_Genf_2019_1Y7A5587.jpg"
+  },
+  "toyota|prius": {
+    "image": "store/img/bikes/toyota-prius.webp",
+    "thumb": "store/img/bikes/toyota-prius-thumb.webp",
+    "kind": "car",
+    "title": "Toyota Prius (XW60) Plug-in Hybrid Automesse Ludwigsburg 2023 1X7A0004.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Prius_(XW60)_Plug-in_Hybrid_Automesse_Ludwigsburg_2023_1X7A0004.jpg"
+  },
   "triumph|america": {
     "image": "store/img/bikes/triumph-america.webp",
     "thumb": "store/img/bikes/triumph-america-thumb.webp",
@@ -8874,10 +9279,11 @@
   "yamaha|mt-03": {
     "image": "store/img/bikes/yamaha-mt-03.webp",
     "thumb": "store/img/bikes/yamaha-mt-03-thumb.webp",
-    "title": "JGSDF Police Motorcycle (YAMAHA MT-03, 11-0476) right side view at Camp Uji September 14, 2024.jpg",
+    "title": "JGSDF Police Motorcycle (YAMAHA MT-03, 11-0476) left front view at Camp Uji September 14, 2024.jpg",
     "author": "Hunini",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:JGSDF_Police_Motorcycle_(YAMAHA_MT-03,_11-0476)_right_side_view_at_Camp_Uji_September_14,_2024.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:JGSDF_Police_Motorcycle_(YAMAHA_MT-03,_11-0476)_left_front_view_at_Camp_Uji_September_14,_2024.jpg",
+    "hero": "store/img/bikes/yamaha-mt-03-hero.webp"
   },
   "yamaha|mt-07": {
     "image": "store/img/bikes/yamaha-mt-07.webp",
@@ -8888,37 +9294,14 @@
     "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_MT-07_Y-AMT.jpg",
     "hero": "store/img/bikes/yamaha-mt-07-hero.webp"
   },
-  "yamaha|mt-07-moto-cage": {
-    "image": "store/img/bikes/yamaha-mt-07-moto-cage.webp",
-    "thumb": "store/img/bikes/yamaha-mt-07-moto-cage-thumb.webp",
-    "title": "Yamaha MT-07 Moto Cage.jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-07_Moto_Cage.jpg"
-  },
   "yamaha|mt-09": {
     "image": "store/img/bikes/yamaha-mt-09.webp",
     "thumb": "store/img/bikes/yamaha-mt-09-thumb.webp",
     "title": "2024 Yamaha MT-09.jpg",
     "author": "Chanokchon",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09.jpg"
-  },
-  "yamaha|mt-09-sp": {
-    "image": "store/img/bikes/yamaha-mt-09-sp.webp",
-    "thumb": "store/img/bikes/yamaha-mt-09-sp-thumb.webp",
-    "title": "2024 Yamaha MT-09 SP.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09_SP.jpg"
-  },
-  "yamaha|mt-09-street-rally": {
-    "image": "store/img/bikes/yamaha-mt-09-street-rally.webp",
-    "thumb": "store/img/bikes/yamaha-mt-09-street-rally-thumb.webp",
-    "title": "Yamaha MT-09 STREET RALLY at Tokyo Motor Show 2013-2.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-09_STREET_RALLY_at_Tokyo_Motor_Show_2013-2.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09.jpg",
+    "hero": "store/img/bikes/yamaha-mt-09-hero.webp"
   },
   "yamaha|mt-09-tracer": {
     "image": "store/img/bikes/yamaha-mt-09-tracer.webp",
@@ -8926,79 +9309,26 @@
     "title": "YAMAHA MT-09 Tracer, photographed in Takurazaki, October 2024 - 7956.jpg",
     "author": "Laitche",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_MT-09_Tracer,_photographed_in_Takurazaki,_October_2024_-_7956.jpg"
-  },
-  "yamaha|mt-09-tracer-abs": {
-    "image": "store/img/bikes/yamaha-mt-09-tracer-abs.webp",
-    "thumb": "store/img/bikes/yamaha-mt-09-tracer-abs-thumb.webp",
-    "title": "YAMAHA MT-09 TRACER ABS at the Tokyo Motor Show 2015.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_MT-09_TRACER_ABS_at_the_Tokyo_Motor_Show_2015.jpg"
-  },
-  "yamaha|mt-09-y-amt": {
-    "image": "store/img/bikes/yamaha-mt-09-y-amt.webp",
-    "thumb": "store/img/bikes/yamaha-mt-09-y-amt-thumb.webp",
-    "title": "2024 Yamaha MT-09 Y-AMT.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09_Y-AMT.jpg"
-  },
-  "yamaha|mt-10": {
-    "image": "store/img/bikes/yamaha-mt-10.webp",
-    "thumb": "store/img/bikes/yamaha-mt-10-thumb.webp",
-    "title": "Yamaha MT-10 (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-10_(1).jpg"
-  },
-  "yamaha|mt-10-sp": {
-    "image": "store/img/bikes/yamaha-mt-10-sp.webp",
-    "thumb": "store/img/bikes/yamaha-mt-10-sp-thumb.webp",
-    "title": "Yamaha MT-10 SP motorbike, Ballycastle - geograph.org.uk - 8346519.jpg",
-    "author": "Kenneth Allen",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-10_SP_motorbike,_Ballycastle_-_geograph.org.uk_-_8346519.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_MT-09_Tracer,_photographed_in_Takurazaki,_October_2024_-_7956.jpg",
+    "hero": "store/img/bikes/yamaha-mt-09-tracer-hero.webp"
   },
   "yamaha|mt-125": {
     "image": "store/img/bikes/yamaha-mt-125.webp",
     "thumb": "store/img/bikes/yamaha-mt-125-thumb.webp",
-    "title": "Yamaha MT-125 (1).jpg",
-    "author": "Cjp24",
+    "title": "Yamaha MT-125 rear.jpg",
+    "author": "Corvettec6r",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-125_(1).jpg"
-  },
-  "yamaha|mt-15": {
-    "image": "store/img/bikes/yamaha-mt-15.webp",
-    "thumb": "store/img/bikes/yamaha-mt-15-thumb.webp",
-    "title": "Yamaha M-Slaz 150 (MT-15).jpg",
-    "author": "M.rJirapat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_M-Slaz_150_(MT-15).jpg"
-  },
-  "yamaha|mt-25": {
-    "image": "store/img/bikes/yamaha-mt-25.webp",
-    "thumb": "store/img/bikes/yamaha-mt-25-thumb.webp",
-    "title": "2016 Yamaha MT-25.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_MT-25.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-125_rear.jpg",
+    "hero": "store/img/bikes/yamaha-mt-125-hero.webp"
   },
   "yamaha|mt09": {
     "image": "store/img/bikes/yamaha-mt09.webp",
     "thumb": "store/img/bikes/yamaha-mt09-thumb.webp",
-    "title": "Yamaha MT-09 - Mondial de l'Automobile de Paris 2018 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_MT-09_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg"
-  },
-  "yamaha|neo's": {
-    "image": "store/img/bikes/yamaha-neo-s.webp",
-    "thumb": "store/img/bikes/yamaha-neo-s-thumb.webp",
-    "title": "Yamaha Neo's Scooter.jpg",
-    "author": "matýsek",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Neo's_Scooter.jpg"
+    "title": "YAMAHA MT-09 (1).JPG",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_MT-09_(1).JPG",
+    "hero": "store/img/bikes/yamaha-mt09-hero.webp"
   },
   "yamaha|neos": {
     "image": "store/img/bikes/yamaha-neos.webp",
@@ -9006,15 +9336,8 @@
     "title": "Yamaha neos mittopcase.jpg",
     "author": "Markus Zinnecker (user Speedguru )",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_neos_mittopcase.jpg"
-  },
-  "yamaha|niken": {
-    "image": "store/img/bikes/yamaha-niken.webp",
-    "thumb": "store/img/bikes/yamaha-niken-thumb.webp",
-    "title": "Yamaha Niken - Mondial de l'Automobile de Paris 2018 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Niken_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_neos_mittopcase.jpg",
+    "hero": "store/img/bikes/yamaha-neos-hero.webp"
   },
   "yamaha|niken-gt": {
     "image": "store/img/bikes/yamaha-niken-gt.webp",
@@ -9022,31 +9345,26 @@
     "title": "Yamaha Niken GT Tokyo Motorcycle Show 2019.jpg",
     "author": "さぱしあ",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Niken_GT_Tokyo_Motorcycle_Show_2019.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Niken_GT_Tokyo_Motorcycle_Show_2019.jpg",
+    "hero": "store/img/bikes/yamaha-niken-gt-hero.webp"
   },
   "yamaha|nmax": {
     "image": "store/img/bikes/yamaha-nmax.webp",
     "thumb": "store/img/bikes/yamaha-nmax-thumb.webp",
-    "title": "All Yamaha NMAX parking in IGGO - Telanaipura, Jambi City, JA.jpg",
-    "author": "Firzafp",
+    "title": "2025 Yamaha NMAX 155 Standard.jpg",
+    "author": "Chanokchon",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:All_Yamaha_NMAX_parking_in_IGGO_-_Telanaipura,_Jambi_City,_JA.jpg"
-  },
-  "yamaha|nmax-125": {
-    "image": "store/img/bikes/yamaha-nmax-125.webp",
-    "thumb": "store/img/bikes/yamaha-nmax-125-thumb.webp",
-    "title": "Yamaha NMAX 125 2025.jpg",
-    "author": "AVMOTO",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_NMAX_125_2025.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_NMAX_155_Standard.jpg",
+    "hero": "store/img/bikes/yamaha-nmax-hero.webp"
   },
   "yamaha|nmax-155": {
     "image": "store/img/bikes/yamaha-nmax-155.webp",
     "thumb": "store/img/bikes/yamaha-nmax-155-thumb.webp",
-    "title": "Yamaha NMAX Turbo 155 front side view in Indonesia.jpg",
-    "author": "Dedybudiman08",
+    "title": "Yamaha NMAX 155.jpg",
+    "author": "LSSM1437",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_NMAX_Turbo_155_front_side_view_in_Indonesia.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_NMAX_155.jpg",
+    "hero": "store/img/bikes/yamaha-nmax-155-hero.webp"
   },
   "yamaha|nmax-155-abs": {
     "image": "store/img/bikes/yamaha-nmax-155-abs.webp",
@@ -9054,15 +9372,8 @@
     "title": "2020 Yamaha NMAX 155 ABS (20200810) 01.jpg",
     "author": "オーバードライブ83",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2020_Yamaha_NMAX_155_ABS_(20200810)_01.jpg"
-  },
-  "yamaha|ped2-concept": {
-    "image": "store/img/bikes/yamaha-ped2-concept.webp",
-    "thumb": "store/img/bikes/yamaha-ped2-concept-thumb.webp",
-    "title": "Yamaha Concept Motorcycle PED2.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Concept_Motorcycle_PED2.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Yamaha_NMAX_155_ABS_(20200810)_01.jpg",
+    "hero": "store/img/bikes/yamaha-nmax-155-abs-hero.webp"
   },
   "yamaha|pes2-concept": {
     "image": "store/img/bikes/yamaha-pes2-concept.webp",
@@ -9070,15 +9381,17 @@
     "title": "Yamaha Concept PES2.JPG",
     "author": "Rainmaker47",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Concept_PES2.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Concept_PES2.JPG",
+    "hero": "store/img/bikes/yamaha-pes2-concept-hero.webp"
   },
   "yamaha|pw50": {
     "image": "store/img/bikes/yamaha-pw50.webp",
     "thumb": "store/img/bikes/yamaha-pw50-thumb.webp",
-    "title": "Yamaha pw50.jpg",
-    "author": "Galka rem",
+    "title": "Yam PW50.jpg",
+    "author": "Cdw1952",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_pw50.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yam_PW50.jpg",
+    "hero": "store/img/bikes/yamaha-pw50-hero.webp"
   },
   "yamaha|pw80": {
     "image": "store/img/bikes/yamaha-pw80.webp",
@@ -9086,31 +9399,26 @@
     "title": "Yam PW80.jpg",
     "author": "Cdw1952",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yam_PW80.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yam_PW80.jpg",
+    "hero": "store/img/bikes/yamaha-pw80-hero.webp"
   },
   "yamaha|r1": {
     "image": "store/img/bikes/yamaha-r1.webp",
     "thumb": "store/img/bikes/yamaha-r1-thumb.webp",
-    "title": "1998 Yamaha YZF-R1 in the Yamaha Communication Plaza.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1998_Yamaha_YZF-R1_in_the_Yamaha_Communication_Plaza.JPG"
-  },
-  "yamaha|r125": {
-    "image": "store/img/bikes/yamaha-r125.webp",
-    "thumb": "store/img/bikes/yamaha-r125-thumb.webp",
-    "title": "Yamaha YZF-R125 blue.jpg",
-    "author": "Sonia Fantoli",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125_blue.jpg"
+    "title": "Yamaha YZF-R1 RN12.jpg",
+    "author": "K. Schwebke",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R1_RN12.jpg",
+    "hero": "store/img/bikes/yamaha-r1-hero.webp"
   },
   "yamaha|r15": {
     "image": "store/img/bikes/yamaha-r15.webp",
     "thumb": "store/img/bikes/yamaha-r15-thumb.webp",
-    "title": "Yamaha r15 v2 blue.jpg",
-    "author": "Jimmy tikhak",
+    "title": "Yamaha R15 V3.0.jpg",
+    "author": "Akshayanil919",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_r15_v2_blue.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_R15_V3.0.jpg",
+    "hero": "store/img/bikes/yamaha-r15-hero.webp"
   },
   "yamaha|r15-v4": {
     "image": "store/img/bikes/yamaha-r15-v4.webp",
@@ -9118,7 +9426,8 @@
     "title": "Yamaha R15 v4 bike.jpg",
     "author": "Kamalnath P",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_R15_v4_bike.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_R15_v4_bike.jpg",
+    "hero": "store/img/bikes/yamaha-r15-v4-hero.webp"
   },
   "yamaha|r1m": {
     "image": "store/img/bikes/yamaha-r1m.webp",
@@ -9126,15 +9435,17 @@
     "title": "Telaietto posteriore febur Yamaha R1 R1M 2015.JPG",
     "author": "Febur",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Telaietto_posteriore_febur_Yamaha_R1_R1M_2015.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Telaietto_posteriore_febur_Yamaha_R1_R1M_2015.JPG",
+    "hero": "store/img/bikes/yamaha-r1m-hero.webp"
   },
   "yamaha|r3": {
     "image": "store/img/bikes/yamaha-r3.webp",
     "thumb": "store/img/bikes/yamaha-r3-thumb.webp",
-    "title": "2015 Yamaha YZF-R3 right.JPG",
-    "author": "Dennis Bratland",
+    "title": "5-YZF R3 2021.jpg",
+    "author": "Kuro202",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_YZF-R3_right.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:5-YZF_R3_2021.jpg",
+    "hero": "store/img/bikes/yamaha-r3-hero.webp"
   },
   "yamaha|r6": {
     "image": "store/img/bikes/yamaha-r6.webp",
@@ -9142,23 +9453,8 @@
     "title": "Yamaha r6 2004 Antraciet.JPG",
     "author": "Zwaan15",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_r6_2004_Antraciet.JPG"
-  },
-  "yamaha|r7": {
-    "image": "store/img/bikes/yamaha-r7.webp",
-    "thumb": "store/img/bikes/yamaha-r7-thumb.webp",
-    "title": "2021 Yamaha YZF-R7.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_YZF-R7.jpg"
-  },
-  "yamaha|r9": {
-    "image": "store/img/bikes/yamaha-r9.webp",
-    "thumb": "store/img/bikes/yamaha-r9-thumb.webp",
-    "title": "2025 Yamaha YZF-R9.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_YZF-R9.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_r6_2004_Antraciet.JPG",
+    "hero": "store/img/bikes/yamaha-r6-hero.webp"
   },
   "yamaha|raptor-350": {
     "image": "store/img/bikes/yamaha-raptor-350.webp",
@@ -9166,31 +9462,26 @@
     "title": "Yamaha 350 Raptor nach Rennen.JPG",
     "author": "Rene Schwarzer",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_350_Raptor_nach_Rennen.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_350_Raptor_nach_Rennen.JPG",
+    "hero": "store/img/bikes/yamaha-raptor-350-hero.webp"
   },
   "yamaha|raptor-700": {
     "image": "store/img/bikes/yamaha-raptor-700.webp",
     "thumb": "store/img/bikes/yamaha-raptor-700-thumb.webp",
-    "title": "Yamaha Raptor 700 (15157750976).jpg",
-    "author": "FaceMePLS from The Hague, The Netherlands",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Raptor_700_(15157750976).jpg"
-  },
-  "yamaha|resonator-125-concept": {
-    "image": "store/img/bikes/yamaha-resonator-125-concept.webp",
-    "thumb": "store/img/bikes/yamaha-resonator-125-concept-thumb.webp",
-    "title": "Yamaha concept Resonator 125.JPG",
-    "author": "Rainmaker47",
+    "title": "Yamaha Raptor 700.jpg",
+    "author": "John Arthur Wesson",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_concept_Resonator_125.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Raptor_700.jpg",
+    "hero": "store/img/bikes/yamaha-raptor-700-hero.webp"
   },
   "yamaha|royal-star": {
     "image": "store/img/bikes/yamaha-royal-star.webp",
     "thumb": "store/img/bikes/yamaha-royal-star-thumb.webp",
-    "title": "Yamaha Royalstar 2000 (23966484288).jpg",
-    "author": "RL GNZLZ from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Royalstar_2000_(23966484288).jpg"
+    "title": "Yamaha XVZ 1300 Royal Star.jpg",
+    "author": "Reisecruiser",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVZ_1300_Royal_Star.jpg",
+    "hero": "store/img/bikes/yamaha-royal-star-hero.webp"
   },
   "yamaha|royal-star-venture": {
     "image": "store/img/bikes/yamaha-royal-star-venture.webp",
@@ -9198,23 +9489,8 @@
     "title": "Yamaha XVZ1300TF Royal Star Venture 2005 (1).JPG",
     "author": "kolochkov",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVZ1300TF_Royal_Star_Venture_2005_(1).JPG"
-  },
-  "yamaha|royal-star-venture-1300": {
-    "image": "store/img/bikes/yamaha-royal-star-venture-1300.webp",
-    "thumb": "store/img/bikes/yamaha-royal-star-venture-1300-thumb.webp",
-    "title": "Yamaha Royal Star Venture 1300.jpg",
-    "author": "Addvisor",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Royal_Star_Venture_1300.jpg"
-  },
-  "yamaha|saluto": {
-    "image": "store/img/bikes/yamaha-saluto.webp",
-    "thumb": "store/img/bikes/yamaha-saluto-thumb.webp",
-    "title": "2015 Yamaha YC125-4 Saluto.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_YC125-4_Saluto.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVZ1300TF_Royal_Star_Venture_2005_(1).JPG",
+    "hero": "store/img/bikes/yamaha-royal-star-venture-hero.webp"
   },
   "yamaha|serow-250": {
     "image": "store/img/bikes/yamaha-serow-250.webp",
@@ -9222,23 +9498,17 @@
     "title": "Yamaha serow 250.jpg",
     "author": "Navian",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_serow_250.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_serow_250.jpg",
+    "hero": "store/img/bikes/yamaha-serow-250-hero.webp"
   },
   "yamaha|slider": {
     "image": "store/img/bikes/yamaha-slider.webp",
     "thumb": "store/img/bikes/yamaha-slider-thumb.webp",
-    "title": "Yamaha Slider 49cc.jpg",
-    "author": "Hamza Izourane",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Slider_49cc.jpg"
-  },
-  "yamaha|smax": {
-    "image": "store/img/bikes/yamaha-smax.webp",
-    "thumb": "store/img/bikes/yamaha-smax-thumb.webp",
-    "title": "Yamaha Smax.jpg",
-    "author": "Nicolas Liu",
+    "title": "Yamaha Slider.JPG",
+    "author": "Leineabstiegsschleuse",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Smax.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Slider.JPG",
+    "hero": "store/img/bikes/yamaha-slider-hero.webp"
   },
   "yamaha|soul-gt": {
     "image": "store/img/bikes/yamaha-soul-gt.webp",
@@ -9246,31 +9516,26 @@
     "title": "2016 Yamaha Soul GT, West Surabaya.jpg",
     "author": "Alex Neman",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_Soul_GT,_West_Surabaya.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_Soul_GT,_West_Surabaya.jpg",
+    "hero": "store/img/bikes/yamaha-soul-gt-hero.webp"
   },
   "yamaha|sr-400": {
     "image": "store/img/bikes/yamaha-sr-400.webp",
     "thumb": "store/img/bikes/yamaha-sr-400-thumb.webp",
-    "title": "Yamaha SR400 2014 Dash.JPG",
-    "author": "Khaosaming",
+    "title": "1992 Yamaha SR400S.JPG",
+    "author": "Rainmaker47",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_SR400_2014_Dash.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:1992_Yamaha_SR400S.JPG",
+    "hero": "store/img/bikes/yamaha-sr-400-hero.webp"
   },
   "yamaha|sr400": {
     "image": "store/img/bikes/yamaha-sr400.webp",
     "thumb": "store/img/bikes/yamaha-sr400-thumb.webp",
-    "title": "Yamaha SR400 2014.JPG",
-    "author": "Khaosaming",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_SR400_2014.JPG"
-  },
-  "yamaha|star-bolt": {
-    "image": "store/img/bikes/yamaha-star-bolt.webp",
-    "thumb": "store/img/bikes/yamaha-star-bolt-thumb.webp",
-    "title": "2014 Yamaha Star Bolt 2014-07-15 03-04.jpg",
-    "author": "User:Aenglert89",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_Star_Bolt_2014-07-15_03-04.jpg"
+    "title": "YAMAHA SR400 20070304-03.jpg",
+    "author": "Kure",
+    "license": "CC BY-SA 2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_SR400_20070304-03.jpg",
+    "hero": "store/img/bikes/yamaha-sr400-hero.webp"
   },
   "yamaha|star-venture": {
     "image": "store/img/bikes/yamaha-star-venture.webp",
@@ -9278,7 +9543,8 @@
     "title": "2021 Yamaha Star Venture TC.jpg",
     "author": "MrPHR",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_Star_Venture_TC.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_Star_Venture_TC.jpg",
+    "hero": "store/img/bikes/yamaha-star-venture-hero.webp"
   },
   "yamaha|stratoliner": {
     "image": "store/img/bikes/yamaha-stratoliner.webp",
@@ -9286,23 +9552,26 @@
     "title": "Moscow, Yamaha XV1900 Stratoliner, May 2026 01.jpg",
     "author": "Retired electrician",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Yamaha_XV1900_Stratoliner,_May_2026_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Yamaha_XV1900_Stratoliner,_May_2026_01.jpg",
+    "hero": "store/img/bikes/yamaha-stratoliner-hero.webp"
   },
   "yamaha|super-tenere": {
     "image": "store/img/bikes/yamaha-super-tenere.webp",
     "thumb": "store/img/bikes/yamaha-super-tenere-thumb.webp",
-    "title": "Yamaha Super Tenere 1200 Z 2013 (15578373544).jpg",
+    "title": "Yamaha Super Tenere (11498931363).jpg",
     "author": "order_242 from Chile",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Super_Tenere_1200_Z_2013_(15578373544).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Super_Tenere_(11498931363).jpg",
+    "hero": "store/img/bikes/yamaha-super-tenere-hero.webp"
   },
   "yamaha|sz": {
     "image": "store/img/bikes/yamaha-sz.webp",
     "thumb": "store/img/bikes/yamaha-sz-thumb.webp",
-    "title": "SZ 深圳 Shenzhen 龍崗 Longgang 五和大道 Wuhe Road shop Yamaha Music night October 2023 R12S 01.jpg",
-    "author": "URAIRSIDE PASTEE Harma Laum",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:SZ_%E6%B7%B1%E5%9C%B3_Shenzhen_%E9%BE%8D%E5%B4%97_Longgang_%E4%BA%94%E5%92%8C%E5%A4%A7%E9%81%93_Wuhe_Road_shop_Yamaha_Music_night_October_2023_R12S_01.jpg"
+    "title": "Yamaha SZ X.jpg",
+    "author": "Saleeshkumar2000",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_SZ_X.jpg",
+    "hero": "store/img/bikes/yamaha-sz-hero.webp"
   },
   "yamaha|szr": {
     "image": "store/img/bikes/yamaha-szr.webp",
@@ -9310,15 +9579,8 @@
     "title": "Yamaha SZR 660.jpg",
     "author": "Bike-didi62",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_SZR_660.jpg"
-  },
-  "yamaha|t110c": {
-    "image": "store/img/bikes/yamaha-t110c.webp",
-    "thumb": "store/img/bikes/yamaha-t110c-thumb.webp",
-    "title": "Yamaha T110C.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_T110C.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_SZR_660.jpg",
+    "hero": "store/img/bikes/yamaha-szr-hero.webp"
   },
   "yamaha|tdm-900": {
     "image": "store/img/bikes/yamaha-tdm-900.webp",
@@ -9326,7 +9588,8 @@
     "title": "Yamaha 08 TDM 900.jpg",
     "author": "Levethane",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_08_TDM_900.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_08_TDM_900.jpg",
+    "hero": "store/img/bikes/yamaha-tdm-900-hero.webp"
   },
   "yamaha|tdm-900-a": {
     "image": "store/img/bikes/yamaha-tdm-900-a.webp",
@@ -9334,7 +9597,8 @@
     "title": "Yamaha TDM 900 A RN08.jpg",
     "author": "TDMichel",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM_900_A_RN08.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM_900_A_RN08.jpg",
+    "hero": "store/img/bikes/yamaha-tdm-900-a-hero.webp"
   },
   "yamaha|tdm-900a": {
     "image": "store/img/bikes/yamaha-tdm-900a.webp",
@@ -9342,7 +9606,8 @@
     "title": "Yamaha TDM 900A schwarz.jpg",
     "author": "Mpiet",
     "license": "CC BY-SA 2.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM_900A_schwarz.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM_900A_schwarz.jpg",
+    "hero": "store/img/bikes/yamaha-tdm-900a-hero.webp"
   },
   "yamaha|tdm850": {
     "image": "store/img/bikes/yamaha-tdm850.webp",
@@ -9350,15 +9615,17 @@
     "title": "Yamaha TDM850.JPG",
     "author": "Kovács Barnabás",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM850.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM850.JPG",
+    "hero": "store/img/bikes/yamaha-tdm850-hero.webp"
   },
   "yamaha|tdm900": {
     "image": "store/img/bikes/yamaha-tdm900.webp",
     "thumb": "store/img/bikes/yamaha-tdm900-thumb.webp",
-    "title": "YAMAHA TDM900 ABS 2008 Yamaha Communication Plaza.jpg",
-    "author": "PekePON",
+    "title": "Yamaha TDM900 2003 right side 01.jpg",
+    "author": "Teherauto",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TDM900_ABS_2008_Yamaha_Communication_Plaza.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDM900_2003_right_side_01.jpg",
+    "hero": "store/img/bikes/yamaha-tdm900-hero.webp"
   },
   "yamaha|tdr-125": {
     "image": "store/img/bikes/yamaha-tdr-125.webp",
@@ -9366,31 +9633,17 @@
     "title": "Yamaha TDR 125 2012.JPG",
     "author": "Marcin Białek",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDR_125_2012.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TDR_125_2012.JPG",
+    "hero": "store/img/bikes/yamaha-tdr-125-hero.webp"
   },
   "yamaha|tenere-700": {
     "image": "store/img/bikes/yamaha-tenere-700.webp",
     "thumb": "store/img/bikes/yamaha-tenere-700-thumb.webp",
-    "title": "Yamaha Ténéré Rally 700 EICMA 2024.jpg",
-    "author": "Saggittarius A",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_T%C3%A9n%C3%A9r%C3%A9_Rally_700_EICMA_2024.jpg"
-  },
-  "yamaha|tenere-700-rally": {
-    "image": "store/img/bikes/yamaha-tenere-700-rally.webp",
-    "thumb": "store/img/bikes/yamaha-tenere-700-rally-thumb.webp",
-    "title": "06-2024 Yamaha Rally Tenere 700.jpg",
-    "author": "Wikisympathisant",
+    "title": "Tenere 700.jpg",
+    "author": "Happypap55",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:06-2024_Yamaha_Rally_Tenere_700.jpg"
-  },
-  "yamaha|tenere-700-world-raid": {
-    "image": "store/img/bikes/yamaha-tenere-700-world-raid.webp",
-    "thumb": "store/img/bikes/yamaha-tenere-700-world-raid-thumb.webp",
-    "title": "Tenere 700 World Raid (2).jpg",
-    "author": "APneunzehn74",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Tenere_700_World_Raid_(2).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Tenere_700.jpg",
+    "hero": "store/img/bikes/yamaha-tenere-700-hero.webp"
   },
   "yamaha|thunderace": {
     "image": "store/img/bikes/yamaha-thunderace.webp",
@@ -9398,7 +9651,8 @@
     "title": "Yamaha YZF1000R ThunderAce.JPG",
     "author": "Bal118",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF1000R_ThunderAce.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF1000R_ThunderAce.JPG",
+    "hero": "store/img/bikes/yamaha-thunderace-hero.webp"
   },
   "yamaha|thundercat": {
     "image": "store/img/bikes/yamaha-thundercat.webp",
@@ -9406,15 +9660,17 @@
     "title": "YamahaYZF600R ThunderCat.jpg",
     "author": "Futa507",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YamahaYZF600R_ThunderCat.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YamahaYZF600R_ThunderCat.jpg",
+    "hero": "store/img/bikes/yamaha-thundercat-hero.webp"
   },
   "yamaha|tmax": {
     "image": "store/img/bikes/yamaha-tmax.webp",
     "thumb": "store/img/bikes/yamaha-tmax-thumb.webp",
-    "title": "YAMAHA TMAX 2010-1 Yamaha Communication Plaza.jpg",
+    "title": "YAMAHA TMAX 10th Anniversary WHITEMAX Yamaha Communication Plaza.jpg",
     "author": "PekePON",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TMAX_2010-1_Yamaha_Communication_Plaza.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TMAX_10th_Anniversary_WHITEMAX_Yamaha_Communication_Plaza.jpg",
+    "hero": "store/img/bikes/yamaha-tmax-hero.webp"
   },
   "yamaha|tmax-500": {
     "image": "store/img/bikes/yamaha-tmax-500.webp",
@@ -9422,23 +9678,17 @@
     "title": "TMAX500.JPG",
     "author": "Shohei ninomiya",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:TMAX500.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:TMAX500.JPG",
+    "hero": "store/img/bikes/yamaha-tmax-500-hero.webp"
   },
   "yamaha|tmax-560": {
     "image": "store/img/bikes/yamaha-tmax-560.webp",
     "thumb": "store/img/bikes/yamaha-tmax-560-thumb.webp",
-    "title": "Yamaha TMAX 560 (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TMAX_560_(1).jpg"
-  },
-  "yamaha|tmax-tech-max": {
-    "image": "store/img/bikes/yamaha-tmax-tech-max.webp",
-    "thumb": "store/img/bikes/yamaha-tmax-tech-max-thumb.webp",
-    "title": "2025 Yamaha TMAX 560 Tech MAX.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_TMAX_560_Tech_MAX.jpg"
+    "title": "2025 Yamaha TMAX 560.jpg",
+    "author": "Corvettec6r",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_TMAX_560.jpg",
+    "hero": "store/img/bikes/yamaha-tmax-560-hero.webp"
   },
   "yamaha|tracer-700": {
     "image": "store/img/bikes/yamaha-tracer-700.webp",
@@ -9446,7 +9696,8 @@
     "title": "2017-06-19 Yamaha 700 Tracer, Baujahr 2017, blau (01).jpg",
     "author": "GT1976",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017-06-19_Yamaha_700_Tracer,_Baujahr_2017,_blau_(01).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2017-06-19_Yamaha_700_Tracer,_Baujahr_2017,_blau_(01).jpg",
+    "hero": "store/img/bikes/yamaha-tracer-700-hero.webp"
   },
   "yamaha|tracer-9": {
     "image": "store/img/bikes/yamaha-tracer-9.webp",
@@ -9454,39 +9705,26 @@
     "title": "Yamaha Tracer 9 GT 2024.jpg",
     "author": "Babounet",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_9_GT_2024.jpg"
-  },
-  "yamaha|tracer-9-gt": {
-    "image": "store/img/bikes/yamaha-tracer-9-gt.webp",
-    "thumb": "store/img/bikes/yamaha-tracer-9-gt-thumb.webp",
-    "title": "Yamaha Tracer 9 GT 2025.jpg",
-    "author": "AVMOTO",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_9_GT_2025.jpg"
-  },
-  "yamaha|tracer-9-gt+": {
-    "image": "store/img/bikes/yamaha-tracer-9-gt-2.webp",
-    "thumb": "store/img/bikes/yamaha-tracer-9-gt-2-thumb.webp",
-    "title": "2026 Yamaha Tracer 9 GT.jpg",
-    "author": "Chanokchon",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Yamaha_Tracer_9_GT.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_9_GT_2024.jpg",
+    "hero": "store/img/bikes/yamaha-tracer-9-hero.webp"
   },
   "yamaha|tracer-900": {
     "image": "store/img/bikes/yamaha-tracer-900.webp",
     "thumb": "store/img/bikes/yamaha-tracer-900-thumb.webp",
-    "title": "Yamaha Tracer 900 GT (1).jpg",
-    "author": "Cjp24",
+    "title": "Yamaha Tracer 900 GT.jpg",
+    "author": "MicP89",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_900_GT_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_900_GT.jpg",
+    "hero": "store/img/bikes/yamaha-tracer-900-hero.webp"
   },
   "yamaha|tracer-900-gt": {
     "image": "store/img/bikes/yamaha-tracer-900-gt.webp",
     "thumb": "store/img/bikes/yamaha-tracer-900-gt-thumb.webp",
-    "title": "Yamaha Tracer 900 GT (2).jpg",
-    "author": "Cjp24",
+    "title": "Yamaha Tracer 900 GT.jpg",
+    "author": "MicP89",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_900_GT_(2).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tracer_900_GT.jpg",
+    "hero": "store/img/bikes/yamaha-tracer-900-gt-hero.webp"
   },
   "yamaha|tricity": {
     "image": "store/img/bikes/yamaha-tricity.webp",
@@ -9494,7 +9732,8 @@
     "title": "Yamaha Tricity display white color.jpg",
     "author": "Norio NAKAYAMA from saitama, japan",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tricity_display_white_color.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Tricity_display_white_color.jpg",
+    "hero": "store/img/bikes/yamaha-tricity-hero.webp"
   },
   "yamaha|tricity-125": {
     "image": "store/img/bikes/yamaha-tricity-125.webp",
@@ -9502,15 +9741,8 @@
     "title": "Kanagawa Prefectural Police Yamaha Tricity 125.jpg",
     "author": "Ypy31",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kanagawa_Prefectural_Police_Yamaha_Tricity_125.jpg"
-  },
-  "yamaha|tricker": {
-    "image": "store/img/bikes/yamaha-tricker.webp",
-    "thumb": "store/img/bikes/yamaha-tricker-thumb.webp",
-    "title": "2014 Yamaha Tricker XG250.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_Tricker_XG250.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Kanagawa_Prefectural_Police_Yamaha_Tricity_125.jpg",
+    "hero": "store/img/bikes/yamaha-tricity-125-hero.webp"
   },
   "yamaha|tt-r125l": {
     "image": "store/img/bikes/yamaha-tt-r125l.webp",
@@ -9518,7 +9750,8 @@
     "title": "2007 Yamaha TT-R125L Image 3.jpg",
     "author": "2geriatrics2furious",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_Image_3.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_Image_3.jpg",
+    "hero": "store/img/bikes/yamaha-tt-r125l-hero.webp"
   },
   "yamaha|tt-r250": {
     "image": "store/img/bikes/yamaha-tt-r250.webp",
@@ -9526,7 +9759,8 @@
     "title": "2002ttr250yamahaenduro.jpg",
     "author": "Haridimous at English Wikipedia",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2002ttr250yamahaenduro.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2002ttr250yamahaenduro.jpg",
+    "hero": "store/img/bikes/yamaha-tt-r250-hero.webp"
   },
   "yamaha|tt-r50": {
     "image": "store/img/bikes/yamaha-tt-r50.webp",
@@ -9534,39 +9768,35 @@
     "title": "YAMAHA TT-R50 Yamaha Communication Plaza.jpg",
     "author": "PekePON",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TT-R50_Yamaha_Communication_Plaza.jpg"
-  },
-  "yamaha|tt250r": {
-    "image": "store/img/bikes/yamaha-tt250r.webp",
-    "thumb": "store/img/bikes/yamaha-tt250r-thumb.webp",
-    "title": "TT250R 1993.jpg",
-    "author": "Priorcozmo",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:TT250R_1993.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TT-R50_Yamaha_Communication_Plaza.jpg",
+    "hero": "store/img/bikes/yamaha-tt-r50-hero.webp"
   },
   "yamaha|tw-200": {
     "image": "store/img/bikes/yamaha-tw-200.webp",
     "thumb": "store/img/bikes/yamaha-tw-200-thumb.webp",
-    "title": "YAMAHA TW200 Special specification motorcycle reached the South Pole with Japanese adventurer Shinji Kazama.jpg",
-    "author": "Neruru",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TW200_Special_specification_motorcycle_reached_the_South_Pole_with_Japanese_adventurer_Shinji_Kazama.jpg"
+    "title": "Yamaha TW200 01.jpg",
+    "author": "Justin Rocha",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TW200_01.jpg",
+    "hero": "store/img/bikes/yamaha-tw-200-hero.webp"
   },
   "yamaha|tw200": {
     "image": "store/img/bikes/yamaha-tw200.webp",
     "thumb": "store/img/bikes/yamaha-tw200-thumb.webp",
-    "title": "2010 Yamaha TW200 at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "author": "Dbratland",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Yamaha_TW200_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg"
+    "title": "Yamaha TW200 01.jpg",
+    "author": "Justin Rocha",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TW200_01.jpg",
+    "hero": "store/img/bikes/yamaha-tw200-hero.webp"
   },
   "yamaha|tzr": {
     "image": "store/img/bikes/yamaha-tzr.webp",
     "thumb": "store/img/bikes/yamaha-tzr-thumb.webp",
-    "title": "Yamaha TZR 250, National Museum of Scotland pic1.JPG",
-    "author": "Alf van Beem",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TZR_250,_National_Museum_of_Scotland_pic1.JPG"
+    "title": "YAMAHA TZR250 1986.JPG",
+    "author": "Kuro8124",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_TZR250_1986.JPG",
+    "hero": "store/img/bikes/yamaha-tzr-hero.webp"
   },
   "yamaha|tzr-50": {
     "image": "store/img/bikes/yamaha-tzr-50.webp",
@@ -9574,7 +9804,8 @@
     "title": "Yamaha TZR 50.jpg",
     "author": "James Willock",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TZR_50.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_TZR_50.jpg",
+    "hero": "store/img/bikes/yamaha-tzr-50-hero.webp"
   },
   "yamaha|tzr50": {
     "image": "store/img/bikes/yamaha-tzr50.webp",
@@ -9582,23 +9813,17 @@
     "title": "Yamaha-TZR50R.jpg",
     "author": "Marc-Lauren",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha-TZR50R.jpg"
-  },
-  "yamaha|v-ixion-advance": {
-    "image": "store/img/bikes/yamaha-v-ixion-advance.webp",
-    "thumb": "store/img/bikes/yamaha-v-ixion-advance-thumb.webp",
-    "title": "Yamaha V-Ixion Advance - Indonesia International Motor Show 2016 - April 9 2016.jpg",
-    "author": "Wilzz99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V-Ixion_Advance_-_Indonesia_International_Motor_Show_2016_-_April_9_2016.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha-TZR50R.jpg",
+    "hero": "store/img/bikes/yamaha-tzr50-hero.webp"
   },
   "yamaha|v-max": {
     "image": "store/img/bikes/yamaha-v-max.webp",
     "thumb": "store/img/bikes/yamaha-v-max-thumb.webp",
-    "title": "Yamaha 1700 VMax.jpg",
-    "author": "Dédélembrouille",
+    "title": "Yamaha Vmax motorbike.jpg",
+    "author": "Norbert Nagel, Mörfelden-Walldorf, Germany",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_1700_VMax.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vmax_motorbike.jpg",
+    "hero": "store/img/bikes/yamaha-v-max-hero.webp"
   },
   "yamaha|v-star-1100-classic": {
     "image": "store/img/bikes/yamaha-v-star-1100-classic.webp",
@@ -9606,7 +9831,8 @@
     "title": "Yamaha V Star 1100 Classic.jpg",
     "author": "Johntorcasio",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V_Star_1100_Classic.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V_Star_1100_Classic.jpg",
+    "hero": "store/img/bikes/yamaha-v-star-1100-classic-hero.webp"
   },
   "yamaha|v-star-1300": {
     "image": "store/img/bikes/yamaha-v-star-1300.webp",
@@ -9614,7 +9840,8 @@
     "title": "Yamaha V-Star-1300cc.jpg",
     "author": "Phoenician Patriot",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V-Star-1300cc.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V-Star-1300cc.jpg",
+    "hero": "store/img/bikes/yamaha-v-star-1300-hero.webp"
   },
   "yamaha|v-star-650-classic": {
     "image": "store/img/bikes/yamaha-v-star-650-classic.webp",
@@ -9622,7 +9849,8 @@
     "title": "Yamaha V-Star 650 Classic.jpg",
     "author": "Anndreey",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V-Star_650_Classic.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_V-Star_650_Classic.jpg",
+    "hero": "store/img/bikes/yamaha-v-star-650-classic-hero.webp"
   },
   "yamaha|v-star-950": {
     "image": "store/img/bikes/yamaha-v-star-950.webp",
@@ -9630,7 +9858,8 @@
     "title": "V-Star 950 1.jpg",
     "author": "WherePlochny",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:V-Star_950_1.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:V-Star_950_1.jpg",
+    "hero": "store/img/bikes/yamaha-v-star-950-hero.webp"
   },
   "yamaha|vega": {
     "image": "store/img/bikes/yamaha-vega.webp",
@@ -9638,15 +9867,8 @@
     "title": "2016 Yamaha Vega Force 115 (20200818).jpg",
     "author": "オーバードライブ83",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_Vega_Force_115_(20200818).jpg"
-  },
-  "yamaha|vega-force": {
-    "image": "store/img/bikes/yamaha-vega-force.webp",
-    "thumb": "store/img/bikes/yamaha-vega-force-thumb.webp",
-    "title": "Yamaha Vega Force - Jakarta Fair 2016 - June 21 2016.jpg",
-    "author": "Wilzz99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vega_Force_-_Jakarta_Fair_2016_-_June_21_2016.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_Vega_Force_115_(20200818).jpg",
+    "hero": "store/img/bikes/yamaha-vega-hero.webp"
   },
   "yamaha|vino": {
     "image": "store/img/bikes/yamaha-vino.webp",
@@ -9654,7 +9876,8 @@
     "title": "Yamaha Vino bicolor.jpg",
     "author": "Luca Boldrini",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vino_bicolor.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vino_bicolor.jpg",
+    "hero": "store/img/bikes/yamaha-vino-hero.webp"
   },
   "yamaha|vino-125": {
     "image": "store/img/bikes/yamaha-vino-125.webp",
@@ -9662,15 +9885,17 @@
     "title": "Yamaha Vino 125 2006.jpg",
     "author": "Kb9vrg at English Wikipedia",
     "license": "CC BY 2.5",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vino_125_2006.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vino_125_2006.jpg",
+    "hero": "store/img/bikes/yamaha-vino-125-hero.webp"
   },
   "yamaha|vino-50": {
     "image": "store/img/bikes/yamaha-vino-50.webp",
     "thumb": "store/img/bikes/yamaha-vino-50-thumb.webp",
-    "title": "YAMAHA Vino50 2008 Yamaha Communication Plaza.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_Vino50_2008_Yamaha_Communication_Plaza.jpg"
+    "title": "Yamaha Vino 50 RX3-078 20090420.jpg",
+    "author": "Max Chang",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vino_50_RX3-078_20090420.jpg",
+    "hero": "store/img/bikes/yamaha-vino-50-hero.webp"
   },
   "yamaha|virago": {
     "image": "store/img/bikes/yamaha-virago.webp",
@@ -9678,7 +9903,8 @@
     "title": "2014 Yamaha XV 535 Virago.JPG",
     "author": "Jacek Halicki",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_XV_535_Virago.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_XV_535_Virago.JPG",
+    "hero": "store/img/bikes/yamaha-virago-hero.webp"
   },
   "yamaha|virago-250": {
     "image": "store/img/bikes/yamaha-virago-250.webp",
@@ -9686,7 +9912,8 @@
     "title": "Yamaha Virago 250 Maroon.jpg",
     "author": "Happy Little Nomad",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Virago_250_Maroon.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Virago_250_Maroon.jpg",
+    "hero": "store/img/bikes/yamaha-virago-250-hero.webp"
   },
   "yamaha|virago-535": {
     "image": "store/img/bikes/yamaha-virago-535.webp",
@@ -9694,7 +9921,8 @@
     "title": "Yamaha Virago SV 535.jpg",
     "author": "Thomas Skowron",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Virago_SV_535.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Virago_SV_535.jpg",
+    "hero": "store/img/bikes/yamaha-virago-535-hero.webp"
   },
   "yamaha|vity": {
     "image": "store/img/bikes/yamaha-vity.webp",
@@ -9702,7 +9930,8 @@
     "title": "Yamaha Vity.jpg",
     "author": "Garry Knight",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vity.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vity.jpg",
+    "hero": "store/img/bikes/yamaha-vity-hero.webp"
   },
   "yamaha|vixion": {
     "image": "store/img/bikes/yamaha-vixion.webp",
@@ -9710,15 +9939,17 @@
     "title": "2014 Yamaha Vixion Lightning 150 (20201109).jpg",
     "author": "オーバードライブ83",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_Vixion_Lightning_150_(20201109).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_Vixion_Lightning_150_(20201109).jpg",
+    "hero": "store/img/bikes/yamaha-vixion-hero.webp"
   },
   "yamaha|vmax": {
     "image": "store/img/bikes/yamaha-vmax.webp",
     "thumb": "store/img/bikes/yamaha-vmax-thumb.webp",
-    "title": "YAMAHA VMAX 2010-1 Yamaha Communication Plaza.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_VMAX_2010-1_Yamaha_Communication_Plaza.jpg"
+    "title": "Yamaha Vmax right side.jpg",
+    "author": "A1AA1A",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vmax_right_side.jpg",
+    "hero": "store/img/bikes/yamaha-vmax-hero.webp"
   },
   "yamaha|vmax-1200": {
     "image": "store/img/bikes/yamaha-vmax-1200.webp",
@@ -9726,15 +9957,8 @@
     "title": "Yamaha Vmax 1200.jpg",
     "author": "loic33000",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vmax_1200.jpg"
-  },
-  "yamaha|vmax-1700": {
-    "image": "store/img/bikes/yamaha-vmax-1700.webp",
-    "thumb": "store/img/bikes/yamaha-vmax-1700-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Yamaha - Vmax 1700 H - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Yamaha_-_Vmax_1700_H_-_002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Vmax_1200.jpg",
+    "hero": "store/img/bikes/yamaha-vmax-1200-hero.webp"
   },
   "yamaha|vox": {
     "image": "store/img/bikes/yamaha-vox.webp",
@@ -9742,7 +9966,8 @@
     "title": "Yamaha-vox01.jpg",
     "author": "stealth3327",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha-vox01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha-vox01.jpg",
+    "hero": "store/img/bikes/yamaha-vox-hero.webp"
   },
   "yamaha|warrior": {
     "image": "store/img/bikes/yamaha-warrior.webp",
@@ -9750,15 +9975,17 @@
     "title": "New Warrior 01.jpg",
     "author": "Brian Thomas",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:New_Warrior_01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:New_Warrior_01.jpg",
+    "hero": "store/img/bikes/yamaha-warrior-hero.webp"
   },
   "yamaha|why": {
     "image": "store/img/bikes/yamaha-why.webp",
     "thumb": "store/img/bikes/yamaha-why-thumb.webp",
-    "title": "YAMAHA WHY 03.jpg",
-    "author": "Michał Frąckowiak",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_WHY_03.jpg"
+    "title": "Yamaha Why 50 in Avellino.jpg",
+    "author": "Corvettec6r",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Why_50_in_Avellino.jpg",
+    "hero": "store/img/bikes/yamaha-why-hero.webp"
   },
   "yamaha|wild-star": {
     "image": "store/img/bikes/yamaha-wild-star.webp",
@@ -9766,23 +9993,8 @@
     "title": "2016 Yamaha XV1600 Wild Star.jpg",
     "author": "Jacek Halicki",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_XV1600_Wild_Star.jpg"
-  },
-  "yamaha|wr-450-f": {
-    "image": "store/img/bikes/yamaha-wr-450-f.webp",
-    "thumb": "store/img/bikes/yamaha-wr-450-f-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Yamaha - WR 450 F - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Yamaha_-_WR_450_F_-_001.jpg"
-  },
-  "yamaha|wr250": {
-    "image": "store/img/bikes/yamaha-wr250.webp",
-    "thumb": "store/img/bikes/yamaha-wr250-thumb.webp",
-    "title": "Yamaha WR250 R Merivoimien vuosipäivä 2014 01.JPG",
-    "author": "MKFI",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_WR250_R_Merivoimien_vuosip%C3%A4iv%C3%A4_2014_01.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_XV1600_Wild_Star.jpg",
+    "hero": "store/img/bikes/yamaha-wild-star-hero.webp"
   },
   "yamaha|wr250f": {
     "image": "store/img/bikes/yamaha-wr250f.webp",
@@ -9790,15 +10002,8 @@
     "title": "2002WR250F.jpg",
     "author": "Cdw1952",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2002WR250F.jpg"
-  },
-  "yamaha|wr250r": {
-    "image": "store/img/bikes/yamaha-wr250r.webp",
-    "thumb": "store/img/bikes/yamaha-wr250r-thumb.webp",
-    "title": "YAMAHA WR250R.jpg",
-    "author": "Tr-909",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2002WR250F.jpg",
+    "hero": "store/img/bikes/yamaha-wr250f-hero.webp"
   },
   "yamaha|wr250x": {
     "image": "store/img/bikes/yamaha-wr250x.webp",
@@ -9806,7 +10011,8 @@
     "title": "YAMAHA WR250X.jpg",
     "author": "Tr-909",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_WR250X.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_WR250X.jpg",
+    "hero": "store/img/bikes/yamaha-wr250x-hero.webp"
   },
   "yamaha|wr450f": {
     "image": "store/img/bikes/yamaha-wr450f.webp",
@@ -9814,15 +10020,17 @@
     "title": "2012 Yamaha WR450f, Feb 2019.jpg",
     "author": "Jamesm113",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2012_Yamaha_WR450f,_Feb_2019.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Yamaha_WR450f,_Feb_2019.jpg",
+    "hero": "store/img/bikes/yamaha-wr450f-hero.webp"
   },
   "yamaha|x-city": {
     "image": "store/img/bikes/yamaha-x-city.webp",
     "thumb": "store/img/bikes/yamaha-x-city-thumb.webp",
-    "title": "Yamaha X-City in Avellino.jpg",
-    "author": "Corvettec6r",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_X-City_in_Avellino.jpg"
+    "title": "XCity Bild.jpg",
+    "author": "Ma8473844",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:XCity_Bild.jpg",
+    "hero": "store/img/bikes/yamaha-x-city-hero.webp"
   },
   "yamaha|x-city-125": {
     "image": "store/img/bikes/yamaha-x-city-125.webp",
@@ -9830,7 +10038,8 @@
     "title": "Yamaha XCity125.jpg",
     "author": "Ma8473844",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XCity125.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XCity125.jpg",
+    "hero": "store/img/bikes/yamaha-x-city-125-hero.webp"
   },
   "yamaha|x-city-250": {
     "image": "store/img/bikes/yamaha-x-city-250.webp",
@@ -9838,7 +10047,8 @@
     "title": "X-city 250 CFR.jpg",
     "author": "C.F. Romberg smokeonit1 AT mac DOT com",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:X-city_250_CFR.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:X-city_250_CFR.jpg",
+    "hero": "store/img/bikes/yamaha-x-city-250-hero.webp"
   },
   "yamaha|x-ride": {
     "image": "store/img/bikes/yamaha-x-ride.webp",
@@ -9846,23 +10056,8 @@
     "title": "All New X-Ride 125.jpg",
     "author": "Priyow20",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:All_New_X-Ride_125.jpg"
-  },
-  "yamaha|x-ride-125": {
-    "image": "store/img/bikes/yamaha-x-ride-125.webp",
-    "thumb": "store/img/bikes/yamaha-x-ride-125-thumb.webp",
-    "title": "2020 Yamaha X-Ride 125 (20220111).jpg",
-    "author": "オーバードライブ83",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2020_Yamaha_X-Ride_125_(20220111).jpg"
-  },
-  "yamaha|xabre": {
-    "image": "store/img/bikes/yamaha-xabre.webp",
-    "thumb": "store/img/bikes/yamaha-xabre-thumb.webp",
-    "title": "Yamaha Xabre 150.JPG",
-    "author": "69PAULWALKER69",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Xabre_150.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:All_New_X-Ride_125.jpg",
+    "hero": "store/img/bikes/yamaha-x-ride-hero.webp"
   },
   "yamaha|xc-300-versity": {
     "image": "store/img/bikes/yamaha-xc-300-versity.webp",
@@ -9870,15 +10065,8 @@
     "title": "Yamaha XC300 Versity.jpg",
     "author": "Corvettec6r",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XC300_Versity.jpg"
-  },
-  "yamaha|xenter-125": {
-    "image": "store/img/bikes/yamaha-xenter-125.webp",
-    "thumb": "store/img/bikes/yamaha-xenter-125-thumb.webp",
-    "title": "Yamaha Xenter 125.jpg",
-    "author": "Corvettec6r",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Xenter_125.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XC300_Versity.jpg",
+    "hero": "store/img/bikes/yamaha-xc-300-versity-hero.webp"
   },
   "yamaha|xj-600-s-diversion": {
     "image": "store/img/bikes/yamaha-xj-600-s-diversion.webp",
@@ -9886,15 +10074,17 @@
     "title": "1997 Yamaha XJ600S Diversion.jpg",
     "author": "Sven Pauli",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:1997_Yamaha_XJ600S_Diversion.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:1997_Yamaha_XJ600S_Diversion.jpg",
+    "hero": "store/img/bikes/yamaha-xj-600-s-diversion-hero.webp"
   },
   "yamaha|xj6": {
     "image": "store/img/bikes/yamaha-xj6.webp",
     "thumb": "store/img/bikes/yamaha-xj6-thumb.webp",
-    "title": "1992 Yamaha Diversion 600 (XJ600S).JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1992_Yamaha_Diversion_600_(XJ600S).JPG"
+    "title": "Yamaha XJ6 01.jpg",
+    "author": "Zbigniew.czernik",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XJ6_01.jpg",
+    "hero": "store/img/bikes/yamaha-xj6-hero.webp"
   },
   "yamaha|xj6-n": {
     "image": "store/img/bikes/yamaha-xj6-n.webp",
@@ -9902,15 +10092,8 @@
     "title": "Xj6-n.jpg",
     "author": "Newbeer",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Xj6-n.jpg"
-  },
-  "yamaha|xj6f": {
-    "image": "store/img/bikes/yamaha-xj6f.webp",
-    "thumb": "store/img/bikes/yamaha-xj6f-thumb.webp",
-    "title": "Yamaha XJ6F.jpg",
-    "author": "Rachmaninoff",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XJ6F.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Xj6-n.jpg",
+    "hero": "store/img/bikes/yamaha-xj6-n-hero.webp"
   },
   "yamaha|xjr-1300": {
     "image": "store/img/bikes/yamaha-xjr-1300.webp",
@@ -9918,15 +10101,17 @@
     "title": "Yamaha XJR 1300 Jg. 2003.jpg",
     "author": "Hoepfi5 at de.wikipedia",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XJR_1300_Jg._2003.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XJR_1300_Jg._2003.jpg",
+    "hero": "store/img/bikes/yamaha-xjr-1300-hero.webp"
   },
   "yamaha|xjr1300": {
     "image": "store/img/bikes/yamaha-xjr1300.webp",
     "thumb": "store/img/bikes/yamaha-xjr1300-thumb.webp",
-    "title": "W2561 Yamaha Xjr1300 Handi AG 20170311-141326N930.jpg",
-    "author": "Llann Wé²",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:W2561_Yamaha_Xjr1300_Handi_AG_20170311-141326N930.jpg"
+    "title": "Yamaha XJR 1300.jpg",
+    "author": "BKLuis",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XJR_1300.jpg",
+    "hero": "store/img/bikes/yamaha-xjr1300-hero.webp"
   },
   "yamaha|xmax": {
     "image": "store/img/bikes/yamaha-xmax.webp",
@@ -9934,7 +10119,8 @@
     "title": "2017-09-19 (326) Yamaha XMAX at Bahnhof Melk, Austtria.jpg",
     "author": "GT1976",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017-09-19_(326)_Yamaha_XMAX_at_Bahnhof_Melk,_Austtria.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2017-09-19_(326)_Yamaha_XMAX_at_Bahnhof_Melk,_Austtria.jpg",
+    "hero": "store/img/bikes/yamaha-xmax-hero.webp"
   },
   "yamaha|xmax-125": {
     "image": "store/img/bikes/yamaha-xmax-125.webp",
@@ -9942,23 +10128,26 @@
     "title": "Yamaha X-Max 125, 2017.jpg",
     "author": "CommanderWaterford",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_X-Max_125,_2017.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_X-Max_125,_2017.jpg",
+    "hero": "store/img/bikes/yamaha-xmax-125-hero.webp"
   },
   "yamaha|xmax-300": {
     "image": "store/img/bikes/yamaha-xmax-300.webp",
     "thumb": "store/img/bikes/yamaha-xmax-300-thumb.webp",
-    "title": "Yamaha XMAX 300 on Jingtong Expressway 20231215081504.jpg",
-    "author": "TurnOnTheNight",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XMAX_300_on_Jingtong_Expressway_20231215081504.jpg"
+    "title": "Yamaha XMAX 300 LAK-7239 right side on Lane 176, Section 2, Xiulang Road 20180530.jpg",
+    "author": "Hsu Luke",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XMAX_300_LAK-7239_right_side_on_Lane_176,_Section_2,_Xiulang_Road_20180530.jpg",
+    "hero": "store/img/bikes/yamaha-xmax-300-hero.webp"
   },
   "yamaha|xmax-300-tech-max": {
     "image": "store/img/bikes/yamaha-xmax-300-tech-max.webp",
     "thumb": "store/img/bikes/yamaha-xmax-300-tech-max-thumb.webp",
-    "title": "2024 Yamaha XMAX 300 Tech MAX.jpg",
+    "title": "2026 Yamaha XMAX 300 Tech MAX.jpg",
     "author": "Chanokchon",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Yamaha_XMAX_300_Tech_MAX.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Yamaha_XMAX_300_Tech_MAX.jpg",
+    "hero": "store/img/bikes/yamaha-xmax-300-tech-max-hero.webp"
   },
   "yamaha|xsr-125": {
     "image": "store/img/bikes/yamaha-xsr-125.webp",
@@ -9966,15 +10155,17 @@
     "title": "Yam XSR 125 ri.jpg",
     "author": "Atirador",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yam_XSR_125_ri.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yam_XSR_125_ri.jpg",
+    "hero": "store/img/bikes/yamaha-xsr-125-hero.webp"
   },
   "yamaha|xsr125": {
     "image": "store/img/bikes/yamaha-xsr125.webp",
     "thumb": "store/img/bikes/yamaha-xsr125-thumb.webp",
-    "title": "Yamaha XSR 125 2026.jpg",
-    "author": "MotorideSA",
+    "title": "Yam XSR 125 fr.jpg",
+    "author": "Atirador",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR_125_2026.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yam_XSR_125_fr.jpg",
+    "hero": "store/img/bikes/yamaha-xsr125-hero.webp"
   },
   "yamaha|xsr155": {
     "image": "store/img/bikes/yamaha-xsr155.webp",
@@ -9982,7 +10173,8 @@
     "title": "Yamaha XSR155 parked near Masjid Sultan - Singapore.jpg",
     "author": "Firzafp",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR155_parked_near_Masjid_Sultan_-_Singapore.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR155_parked_near_Masjid_Sultan_-_Singapore.jpg",
+    "hero": "store/img/bikes/yamaha-xsr155-hero.webp"
   },
   "yamaha|xsr700": {
     "image": "store/img/bikes/yamaha-xsr700.webp",
@@ -9990,39 +10182,17 @@
     "title": "Red Yamaha XSR700 parked near a bicycle 2018.jpg",
     "author": "Zac56105",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Red_Yamaha_XSR700_parked_near_a_bicycle_2018.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Red_Yamaha_XSR700_parked_near_a_bicycle_2018.jpg",
+    "hero": "store/img/bikes/yamaha-xsr700-hero.webp"
   },
   "yamaha|xsr900": {
     "image": "store/img/bikes/yamaha-xsr900.webp",
     "thumb": "store/img/bikes/yamaha-xsr900-thumb.webp",
-    "title": "2016 Yamaha XSR900.jpg",
-    "author": "O1dm0n",
+    "title": "Yamaha XSR 900 2018.jpg",
+    "author": "AlbertoSossella",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Yamaha_XSR900.jpg"
-  },
-  "yamaha|xsr900-gp": {
-    "image": "store/img/bikes/yamaha-xsr900-gp.webp",
-    "thumb": "store/img/bikes/yamaha-xsr900-gp-thumb.webp",
-    "title": "Yamaha XSR900 GP 2026.jpg",
-    "author": "MotorideSA",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR900_GP_2026.jpg"
-  },
-  "yamaha|xt-225": {
-    "image": "store/img/bikes/yamaha-xt-225.webp",
-    "thumb": "store/img/bikes/yamaha-xt-225-thumb.webp",
-    "title": "Yamaha XT225.JPG",
-    "author": "Onjacktallcuca",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT225.JPG"
-  },
-  "yamaha|xt-660-r": {
-    "image": "store/img/bikes/yamaha-xt-660-r.webp",
-    "thumb": "store/img/bikes/yamaha-xt-660-r-thumb.webp",
-    "title": "Yamaha XT 660 R (?) in Athens on 11-1-2023.jpg",
-    "author": "George E. Koronaios",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660_R_(%3F)_in_Athens_on_11-1-2023.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR_900_2018.jpg",
+    "hero": "store/img/bikes/yamaha-xsr900-hero.webp"
   },
   "yamaha|xt-660r": {
     "image": "store/img/bikes/yamaha-xt-660r.webp",
@@ -10030,23 +10200,26 @@
     "title": "Yamaha XT 660 R.jpg",
     "author": "Frukko",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660_R.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660_R.jpg",
+    "hero": "store/img/bikes/yamaha-xt-660r-hero.webp"
   },
   "yamaha|xt1200z": {
     "image": "store/img/bikes/yamaha-xt1200z.webp",
     "thumb": "store/img/bikes/yamaha-xt1200z-thumb.webp",
-    "title": "2010 Yamaha XT1200Z Super Ténéré.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Yamaha_XT1200Z_Super_T%C3%A9n%C3%A9r%C3%A9.JPG"
+    "title": "IMG 9157 XT1200Z.JPG",
+    "author": "Witold Grzesiek",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:IMG_9157_XT1200Z.JPG",
+    "hero": "store/img/bikes/yamaha-xt1200z-hero.webp"
   },
   "yamaha|xt1200z-super-tenere": {
     "image": "store/img/bikes/yamaha-xt1200z-super-tenere.webp",
     "thumb": "store/img/bikes/yamaha-xt1200z-super-tenere-thumb.webp",
-    "title": "Yamaha XT1200Z Super Ténéré - rear view.jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT1200Z_Super_T%C3%A9n%C3%A9r%C3%A9_-_rear_view.jpg"
+    "title": "Yamaha XT 1200 Z Super Ténéré.jpg",
+    "author": "Witold Grzesiek",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_1200_Z_Super_T%C3%A9n%C3%A9r%C3%A9.jpg",
+    "hero": "store/img/bikes/yamaha-xt1200z-super-tenere-hero.webp"
   },
   "yamaha|xt125r": {
     "image": "store/img/bikes/yamaha-xt125r.webp",
@@ -10054,7 +10227,8 @@
     "title": "Yamaha XT125R side.jpg",
     "author": "Tmr5555 at en.wikipedia",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT125R_side.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT125R_side.jpg",
+    "hero": "store/img/bikes/yamaha-xt125r-hero.webp"
   },
   "yamaha|xt125x": {
     "image": "store/img/bikes/yamaha-xt125x.webp",
@@ -10062,7 +10236,8 @@
     "title": "The 2006 Yamaha XT125X.jpg",
     "author": "Leeb219",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:The_2006_Yamaha_XT125X.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:The_2006_Yamaha_XT125X.jpg",
+    "hero": "store/img/bikes/yamaha-xt125x-hero.webp"
   },
   "yamaha|xt225": {
     "image": "store/img/bikes/yamaha-xt225.webp",
@@ -10070,15 +10245,17 @@
     "title": "YAMAHA XT225 SEROW '85.jpg",
     "author": "Kuro8124",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_XT225_SEROW_'85.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_XT225_SEROW_'85.jpg",
+    "hero": "store/img/bikes/yamaha-xt225-hero.webp"
   },
   "yamaha|xt250": {
     "image": "store/img/bikes/yamaha-xt250.webp",
     "thumb": "store/img/bikes/yamaha-xt250-thumb.webp",
-    "title": "Yamaha XT250 (Brunei 2024).jpg",
-    "author": "Chin Yu Chu",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT250_(Brunei_2024).jpg"
+    "title": "1981 Yamaha XT250.jpg",
+    "author": "Original uploader was RXrenesis8 at en.wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1981_Yamaha_XT250.jpg",
+    "hero": "store/img/bikes/yamaha-xt250-hero.webp"
   },
   "yamaha|xt350": {
     "image": "store/img/bikes/yamaha-xt350.webp",
@@ -10086,7 +10263,8 @@
     "title": "Yamaha XT 350.JPG",
     "author": "MKFI",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_350.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_350.JPG",
+    "hero": "store/img/bikes/yamaha-xt350-hero.webp"
   },
   "yamaha|xt600e": {
     "image": "store/img/bikes/yamaha-xt600e.webp",
@@ -10094,23 +10272,17 @@
     "title": "Yamaha XT600E.JPG",
     "author": "Vaa",
     "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT600E.JPG"
-  },
-  "yamaha|xt660r": {
-    "image": "store/img/bikes/yamaha-xt660r.webp",
-    "thumb": "store/img/bikes/yamaha-xt660r-thumb.webp",
-    "title": "Yamaha XT 660R (15042330230).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660R_(15042330230).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT600E.JPG",
+    "hero": "store/img/bikes/yamaha-xt600e-hero.webp"
   },
   "yamaha|xt660z": {
     "image": "store/img/bikes/yamaha-xt660z.webp",
     "thumb": "store/img/bikes/yamaha-xt660z-thumb.webp",
-    "title": "Yamaha XT660Z Ténéré HMT 2015.jpg",
-    "author": "San Andreas",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT660Z_T%C3%A9n%C3%A9r%C3%A9_HMT_2015.jpg"
+    "title": "Yamaha XT660Z Ténéré left side.jpg",
+    "author": "bibi95",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT660Z_T%C3%A9n%C3%A9r%C3%A9_left_side.jpg",
+    "hero": "store/img/bikes/yamaha-xt660z-hero.webp"
   },
   "yamaha|xt660z-tenere": {
     "image": "store/img/bikes/yamaha-xt660z-tenere.webp",
@@ -10118,7 +10290,8 @@
     "title": "Yamaha XT660Z Ténéré (1).jpg",
     "author": "Cjp24",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT660Z_T%C3%A9n%C3%A9r%C3%A9_(1).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT660Z_T%C3%A9n%C3%A9r%C3%A9_(1).jpg",
+    "hero": "store/img/bikes/yamaha-xt660z-tenere-hero.webp"
   },
   "yamaha|xtz-125": {
     "image": "store/img/bikes/yamaha-xtz-125.webp",
@@ -10126,15 +10299,8 @@
     "title": "Yamaha XTZ 125 Brazil.jpg",
     "author": "Borowskki",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XTZ_125_Brazil.jpg"
-  },
-  "yamaha|xv-1900-midnight-star": {
-    "image": "store/img/bikes/yamaha-xv-1900-midnight-star.webp",
-    "thumb": "store/img/bikes/yamaha-xv-1900-midnight-star-thumb.webp",
-    "title": "Yamaha XV1900 MidnightStar.jpg",
-    "author": "StealthFX",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XV1900_MidnightStar.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XTZ_125_Brazil.jpg",
+    "hero": "store/img/bikes/yamaha-xtz-125-hero.webp"
   },
   "yamaha|xv250": {
     "image": "store/img/bikes/yamaha-xv250.webp",
@@ -10142,31 +10308,26 @@
     "title": "Xv250.JPG",
     "author": "Nerdge at English Wikipedia",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Xv250.JPG"
-  },
-  "yamaha|xv950": {
-    "image": "store/img/bikes/yamaha-xv950.webp",
-    "thumb": "store/img/bikes/yamaha-xv950-thumb.webp",
-    "title": "Yamaha Xv 950 (199434915).jpeg",
-    "author": "Aleksey Potapov",
-    "license": "CC BY 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Xv_950_(199434915).jpeg"
+    "source": "https://commons.wikimedia.org/wiki/File:Xv250.JPG",
+    "hero": "store/img/bikes/yamaha-xv250-hero.webp"
   },
   "yamaha|xvs-1100-drag-star": {
     "image": "store/img/bikes/yamaha-xvs-1100-drag-star.webp",
     "thumb": "store/img/bikes/yamaha-xvs-1100-drag-star-thumb.webp",
-    "title": "2009073104 Yamaha XVS 1100 Drag Star.jpg",
+    "title": "2009073108 Yamaha XVS 1100 Drag Star.jpg",
     "author": "VSchagow",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2009073104_Yamaha_XVS_1100_Drag_Star.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2009073108_Yamaha_XVS_1100_Drag_Star.jpg",
+    "hero": "store/img/bikes/yamaha-xvs-1100-drag-star-hero.webp"
   },
   "yamaha|xvs-1100-dragstar": {
     "image": "store/img/bikes/yamaha-xvs-1100-dragstar.webp",
     "thumb": "store/img/bikes/yamaha-xvs-1100-dragstar-thumb.webp",
-    "title": "Yamaha XVS 1100 Dragstar DSCF0783.JPG",
-    "author": "Addvisor",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVS_1100_Dragstar_DSCF0783.JPG"
+    "title": "2009073108 Yamaha XVS 1100 Drag Star.jpg",
+    "author": "VSchagow",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009073108_Yamaha_XVS_1100_Drag_Star.jpg",
+    "hero": "store/img/bikes/yamaha-xvs-1100-dragstar-hero.webp"
   },
   "yamaha|xvs-650-drag-star": {
     "image": "store/img/bikes/yamaha-xvs-650-drag-star.webp",
@@ -10174,15 +10335,8 @@
     "title": "Yamaha XVS 650 Drag Star in Norcia.jpg",
     "author": "Livioandronico2013",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVS_650_Drag_Star_in_Norcia.jpg"
-  },
-  "yamaha|xvs250": {
-    "image": "store/img/bikes/yamaha-xvs250.webp",
-    "thumb": "store/img/bikes/yamaha-xvs250-thumb.webp",
-    "title": "Yamaha XVS250 Drag Star.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVS250_Drag_Star.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVS_650_Drag_Star_in_Norcia.jpg",
+    "hero": "store/img/bikes/yamaha-xvs-650-drag-star-hero.webp"
   },
   "yamaha|xvs650": {
     "image": "store/img/bikes/yamaha-xvs650.webp",
@@ -10190,7 +10344,8 @@
     "title": "Yamaha XVS650 Dragstar.jpg",
     "author": "Sven Boisen",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVS650_Dragstar.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XVS650_Dragstar.jpg",
+    "hero": "store/img/bikes/yamaha-xvs650-hero.webp"
   },
   "yamaha|xvs950a": {
     "image": "store/img/bikes/yamaha-xvs950a.webp",
@@ -10198,7 +10353,8 @@
     "title": "YAMAHA XVS950A 2010-1 Yamaha Communication Plaza.jpg",
     "author": "PekePON",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_XVS950A_2010-1_Yamaha_Communication_Plaza.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_XVS950A_2010-1_Yamaha_Communication_Plaza.jpg",
+    "hero": "store/img/bikes/yamaha-xvs950a-hero.webp"
   },
   "yamaha|y15zr": {
     "image": "store/img/bikes/yamaha-y15zr.webp",
@@ -10206,7 +10362,8 @@
     "title": "Yamaha Y15ZR.jpg",
     "author": "Jolt737",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Y15ZR.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Y15ZR.jpg",
+    "hero": "store/img/bikes/yamaha-y15zr-hero.webp"
   },
   "yamaha|ybr-125": {
     "image": "store/img/bikes/yamaha-ybr-125.webp",
@@ -10214,7 +10371,8 @@
     "title": "Yamaha YBR 125 ED \"Libero 125\" colombiana, modelo 2018.jpg",
     "author": "Andreslive4",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YBR_125_ED_%22Libero_125%22_colombiana,_modelo_2018.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YBR_125_ED_%22Libero_125%22_colombiana,_modelo_2018.jpg",
+    "hero": "store/img/bikes/yamaha-ybr-125-hero.webp"
   },
   "yamaha|ybr125": {
     "image": "store/img/bikes/yamaha-ybr125.webp",
@@ -10222,7 +10380,8 @@
     "title": "Yamaha YBR125ED JPN 2014 model Feb 22 2017.jpg",
     "author": "Tatawidepine",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YBR125ED_JPN_2014_model_Feb_22_2017.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YBR125ED_JPN_2014_model_Feb_22_2017.jpg",
+    "hero": "store/img/bikes/yamaha-ybr125-hero.webp"
   },
   "yamaha|yfm700r": {
     "image": "store/img/bikes/yamaha-yfm700r.webp",
@@ -10230,7 +10389,8 @@
     "title": "YFM700R.JPG",
     "author": "4028mdk09",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YFM700R.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:YFM700R.JPG",
+    "hero": "store/img/bikes/yamaha-yfm700r-hero.webp"
   },
   "yamaha|ys125": {
     "image": "store/img/bikes/yamaha-ys125.webp",
@@ -10238,7 +10398,8 @@
     "title": "Yamaha YS125 4227.jpg",
     "author": "Ashley Pomeroy",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YS125_4227.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YS125_4227.jpg",
+    "hero": "store/img/bikes/yamaha-ys125-hero.webp"
   },
   "yamaha|yz-250": {
     "image": "store/img/bikes/yamaha-yz-250.webp",
@@ -10246,39 +10407,26 @@
     "title": "YZ250.jpg",
     "author": "Coadster68",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YZ250.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YZ250.jpg",
+    "hero": "store/img/bikes/yamaha-yz-250-hero.webp"
   },
   "yamaha|yz-450-f": {
     "image": "store/img/bikes/yamaha-yz-450-f.webp",
     "thumb": "store/img/bikes/yamaha-yz-450-f-thumb.webp",
-    "title": "Yamaha YZ 450 F - EICMA 2024.jpg",
-    "author": "Saggittarius A",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ_450_F_-_EICMA_2024.jpg"
-  },
-  "yamaha|yz125": {
-    "image": "store/img/bikes/yamaha-yz125.webp",
-    "thumb": "store/img/bikes/yamaha-yz125-thumb.webp",
-    "title": "Yamaha YZ125 Motorcycle.jpg",
-    "author": "Goygoo",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg"
-  },
-  "yamaha|yz250": {
-    "image": "store/img/bikes/yamaha-yz250.webp",
-    "thumb": "store/img/bikes/yamaha-yz250-thumb.webp",
-    "title": "1974 Yamaha YZ250 (OW12).JPG",
-    "author": "Rainmaker47",
+    "title": "Yamaha YZ450F used by Jarrett Pronk at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg",
+    "author": "Chris Woodrich",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1974_Yamaha_YZ250_(OW12).JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ450F_used_by_Jarrett_Pronk_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
+    "hero": "store/img/bikes/yamaha-yz-450-f-hero.webp"
   },
   "yamaha|yz450f": {
     "image": "store/img/bikes/yamaha-yz450f.webp",
     "thumb": "store/img/bikes/yamaha-yz450f-thumb.webp",
-    "title": "Yamaha YZ450F Dakar Rally 2015 JVO racing Pedrero Guasch.JPG",
-    "author": "Peprovira",
+    "title": "Yamaha YZ450F used by Jarrett Pronk at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg",
+    "author": "Chris Woodrich",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ450F_Dakar_Rally_2015_JVO_racing_Pedrero_Guasch.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZ450F_used_by_Jarrett_Pronk_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
+    "hero": "store/img/bikes/yamaha-yz450f-hero.webp"
   },
   "yamaha|yzf-600-r": {
     "image": "store/img/bikes/yamaha-yzf-600-r.webp",
@@ -10286,7 +10434,8 @@
     "title": "Yamaha YZF600R Thundercat 1998.jpg",
     "author": "Angelmonera",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF600R_Thundercat_1998.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF600R_Thundercat_1998.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-600-r-hero.webp"
   },
   "yamaha|yzf-600-r-thundercat": {
     "image": "store/img/bikes/yamaha-yzf-600-r-thundercat.webp",
@@ -10294,71 +10443,53 @@
     "title": "04 Yamaha YZF600R Thundercat.jpg",
     "author": "Adam k42069",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:04_Yamaha_YZF600R_Thundercat.jpg"
-  },
-  "yamaha|yzf-r-125": {
-    "image": "store/img/bikes/yamaha-yzf-r-125.webp",
-    "thumb": "store/img/bikes/yamaha-yzf-r-125-thumb.webp",
-    "title": "Yamaha YZF-R125.jpg",
-    "author": "Rikita",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:04_Yamaha_YZF600R_Thundercat.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-600-r-thundercat-hero.webp"
   },
   "yamaha|yzf-r1": {
     "image": "store/img/bikes/yamaha-yzf-r1.webp",
     "thumb": "store/img/bikes/yamaha-yzf-r1-thumb.webp",
-    "title": "2015 Yamaha YZF-R1.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_YZF-R1.JPG"
-  },
-  "yamaha|yzf-r125": {
-    "image": "store/img/bikes/yamaha-yzf-r125.webp",
-    "thumb": "store/img/bikes/yamaha-yzf-r125-thumb.webp",
-    "title": "Yamaha YZF-R125 2025.jpg",
-    "author": "AVMOTO",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R125_2025.jpg"
+    "title": "YAMAHA YZF-R1 2010 right-front Yamaha Communication Plaza.jpg",
+    "author": "PekePON",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_YZF-R1_2010_right-front_Yamaha_Communication_Plaza.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r1-hero.webp"
   },
   "yamaha|yzf-r15": {
     "image": "store/img/bikes/yamaha-yzf-r15.webp",
     "thumb": "store/img/bikes/yamaha-yzf-r15-thumb.webp",
-    "title": "2014 Yamaha YZF-R15.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Yamaha_YZF-R15.JPG"
-  },
-  "yamaha|yzf-r1m": {
-    "image": "store/img/bikes/yamaha-yzf-r1m.webp",
-    "thumb": "store/img/bikes/yamaha-yzf-r1m-thumb.webp",
-    "title": "YAMAHA YZF-R1M at the Tokyo Motor Show 2015.jpg",
-    "author": "PekePON",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_YZF-R1M_at_the_Tokyo_Motor_Show_2015.jpg"
+    "title": "Yamaha YZF-R15.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R15.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r15-hero.webp"
   },
   "yamaha|yzf-r25": {
     "image": "store/img/bikes/yamaha-yzf-r25.webp",
     "thumb": "store/img/bikes/yamaha-yzf-r25-thumb.webp",
-    "title": "2015 Yamaha YZF-R25.JPG",
-    "author": "Rainmaker47",
+    "title": "Yamaha YZF-R25 at Tokyo Motor Show 2013-2.jpg",
+    "author": "PekePON",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_YZF-R25.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R25_at_Tokyo_Motor_Show_2013-2.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r25-hero.webp"
   },
   "yamaha|yzf-r3": {
     "image": "store/img/bikes/yamaha-yzf-r3.webp",
     "thumb": "store/img/bikes/yamaha-yzf-r3-thumb.webp",
-    "title": "2025 Yamaha YZF-R3.jpg",
-    "author": "Chanokchon",
+    "title": "YZF-R3 2015.jpg",
+    "author": "Kuro202",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_YZF-R3.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YZF-R3_2015.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r3-hero.webp"
   },
   "yamaha|yzf-r6": {
     "image": "store/img/bikes/yamaha-yzf-r6.webp",
     "thumb": "store/img/bikes/yamaha-yzf-r6-thumb.webp",
-    "title": "2018 Yamaha YZF-R6-0.jpg",
-    "author": "Kuro202",
+    "title": "Yamaha YZF-R6 rouge.jpg",
+    "author": "A1AA1A",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2018_Yamaha_YZF-R6-0.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R6_rouge.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r6-hero.webp"
   },
   "yamaha|yzf-r6-r46": {
     "image": "store/img/bikes/yamaha-yzf-r6-r46.webp",
@@ -10366,7 +10497,8 @@
     "title": "YZF R6 R46 Soleil.jpg",
     "author": "Prnrm",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:YZF_R6_R46_Soleil.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:YZF_R6_R46_Soleil.jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r6-r46-hero.webp"
   },
   "yamaha|yzf-r7": {
     "image": "store/img/bikes/yamaha-yzf-r7.webp",
@@ -10374,7 +10506,8 @@
     "title": "Yamaha YZF-R7 (55048319395).jpg",
     "author": "Alexandre Prevot from Nancy, France",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R7_(55048319395).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R7_(55048319395).jpg",
+    "hero": "store/img/bikes/yamaha-yzf-r7-hero.webp"
   },
   "yamaha|yzf600": {
     "image": "store/img/bikes/yamaha-yzf600.webp",
@@ -10382,7 +10515,8 @@
     "title": "Yamaha YZF600 at Albert Park GP.jpg",
     "author": "Tamas",
     "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF600_at_Albert_Park_GP.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF600_at_Albert_Park_GP.jpg",
+    "hero": "store/img/bikes/yamaha-yzf600-hero.webp"
   },
   "yamaha|yzf600r": {
     "image": "store/img/bikes/yamaha-yzf600r.webp",
@@ -10390,15 +10524,17 @@
     "title": "YAMAHA YZF600R Thundercat.JPG",
     "author": "Tarpa600tc",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_YZF600R_Thundercat.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_YZF600R_Thundercat.JPG",
+    "hero": "store/img/bikes/yamaha-yzf600r-hero.webp"
   },
   "yamaha|zuma": {
     "image": "store/img/bikes/yamaha-zuma.webp",
     "thumb": "store/img/bikes/yamaha-zuma-thumb.webp",
-    "title": "Yamaha Zuma.jpg",
-    "author": "Elvert Barnes",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Zuma.jpg"
+    "title": "Yamaha Zuma Texas.jpg",
+    "author": "Terry Ross from Corpus Christi, Texas, United States",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Zuma_Texas.jpg",
+    "hero": "store/img/bikes/yamaha-zuma-hero.webp"
   },
   "yamaha|zuma-125": {
     "image": "store/img/bikes/yamaha-zuma-125.webp",
@@ -10406,31 +10542,26 @@
     "title": "Zuma125.png",
     "author": "Domesticated om at English Wikipedia",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Zuma125.png"
+    "source": "https://commons.wikimedia.org/wiki/File:Zuma125.png",
+    "hero": "store/img/bikes/yamaha-zuma-125-hero.webp"
   },
   "zero|ds": {
     "image": "store/img/bikes/zero-ds.webp",
     "thumb": "store/img/bikes/zero-ds-thumb.webp",
-    "title": "Zero DS 2011.jpg",
+    "title": "2012 zero-ds studio black-ra 1680x1200 press.jpg",
     "author": "Muc10",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Zero_DS_2011.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2012_zero-ds_studio_black-ra_1680x1200_press.jpg",
+    "hero": "store/img/bikes/zero-ds-hero.webp"
   },
   "zero|dsr": {
     "image": "store/img/bikes/zero-dsr.webp",
     "thumb": "store/img/bikes/zero-dsr-thumb.webp",
-    "title": "Zero Motorcycles DSR 2018.jpg",
-    "author": "Lmenut",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Zero_Motorcycles_DSR_2018.jpg"
-  },
-  "zero|dsr/x": {
-    "image": "store/img/bikes/zero-dsr-x.webp",
-    "thumb": "store/img/bikes/zero-dsr-x-thumb.webp",
-    "title": "Zero DSRX, BAS 24, Brussels (P1170324-RR).jpg",
-    "author": "Matti Blume",
+    "title": "MY18 Zero DSR Black Forest Edition.jpg",
+    "author": "Irniz0rel",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Zero_DSRX,_BAS_24,_Brussels_(P1170324-RR).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:MY18_Zero_DSR_Black_Forest_Edition.jpg",
+    "hero": "store/img/bikes/zero-dsr-hero.webp"
   },
   "zero|fx": {
     "image": "store/img/bikes/zero-fx.webp",
@@ -10438,54 +10569,7 @@
     "title": "United States Army Zero FX ZF 5.7 - 2022 STEM Event.jpg",
     "author": "Noah Wulf",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:United_States_Army_Zero_FX_ZF_5.7_-_2022_STEM_Event.jpg"
-  },
-  "zero|fxe": {
-    "image": "store/img/bikes/zero-fxe.webp",
-    "thumb": "store/img/bikes/zero-fxe-thumb.webp",
-    "title": "M15A-FXE in Toyota Yaris Hybrid (4th-gen).jpg",
-    "author": "Oq10pass",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:M15A-FXE_in_Toyota_Yaris_Hybrid_(4th-gen).jpg"
-  },
-  "zero|fxs": {
-    "image": "store/img/bikes/zero-fxs.webp",
-    "thumb": "store/img/bikes/zero-fxs-thumb.webp",
-    "title": "2018 Toyota Crown Hybrid 8GR-FXS.jpg",
-    "author": "TTTNIS",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2018_Toyota_Crown_Hybrid_8GR-FXS.jpg"
-  },
-  "zero|sr": {
-    "image": "store/img/bikes/zero-sr.webp",
-    "thumb": "store/img/bikes/zero-sr-thumb.webp",
-    "title": "Sr400fe.jpg",
-    "author": "KazuhiroOohashi",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Sr400fe.jpg"
-  },
-  "zero|sr/s": {
-    "image": "store/img/bikes/zero-sr-s.webp",
-    "thumb": "store/img/bikes/zero-sr-s-thumb.webp",
-    "title": "Moscow, CFMoto SR-S 750, Sept 2026 02.jpg",
-    "author": "Retired electrician",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_CFMoto_SR-S_750,_Sept_2026_02.jpg"
-  },
-  "zero|xb": {
-    "image": "store/img/bikes/zero-xb.webp",
-    "thumb": "store/img/bikes/zero-xb-thumb.webp",
-    "title": "Mule, 1998.174.XB(2).jpg",
-    "author": "Anonyme",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Mule,_1998.174.XB(2).jpg"
-  },
-  "zero|xe": {
-    "image": "store/img/bikes/zero-xe.webp",
-    "thumb": "store/img/bikes/zero-xe-thumb.webp",
-    "title": "Jaguar XE SV Project 8 orange 1.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Jaguar_XE_SV_Project_8_orange_1.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:United_States_Army_Zero_FX_ZF_5.7_-_2022_STEM_Event.jpg",
+    "hero": "store/img/bikes/zero-fx-hero.webp"
   }
 }

@@ -298,8 +298,11 @@ async function stripScenery(file, out) {
       for (const prim of mesh.listPrimitives()) {
         const s = span(prim);
         if (!s || !longest) continue;
-        const flat = Math.min(...s) < longest * 0.02;
-        const wide = s.filter((v) => v > longest * 0.55).length >= 2;
+        // a display base: thin in one axis, broad in the other two. The thresholds were 0.02/0.55
+        // and missed the Yamaha Tracer 9's plinth, which is thin but not paper-thin and about
+        // half the model across.
+        const flat = Math.min(...s) < longest * 0.06;
+        const wide = s.filter((v) => v > longest * 0.45).length >= 2;
         if (flat && wide) { scenery = true; break; }
       }
     }

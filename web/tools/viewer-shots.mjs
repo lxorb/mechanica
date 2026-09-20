@@ -212,6 +212,69 @@ async function sheet(names) {
   console.log(`\n${tiles.length} tiles -> ${out}`);
 }
 
+/**
+ * Frame times across a focus, per model. Records every rAF gap for a second before and two
+ * seconds after viewer.focus(), and reports the worst frame — which is where the stall was.
+ */
+async function frames(models) {
+  const { server, port } = await serve();
+  const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
+  const browser = await puppeteer.launch({
+    executablePath: CHROME, headless: "new",
+    args: ["--no-sandbox", "--enable-unsafe-swiftshader", "--use-gl=angle", "--hide-scrollbars"],
+  });
+  let worstOverall = 0;
+  for (const [name, query] of models) {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 });
+    try {
+      await page.goto(`http://127.0.0.1:${port}/counter/solo.html?${query}`, { waitUntil: "load", timeout: 40000 });
+      await page.waitForFunction(
+        () => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready",
+        { timeout: 70000 },
+      ).catch(() => {});
+      await new Promise((r) => setTimeout(r, 2500));
+      const result = await page.evaluate(async () => {
+        const gaps = [];
+        let last = performance.now();
+        let running = true;
+        const tick = (now) => { gaps.push(now - last); last = now; if (running) requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+        await new Promise((r) => setTimeout(r, 700));
+        const before = gaps.length;
+        const parts = window.viewer.state().parts;
+        const target = parts.find((p) => p !== "frame") || parts[0];
+        const t0 = performance.now();
+        window.viewer.focus(target);
+        const call = performance.now() - t0;
+        await new Promise((r) => setTimeout(r, 1800));
+        running = false;
+        const during = gaps.slice(before);
+        return {
+          target,
+          call: +call.toFixed(2),
+          worst: +Math.max(0, ...during).toFixed(1),
+          median: +during.sort((a, b) => a - b)[Math.floor(during.length / 2)].toFixed(1),
+          over32: during.filter((g) => g > 32).length,
+        };
+      });
+      worstOverall = Math.max(worstOverall, result.worst);
+      console.log(
+        `  ${result.over32 ? "!! " : "ok "} ${name.padEnd(12)} focus(${String(result.target).padEnd(12)}) ` +
+        `call ${String(result.call).padStart(6)} ms · worst frame ${String(result.worst).padStart(6)} ms · ` +
+        `median ${String(result.median).padStart(5)} ms · frames over 32 ms: ${result.over32}`,
+      );
+    } catch (error) {
+      console.log(`  !! ${name}: ${error.message.slice(0, 80)}`);
+    }
+    await page.close();
+  }
+  await browser.close();
+  server.close();
+  console.log(`
+worst frame across every model: ${worstOverall.toFixed(1)} ms`);
+}
+
 /** one sheet per viewport of every environment, so the four can be compared side by side. */
 async function envs(list) {
   const { server, port } = await serve();
@@ -399,6 +462,17 @@ async function main() {
    * "too dark" is a number in the log rather than an argument about a screenshot.
    */
   // --envs: every environment, with one exact and one generic model, at both viewports
+  // --frames: frame-time trace around a focus. The founder's report was "it lags a bit and then
+  // just teleports there", which is one long frame (shader compilation for the highlight
+  // materials) with the camera tween running underneath it. This measures the long frame.
+  if (process.argv.includes("--frames")) {
+    const dir = join(WEB, "store", "models", "generic");
+    const generics = readdirSync(dir)
+      .filter((n) => existsSync(join(dir, n, "model.glb")))
+      .map((n) => [n, `model=generic/${n}`]);
+    const exact = [["yzf-2021", "model=yzf-2021"], ["cbr650r", "model=honda-cbr650r"], ["corvette", "model=corvette-c8"]];
+    return frames(only.length ? generics.filter(([n]) => only.includes(n)) : [...generics, ...exact]);
+  }
   if (process.argv.includes("--envs")) {
     const ENVS = ["auto_service", "autoshop_01", "studio_small_09", "empty_warehouse_01"];
     const MODELS = [["yzf", "model=yzf-2021"], ["naked", "model=generic/naked"]];

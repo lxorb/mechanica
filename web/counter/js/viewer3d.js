@@ -31,6 +31,23 @@
  *
  * partFor(sectionTitle, keywords[]) -> part key | null   (keyword table lives here so the mapping is
  * one place; "Checking the front brake fluid level" -> front-brake, "chain tension" -> chain, ...)
+ * **null is a normal answer** and the viewer will highlight nothing rather than guess. See the
+ * note on FALLBACK below, and web/tools/partfor-test.mjs for the regression table.
+ *
+ * THE STAGE
+ *   Four environments — Service / Garage / Studio / Warehouse, Poly Haven HDRIs, CC0 — chosen with
+ *   the swatches at the top right and remembered in localStorage. The .hdr lights the vehicle
+ *   through PMREM; a tonemapped .jpg is the backdrop at backgroundBlurriness 0, 4k first and 8k
+ *   swapped in on desktop. ENVIRONMENTS also supports `scene: "<file>.glb"` for a modelled room
+ *   (loadRoom); see CREDITS.md for why the Garage is currently an HDRI and not the GLB.
+ *
+ *   Exploding cross-fades the panorama to a technical grid (technicalBackdrop) over 400 ms:
+ *   slate ink, a perspective floor grid, a thin orange horizon. It replaces scene.background only
+ *   — scene.environment is untouched, so the parts keep the garage's light while they float.
+ *
+ *   checkExposure() reads back the rendered model's luminance against its backdrop after the
+ *   scene settles and lifts the exposure if the vehicle is under 35% of it. Some Sketchfab
+ *   exports are legible out of the box and some are silhouettes; this is the safety net.
  *
  * ---------------------------------------------------------------------------------------------
  * three.js loading. The module wants these bare specifiers, so index.html should carry:
@@ -66,6 +83,18 @@ const EXPLODE_MS = 400;
 const FOCUS_MS = 600;
 const IDLE_MS = 3000;
 const EXPLODE_SCALE = 0.8;   // how far the per-part vectors actually throw parts apart
+
+/**
+ * Camera padding, as a multiple of the distance that exactly fits the box.
+ *
+ * A focused part used to be framed at 1.02 — touching all four edges — so the brake disc and
+ * caliper spilled off the top and bottom of the panel, and the part the user asked about was the
+ * one thing not fully on screen. The exploded assembly has the same problem in slower motion: the
+ * parts are still travelling while the camera tween runs, so mid-flight they sit outside the box
+ * the camera was aimed at. Both want room around them.
+ */
+const FOCUS_ZOOM = 1.42;
+const EXPLODED_ZOOM = 1.14;
 
 /* ------------------------------------------------------------------ part vocabulary */
 
@@ -1146,7 +1175,9 @@ function loadEnvironment(THREE, renderer, name, big) {
       texture.colorSpace = THREE.SRGBColorSpace;
       return texture;
     };
-    const background = await panorama(big ? "4k" : "2k").catch(() => panorama("4k")).catch(() => hdr);
+    // 4k on both: it is 0.6-2.0 MB per environment, inside the phone budget, and at
+    // backgroundBlurriness 0 a 2k equirect is visibly soft even on a handset
+    const background = await panorama("4k").catch(() => hdr);
     if (background !== hdr) hdr.dispose();
     // desktop only, and only once the 4k is already up
     const upgrade = big ? panorama("8k").catch(() => null) : Promise.resolve(null);
@@ -2011,7 +2042,7 @@ function createScene(THREE, host, initialModel, opts) {
         controls.minDistance = model.radius * 0.6;
         controls.maxDistance = model.radius * 12;
       }
-      fit(boxAtSpacing(target, selected), { instant: true, zoom: selected ? 1.02 : target ? 1.03 : 1.08 });
+      fit(boxAtSpacing(target, selected), { instant: true, zoom: selected ? FOCUS_ZOOM : target ? EXPLODED_ZOOM : 1.08 });
       run();
       return true;
     },
@@ -2039,7 +2070,7 @@ function createScene(THREE, host, initialModel, opts) {
       fit(boxAtSpacing(to, null), {
         instant: instant || reduced.matches,
         duration: EXPLODE_MS,
-        zoom: to ? 1.12 : 1.08,
+        zoom: to ? EXPLODED_ZOOM : 1.08,
       });
     },
     highlight(partKey) {
@@ -2049,7 +2080,7 @@ function createScene(THREE, host, initialModel, opts) {
     },
     focus(partKey) {
       scene3d.highlight(partKey);
-      fit(boxAtSpacing(target, selected), { zoom: selected ? 1.02 : 1.08 });
+      fit(boxAtSpacing(target, selected), { zoom: selected ? FOCUS_ZOOM : 1.08 });
       touch();
     },
     xray(on) { xrayOn = !!on; paint(); },
@@ -2155,7 +2186,7 @@ function createScene(THREE, host, initialModel, opts) {
         // the parts have landed: frame what is actually there now, rather than the padded box
         // the camera was aimed at while they were still moving
         if (!cameraTween) {
-          fit(boxAtSpacing(target, selected), { duration: 260, zoom: selected ? 1.06 : target ? 1.06 : 1.08 });
+          fit(boxAtSpacing(target, selected), { duration: 260, zoom: selected ? FOCUS_ZOOM : target ? EXPLODED_ZOOM : 1.08 });
         }
       }
     }

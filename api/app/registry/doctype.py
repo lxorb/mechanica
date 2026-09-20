@@ -16,13 +16,16 @@ import re
 # docKind -> the word prefixes that name it. Matched per word, so "brochure_pdf_files" -> brochure
 # and "accessories" -> accessor, while "inspection" never reaches "spec".
 KINDS: tuple[tuple[str, tuple[str, ...]], ...] = (
-    ("brochure", ("brochure", "catalog", "catalogue", "accessor", "prospekt", "lineup")),
+    ("brochure", ("brochure", "prospekt", "accessor")),
     ("warranty", ("warranty", "warrant", "wrty", "guarantee")),
     ("quickstart", ("quickstart", "quickguide", "quickreference", "quick", "qrg", "qsg", "gettingstarted")),
     ("infotainment", ("infotainment", "infotain", "navi", "navigation", "connectivity", "multimedia")),
     ("supplement", ("supplement", "addendum", "addend", "insert")),
     ("spec", ("spec", "specification", "specs")),
     ("owner", ("owner", "owners", "rider", "riders", "handbook", "bedienungsanleitung", "instruction")),
+    # Weak, and therefore checked after "owner": Ford files its owner guides under /catalog/, so the
+    # word names the shelf, not the document.
+    ("brochure", ("catalog", "catalogue", "lineup")),
     # no "maintenance" here: "use and maintenance booklet" is what Piaggio and MV Agusta call the
     # owner's manual, and the word would drag every one of them into the service bucket.
     ("service", ("service", "shop", "repair", "workshop", "wiring")),
@@ -49,5 +52,9 @@ def classify_doc(url: str, title: str | None = None) -> str:
 
     A row nothing identifies is an owner's manual: that is what these portals mostly publish, and
     the ranking in _pick() puts a real owner row ahead of it anyway."""
-    path = url.split("://", 1)[-1].split("?", 1)[0]
-    return _match(path) or _match(title or "") or "owner"
+    host, _, rest = url.split("://", 1)[-1].partition("/")
+    path = rest.split("?", 1)[0]  # the host is not evidence: service.citroen.com serves owner guides
+    by_path, by_title = _match(path), _match(title or "")
+    if by_path == "service" and by_title == "owner":
+        return "owner"  # /sip/service/ is Harley's portal name, and the title says what the file is
+    return by_path or by_title or "owner"

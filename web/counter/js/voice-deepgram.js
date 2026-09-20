@@ -7,9 +7,11 @@
  * raw linear16 and the agent's voice back down as raw linear16, with JSON events interleaved as
  * text frames. No SDK — 60 lines of AudioWorklet beat a 200 KB bundle in front of a chat drawer.
  *
- * AUTH. A browser WebSocket has no headers, so the key travels as the Sec-WebSocket-Protocol
- * pair `[scheme, key]` — what Deepgram's own browser-agent component does. /voice/deepgram-token
- * mints a 10-minute usage:write key and says which scheme to use; the account key stays on Azure.
+ * AUTH. Deployed, the socket is `wss://<origin>/ws/deepgram/agent`: the Cloudflare Worker holds
+ * the account key and opens Deepgram's socket with a real `Authorization: Token` header, so this
+ * tab carries no credential at all. Only a page served from localhost — no Worker in front of it
+ * — falls back to /voice/deepgram-token, which mints a short-lived key that travels in the
+ * Sec-WebSocket-Protocol pair `[scheme, key]` because a browser WebSocket has no headers.
  *
  * GROUNDING. The Settings message is built on the server, never here: the prompt, the model and
  * the four tool endpoints are all in it, and Deepgram calls those endpoints itself, so the
@@ -53,6 +55,18 @@ export const supported =
   typeof WebSocket !== "undefined" &&
   typeof AudioContext !== "undefined" &&
   Boolean(navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+const LOCAL = new Set(["localhost", "127.0.0.1", "[::1]", "::1", ""]);
+
+/**
+ * The same-origin socket the Worker proxies, or null when this page is served from localhost and
+ * there is no Worker to proxy it. Same four lines in deepgram.js: importing a 400-line agent
+ * module into the dictation path to share them would cost more than it saves.
+ */
+function proxy(path) {
+  if (typeof location === "undefined" || LOCAL.has(location.hostname)) return null;
+  return `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}${path}`;
+}
 
 /* ------------------------------------------------------------------ pcm */
 
@@ -241,15 +255,21 @@ export async function start(opts = {}) {
 async function run(session, opts, say) {
   say({ type: "status", value: "connecting" });
 
+  const relay = proxy("/ws/deepgram/agent");
   const [config, token] = await Promise.all([
     T.voiceSettings(opts.manualId, opts.bikeId),
-    T.deepgramToken(),
+    relay ? null : T.deepgramToken(),
   ]);
   if (session.dead) return;
   if (!config || !config.settings) throw new Error("no agent settings");
-  const key = typeof token === "string" ? token : token && (token.key || token.token);
-  if (!key) throw new Error("no deepgram key");
-  const scheme = (token && token.scheme) || "token";
+  let url = relay;
+  let protocols;
+  if (!relay) {
+    const key = typeof token === "string" ? token : token && (token.key || token.token);
+    if (!key) throw new Error("no deepgram key");
+    url = config.url;
+    protocols = [(token && token.scheme) || "token", key];
+  }
   const rate = Number(config.sampleRate) || FALLBACK_RATE;
 
   session.stream = await navigator.mediaDevices.getUserMedia({
@@ -263,7 +283,7 @@ async function run(session, opts, say) {
   if (ctx.state === "suspended") await ctx.resume();
   if (session.dead) return;
 
-  const ws = new WebSocket(config.url, [scheme, key]);
+  const ws = protocols ? new WebSocket(url, protocols) : new WebSocket(url);
   ws.binaryType = "arraybuffer";
   session.ws = ws;
 

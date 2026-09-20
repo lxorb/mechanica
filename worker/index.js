@@ -1,7 +1,8 @@
 /**
- * trustthemanual Worker: same-origin `/api/*` proxy in front of the FastAPI backend.
+ * trustthemanual Worker: same-origin `/api/*` proxy in front of the FastAPI backend, plus the
+ * `/ws/deepgram/*` WebSocket proxy that keeps the Deepgram key at the edge.
  * Everything else is served straight from the static assets in web/ (see wrangler.jsonc,
- * `assets.run_worker_first: ["/api/*"]` — other paths never reach this handler).
+ * `assets.run_worker_first: ["/api/*", "/ws/*"]` — other paths never reach this handler).
  *
  * `/api/<path>` -> `${API_ORIGIN}/<path>`: method, headers and body are forwarded as-is
  * (Range included), the response body is streamed back untouched, and redirects are NOT
@@ -12,11 +13,127 @@ const API_ORIGIN = "https://ttm-api.victoriousground-5b684586.eastus.azurecontai
 // Only these read-only, rarely-changing GETs get a short edge/browser cache.
 const CACHEABLE = /^\/(catalog|manuals)(\/|$|\?)/;
 
+/**
+ * Deepgram sockets the browser is allowed to reach through this Worker.
+ *
+ * A browser WebSocket cannot set headers, so the old path minted a temporary Deepgram key and
+ * shipped it to the tab in the `Sec-WebSocket-Protocol` pair. That needs `keys:write` on the
+ * account key, which this account does not have — `/api/voice/deepgram-token` 502s and neither
+ * socket ever opens. Here the Worker holds `DEEPGRAM_API_KEY` (a Worker secret), opens the
+ * upstream socket with a real `Authorization: Token` header and pipes the frames through. No
+ * credential of any kind reaches the browser, and nothing about a frame is ever logged.
+ */
+const DEEPGRAM_ROUTES = {
+  "/ws/deepgram/agent": "https://agent.deepgram.com/v1/agent/converse",
+  "/ws/deepgram/listen": "https://api.deepgram.com/v2/listen",
+};
+
+// Browsers always send Origin on a WebSocket handshake; anything else is one of our own scripts.
+const ORIGIN_ALLOW = new Set([
+  "mechanica.emilvinu.ch",
+  "trustthemanual.cloudflare-disjoin783.workers.dev",
+  "localhost",
+  "127.0.0.1",
+]);
+
+function originOk(origin, url) {
+  if (!origin) return true;
+  let host;
+  try {
+    host = new URL(origin).hostname;
+  } catch {
+    return false;
+  }
+  // `url.hostname` covers the live domain and every workers.dev preview of this Worker.
+  return host === url.hostname || ORIGIN_ALLOW.has(host);
+}
+
+function json(status, body) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json", "cache-control": "no-store" },
+  });
+}
+
+/** Close codes a WebSocket may be closed with: 1005/1006/1015 and anything below 1000 are not. */
+function shut(ws, code, reason) {
+  const ok = Number.isInteger(code) && code >= 1000 && code <= 4999 && ![1005, 1006, 1015].includes(code);
+  try {
+    ws.close(ok ? code : 1000, reason ? String(reason).slice(0, 120) : undefined);
+  } catch {
+    /* already gone */
+  }
+}
+
+/**
+ * A socket whose binary frames arrive as ArrayBuffer. Workers defaults `binaryType` to "blob",
+ * and a Blob handed back to `send()` goes out as the text "[object Blob]" — which is exactly how
+ * a transparent audio proxy turns every PCM frame into an UNPARSABLE_CLIENT_MESSAGE. One line,
+ * both ends, or nothing that is not JSON survives the hop.
+ */
+function raw(ws) {
+  ws.binaryType = "arraybuffer";
+  ws.accept();
+  return ws;
+}
+
+/** Frames from `from` to `to`, verbatim, in whatever type they arrive (text or ArrayBuffer). */
+function pipe(from, to) {
+  from.addEventListener("message", (event) => {
+    try {
+      to.send(event.data);
+    } catch {
+      shut(from, 1011);
+    }
+  });
+  from.addEventListener("close", (event) => shut(to, event.code, event.reason));
+  from.addEventListener("error", () => shut(to, 1011));
+}
+
+async function deepgram(request, env, url, upstreamUrl) {
+  if ((request.headers.get("Upgrade") || "").toLowerCase() !== "websocket") {
+    return json(426, { error: "expected_websocket" });
+  }
+  if (!originOk(request.headers.get("Origin"), url)) return json(403, { error: "forbidden_origin" });
+  const key = env.DEEPGRAM_API_KEY;
+  if (!key) return json(503, { error: "no_deepgram_key" });
+
+  // The upstream socket is opened BEFORE the browser's handshake is answered, so the Settings
+  // message the client sends on `open` can never race an upstream that is not there yet.
+  let upstream;
+  try {
+    upstream = await fetch(upstreamUrl + url.search, {
+      headers: {
+        Upgrade: "websocket",
+        Connection: "Upgrade",
+        Authorization: `Token ${key}`,
+      },
+    });
+  } catch (err) {
+    return json(502, { error: "deepgram_unreachable", detail: String(err) });
+  }
+
+  if (!upstream.webSocket) return json(502, { error: "deepgram_refused", status: upstream.status });
+  const remote = raw(upstream.webSocket);
+
+  const pair = new WebSocketPair();
+  const [client, server] = [pair[0], raw(pair[1])];
+
+  pipe(server, remote);
+  pipe(remote, server);
+
+  return new Response(null, { status: 101, webSocket: client });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    const upstreamWs = DEEPGRAM_ROUTES[url.pathname];
+    if (upstreamWs) return deepgram(request, env, url, upstreamWs);
+
     if (!url.pathname.startsWith("/api/") && url.pathname !== "/api") {
-      // Defensive: with run_worker_first scoped to /api/* we are not called for these.
+      // Defensive: with run_worker_first scoped to /api/* and /ws/* we are not called for these.
       return env.ASSETS ? env.ASSETS.fetch(request) : new Response("Not found", { status: 404 });
     }
 
@@ -40,10 +157,7 @@ export default {
         redirect: "manual",
       });
     } catch (err) {
-      return new Response(JSON.stringify({ error: "upstream_unreachable", detail: String(err) }), {
-        status: 502,
-        headers: { "content-type": "application/json", "cache-control": "no-store" },
-      });
+      return json(502, { error: "upstream_unreachable", detail: String(err) });
     }
 
     const out = new Response(upstream.body, upstream);

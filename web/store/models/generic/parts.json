@@ -85,7 +85,7 @@
  "classic": {
   "kind": "bike",
   "rotate": null,
-  "orient": 180,
+  "orient": 0,
   "paint": [
    "fuel-tank",
    "fairing",
@@ -176,7 +176,7 @@
  "touring": {
   "kind": "bike",
   "rotate": null,
-  "orient": 180,
+  "orient": 0,
   "paint": [
    "fuel-tank",
    "fairing",

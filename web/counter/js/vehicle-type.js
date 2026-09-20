@@ -162,6 +162,11 @@ const RULES = [
   ["classic", /\b(bonneville|thruxton|scrambler|street ?twin|speed ?twin|t ?100|t ?120|classic|continental gt|interceptor|bullet|hunter ?350|cafe|caf[eé] ?racer|retro|vintage|w ?\d{3}|z ?\d{3} ?rs|xsr|sr ?400|sr ?500|gb ?\d{3}|cl ?\d{3}|v7|v9|nevada|envy|guzzi california|commando|le ?mans|bobber ?black)\b/],
 
   // --- sportbikes
+  // Model codes that run straight into their displacement with no separator — CBR650R, ZX10R,
+  // GSXR1000, RSV4. They need their own rule because the alternation below is wrapped in
+  // \b(...)\b, and "cbr" inside that never matched "cbr650r": there is no word boundary between
+  // the letters and the digits. "CBR 650R" typed with a space matched and "CBR650R" did not.
+  ["sportbike", /\b(cbr|zx ?r?|gsx ?r|rsv|yzf|rvf|vfr|zzr|cbf?r)\d+/],
   ["sportbike", /\b(r ?[1367]\b|r ?1m|yzf|cbr|zx ?\d{1,2} ?r?|ninja|gsx ?r|gsxr|panigale|superleggera|supersport|rsv ?4|rsv|rs ?\d{3}|s ?1000 ?rr|f3 ?\d{3}|f4|rr\b|daytona|fireblade|hayabusa|gsx ?\d{4} ?r|zzr|sport|rc ?\d{3}|rc ?\d{2}|cbr ?\d{3,4}|ninja ?h2|h2 ?r|v4 ?s|superbike)\b/],
 
   // --- naked / roadster (the fallback family; last so anything above beats it)

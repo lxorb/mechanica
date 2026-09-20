@@ -100,11 +100,11 @@
     "name": "classic",
     "type": "classic",
     "kind": "bike",
-    "uid": "c02dec85ac0541b8ab6dd56098706b50",
-    "title": "Cafe Racer",
-    "author": "Andrei Milin",
-    "authorUrl": "https://sketchfab.com/andreimilin",
-    "url": "https://sketchfab.com/3d-models/cafe-racer-c02dec85ac0541b8ab6dd56098706b50",
+    "uid": "f121301624174b179ca4d50158797b03",
+    "title": "Honda CB 750 F Super Sport 1970",
+    "author": "ᗩᒪE᙭. Kᗩ.",
+    "authorUrl": "https://sketchfab.com/alex_ka",
+    "url": "https://sketchfab.com/3d-models/honda-cb-750-f-super-sport-1970-f121301624174b179ca4d50158797b03",
     "license": "by",
     "makes": [
       "triumph",
@@ -115,8 +115,8 @@
       "yamaha",
       "kawasaki"
     ],
-    "note": "95k faces — the Triumph Bonneville it replaced needed join+simplify to fit the budget and came out as a black slab",
-    "orient": 180,
+    "note": "37k faces — the third classic tried; the two cafe racers before it converted to smeared geometry",
+    "orient": 0,
     "rotate": null
   },
   {
@@ -196,12 +196,12 @@
     "name": "touring",
     "type": "touring",
     "kind": "bike",
-    "orient": 180,
-    "uid": "5611ae9df1ef471da647a0d8b1e9c235",
-    "title": "Yamaha Tracer 9 Moto",
-    "author": "alban",
-    "authorUrl": "https://sketchfab.com/alban3d",
-    "url": "https://sketchfab.com/3d-models/yamaha-tracer-9-moto-5611ae9df1ef471da647a0d8b1e9c235",
+    "orient": 0,
+    "uid": "dac59dc8fa064ce380b14cb4ac0b5f99",
+    "title": "Romanian Police Motorbike",
+    "author": "solid3DDD",
+    "authorUrl": "https://sketchfab.com/solid3DDD",
+    "url": "https://sketchfab.com/3d-models/romanian-police-motorbike-high-poly-3d-model-dac59dc8fa064ce380b14cb4ac0b5f99",
     "license": "by",
     "makes": [
       "bmw",
@@ -211,7 +211,7 @@
       "harley-davidson",
       "indian"
     ],
-    "note": "sport-tourer: fairing, screen, upright bars — the Polizei model it replaced converted to flat panels",
+    "note": "full-fairing tourer with panniers; the Tracer 9 before it ships welded to a display plinth",
     "rotate": null
   },
   {

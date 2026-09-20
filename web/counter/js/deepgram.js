@@ -1,6 +1,11 @@
 /**
- * Deepgram Flux dictation over WebSocket, keyed by a short-lived token from the API.
+ * Deepgram Flux dictation over WebSocket.
  * Same shape as speech.js: supported, prime(terms), start(onText, onEnd), stop().
+ *
+ * AUTH. Deployed, the socket is `wss://<origin>/ws/deepgram/listen?<query>`: the Cloudflare Worker
+ * holds the account key and adds the `Authorization: Token` header a browser socket cannot send
+ * (worker/index.js). Only a page served from localhost falls back to the short-lived token from
+ * /voice/deepgram-token, carried in the Sec-WebSocket-Protocol pair.
  */
 
 import { deepgramToken } from "./ttm.js";
@@ -31,6 +36,14 @@ export const supported =
   typeof WebSocket !== "undefined" &&
   typeof AudioContext !== "undefined" &&
   Boolean(navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+const LOCAL = new Set(["localhost", "127.0.0.1", "[::1]", "::1", ""]);
+
+/** The Worker-proxied socket, or null on localhost where there is no Worker in front of us. */
+function proxy(path) {
+  if (typeof location === "undefined" || LOCAL.has(location.hostname)) return null;
+  return `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}${path}`;
+}
 
 let keyterms = [];
 
@@ -119,9 +132,14 @@ export function start(onText, onEnd) {
 }
 
 async function run(session, onText, finish) {
-  const token = await deepgramToken();
-  const key = typeof token === "string" ? token : token && (token.key || token.token);
-  if (!key) throw new Error("deepgram token");
+  const relay = proxy("/ws/deepgram/listen");
+  let protocols;
+  if (!relay) {
+    const token = await deepgramToken();
+    const key = typeof token === "string" ? token : token && (token.key || token.token);
+    if (!key) throw new Error("deepgram token");
+    protocols = [(token && token.scheme) || "token", key];
+  }
   if (session.dead) return;
 
   session.stream = await navigator.mediaDevices.getUserMedia({
@@ -142,7 +160,10 @@ async function run(session, onText, finish) {
   });
   for (const term of keyterms) params.append("keyterm", term);
 
-  const ws = new WebSocket(`wss://api.deepgram.com/v2/listen?${params.toString()}`, ["token", key]);
+  const url = relay
+    ? `${relay}?${params.toString()}`
+    : `wss://api.deepgram.com/v2/listen?${params.toString()}`;
+  const ws = protocols ? new WebSocket(url, protocols) : new WebSocket(url);
   ws.binaryType = "arraybuffer";
   session.ws = ws;
 
