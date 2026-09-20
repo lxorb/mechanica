@@ -31,5 +31,8 @@ the Worker), they fit in the two-hour budget together, and each fixes something 
 - **#1** is the one a Deepgram judge will specifically look for, it is the documented feature for exactly
   this vocabulary problem, and it is free. It ships with the measurement that says we could not prove it.
 
-`api/.venv/Scripts/python -m pytest api/tests -q` — **497 passed, 20 skipped**. `node --check` clean on
-every JS file touched.
+`api/.venv/Scripts/python -m pytest api/tests -q` — **551 passed, 20 skipped**, plus 9 new tests written
+for these three changes; `test_voice.py`, `test_voice_agent.py`, `test_voice_elevenlabs.py` and
+`test_chat.py` are **157 passed**. (One unrelated failure, `test_climate.py::test_station_by_name`, belongs
+to another agent's in-flight feature and touches nothing here.) `node --check` clean on every JS file
+touched.

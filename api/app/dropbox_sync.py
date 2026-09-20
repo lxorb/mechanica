@@ -40,6 +40,7 @@ import json
 import logging
 import os
 import re
+import sys
 import threading
 import time
 import unicodedata
@@ -530,5 +531,8 @@ async def webhook(request: Request, tasks: BackgroundTasks) -> dict[str, Any]:
     return {"ok": True}
 
 
-if enabled() and os.getenv("DROPBOX_AUTOSTART", "1") != "0":
+# The watcher starts itself the moment a token exists - no route has to be hit, no deploy step added.
+# Never under pytest: conftest cannot unset a secret it does not know about, and the day dropbox.txt
+# appears on this machine the suite must not grow a thread that talks to the real Dropbox.
+if enabled() and os.getenv("DROPBOX_AUTOSTART", "1") != "0" and "pytest" not in sys.modules:
     start()

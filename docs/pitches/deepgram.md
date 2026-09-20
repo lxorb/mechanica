@@ -5,7 +5,10 @@ loud **and** the manufacturer's own manual page opens with the answering lines m
 
 Live: **https://mechanica.emilvinu.ch** · API at `/api` · repo `C:\Users\me\trustthemanual`
 Code for this sponsor: `api/app/voice.py` · `web/counter/js/voice-deepgram.js` · `web/counter/js/deepgram.js`
-· `worker/index.js` · docs `web/docs/VOICE.md`. Diagram source: [`deepgram/architecture.mmd`](deepgram/architecture.mmd).
+· `worker/index.js` · docs `web/docs/VOICE.md`.
+Diagram: [`deepgram/architecture.png`](deepgram/architecture.png) · [`.svg`](deepgram/architecture.svg) ·
+[`.mmd`](deepgram/architecture.mmd) (rendered with `@mermaid-js/mermaid-cli@11`).
+Backlog with impact/build scores: [`deepgram/improvements.md`](deepgram/improvements.md).
 
 **The one line for this sponsor:** *the agent has no permission to speak a sentence the manual does not
 print — four grounded functions are its entire vocabulary — and the page it names is on screen before it
