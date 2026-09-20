@@ -1,0 +1,46 @@
+---
+title: Not a wrapper - what is deterministic, what the model decides, what is verified
+---
+flowchart LR
+
+    subgraph A["DETERMINISTIC — no model, no tokens, no chance of being wrong"]
+        direction TB
+        A1["PDF text layer + per-block coordinates<br/>PyMuPDF"]
+        A2["BM25 retrieval over the manual's own headings"]
+        A3["Spec path: a torque question answers<br/>from parsed rows — 0 LLM calls, $0.00013"]
+        A4["Parts catalog: 295 taxonomy entries matched<br/>to the manual's own words — 0 LLM calls"]
+        A5["Answer cache, currency arithmetic,<br/>URL liveness, highlight geometry"]
+    end
+
+    subgraph B["THE MODEL ONLY EVER DECIDES THREE THINGS"]
+        direction TB
+        B1["WHICH VEHICLE is in this photo<br/>— constrained to our catalog"]
+        B2["WHICH PAGE IDs answer this sentence<br/>— it returns ids, never prose"]
+        B3["HOW TO SAY what those pages already print<br/>— chat, the one place words are generated"]
+    end
+
+    subgraph C["VERIFIED IN CODE BEFORE ANYTHING IS SHOWN"]
+        direction TB
+        C1["every ingest quote must be found in the<br/>PDF text layer, or it is dropped"]
+        C2["every picked id must be in the candidate<br/>list, or it is dropped"]
+        C3["every citation quote is sliced by the SERVER<br/>out of the original page — verbatim by<br/>construction, not by trusting the model"]
+        C4["every number in an answer must be printed<br/>on a page the model was given"]
+        C5["every offer URL is fetched before it ships"]
+    end
+
+    OUT["WHAT THE MECHANIC SEES<br/>the manufacturer's own page,<br/>with the lines marked.<br/>Never AI prose presented as the answer."]
+
+    A --> B --> C --> OUT
+
+    N1["Measured: 100% top-1 over 150 queries · 100% valid citations<br/>0 invented numbers · 0 dealer referrals · $0.00038 per ask"]
+    OUT --> N1
+
+    classDef det fill:#f1f5f9,stroke:#334155,stroke-width:2px,color:#0f172a
+    classDef ai fill:#e85d04,stroke:#7a2d00,stroke-width:3px,color:#ffffff
+    classDef guard fill:#ecfdf5,stroke:#047857,stroke-width:2px,color:#064e3b
+    classDef out fill:#141414,stroke:#e85d04,stroke-width:4px,color:#ffffff
+
+    class A1,A2,A3,A4,A5 det
+    class B1,B2,B3 ai
+    class C1,C2,C3,C4,C5 guard
+    class OUT,N1 out

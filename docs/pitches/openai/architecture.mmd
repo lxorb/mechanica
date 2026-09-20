@@ -1,0 +1,123 @@
+---
+title: Mechanica - the OpenAI API is the heart, the guardrails are the product
+---
+flowchart TB
+
+    U(["Mechanic, bike on the lift, dirty hands"])
+
+    subgraph CLIENT["BROWSER - vanilla ES-module PWA, no build step"]
+        direction LR
+        C1["Photo · VIN · typeahead<br/>22,300 vehicles"]
+        C2["One sentence,<br/>typed or spoken"]
+        C3["pdf.js: the OEM page,<br/>orange marks on the printed lines<br/>three.js: explode + highlight"]
+    end
+
+    EDGE["CLOUDFLARE WORKER — static assets<br/>run_worker_first /api/* · Range · redirect: manual · 60 s edge cache"]
+
+    DOOR["app/llm.py — THE SINGLE DOOR TO OPENAI<br/>responses.parse · responses.stream · web_search · images.generate<br/>every call logs route · model · inputTokens · cachedTokens · outputTokens · USD"]
+
+    subgraph L1["LANE 1 — IDENTIFY THE VEHICLE"]
+        direction TB
+        O1["OPENAI · identify.photo<br/>gpt-5.6-luna · VISION<br/>strict json_schema: make, model,<br/>generation, kind, cues, alternatives<br/>$0.00046 / photo"]
+        G1["GUARDRAIL · catalog-constrained<br/>400 model names half cars / half bikes<br/>in the prompt; answer is fuzzy-matched<br/>back to a real catalog row, floor 0.80.<br/>A model we have no manual for cannot win."]
+        D1["DETERMINISTIC · VIN<br/>NHTSA vPIC decode<br/>zero LLM tokens"]
+    end
+
+    subgraph L2["LANE 2 — INGEST THE MANUAL, ONCE, ON DEMAND  ($0.10 · 44-50 s)"]
+        direction TB
+        I1["OEM PDF fetched from the registry<br/>13.5k distinct free official manuals"]
+        I2["PyMuPDF text layer<br/>per-block coordinates<br/>ZERO LLM"]
+        I3["OPENAI · ingest.struct<br/>gpt-5.6-luna · strict json_schema<br/>5-page windows, 32 parallel workers<br/>units · specs · parts · verbatim quotes<br/>47.0% of 70.4M input tokens served<br/>from the prompt cache"]
+        I4["OPENAI · ingest.keywords<br/>gpt-5.6-luna · strict json_schema<br/>rider slang per printed heading"]
+        G2["GUARDRAIL · ground.py<br/>every quote is searched for in the PDF<br/>text layer. Not found = DROPPED.<br/>A highlight can only sit on ink<br/>the manufacturer printed."]
+        I5["BM25 index + spec rows + page text<br/>Azure Blob, the only durable store"]
+    end
+
+    subgraph L3["LANE 3 — QUESTION TO PRINTED PAGE  (p95 3.33 s · $0.00038)"]
+        direction TB
+        R1["OPENAI · ask.router<br/>gpt-5.6-luna · strict json_schema<br/>intent · components · queries · specName<br/>slang, typos, DE/ES/FR to manual English<br/>99.5% PROMPT-CACHE HIT on 3.45M tokens<br/>$0.000132 / call"]
+        SP{"intent == spec ?"}
+        Z1["ZERO-LLM SPEC PATH<br/>parsed spec rows, verbatim-checked<br/>$0.00013 · 1.5 s · no picker call"]
+        B1["BM25 / LocalIndex<br/>6 candidates<br/>ZERO LLM"]
+        DEC{"top-2 margin<br/>decisive?"}
+        P1["OPENAI · ask.picker<br/>gpt-5.6-terra · strict json_schema<br/>RETURNS IDS ONLY, NEVER PROSE<br/>34.6% cached · $0.0022 / call"]
+        G3["GUARDRAIL · id allowlist<br/>any id not in the candidate list<br/>is dropped before the response.<br/>A hallucinated section cannot<br/>reach the screen."]
+        AC["answer cache 500 entries<br/>repeat ask: 0.2-0.4 s · $0"]
+    end
+
+    subgraph L4["LANE 4 — GROUNDED CHAT  (first token p50 2.64 s · $0.0049)"]
+        direction TB
+        H1["same router + BM25 -> at most 6 printed pages<br/>dealer-referral sentences stripped<br/>one bear-2 compression call, 31.2% of tokens saved"]
+        H2["OPENAI · chat.answer<br/>gpt-5.6-terra · RESPONSES API STREAMING<br/>prompt_cache_key pinned per route+model<br/>42.7% cached · may only emit [p. N]<br/>tokens stream to the drawer as they arrive"]
+        G4["GUARDRAIL · citations by construction<br/>the MODEL names a page; the SERVER slices<br/>the quote out of the ORIGINAL page text.<br/>100% of 43 citations verbatim."]
+        G5["GUARDRAIL · structural number check<br/>every digit in the answer must be printed<br/>on a page it was given. Step numbers and<br/>[p. N] excluded. 0 invented numbers / 25."]
+    end
+
+    subgraph L5["LANE 5 — EXACT-FIT PARTS WITH LIVE PRICES"]
+        direction TB
+        Q1["query built from what the manual PRINTED:<br/>OEM number, else spec string, + make/model/year<br/>ZERO LLM"]
+        W1["OPENAI · offers<br/>gpt-5.6-terra · BUILT-IN web_search TOOL<br/>search_context_size low · max_tool_calls 2<br/>one pipe-delimited line per offer"]
+        G6["GUARDRAIL · parse, then verify<br/>a price no regex finds in the model's own<br/>text never reaches the UI; every URL is<br/>HEAD-fetched in parallel, 404/410/5xx dropped;<br/>currency converted in Python, not by a model"]
+    end
+
+    subgraph L6["LANE 6 — THE ART, GENERATED (build time, shipped static)"]
+        direction TB
+        M1["OPENAI · gpt-image-1<br/>97 part illustrations, 1024px transparent<br/>ONE style prompt + ONE camera for the set<br/>102 calls · $4.31 · $0.042 each"]
+        M2["OPENAI · gpt-image-1<br/>10 logo candidates, the shipped mark"]
+        M3["OPENAI · images.score · gpt-5.6-luna VISION<br/>AS A JUDGE: structured rubric grades every<br/>Wikimedia catalog photo — single bike, whole<br/>bike, sharpness, view angle, is it the model<br/>4,136 calls · $2.04"]
+    end
+
+    VO["OpenAI model behind the Deepgram voice agent<br/>it may only call our grounded tools:<br/>find_procedure · read_page · get_spec · list_parts<br/>first audio 0.7-2.0 s"]
+
+    %% ---- wiring ----
+    U --> CLIENT
+    CLIENT --> EDGE
+    EDGE --> DOOR
+
+    DOOR --> L1
+    DOOR --> L2
+    DOOR --> L3
+    DOOR --> L4
+    DOOR --> L5
+    DOOR --> L6
+    DOOR --> VO
+
+    C1 --> O1 --> G1 --> I1
+    C1 --> D1 --> I1
+    I1 --> I2 --> I3 --> G2 --> I5
+    I2 --> I4 --> I5
+
+    C2 --> R1 --> SP
+    SP -- yes --> Z1 --> AC
+    SP -- no --> B1 --> DEC
+    DEC -- yes --> AC
+    DEC -- no --> P1 --> G3 --> AC
+    I5 -.-> B1
+    I5 -.-> Z1
+    AC --> C3
+
+    C2 --> H1 --> H2 --> G4 --> G5 --> C3
+    I5 -.-> H1
+
+    C3 --> Q1 --> W1 --> G6 --> C3
+    M1 -.-> C3
+    M2 -.-> C3
+    M3 -.-> C1
+    VO -.-> C2
+
+    %% ---- what we do NOT use ----
+    NO["NOT USED, and we will say so:<br/>no fine-tuning · no Batch API · no Assistants<br/>no embeddings in the live path · no RAG vector store"]
+
+    classDef ai fill:#e85d04,stroke:#7a2d00,stroke-width:3px,color:#ffffff
+    classDef guard fill:#ecfdf5,stroke:#047857,stroke-width:2px,color:#064e3b
+    classDef det fill:#f1f5f9,stroke:#334155,stroke-width:1px,color:#0f172a
+    classDef door fill:#141414,stroke:#e85d04,stroke-width:4px,color:#ffffff
+    classDef ui fill:#faf8f5,stroke:#8a8177,stroke-width:1px,color:#141414
+    classDef none fill:#ffffff,stroke:#b91c1c,stroke-width:2px,color:#7f1d1d,stroke-dasharray: 5 5
+
+    class O1,I3,I4,R1,P1,H2,W1,M1,M2,M3,VO ai
+    class G1,G2,G3,G4,G5,G6 guard
+    class D1,I1,I2,I5,B1,Z1,Q1,AC,H1 det
+    class DOOR door
+    class C1,C2,C3,EDGE,U ui
+    class NO none
