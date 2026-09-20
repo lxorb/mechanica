@@ -1,6 +1,7 @@
 """PDF -> Page models, outline, cover title. Nothing here calls an LLM."""
 
 import re
+import unicodedata
 
 import pymupdf
 
@@ -68,8 +69,12 @@ def outline(items: list[tuple[int, str, int]]) -> list[OutlineNode]:
 
 
 def chapters(items: list[tuple[int, str, int]], page_count: int) -> list[tuple[int, int, str]]:
-    """(pageStart, pageEnd, title) for every top-level outline entry."""
-    tops = [(p, t) for lvl, t, p in items if lvl == 1]
+    """(pageStart, pageEnd, title) for every top-level outline entry.
+
+    Sorted by page on purpose: Honda's US outlines end with a broken 'Index' destination pointing at page 1,
+    and in document order that one chapter would claim the whole manual.
+    """
+    tops = sorted(((p, t) for lvl, t, p in items if lvl == 1), key=lambda x: x[0])
     out = []
     for i, (page, title) in enumerate(tops):
         end = tops[i + 1][0] - 1 if i + 1 < len(tops) else page_count
@@ -89,15 +94,24 @@ def headings_for(items: list[tuple[int, str, int]], start: int, end: int) -> lis
     return [f"{t} (p{p})" for lvl, t, p in items if start <= p <= end and lvl > 1][:12]
 
 
+MAX_SKIP = 0.6
+
+
 def skip_pages(items: list[tuple[int, str, int]], chaps: list[tuple[int, int, str]], page_count: int) -> set[int]:
-    """Front matter, table of contents and index: never worth an LLM call."""
-    dead: set[int] = set()
-    first = min((p for _, _, p in items), default=1)
-    dead.update(range(1, min(first, 5)))
+    """Front matter, table of contents and index: never worth an LLM call.
+
+    A malformed outline must never cost us the manual, so if the chapter-based skips would swallow most of
+    the book the outline is not trusted and only the front matter is dropped.
+    """
+    front = {p for p in range(1, min(min((p for _, _, p in items), default=1), 5)) if p >= 1}
+    dead = set(front)
     for start, end, title in chaps:
         if _TOC_CHAPTER.search(title):
             dead.update(range(start, end + 1))
-    return {p for p in dead if 1 <= p <= page_count}
+    dead = {p for p in dead if 1 <= p <= page_count}
+    if page_count and len(dead) > MAX_SKIP * page_count:
+        return {p for p in front if 1 <= p <= page_count}
+    return dead
 
 
 COVER_PAGES = 6
@@ -114,8 +128,19 @@ _ARTNO = re.compile(r"\s*\b(art(icle)?\.?\s*no\.?|part\s*no\.?|item\s*no\.?|p/?n
 _TOKEN = re.compile(r"[A-Za-z0-9]+")
 
 
+MANUALISH = {"manual", "manuals", "handbook", "instruction", "instructions", "booklet", "guide"}
+
+
 def _tokens(text: str) -> list[str]:
-    return [t.lower() for t in _TOKEN.findall(text or "")]
+    """Accent-folded: a cover prints 'Ténéré 700' where the registry says 'Tenere 700'."""
+    folded = unicodedata.normalize("NFKD", text or "").encode("ascii", "ignore").decode()
+    return [t.lower() for t in _TOKEN.findall(folded)]
+
+
+def _squash(text: str) -> str:
+    """'MTN690 (MT-07)' and 'MT07' have to compare equal: covers print the model with its own punctuation."""
+    folded = unicodedata.normalize("NFKD", text or "").encode("ascii", "ignore").decode()
+    return "".join(c for c in folded.lower() if c.isalnum())
 
 
 GENERIC = {
@@ -169,14 +194,22 @@ def cover_title(doc: pymupdf.Document, make: str, model: str, year: int) -> str:
     """The title printed on the cover, never a warning block, never font noise, never the same for two bikes."""
     want = [t for t in _tokens(model) if t not in {"the", "and"}]
     maker = _tokens(make)[:1]
+    squashed = _squash(model)
 
     def scores(text: str) -> tuple[bool, int]:
         got = set(_tokens(text))
         has_model = bool(want) and sum(1 for t in want if t in got) >= max(1, (len(want) + 1) // 2)
-        score = (4 if has_model else 0) + (2 if "manual" in got else 0)
+        if not has_model and len(squashed) >= 4:
+            has_model = squashed in _squash(text)
+        score = (4 if has_model else 0) + (2 if got & MANUALISH else 0)
         score += 1 if str(year) in got else 0
         score += 1 if maker and maker[0] in got else 0
         return has_model, score
+
+    def namelike(text: str) -> bool:
+        """Without the model, a cover line is only a title if it says whose manual it is: 'Canada' is not one."""
+        got = set(_tokens(text))
+        return bool(got & MANUALISH) or bool(maker and maker[0] in got)
 
     best: tuple[int, float, str, bool] | None = None
     for n in range(min(COVER_PAGES, doc.page_count)):
@@ -192,8 +225,8 @@ def cover_title(doc: pymupdf.Document, make: str, model: str, year: int) -> str:
                         joined_model = True
                         score += 4
                         break
-            if not joined_model and n > 1:
-                continue  # past the cover, a big line is a chapter heading, not the title of the manual
+            if not joined_model and (n > 1 or not namelike(joined)):
+                continue  # past the cover it is a chapter heading; on it, a line naming nothing is not a title
             if best is None or (score, size) > (best[0], best[1]):
                 best = (score, size, joined, joined_model)
         if best is not None and best[0] >= 4:

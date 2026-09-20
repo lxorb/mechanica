@@ -15,6 +15,7 @@ from .fetch import fetch
 log = logging.getLogger("ingest")
 
 MIN_PAGES = 8  # a rider's manual is never this short; anything shorter is a test file or a leaflet
+MIN_READABLE_PAGES = 8  # a scan without a text layer: nothing to quote, so never pay an LLM for it
 
 
 def pdf_path(manual_id: str) -> Path:
@@ -69,6 +70,11 @@ def run(
         progress(0, doc.page_count)
 
         page_models = pagelib.extract_pages(doc, manual_id, progress=lambda n: progress(n))
+        readable = sum(1 for p in page_models if len(p.text.strip()) >= structure.MIN_CHARS)
+        if readable < MIN_READABLE_PAGES:
+            pages = doc.page_count
+            doc.close()
+            raise ValueError(f"no text layer: {readable} readable of {pages} pages")
         store.put_pages(manual_id, page_models)
 
         toc = pagelib.toc(doc)

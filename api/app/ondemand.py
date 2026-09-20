@@ -5,14 +5,17 @@ ensure(bike_id) is cheap to call and safe to hammer: one job per manual id, whoe
 
 from __future__ import annotations
 
+import json
 import logging
 import re
 import threading
+import time
 import unicodedata
 import uuid
 from typing import NamedTuple
 
 from . import ingest
+from .config import settings
 from .models import Bike, IngestJob, Manual, RegistryEntry
 from .store import get_store
 
@@ -47,8 +50,55 @@ MIN_SECTIONS = 10
 NOT_A_MANUAL = ("_ebook",)
 THIN = ("/99888-",)
 
+FAIL_COOLDOWN = 6 * 3600
+
 _jobs: dict[str, str] = {}
+_fails: dict[str, dict] = {}
 _lock = threading.Lock()
+
+
+def _fail_path(manual_id: str):
+    return settings.data_dir / "failed" / f"{manual_id}.json"
+
+
+def forget_failure(manual_id: str) -> None:
+    _fails.pop(manual_id, None)
+    try:
+        _fail_path(manual_id).unlink(missing_ok=True)
+    except OSError:
+        pass
+
+
+def remember_failure(manual_id: str, url: str, error: str) -> dict:
+    """A manual that cannot be built must stay broken for a while, or every poll starts the job again."""
+    record = {"manualId": manual_id, "url": url, "error": error[:500], "at": time.time()}
+    _fails[manual_id] = record
+    try:
+        path = _fail_path(manual_id)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(record), encoding="utf-8")
+    except OSError as exc:
+        log.warning("%s: could not persist the failure marker: %s", manual_id, exc)
+    return record
+
+
+def recent_failure(manual_id: str) -> dict | None:
+    record = _fails.get(manual_id)
+    if record is None:
+        path = _fail_path(manual_id)
+        if path.exists():
+            try:
+                record = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                record = None
+        if record:
+            _fails[manual_id] = record
+    if not record:
+        return None
+    if time.time() - float(record.get("at", 0)) > FAIL_COOLDOWN:
+        forget_failure(manual_id)
+        return None
+    return record
 _registry: dict[tuple[str, str], list[RegistryEntry]] = {}
 _registry_at = 0.0
 _registry_lock = threading.Lock()
@@ -161,10 +211,13 @@ def _work(job_id: str, source: Source, bike: Bike) -> None:
 
         curate.apply(manual.model_copy(update={"source": url}))
         _link(bike.id, manual_id)
+        forget_failure(manual_id)
     except Exception as exc:
-        log.warning("%s: on-demand ingest failed: %s", manual_id, exc)
+        message = f"{type(exc).__name__}: {exc}"[:500]
+        log.warning("%s: on-demand ingest failed: %s", manual_id, message)
+        remember_failure(manual_id, url, message)
         job = store.job(job_id) or IngestJob(id=job_id, manualId=manual_id, status="error")
-        store.put_job(job.model_copy(update={"status": "error", "error": f"{type(exc).__name__}: {exc}"[:500]}))
+        store.put_job(job.model_copy(update={"status": "error", "error": message}))
     finally:
         with _lock:
             if _jobs.get(manual_id) == job_id:
@@ -194,7 +247,17 @@ def ensure(bike_id: str, vin: str | None = None) -> dict:
     manual = store.manual(manual_id)
     if manual is not None and len(manual.sections) >= MIN_SECTIONS:
         _link(bike_id, manual_id)
+        forget_failure(manual_id)
         return {"status": "ready", "manualId": manual_id, "pages": manual.pages}
+
+    broken = recent_failure(manual_id)
+    if broken:
+        return {
+            "status": "error",
+            "manualId": manual_id,
+            "error": broken.get("error", "ingest failed"),
+            "retryAfter": float(broken.get("at", 0)) + FAIL_COOLDOWN,
+        }
 
     with _lock:
         running = _jobs.get(manual_id)

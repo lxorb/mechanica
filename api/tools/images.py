@@ -38,7 +38,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 import httpx
-from PIL import Image
+from PIL import Image, ImageChops
 
 # Commons titles are full Unicode; a redirected stdout on Windows is cp1252.
 for _stream in (sys.stdout, sys.stderr):
@@ -86,6 +86,7 @@ CC_OK = re.compile(r"^cc[\s_-]*by(?:[\s_-]*sa)?[\s_-]*\d", re.I)
 CC_BAD = re.compile(r"\b(nc|nd|noncommercial|noderiv)\b", re.I)
 TAG = re.compile(r"<[^>]+>")
 WS = re.compile(r"\s+")
+EXT = re.compile(r"\.[a-z0-9]{2,5}$", re.I)
 
 
 # --------------------------------------------------------------------------- keys
@@ -126,6 +127,27 @@ def has_token(text_n: str, token: str) -> bool:
     return re.search(rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])", text_n) is not None
 
 
+def glued(haystack: str, needle: str) -> bool:
+    """`needle` sits in `haystack` without a letter running into it.
+
+    Both are squashed (alphanumerics only), so "sv650" is found inside
+    "sv650al7" -- a digit then a letter starts a new word -- while "r1150r" is
+    NOT found inside "r1150rs", because a letter glued to a letter continues the
+    same model code and "R 1150 RS" is a different motorcycle from an R 1150 R.
+
+    Only the character AFTER the match is tested. Squashing has already run the
+    make into the model ("Kawasaki KX 500" -> "kawasakikx500"), so a letter in
+    front of the match is the norm, not a signal.
+    """
+    at = haystack.find(needle)
+    while at >= 0:
+        after = haystack[at + len(needle) : at + len(needle) + 1]
+        if not (after.isalpha() and needle[-1:].isalpha()):
+            return True
+        at = haystack.find(needle, at + 1)
+    return False
+
+
 def mentions(text: str, name: str) -> bool:
     """Does `text` name this bike?
 
@@ -148,7 +170,7 @@ def mentions(text: str, name: str) -> bool:
     run = r"(?<![a-z0-9])" + r"[^a-z0-9]*".join(re.escape(t) for t in tokens) + r"(?![a-z0-9])"
     if re.search(run, text_n):
         return True
-    if squash(name) in squash(text):
+    if glued(squash(text), squash(name)):
         return True
     if sum(1 for t in tokens if len(t) >= 3) < 2:
         return False
@@ -289,6 +311,9 @@ def pick(pages: list, m: Model, used: set):
         if not info:
             continue
         title = str(page.get("title", "")).removeprefix("File:")
+        # Match on the stem: ".jpg" is not part of the bike's name, and it
+        # otherwise reads as a word glued to it ("HondaCB300F" + "jpg").
+        stem = EXT.sub("", title)
         if title in used:
             continue
         if info.get("mime") not in ("image/jpeg", "image/png"):
@@ -300,7 +325,7 @@ def pick(pages: list, m: Model, used: set):
         if ratio > 3.0 or ratio < 0.5:
             continue
 
-        title_n = norm(title)
+        title_n = norm(stem)
         if any(w in title_n.split() and w not in model_n.split() for w in REJECT_WORDS):
             continue
 
@@ -318,11 +343,11 @@ def pick(pages: list, m: Model, used: set):
         # The make may come from either, since plenty of good files are titled
         # bare ("SV 650 AL7.jpg").
         haystack = f"{title} {desc}"
-        if not (mentions(title, m.model) and mentions(haystack, m.make)):
+        if not (mentions(stem, m.model) and mentions(haystack, m.make)):
             continue
 
         score = 1.0
-        if mentions(title, m.make):
+        if mentions(stem, m.make):
             score += 3.0
         if re.search(
             r"(?<![a-z0-9])" + r"[^a-z0-9]*".join(re.escape(t) for t in model_n.split()),
@@ -337,11 +362,11 @@ def pick(pages: list, m: Model, used: set):
             score += 0.5
         score += min(width, 4000) / 4000.0
         # "Vulcan 900 & 1500.jpg" is two bikes in one frame: a poor catalogue tile.
-        if "&" in title or has_token(title_n, "and"):
+        if "&" in stem or has_token(title_n, "and"):
             score -= 1.5
         # "250 SX" must lose to a real 250 SX when the only candidate title says
         # "250 SX-F": a letter glued to either end of the model is a different bike.
-        sq_t, sq_m = squash(title), squash(m.model)
+        sq_t, sq_m = squash(stem), squash(m.model)
         at = sq_t.find(sq_m)
         if at >= 0:
             after = sq_t[at + len(sq_m) : at + len(sq_m) + 1]
@@ -353,9 +378,54 @@ def pick(pages: list, m: Model, used: set):
     return best
 
 
+def flatten(im: Image.Image) -> Image.Image:
+    """RGB, with any transparency composited onto white rather than discarded."""
+    if im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info):
+        rgba = im.convert("RGBA")
+        flat = Image.new("RGB", rgba.size, (255, 255, 255))
+        flat.paste(rgba, mask=rgba.split()[-1])
+        return flat
+    return im.convert("RGB")
+
+
+def borders(im: Image.Image, tol: int = 12) -> tuple:
+    """(left, top, right, bottom) uniform margin widths, in pixels.
+
+    Press renders arrive as a bike floating in a wide field of flat white; as a
+    catalogue tile that reads as a stretched stripe down each edge. The bounding
+    box of everything that differs from the corner colour is the real picture.
+    """
+    w, h = im.size
+    corners = [im.getpixel(p) for p in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1))]
+    bg = max(set(corners), key=corners.count)
+    diff = ImageChops.difference(im, Image.new("RGB", im.size, bg)).convert("L")
+    box = diff.point(lambda v: 255 if v > tol else 0).getbbox()
+    if not box:
+        return (0, 0, 0, 0)
+    return (box[0], box[1], w - box[2], h - box[3])
+
+
+def debordered(im: Image.Image, min_frac: float = 0.04) -> Image.Image:
+    """Crop uniform edge bands wider than `min_frac` of the picture, with a hair of padding."""
+    w, h = im.size
+    left, top, right, bottom = borders(im)
+    if max(left, right) < min_frac * w and max(top, bottom) < min_frac * h:
+        return im
+    pad = max(2, round(0.015 * max(w, h)))
+    box = (
+        max(0, left - pad),
+        max(0, top - pad),
+        min(w, w - right + pad),
+        min(h, h - bottom + pad),
+    )
+    if box[2] - box[0] < 0.25 * w or box[3] - box[1] < 0.25 * h:
+        return im  # almost everything is background: leave it alone
+    return im.crop(box)
+
+
 def convert(raw: bytes, dest: Path, thumb: Path) -> tuple:
-    with Image.open(io.BytesIO(raw)) as im:
-        im = im.convert("RGB")
+    with Image.open(io.BytesIO(raw)) as src:
+        im = debordered(flatten(src))
         full = im.copy()
         full.thumbnail((640, 640), Image.LANCZOS)
         full.save(dest, "WEBP", quality=80, method=6)
@@ -416,6 +486,80 @@ def write_outputs(entries: dict) -> None:
     save(OUT_CREDITS, "\n".join(lines) + "\n")
 
 
+# --------------------------------------------------------------------- band sweep
+
+
+def banded(path: Path, min_frac: float = 0.04) -> bool:
+    """Does this tile carry a uniform stripe down an edge?"""
+    try:
+        with Image.open(path) as im:
+            im = im.convert("RGB")
+            w, h = im.size
+            left, top, right, bottom = borders(im)
+            return max(left, right) >= min_frac * w or max(top, bottom) >= min_frac * h
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def source_url(client: httpx.Client, bucket: Bucket, title: str) -> str:
+    """The 640-px rendition of one Commons file, by title."""
+    r = get(
+        client,
+        API,
+        bucket,
+        params={
+            "action": "query",
+            "format": "json",
+            "formatversion": "2",
+            "titles": f"File:{title}",
+            "prop": "imageinfo",
+            "iiprop": "url|size|mime",
+            # Wider than the tile: cropping the bands off a 640-px rendition
+            # would leave less than 640 px of bike.
+            "iiurlwidth": "1000",
+        },
+    )
+    for page in (r.json().get("query") or {}).get("pages") or []:
+        info = (page.get("imageinfo") or [None])[0]
+        if info:
+            return info.get("thumburl") or info.get("url") or ""
+    return ""
+
+
+def fix_bands(rps: float) -> int:
+    """Re-render every stored tile whose edges are flat bands. Returns the count."""
+    entries = json.loads(OUT_JSON.read_text(encoding="utf-8"))
+    hits = [
+        (key, e)
+        for key, e in entries.items()
+        if Path(e["image"]).stem not in PROTECTED and banded(ROOT / "web" / e["image"])
+    ]
+    print(f"{len(entries)} tiles, {len(hits)} with edge bands", flush=True)
+    bucket = Bucket(rps)
+    fixed = 0
+    with httpx.Client(
+        headers={"User-Agent": UA, "Accept-Encoding": "gzip"},
+        timeout=httpx.Timeout(30.0, connect=15.0),
+        follow_redirects=True,
+    ) as client:
+        for key, e in hits:
+            dest, thumb = ROOT / "web" / e["image"], ROOT / "web" / e["thumb"]
+            try:
+                url = source_url(client, bucket, e["title"])
+                if not url:
+                    print(f"  ! {key}: no source", flush=True)
+                    continue
+                convert(get(client, url, bucket).content, dest, thumb)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  ! {key}: {exc!r}", flush=True)
+                continue
+            still = " (still banded)" if banded(dest) else ""
+            fixed += not still
+            print(f"  ~ {key}{still}", flush=True)
+    print(f"re-rendered {fixed} of {len(hits)}", flush=True)
+    return fixed
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -427,7 +571,16 @@ def main() -> int:
     ap.add_argument("--workers", type=int, default=5)
     ap.add_argument("--minutes", type=float, default=0.0, help="0 = no time limit")
     ap.add_argument("--checkpoint", type=int, default=25)
+    ap.add_argument(
+        "--fix-bands",
+        action="store_true",
+        help="re-render stored tiles that have flat stripes down an edge, then exit",
+    )
     args = ap.parse_args()
+
+    if args.fix_bands:
+        fix_bands(args.rps)
+        return 0
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     models = build_models(args.limit)
