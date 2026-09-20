@@ -2271,6 +2271,30 @@
     "via": "alias",
     "aliasOf": "can-am|2014-spyder-rt"
   },
+  "can-am|can-am-pulse": {
+    "image": "store/img/bikes2/can-am-can-am-pulse.webp",
+    "thumb": "store/img/bikes2/can-am-can-am-pulse.thumb.webp",
+    "title": "Can-Am Pulse.jpg",
+    "author": "XDVRACE",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Can-Am_Pulse.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/can-am-can-am-pulse.hero.webp"
+  },
+  "can-am|pulse": {
+    "image": "store/img/bikes2/can-am-pulse.webp",
+    "thumb": "store/img/bikes2/can-am-pulse.thumb.webp",
+    "title": "Can-Am Pulse 2026.jpg",
+    "author": "XDVRACE",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Can-Am_Pulse_2026.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/can-am-pulse.hero.webp"
+  },
   "can-am|spyder-f3-series,-2017": {
     "image": "store/img/bikes/can-am-spyder-f3.webp",
     "thumb": "store/img/bikes/can-am-spyder-f3-thumb.webp",
@@ -6076,6 +6100,18 @@
     "via": "alias",
     "aliasOf": "honda|accord"
   },
+  "honda|ace-tuff": {
+    "image": "store/img/bikes2/honda-ace-tuff.webp",
+    "thumb": "store/img/bikes2/honda-ace-tuff.thumb.webp",
+    "title": "2014 Ace Cafe Flattrack day 28.jpg",
+    "author": "REDMAXSPEEDSHOP.COM",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ace_Cafe_Flattrack_day_28.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-ace-tuff.hero.webp"
+  },
   "honda|activa-e:": {
     "image": "store/img/bikes/honda-activa.webp",
     "thumb": "store/img/bikes/honda-activa-thumb.webp",
@@ -6333,6 +6369,18 @@
     "view": "side",
     "via": "alias",
     "aliasOf": "honda|c125"
+  },
+  "honda|cb-1": {
+    "image": "store/img/bikes2/honda-cb-1.webp",
+    "thumb": "store/img/bikes2/honda-cb-1.thumb.webp",
+    "title": "Honda CB-1.JPG",
+    "author": "JuliusRoch",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB-1.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-cb-1.hero.webp"
   },
   "honda|cb-1100-ex": {
     "image": "store/img/bikes/honda-cb-1100.webp",
@@ -7776,6 +7824,18 @@
     "via": "alias",
     "aliasOf": "honda|cbr300r"
   },
+  "honda|cbr400f": {
+    "image": "store/img/bikes2/honda-cbr400f.webp",
+    "thumb": "store/img/bikes2/honda-cbr400f.thumb.webp",
+    "title": "Honda CBR400F 1983.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR400F_1983.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-cbr400f.hero.webp"
+  },
   "honda|cbr400r": {
     "image": "store/img/bikes2/honda-cbr400r.webp",
     "thumb": "store/img/bikes2/honda-cbr400r.thumb.webp",
@@ -8764,6 +8824,18 @@
     "score": 7.5,
     "hero": "store/img/bikes2/honda-crf80f.hero.webp"
   },
+  "honda|crm80": {
+    "image": "store/img/bikes2/honda-crm80.webp",
+    "thumb": "store/img/bikes2/honda-crm80.thumb.webp",
+    "title": "CRM80.jpg",
+    "author": "黒エサ屋さん",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CRM80.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/honda-crm80.hero.webp"
+  },
   "honda|crosstourer-highlander": {
     "image": "store/img/bikes/honda-crosstourer.webp",
     "thumb": "store/img/bikes/honda-crosstourer-thumb.webp",
@@ -9210,6 +9282,30 @@
     "score": 7.5,
     "hero": "store/img/bikes2/honda-gb350-gb350-s.hero.webp"
   },
+  "honda|gb350-c": {
+    "image": "store/img/bikes2/honda-gb350-c.webp",
+    "thumb": "store/img/bikes2/honda-gb350-c.thumb.webp",
+    "title": "Honda GB350 (cropped).jpg",
+    "author": "AVMOTO",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_GB350_(cropped).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-gb350-c.hero.webp"
+  },
+  "honda|gb350c": {
+    "image": "store/img/bikes2/honda-gb350c.webp",
+    "thumb": "store/img/bikes2/honda-gb350c.thumb.webp",
+    "title": "2026 Honda GB350C.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Honda_GB350C.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-gb350c.hero.webp"
+  },
   "honda|gb350s": {
     "image": "store/img/bikes2/honda-gb350s.webp",
     "thumb": "store/img/bikes2/honda-gb350s.thumb.webp",
@@ -9520,6 +9616,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Grom_125_at_Birmingham_2014.jpg",
     "via": "alias",
     "aliasOf": "honda|grom"
+  },
+  "honda|gyro-up": {
+    "image": "store/img/bikes2/honda-gyro-up.webp",
+    "thumb": "store/img/bikes2/honda-gyro-up.thumb.webp",
+    "title": "Honda Collection Hall Honda Gyro Up.jpg",
+    "author": "Ypy31",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Collection_Hall_Honda_Gyro_Up.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-gyro-up.hero.webp"
   },
   "honda|hornet": {
     "image": "store/img/bikes2/honda-hornet.webp",
@@ -9942,6 +10050,18 @@
     "via": "alias",
     "aliasOf": "honda|nm4"
   },
+  "honda|ns-1": {
+    "image": "store/img/bikes2/honda-ns-1.webp",
+    "thumb": "store/img/bikes2/honda-ns-1.thumb.webp",
+    "title": "HONDA NS-1.jpg",
+    "author": "Alpha arion",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HONDA_NS-1.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-ns-1.hero.webp"
+  },
   "honda|nsc110-dio": {
     "image": "store/img/bikes/honda-nsc110.webp",
     "thumb": "store/img/bikes/honda-nsc110-thumb.webp",
@@ -10118,6 +10238,18 @@
     "via": "alias",
     "aliasOf": "honda|odyssey"
   },
+  "honda|pacific-coast": {
+    "image": "store/img/bikes2/honda-pacific-coast.webp",
+    "thumb": "store/img/bikes2/honda-pacific-coast.thumb.webp",
+    "title": "Honda Pacific Coast DSCF4686.jpg",
+    "author": "Addvisor",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Pacific_Coast_DSCF4686.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-pacific-coast.hero.webp"
+  },
   "honda|partner": {
     "image": "store/img/bikes2/honda-partner.webp",
     "thumb": "store/img/bikes2/honda-partner.thumb.webp",
@@ -10213,6 +10345,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_PS125i_2009.JPG",
     "via": "alias",
     "aliasOf": "honda|ps125i"
+  },
+  "honda|ps250": {
+    "image": "store/img/bikes2/honda-ps250.webp",
+    "thumb": "store/img/bikes2/honda-ps250.thumb.webp",
+    "title": "Fake scooter rat bike.jpg",
+    "author": "Jonathan Brodsky from Pittsburgh, PA, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fake_scooter_rat_bike.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.0,
+    "hero": "store/img/bikes2/honda-ps250.hero.webp"
+  },
+  "honda|racoon": {
+    "image": "store/img/bikes2/honda-racoon.webp",
+    "thumb": "store/img/bikes2/honda-racoon.thumb.webp",
+    "title": "Rower honda racoon.jpg",
+    "author": "Piotr 1",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Rower_honda_racoon.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/honda-racoon.hero.webp"
   },
   "honda|rebel-1100-dct": {
     "image": "store/img/bikes/honda-rebel-1100.webp",
@@ -10578,6 +10734,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Silverwing_fsc600.jpg",
     "via": "alias",
     "aliasOf": "honda|silver-wing"
+  },
+  "honda|smart-dio": {
+    "image": "store/img/bikes2/honda-smart-dio.webp",
+    "thumb": "store/img/bikes2/honda-smart-dio.thumb.webp",
+    "title": "Honda Dio.jpg",
+    "author": "TTTNIS",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Dio.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-smart-dio.hero.webp"
+  },
+  "honda|smart-dio-dx": {
+    "image": "store/img/bikes2/honda-smart-dio.webp",
+    "thumb": "store/img/bikes2/honda-smart-dio.thumb.webp",
+    "hero": "store/img/bikes2/honda-smart-dio.hero.webp",
+    "title": "Honda Dio.jpg",
+    "author": "TTTNIS",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Dio.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|smart-dio"
   },
   "honda|spacy125": {
     "image": "store/img/bikes2/honda-spacy125.webp",
@@ -11435,6 +11615,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:XR650R_ED-Type_in_Snow_Wikipedia.jpg",
     "via": "alias",
     "aliasOf": "honda|xr-650"
+  },
+  "honda|xr100-motard": {
+    "image": "store/img/bikes2/honda-xr100-motard.webp",
+    "thumb": "store/img/bikes2/honda-xr100-motard.thumb.webp",
+    "title": "Honda XR100 sideview.jpg",
+    "author": "jim simonson",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_XR100_sideview.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-xr100-motard.hero.webp"
   },
   "honda|xr230": {
     "image": "store/img/bikes2/honda-xr230.webp",
@@ -14683,6 +14875,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_S_-_MRS_Oficina_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|vulcan-s"
+  },
+  "kawasaki|w230": {
+    "image": "store/img/bikes2/kawasaki-w230.webp",
+    "thumb": "store/img/bikes2/kawasaki-w230.thumb.webp",
+    "title": "Japan-Mobility-Show-2025-RuinDig 2740.jpg",
+    "author": "RuinDig/Yuki Uchida",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Japan-Mobility-Show-2025-RuinDig_2740.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-w230.hero.webp"
   },
   "kawasaki|w800-black-edition": {
     "image": "store/img/bikes/kawasaki-w800.webp",
@@ -18698,6 +18902,18 @@
     "via": "alias",
     "aliasOf": "royal-enfield|classic-500"
   },
+  "royal-enfield|classic-650": {
+    "image": "store/img/bikes2/royal-enfield-classic-650.webp",
+    "thumb": "store/img/bikes2/royal-enfield-classic-650.thumb.webp",
+    "title": "Royal Enfield (39759).jpg",
+    "author": "Al*from*Lig",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_(39759).jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/royal-enfield-classic-650.hero.webp"
+  },
   "royal-enfield|classic-chrome": {
     "image": "store/img/bikes2/royal-enfield-classic-chrome.webp",
     "thumb": "store/img/bikes2/royal-enfield-classic-chrome.thumb.webp",
@@ -19302,6 +19518,18 @@
     "via": "alias",
     "aliasOf": "suzuki|burgman-650"
   },
+  "suzuki|burgman-street-125ex": {
+    "image": "store/img/bikes2/suzuki-burgman-street-125ex.webp",
+    "thumb": "store/img/bikes2/suzuki-burgman-street-125ex.thumb.webp",
+    "title": "2023 Suzuki Burgman Street 125 EX.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Suzuki_Burgman_Street_125_EX.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/suzuki-burgman-street-125ex.hero.webp"
+  },
   "suzuki|dr-650-se": {
     "image": "store/img/bikes/suzuki-dr-650.webp",
     "thumb": "store/img/bikes/suzuki-dr-650-thumb.webp",
@@ -19522,6 +19750,18 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/suzuki-gsx-8r.hero.webp"
+  },
+  "suzuki|gsx-8t": {
+    "image": "store/img/bikes2/suzuki-gsx-8t.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-8t.thumb.webp",
+    "title": "Suzuki GSX-8T.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8T.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/suzuki-gsx-8t.hero.webp"
   },
   "suzuki|gsx-r-1000-mladin-replica": {
     "image": "store/img/bikes/suzuki-gsx-r-1000.webp",
@@ -22631,6 +22871,18 @@
     "via": "alias",
     "aliasOf": "triumph|scrambler-400-x"
   },
+  "triumph|scrambler-400-xc": {
+    "image": "store/img/bikes2/triumph-scrambler-400-xc.webp",
+    "thumb": "store/img/bikes2/triumph-scrambler-400-xc.thumb.webp",
+    "title": "Triumph Scrambler 400 X, M-M25.jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Scrambler_400_X,_M-M25.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/triumph-scrambler-400-xc.hero.webp"
+  },
   "triumph|scrambler-900": {
     "image": "store/img/bikes2/triumph-scrambler-900.webp",
     "thumb": "store/img/bikes2/triumph-scrambler-900.thumb.webp",
@@ -22676,6 +22928,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "triumph|speed-400"
+  },
+  "triumph|speed-triple-1200-rx": {
+    "image": "store/img/bikes2/triumph-speed-triple-1200-rx.webp",
+    "thumb": "store/img/bikes2/triumph-speed-triple-1200-rx.thumb.webp",
+    "title": "Triumph Speed Triple 1200 RX.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Speed_Triple_1200_RX.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/triumph-speed-triple-1200-rx.hero.webp"
   },
   "triumph|speed-triple-abs": {
     "image": "store/img/bikes/triumph-speed-triple.webp",
@@ -23741,6 +24005,18 @@
     "via": "search",
     "view": "three_quarter",
     "score": 8.5
+  },
+  "triumph|trident-800": {
+    "image": "store/img/bikes2/triumph-trident-800.webp",
+    "thumb": "store/img/bikes2/triumph-trident-800.thumb.webp",
+    "title": "Triumph Trident 800 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Trident_800_2026.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/triumph-trident-800.hero.webp"
   },
   "triumph|trophy-1200": {
     "image": "store/img/bikes2/triumph-trophy-1200.webp",
@@ -25024,6 +25300,54 @@
     "via": "alias",
     "aliasOf": "yamaha|fzs"
   },
+  "yamaha|gear-ultima-hybrid": {
+    "image": "store/img/bikes2/yamaha-gear-ultima-hybrid.webp",
+    "thumb": "store/img/bikes2/yamaha-gear-ultima-hybrid.thumb.webp",
+    "title": "Yamaha Gear Ultima Hybrid Solid Version.jpg",
+    "author": "Danishyandi",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Gear_Ultima_Hybrid_Solid_Version.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-gear-ultima-hybrid.hero.webp"
+  },
+  "yamaha|gear-ultima-hybrid-s": {
+    "image": "store/img/bikes2/yamaha-gear-ultima-hybrid.webp",
+    "thumb": "store/img/bikes2/yamaha-gear-ultima-hybrid.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-gear-ultima-hybrid.hero.webp",
+    "title": "Yamaha Gear Ultima Hybrid Solid Version.jpg",
+    "author": "Danishyandi",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Gear_Ultima_Hybrid_Solid_Version.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|gear-ultima-hybrid"
+  },
+  "yamaha|gear-ultima-hybrid-smart": {
+    "image": "store/img/bikes2/yamaha-gear-ultima-hybrid.webp",
+    "thumb": "store/img/bikes2/yamaha-gear-ultima-hybrid.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-gear-ultima-hybrid.hero.webp",
+    "title": "Yamaha Gear Ultima Hybrid Solid Version.jpg",
+    "author": "Danishyandi",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Gear_Ultima_Hybrid_Solid_Version.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|gear-ultima-hybrid"
+  },
+  "yamaha|gear-ultima-hybrid-solid": {
+    "image": "store/img/bikes2/yamaha-gear-ultima-hybrid.webp",
+    "thumb": "store/img/bikes2/yamaha-gear-ultima-hybrid.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-gear-ultima-hybrid.hero.webp",
+    "title": "Yamaha Gear Ultima Hybrid Solid Version.jpg",
+    "author": "Danishyandi",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Gear_Ultima_Hybrid_Solid_Version.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|gear-ultima-hybrid"
+  },
   "yamaha|gladiator-type-j.a.": {
     "image": "store/img/bikes/yamaha-gladiator.webp",
     "thumb": "store/img/bikes/yamaha-gladiator-thumb.webp",
@@ -25045,6 +25369,30 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/yamaha-grand-filano-bjk.hero.webp"
+  },
+  "yamaha|grand-filano-hybrid-lux": {
+    "image": "store/img/bikes2/yamaha-grand-filano-hybrid-lux.webp",
+    "thumb": "store/img/bikes2/yamaha-grand-filano-hybrid-lux.thumb.webp",
+    "title": "2022 Yamaha Grand Filano Hybrid Connected ABS.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Yamaha_Grand_Filano_Hybrid_Connected_ABS.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-grand-filano-hybrid-lux.hero.webp"
+  },
+  "yamaha|grand-filano-hybrid-neo": {
+    "image": "store/img/bikes2/yamaha-grand-filano-hybrid-neo.webp",
+    "thumb": "store/img/bikes2/yamaha-grand-filano-hybrid-neo.thumb.webp",
+    "title": "2022 Yamaha Grand Filano Hybrid Connected.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Yamaha_Grand_Filano_Hybrid_Connected.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-grand-filano-hybrid-neo.hero.webp"
   },
   "yamaha|grizzly-700-eps": {
     "image": "store/img/bikes/yamaha-grizzly-700.webp",
@@ -26380,6 +26728,18 @@
     "via": "category",
     "view": "side",
     "score": 9.5
+  },
+  "yamaha|nouvo-rc": {
+    "image": "store/img/bikes2/yamaha-nouvo-rc.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo-rc.thumb.webp",
+    "title": "Yamaha Nouvo 115cc Thailand Right.jpg",
+    "author": "Khaosaming",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Right.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-nouvo-rc.hero.webp"
   },
   "yamaha|nouvo-sx": {
     "image": "store/img/bikes2/yamaha-nouvo-sx.webp",

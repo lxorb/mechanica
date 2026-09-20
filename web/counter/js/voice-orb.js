@@ -1,10 +1,16 @@
 /**
- * The voice orb. Owner: voice agent. Pairs with ../css/voice-orb.css; mounted by chat-ui.js.
+ * The voice orb. Owner: voice agent. Pairs with ../css/voice-orb.css; mounted by voice-session.js.
  *
- * WHAT IT IS. While voice mode is live, the chat is not a chat — it is one round thing in the
- * middle of the screen that is listening to you. Not a mic button in a corner: the mechanic's
- * hands are on the bike, he is a metre from the phone, and the only affordance that survives that
- * is a target the size of his fist in the place his eye already is.
+ * WHAT IT IS. One round thing that is listening to you, and it lives above the whole app rather
+ * than inside one view: the mechanic's hands are on the bike, he is a metre from the phone, and
+ * the only affordance that survives that is a target the size of his fist in the place his eye
+ * already is.
+ *
+ * TWO SIZES, ONE ELEMENT. Opened from the chat it is FULL: the screen is the orb, because there
+ * is nothing else to look at yet. The moment the manual is up it DOCKS — the same element, a
+ * transform away, sitting above the reader's thumb row with one line of transcript beside it —
+ * because now the page is the thing to look at and the assistant is a companion to it, not a
+ * replacement for it. Nothing unmounts, nothing reconnects, nothing stops listening.
  *
  * WHAT IT SAYS, WITHOUT WORDS.
  *   listening  the disc breathes, and rides the mic's own RMS on top of the breath, so he can see
@@ -13,21 +19,25 @@
  *              stillness in the middle is the difference between "working" and "hung"
  *   speaking   the breath stops again and the disc pulses on the agent's OUTPUT level, so the
  *              shape on screen is the shape of the voice in the room
- * One word underneath (Listening / Thinking / Speaking) and one fading line of transcript above.
- * Nothing else: no bubbles, no icons, no explanation.
+ *
+ * THE THREE GESTURES. Tap while it is talking: stop the answer. Tap while it is not: dock or
+ * undock. Long press: leave. A tap has to mean "be quiet" while it is talking, because that is
+ * the only thing anyone ever wants from a talking machine, and it cannot mean two things at once.
  *
  * SIXTY FRAMES, NO LAYOUT. One requestAnimationFrame loop writes two custom properties, `--s`
  * (scale) and `--g` (glow), and the stylesheet turns those into a transform and an opacity. No
- * width, height, margin or top is ever touched, so the compositor carries the whole animation and
- * the loop costs nothing measurable. The loop does not run when the orb is not mounted.
+ * width, height, margin or top is ever touched — by the loop or by the dock, which is one more
+ * transform on the same element. The loop does not run when the orb is not mounted.
  *
- * REDUCED MOTION. No breath, no ripple, no pulse: `--lvl` drives a ring that fills instead, which
- * moves nothing. The state word still changes, which is the part that actually carries the
- * meaning.
+ * REDUCED MOTION. No breath, no ripple, no pulse, and the dock is instant: `--lvl` drives a ring
+ * that fills instead, which moves nothing. The state word still changes, which is the part that
+ * actually carries the meaning.
  *
- * mountOrb(host, {levels, onInterrupt, onLeave}) -> {setState, setLine, peek, isPeeking, destroy}
+ * mountOrb(host, {levels, onInterrupt, onLeave, onToggle})
+ *   -> {setState, setLine, setDock, chip, isCompact, el, destroy}
  *   levels()      -> {mic, out} in 0..1, pulled once a frame; the session owns the meters
- *   onInterrupt() the orb was tapped while the agent was talking - stop it
+ *   onInterrupt() tapped while the agent was talking - stop it
+ *   onToggle()    tapped while it was not - the other size
  *   onLeave()     the x, or a long press on the orb - leave voice mode
  */
 
@@ -52,6 +62,8 @@ const OUT_GAIN = 0.3;
 // rise fast (you see the word land) and fall slowly (it does not flicker between syllables).
 const RISE = 0.5;
 const FALL = 0.12;
+// A figure with a page on it, shown beside the orb and then gone. Long enough to read twice.
+const CHIP_MS = 5200;
 
 const reduced = () =>
   typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -89,8 +101,9 @@ export function mountOrb(host, opts = {}) {
   const levels = typeof opts.levels === "function" ? opts.levels : () => ({ mic: 0, out: 0 });
   const onInterrupt = typeof opts.onInterrupt === "function" ? opts.onInterrupt : () => {};
   const onLeave = typeof opts.onLeave === "function" ? opts.onLeave : () => {};
+  const onToggle = typeof opts.onToggle === "function" ? opts.onToggle : () => {};
 
-  const wrap = el("div", { class: "vo", hidden: "" });
+  const wrap = el("div", { class: "vo is-full", hidden: "" });
   // The whole overlay is one live region: the state word is what a screen reader needs, and it is
   // the only thing that changes often enough to be worth announcing.
   const line = el("div", { class: "vo-line", "aria-hidden": "true" });
@@ -103,7 +116,11 @@ export function mountOrb(host, opts = {}) {
   const state = el("div", { class: "vo-state", role: "status", "aria-live": "polite" });
   const shut = el("button", { type: "button", class: "vo-x", "aria-label": "Leave voice mode", text: "✕" });
 
-  const back = el("button", { type: "button", class: "vo-back", "aria-label": "Show the conversation" });
+  // The one thing an answer leaves behind on the page: the figure and the page it is printed on,
+  // beside the orb, gone before it is clutter. He heard it; this is so he can check he did.
+  const chipEl = el("div", { class: "vo-chip", "aria-hidden": "true" });
+
+  const back = el("button", { type: "button", class: "vo-back", "aria-label": "Dock the orb" });
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 24 24");
   svg.setAttribute("fill", "none");
@@ -113,19 +130,20 @@ export function mountOrb(host, opts = {}) {
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("d", CHEVRON);
   svg.append(path);
-  back.append(svg, document.createTextNode("Chat"));
+  back.append(svg, document.createTextNode("Manual"));
 
-  wrap.append(line, orb, state, shut, back);
+  wrap.append(line, orb, state, chipEl, shut, back);
   host.append(wrap);
 
   let raf = 0;
   let value = "closed";
   let mic = 0;
   let out = 0;
-  let peeking = false;
+  let compact = false;
   let hold = 0;
   let held = false;
   let t0 = 0;
+  let chipTimer = 0;
 
   /* ---------------------------------------------------------- the loop */
 
@@ -204,11 +222,12 @@ export function mountOrb(host, opts = {}) {
       held = false;
       return;
     }
-    if (peeking) {
-      peek(false);
+    // While it is talking a tap means one thing and it is not "resize".
+    if (value === "speaking") {
+      onInterrupt();
       return;
     }
-    onInterrupt();
+    onToggle();
   });
 
   shut.addEventListener("click", (event) => {
@@ -218,16 +237,19 @@ export function mountOrb(host, opts = {}) {
 
   back.addEventListener("click", (event) => {
     event.preventDefault();
-    peek(!peeking);
+    onToggle();
   });
 
   /* ---------------------------------------------------------- the face */
 
-  /** Behind the orb is the conversation, and this is how you get to it without hanging up. */
-  function peek(on) {
-    peeking = Boolean(on);
-    wrap.classList.toggle("is-peek", peeking);
-    orb.setAttribute("aria-label", peeking ? "Back to the orb" : "Stop the answer");
+  /** Full screen, or a companion in the corner. One transform apart; nothing remounts. */
+  function setDock(mode) {
+    const next = mode === "compact";
+    if (next === compact) return;
+    compact = next;
+    wrap.classList.toggle("is-compact", compact);
+    wrap.classList.toggle("is-full", !compact);
+    orb.setAttribute("aria-label", compact ? "Open voice full screen" : "Stop the answer");
   }
 
   function setState(next) {
@@ -242,7 +264,8 @@ export function mountOrb(host, opts = {}) {
     if (on) run();
     else {
       halt();
-      peek(false);
+      setDock("full");
+      chip("");
       line.classList.remove("is-on");
       line.textContent = "";
       orb.style.setProperty("--s", "1");
@@ -252,18 +275,43 @@ export function mountOrb(host, opts = {}) {
     }
   }
 
-  /** One line, one line only: the last thing either of them said, fading in over the orb. */
+  /** One line, one line only: the last thing either of them said. */
   function setLine(text) {
     const clean = String(text || "").trim();
     line.textContent = clean;
     line.classList.toggle("is-on", Boolean(clean));
   }
 
+  /** "p. 85 · DOT four" — the figure, where it is printed, and then gone. */
+  function chip(text) {
+    const clean = String(text || "").trim();
+    if (chipTimer) {
+      clearTimeout(chipTimer);
+      chipTimer = 0;
+    }
+    chipEl.textContent = clean;
+    chipEl.classList.toggle("is-on", Boolean(clean));
+    if (!clean) return;
+    chipTimer = window.setTimeout(() => {
+      chipTimer = 0;
+      chipEl.classList.remove("is-on");
+    }, CHIP_MS);
+  }
+
   function destroy() {
     halt();
     release();
+    if (chipTimer) clearTimeout(chipTimer);
     wrap.remove();
   }
 
-  return { setState, setLine, peek, isPeeking: () => peeking, el: wrap, destroy };
+  return {
+    setState,
+    setLine,
+    setDock,
+    chip,
+    isCompact: () => compact,
+    el: wrap,
+    destroy,
+  };
 }

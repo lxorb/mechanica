@@ -241,6 +241,7 @@ async function drive(page, opts) {
         this.timer = 0;
         this.turn = 0;
         this.loudMs = 0;
+        this.env = 0;
         this.vadArmed = false;
         window.__stub = this;
         setTimeout(() => {
@@ -289,8 +290,11 @@ async function drive(page, opts) {
         const ms = (pcm.length / o.rate) * 1000;
         const talking = this.timer !== 0 || this.at < speech.length;
         mark("up", { rms: Number(rms.toFixed(4)), ms: Math.round(ms), talking });
-        if (rms < o.vad) {
-          this.loudMs = 0;
+        // Same envelope the client uses, for the same reason: a VAD that judged 43 ms frames one
+        // at a time would find gaps inside every word and never decide anyone was talking.
+        this.env += (rms - this.env) * (rms > this.env ? 0.6 : 0.15);
+        if (this.env < o.vad) {
+          this.loudMs = Math.max(0, this.loudMs - ms * 0.5);
           return;
         }
         this.loudMs += ms;
@@ -342,11 +346,18 @@ async function drive(page, opts) {
       on: (e) => mark(e.type === "status" ? `status:${e.value}` : e.type, e.type === "text" ? {} : e),
     });
 
+    // The mic's own meter, sampled whether or not the guard is forwarding: this is the only view
+    // of what the microphone heard that survives the guard, and the barge-in latency is measured
+    // from it - the loud onset in the room, not the moment the socket was told about it.
+    const meter = [];
+    const poll = setInterval(() => meter.push({ t: Math.round(performance.now()), l: handle.level() }), 20);
+
     await new Promise((done) => setTimeout(done, o.ms));
 
+    clearInterval(poll);
     const audio = handle.audio();
     handle.stop();
-    return { log, audio };
+    return { log, audio, meter };
   }, opts);
 }
 
@@ -369,12 +380,16 @@ function summarise(out) {
   };
 }
 
-/** When did the loud stretch of the barge-in wav reach the mic, and when did a frame go up? */
+/**
+ * When did the loud stretch of the barge-in wav reach the microphone, and how long after that did
+ * a mic frame actually leave for Deepgram? Both read off the client: the onset from the mic meter
+ * (which the guard does not touch), the delivery from the stub's own receipt log.
+ */
 function bargeLatency(out) {
-  const up = out.log.filter((r) => r.type === "up");
-  if (!up.length) return null;
-  const loud = out.log.find((r) => r.type === "UserStartedSpeaking");
-  return loud ? loud.t : null;
+  const onset = out.meter.find((m) => m.l > 0.06);
+  if (!onset) return { onset: null, sent: null, delta: null };
+  const sent = out.log.find((r) => r.type === "up" && r.t >= onset.t);
+  return { onset: onset.t, sent: sent ? sent.t : null, delta: sent ? sent.t - onset.t : null };
 }
 
 /* ------------------------------------------------------------------ run */
@@ -384,7 +399,7 @@ async function main() {
   const agentWav = join(CACHE, "agent.wav");
   const riderWav = join(CACHE, "rider.wav");
   await speak("Page 78, one hundred newton metres. Page 130, forty five newton metres.", "aura-2-asteria-en", agentWav);
-  await speak("Wait. Stop. The brake fluid, which page.", "aura-2-orpheus-en", riderWav);
+  await speak("Wait wait wait hold on the brake fluid which page is it on", "aura-2-orpheus-en", riderWav);
 
   const agentPcm = readWav(agentWav);
   const riderPcm = readWav(riderWav);
@@ -452,7 +467,10 @@ async function main() {
       ms: c.ms,
       // Deepgram's VAD is not published; this is a plain RMS gate at a level a person clears and
       // a quiet echo does not, held for 200 ms. Both runs face the same one.
-      vad: 0.02,
+      // RMS 0.012 is about -38 dBFS. Deepgram does not publish flux's VAD threshold; this one is
+      // deliberately set where a quiet echo sits rather than where a shout does, because a VAD
+      // that ignored the echo would make the legacy run look clean for the wrong reason.
+      vad: 0.012,
       vadMs: 200,
     });
     await browser.close();
@@ -461,10 +479,10 @@ async function main() {
 
   server.close();
 
-  console.log("run                    frames up   over the agent      self-interrupts   turns");
+  console.log("run                      up   over the agent   self-cuts   turns   cut mid-word   interrupted");
   for (const { c, sum } of results) {
     console.log(
-      `${c.name.padEnd(22)} ${String(sum.frames).padStart(9)}   ${String(sum.overTalk).padStart(6)} (${String(sum.bytesOverTalk).padStart(6)} B)   ${String(sum.selfStarts).padStart(15)}   ${String(sum.turns).padStart(5)}`,
+      `${c.name.padEnd(22)} ${String(sum.frames).padStart(4)}   ${String(sum.overTalk).padStart(4)} (${String(sum.bytesOverTalk).padStart(6)} B)   ${String(sum.selfStarts).padStart(9)}   ${String(sum.turns).padStart(5)}   ${String(sum.cutMid).padStart(12)}   ${String(sum.interrupted).padStart(11)}`,
     );
   }
 
@@ -488,11 +506,9 @@ async function main() {
   say(fixed.turns <= 2, `fixed does not loop: ${fixed.turns} agent turns (legacy ${legacy.turns})`);
 
   const lat = bargeLatency(bargeRun.out);
-  const loudAt = bargeRun.out.log.find((r) => r.type === "up" && r.rms > 0.05);
-  const delta = lat != null && loudAt ? lat - loudAt.t : null;
   say(
-    delta != null && delta <= 400,
-    `a real voice still cuts in: first loud frame at ${loudAt ? loudAt.t : "?"} ms, socket believed it at ${lat} ms (+${delta} ms)`,
+    lat.delta != null && lat.delta <= 400,
+    `a real voice still cuts in: loud at ${lat.onset} ms, first mic frame on the socket at ${lat.sent} ms (+${lat.delta} ms)`,
   );
   say(bargeRun.sum.interrupted > 0, `and the answer stopped: ${bargeRun.sum.interrupted} interruptions reported to the UI`);
 

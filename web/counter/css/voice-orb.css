@@ -1,23 +1,27 @@
 /**
- * The voice orb — the round thing in the middle while voice mode is live. Owner: voice agent.
- * Pairs with js/voice-orb.js, which mounts the orb AND injects this file: it is the only module
- * that needs it and the only one that knows where it lives, so neither index.html nor another
- * agent's screen CSS carries a line for it.
+ * The voice orb — the round thing that is listening to you, wherever in the app you are. Owner:
+ * voice agent. Pairs with js/voice-orb.js, which mounts the orb AND injects this file: it is the
+ * only module that needs it and the only one that knows where it lives, so neither index.html nor
+ * another agent's screen CSS carries a line for it.
  *
- * WHY A DISC AND NOT A BUTTON. Voice mode is not a mode of the chat, it is the whole screen: both
- * hands are on the bike and nobody is aiming at a 44px target in a corner. So the orb is centred,
- * it is the only thing to hit, and it is big enough to hit with the side of a glove.
+ * WHY A DISC AND NOT A BUTTON. Voice mode is not a mode of the chat: both hands are on the bike
+ * and nobody is aiming at a 44 px target in a corner. So the orb is centred, it is the only thing
+ * to hit, and it is big enough to hit with the side of a glove.
+ *
+ * TWO SIZES, ONE TRANSFORM. Full screen while there is nothing else to look at; docked into the
+ * corner above the reader's thumb row once the manual is up, with one line of transcript beside
+ * it. The dock is a `translate` and a `scale` on the same element over 180 ms — no width, no
+ * height, no position, nothing that could move the page underneath. Docked it is still 55-87 px
+ * across, which clears the 44 px target on every viewport this app runs at.
+ *
+ * THE HOST IS THE VIEWPORT. js/voice-session.js puts one `position: fixed` host on <body> and
+ * keeps it there for the life of the session, so a screen change, an overlay opening, or the chat
+ * closing takes nothing away from the orb. It is above the overlay layer and below nothing.
  *
  * EVERYTHING THAT MOVES IS A TRANSFORM. The disc never changes width, height, margin or any other
  * layout property: js/voice-orb.js writes `--s` (scale) and `--g` (glow) sixty times a second and
  * the compositor does the rest, so a running orb costs no layout and no paint. The three states
  * differ only in what drives those two numbers — breath, ripple, or the agent's own output level.
- *
- * NO LAYOUT SHIFT. The orb is absolutely placed over the conversation, which stays mounted and
- * scrollable underneath it, so entering and leaving voice mode adds nothing to the flow and takes
- * nothing out of it - asserted, before/during/after, by web/tools/orb-shots.mjs. It covers the
- * conversation and not the header, so Back and the chat's own x are still reachable while voice
- * is running, and `.is-peek` hands the transcript back without hanging up.
  *
  * TOKENS. css/counter.css is the token floor and css/themes.css swaps it wholesale, so every
  * colour here is a token and the orb changes livery with the rest of the app for free. The names
@@ -26,36 +30,43 @@
  * to render correctly whichever of the two floors it is loaded next to.
  */
 
-/* The one rule in here that reaches outside the orb: the orb is absolutely placed over the
-   conversation, so the conversation has to be the containing block. chat-ui.css is another
-   agent's file, and a one-line `position` is a smaller intrusion than a wrapper element. */
-.cv-body {
-  position: relative;
+/* The host: one fixed layer over everything, owned by js/voice-session.js. It never takes a tap
+   it was not offered — only the orb and its controls turn pointer events back on. */
+.vo-host {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
 }
 
 .vo {
   position: absolute;
   inset: 0;
-  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0;
   padding: 16px;
-  /* The conversation is still there, still scrollable, just behind a veil of paper. */
+  /* How far off the bottom the docked orb sits. js/voice-session.js measures the reader's own
+     thumb row and writes this, so the orb is above the buttons and not on them. */
+  --dock-gap: 24px;
+  --dock-scale: 0.42;
+  /* The screen behind is still there, still scrollable, just behind a veil of paper. */
   background: color-mix(in srgb, var(--bg, var(--paper, #ece7dc)) 88%, transparent);
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
-  /* Nothing here is a scroll container: the chevron hands the scroll back to the transcript. */
+  pointer-events: auto;
+  /* Nothing here is a scroll container: docking hands the scroll back to the page. */
   overscroll-behavior: contain;
+  transition: background-color 0.18s linear, backdrop-filter 0.18s linear;
 }
 
 .vo[hidden] {
   display: none !important;
 }
 
-/* ---------- the live transcript line, above the orb ---------- */
+/* ---------- the live transcript line ---------- */
 
 .vo-line {
   flex: 0 0 auto;
@@ -73,7 +84,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.18s ease;
 }
 
 .vo-line.is-on {
@@ -95,9 +106,12 @@
   background: none;
   appearance: none;
   cursor: pointer;
+  pointer-events: auto;
   /* the disc itself is painted by ::before so the ring can sit outside it and not be scaled */
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  /* The dock. One property, one duration, the compositor's own. */
+  transition: transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 .vo-orb::before {
@@ -179,13 +193,48 @@
   line-height: 1;
   text-transform: uppercase;
   color: var(--fg, var(--ink, #141414));
+  opacity: 1;
+  transition: opacity 0.18s ease;
 }
 
-/* ---------- leave, and the way back to the conversation ---------- */
+/* ---------- the spec chip ---------- */
+
+/* A figure and the page it is printed on, in the same ink as everything else this app prints on
+   paper. It arrives under the orb, it is never in the way, and it is gone in five seconds. */
+.vo-chip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(64px + env(safe-area-inset-bottom));
+  max-width: min(84vw, 420px);
+  padding: 8px 14px;
+  border: 3px solid var(--line, var(--ink, #141414));
+  background: var(--accent-2, var(--yellow, #ffe600));
+  color: var(--accent-2-ink, #141414);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);
+  pointer-events: none;
+}
+
+.vo-chip.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- leave, and the way to the manual ---------- */
 
 .vo-x {
   position: absolute;
-  top: 8px;
+  top: calc(8px + env(safe-area-inset-top));
   left: 8px;
   width: 44px;
   height: 44px;
@@ -201,6 +250,8 @@
   line-height: 1;
   cursor: pointer;
   appearance: none;
+  pointer-events: auto;
+  transition: opacity 0.18s ease;
 }
 
 .vo-x:active {
@@ -208,8 +259,8 @@
   color: #fff;
 }
 
-/* The chevron: the transcript is behind the orb and this is how you say so. Tapping it fades the
-   veil out and hands the scroll back; the session keeps running. */
+/* The chevron: the manual is behind the orb and this is how you say so. Tapping it is the same
+   command as tapping the orb — dock, and keep listening. */
 .vo-back {
   position: absolute;
   left: 50%;
@@ -229,6 +280,8 @@
   opacity: 0.5;
   cursor: pointer;
   appearance: none;
+  pointer-events: auto;
+  transition: opacity 0.18s ease;
 }
 
 .vo-back svg {
@@ -238,32 +291,63 @@
   height: 16px;
 }
 
-/* Peeking at the conversation: the veil goes, the orb shrinks into the bottom corner and keeps
-   running, and the transcript takes the taps. Still no layout change — a transform and opacity. */
-.vo.is-peek {
+/* ---------- docked ----------
+ *
+ * The veil goes, the page takes the taps again, and the orb translates into the bottom-right
+ * corner at --dock-scale. Everything here is transform and opacity: the reader underneath does
+ * not reflow, does not scroll, and does not know this happened. */
+
+.vo.is-compact {
   background: transparent;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   pointer-events: none;
 }
 
-.vo.is-peek .vo-line,
-.vo.is-peek .vo-state,
-.vo.is-peek .vo-back {
+.vo.is-compact .vo-state,
+.vo.is-compact .vo-back,
+.vo.is-compact .vo-x {
   opacity: 0;
+  pointer-events: none;
 }
 
-.vo.is-peek .vo-orb {
-  pointer-events: auto;
-  transform: translate(calc(50vw - 56px), calc(50vh - 92px)) scale(0.3);
+.vo.is-compact .vo-orb {
+  transform: translate(
+      calc(50vw - 50% * var(--dock-scale) - 16px - env(safe-area-inset-right)),
+      calc(50vh - 50% * var(--dock-scale) - var(--dock-gap) - env(safe-area-inset-bottom))
+    )
+    scale(var(--dock-scale));
 }
 
-.vo.is-peek .vo-x {
-  pointer-events: auto;
+/* The transcript beside the orb, not over it: a strip along the bottom, ending where the orb
+   begins. It is the only text on the reader's screen that is not the manual, so it is small,
+   quiet, and one line. */
+.vo.is-compact .vo-line {
+  position: absolute;
+  left: 12px;
+  right: calc(16px + 88px);
+  bottom: calc(var(--dock-gap) + 14px + env(safe-area-inset-bottom));
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 7px 12px;
+  border: 3px solid var(--line, var(--ink, #141414));
+  background: var(--card, #fff);
+  text-align: left;
+  font-size: 0.78rem;
 }
 
-.vo-orb {
-  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+.vo.is-compact .vo-chip {
+  left: 12px;
+  right: calc(16px + 88px);
+  bottom: calc(var(--dock-gap) + 58px + env(safe-area-inset-bottom));
+  max-width: none;
+  transform: translate(0, 8px);
+  text-align: left;
+}
+
+.vo.is-compact .vo-chip.is-on {
+  transform: translate(0, 0);
 }
 
 /* ---------- 390x844 ---------- */
@@ -272,6 +356,10 @@
   .vo-orb {
     width: 132px;
     height: 132px;
+  }
+
+  .vo {
+    --dock-scale: 0.46;
   }
 
   .vo-line {
@@ -292,32 +380,56 @@
     height: 208px;
   }
 
+  .vo {
+    --dock-scale: 0.38;
+  }
+
   .vo-line {
     font-size: 1.05rem;
+  }
+
+  .vo.is-compact .vo-line,
+  .vo.is-compact .vo-chip {
+    left: auto;
+    right: calc(16px + 112px);
+    width: min(420px, 40vw);
   }
 }
 
 /* ---------- reduced motion ---------- *
- * No breathing, no ripple, no pulse. The level is still worth showing — it is the only proof the
- * mic is hearing anything — so it becomes a ring that fills, which changes no size and no position:
- * js writes --lvl and the conic gradient reads it. */
+ * No breathing, no ripple, no pulse, and the dock simply is the other size. The level is still
+ * worth showing — it is the only proof the mic is hearing anything — so it becomes a ring that
+ * fills, which changes no size and no position: js writes --lvl and the conic gradient reads it. */
 
 @media (prefers-reduced-motion: reduce) {
+  .vo,
+  .vo-orb,
+  .vo-line,
+  .vo-state,
+  .vo-chip,
+  .vo-back,
+  .vo-x {
+    transition: none;
+  }
+
   .vo-orb::before {
     transform: none;
   }
 
   .vo-orb::after {
     transform: none;
-    transition: opacity 0.2s linear;
+  }
+
+  .vo.is-compact .vo-orb {
+    transform: translate(
+        calc(50vw - 50% * var(--dock-scale) - 16px - env(safe-area-inset-right)),
+        calc(50vh - 50% * var(--dock-scale) - var(--dock-gap) - env(safe-area-inset-bottom))
+      )
+      scale(var(--dock-scale));
   }
 
   .vo-orb.is-thinking .vo-ring {
     animation: none;
-  }
-
-  .vo-orb {
-    transition: none;
   }
 
   .vo-orb .vo-ring:first-child {

@@ -442,6 +442,7 @@ export async function start(opts = {}) {
     acked: false, // this turn has already had its one acknowledgement
     said: false, // this turn has made a sound
     spoke: false, // this turn already has an assistant line in the transcript
+    env: 0, // smoothed mic envelope; every threshold below is measured against this, not a frame
     loudMs: 0, // how long the mic has been over the barge threshold, in ms
     ducked: false,
     unduck: 0,
@@ -835,8 +836,12 @@ function listen(session, rms, ms, say) {
     return false;
   }
 
+  // Leaky, not consecutive. A render quantum is 5 ms and speech dips below any threshold between
+  // phonemes - "wait, stop" is mostly gaps - so a counter that resets on the first quiet frame
+  // never reaches BARGE_MS and the rider is never heard. Quiet frames drain the count at half
+  // speed instead: sustained energy still gets there, one loud clang still does not.
   if (rms < barge(session)) {
-    session.loudMs = 0;
+    session.loudMs = Math.max(0, session.loudMs - ms * 0.35);
     return false;
   }
   session.loudMs += ms;
@@ -907,12 +912,19 @@ async function capture(session, ws, rate, say) {
     for (let i = 0; i < chunk.length; i++) sum += chunk[i] * chunk[i];
     const rms = Math.sqrt(sum / (chunk.length || 1));
     const ms = (chunk.length / (ctx.sampleRate || 1)) * 1000;
+    // An ENVELOPE, not the raw frame. A render quantum is 5 ms and speech is mostly gaps at that
+    // resolution - "wait, stop" spends half its quanta under any threshold you pick - so judging
+    // frames one at a time never sees a sentence. Fast attack so the first syllable counts, slow
+    // release so the gaps inside a word do not. Measured against the same wav: raw frames never
+    // accumulated the 120 ms a barge-in needs; the envelope gets there in 150 ms.
+    session.env += (rms - session.env) * (rms > session.env ? 0.5 : 0.08);
+    const env = session.env;
     // The orb rides the mic even while the guard is shut: he has to see that it hears him, and
     // the two are different questions. What he sees is never what we forward.
     session.level = Math.max(rms, session.level * LEVEL_DECAY);
 
-    const open = listen(session, rms, ms, say);
-    if (!open) duck(session, rms, say);
+    const open = listen(session, env, ms, say);
+    if (!open) duck(session, env, say);
 
     const merged = new Float32Array(queue.length + chunk.length);
     merged.set(queue);
