@@ -635,3 +635,6 @@ html[data-swapping] *::after {
     transition: none !important;
   }
 }
+
+/* the final logo mark beside the title; its own navy tile so it reads on every theme */
+.ticket-logo { width: 28px; height: 28px; border-radius: 7px; margin-right: 10px; vertical-align: middle; flex: 0 0 auto; }
