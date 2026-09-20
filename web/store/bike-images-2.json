@@ -6088,6 +6088,18 @@
     "via": "alias",
     "aliasOf": "honda|crf150r"
   },
+  "honda|crf250f": {
+    "image": "store/img/bikes2/honda-crf250f.webp",
+    "thumb": "store/img/bikes2/honda-crf250f.thumb.webp",
+    "title": "2020 Honda CRF250 Mission Impossible Dead Reckoning Part One Petersen Automotive Museum.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Honda_CRF250_Mission_Impossible_Dead_Reckoning_Part_One_Petersen_Automotive_Museum.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-crf250f.hero.webp"
+  },
   "honda|crf250l-abs": {
     "image": "store/img/bikes/honda-crf250l.webp",
     "thumb": "store/img/bikes/honda-crf250l-thumb.webp",

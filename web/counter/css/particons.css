@@ -11,6 +11,7 @@
   --part-icon-size: 48px;
   --part-icon-radius: 12px;
   --part-icon-pad: 2px;
+  /* Part icons are line art: the tile stays paper in every theme, or the strokes vanish. */
   --part-icon-tile: #f4f0e7;
   --part-icon-edge: #ddd6c6;
 }
@@ -59,14 +60,14 @@
 
 /* On the ink background the paper tile goes to full card white. */
 .part-icon.on-ink {
-  --part-icon-tile: #fff;
+  --part-icon-tile: var(--page);
   --part-icon-edge: transparent;
 }
 
 /* Selected / active row: the tile takes the yellow the app uses for "now". */
 .part-icon.is-on {
-  --part-icon-tile: #ffe600;
-  --part-icon-edge: #141414;
+  --part-icon-tile: var(--accent-2);
+  --part-icon-edge: var(--page-ink);
 }
 
 @media (prefers-reduced-motion: no-preference) {

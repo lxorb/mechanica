@@ -1,0 +1,223 @@
+{
+  "pitch": "long-lake",
+  "order": 2,
+  "title": "Designed for the second deployment",
+  "target": "Long Lake",
+  "length": "5:00",
+  "angle": "AI into an unglamorous service business. Cycle time, error rate and unit cost against a named baseline — and our own weakest column named in minute 4 instead of lost in Q&A.",
+  "endline": "Don't trust the AI. Trust the manual.",
+  "marks": [
+    { "t": "0:00", "do": "Phone down. 400 hours." },
+    { "t": "0:35", "do": "His two reasons. 95% and $4." },
+    { "t": "0:50", "do": "mt-07 → 2018 → Yes. Put the phone DOWN." },
+    { "t": "1:05", "do": "The diagram. Three zone labels only. 90 s." },
+    { "t": "1:25", "do": "390 duke → 2024 → type chain." },
+    { "t": "1:55", "do": "Open p.77. STOP TALKING." },
+    { "t": "2:20", "do": "Chat → chain is loose, what do I do → tap a chip." },
+    { "t": "2:45", "do": "THE CAR. civic → tire pressure → flat tyre. Never cut this." },
+    { "t": "3:25", "do": "The MT-07 is ready. Type oil. \"Nobody touched it.\"" },
+    { "t": "3:45", "do": "The metrics that moved." },
+    { "t": "4:20", "do": "The honest column. Say it flat, then the plan." },
+    { "t": "4:40", "do": "Back to the marked page. Close." }
+  ],
+  "slides": [
+    {
+      "kind": "number",
+      "at": "0:00",
+      "label": "A motorcycle workshop in Germany",
+      "value": "400",
+      "unit": "hours",
+      "sub": "a year, per mechanic, *looking for a page*. That is his number — and *EUR 36–48k* of billable time is arithmetic on his number.",
+      "notes": [
+        "*One person, not a market.* \"A friend of mine.\" Not \"shops everywhere\", not \"the $X billion repair industry\". Long Lake buys individual businesses; they think in units of one company, and so should you.",
+        "Say the 400 hours, then stop for two seconds.",
+        "Say ~he says~ and ~that's arithmetic on his number~ out loud. Do not quote a TAM — we have no sourced one."
+      ],
+      "defs": [
+        { "n": "400 h", "d": "20% × 2,000 h — arithmetic on his number and an assumed 2,000-hour year (computed)." },
+        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate (assumed). Always say \"he says\"." },
+        { "n": "EUR 36k-48k", "d": "400 h × EUR 90–120/h (computed)." }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "0:35",
+      "kicker": "He does not use AI. Two reasons, both fair.",
+      "items": [
+        { "value": "95%", "label": "right — and he signs for the 5%", "sub": "A wrong torque figure is not a wrong paragraph. It is a wheel that comes off." },
+        { "value": "$4", "label": "a question, when he tried it", "sub": "The model had to read a 500-page manual. He hit his limit before lunch." }
+      ],
+      "notes": [
+        "*These are his objections, not your argument.* You are agreeing with a skeptic, in a room full of people whose job is installing AI into businesses run by exactly this kind of skeptic.",
+        "If you have thirty spare seconds anywhere, spend them here: ~the hardest part of the FDE job you're hiring for is this guy, and he's right.~",
+        "Do not blend his ~$4 with our $12.40 — different measurements of different manuals."
+      ],
+      "defs": [
+        { "n": "95%", "d": "his line, quoted: \"95% right isn't enough when I sign for the 5%.\" His number, not ours.", "src": "BRIEF.md" },
+        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed)." }
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "1:05",
+      "title": "Built once. Deployed N times.",
+      "caption": "Grey took the whole hackathon and is never paid for again. Orange is what one new vehicle costs. Black is what a new shop costs, which is nothing.",
+      "flow": {
+        "bands": [
+          {
+            "label": "Built once — every deployment inherits this, forever",
+            "tone": "ghost",
+            "rows": [
+              {
+                "gap": 30,
+                "items": [
+                  { "tone": "white", "t": "84 publisher hosts,|none with an API", "sub": "34 adapters + 26 crawl fragments · Ducati needs a headful browser over CDP · 17 makes documented unreachable" },
+                  { "tone": "white", "t": "doctype.py", "sub": "8 document kinds from URL and title alone, never by downloading" },
+                  { "tone": "green", "t": "ground.py", "sub": "a quote not found character-for-character in the PDF text layer is DROPPED" },
+                  { "tone": "green", "t": "the evals", "sub": "130 in-scope queries · 20 off-topic negative controls · every digit checked" }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Per vehicle — automatic, nobody in the loop",
+            "tone": "orange",
+            "labelColor": "#e85d04",
+            "rows": [
+              {
+                "gap": 34,
+                "items": [
+                  { "tone": "orange", "t": "fetch the OEM PDF", "sub": "SHA-256 dedupe" },
+                  { "tone": "orange", "t": "text layer|+ coordinates", "sub": "zero LLM" },
+                  { "tone": "orange", "t": "one structuring pass", "sub": "5-page windows · 32 workers" },
+                  { "tone": "orange", "t": "a searchable manual", "sub": "readable 1.3 s · searchable 40.4 s · $0.095, once" }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Per shop — zero engineering, zero migration, zero data to import",
+            "tone": "ink",
+            "rows": [
+              {
+                "gap": 34,
+                "items": [
+                  { "tone": "paper", "t": "open the URL" },
+                  { "tone": "paper", "t": "type what is wrong,|in the words a mechanic uses" },
+                  { "tone": "ink", "t": "THE OEM PAGE,|answering lines marked", "sub": "$0.0006 an ask — replaces reading the 775-page manual to a model, $12.40" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "*Say the zone labels, do not read the boxes.* Ninety seconds on this slide and you touch three things only: eighty-four portals with no API; nine cents and forty seconds per new vehicle with no human in it; zero engineering per new shop.",
+        "If they lean in, give them the Ducati / Kawasaki / Honda war stories — an operator who has integrated a legacy ERP recognises that suffering instantly, and it is the fastest credibility you will get all day.",
+        "\"The second deployment is the only one that matters, and it is already cheaper than the first.\""
+      ],
+      "defs": [
+        { "n": "84", "d": "portals — distinct row.site in registry.json, the adapter's own name for the publisher portal (measured)." },
+        { "n": "17", "d": "portals walked to the end and written off — docs/MANUALS.md 'Checked and genuinely unreachable' (measured)." },
+        { "n": "1.3 s", "d": "a brand-new manual → readable — live run, KTM 390 Duke 2014, 182 p, 2026-09-20 (measured)." },
+        { "n": "40.4 s", "d": "a brand-new manual → fully searchable, same run (measured)." },
+        { "n": "$0.095", "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests (measured)." },
+        { "n": "$0.0006", "d": "six asks against the 775-page manual, $0.00357 total — live GET /api/cost delta, 2026-09-20. Lead with this and $12.40 and let them divide.", "src": "README.md" },
+        { "n": "$12.40", "d": "naive $/question, largest deployed manual — naive_usd(775), past the 272k long-context line so billed 2× (measured)." },
+        { "n": "775", "d": "largest manual deployed, in pages — max(manual.pages), live GET /api/manuals (measured)." }
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "1:55",
+      "title": "The answer is a page",
+      "line": "KTM's page 77, and the marker sits on the two lines that answer him.",
+      "points": [
+        "\"If we can't find the ink, we don't draw the marker.\"",
+        "Five minutes of thumbing a PDF became two seconds.",
+        "That is the cycle time, and it is the whole product."
+      ],
+      "image": "general/05-book.png",
+      "notes": [
+        "*This is the slide. Stop talking.* Let them read the marked line.",
+        "Then one sentence: ~it's only there because we found that exact text in KTM's PDF — if we can't find the ink, we don't draw the marker.~ That sentence is the entire trust story; everything else is convenience.",
+        "The car moment comes next. Do not oversell it — type `civic`, tap it, ask, open the page, then: ~nobody wrote a car version.~ It lands harder if you're bored by it."
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "3:45",
+      "kicker": "The metrics that moved",
+      "items": [
+        { "value": "5 min → 2 s", "label": "cycle time", "sub": "p95 3.33 s over a 150-query eval · 3.95 s cold, 0.088 s repeated" },
+        { "value": "100% / 0 of 20", "label": "error rate", "sub": "right section first on 130 in-scope questions · 0 of 20 off-topic answered · 0 invented numbers" },
+        { "value": "$0.0006 vs $12.40", "label": "unit cost", "sub": "an ask against the same 775-page manual read to a model once" },
+        { "value": "535 manuals", "label": "what the corpus cost", "sub": "95,914 pages · 91,388 sections · the live API has spent $8.93 as of 2026-09-20 09:55" }
+      ],
+      "notes": [
+        "*Say the two numbers and shut up.* Do not say \"thirty-two thousand times cheaper\". Say \"twelve dollars forty\" and \"six ten-thousandths of a dollar\" and let them divide. Operators trust arithmetic they did themselves.",
+        "Cycle time, error rate, unit cost — that is their bullet #4, in their order.",
+        "Never quote the live ledger without the timestamp. It moved $8.08 → $8.93 in thirteen minutes on the day these files were written."
+      ],
+      "defs": [
+        { "n": "3.33 s", "d": "an ask, p95 — api/eval/report.md, 150 queries, sequential, cold cache (measured)." },
+        { "n": "3.95 s", "d": "that ask cold — live timed POST /api/ask, Honda Civic Sedan 2022, 'how do I change a flat tyre' → p.709, 2026-09-20 (measured).", "src": "long-lake.md" },
+        { "n": "0.088 s", "d": "the same ask repeated — served from ask._cache at $0 (measured).", "src": "long-lake.md" },
+        { "n": "100%", "d": "right section first, in-scope questions — 100% of 130, api/eval/report.md (measured)." },
+        { "n": "20 of 20", "d": "off-topic questions returned empty instead of guessed at (measured)." },
+        { "n": "$0.0006", "d": "six asks against the 775-page manual — $0.00357 total, live GET /api/cost delta 2026-09-20.", "src": "README.md" },
+        { "n": "$12.40", "d": "naive $/question on that same manual — live GET /api/cost → naivePerAsk (measured)." },
+        { "n": "535", "d": "manuals indexed and searchable now — live GET /api/manuals (measured)." },
+        { "n": "95,914", "d": "printed pages behind them (measured)." },
+        { "n": "91,388", "d": "sections indexed (measured)." },
+        { "n": "$8.93", "d": "what the DEPLOYED app has spent — live GET /api/cost over 1,633 calls, 2026-09-20. Moves every hour, resets on redeploy (measured)." }
+      ]
+    },
+    {
+      "kind": "statement",
+      "at": "4:20",
+      "kicker": "What we don't have yet",
+      "text": "This is not in daily production use. One shop. One mechanic. Zero installs, no adoption data.",
+      "sub": "*Ten independent shops for one month*, and the only number I care about is how much of that twenty percent comes back. Everything you'd need to measure it is already logged per route.",
+      "notes": [
+        "*Deliver the weakness flat, then immediately give the plan.* Do not apologise, do not hedge with \"but\".",
+        "\"This is not in daily production use. Here's what I'd do about it: ten shops, one month, and the number is how much of the twenty percent comes back.\" The plan is what turns the concession into a credential.",
+        "This being the last slide is deliberate. In this room, the team that puts its own weakest column on the final slide is the team that gets believed about the other five.",
+        "Then the close, back on the marked page: ~there is not one AI-written sentence on it. The model never gets to be the answer — it only gets to point.~"
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "long-lake.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not claim installs, adoption or throughput data: one design partner, zero installs. That is the deduction you name yourself.",
+            "Do not quote a TAM — we have no sourced one.",
+            "Do not lead with a multiple. Lead with $12.40 and $0.0006 and let them divide.",
+            "Do not demo anything pending a key. Do not say the word Elastic.",
+            "Cut in this order if short: the chat at 2:20, then the diagram. NEVER cut the car at 2:45."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
+            "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
+            "Never quote a running ledger total without the date beside it.",
+            "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual. Distinct fetchable PDFs is 14,770.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": [
+        "Presenter-only. The audience sees the end card.",
+        "Booth first: ask what the prize is actually for. §10 of long-lake.md says which three slides to swap for each answer."
+      ]
+    }
+  ]
+}

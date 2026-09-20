@@ -89,7 +89,7 @@
   min-width: 44px;
   height: auto;
   min-height: 44px;
-  border: 2px solid rgba(255, 255, 255, 0.55);
+  border: 2px solid var(--slab-line);
 }
 
 [data-screen="book"] .bar-word {
@@ -118,7 +118,7 @@
   content: "";
   position: absolute;
   inset: 5px 8px;
-  border: 2px solid rgba(255, 255, 255, 0.55);
+  border: 2px solid var(--slab-line);
 }
 
 [data-screen="book"] .book-cover.is-back::before {
@@ -277,7 +277,7 @@
 }
 
 [data-screen="book"] .page-sheet.ask-flash {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: -3px;
 }
 
@@ -386,7 +386,7 @@
   min-height: 48px;
   padding: 10px 10px 10px 12px;
   border: 0;
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 3px solid var(--line);
   background: var(--card);
   color: var(--ink);
   font-family: Barlow, system-ui, sans-serif;
@@ -454,7 +454,7 @@
   height: 52px;
   min-height: 44px;
   box-sizing: border-box;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   border-radius: 0;
   background: var(--card);
   color: var(--ink);
@@ -468,7 +468,7 @@
 
 [data-screen="book"] .ask-q:focus,
 [data-screen="book"] .ask-q:focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: -3px;
 }
 
@@ -506,7 +506,7 @@
   width: 100%;
   min-height: 44px;
   padding: 12px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   background: var(--card);
   color: inherit;
   text-align: left;

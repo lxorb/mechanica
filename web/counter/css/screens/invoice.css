@@ -78,7 +78,7 @@
   gap: 8px;
   padding: 8px 12px;
   background: var(--paper);
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 3px solid var(--line);
 }
 
 .pv-q {
@@ -86,7 +86,7 @@
   min-width: 0;
   min-height: 44px;
   padding: 8px 12px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   border-radius: 0;
   background: var(--card);
   color: var(--ink);
@@ -97,7 +97,7 @@
 }
 
 .pv-q:focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -171,7 +171,7 @@
   margin: 0 0 8px;
   padding: 8px 0 5px;
   background: var(--paper);
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 3px solid var(--line);
 }
 
 .pv-tiles {
@@ -191,7 +191,7 @@
   text-align: left;
   min-height: 44px;
   padding: 8px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   border-radius: 0;
   background: var(--card);
   color: inherit;
@@ -201,7 +201,7 @@
 }
 
 .pv-tile:focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -219,7 +219,7 @@
   display: block;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #f6f2e9;
+  background: var(--page-tint);
   box-shadow: inset 0 0 0 1px var(--rule);
 }
 
@@ -285,7 +285,7 @@
   font-variant-numeric: tabular-nums;
   padding: 3px 5px;
   background: var(--yellow);
-  box-shadow: inset 0 0 0 2px var(--ink);
+  box-shadow: inset 0 0 0 2px var(--line);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -306,8 +306,8 @@
   aspect-ratio: 4 / 3;
   max-height: 42dvh;
   overflow: hidden;
-  background: #f6f2e9;
-  border: 3px solid var(--ink);
+  background: var(--page-tint);
+  border: 3px solid var(--line);
 }
 
 .pv-det-name {
@@ -347,7 +347,7 @@
   font-variant-numeric: tabular-nums;
   padding: 10px 10px;
   background: var(--yellow);
-  box-shadow: inset 0 0 0 3px var(--ink);
+  box-shadow: inset 0 0 0 3px var(--line);
   word-break: break-all;
 }
 
@@ -389,7 +389,7 @@
 .pv-pill {
   min-height: 44px;
   padding: 0 12px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   border-radius: 0;
   background: var(--card);
   color: var(--ink);
@@ -425,14 +425,14 @@
   align-items: center;
   min-height: 44px;
   padding: 9px 10px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   background: var(--card);
   color: inherit;
   text-decoration: none;
 }
 
 .pv-offer:focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -486,7 +486,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 2px 5px;
-  box-shadow: inset 0 0 0 2px var(--ink);
+  box-shadow: inset 0 0 0 2px var(--line);
 }
 
 .pv-tag.is-in {
@@ -545,7 +545,7 @@
 .pv-bar {
   height: 6px;
   background: var(--card);
-  box-shadow: inset 0 0 0 2px var(--ink);
+  box-shadow: inset 0 0 0 2px var(--line);
 }
 
 .pv-bar i {
@@ -564,9 +564,9 @@
 
 .pv-skel-row {
   height: 66px;
-  border: 3px solid var(--ink);
-  background-color: #f1ece1;
-  background-image: linear-gradient(90deg, #f1ece1 25%, #e2dccd 38%, #f1ece1 62%);
+  border: 3px solid var(--line);
+  background-color: var(--shim);
+  background-image: linear-gradient(90deg, var(--shim) 25%, var(--shim-hi) 38%, var(--shim) 62%);
   background-size: 400% 100%;
   animation: pv-shim 1.15s linear infinite;
 }
@@ -615,7 +615,7 @@
 
   .pv-detail {
     flex: 0 0 clamp(360px, 36vw, 520px);
-    border-left: 3px solid var(--ink);
+    border-left: 3px solid var(--line);
     background: var(--paper);
   }
 

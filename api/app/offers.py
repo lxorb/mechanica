@@ -15,11 +15,18 @@ Every surviving offer is then fetched (HEAD, GET on a 405) with a 2.5 s timeout,
 or a dead host drops it. Offers carry `priceUsd` beside `price`/`currency` and arrive sorted by it, so a
 list of eight shops in five currencies still reads cheapest-first without the browser doing arithmetic.
 
-Deadline: the counter aborts this request at 6 s (OFFERS_MS in web/counter/js/ttm.js), and a cold web
-search takes 10-15 s, so a cold click used to show nothing at all. The lookup now runs on its own thread:
-the request leaves at DEADLINE with whatever is verified by then, the thread keeps going and writes the
-finished answer to the cache, and the next click - or the /parts/offers/warm prefetch the Parts view
-fires on open - serves it in a millisecond.
+Cold latency. Measured: one web_search answer is 14-18 s wall clock, nearly all of it the model writing
+15 offer lines; a second parallel search leg is just as slow as the first, so splitting the query buys
+nothing. What the request used to do was wait 4.5 s, return zero offers, and leave the Parts sheet to
+ask again 10 s later - 15.4 s before a rider saw a price.
+
+So the answer is read as it is written. The line-per-offer format was chosen to be parseable; streaming
+it makes it parseable *early*. Each completed line is parsed the moment its newline arrives and its URL
+goes straight into the verification pool, so shops are being checked while the model is still writing
+the next one. The request leaves as soon as ENOUGH offers are verified - typically well before the model
+has finished - and the lookup thread keeps going, verifies the rest and writes the finished answer to the
+cache, so the next click, or the /parts/offers/warm prefetch the Parts view fires on open, is a
+millisecond. DEADLINE is the ceiling, not the wait.
 
 Cache: store.put_offers(manual_id, part_id, result); a result under 24 h old is served as-is for $0.
 A result that found nothing expires after an hour instead, so one bad search does not sit there all day.
@@ -28,6 +35,7 @@ A result that found nothing expires after an hour instead, so one bad search doe
 import re
 import threading
 import time
+from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urlparse
 
@@ -46,8 +54,12 @@ MAX_OFFERS = 15
 VERIFY_TIMEOUT = 2.5
 VERIFY_WORKERS = 16
 SEARCH_CALLS = 2
-# well under the counter's own 6 s abort, so a cold click still paints whatever was verified in time
-DEADLINE = 4.5
+CONTEXT_SIZE = "low"
+# The ceiling on a cold click, not the wait: the request leaves the moment ENOUGH shops have been
+# verified. ttm.js allows 25 s (OFFERS_MS) and the Parts sheet re-asks 10 s after an empty answer,
+# so anything that returns real offers inside this beats a 15 s empty-then-retry by a mile.
+DEADLINE = 7.5
+ENOUGH = 4
 WARM_PARTS = 12
 WARM_WORKERS = 12
 
@@ -361,6 +373,43 @@ def verify(offers: list[Offer], on_live=None) -> list[Offer]:
     return live
 
 
+class Checker:
+    """Verification that can start before the search has finished. Offers are handed in one at a
+    time as their line is parsed off the stream; each URL is checked on the pool straight away and
+    the ones that answer are handed to `on_live`. `close()` waits for whatever is still in flight."""
+
+    def __init__(self, on_live):
+        self.on_live = on_live
+        self.client = httpx.Client(
+            timeout=VERIFY_TIMEOUT,
+            follow_redirects=True,
+            headers={"User-Agent": UA, "Accept": "text/html,*/*"},
+        )
+        self.pool = ThreadPoolExecutor(max_workers=VERIFY_WORKERS, thread_name_prefix="verify")
+        self.pending: list = []
+        self.seen: set[str] = set()
+
+    def add(self, offer: Offer) -> None:
+        key = _key(offer)
+        if key in self.seen or len(self.seen) >= MAX_OFFERS * 2:
+            return
+        self.seen.add(key)
+        self.pending.append(self.pool.submit(self._check, offer))
+
+    def _check(self, offer: Offer) -> None:
+        if alive(offer.url, self.client):
+            self.on_live(offer)
+
+    def close(self) -> None:
+        for future in self.pending:
+            try:
+                future.result(timeout=VERIFY_TIMEOUT * 2)
+            except Exception:
+                pass
+        self.pool.shutdown(wait=False)
+        self.client.close()
+
+
 # --- assembly ------------------------------------------------------------
 
 
@@ -381,18 +430,102 @@ def dedupe(offers: list[Offer]) -> list[Offer]:
     return list(best.values())
 
 
-def search(route: str, query: str, part: Part, bike: Bike | None, hint: str | None = None) -> tuple[list[Offer], float]:
+def _user(query: str, part: Part, bike: Bike | None, hint: str | None) -> str:
     ride = f"{bike.make} {bike.model} {bike.year}" if bike else "this motorcycle"
     printed = part.oem or part.spec or hint or part.name
-    user = (
+    return (
         f"Part: {part.name}\n"
         f"Printed in the manual: {printed}\n"
         f"Bike: {ride}\n"
         f"Search: {query}\n"
         f"Up to {MAX_OFFERS} offers, variants on their own lines."
     )
-    text, cost = llm.web_search(route, settings.model_offers, SYSTEM, user, max_calls=SEARCH_CALLS)
-    offers = parse_lines(text)
+
+
+def stream_lines(route: str, system: str, user: str) -> Iterator[tuple[str, object]]:
+    """The same search llm.web_search makes, read as it is written: yields ("delta", text) while
+    the model writes and exactly one ("usd", float) when it stops.
+
+    It reaches for llm.client() and llm.log() instead of llm.web_search() because the answer has to
+    be parsed while it is still arriving - the whole point - and llm.py owns the non-streaming
+    shape. Same tool, same effort, same cost accounting, same door; llm.web_search is still the
+    fallback in search() below when a stream cannot be opened at all."""
+    usage = None
+    calls = 0
+    with llm.client().responses.stream(
+        model=settings.model_offers,
+        instructions=system,
+        input=[{"role": "user", "content": [llm.text_part(user)]}],
+        tools=[{"type": "web_search", "search_context_size": CONTEXT_SIZE}],
+        reasoning={"effort": "low"},
+        max_tool_calls=SEARCH_CALLS,
+    ) as events:
+        for event in events:
+            kind = getattr(event, "type", "")
+            if kind == "response.output_text.delta":
+                delta = getattr(event, "delta", "")
+                if delta:
+                    yield "delta", delta
+            elif kind == "response.completed":
+                response = getattr(event, "response", None)
+                usage = getattr(response, "usage", None)
+                calls = sum(
+                    1
+                    for item in (getattr(response, "output", None) or [])
+                    if getattr(item, "type", "") == "web_search_call"
+                )
+    cost = 0.0
+    if usage is not None:
+        cost = llm.log(route, settings.model_offers, usage, extra_usd=calls * llm.WEB_SEARCH_CALL_USD)
+    yield "usd", cost
+
+
+def _read(route: str, user: str, on_offer) -> tuple[list[Offer], float, str]:
+    """Stream the answer and parse every line the moment its newline lands. A stream that cannot be
+    opened at all - an SDK without it, a proxy that buffers - falls back to the plain request, which
+    is the behaviour this had before and is only slower, never wrong."""
+    offers: list[Offer] = []
+    text = ""
+
+    def take(chunk: str) -> None:
+        for offer in parse_lines(chunk):
+            offers.append(offer)
+            if on_offer:
+                on_offer(offer)
+
+    try:
+        cost = 0.0
+        buffer = ""
+        for kind, value in stream_lines(route, SYSTEM, user):
+            if kind == "usd":
+                cost = float(value or 0.0)
+                continue
+            buffer += str(value)
+            text += str(value)
+            while "\n" in buffer:
+                line, buffer = buffer.split("\n", 1)
+                take(line)
+        take(buffer)
+        return offers, cost, text
+    except Exception:
+        text, cost = llm.web_search(route, settings.model_offers, SYSTEM, user, max_calls=SEARCH_CALLS)
+        offers = []
+        take(text)
+        return offers, cost, text
+
+
+def search(
+    route: str,
+    query: str,
+    part: Part,
+    bike: Bike | None,
+    hint: str | None = None,
+    on_offer=None,
+) -> tuple[list[Offer], float]:
+    """`on_offer` is handed each offer the moment its line is complete, so verification of the
+    first shop starts while the model is still writing the fifteenth."""
+    user = _user(query, part, bike, hint)
+    offers, cost, text = _read(route, user, on_offer)
     if not offers and URL_IN.search(text or ""):
         # the format drifted but there is something there: one cheap structured re-read of the same text
         rows = llm.structured(
@@ -408,6 +541,9 @@ def search(route: str, query: str, part: Part, bike: Bike | None, hint: str | No
             for row in rows.offers
             if _buyable(row.url) and 0 < row.price < 100_000
         ]
+        for offer in offers:
+            if on_offer:
+                on_offer(offer)
     return offers, cost
 
 
@@ -498,23 +634,39 @@ class _Lookup:
         self.live: list[Offer] = []
         self.lock = threading.Lock()
         self.done = threading.Event()  # for waiting on, never for deciding what is finished
+        # ENOUGH verified shops is a good enough answer to send: the rest lands in the cache.
+        self.ready = threading.Event()
 
     def run(self) -> None:
+        checker = Checker(self._keep)
         try:
-            found, self.cost = search("offers", self.query, self.part, self.bike, self.hint)
-            verify(dedupe(found), on_live=self._keep)
+            found, self.cost = search(
+                "offers", self.query, self.part, self.bike, self.hint, on_offer=checker.add
+            )
+            checker.close()
+            if not self.live and found:  # a search that answered after the stream (the fallback)
+                verify(dedupe(found), on_live=self._keep)
             self.finished = True
             self._cache()
         except Exception:  # an outage is never cached: the next click tries again
             self.finished = False
         finally:
+            checker.close()
+            self.ready.set()
             self.done.set()
             with _running_lock:
                 _running.pop((self.manual_id, self.part_id), None)
 
+    def wait(self, seconds: float) -> None:
+        """Back as soon as there is something worth painting, and never longer than `seconds`."""
+        self.ready.wait(timeout=seconds)
+
     def _keep(self, offer: Offer) -> None:
         with self.lock:
             self.live.append(offer)
+            enough = len(self.live) >= ENOUGH
+        if enough:
+            self.ready.set()
 
     def snapshot(self) -> list[Offer]:
         with self.lock:
@@ -599,7 +751,7 @@ def offers(manual_id: str, part_id: str, bike: Bike | None) -> OffersResult:
     if bike is None and manual.bikeIds:
         bike = store.bike(manual.bikeIds[0])
     lookup = _start(manual_id, part_id, part, hint, bike)
-    lookup.done.wait(timeout=DEADLINE)
+    lookup.wait(DEADLINE)
     return lookup.result()
 
 

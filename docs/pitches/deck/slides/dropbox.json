@@ -1,0 +1,263 @@
+{
+  "pitch": "dropbox",
+  "order": 8,
+  "title": "The last mile is a folder",
+  "target": "Dropbox",
+  "length": "5:00",
+  "angle": "Owner's manuals are free, the service manual a shop needs is metered — so we index the copy the shop already bought.",
+  "endline": "Trust the manual — including the one you already paid for.",
+  "marks": [
+    { "t": "0:00", "do": "The chaos. Start the PDF drop underneath it." },
+    { "t": "0:45", "do": "Order. 14,770 fetchable PDFs, 13,537 vehicles." },
+    { "t": "1:00", "do": "\"And it is still the wrong document.\" Go quiet on nine euros an hour." },
+    { "t": "1:30", "do": "He already owns it. It is a PDF in a folder." },
+    { "t": "2:15", "do": "LIVE — drop the file, then ask the service manual a question." },
+    { "t": "3:15", "do": "How it is done. Three sentences, do not read the diagram." },
+    { "t": "4:00", "do": "What the model is allowed to do." },
+    { "t": "4:15", "do": "The last mile is a folder." }
+  ],
+  "slides": [
+    {
+      "kind": "title",
+      "at": "0:00",
+      "title": "Mechanica",
+      "line": "Don't trust the AI. Trust the manual.",
+      "meta": "We just get you to the page",
+      "notes": [
+        "\"A friend of mine runs his own motorcycle workshop in Germany. He spends about a fifth of his week not fixing bikes — looking for a page.\"",
+        "*Start the PDF drop now* and let the ingest run underneath the chaos slides — same trick as the general pitch. It is the same 40–50 s as any cold manual.",
+        "Check the actual track text at the venue. If it is not about chaos→order, cut the chaos slides to ten seconds: \"we indexed 53,557 manuals from 84 portals — and none of them is the one a professional needs.\""
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "0:10",
+      "title": "53,557 rows. 84 portals.",
+      "caption": "Every one of them a different shape.",
+      "svgFile": "dropbox/rows-per-portal.svg",
+      "notes": [
+        "\"So we went and indexed every manual a manufacturer publishes. Fifty-three thousand five hundred and fifty-seven rows, across eighty-four different portals.\"",
+        "Twenty-five thousand of those rows point at a file another row already named.",
+        "*Do not say \"53,557 manuals\"* — they are rows, and 25,357 of them are the same file under another year. Say rows, then say 14,770 distinct PDFs. The honesty is the pitch."
+      ],
+      "defs": [
+        { "n": "53,557", "d": "registry rows — len(registry.json), one row per (make, model, year, market, document) (measured)." },
+        { "n": "84", "d": "portals — distinct row.site (measured)." },
+        { "n": "25,357", "d": "rows naming a file another row already names — 53,557 − 28,200 distinct URLs (computed)." }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "0:30",
+      "dense": true,
+      "title": "What a portal calls a handbook",
+      "line": "4,081 rows arrive typed *owner* and are a brochure, a warranty insert, or the infotainment guide — counted over *every* row, in every language and access level.",
+      "head": ["what it actually is", "rows"],
+      "align": ["l", "r"],
+      "rows": [
+        ["infotainment guide", "2,793"],
+        ["supplement", "578"],
+        ["quickstart", "479"],
+        ["spec sheet", "159"],
+        { "emph": true, "cells": ["*from Triumph's portal alone*", "*3,030*"] },
+        ["…and 17 manufacturers we walked to the end and wrote off", "CFMOTO TLS-resets from outside its region · Beta needs a VIN"]
+      ],
+      "note": "The free-English subset — the rows we would actually fetch — is *1,489*. *Say which one you mean.* `doctype.py` classifies 8 document kinds from the URL and title alone, never by downloading.",
+      "notes": [
+        "*This slide is the laugh.* Say \"the Gold Wing brochure is filed next to the owner's manual\" and let it land. It is the single most human illustration of the mess.",
+        "Never call 4,081 and 1,489 the same number: owner-typed over every row vs the free-English subset.",
+        "Piaggio calls the owner's manual a \"use and maintenance booklet\", so any classifier that greps *maintenance* drags every Piaggio handbook into the service bucket."
+      ],
+      "defs": [
+        { "n": "4,081", "d": "mislabelled rows, owner-typed — row.type=='owner' and doctype.classify_doc(url, title) != 'owner', over ALL rows in every language and access level (measured)." },
+        { "n": "1,489", "d": "mislabelled rows, free-English — the same test restricted to rows we would actually fetch. A SUBSET question (measured)." },
+        { "n": "2,793", "d": "…of which infotainment (measured)." },
+        { "n": "578", "d": "…of which supplement (measured)." },
+        { "n": "479", "d": "…of which quickstart (measured)." },
+        { "n": "159", "d": "…of which spec (measured)." },
+        { "n": "3,030", "d": "of the 4,081, the rows from Triumph's portal alone.", "src": "dropbox.md" },
+        { "n": "17", "d": "portals walked to the end and written off — docs/MANUALS.md 'Checked and genuinely unreachable' (measured)." }
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "0:45",
+      "title": "Order",
+      "caption": "14,770 fetchable PDFs · 13,537 vehicles · one page.",
+      "svgFile": "dropbox/chaos-to-order.svg",
+      "notes": [
+        "\"That is the chaos. We turned it into fourteen thousand seven hundred and seventy fetchable PDFs and thirteen thousand five hundred and thirty-seven vehicles that open on the right page.\"",
+        "Then the turn, and go quiet: *\"And it is still the wrong document.\"*",
+        "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual."
+      ],
+      "defs": [
+        { "n": "14,770", "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable rows (computed)." },
+        { "n": "13,537", "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs." },
+        { "n": "27,751", "d": "vehicles you can pick (measured)." }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "1:00",
+      "kicker": "And it is still the wrong document",
+      "items": [
+        { "value": "182", "label": "service-manual rows in the whole registry", "sub": "167 free · 7 paid · 5 dealer-only · 3 subscription" },
+        { "value": "15", "label": "of them are not free", "sub": "BMW meters its at *EUR 9 / hour*. Triumph, *GBP 5.99 / month per bike*. Ducati, Piaggio, Moto Guzzi, Aprilia and Royal Enfield: dealers only." }
+      ],
+      "sub": "We fetch *zero* of those. Not because we can't — because we won't. The registry stores locations, never documents.",
+      "notes": [
+        "*This slide is the turn.* Go quiet on \"nine euros an hour.\"",
+        "\"That is the manufacturers' business model and I am not going to pretend otherwise.\"",
+        "Do not say \"none of our service manuals are free\" — 182 rows, 15 of them metered."
+      ],
+      "defs": [
+        { "n": "182", "d": "service-manual rows — row.type=='service' in registry.json (measured)." },
+        { "n": "15", "d": "…of those, not free — {'paid': 7, 'subscription': 3, 'dealer': 5, 'free': 167} (computed)." },
+        { "n": "EUR 9 / hour", "d": "what BMW charges to read its service manual (aos.bmwgroup.com), per docs/MANUALS.md.", "src": "dropbox.md" },
+        { "n": "GBP 5.99 / month per bike", "d": "what Triumph charges for its service manual, per docs/MANUALS.md.", "src": "dropbox.md" }
+      ]
+    },
+    {
+      "kind": "statement",
+      "at": "1:30",
+      "kicker": "He already owns it",
+      "text": "It is a PDF in his Dropbox, in a folder with four hundred scanned bulletins, the importer's emails and three photos of a wiring loom.",
+      "sub": "He connects the folder once. Every PDF he drops in from then on gets *the exact same treatment as a factory manual* — read page by page, its own headings become the search index, and every quote is searched back into the PDF's text layer. *If we can't find the ink, we don't draw the marker.*",
+      "notes": [
+        "\"Nothing is rewritten. Nothing is uploaded anywhere else. It is his document, in his index, and the answer is still a page he can hold a judge to.\"",
+        "Why Dropbox and not a watched directory: longpoll gives sub-second change notice without a token on the socket and without polling a laptop that is asleep; content_hash tells us the same manual saved twice is the same manual before we spend ten cents; and the folder works from his phone in the workshop and his desktop in the office.",
+        "The abstraction is one Store-shaped seam. If the next shop is on Drive, that is a second adapter, not a second product."
+      ]
+    },
+    {
+      "kind": "demo",
+      "at": "2:15",
+      "title": "Live — connect the folder",
+      "line": "Before you go on: the folder is empty and `GET /api/dropbox/status` shows `counts: {}`.",
+      "rows": [
+        { "do": "From the phone, drop `MV Agusta Brutale 1000 RR 2024 service manual.pdf` into the shop folder", "see": "Dropbox's own upload toast. \"That's the whole setup. It's a folder.\"" },
+        { "do": "In the app, type `brutale` → tap MV AGUSTA BRUTALE 1000 RR → 2024", "see": "the bike. \"He never told us which bike. The folder is the filing cabinet, so the file name is the metadata.\"" },
+        { "do": "Show `/api/dropbox/status` on the second screen", "see": "`state: done`, `manualId: mv-agusta-brutale-1000-rr-2024-shop`. \"Longpoll came back in about a second, we pulled it, same ingest as a KTM manual. Forty seconds, ten cents.\"" },
+        { "do": "Type `valve clearance`", "see": "the service manual's own heading, then the printed page, marker on the lines. *\"That figure is not in any owner's manual on earth. It's in his.\"*" },
+        { "do": "Tap CHAT, ask `what is the valve clearance`", "see": "every sentence ends in a [p. N] chip; tap it. \"Same rule on his document as on the factory's: it may only emit page numbers.\"" }
+      ],
+      "notes": [
+        "*If there is no token on the day*, do the same demo through the button that is already live: on a bike with no free manual, PDF → pick the file → progress bar → the same page-exact answers. Then say, honestly: \"the folder version is in the repo, thirty-two tests green — it needs a token and I didn't want to fake one on stage.\"",
+        "Do not demo the Chooser — it needs TTM_DROPBOX_APP_KEY and the button hides itself.",
+        "If it says `unmatched`: the name is the metadata. Rename to `<make> <model> <year>.pdf` and re-drop. *Say it out loud — refusing to guess is the feature.*",
+        "\"Is that a real service manual?\" Yes: MV Agusta publishes its workshop manuals free and 113 are in our registry. We are not showing a BMW one, because BMW charges nine euros an hour and we do not fetch metered documents."
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "3:15",
+      "title": "One poller, one webhook, one ingest",
+      "caption": "The moment the bytes are on disk it is literally the same function that ingests a factory PDF — which is why a shop's scanned manual gets the grounding guarantees and not a watered-down version of them.",
+      "flow": {
+        "bands": [
+          {
+            "rows": [
+              {
+                "gap": 30,
+                "items": [
+                  { "tone": "paper", "t": "/Mechanica", "sub": "service manuals · bulletins · scans" },
+                  { "tone": "white", "t": "files/list_folder/longpoll", "sub": "notify host · auth = noauth · up to 480 s · THE CURSOR IS THE CREDENTIAL" },
+                  { "tone": "white", "t": "POST /api/dropbox/webhook", "sub": "HMAC-SHA256 of the raw body · names the account, never the file" },
+                  { "tone": "white", "t": "files/list_folder|(/continue)", "sub": "cursor · recursive · 2000/page" }
+                ]
+              },
+              {
+                "down": true,
+                "gap": 30,
+                "items": [
+                  { "tone": "green", "t": "path parses to|make · model · year?", "sub": "no → state: unmatched, shown in /dropbox/status, NEVER guessed into the catalog" },
+                  { "tone": "green", "t": "%PDF magic|+ sha256 seen before?", "sub": "duplicate → state: duplicate, of the manual we already built" },
+                  { "tone": "orange", "t": "ingest.run()", "sub": "the SAME path as an OEM URL and as /ingest/upload" },
+                  { "tone": "ink", "t": "the printed page,|marked", "sub": "manualId ends -shop, so the free -om row survives underneath it" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "*Do not read the diagram.* Three sentences: one poller, one webhook, one ingest. The Dropbox side is four documented calls and a stored cursor. The moment the bytes are on disk it is the same function that ingests a factory PDF.",
+        "Longpoll is unauthenticated *by design* — the cursor is the credential — so our watcher never puts the token on an eight-minute socket. That is a good line.",
+        "Honest gaps: cross-tenant dedupe is *not* built — the content hash is stored, the dedupe is not. And there is no per-shop tenancy boundary yet; the manual id already ends -shop precisely so the free -om row survives underneath it."
+      ],
+      "defs": [
+        { "n": "$0.0972", "d": "our median $ to ingest one manual — mass_report.jsonl, median over 648 real ingests, median 170 pages (measured)." },
+        { "n": "$0.00038", "d": "our $ per question after that (measured)." }
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "4:00",
+      "title": "What the model is allowed to do",
+      "line": "Emit page numbers. That's all. *The server cuts the quote out of the page.*",
+      "points": [
+        "100% of 48 claim sentences carry a page",
+        "100% of 43 quotes verbatim on the page they name",
+        "0 invented numbers · 0 dealer referrals"
+      ],
+      "image": "general/08-chat.png",
+      "caption": "Same rule on his document as on the factory's.",
+      "notes": [
+        "The grounding gate is the load-bearing part: `ingest/ground.py` drops any quote it cannot find in the PDF's text layer.",
+        "Every screen shows the manual's cover title and its own printed page number, so there is no way to read an answer here without knowing who wrote it.",
+        "The registry stores *locations, not documents* — RegistryEntry has no field that could hold manual content. This path only ever ingests a document the user already holds, into the user's own index."
+      ],
+      "defs": [
+        { "n": "100% of 48", "d": "chat claim sentences carrying a page number (measured)." },
+        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name (measured)." },
+        { "n": "0 · 0", "d": "invented numbers · dealer referrals, of 25 answers (measured)." }
+      ]
+    },
+    {
+      "kind": "statement",
+      "at": "4:15",
+      "kicker": "The last mile is a folder",
+      "text": "The shop bought the manual. We just make the copy it already owns as findable as the factory's — page-exact, marker on the ink, same two taps.",
+      "sub": "Fifty-three thousand rows of order, and the one that matters is yours. *Don't trust the AI. Trust the manual — including the one you already paid for.*",
+      "notes": [
+        "The mechanic's document is metered by the hour, and it always will be. So we don't fight it.",
+        "If asked what we built today: api/app/dropbox_sync.py — the poller, the webhook with signature verification, the path→vehicle resolver, the ingest hand-off, /dropbox/config|status|sync|webhook — plus 32 tests and api/tools/dropbox_report.py, which generates the chaos evidence from live data so the numbers cannot drift.",
+        "Two lines in existing files: one router include, one settings line. Nothing else was touched."
+      ],
+      "defs": [
+        { "n": "53,557", "d": "registry rows (measured). Say *rows*, never manuals." }
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "dropbox.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not say the folder sync is connected. It is built, tested against a mocked Dropbox, and deploying — /api/dropbox/* is not in the live OpenAPI.",
+            "Do not demo the Chooser — it needs TTM_DROPBOX_APP_KEY and the button hides itself.",
+            "Do not say we host or re-publish manufacturer PDFs, and do not promise customer-facing shared links.",
+            "Do not say cross-tenant dedupe exists — the content hash is stored, the dedupe is not built.",
+            "Do not say \"53,557 manuals\". They are rows. Then say 14,770 distinct PDFs."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
+            "Climate Fit is \"built, deploying\", not deployed.",
+            "Never quote a running ledger total without the date beside it.",
+            "Never call 13,537 \"manuals\" — it is vehicles carrying a free manual.",
+            "Never call 4,081 and 1,489 the same number.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": ["Presenter-only. The audience sees the end card."]
+    }
+  ]
+}

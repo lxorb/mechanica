@@ -147,28 +147,31 @@ function wrap(text, width, size, ratio) {
   return lines;
 }
 
+/** Narrow boxes get smaller type rather than a five-line title. */
 function itemLayout(item, width) {
-  const t = wrap(item.t || "", width, TITLE_SIZE, 0.53);
-  const s = item.sub ? wrap(item.sub, width, SUB_SIZE, 0.50) : [];
-  const h = 17 + t.length * TITLE_LH + (s.length ? 8 + s.length * SUB_LH : 0) + 17;
-  return { t, s, h: Math.max(64, h) };
+  const k = width < 175 ? 0.80 : width < 215 ? 0.87 : width < 265 ? 0.94 : 1;
+  const ts = TITLE_SIZE * k, ss = SUB_SIZE * k, tlh = TITLE_LH * k, slh = SUB_LH * k;
+  const t = wrap(item.t || "", width, ts, 0.53);
+  const s = item.sub ? wrap(item.sub, width, ss, 0.50) : [];
+  const h = 16 + t.length * tlh + (s.length ? 8 + s.length * slh : 0) + 16;
+  return { t, s, ts, ss, tlh, slh, h: Math.max(62, h) };
 }
 
 function drawItem(item, x, y, w, h, lay) {
   const tone = TONES[item.tone || "white"] || TONES.white;
   const cx = x + w / 2;
-  let ty = y + 17 + TITLE_SIZE * 0.82;
+  const block = lay.t.length * lay.tlh + (lay.s.length ? 8 + lay.s.length * lay.slh : 0);
+  let ty = y + (h - block) / 2 + lay.ts * 0.82;
   const body = lay.t.map((l) => {
-    const line = `<text x="${cx}" y="${ty.toFixed(1)}" text-anchor="middle" font-size="${TITLE_SIZE}" font-weight="700" fill="${tone.text}">${esc(l)}</text>`;
-    ty += TITLE_LH;
+    const line = `<text x="${cx}" y="${ty.toFixed(1)}" text-anchor="middle" font-size="${lay.ts.toFixed(1)}" font-weight="700" fill="${tone.text}">${esc(l)}</text>`;
+    ty += lay.tlh;
     return line;
   });
   if (lay.s.length) {
-    ty += 8 - TITLE_LH + SUB_LH * 0.05;
-    ty = y + 17 + lay.t.length * TITLE_LH + 8 + SUB_SIZE * 0.82;
+    ty = y + (h - block) / 2 + lay.t.length * lay.tlh + 8 + lay.ss * 0.82;
     for (const l of lay.s) {
-      body.push(`<text x="${cx}" y="${ty.toFixed(1)}" text-anchor="middle" font-size="${SUB_SIZE}" fill="${tone.sub}">${esc(l)}</text>`);
-      ty += SUB_LH;
+      body.push(`<text x="${cx}" y="${ty.toFixed(1)}" text-anchor="middle" font-size="${lay.ss.toFixed(1)}" fill="${tone.sub}">${esc(l)}</text>`);
+      ty += lay.slh;
     }
   }
   const dash = item.tone === "ghost" ? ' stroke-dasharray="7 6"' : "";

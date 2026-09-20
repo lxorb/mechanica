@@ -1,0 +1,749 @@
+{
+  "pitch": "ramp",
+  "order": 5,
+  "title": "EUR 24,640 a year, and 46 cents a month",
+  "target": "Ramp",
+  "length": "5:00",
+  "angle": "A one-man workshop loses EUR 24,640 a year to looking for a page, and the tool that gives it back costs cents a month to run. Every cell regenerable from ramp/numbers.py.",
+  "endline": "Don't trust the AI. Trust the manual.",
+  "marks": [
+    {
+      "t": "0:00",
+      "do": "The workshop. Then the money, before anything about the product."
+    },
+    {
+      "t": "0:30",
+      "do": "EUR 44,000 — say the arithmetic in four steps, slowly."
+    },
+    {
+      "t": "0:45",
+      "do": "Cut it yourself. \"That number is too kind to me.\" EUR 24,640."
+    },
+    {
+      "t": "1:00",
+      "do": "The stopwatch table. Say \"machine time\" out loud."
+    },
+    {
+      "t": "1:45",
+      "do": "100 / 100 / 100. One breath, then move."
+    },
+    {
+      "t": "2:15",
+      "do": "LIVE. Stopwatch on the phone, next to the app."
+    },
+    {
+      "t": "3:15",
+      "do": "Why the bill is small — the diagram."
+    },
+    {
+      "t": "3:35",
+      "do": "$4,800 → $0.46. Say only two numbers."
+    },
+    {
+      "t": "3:50",
+      "do": "Under 1% of a seat. THE Ramp slide."
+    },
+    {
+      "t": "4:05",
+      "do": "5.5 working days. And 22 if his 20% is really 5%."
+    },
+    {
+      "t": "4:15",
+      "do": "522 M hours — then come back to \"five people in the average shop\"."
+    },
+    {
+      "t": "4:35",
+      "do": "Three numbers and stop."
+    }
+  ],
+  "slides": [
+    {
+      "kind": "title",
+      "at": "0:00",
+      "title": "Mechanica",
+      "line": "Don't trust the AI. Trust the manual.",
+      "meta": "We just get you to the page",
+      "notes": [
+        "Say it, then two seconds of silence.",
+        "Then: \"A friend of mine opened a motorcycle workshop in Germany a few years ago. He's a good mechanic. And about a fifth of his working time, he isn't fixing bikes. He's looking for a page.\"",
+        "Every time you quote a figure, say *measured*, *assumed*, or *his*. Doing that four or five times is the entire tone of this pitch."
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "0:30",
+      "title": "EUR 44,000",
+      "line": "Per mechanic. Per year. Say the arithmetic out loud, slowly, in four steps.",
+      "head": [
+        "",
+        "",
+        ""
+      ],
+      "align": [
+        "l",
+        "r",
+        "l"
+      ],
+      "rows": [
+        [
+          "a full-time self-employed German craftsman works",
+          "*44.3 h/week*",
+          "Eurostat LFS 2024 — measured"
+        ],
+        [
+          "× 45 working weeks",
+          "*~2,000 h/year*",
+          "the 45 weeks is our assumption"
+        ],
+        [
+          "× his 20%",
+          "*400 hours a year*",
+          "his number"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "× the German independent-shop rate, EUR 110/h",
+            "*EUR 44,000*",
+            "motor.com.de 2026 — assumed rate, cited"
+          ]
+        }
+      ],
+      "notes": [
+        "*Do not editorialise the number.* Say the arithmetic in four steps: hours, share, rate, product. If you explain why it's big, it gets smaller. Let it sit.",
+        "The thing not to say: \"the market for workshop software\". Not yet. One man, one number.",
+        "Never say EUR 44,000 without immediately taking the deductions down to EUR 24,640 — that is the very next slide, and it is the most important one in the deck."
+      ],
+      "defs": [
+        {
+          "n": "44.3 h/week",
+          "d": "a full-time self-employed German craft/trades worker — Eurostat LFS lfsa_ewhuis, Germany 2024 (measured, third-party).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "2,000 h",
+          "d": "44.3 h × 45 working weeks. The 45 weeks is our assumption (assumed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "20%",
+          "d": "share of his working time spent looking for a page — HIS estimate (assumed)."
+        },
+        {
+          "n": "400 hours",
+          "d": "20% × ~2,000 h (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "EUR 110/h",
+          "d": "German workshop labour, average — motor.com.de 2026; freie Werkstatt EUR 75–125/h (assumed rate, cited).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "EUR 44,000",
+          "d": "400 h × EUR 110/h — the gross, un-deducted figure. Never say it without the next slide.",
+          "src": "ramp/numbers.md"
+        }
+      ]
+    },
+    {
+      "kind": "number",
+      "at": "0:45",
+      "label": "…and honestly,",
+      "value": "EUR 24,640",
+      "sub": "Minus *30%* for recovery — he still has to read the page. Minus another *20%* for utilisation — an hour is only money if there's a bike waiting. *That's the number I'd sign for.*",
+      "notes": [
+        "*This is the most important slide in the deck.* Every pitch in the room will show the previous slide. Almost none will show this one.",
+        "Say the words ~that number is too kind to me.~ Cutting your own headline in half on stage buys you every number after it.",
+        "The US version of the same arithmetic is $56,000 gross, $31,360 after the same deductions. ramp/numbers.md §7(b) runs the whole grid — at 30% recovery and 50% utilisation, the hostile corner, it is EUR 6,600 a year and the seat still pays back in 20 working days."
+      ],
+      "defs": [
+        {
+          "n": "EUR 24,640",
+          "d": "EUR 44,000 after a 30% recovery deduction and a 20% utilisation deduction. numbers.md §9 says: prefer this on stage.",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "$31,360",
+          "d": "the same arithmetic in the US — $56,000 gross after the same two deductions.",
+          "src": "ramp/numbers.md"
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "1:00",
+      "dense": true,
+      "title": "The stopwatch",
+      "line": "Measured against the live API on 2026-09-20. Use the phone's own stopwatch next to the app, not an animation.",
+      "head": [
+        "step",
+        "measured"
+      ],
+      "align": [
+        "l",
+        "r"
+      ],
+      "rows": [
+        [
+          "photo of the bike → the exact model *and year*",
+          "5.80 s"
+        ],
+        [
+          "VIN → the exact model and year",
+          "0.11 s"
+        ],
+        [
+          "plain-words question → the section and the page",
+          "1.59 s median · p95 3.33 s over 150 queries"
+        ],
+        [
+          "the same question a second time",
+          "0.13 s, and $0"
+        ],
+        [
+          "the printed page renders",
+          "0.24 s"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "*photo → the marked page*",
+            "*7.7 s*"
+          ]
+        },
+        {
+          "emph": true,
+          "cells": [
+            "*typed or VIN → the marked page*",
+            "*2.0 s*"
+          ]
+        },
+        [
+          "a manual we have never seen → fully searchable",
+          "40.4 s, once, for $0.095"
+        ]
+      ],
+      "note": "*That is machine time.* Put a stopwatch on a human and it is two or three times that, because he still has to tap and read. What collapsed is the *finding*. The finding is one and a half seconds.",
+      "notes": [
+        "*The stopwatch must be real.* Say \"machine time\" out loud and concede the human seconds before anyone asks. The concession is free and the credibility is not.",
+        "\"Say a lookup costs him five minutes today — and five minutes is the kind end of it, because the thing he's paging through is a 268-page PDF on a phone. Five minutes becomes seven point seven seconds.\"",
+        "Do not present lookups-per-day as measured. It is the one assumption with no source at all, and it is the load-bearing one."
+      ],
+      "defs": [
+        {
+          "n": "5.80 s",
+          "d": "photo of the bike → the exact model and year — median of 3 live runs (5.01 / 5.80 / 7.66), 2026-09-20 (measured).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "0.11 s",
+          "d": "VIN → the exact model and year — live, 2026-09-20 (measured).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "1.59 s",
+          "d": "plain-words question → the section and the page, median live; mean 1.60 s, p95 3.33 s over the 150-query eval (measured).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "3.33 s",
+          "d": "an ask, p95 — api/eval/report.md (measured)."
+        },
+        {
+          "n": "0.13",
+          "d": "the same question a second time — 0.130 s on the live run (0.075 s and 0.179 s), and $0 (measured).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "7.7 s",
+          "d": "photo → the marked page, end to end (computed from the measured legs).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "2.0 s",
+          "d": "typed or VIN → the marked page (computed from the measured legs).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "40.4 s",
+          "d": "a manual we have never seen → fully searchable (measured)."
+        },
+        {
+          "n": "$0.095",
+          "d": "our cost to read a manual once — $0.0951 mean over 648 ingests (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "1:45",
+      "kicker": "A time saving nobody trusts is not a saving",
+      "items": [
+        {
+          "value": "100%",
+          "label": "right section first, in-scope",
+          "sub": "130 questions"
+        },
+        {
+          "value": "100%",
+          "label": "off-topic returned empty instead of guessed at",
+          "sub": "20 of 20"
+        },
+        {
+          "value": "100%",
+          "label": "chat quotes verbatim on the page they name",
+          "sub": "43 of 43"
+        }
+      ],
+      "sub": "\"If it were 95% right he'd check the manual anyway, and I'd have added a step instead of removing one. *So the answer is the manual.*\"",
+      "notes": [
+        "*One breath, then move.* It is an objection-killer, not a feature list.",
+        "\"When we're wrong, he sees it in half a second, because he's looking at the document. A marker on KTM's line, on KTM's page.\"",
+        "Cut this slide second if you are running short — the repeat-ask moment in the demo goes first. Never cut the EUR 24,640 slide or the marked page."
+      ],
+      "defs": [
+        {
+          "n": "100% of 130",
+          "d": "right section first, in-scope questions — api/eval/report.md (measured)."
+        },
+        {
+          "n": "20 of 20",
+          "d": "off-topic questions returned empty instead of guessed at (measured)."
+        },
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "demo",
+      "at": "2:15",
+      "title": "Live — one phone, one stopwatch",
+      "line": "Every input below was run against the live app today. Do not improvise inputs.",
+      "rows": [
+        {
+          "do": "type `390 duke`, tap KTM 390 DUKE, tap 2024",
+          "see": "photo cards → year chips → the bike on the stage. \"The exact year. A 2024 and a 2021 are different machines.\""
+        },
+        {
+          "do": "type `chain is loose` — *start the stopwatch*",
+          "see": "the chain lights; under KTM's chapter 12: *Checking the chain tension* P. 77–78, *Adjusting the chain tension* P. 78. \"Those aren't our words.\""
+        },
+        {
+          "do": "tap the heading → MANUAL → — *stop the stopwatch*",
+          "see": "KTM page 77, orange markers on the measuring instruction and on *Chain tension 7 … 10 mm*. \"Two seconds.\""
+        },
+        {
+          "do": "type `chain is loose` again",
+          "see": "the same page, instantly. \"A tenth of a second, and it costs zero. He's the second mechanic today to ask that.\""
+        },
+        {
+          "do": "tap `#cost`",
+          "see": "the live cost overlay. \"That's not a demo number. That's the meter.\""
+        }
+      ],
+      "notes": [
+        "*Narrate the taps, not the screen.* \"Type it. Tap it. Tap the year.\"",
+        "The second ask is the unit-economics story told without a slide. Let them watch it come back instantly at zero.",
+        "If it stalls: every input above is cached from this morning and returns in a fifth of a second. Never type a question that is not in ramp.md."
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "3:15",
+      "title": "Why the bill is small",
+      "caption": "The manual is never in the prompt. His four dollars was four hundred thousand tokens of PDF, every single question. We read the six pages that matter.",
+      "flow": {
+        "w": 1380,
+        "bands": [
+          {
+            "rows": [
+              {
+                "gap": 34,
+                "items": [
+                  {
+                    "tone": "paper",
+                    "t": "question,|plain words"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "router",
+                    "sub": "cheap model · 99.5% cached · $0.00013"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "spec question",
+                    "sub": "parsed spec rows + BM25 · $0 — no model call · 24 of the 150 eval queries"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "BM25 over the|PDF text layer",
+                    "sub": "$0 — in process, no embeddings, no vector DB"
+                  }
+                ]
+              },
+              {
+                "down": true,
+                "gap": 34,
+                "items": [
+                  {
+                    "tone": "white",
+                    "t": "one clear winner|→ no picker",
+                    "sub": "$0 · 85.3% of asks"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "close call|→ picker",
+                    "sub": "$0.0022 · the other 15%"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "THE PRINTED PAGE",
+                    "sub": "marker on the answering lines · mean $0.00038 an ask"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "asked again|→ answer cache",
+                    "sub": "0.13 s · $0"
+                  }
+                ]
+              },
+              {
+                "down": true,
+                "gap": 34,
+                "items": [
+                  {
+                    "tone": "paper",
+                    "t": "a manual nobody|has opened yet"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "once, $0.0951"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "indexed forever,|shared by every shop"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "\"The manual is never in the prompt. That's the whole trick.\"",
+        "85.3% of asks never pay for a picker at all — the spec path and the decisive-BM25 path both skip it. 172 model calls for 150 asks.",
+        "Retrieval itself is free: BM25 in process, no embeddings, no vector database. Do not go further into architecture than this slide."
+      ],
+      "defs": [
+        {
+          "n": "$0.00013",
+          "d": "ask, spec question — zero LLM after the router.",
+          "src": "openai.md"
+        },
+        {
+          "n": "99.5%",
+          "d": "ask.router prompt-cache hit rate.",
+          "src": "token-company/cost-report.md"
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask — eval mean over 150 controlled queries (measured)."
+        },
+        {
+          "n": "1.15",
+          "d": "LLM calls per ask — 172 calls / 150 asks, so 85% never pay for a picker (computed)."
+        },
+        {
+          "n": "$0.0951",
+          "d": "our $ to read a manual, once — mean over 648 real ingests (measured)."
+        },
+        {
+          "n": "0.13",
+          "d": "the same question a second time — 0.130 s on the live run (0.075 s and 0.179 s), and $0 (measured).",
+          "src": "ramp/numbers.md"
+        }
+      ]
+    },
+    {
+      "kind": "two-up",
+      "at": "3:35",
+      "title": "40 questions a day, 30 days",
+      "left": {
+        "value": "$4,800",
+        "label": "his bill, when he tried it",
+        "caption": "$4.00 a question · $57,600 a year"
+      },
+      "right": {
+        "value": "$0.46",
+        "label": "our bill, the default path",
+        "caption": "$0.00038 an ask · $5.47 a year. Every question a written answer instead: $5.04 a month."
+      },
+      "caption": "Say *only* these two numbers. The other rows are on the slide so a judge can check you, not so you can recite them.",
+      "notes": [
+        "\"Four thousand eight hundred dollars a month, to forty-six cents.\"",
+        "\"And the forty-six cents is the number that actually matters to whoever signs for software here, because it means the AI line item on a seat is *under one percent of the price of the seat*.\"",
+        "\"It is not a variable cost that eats you at scale — it's a fixed cost in disguise. The only thing that scales is the number of distinct motorcycles in the world, and that number is finite.\""
+      ],
+      "defs": [
+        {
+          "n": "$4,800",
+          "d": "his month at 40 questions/day × 30 days, at his own lived $4 a question.",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "$0.46",
+          "d": "the same month on the default path at $0.00038 an ask.",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "$5.04",
+          "d": "the same month if every question gets a written answer with citations — the worst case.",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "3:50",
+      "title": "Under 1% of a seat",
+      "line": "Everyone shows cost savings. Almost nobody shows what the cost saving does to their own P&L.",
+      "head": [
+        "what we serve",
+        "model cost / seat / year",
+        "price / seat / year",
+        "gross margin on the AI line"
+      ],
+      "align": [
+        "l",
+        "r",
+        "r",
+        "r"
+      ],
+      "rows": [
+        {
+          "emph": true,
+          "cells": [
+            "default path",
+            "$5.47",
+            "EUR 49/mo = $635",
+            "*99.14%* — the AI line is *0.86%* of the seat"
+          ]
+        },
+        [
+          "worst case, every question a chat answer",
+          "$60.48",
+          "same",
+          "90.48% — the AI line is 9.5% of the seat"
+        ]
+      ],
+      "note": "*This is the Ramp slide.* \"The AI line item is under one percent of the price of the seat\" is the sentence a finance audience remembers.",
+      "notes": [
+        "EUR 49 is what we would charge, and be straight that nobody has paid it yet.",
+        "What we will *not* do is charge per question: our cost is $0.00038 an ask, metering that costs more to bill than to serve — and the moment you meter it he rations it, and a tool you ration doesn't get the 400 hours back.",
+        "The expensive step — reading a manual end to end, $0.095 — happens once per manual, not once per question, and every shop that ever opens that bike shares it."
+      ],
+      "defs": [
+        {
+          "n": "0.86%",
+          "d": "the AI line as a share of the seat price on the default path — $5.47 model cost against a $635/year seat.",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "9.5%",
+          "d": "the same share in the worst case where every question gets a written chat answer — $60.48 a year.",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "EUR 49",
+          "d": "the per-seat monthly price we would charge. Nobody has paid it yet (assumed).",
+          "src": "ramp/numbers.md"
+        }
+      ]
+    },
+    {
+      "kind": "number",
+      "at": "4:05",
+      "label": "Payback on a seat",
+      "value": "5.5",
+      "unit": "working days",
+      "sub": "For 1, 3 or 10 mechanics — the ratio does not move. *And if you think his twenty percent is nonsense, say it's five: the seat still pays for itself in 22 working days.*",
+      "notes": [
+        "EUR 24,640 of recovered billable work against EUR 588 a year. 42× return.",
+        "The 22-day line is the one that ends the argument. Offer it before they ask for it.",
+        "There is no cell in the ramp/numbers.md §7(b) grid where this doesn't work."
+      ],
+      "defs": [
+        {
+          "n": "5.5 working days",
+          "d": "payback on one seat — EUR 24,640 recovered against EUR 588/year, 42× return (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "22 working days",
+          "d": "the same payback if his 20% is really 5% — a quarter of what he claims (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "EUR 24,640",
+          "d": "recovered billable work per mechanic per year, after both deductions.",
+          "src": "ramp/numbers.md"
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "4:15",
+      "title": "522 million hours a year",
+      "line": "Built bottom-up from Eurostat's own hours, not from a market-report headline.",
+      "head": [
+        "",
+        "shops (car + motorcycle repair)",
+        "people",
+        "hours lost to searching / year",
+        "at sector value added / hour"
+      ],
+      "align": [
+        "l",
+        "r",
+        "r",
+        "r",
+        "r"
+      ],
+      "rows": [
+        [
+          "Germany",
+          "54,470",
+          "308,914",
+          "*89 M h*",
+          "*EUR 4.4 bn*"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "EU-27",
+            "540,394",
+            "1,527,411",
+            "*522 M h*",
+            "*EUR 14.7 bn*"
+          ]
+        },
+        [
+          "US",
+          "315,404",
+          "600,406",
+          "*216 M h*",
+          "$30.3 bn at the shop rate"
+        ]
+      ],
+      "note": "As a software business it is smaller and more honest: ~900 M a year of seats in the EU, ~425 M in the US — and the average shop has *five* people in it, which is exactly the shop nobody sells software to.",
+      "notes": [
+        "*End on the small number, not the big one.* After the billions, come back to \"five people in the average shop.\" A market of one-man shops sounds unserious until you say there are 540,000 of them.",
+        "Then the close, three numbers and stop: 400 hours a year · 7.7 seconds from a photo to the marked line · and cents a month to run it.",
+        "Last slide: the marked KTM page. No logo, no bullets. \"He won't use AI because it's right ninety-five percent of the time and he signs for the five. So we built the thing that never answers.\""
+      ],
+      "defs": [
+        {
+          "n": "54,470",
+          "d": "German car-repair (49,922) + motorcycle (4,548) enterprises — Eurostat SBS sbs_ovw_act, NACE G45.2 + G45.4, 2024 (third-party).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "308,914",
+          "d": "people employed in them, Germany 2024 — Eurostat SBS (third-party).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "89 M h",
+          "d": "hours lost to searching per year, Germany — employee hours × the assumed search share (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "522 M h",
+          "d": "the same for the EU-27 (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "216 M h",
+          "d": "the same for the US (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "EUR 14.7 bn",
+          "d": "522 M h priced at Eurostat's own sector value added per hour (computed).",
+          "src": "ramp/numbers.md"
+        }
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "4:35",
+      "wide": true,
+      "title": "Three numbers, and I'll stop",
+      "line": "400 hours a year, per mechanic — *his* number.\n7.7 seconds from a photo of the bike to the marked line — *measured, today*.\nAnd cents a month to run it.",
+      "points": [
+        "\"Don't trust the AI. Trust the manual. We just get you to the page.\""
+      ],
+      "image": "general/05-book.png",
+      "notes": [
+        "The last slide is the marked KTM page. No logo, no bullets.",
+        "If you quote the total spend, say the timestamp with it: the deployed app had spent $8.93 over 1,633 model calls at 2026-09-20 09:55, and it moves every hour.",
+        "Do not quote a live ledger total without a timestamp. It is the easiest thing in this deck to get caught on."
+      ],
+      "defs": [
+        {
+          "n": "400 hours",
+          "d": "20% × ~2,000 h — arithmetic on his number (computed).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "7.7 s",
+          "d": "photo → the marked page, end to end (computed from the measured legs).",
+          "src": "ramp/numbers.md"
+        },
+        {
+          "n": "$8.93",
+          "d": "what the deployed app has spent — live GET /api/cost over 1,633 calls, 2026-09-20 09:55. Moves every hour (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "ramp.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not say EUR 44,000 without immediately taking the recovery and utilisation deductions down to EUR 24,640.",
+            "Do not present his 20%, the 2,000-hour year, or lookups-per-day as measured. They are his number and our assumptions — and lookups/day is the one with no source at all.",
+            "Do not quote a live ledger total without the timestamp.",
+            "Say measured, assumed, or his — four or five times. That is the tone of this pitch."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
+            "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
+            "Never call 13,537 \"manuals\" — distinct fetchable PDFs is 14,770.",
+            "Never call 4,081 and 1,489 the same number.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": [
+        "Presenter-only. The audience sees the end card.",
+        "ramp.md's closing line quotes a running total of $6.14; numbers.md reports $8.93 at 2026-09-20 09:55. Quote numbers.md, with the timestamp — or do not quote a total at all."
+      ]
+    }
+  ]
+}

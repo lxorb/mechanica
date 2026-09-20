@@ -10,7 +10,7 @@
   margin: -12px -12px 0;
   max-width: 720px;
   overflow: hidden;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   background: var(--ink);
 }
 
@@ -109,7 +109,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 3 / 2;
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 3px solid var(--line);
   background: var(--paper);
   overflow: hidden;
 }
@@ -155,7 +155,7 @@
   font-weight: 700;
   font-size: 0.72rem;
   font-variant-numeric: tabular-nums;
-  color: #6c665a;
+  color: var(--muted-2);
 }
 
 [data-screen="confirm"] .confirm-alt-conf {
@@ -308,7 +308,7 @@
 }
 
 [data-screen="confirm"] .confirm-none:disabled {
-  background: #5c5c5c;
+  background: var(--slab-off);
   color: #fff;
   opacity: 1;
   cursor: not-allowed;
@@ -442,7 +442,7 @@
 
 [data-screen="confirm"] .confirm-bar {
   height: 12px;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   background: var(--card);
   overflow: hidden;
 }

@@ -55,13 +55,46 @@ def no_lookups_left_over():
     mod._running.clear()
 
 
+def fake_stream(text=LINES, usd=0.021, chunk=17, before=0.0):
+    """The search as the model actually delivers it: text in pieces that do not respect line ends,
+    then the bill. `before` is the dead time a real search spends looking things up first."""
+
+    def stream(*a, **k):
+        if before:
+            time.sleep(before)
+        for i in range(0, len(text), chunk):
+            yield "delta", text[i : i + chunk]
+        yield "usd", usd
+
+    return stream
+
+
 @pytest.fixture
 def wired(monkeypatch, fresh_store):
-    """One fake store, one fake search, one fake link checker."""
+    """One fake store, one fake streamed search, one fake link checker."""
     monkeypatch.setattr(mod, "get_store", lambda: fresh_store)
+    monkeypatch.setattr(mod, "stream_lines", fake_stream())
     monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (LINES, 0.021))
     monkeypatch.setattr(mod, "verify", fake_verify)
+    monkeypatch.setattr(mod, "Checker", FakeChecker)
     return fresh_store
+
+
+class FakeChecker:
+    """The real Checker with the network taken out: same contract, same ordering."""
+
+    def __init__(self, on_live):
+        self.on_live = on_live
+        self.seen = set()
+
+    def add(self, offer):
+        if offer.url in self.seen or offer.url == DEAD:
+            return
+        self.seen.add(offer.url)
+        self.on_live(offer)
+
+    def close(self):
+        pass
 
 
 def result(store, manual_id="m1", part_id="spark-plug"):
@@ -222,7 +255,7 @@ def test_every_offer_carries_a_usd_price_beside_the_shop_price(wired):
 
 
 def test_one_shop_may_hold_several_products_and_several_sizes(wired, monkeypatch):
-    monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (SAME_SHOP, 0.021))
+    monkeypatch.setattr(mod, "stream_lines", fake_stream(text=SAME_SHOP))
     wired.put_manual(_manual())
     out = mod.offers("m1", "spark-plug", BIKE)
     assert {o.retailer for o in out.offers} == {"RevZilla"}
@@ -258,11 +291,11 @@ def test_offers_refetches_when_the_cache_is_a_day_old(wired):
 
 def test_an_empty_answer_is_only_cached_for_an_hour(wired, monkeypatch):
     wired.put_manual(_manual())
-    monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: ("nothing for sale", 0.019))
+    monkeypatch.setattr(mod, "stream_lines", fake_stream(text="nothing for sale", usd=0.019))
     assert mod.offers("m1", "spark-plug", BIKE).offers == []
     empty = result(wired).model_copy(update={"fetchedAt": time.time() - mod.FRESH_EMPTY - 1})
     wired.put_offers("m1", "spark-plug", empty.model_dump())
-    monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (LINES, 0.021))
+    monkeypatch.setattr(mod, "stream_lines", fake_stream())
     assert len(mod.offers("m1", "spark-plug", BIKE).offers) == 3
 
 
@@ -272,6 +305,7 @@ def test_a_failed_search_still_hands_back_the_search_links(wired, monkeypatch):
     def boom(*a, **k):
         raise RuntimeError("openai is down")
 
+    monkeypatch.setattr(mod, "stream_lines", boom)
     monkeypatch.setattr(mod.llm, "web_search", boom)
     out = mod.offers("m1", "spark-plug", BIKE)
     assert out.offers == [] and out.links == PART.links
@@ -299,26 +333,60 @@ def _manual(parts=None):
 
 
 def test_a_slow_search_answers_at_the_deadline_and_finishes_in_the_background(wired, monkeypatch):
-    """The counter gives up at 6 s. A cold search takes longer, so the request leaves with what it
-    has and the lookup keeps going - the next click is the one that pays off."""
+    """A search that has not written a single line by the deadline still has to answer: the request
+    leaves empty, the lookup keeps going, and the next click is the one that pays off."""
     wired.put_manual(_manual())
-    searching = threading.Event()
-
-    def slow(*a, **k):
-        searching.set()
-        time.sleep(0.4)
-        return LINES, 0.021
-
-    monkeypatch.setattr(mod.llm, "web_search", slow)
+    monkeypatch.setattr(mod, "stream_lines", fake_stream(before=0.4))
     monkeypatch.setattr(mod, "DEADLINE", 0.05)
 
     out = mod.offers("m1", "spark-plug", BIKE)
-    assert searching.is_set()
     assert out.complete is False and out.offers == [] and out.usd == 0.0
     assert out.links == PART.links  # the rider still gets somewhere to click
 
     assert wait_for_cache(wired) is not None
     assert len(mod.offers("m1", "spark-plug", BIKE).offers) == 3
+
+
+def test_the_request_leaves_as_soon_as_enough_shops_are_verified(wired, monkeypatch):
+    """The point of streaming: the deadline is a ceiling, not the wait. Three verified offers with
+    ENOUGH at 3 must come back in a fraction of a search that is still writing."""
+    wired.put_manual(_manual())
+    monkeypatch.setattr(mod, "stream_lines", fake_stream(text=LINES + "\n" + "x" * 4000, chunk=400))
+    monkeypatch.setattr(mod, "ENOUGH", 3)
+    monkeypatch.setattr(mod, "DEADLINE", 5.0)
+
+    started = time.time()
+    out = mod.offers("m1", "spark-plug", BIKE)
+    assert time.time() - started < 4.0
+    assert len(out.offers) >= 3
+
+
+def test_an_offer_is_verified_while_the_search_is_still_writing(wired, monkeypatch):
+    """Each line is handed to the checker as its newline lands, not after the last one."""
+    wired.put_manual(_manual())
+    order = []
+    monkeypatch.setattr(mod, "stream_lines", fake_stream(chunk=9))
+
+    class Watching(FakeChecker):
+        def add(self, offer):
+            order.append(offer.url)
+            super().add(offer)
+
+    monkeypatch.setattr(mod, "Checker", Watching)
+    mod.offers("m1", "spark-plug", BIKE)
+    assert order and order[0] == "https://www.revzilla.com/motorcycle/ngk-lmar8ai-10"
+
+
+def test_a_stream_that_cannot_be_opened_falls_back_to_the_plain_search(wired, monkeypatch):
+    wired.put_manual(_manual())
+
+    def broken(*a, **k):
+        raise RuntimeError("no stream here")
+        yield  # pragma: no cover - makes this a generator
+
+    monkeypatch.setattr(mod, "stream_lines", broken)
+    out = mod.offers("m1", "spark-plug", BIKE)
+    assert len(out.offers) == 3 and out.usd == 0.021
 
 
 def test_a_half_finished_answer_is_never_served_from_the_cache(wired):
@@ -339,10 +407,9 @@ def test_two_clicks_on_one_part_share_a_single_search(wired, monkeypatch):
 
     def counted(*a, **k):
         calls.append(1)
-        time.sleep(0.2)
-        return LINES, 0.021
+        return fake_stream(before=0.2)()
 
-    monkeypatch.setattr(mod.llm, "web_search", counted)
+    monkeypatch.setattr(mod, "stream_lines", counted)
     monkeypatch.setattr(mod, "DEADLINE", 0.01)
     mod.offers("m1", "spark-plug", BIKE)
     mod.offers("m1", "spark-plug", BIKE)

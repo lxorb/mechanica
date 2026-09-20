@@ -121,6 +121,15 @@ TAG = re.compile(r"<[^>]+>")
 WS = re.compile(r"\s+")
 EXT = re.compile(r"\.[a-z0-9]{2,5}$", re.I)
 OK_MIME = ("image/jpeg", "image/png", "image/webp")
+
+OPENVERSE = "https://api.openverse.org/v1/images/"
+# Openverse licence codes we may redistribute, mapped to how Commons words them.
+OV_LICENCE = {
+    "cc0": "CC0",
+    "pdm": "Public domain",
+    "by": "CC BY",
+    "by-sa": "CC BY-SA",
+}
 # WebP effort. 6 buys ~8% off the file for ~4x the CPU, and fit() encodes a tile
 # up to four times looking for its byte ceiling; at 3,900 models that is the run.
 WEBP_METHOD = 4
@@ -563,6 +572,9 @@ class Cand:
     via: str
     pre: float
     depth: int = 0
+    preview_url: str = ""  # empty = render it from Commons by title
+    full_url: str = ""
+    source_url: str = ""
 
 
 def commons_pages(client: httpx.Client, bucket: Bucket, titles: list) -> list:
@@ -773,6 +785,71 @@ def from_search(client: httpx.Client, bucket: Bucket, m: Model, used: set, want:
     return out
 
 
+def from_openverse(client: httpx.Client, bucket: Hosts, m: Model, used: set, want: int) -> list:
+    """Openverse: Flickr and friends, for the bikes Commons simply never got.
+
+    Anonymous callers get 200 requests a DAY (an app token lifts that only once
+    its e-mail is verified), so this is a scalpel for a short gap list, never a
+    sweep. One query per model, the most specific form first.
+    """
+    out: list = []
+    for q in (f"{m.make} {m.model}", f"{m.model} {m.noun}"):
+        try:
+            r = get(
+                client,
+                OPENVERSE,
+                bucket,
+                params={
+                    "q": q,
+                    "license_type": "all-cc",
+                    "category": "photograph",
+                    "page_size": "12",
+                },
+                tries=2,
+            )
+            results = r.json().get("results") or []
+        except Exception:  # noqa: BLE001 - quota or a bad day; Commons already ran
+            return out
+        for it in results:
+            licence = OV_LICENCE.get(str(it.get("license") or "").lower())
+            if not licence:
+                continue  # nc / nd / sampling: not ours to republish
+            title = str(it.get("title") or "").strip() or str(it.get("id"))
+            if title in used:
+                continue
+            width, height = int(it.get("width") or 0), int(it.get("height") or 0)
+            info = {"width": width, "height": height, "mime": "image/jpeg"}
+            version = str(it.get("license_version") or "").strip()
+            meta = {
+                "LicenseShortName": {"value": f"{licence} {version}".strip()},
+                "Artist": {"value": str(it.get("creator") or "Unknown")},
+            }
+            if not usable(info, meta):
+                continue
+            stem = f"{title} {' '.join(str(t.get('name','')) for t in (it.get('tags') or []))}"
+            if bad_title(title, m) or not mentions(stem, m.model):
+                continue
+            url = str(it.get("url") or "")
+            if not url:
+                continue
+            out.append(
+                Cand(
+                    title,
+                    title,
+                    info,
+                    meta,
+                    "openverse",
+                    prescore(title, info, m, base=2.0),
+                    preview_url=str(it.get("thumbnail") or url),
+                    full_url=url,
+                    source_url=str(it.get("foreign_landing_url") or url),
+                )
+            )
+        if len(out) >= want:
+            break
+    return out
+
+
 def gather(
     client: httpx.Client,
     bucket: Bucket,
@@ -781,6 +858,7 @@ def gather(
     wikis: list,
     want: int,
     depths: int = 2,
+    openverse: bool = False,
 ) -> list:
     """Up to `want` licence-clean candidates, best-looking first.
 
@@ -803,6 +881,8 @@ def gather(
         ]
         if depth == 0 and wikis:
             sources.append(lambda: from_wikis(client, bucket, probe, used, wikis))
+        if depth == 0 and openverse:
+            sources.append(lambda: from_openverse(client, bucket, probe, used, want))
         for source in sources:
             if len(found) >= 3:
                 break
@@ -1178,6 +1258,11 @@ def main() -> int:
     ap.add_argument("--wikis", default=",".join(WIKIS))
     ap.add_argument("--wiki-tier", type=int, default=1, help="sweep wikis up to this tier")
     ap.add_argument("--retry-misses", action="store_true", help="ignore the no-candidate cache")
+    ap.add_argument(
+        "--openverse",
+        action="store_true",
+        help="also query Openverse (200 requests/day anonymous - use with --only)",
+    )
     ap.add_argument("--only", default="", help="file of make|model keys to run instead of the queue")
     ap.add_argument("--depths", type=int, default=2, help="how many model-name variants to try")
     ap.add_argument("--no-alias", action="store_true", help="skip the variant-key alias pass")
@@ -1267,7 +1352,7 @@ def main() -> int:
 
     def preview(client: httpx.Client, c: Cand):
         try:
-            r = get(client, filepath_url(c.title, 400), cdn_bucket, tries=2)
+            r = get(client, c.preview_url or filepath_url(c.title, 400), cdn_bucket, tries=2)
         except Exception:  # noqa: BLE001
             return None
         mime = r.headers.get("content-type", "").split(";")[0]
@@ -1302,6 +1387,7 @@ def main() -> int:
             wikis if m.tier <= args.wiki_tier else [],
             args.candidates,
             args.depths,
+            args.openverse,
         )
         with lock:
             stats["cands"] += len(cands)
@@ -1369,7 +1455,11 @@ def main() -> int:
 
             dest = IMG_DIR / name
             try:
-                raw = get(client, filepath_url(chosen.title, 1280), cdn_bucket).content
+                raw = get(
+                    client,
+                    chosen.full_url or filepath_url(chosen.title, 1280),
+                    cdn_bucket,
+                ).content
                 written, hero = render(raw, dest, quality)
             except Exception as exc:  # noqa: BLE001
                 for path in outputs(dest):
@@ -1386,7 +1476,8 @@ def main() -> int:
                 "title": chosen.title,
                 "author": strip_html((chosen.meta.get("Artist") or {}).get("value", "")) or "Unknown",
                 "license": strip_html((chosen.meta.get("LicenseShortName") or {}).get("value", "")),
-                "source": "https://commons.wikimedia.org/wiki/"
+                "source": chosen.source_url
+                or "https://commons.wikimedia.org/wiki/"
                 + quote(chosen.page_title.replace(" ", "_"), safe=":/_(),.!'-"),
                 "via": chosen.via,
                 "view": shot.view if shot else None,
@@ -1522,7 +1613,7 @@ def main() -> int:
         k.split(":", 1)[1]: v for k, v in sorted(stats.items()) if k.startswith(prefix)
     }
     pass_rate = {}
-    for src in ("wikipedia", "category", "family", "search"):
+    for src in ("wikipedia", "category", "family", "search", "openverse"):
         seen = stats.get(f"scored:{src}", 0)
         if seen:
             pass_rate[src] = f"{stats.get(f'passed:{src}', 0)}/{seen}"

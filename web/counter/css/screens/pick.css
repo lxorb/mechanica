@@ -89,7 +89,7 @@
 [data-screen="pick"] .askbar {
   width: 100%;
   background: var(--card);
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
 }
 
 [data-screen="pick"] .meter {
@@ -126,7 +126,7 @@
 
 [data-screen="pick"] .ask .btn {
   border: 0;
-  border-right: 3px solid var(--ink);
+  border-right: 3px solid var(--line);
   width: 48px;
   min-width: 48px;
   height: 48px;
@@ -135,7 +135,7 @@
 
 [data-screen="pick"] .ask .send {
   border-right: 0;
-  border-left: 3px solid var(--ink);
+  border-left: 3px solid var(--line);
   background: var(--ink);
   color: #fff;
   font-family: "Big Shoulders Display", sans-serif;
@@ -179,12 +179,12 @@
 }
 
 [data-screen="pick"] .ask-q::placeholder {
-  color: #8d8778;
+  color: var(--muted);
   font-weight: 600;
 }
 
 [data-screen="pick"] .ask-q:focus {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: -3px;
 }
 
@@ -222,7 +222,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   background: var(--card);
 }
 
@@ -311,7 +311,7 @@
   min-width: 48px;
   padding: 0 4px 2px;
   border: 0;
-  border-left: 3px solid var(--ink);
+  border-left: 3px solid var(--line);
   background: var(--card);
   color: var(--ink);
   font-family: "Big Shoulders Display", sans-serif;
@@ -331,7 +331,7 @@
 
 [data-screen="pick"] .hit.is-on {
   border-color: var(--orange);
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: -6px;
   background: var(--ink);
   color: #fff;
@@ -355,7 +355,7 @@
 [data-screen="pick"] .none {
   min-height: 44px;
   padding: 12px;
-  border: 3px dashed var(--ink);
+  border: 3px dashed var(--line);
   background: transparent;
   color: var(--ink);
   font-family: Barlow, system-ui, sans-serif;

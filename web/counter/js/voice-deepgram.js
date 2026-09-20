@@ -27,11 +27,40 @@
  * in it moves the reader — the mechanic hears "page 115" and page 115 is already there. show_page
  * still works and still wins when the agent does call it; this only covers the turns it doesn't.
  *
- * start({manualId, bikeId, on}) -> handle {stop(), speaking(), level()}
+ * THE EVENTS DEEPGRAM DOES NOT SEND. Measured over five live sessions on this configuration
+ * (flux listen v2 + open_ai think + aura-2 speak), the socket sends Welcome, SettingsApplied,
+ * ConversationText, History, LatencyReport, UserStartedSpeaking, EndOfTurn, FunctionCallRequest,
+ * FunctionCallResponse and AgentAudioDone — and **never once AgentThinking or
+ * AgentStartedSpeaking**. Those two were the entire basis of the "Thinking" and "Speaking"
+ * statuses, so the drawer sat on "Listening" through every lookup and every answer. The status is
+ * therefore derived from what does arrive: EndOfTurn or a FunctionCallRequest means thinking, the
+ * first audio frame of a turn means speaking, a drained player with nothing in flight means
+ * listening. AgentThinking/AgentStartedSpeaking are still honoured if they ever show up.
+ *
+ * ONE SEC, CHECKING THE MANUAL. A spec question answers in 1.4-2.1 s; a question that walks
+ * find_procedure then reads four printed pages takes five to ten, and the mechanic hears nothing
+ * at all in between. Measured, no single round trip is slow - every one is 250-650 ms - so there
+ * is nothing to hang a per-call spinner on: it is the CHAIN that is slow. So the ack is a
+ * turn-level timer. If a lookup is running and this turn has made no sound ACK_MS after the
+ * rider stopped talking, the client sends InjectAgentMessage with behavior "queue", which is
+ * Deepgram's documented filler-during-a-long-function-call path. Live: sent at 2,503 ms, heard at
+ * 2,636 ms, against a real answer at 5,191 ms - four seconds of silence turned into one sentence
+ * and a wait. ACK_MS is above the slowest measured spec turn so a two-second answer never gets one.
+ *
+ * BARGE-IN, BEFORE DEEPGRAM SAYS SO. UserStartedSpeaking is the truth, but it is 0.4-2.2 s of
+ * network and model away (measured range over five sessions; median ~0.7 s, worst 2.2 s), and
+ * being talked over for two seconds is the single least human thing this agent does. So the mic's
+ * own RMS ducks playback locally after ~130 ms of speech while the agent is talking, and the
+ * server event - if it comes - turns the duck into a real stop. If it does not come within
+ * UNDUCK_MS the agent was not being interrupted at all (a dropped spanner, a compressor) and the
+ * answer comes back up where it left off. A duck is reversible; a flush is not.
+ *
+ * start({manualId, bikeId, on}) -> handle {stop(), interrupt(), speaking(), level(), out()}
  * `on` is called with:
  *   {type:"status", value:"connecting|listening|thinking|speaking|closed"}
  *   {type:"text", role:"user"|"assistant", text}   one finished turn, for the transcript
  *   {type:"page", page}                            show_page, or the page the answer named
+ *   {type:"interrupted"}                           the agent was cut off, for the UI to show
  *   {type:"error", message}
  */
 
@@ -43,9 +72,22 @@ const LEVEL_DECAY = 0.82;
 // Enough to ride out a stalled frame, small enough that it is not felt in front of the answer.
 const JITTER_S = 0.08;
 const KEEPALIVE_MS = 8000;
-// How long after a barge-in to keep dropping the abandoned answer's chunks. Long enough to cover
-// what was already in flight, short enough that a missing AgentStartedSpeaking costs nothing.
+// How long after a barge-in to keep dropping the abandoned answer's chunks. Measured, 8-103 KB of
+// the abandoned answer still arrives after the rider starts talking - up to two seconds of audio -
+// so the window has to outlive the flush. Short enough that a lost UserStartedSpeaking costs
+// nothing, because a mute nothing lifts would silence the session for good.
 const BARGE_MUTE_MS = 500;
+// Local barge-in. RMS of a voice a metre from the phone with echo cancellation on; three frames
+// (~130 ms) so a dropped spanner is not a conversation.
+const DUCK_RMS = 0.05;
+const DUCK_FRAMES = 3;
+const DUCKED_GAIN = 0.08;
+// If Deepgram never agrees that the rider spoke, it was not speech: put the answer back.
+const UNDUCK_MS = 900;
+// A turn with a lookup running and no sound yet gets one spoken acknowledgement at this mark.
+// Above the slowest measured spec turn (2,107 ms) so a two-second answer never earns one.
+const ACK_MS = 2500;
+const ACK_TEXT = "One sec, checking the manual.";
 
 // "page 115 says ...", "on page 115", "pages 85 and 86" — the first printed page an answer names.
 // Only ever "page N": a bare number in an answer is a torque or a capacity, never somewhere to go.
@@ -115,17 +157,45 @@ function player(ctx, rate, onDone) {
   let cursor = 0;
   let live = [];
   let gain = null;
+  let meter = null;
+  let window = null;
   let muteUntil = 0;
 
   function sink() {
     if (!gain) {
       gain = ctx.createGain();
+      // The orb pulses on the voice the rider is actually hearing, so the meter has to be on the
+      // node the voice goes through, not on the chunks going into it: a chunk is scheduled up to
+      // JITTER_S before it is audible, and an orb 80 ms ahead of the sound looks broken.
+      meter = ctx.createAnalyser();
+      meter.fftSize = 256;
+      meter.smoothingTimeConstant = 0;
+      window = new Float32Array(meter.fftSize);
+      gain.connect(meter);
       gain.connect(ctx.destination);
     }
     return gain;
   }
 
   return {
+    /** RMS of what is coming out of the speaker right now, 0..1. */
+    level() {
+      if (!meter || !live.length) return 0;
+      meter.getFloatTimeDomainData(window);
+      let sum = 0;
+      for (let i = 0; i < window.length; i++) sum += window[i] * window[i];
+      return Math.sqrt(sum / window.length);
+    },
+    /**
+     * Quieten the answer without throwing it away. The rider may only have coughed; a duck is a
+     * guess that can be taken back, and `flush` - which cannot - waits for Deepgram to confirm.
+     */
+    duck(on) {
+      if (!gain) return;
+      const now = ctx.currentTime;
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setTargetAtTime(on ? DUCKED_GAIN : 1, now, 0.02);
+    },
     push(buffer) {
       // After a barge-in the rest of the abandoned answer keeps arriving for a moment; dropping
       // it is the difference between interrupting the agent and talking over it. A window, not a
@@ -166,13 +236,26 @@ function player(ctx, rate, onDone) {
       }
       live = [];
       cursor = 0;
+      if (gain) {
+        // A flush ends the duck: the next answer must not arrive at eight percent.
+        gain.gain.cancelScheduledValues(ctx.currentTime);
+        gain.gain.value = 1;
+      }
     },
     /** The agent is starting a new answer: take the mute off early. */
     resume() {
       muteUntil = 0;
+      if (gain) {
+        gain.gain.cancelScheduledValues(ctx.currentTime);
+        gain.gain.value = 1;
+      }
     },
     busy() {
       return live.length > 0;
+    },
+    /** Still inside the window where the abandoned answer's chunks are being dropped. */
+    muted() {
+      return performance.now() < muteUntil;
     },
   };
 }
@@ -193,6 +276,14 @@ function tear(s) {
   if (s.beat) {
     clearInterval(s.beat);
     s.beat = 0;
+  }
+  if (s.ack) {
+    clearTimeout(s.ack);
+    s.ack = 0;
+  }
+  if (s.unduck) {
+    clearTimeout(s.unduck);
+    s.unduck = 0;
   }
   const ws = s.ws;
   s.ws = null;
@@ -239,6 +330,15 @@ export async function start(opts = {}) {
     dead: false,
     pages: 0, // printed pages in this manual; 0 until the settings arrive
     page: 0, // the page already on the rider's screen
+    status: "connecting",
+    lookups: 0, // server-side function calls still out
+    ack: 0, // the "one sec" timer for this turn
+    acked: false, // this turn has already had its one acknowledgement
+    said: false, // this turn has made a sound
+    spoke: false, // this turn already has an assistant line in the transcript
+    loud: 0, // consecutive loud mic frames, for the local barge-in
+    ducked: false,
+    unduck: 0,
   };
   current = session;
 
@@ -262,9 +362,58 @@ export async function start(opts = {}) {
       tear(session);
       if (!was) say({ type: "status", value: "closed" });
     },
+    /** The rider tapped the orb while the agent was talking. Same path as a spoken barge-in. */
+    interrupt() {
+      if (session.dead || !session.play || !session.play.busy()) return false;
+      session.play.flush();
+      session.ducked = false;
+      say({ type: "interrupted" });
+      status(session, "listening", say);
+      return true;
+    },
     speaking: () => Boolean(session.play && session.play.busy()),
     level: () => session.level,
+    out: () => (session.play ? session.play.level() : 0),
+    status: () => session.status,
   };
+}
+
+/** One status, said once. Everything that drives the orb goes through here. */
+function status(session, value, say) {
+  if (session.dead || session.status === value) return;
+  session.status = value;
+  say({ type: "status", value });
+}
+
+/**
+ * The rider stopped talking and a lookup is running. If this turn is still silent ACK_MS later,
+ * have the agent say one short thing rather than leave him in front of a dead phone. `queue` is
+ * Deepgram's documented behaviour for exactly this - filler during a long-running function call -
+ * and it is refused rather than obeyed if the rider is speaking, which is the right answer too.
+ */
+function arm(session, ws, say) {
+  if (session.ack || session.acked || session.said || session.dead) return;
+  session.ack = window.setTimeout(() => {
+    session.ack = 0;
+    if (session.dead || session.said || !session.lookups) return;
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    session.acked = true;
+    // Deepgram echoes the injected line back as an ordinary assistant ConversationText, so the
+    // transcript gets it from there; saying it twice here would put it in the history twice.
+    ws.send(JSON.stringify({ type: "InjectAgentMessage", message: ACK_TEXT, behavior: "queue" }));
+  }, ACK_MS);
+}
+
+/** A turn is starting: nothing has been said yet and the last turn's acknowledgement is spent. */
+function fresh(session) {
+  if (session.ack) {
+    clearTimeout(session.ack);
+    session.ack = 0;
+  }
+  session.said = false;
+  session.acked = false;
+  session.spoke = false;
+  session.lookups = 0;
 }
 
 async function run(session, opts, say) {
@@ -295,7 +444,7 @@ async function run(session, opts, say) {
 
   const ctx = new AudioContext({ sampleRate: rate });
   session.ctx = ctx;
-  session.play = player(ctx, rate, () => say({ type: "status", value: "listening" }));
+  session.play = player(ctx, rate, () => status(session, session.lookups ? "thinking" : "listening", say));
   if (ctx.state === "suspended") await ctx.resume();
   if (session.dead) return;
 
@@ -312,6 +461,15 @@ async function run(session, opts, say) {
 
   ws.onmessage = (event) => {
     if (typeof event.data !== "string") {
+      // The first frame of a turn is the only "AgentStartedSpeaking" this socket ever sends.
+      if (!session.said && !session.play.muted()) {
+        session.said = true;
+        if (session.ack) {
+          clearTimeout(session.ack);
+          session.ack = 0;
+        }
+        status(session, "speaking", say);
+      }
       session.play.push(event.data);
       return;
     }
@@ -341,40 +499,83 @@ function handle(session, ws, msg, say) {
     case "Welcome":
       break;
     case "SettingsApplied":
-      say({ type: "status", value: "listening" });
+      status(session, "listening", say);
       break;
     // Barge-in. Flux (listen v2) announces a turn with StartOfTurn; nova-3 sends
-    // UserStartedSpeaking. Whichever arrives, the buffered answer dies on the spot.
+    // UserStartedSpeaking. Whichever arrives, the buffered answer dies on the spot - and so does
+    // the local duck that has probably been holding it down for the last half second.
     case "UserStartedSpeaking":
-    case "StartOfTurn":
+    case "StartOfTurn": {
+      const cut = session.play.busy();
       session.play.flush();
-      say({ type: "status", value: "listening" });
+      session.ducked = false;
+      session.loud = 0;
+      if (session.unduck) {
+        clearTimeout(session.unduck);
+        session.unduck = 0;
+      }
+      fresh(session);
+      if (cut) say({ type: "interrupted" });
+      status(session, "listening", say);
+      break;
+    }
+    // The rider's turn is over and the model has it. Nothing will be audible for a second or two.
+    case "EndOfTurn":
+      fresh(session);
+      status(session, "thinking", say);
       break;
     case "AgentThinking":
-      say({ type: "status", value: "thinking" });
+      status(session, "thinking", say);
       break;
     case "AgentStartedSpeaking":
       session.play.resume();
-      say({ type: "status", value: "speaking" });
+      session.said = true;
+      status(session, "speaking", say);
       break;
     case "ConversationText": {
       const text = String(msg.content || "").trim();
       if (!text) break;
       const assistant = msg.role !== "user";
-      say({ type: "text", role: assistant ? "assistant" : "user", text });
-      // The page the agent just said out loud, for the turns where it does not call show_page.
+      // The acknowledgement is not part of the answer: it stands alone and the answer that lands
+      // four seconds later is a fresh line, not a sentence appended to "one sec".
+      if (assistant && text === ACK_TEXT) {
+        say({ type: "text", role: "assistant", text });
+        session.spoke = false;
+        break;
+      }
+      // The model answers one sentence per message. A mechanic asked one question and got one
+      // answer, so the transcript gets one line: `part` is true for every sentence after the
+      // first of the same turn, and chat-ui appends it to the bubble already there.
+      say({ type: "text", role: assistant ? "assistant" : "user", text, part: assistant && session.spoke });
       if (assistant) {
+        session.spoke = true;
+        // The page the agent just said out loud, for the turns where it does not call show_page.
         const named = SPOKEN_PAGE.exec(text);
         if (named) turnTo(session, Number(named[1]), say);
+      } else {
+        session.spoke = false;
       }
       break;
     }
     case "FunctionCallRequest":
-      for (const call of msg.functions || []) run_function(session, ws, call, say);
+      // Deepgram reports its OWN server-side calls here too, so this is where the browser learns
+      // that a lookup is running at all - the one thing it needs to know to cover the silence.
+      for (const call of msg.functions || []) {
+        if (call && call.client_side === false) session.lookups += 1;
+        run_function(session, ws, call, say);
+      }
+      status(session, "thinking", say);
+      arm(session, ws, say);
+      break;
+    case "FunctionCallResponse":
+      session.lookups = Math.max(0, session.lookups - 1);
       break;
     case "AgentAudioDone":
-      // The last chunk is scheduled, not played: the player says "listening" when it drains.
-      if (!session.play.busy()) say({ type: "status", value: "listening" });
+      // The last chunk is scheduled, not played: the player says "listening" when it drains. And
+      // the acknowledgement finishes with an AgentAudioDone of its own while the real answer is
+      // still being looked up, which is thinking, not listening.
+      if (session.lookups) status(session, "thinking", say);
+      else if (!session.play.busy()) status(session, "listening", say);
       break;
     case "Error":
       say({ type: "error", message: String(msg.description || msg.message || "voice error") });
@@ -425,12 +626,13 @@ async function capture(session, ws, rate, say) {
   let queue = new Float32Array(0);
 
   const push = (chunk) => {
-    let peak = 0;
-    for (let i = 0; i < chunk.length; i++) {
-      const v = chunk[i] < 0 ? -chunk[i] : chunk[i];
-      if (v > peak) peak = v;
-    }
-    session.level = Math.max(peak, session.level * LEVEL_DECAY);
+    // RMS, not peak: the orb has to grow with how loud the sentence is, and a peak meter is
+    // pinned at the top by the first consonant and says nothing after that.
+    let sum = 0;
+    for (let i = 0; i < chunk.length; i++) sum += chunk[i] * chunk[i];
+    const rms = Math.sqrt(sum / (chunk.length || 1));
+    session.level = Math.max(rms, session.level * LEVEL_DECAY);
+    listen(session, rms, say);
 
     const merged = new Float32Array(queue.length + chunk.length);
     merged.set(queue);

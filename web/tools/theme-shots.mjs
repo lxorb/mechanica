@@ -72,7 +72,7 @@ function serve() {
         return;
       }
       const path = decodeURIComponent(url.split("?")[0]);
-      const file = normalize(join(WEB, path));
+      const file = normalize(join(WEB, path.endsWith("/") ? join(path, "index.html") : path));
       if (!file.startsWith(WEB) || !existsSync(file) || !statSync(file).isFile()) {
         res.writeHead(404).end("not found");
         return;
@@ -290,41 +290,57 @@ async function pixelDiff(sharp, aPath, bBuffer) {
   return bad / (a.data.length / 4);
 }
 
-/** One PNG per theme: every stop scaled to a common cell, labelled, tiled five across. */
+/**
+ * One PNG per theme. Two bands, because the two viewports have nothing like the same shape:
+ * the ten phone stops five across at 0.6, the ten desktop stops three across at 0.3. A single
+ * cell size would letterbox one of the two into a stripe.
+ */
+const BANDS = {
+  phone: { cols: 5, w: 234, h: 506 },
+  desk: { cols: 3, w: 390, h: 244 },
+};
+const LABEL = 20;
+const SHEET_W = 1170;
+
 async function contactSheet(sharp, theme, tiles) {
   if (!tiles.length) return;
-  const CELL_W = 260;
-  const CELL_H = 560;
-  const LABEL = 22;
-  const cols = 5;
-  const rows = Math.ceil(tiles.length / cols);
-  const cells = await Promise.all(tiles.map(async (tile) => {
-    const body = await sharp(tile.buffer)
-      .resize({ width: CELL_W, height: CELL_H, fit: "contain", position: "top", background: "#20242a" })
-      .toBuffer();
-    return sharp({ create: { width: CELL_W, height: CELL_H + LABEL, channels: 4, background: "#20242a" } })
-      .composite([
-        { input: body, top: LABEL, left: 0 },
-        {
-          input: Buffer.from(
-            `<svg width="${CELL_W}" height="${LABEL}">`
-            + `<rect width="${CELL_W}" height="${LABEL}" fill="#101317"/>`
-            + `<text x="6" y="15" font-family="monospace" font-size="12" fill="#e9e4d7">${tile.name}</text></svg>`,
-          ),
-          top: 0, left: 0,
-        },
-      ])
-      .png()
-      .toBuffer();
-  }));
-  const sheet = sharp({
-    create: { width: cols * CELL_W, height: rows * (CELL_H + LABEL), channels: 4, background: "#101317" },
-  }).composite(cells.map((input, i) => ({
-    input,
-    left: (i % cols) * CELL_W,
-    top: Math.floor(i / cols) * (CELL_H + LABEL),
-  })));
-  await sheet.png().toFile(join(SHEETS, `${theme}.png`));
+  const cells = [];
+  let top = 0;
+  for (const [view, box] of Object.entries(BANDS)) {
+    const mine = tiles.filter((t) => t.file.includes(`-${view}-`));
+    if (!mine.length) continue;
+    for (let i = 0; i < mine.length; i += 1) {
+      const tile = mine[i];
+      const body = await sharp(tile.buffer)
+        .resize({ width: box.w, height: box.h, fit: "cover", position: "top" })
+        .toBuffer();
+      const cell = await sharp({ create: { width: box.w, height: box.h + LABEL, channels: 4, background: "#101317" } })
+        .composite([
+          { input: body, top: LABEL, left: 0 },
+          {
+            input: Buffer.from(
+              `<svg width="${box.w}" height="${LABEL}">`
+              + `<rect width="${box.w}" height="${LABEL}" fill="#101317"/>`
+              + `<text x="6" y="14" font-family="monospace" font-size="12" fill="#e9e4d7">${tile.name}</text></svg>`,
+            ),
+            top: 0,
+            left: 0,
+          },
+        ])
+        .png()
+        .toBuffer();
+      cells.push({
+        input: cell,
+        left: (i % box.cols) * box.w,
+        top: top + Math.floor(i / box.cols) * (box.h + LABEL),
+      });
+    }
+    top += Math.ceil(mine.length / box.cols) * (box.h + LABEL);
+  }
+  await sharp({ create: { width: SHEET_W, height: top, channels: 4, background: "#101317" } })
+    .composite(cells)
+    .png()
+    .toFile(join(SHEETS, `${theme}.png`));
   console.log(`  -> docs/ui-themes/${theme}.png`);
 }
 

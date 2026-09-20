@@ -21,9 +21,9 @@
   flex: 0 0 auto;
   min-height: 56px;
   padding: 0 16px;
-  border: 3px solid var(--ink);
-  background: var(--yellow);
-  color: var(--ink);
+  border: 3px solid var(--line);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
@@ -42,8 +42,8 @@
 }
 
 [data-screen="pick"] .chat-pill:active {
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 /* ------------------------------------------------------------------ the view */
@@ -65,7 +65,7 @@
   margin: 0;
   overflow: hidden;
   border-top: 0;
-  background: var(--paper);
+  background: var(--bg);
 }
 
 /* ---------- header ---------- */
@@ -121,9 +121,9 @@
   flex: 0 0 auto;
   min-height: 40px;
   padding: 6px 12px;
-  background: var(--ink);
-  color: var(--yellow);
-  border-bottom: 3px solid var(--ink);
+  background: var(--slab);
+  color: var(--accent-2);
+  border-bottom: 3px solid var(--line);
 }
 
 .cv-meter {
@@ -138,7 +138,7 @@
   display: block;
   width: 4px;
   height: 22px;
-  background: var(--yellow);
+  background: var(--accent-2);
   transform: scaleY(0.12);
   transform-origin: center;
   transition: transform 0.06s linear;
@@ -186,9 +186,9 @@
 .cv-foot {
   flex: 0 0 auto;
   padding: 5px 12px calc(5px + env(safe-area-inset-bottom));
-  border-top: 3px solid var(--ink);
-  background: var(--ink);
-  color: var(--yellow);
+  border-top: 3px solid var(--line);
+  background: var(--slab);
+  color: var(--accent-2);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.66rem;
@@ -210,8 +210,8 @@
   .cv-body {
     max-width: 766px;
     margin: 0 auto;
-    border-left: 3px solid var(--ink);
-    border-right: 3px solid var(--ink);
+    border-left: 3px solid var(--line);
+    border-right: 3px solid var(--line);
   }
 
   .cv-mic,

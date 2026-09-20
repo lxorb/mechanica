@@ -1,0 +1,624 @@
+{
+  "pitch": "token-company",
+  "order": 4,
+  "title": "It was never not-good-enough",
+  "target": "The Token Company",
+  "length": "5:00",
+  "angle": "The AI was never not-good-enough for this mechanic — it was too expensive. A savings ladder that re-prices the same measured tokens, rung by rung.",
+  "endline": "A cost lever. Never a correctness lever.",
+  "marks": [
+    {
+      "t": "0:00",
+      "do": "The $4 problem. 400,000 tokens is the arithmetic, not an anecdote."
+    },
+    {
+      "t": "0:45",
+      "do": "The savings ladder. One rung at a time."
+    },
+    {
+      "t": "1:10",
+      "do": "48× — retrieval is the big one."
+    },
+    {
+      "t": "1:40",
+      "do": "The A/B: cheaper AND more accurate on the same queries."
+    },
+    {
+      "t": "2:10",
+      "do": "Tiering 53× / 59×. Caching 99.5%."
+    },
+    {
+      "t": "2:35",
+      "do": "Compression 31.2% — and the 32.2% we refused."
+    },
+    {
+      "t": "3:05",
+      "do": "The token path. Say the one line over it."
+    },
+    {
+      "t": "3:30",
+      "do": "LIVE: /cost/ttc → chat → the footer → tap the chip → reload."
+    },
+    {
+      "t": "4:30",
+      "do": "His month: $4,800 → $5.04. Close."
+    }
+  ],
+  "slides": [
+    {
+      "kind": "statement",
+      "at": "0:00",
+      "kicker": "The one claim",
+      "text": "The AI was never not-good-enough for this mechanic. It was too expensive to use.",
+      "sub": "He hit the limit screen at eleven in the morning. That is not an accuracy problem — it is a *unit-economics* problem.",
+      "notes": [
+        "\"He doesn't use AI. Not because it's wrong — because one question cost him about four dollars, and he hit the limit before lunch.\"",
+        "What the judge should feel: this is a real person with a real bill, not a benchmark.",
+        "Say ~he says~. His ~$4 is his bill on his manual. Never blend it with our $12.40."
+      ],
+      "defs": [
+        {
+          "n": "~$4",
+          "d": "what one question cost him when he tried an LLM — HIS bill (assumed)."
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "0:20",
+      "title": "The only way to make it answer was to paste the manual in",
+      "line": "800 tokens a page, and the >272,000-token 2× rule — both from app/llm.py. Output is 100 tokens at each model's output price.",
+      "head": [
+        "manual",
+        "pages",
+        "prompt tokens",
+        "naive, flagship",
+        "the whole manual in the cheapest model"
+      ],
+      "align": [
+        "l",
+        "r",
+        "r",
+        "r",
+        "r"
+      ],
+      "rows": [
+        [
+          "KTM 390 Duke 2024 — our demo bike",
+          "143",
+          "114,400",
+          "$1.144",
+          "$0.0229"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "median deployed manual",
+            "171",
+            "136,800",
+            "*$1.37*",
+            "$0.0274"
+          ]
+        },
+        [
+          "his 500-page workshop manual",
+          "500",
+          "400,000 (2×)",
+          "*$8.005*",
+          "$0.1601"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "largest in the deployed catalog",
+            "775",
+            "620,000 (2×)",
+            "*$12.40*",
+            "—"
+          ]
+        }
+      ],
+      "note": "The cheap-model column is there on purpose. *\"Maybe he just picked the wrong model\"* is the honest objection — and on his manual the cheapest model reading the whole thing is still 19–38× our worst case. Cheap models don't fix this. *Not reading the manual* fixes this.",
+      "notes": [
+        "A 500-page workshop manual is 400,000 tokens. At $10/M that is exactly $4.00 of input before the model writes a word — his number is not an anecdote, it is the arithmetic.",
+        "At 40 questions a day that is $160/day, $4,800/month.",
+        "Disclose if asked: we apply the 2× surcharge to the cheap column too. If it does not apply there, the 500-page figure is $0.0801, not $0.1601 — still 19× our worst case."
+      ],
+      "defs": [
+        {
+          "n": "143",
+          "d": "printed pages in the demo manual, KTM 390 Duke 2024.",
+          "src": "README.md"
+        },
+        {
+          "n": "171",
+          "d": "median manual, in pages — median(manual.pages), live GET /api/manuals (computed)."
+        },
+        {
+          "n": "$1.37",
+          "d": "naive $/question, median deployed manual — naive_usd(171), under the 272k line so no 2× (computed)."
+        },
+        {
+          "n": "$8.005",
+          "d": "naive, modelled on his 500-page workshop manual — 400,000 tok at the flagship's input price, past the 272k line so 2×.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "775",
+          "d": "largest manual deployed, in pages (measured)."
+        },
+        {
+          "n": "$12.40",
+          "d": "naive $/question, largest deployed manual — live GET /api/cost → naivePerAsk (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "0:45",
+      "title": "The savings ladder",
+      "line": "Each rung re-prices the *same measured token counts* under the previous rung's rules. Nothing is modelled. Baseline: the median 170-page manual.",
+      "head": [
+        "rung",
+        "$ / ask",
+        "$ / chat answer",
+        "step"
+      ],
+      "align": [
+        "l",
+        "r",
+        "r",
+        "r"
+      ],
+      "rows": [
+        [
+          "0  naive: whole manual, flagship, every question",
+          "$1.3650",
+          "$1.3650",
+          "—"
+        ],
+        [
+          "1  + prompt-cache the whole manual",
+          "$0.1410",
+          "$0.1410",
+          "10×"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "2  page retrieval instead of whole manual",
+            "$0.04839",
+            "$0.02821",
+            "*48×*"
+          ]
+        },
+        [
+          "3  + model tiering",
+          "$0.001882",
+          "$0.005845",
+          "4.8×"
+        ],
+        [
+          "4  + caching + spec path + picker gate + compression",
+          "*$0.000865*",
+          "*$0.004200*",
+          "1.4×"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "5  + answer cache, on a repeat",
+            "*$0*",
+            "*$0*",
+            "—"
+          ]
+        }
+      ],
+      "note": "Rung 4's $0.000865 is the whole-log mix, development traffic included. On the controlled 150-query rider eval it is *$0.00038*. Both are in the report — quote whichever, name which.",
+      "notes": [
+        "Walk it one rung at a time. The point of the ladder is that every rung is the same tokens re-priced, not a model.",
+        "\"The first 48× isn't a model trick. It's not reading 500 pages to answer one question.\"",
+        "BM25 over the manual's own sections, in process, zero LLM, zero embeddings, zero vector DB. The prompt carries 2,314 tokens instead of 136,000–400,000."
+      ],
+      "defs": [
+        {
+          "n": "$1.3650",
+          "d": "rung 0 — 170 p × 800 tok in the flagship, the whole manual every question.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "$0.000865",
+          "d": "rung 4 — what the whole build log actually billed per ask, development traffic included.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask on the controlled 150-query rider eval — THE number to quote (measured)."
+        },
+        {
+          "n": "2,314",
+          "d": "tokens the chat prompt carries instead of the whole manual.",
+          "src": "token-company/cost-report.md"
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "1:40",
+      "title": "The cheapest call is the one not made",
+      "line": "The only controlled A/B in the repo: the same 150 rider queries, before and after the router rewrite, the deterministic spec path and the picker gate.",
+      "head": [
+        "",
+        "before",
+        "after",
+        "change"
+      ],
+      "align": [
+        "l",
+        "r",
+        "r",
+        "r"
+      ],
+      "rows": [
+        {
+          "emph": true,
+          "cells": [
+            "$ per ask",
+            "$0.00207",
+            "*$0.00038*",
+            "*5.4× cheaper*"
+          ]
+        },
+        [
+          "LLM calls per ask",
+          "1.73",
+          "1.15",
+          "−34%"
+        ],
+        [
+          "p95 latency",
+          "4.99 s",
+          "3.33 s",
+          "−33%"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "out-of-scope answered correctly",
+            "55%",
+            "*100%*",
+            "*+45 pts*"
+          ]
+        },
+        [
+          "in-scope top-1",
+          "100%",
+          "100%",
+          "unchanged"
+        ]
+      ],
+      "note": "*Cheaper and more accurate, on the same queries.* 85% of asks make zero picker calls; spec questions cost nothing past the router; if the second BM25 hit is below PICK_MARGIN, BM25 already won.",
+      "notes": [
+        "The row that wins the room is the out-of-scope one: the cheap version is also the honest version.",
+        "\"How much oil does it take\" is answered from parsed spec rows plus BM25, with the quote verified verbatim against the printed page. *Zero LLM calls.*",
+        "1.15 LLM calls per ask = 172 calls for 150 asks."
+      ],
+      "defs": [
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask — eval cost-log delta over 150 controlled queries (measured)."
+        },
+        {
+          "n": "1.15",
+          "d": "LLM calls per ask — 172 calls / 150 asks (computed)."
+        },
+        {
+          "n": "3.33 s",
+          "d": "an ask, p95 — api/eval/report.md (measured)."
+        },
+        {
+          "n": "20 of 20",
+          "d": "off-topic questions returned empty instead of guessed at — the 100% out-of-scope figure (measured)."
+        },
+        {
+          "n": "100% of 130",
+          "d": "right section first, in-scope questions — unchanged by the rewrite (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "2:10",
+      "kicker": "Two levers, measured on the same job",
+      "items": [
+        {
+          "value": "53× / 59×",
+          "label": "model tiering",
+          "sub": "identify.photo $0.024661 → $0.000464 · identify.part $0.014047 → $0.000239. Tiering is per route, not per product — and *nothing* runs on the flagship."
+        },
+        {
+          "value": "99.5%",
+          "label": "prompt caching, from cached_tokens",
+          "sub": "ask.router's 3,000-token vocabulary translator, pinned with prompt_cache_key per route+model. A big prompt is cheap when it never changes."
+        }
+      ],
+      "notes": [
+        "The constraint and the fuzzy match were doing the accuracy work, so the flagship stopped earning its price. Say it that way — it is a measurement, not a preference.",
+        "The expensive tokens are the ones that change. ingest.struct is 47.0% cached over 70.4M tokens; chat.answer 42.7%; ask.picker 34.6%.",
+        "Tiering is worth 4.8× here. *Not reading the manual* is worth 48×.",
+        "*Caveat, know it before a judge opens the report.* token-company.md and openai.md both quote identify.photo at $0.000464 and 53×; the regenerated token-company/cost-report.md reports $0.000532 and 46× off a different call window. If anyone has the report open, quote the route and the direction, not the decimal."
+      ],
+      "defs": [
+        {
+          "n": "$0.000464",
+          "d": "identify.photo on gpt-5.6-luna against $0.024661 on the flagship — 53× on identical work.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "$0.000239",
+          "d": "identify.part on luna against $0.014047 on the flagship — 59×.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "99.5%",
+          "d": "ask.router prompt-cache hit rate over 1,113 calls.",
+          "src": "token-company/cost-report.md"
+        }
+      ]
+    },
+    {
+      "kind": "two-up",
+      "at": "2:35",
+      "title": "Compression, where nothing else could reach",
+      "left": {
+        "value": "31.2%",
+        "label": "tokens removed before the prompt was billed",
+        "caption": "46,501 → 31,977 over 25 answers · 581 tokens an answer · 21.7% of the chat bill"
+      },
+      "right": {
+        "value": "32.2%",
+        "label": "the setting we refused",
+        "caption": "at aggressiveness 0.5 it ate printed values and sometimes a PAGE fence. We shipped 0.3 and got the rest by deleting dealer boilerplate instead."
+      },
+      "caption": "*Cutting text that carries no information beats compressing text that does.* 368/368 KTM and 256/256 BMW printed figures survive, and a lost page fence throws the whole compression away.",
+      "notes": [
+        "A lost fence silently reattributes one page's text to another page's number. A lost torque figure is exactly the thing this product exists not to get wrong — *a wrong torque breaks a motorcycle, and the mechanic is liable for it.*",
+        "Quote the *31.2% eval figure* and name it. The live /cost/ttc counter is in-memory PER REPLICA and zeroes on restart, so a low number means a fresh replica, not a worse compressor. Do not say 31.4%.",
+        "Do not state what the compressor costs us: there is no public $/M, we log it as $0 and count tokens instead."
+      ],
+      "defs": [
+        {
+          "n": "31.2%",
+          "d": "tokens removed before the prompt was billed — 46,501 tok in → 31,977 out over 23 bear-2 calls, api/eval/chat-report.md (measured)."
+        },
+        {
+          "n": "32.2%",
+          "d": "the aggressiveness-0.5 setting: 32.2% saved but only 4/6 PAGE fences intact and 80% of printed figures kept. Refused.",
+          "src": "token-company.md"
+        }
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "3:05",
+      "title": "The token path",
+      "caption": "Compression sits between the PDF text layer and every model call — and it is a cost lever, never a correctness lever. The worst case is that we pay full price for a correct answer.",
+      "flow": {
+        "bands": [
+          {
+            "rows": [
+              {
+                "gap": 30,
+                "items": [
+                  {
+                    "tone": "paper",
+                    "t": "Rider question",
+                    "sub": "~12 tokens"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Router",
+                    "sub": "3,102 tok in · 99.5% cached · $0.000132"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "spec · 16%",
+                    "sub": "parsed spec rows + BM25, quote verified verbatim · 0 LLM calls · $0"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "BM25 over the|manual's sections",
+                    "sub": "in process · no embeddings · no vector DB · $0"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "THE PRINTED PAGES",
+                    "sub": "this is the answer. Most riders stop here — 85% of asks never pay for a picker"
+                  }
+                ]
+              },
+              {
+                "down": true,
+                "gap": 30,
+                "items": [
+                  {
+                    "tone": "white",
+                    "t": "Strip dealer referrals",
+                    "sub": "−2.8% KTM / −5.7% BMW · 368/368 figures intact"
+                  },
+                  {
+                    "tone": "yellow",
+                    "t": "one compression call|for the whole prompt",
+                    "sub": "PAGE-N fences · 46,501 → 31,977 tok · −31.2%"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "every PAGE fence|survived?",
+                    "sub": "no → throw the compression away, use the original text, pay full price, stay correct"
+                  },
+                  {
+                    "tone": "orange",
+                    "t": "Chat",
+                    "sub": "2,314 tok in · 42.7% cached · emits [p. N] only · $0.00420"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "the SERVER slices every|quote out of the ORIGINAL page",
+                    "sub": "43/43 verbatim · 0 invented numbers"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "*The one line to say over this:* compression sits between the PDF text layer and every model call — and it is a cost lever, never a correctness lever. No key, a 5xx, a timeout, a lost page fence: all four return the original text.",
+        "Why one call and not one per page: the API allows 60 requests/minute. Per-page compression would have capped the whole product at ten chats a minute.",
+        "Then the live demo: /cost/ttc, the chat footer's \"N tokens saved\", tap the [p. 78] chip, reload the counter. Warm a *different* question beforehand — a repeat is served from the answer cache at $0 and the counters will not move."
+      ],
+      "defs": [
+        {
+          "n": "99.5%",
+          "d": "ask.router prompt-cache hit rate.",
+          "src": "token-company/cost-report.md"
+        },
+        {
+          "n": "$0.000132",
+          "d": "ask.router, per call, after the cache.",
+          "src": "token-company/cost-report.md"
+        },
+        {
+          "n": "31.2%",
+          "d": "tokens removed before the prompt was billed — 46,501 → 31,977 over 23 bear-2 calls (measured)."
+        },
+        {
+          "n": "2,314",
+          "d": "tokens the chat prompt carries instead of the whole manual.",
+          "src": "token-company/cost-report.md"
+        },
+        {
+          "n": "$0.0041",
+          "d": "our $ per written chat answer — mean over 248 answers in costs.jsonl (the 25-question eval says $0.00488; name which) (measured)."
+        },
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name (measured)."
+        }
+      ]
+    },
+    {
+      "kind": "demo",
+      "at": "3:30",
+      "title": "Live — the counter moves, the citation does not",
+      "line": "Two tabs, phone mirrored. Every scripted question was run beforehand; warm a *different* one, or the answer cache serves it at $0 and nothing moves.",
+      "rows": [
+        {
+          "do": "Tab 2 · `/api/cost/ttc` — read tokensIn / tokensOut / savedPct aloud",
+          "see": "e.g. 8,811 → 6,247. All zeroes on a fresh replica is fine — it just means step 5 starts from 0."
+        },
+        {
+          "do": "Tab 1 · KTM 390 Duke 2024 → CHAT → `chain is loose, what do I do`",
+          "see": "numbered steps, every sentence ending [p. 77] / [p. 78]"
+        },
+        {
+          "do": "Point at the chat footer",
+          "see": "*N tokens saved* — ~600–950 for this question. \"Those tokens were never billed.\""
+        },
+        {
+          "do": "Tap the [p. 78] chip",
+          "see": "the Book jumps to p.78, orange markers on the printed lines. The server sliced that quote out of the *original* page, not the compressed text."
+        },
+        {
+          "do": "Tab 2 · reload `/api/cost/ttc`",
+          "see": "tokensIn, tokensOut, tokensSaved, calls all moved. Same request, counters moved, citation still exact."
+        },
+        {
+          "do": "Tab 1 · `#cost`",
+          "see": "total · per ask · naive per ask · calls. \"Four hundredths of a cent an ask. Pasting the manual in is $12.40.\""
+        }
+      ],
+      "notes": [
+        "Trap: /cost/ttc counters are in-memory per replica. If the number goes *backwards* on reload you hit the other replica — ask the question once more, don't explain it.",
+        "Trap: the BMW R 12 G/S is shaft drive. \"chain is loose\" returns BATTERY GUARD p.150. Chain questions go to the KTM.",
+        "If the compressor is down nothing visible happens: the counter stops moving, the chat bill goes up ~22%, the answer is identical."
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "4:30",
+      "kicker": "His month — 40 questions a day, 30 days",
+      "items": [
+        {
+          "value": "$4,800",
+          "label": "before — his own lived $4 a question",
+          "sub": "that design priced out today on a 500-page manual is $9,606"
+        },
+        {
+          "value": "$5.04",
+          "label": "after — if he chats *every single question*",
+          "sub": "the worst case. The default path, where the manual is the answer, is $0.46"
+        }
+      ],
+      "sub": "Ingest does not scale with mechanics. It scales with distinct manuals, and there are only so many motorcycles.",
+      "notes": [
+        "\"He stopped using AI because one question cost four dollars. His whole month now costs five — and the answer he gets is page 77 of KTM's own manual, not our paraphrase of it.\"",
+        "\"The compression is why the one place we do write a sentence is still affordable, and the page fences are why that sentence can still point at the exact line of ink.\"",
+        "At 1,000 mechanics: $1.64M/month → $5,040/month worst case, $456/month on the default path."
+      ],
+      "defs": [
+        {
+          "n": "$4,800",
+          "d": "his month at 40 questions/day × 30 days on his own lived $4/question.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "$5.04",
+          "d": "the same month on ours if every question gets a written chat answer — the worst case.",
+          "src": "token-company/cost-report.md"
+        },
+        {
+          "n": "$9,606",
+          "d": "the same month with the whole 500-page manual in the flagship, $8.005 a question.",
+          "src": "token-company.md"
+        },
+        {
+          "n": "$0.46",
+          "d": "the same month on the default path, $0.00038 an ask.",
+          "src": "token-company/cost-report.md"
+        }
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "token-company.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not quote the live /cost/ttc percentage as the headline — it is in-memory per replica and zeroes on restart. A low number means a fresh replica, not a worse compressor.",
+            "Quote the 31.2% eval figure and name it. Do not say 31.4%.",
+            "Do not blend his ~$4 with our $12.40 — different measurements of different manuals.",
+            "Do not state what the compressor costs us: there is no public $/M. We log it as $0 and count tokens instead."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
+            "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
+            "Never quote a running ledger total without the date beside it.",
+            "Never call 13,537 \"manuals\" — distinct fetchable PDFs is 14,770.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": [
+        "Presenter-only. The audience sees the end card."
+      ]
+    }
+  ]
+}

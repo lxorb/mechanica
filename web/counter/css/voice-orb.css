@@ -1,0 +1,320 @@
+/**
+ * The voice orb — the round thing in the middle while voice mode is live. Owner: voice agent.
+ * Pairs with js/voice-orb.js, mounted by js/chat-ui.js. Pulled in by css/screens/pick.css next to
+ * chat-ui.css, so index.html (another agent's file) needs no line.
+ *
+ * WHY A DISC AND NOT A BUTTON. Voice mode is not a mode of the chat, it is the whole screen: both
+ * hands are on the bike and nobody is aiming at a 44px target in a corner. So the orb is centred,
+ * it is the only thing to hit, and it is big enough to hit with the side of a glove.
+ *
+ * EVERYTHING THAT MOVES IS A TRANSFORM. The disc never changes width, height, margin or any other
+ * layout property: js/voice-orb.js writes `--s` (scale) and `--g` (glow) sixty times a second and
+ * the compositor does the rest, so a running orb costs no layout and no paint. The three states
+ * differ only in what drives those two numbers — breath, ripple, or the agent's own output level.
+ *
+ * NO LAYOUT SHIFT. The orb is position:fixed over the whole view and the transcript stays mounted
+ * and scrollable underneath it; entering and leaving voice mode adds and removes nothing from the
+ * flow. `.vo-dim` fades the conversation behind it instead of unmounting it.
+ *
+ * Tokens only, from css/counter.css: --orange (the accent), --ink, --paper, --card, --rule.
+ */
+
+.vo {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 16px;
+  /* The conversation is still there, still scrollable, just behind a veil of paper. */
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  /* Nothing here is a scroll container: the chevron hands the scroll back to the transcript. */
+  overscroll-behavior: contain;
+}
+
+.vo[hidden] {
+  display: none !important;
+}
+
+/* ---------- the live transcript line, above the orb ---------- */
+
+.vo-line {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 520px;
+  min-height: 1.3em;
+  margin-bottom: 26px;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.vo-line.is-on {
+  opacity: 0.85;
+}
+
+/* ---------- the orb ---------- */
+
+.vo-orb {
+  --s: 1;
+  --g: 0;
+  position: relative;
+  flex: 0 0 auto;
+  width: 168px;
+  height: 168px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  appearance: none;
+  cursor: pointer;
+  /* the disc itself is painted by ::before so the ring can sit outside it and not be scaled */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vo-orb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--card) 70%, var(--orange)) 0%, var(--orange) 62%, color-mix(in srgb, var(--orange) 76%, var(--ink)) 100%);
+  transform: scale(var(--s));
+  will-change: transform;
+}
+
+/* The halo: one element, opacity and scale only, so "louder" is a bigger softer edge and not a
+   second animation to keep in step. */
+.vo-orb::after {
+  content: "";
+  position: absolute;
+  inset: -34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--orange) 46%, transparent) 0%, transparent 68%);
+  opacity: var(--g);
+  transform: scale(calc(0.86 + var(--s) * 0.18));
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.vo-orb:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 8px;
+}
+
+/* ---------- the ripple rings, while a lookup is running ---------- */
+
+.vo-ring {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--orange);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+}
+
+.vo-orb.is-thinking .vo-ring {
+  animation: vo-ripple 1.9s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+.vo-orb.is-thinking .vo-ring:nth-child(2) {
+  animation-delay: 0.63s;
+}
+
+.vo-orb.is-thinking .vo-ring:nth-child(3) {
+  animation-delay: 1.26s;
+}
+
+@keyframes vo-ripple {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+/* ---------- the state word ---------- */
+
+.vo-state {
+  flex: 0 0 auto;
+  margin-top: 26px;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* ---------- leave, and the way back to the conversation ---------- */
+
+.vo-x {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+}
+
+.vo-x:active {
+  background: var(--orange);
+  color: #fff;
+}
+
+/* The chevron: the transcript is behind the orb and this is how you say so. Tapping it fades the
+   veil out and hands the scroll back; the session keeps running. */
+.vo-back {
+  position: absolute;
+  left: 50%;
+  bottom: calc(6px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  min-width: 64px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  cursor: pointer;
+  appearance: none;
+}
+
+.vo-back svg {
+  display: block;
+  margin: 0 auto 1px;
+  width: 16px;
+  height: 16px;
+}
+
+/* Peeking at the conversation: the veil goes, the orb shrinks into the bottom corner and keeps
+   running, and the transcript takes the taps. Still no layout change — a transform and opacity. */
+.vo.is-peek {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  pointer-events: none;
+}
+
+.vo.is-peek .vo-line,
+.vo.is-peek .vo-state,
+.vo.is-peek .vo-back {
+  opacity: 0;
+}
+
+.vo.is-peek .vo-orb {
+  pointer-events: auto;
+  transform: translate(calc(50vw - 56px), calc(50vh - 92px)) scale(0.3);
+}
+
+.vo.is-peek .vo-x {
+  pointer-events: auto;
+}
+
+.vo-orb {
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* ---------- 390x844 ---------- */
+
+@media (max-height: 700px), (max-width: 360px) {
+  .vo-orb {
+    width: 132px;
+    height: 132px;
+  }
+
+  .vo-line {
+    margin-bottom: 18px;
+  }
+
+  .vo-state {
+    margin-top: 18px;
+    font-size: 1.25rem;
+  }
+}
+
+/* ---------- desktop ---------- */
+
+@media (min-width: 980px) {
+  .vo-orb {
+    width: 208px;
+    height: 208px;
+  }
+
+  .vo-line {
+    font-size: 1.05rem;
+  }
+}
+
+/* ---------- reduced motion ---------- *
+ * No breathing, no ripple, no pulse. The level is still worth showing — it is the only proof the
+ * mic is hearing anything — so it becomes a ring that fills, which changes no size and no position:
+ * js writes --lvl and the conic gradient reads it. */
+
+@media (prefers-reduced-motion: reduce) {
+  .vo-orb::before {
+    transform: none;
+  }
+
+  .vo-orb::after {
+    transform: none;
+    transition: opacity 0.2s linear;
+  }
+
+  .vo-orb.is-thinking .vo-ring {
+    animation: none;
+  }
+
+  .vo-orb {
+    transition: none;
+  }
+
+  .vo-orb .vo-ring:first-child {
+    --lvl: 0;
+    opacity: 1;
+    border: 0;
+    inset: -14px;
+    background: conic-gradient(var(--ink) calc(var(--lvl) * 360deg), color-mix(in srgb, var(--ink) 16%, transparent) 0);
+    -webkit-mask: radial-gradient(circle, transparent 0 calc(50% - 5px), #000 calc(50% - 5px));
+    mask: radial-gradient(circle, transparent 0 calc(50% - 5px), #000 calc(50% - 5px));
+  }
+
+  .vo-orb.is-thinking .vo-ring:first-child {
+    background: repeating-conic-gradient(var(--ink) 0 12deg, transparent 12deg 24deg);
+  }
+}

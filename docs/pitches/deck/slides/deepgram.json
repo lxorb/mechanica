@@ -1,0 +1,219 @@
+{
+  "pitch": "deepgram",
+  "order": 6,
+  "title": "The voice that is not allowed to know anything",
+  "target": "Deepgram",
+  "length": "5:00",
+  "angle": "Live. Four grounded tools are the agent's whole vocabulary, and Deepgram calls our API server-to-server so the manual never enters the tab.",
+  "endline": "Don't trust the voice. Trust the page.",
+  "marks": [
+    { "t": "0:00", "do": "The lift. 20% of his week. He refuses AI, and he is right to." },
+    { "t": "0:30", "do": "The one rule, verbatim. \"Not a style guide — a permission set.\"" },
+    { "t": "1:00", "do": "Four functions, one book. The architecture." },
+    { "t": "1:30", "do": "LIVE. Six utterances. Interrupt it. Ask it about a Ducati." },
+    { "t": "3:00", "do": "Where the milliseconds go. Volunteer the slow one." },
+    { "t": "3:45", "do": "What of Deepgram, and why — including what we could not prove." },
+    { "t": "4:30", "do": "Don't trust the voice. Trust the page." }
+  ],
+  "slides": [
+    {
+      "kind": "statement",
+      "at": "0:00",
+      "kicker": "The lift",
+      "text": "Both hands on the bike, oil on the gloves, a phone on the bench he will not touch.",
+      "sub": "*20%* of his working time goes to manuals — *EUR 36–48k* of billable time a year. He will not use AI: 95% correct is not good enough when he is liable for the 5%, and one question cost him about *$4*. This is the case voice was invented for, and the case where a voice assistant that improvises is at its most dangerous — *because there is no page on screen to catch it.*",
+      "notes": [
+        "A real person with a real number attached to the problem, and a real reason he has refused every product in this category so far.",
+        "\"A wrong torque figure does not produce a wrong paragraph. It produces a wheel that comes off.\"",
+        "Say ~he says~. Thirty seconds, then move to the rule."
+      ],
+      "defs": [
+        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate (assumed)." },
+        { "n": "EUR 36k-48k", "d": "400 h × EUR 90–120/h (computed)." },
+        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed)." }
+      ]
+    },
+    {
+      "kind": "quote",
+      "at": "0:30",
+      "text": "You do not know anything about this motorcycle. Everything you think you remember about a KTM, a BMW or any other bike is wrong here and may not be spoken. Call a function FIRST, every single time, before the first word of every answer.",
+      "cite": "api/app/voice.py — the prompt's one rule, verbatim",
+      "notes": [
+        "\"This is the system prompt. *It is not a style guide, it is a permission set.*\"",
+        "And for numbers specifically: *a torque, a capacity, a pressure, a clearance, a gap, an interval, a fuse rating or a part number may only leave your mouth if a function result you have already received printed it, word for word.*",
+        "A voice answer has no citation — there is no hyperlink in a sound wave. So the grounding cannot be a footnote you add afterwards. It has to be the only thing the agent is able to do.",
+        "*Don't trust the voice. Trust the page.* The voice is a pointer, not an authority."
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "1:00",
+      "title": "Four functions, one book",
+      "caption": "Deepgram calls our API. The manual's text never enters the browser, and the manual id rides in the endpoint's query string — not in the model's arguments.",
+      "flow": {
+        "bands": [
+          {
+            "rows": [
+              {
+                "gap": 32,
+                "items": [
+                  { "tone": "paper", "t": "mic · AudioWorklet", "sub": "24 kHz linear16 · 1,024-sample frames" },
+                  { "tone": "white", "t": "Cloudflare Worker", "sub": "/ws/deepgram/agent · HOLDS THE KEY · a browser WebSocket cannot set headers" },
+                  { "tone": "green", "t": "listen · flux-general-en v2", "sub": "end of turn decided inside the model · eager EOT 0.4 · keyterms built per manual" },
+                  { "tone": "green", "t": "think · open_ai", "sub": "prompt and tools built by OUR server, per manual" },
+                  { "tone": "green", "t": "speak · aura-2-asteria-en", "sub": "\"clear, confident, knowledgeable\"" }
+                ]
+              },
+              {
+                "down": true,
+                "gap": 32,
+                "items": [
+                  { "tone": "orange", "t": "our API · /voice/tools/*", "sub": "find_procedure · read_page · get_spec · list_parts — the agent's entire vocabulary" },
+                  { "tone": "ink", "t": "the manufacturer's PDF|+ its page index", "sub": "the manual's own words, and the page they are printed on" },
+                  { "tone": "white", "t": "the reader", "sub": "the page number in the agent's own transcript moves it — same millisecond as the first byte of audio" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "\"Deepgram calls our API. The manual never enters the browser. The manual id is in the URL, not in the model's arguments.\" Then stop reading the diagram.",
+        "Because the functions carry an `endpoint`, the tool calls are server-to-server. The browser cannot forge a tool result, and the agent physically cannot answer from a book it was not handed.",
+        "We found out the hard way the page cannot be left to the model: 7 spoken turns, 6 pages named out loud, *0 show_page calls* — including on \"show me the brake fluid procedure\". So the reader no longer waits for the model to decide.",
+        "The key: a Workers WebSocket defaults to blob, and a Blob handed back to send() goes out as the literal text [object Blob] — which silently turns every PCM frame into UNPARSABLE_CLIENT_MESSAGE while the JSON keeps flowing perfectly. Good war story if they lean in."
+      ]
+    },
+    {
+      "kind": "demo",
+      "at": "1:30",
+      "title": "Live — six utterances",
+      "line": "KTM 390 Duke 2024, 143 printed pages, already warm. Tap VOICE. The greeting lands *724 ms* after the socket opens.",
+      "rows": [
+        { "do": "\"What's the torque on the rear axle nut?\"", "see": "get_spec fires → *\"Page 78 says tighten the rear axle nut to one hundred newton metres\"* — and page 78 opens. First audio 1,793 ms." },
+        { "do": "\"And the front one?\"", "see": "no repeat of the bike, no repeat of the part — multi-turn context resolves it. *forty five newton metres*, page 130. First audio 1,733 ms." },
+        { "do": "\"What is the tyre pressure?\"", "see": "already in the session's context — *no tool call at all*. First audio 780 ms." },
+        { "do": "\"Show me the brake fluid procedure.\"", "see": "find_procedure → four read_page calls → the steps in the manual's order, page 85 on screen. *9,878 ms — the slow one. Say so.*" },
+        { "do": "*Interrupt it mid-sentence*", "see": "the voice stops dead and listens. Scheduled audio dies in <3 ms." },
+        { "do": "\"What's the valve clearance on a Ducati Panigale?\"", "see": "*\"That is not in this manual.\"* No figure, no guess, no carry-over from another bike." }
+      ],
+      "notes": [
+        "*Do not hide turn 4.* \"That one took ten seconds, because the question walks our search pipeline and then reads four printed pages. A spec question that lands on get_spec is a two-second answer. We know exactly which hop costs what — it's on the next slide.\"",
+        "A judge who watches you volunteer your own slowest path believes the rest of your numbers.",
+        "Numbers are spoken, not printed: the prompt bans every screen-only token. Over 8 live turns every *figure* came out spelled. Two turns leaked a printed *grade* through — SAE 15W/50 and DOT 4 — and aura-2 reads those as letters. *Do not claim 8/8; claim what it is.*",
+        "Turn 2 needs the get_spec ranking deployed to be deterministic. If it is not deployed, drop turn 2 to \"what's the tyre pressure?\"."
+      ],
+      "defs": [
+        { "n": "143", "d": "printed pages in the demo manual, KTM 390 Duke 2024.", "src": "README.md" },
+        { "n": "535", "d": "manuals indexed and searchable now — live GET /api/manuals (measured)." },
+        { "n": "45 Nm", "d": "the printed front-axle figure in Chassis tightening torques, p.128–130 of the KTM 390 Duke 2024 manual.", "src": "README.md" },
+        { "n": "1,793", "d": "first audio byte, ms from the last sample of \"what's the torque on the rear axle nut?\" — saved message trace, 2026-09-20.", "src": "deepgram.md" },
+        { "n": "9,878", "d": "first audio byte, ms, for the procedure question — the tail, and we say so.", "src": "deepgram.md" },
+        { "n": "724 ms", "d": "socket open → greeting audio (measured).", "src": "deepgram.md" }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "3:00",
+      "dense": true,
+      "title": "Where the milliseconds go",
+      "line": "Measured live through the Worker proxy, with Deepgram's own TTS speaking the question into the socket at real speed. Four sessions, eight spoken turns, traces saved.",
+      "head": ["hop", "measured"],
+      "align": ["l", "r"],
+      "rows": [
+        ["socket open → Welcome", "4–10 ms"],
+        ["→ SettingsApplied", "154–166 ms"],
+        ["→ greeting audio", "*724 ms*"],
+        ["get_spec round trip", "260–770 ms"],
+        ["read_page round trip", "110–330 ms"],
+        { "emph": true, "cells": ["find_procedure round trip", "*1,970 ms and 6,519 ms* — the tail; it runs the full router → BM25 → picker pipeline"] },
+        { "emph": true, "cells": ["5 spec turns, 4 sessions: end of speech → first audio", "*median 2.08 s*, range 1.73–4.01 s. A procedure question is *9.9 s*"] },
+        ["barge-in, local stop", "<3 ms, plus a 500 ms window that drops the abandoned answer's in-flight chunks"],
+        ["cost", "*$0.075 per connected minute* — the socket exists only between the two taps on VOICE"]
+      ],
+      "note": "What we would fix next: find_procedure is 85% of the worst case. Returning the section's printed text with the hit collapses a find_procedure + 4 × read_page chain into one call, and takes turn 4 from ~10 s to ~3 s.",
+      "notes": [
+        "\"1.7 seconds to first audio on a spec question. 9.9 on a procedure. Here is which hop costs what.\"",
+        "Do not quote 2 s for a *procedure* question. A spec question is ~2 s; a procedure question is 9.9 s.",
+        "A typical spec question is a ~10-second session — about 1.2 cents. The Cloudflare Worker bills CPU time, not socket duration, so proxying is effectively free."
+      ],
+      "defs": [
+        { "n": "2.08 s", "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)." },
+        { "n": "9.9 s", "d": "the same measurement for a procedure question — say so rather than quoting 2 s for everything (measured)." },
+        { "n": "724 ms", "d": "socket open → greeting audio (measured).", "src": "deepgram.md" },
+        { "n": "6,519", "d": "find_procedure round trip, ms, worst observed — it runs the full router → BM25 → picker ask pipeline.", "src": "deepgram.md" },
+        { "n": "$0.075 per connected minute", "d": "Deepgram's hosted-LLM tier: STT, LLM and TTS bundled, billed on socket time.", "src": "deepgram.md" }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "3:45",
+      "dense": true,
+      "title": "What of Deepgram, and why",
+      "head": ["", "why"],
+      "align": ["l", "l"],
+      "rows": [
+        ["*Voice Agent API*, not STT + LLM + TTS stitched", "One socket carries mic up, voice down and the JSON events interleaved — so the turn boundary, the barge-in signal and the function call are decided next to the audio. And the tool calls are *server-side*, which is what makes the grounding airtight."],
+        ["*flux-general-en* endpointing", "End of turn is detected inside the model, not by a silence timer. Eager EOT starts the LLM before the sentence ends and throws the speculative turn away on TurnResumed. *1.35 s to first audio against nova-3's 1.97 s.*"],
+        ["*Barge-in*", "A workshop answer is often wrong-question-shaped. Scheduled audio dies on the next render quantum, *<3 ms*."],
+        { "emph": true, "cells": ["*Keyterm prompting* — 100 terms, built per manual", "Accepted live with zero errors. *We could not measure a win:* 11.4% vs 13.6% WER at 3 dB, 14.1% vs 13.3% at 0 dB. That is noise, not a result. It ships because it is the documented lever, it costs nothing, and it protects the proper nouns."] }
+      ],
+      "note": "The claim we are entitled to make is *\"built and wired\"*, not *\"X% better\"*. A real number needs real mechanics in a real shop — and that is the first thing we would spend a Deepgram credit on.",
+      "notes": [
+        "\"One socket instead of three. Endpointing inside the model. And a feature we shipped and could not prove — here is the data.\"",
+        "*A judge who hears you refuse an easy number will believe the ones you do give.* This is the best slide in the deck for exactly that reason.",
+        "think.provider.type is open_ai: Deepgram drives think through /v1/chat/completions, which rejects reasoning_effort the moment function tools are attached — so reasoning models close the socket with FAILED_TO_THINK. This is not \"Deepgram instead of OpenAI\", it is Deepgram's transport and turn-taking around OpenAI's reasoning."
+      ]
+    },
+    {
+      "kind": "image",
+      "at": "4:30",
+      "title": "Don't trust the voice. Trust the page.",
+      "line": "He hears the figure. The page it came from is already in front of him, in KTM's own typesetting.",
+      "points": [
+        "Two seconds. Hands never leave the bike.",
+        "Four functions, one book, and a rule that no number may leave its mouth unless a function result printed it word for word."
+      ],
+      "image": "deck/shots/src/book-front-axle.png",
+      "caption": "*22.9 Chassis tightening torques*, p.128 of 143 — captured from the live app, 2026-09-20.",
+      "notes": [
+        "The close, three sentences: the 400 hours; the voice that is not allowed to know anything; and Deepgram's Voice Agent being what makes that airtight rather than aspirational.",
+        "\"Two seconds, hands never leave the bike, and the page is already open. *Don't trust the voice. Trust the page.*\"",
+        "If the demo network dies: web/docs-shots/voice-*.png are real screenshots of a real session, and the saved message trace is in the repo. Show the trace, not a video."
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "deepgram.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not claim keyterm prompting improves accuracy. 11.4% vs 13.6% WER at 3 dB and 14.1% vs 13.3% at 0 dB — that is noise. The honest line is \"it is the documented lever, it costs nothing, and it protects the proper nouns.\"",
+            "Do not quote 2 s for a procedure question. A spec question is ~2 s; a procedure question is 9.9 s.",
+            "Do not say the key is in the browser — the Cloudflare Worker holds it.",
+            "Do not say voice works offline. It is a cloud socket.",
+            "English only today. Say so; it is in web/docs/VOICE.md."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram, and deepgram: true.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
+            "Dropbox folder sync and Climate Fit are \"built, deploying\", not deployed.",
+            "Never quote a running ledger total without the date beside it.",
+            "Never call 13,537 \"manuals\" — distinct fetchable PDFs is 14,770.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": [
+        "Presenter-only. The audience sees the end card.",
+        "Deploy check before rehearsing: keyterms in the Settings message, the spoken-page reader fallback and get_spec ranking are written and tested but need an API + static deploy."
+      ]
+    }
+  ]
+}

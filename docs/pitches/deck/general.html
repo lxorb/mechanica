@@ -66,12 +66,13 @@ h1,h2,h3,h4{font-weight:700;line-height:1.04}
 .s-numbers .g3{grid-template-columns:repeat(3,1fr)}
 .s-numbers .g4{grid-template-columns:repeat(2,1fr)}
 .s-numbers .g5,.s-numbers .g6{grid-template-columns:repeat(3,1fr)}
-.s-numbers .cell{background:var(--card);border:2px solid #ddd5c4;padding:22px 18px 20px}
+.s-numbers .cell{background:var(--card);border:2px solid #ddd5c4;padding:30px 20px 26px;display:flex;flex-direction:column;justify-content:center}
 .s-numbers .big{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-size:106px;
   line-height:.88;color:var(--orange)}
-.s-numbers .g2 .big{font-size:146px}
-.s-numbers .cell-label{font-size:25px;font-weight:600;margin-top:12px;line-height:1.16}
-.s-numbers .cell-sub{font-size:19px;color:var(--dim);margin-top:7px;line-height:1.25}
+.s-numbers .g2 .big{font-size:150px}
+.s-numbers .g4 .big{font-size:120px}
+.s-numbers .cell-label{font-size:27px;font-weight:600;margin-top:13px;line-height:1.16}
+.s-numbers .cell-sub{font-size:20px;color:var(--dim);margin-top:8px;line-height:1.25}
 .s-numbers .sub{margin:26px auto 0;font-size:26px}
 
 /* screenshot */
@@ -109,6 +110,22 @@ h1,h2,h3,h4{font-weight:700;line-height:1.04}
 .s-diagram .fig.card{background:#fff;border:2px solid #ddd5c4;padding:14px}
 .s-diagram .fig svg{max-width:100%;max-height:100%}
 .s-diagram .src{flex:0 0 auto;font-size:23px;color:#3b362e;text-align:center;max-width:1300px}
+
+/* table */
+.s-table{width:100%;max-width:1400px}
+.s-table h3{font-size:56px;letter-spacing:-.015em;text-align:center}
+.s-table .line{font-size:25px;color:var(--dim);margin-top:8px;text-align:center}
+.s-table table{width:100%;border-collapse:collapse;margin-top:24px}
+.s-table th{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-size:22px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--orange);text-align:left;padding:0 14px 10px;
+  border-bottom:3px solid var(--ink)}
+.s-table td{padding:14px;border-bottom:2px solid #ddd5c4;font-size:28px;line-height:1.2;vertical-align:top}
+.s-table .r{text-align:right;font-variant-numeric:tabular-nums}
+.s-table tr.emph td{background:#fff;font-weight:600}
+.s-table tr.emph td b{color:var(--orange)}
+.s-table.dense td{font-size:23px;padding:10px 14px}
+.s-table.dense th{font-size:19px}
+.s-table .src{text-align:center;margin-top:16px}
 
 /* quote */
 .s-quote{max-width:1260px;text-align:center}

@@ -1,10 +1,81 @@
+/**
+ * Mechanica — the token floor. Owner: theme agent.
+ *
+ * Every colour in the app comes from a token declared here. `css/themes.css` overrides the
+ * same names inside `[data-theme="<id>"]` and nothing else, so a theme is a list of colours,
+ * never a list of rules. `js/theme.js` puts the id on <html> and remembers the choice.
+ *
+ * Three groups, and the split matters:
+ *   1. chrome  — everything the app paints. Every theme replaces all of it.
+ *   2. paper   — the manual itself. A printed page is white in a garage and white at night,
+ *                so `--page*` and `--highlight` are NOT themed. Product rule 2: the page is
+ *                the answer, and it must look the same as the paper copy on the bench.
+ *   3. stage   — the 3D panel. `--grid` / `--grid-bg` are read by js/viewer3d.js, not by CSS.
+ *
+ * Defaults below ARE the "Workshop" theme; themes.css does not redeclare it.
+ */
 :root {
-  --orange: #e85d04;
-  --yellow: #ffe600;
-  --ink: #141414;
-  --paper: #ece7dc;
-  --rule: #e4dfd2;
-  --card: #fff;
+  /* ---- ground ---- */
+  --bg: #ece7dc;                 /* app ground */
+  --card: #fff;                  /* cards, inputs, tiles — anything raised off the ground */
+  --slab: #141414;               /* solid block: bars, primary button, the reader's surround */
+  --slab-fg: #fff;               /* text and glyphs on --slab */
+  --slab-off: #5c5c5c;           /* a slab that is disabled */
+  --slab-line: rgba(255, 255, 255, 0.55);  /* hairline drawn on a slab */
+  --ground: repeating-linear-gradient(0deg, var(--bg) 0 24px, var(--rule) 24px 25px), var(--bg);
+
+  /* ---- text and line ---- */
+  --fg: #141414;                 /* primary text */
+  --muted: #8a8375;              /* labels, meta, placeholders */
+  --muted-2: #6c665a;            /* stronger meta: years, spans */
+  --faint: #a49d8d;              /* ghost art, dead borders */
+  --line: #141414;               /* the 3 px structural border this app is built from */
+  --rule: #e4dfd2;               /* hairline / tint divider */
+
+  /* ---- accent ---- */
+  --accent: #e85d04;
+  --accent-ink: #fff;            /* text on --accent */
+  --accent-2: #ffe600;           /* the livery second colour: buttons, tags, search marks */
+  --accent-2-ink: #141414;       /* text on --accent-2 */
+
+  /* ---- status. Workshop's livery has two hues, so both land on the accents. ---- */
+  --danger: #e85d04;
+  --ok: #ffe600;
+
+  /* ---- paper: the manual. Never themed — see the note above. ---- */
+  --page: #fff;                  /* the PDF sheet and any manual diagram behind it */
+  --page-ink: #141414;           /* line art printed on paper */
+  --page-tint: #f6f2e9;          /* the frame behind part photography */
+  --highlight: rgba(232, 93, 4, 0.34);  /* the marker, multiplied over the page */
+
+  /* ---- loading ---- */
+  --shim: #f1ece1;               /* skeleton row */
+  --shim-hi: #e2dccd;            /* the band that travels across it */
+
+  /* ---- depth and focus ---- */
+  --shadow: rgba(20, 20, 20, 0.5);   /* the veil under a sheet */
+  --glass: rgba(20, 20, 20, 0.42);   /* the blurred chip over the 3D stage */
+  --focus: #e85d04;
+
+  /* ---- the 3D stage ---- */
+  --stage: radial-gradient(120% 90% at 50% 12%, #fff 0%, #f4f0e6 55%, #e4dfd2 100%);
+  --stage-fg: #141414;           /* the percentage printed on the stage */
+  --stage-track: rgba(20, 20, 20, 0.16);  /* the loading ring's unfilled track */
+  --grid: #b6bcc4;               /* exploded-view grid lines — read by js/viewer3d.js */
+  --grid-bg: #1a1f24;            /* exploded-view backdrop — read by js/viewer3d.js */
+
+  /* ---- 180 ms token crossfade, killed under prefers-reduced-motion ---- */
+  --theme-swap: 180ms;
+
+  /**
+   * Names the app was built on, kept as aliases so that nothing outside this folder has to
+   * change. New rules should use the semantic names above: --ink covered three different jobs
+   * (text, border, dark slab) which a dark theme has to be able to tell apart.
+   */
+  --ink: var(--fg);
+  --paper: var(--bg);
+  --orange: var(--accent);
+  --yellow: var(--accent-2);
 }
 
 *,
@@ -22,8 +93,8 @@ html {
 body {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 400;
-  color: var(--ink);
-  background: repeating-linear-gradient(0deg, var(--paper) 0 24px, var(--rule) 24px 25px), var(--paper);
+  color: var(--fg);
+  background: var(--ground);
   min-height: 100dvh;
   padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);
@@ -36,7 +107,7 @@ body {
 }
 
 :focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -44,8 +115,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   padding: 10px 16px;
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
@@ -67,7 +138,7 @@ body {
   padding: 0 10px 2px;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: var(--accent-ink);
   font: inherit;
   font-size: 1.7rem;
   line-height: 1;
@@ -82,7 +153,7 @@ body {
 }
 
 .ticket-back:active {
-  color: var(--yellow);
+  color: var(--accent-2);
 }
 
 .ticket b,
@@ -97,7 +168,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   list-style: none;
   width: 100%;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   border-left: 0;
 }
 
@@ -109,9 +180,9 @@ body {
   height: 44px;
   min-height: 44px;
   padding: 0 4px;
-  border-left: 3px solid var(--ink);
+  border-left: 3px solid var(--line);
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.35rem;
@@ -133,13 +204,13 @@ body {
 }
 
 .rail li.now {
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .rail li.done {
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
 }
 
 main {
@@ -179,9 +250,9 @@ body[data-here="book"] main {
   justify-content: center;
   min-height: 52px;
   padding: 12px 16px;
-  border: 3px solid var(--ink);
-  background: var(--yellow);
-  color: var(--ink);
+  border: 3px solid var(--line);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1rem;
@@ -193,8 +264,8 @@ body[data-here="book"] main {
 }
 
 .btn-primary {
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
 }
 
 .btn-icon {
@@ -207,7 +278,7 @@ body[data-here="book"] main {
 
 .card {
   background: var(--card);
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   border-radius: 0;
 }
 
@@ -216,7 +287,7 @@ body[data-here="book"] main {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   margin: 0;
-  border: 3px solid var(--ink);
+  border: 3px solid var(--line);
   background: var(--card);
   border-radius: 0;
 }
@@ -233,8 +304,8 @@ body[data-here="book"] main {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--yellow);
-  color: var(--ink);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.8rem;
@@ -247,8 +318,8 @@ body[data-here="book"] main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.7rem;
@@ -262,7 +333,7 @@ body[data-here="book"] main {
   width: 100%;
   background: var(--card);
   border: 0;
-  border-top: 3px solid var(--ink);
+  border-top: 3px solid var(--line);
   border-radius: 0;
 }
 
@@ -280,7 +351,7 @@ body[data-here="book"] main {
 .ov-veil {
   position: absolute;
   inset: 0;
-  background: rgba(20, 20, 20, 0.5);
+  background: var(--shadow);
   opacity: 0;
   transition: opacity 0.18s ease-out;
 }
@@ -297,8 +368,8 @@ body[data-here="book"] main {
   max-width: 720px;
   margin: 0 auto;
   max-height: min(86dvh, 860px);
-  background: var(--paper);
-  border-top: 3px solid var(--ink);
+  background: var(--bg);
+  border-top: 3px solid var(--line);
   transform: translateY(100%);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -314,8 +385,8 @@ body[data-here="book"] main {
   gap: 12px;
   flex: 0 0 auto;
   padding: 8px 8px 8px 14px;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.3rem;
@@ -329,7 +400,7 @@ body[data-here="book"] main {
   padding: 0 8px 4px;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: var(--accent-ink);
   font: inherit;
   font-size: 1.9rem;
   line-height: 1;
@@ -338,7 +409,7 @@ body[data-here="book"] main {
 }
 
 .ov-x:active {
-  color: var(--yellow);
+  color: var(--accent-2);
 }
 
 .ov-body {
