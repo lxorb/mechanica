@@ -76,11 +76,14 @@ OPENAI_KEY="${OPENAI_API_KEY:-}"
 for f in openai-mechanica.txt openai.txt; do
   [ -z "$OPENAI_KEY" ] && [ -f "$SECRETS_DIR/$f" ] && OPENAI_KEY=$(tr -d '\r\n' < "$SECRETS_DIR/$f")
 done
+DEEPGRAM_KEY="${DEEPGRAM_API_KEY:-}"
+[ -z "$DEEPGRAM_KEY" ] && [ -f "$SECRETS_DIR/deepgram.txt" ] && DEEPGRAM_KEY=$(tr -d '\r\n' < "$SECRETS_DIR/deepgram.txt")
 TTC_KEY="${TTC_API_KEY:-}"
 [ -z "$TTC_KEY" ] && [ -f "$SECRETS_DIR/ttc.txt" ] && TTC_KEY=$(tr -d '\r\n' < "$SECRETS_DIR/ttc.txt")
 if [ -n "$OPENAI_KEY" ]; then
   SECRET_ENV="OPENAI_API_KEY=secretref:openai-key"
   [ -n "$TTC_KEY" ] && SECRET_ENV="$SECRET_ENV TTC_API_KEY=secretref:ttc-key"
+  [ -n "$DEEPGRAM_KEY" ] && SECRET_ENV="$SECRET_ENV DEEPGRAM_API_KEY=secretref:deepgram-key"
 else
   echo "warning: no OpenAI key found (\$OPENAI_API_KEY or $SECRETS_DIR/openai.txt)" >&2
   SECRET_ENV=""
@@ -103,6 +106,7 @@ say "secrets"
 SECRETS=("storage-conn=$STORAGE_CONN")
 [ -n "$OPENAI_KEY" ] && SECRETS+=("openai-key=$OPENAI_KEY")
 [ -n "$TTC_KEY" ] && SECRETS+=("ttc-key=$TTC_KEY")
+[ -n "$DEEPGRAM_KEY" ] && SECRETS+=("deepgram-key=$DEEPGRAM_KEY")
 az containerapp secret set -n "$APP" -g "$RG" --secrets "${SECRETS[@]}" -o none
 
 FQDN=$(az containerapp show -n "$APP" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)
