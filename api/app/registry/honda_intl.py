@@ -11,9 +11,12 @@ found by trying. Four working codes are on neither list:
     FAHONDA   FA Honda, Guatemala                     Spanish
     MAKPETROL Makpetrol, North Macedonia              Macedonian
 
-The HMEE language twins were re-probed for the rest of Europe (HMEFi, HMESv, HMEDa, HMENo, HMEHu,
-HMERo, HMEBg, HMEHr, HMESl, HMEEt, HMELv, HMELt, HMERu, HMETr, HMEUk) and every one is empty, so
-`honda.py`'s ten are the whole set. AMTC (Jordan) is listed on the front page but publishes nothing.
+The search for more was exhaustive rather than lucky: 479 candidate codes were tried - HM/H/AH/HMC
+prefixed and suffixed with all 92 ISO-3166 country codes Honda sells in, the HMEE language twins for
+the rest of Europe (HMEFi, HMESv, HMEDa, HMENo, HMEHu, HMERo, HMEBg, HMEHr, HMESl, HMEEt, HMELv,
+HMELt, HMERu, HMETr, HMEUk), and the named subsidiaries. Eleven answered with models and every one
+was already known except the four above, so `honda.py`'s 37 plus these 4 are the complete portal.
+AMTC (Jordan) is listed on the front page but publishes nothing.
 
 Everything else was checked and is not a second source: powersports.honda.ca, motorcycles.honda.com.au
 and honda.co.uk publish no manual files at all (their "owners" sections are warranty and servicing

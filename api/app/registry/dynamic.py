@@ -68,3 +68,32 @@ def _brp(bike: Bike, vin: str | None = None) -> RegistryEntry | None:
 RESOLVERS.setdefault("indian", _polaris)
 RESOLVERS.setdefault("victory", _polaris)
 RESOLVERS.setdefault("can-am", _brp)
+
+
+# --- registry agent R2 ---------------------------------------------------------------------------
+# Harley-Davidson and Beta both key their manuals to the frame number and neither publishes an index
+# a crawler can walk end to end, so the VIN is the only way in.
+#   Harley  serviceinfo.harley-davidson.com -> /api/vehicles/{VIN} is public and decodes the bike;
+#           /api/documents/{id} is public and hands back a token-free PDF snapshot. What is missing
+#           is the part-number -> document-id map (401 behind the dealer login), so the manual only
+#           comes back when harley.SEED_DOCUMENTS covers that model year and family.
+#   Beta    betamotor.com -> POST /wp-admin/admin-ajax.php action=vin_checker with the manuals page's
+#           nonce. No model index exists at all; the frame number is the whole API.
+# Imported lazily: a resolver must never take the package down if its portal's module changes.
+
+
+def _harley(bike: Bike, vin: str | None = None) -> RegistryEntry | None:
+    from .harley import resolve_vin
+
+    return resolve_vin(bike, vin)
+
+
+def _beta(bike: Bike, vin: str | None = None) -> RegistryEntry | None:
+    from .euro_small import resolve_beta
+
+    return resolve_beta(bike, vin)
+
+
+RESOLVERS.setdefault("harley-davidson", _harley)
+RESOLVERS.setdefault("harley", _harley)
+RESOLVERS.setdefault("beta", _beta)

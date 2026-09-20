@@ -21,7 +21,22 @@ distributor useful to an English catalogue. Languages are filtered through `keep
 request, so the default REGISTRY_LANGS=en costs one pass per base.
 
 Rows are deduplicated on (url, model, year): a publication shared by several distributors is one
-document, and the first market in BASES wins it."""
+document, and the first market in BASES wins it.
+
+There is no second Yamaha source to find. yamaha-motor.ca links straight to this library
+(`index.html?baseCode=6210&langId=02`), yamaha-motor.com.au sits behind Incapsula and its sitemap
+has no manual page at all (its library entry is base 6726), and yamaha-motor-india.com publishes
+none either (base 6C97). Every national site is a front door to the same portal.
+
+**yamaha-owners-manuals.com**, the US eBook site, was chased down too, and the answer to "is there a
+PDF under the eBook" is yes - but not on that site. Its own delivery is dead: `checkForEbookAjax.php`
+answers 500 and `/ebook/<LIT>/<LIT>.html` 404s for every publication tried, old and new. What it
+does have is an index nothing else exposes - `POST https://yamahapubs.com/api/owners-manuals/` with
+`getYearBasedOnCategoryId` / `getFamilyByYearAndCategory` / `getLitNumberFromCategoryYearProduct`
+walks US category, model year (back to 1971) and product family down to a LIT number. Feed that LIT
+number to the library's third search tab (`model_list_pub`, whose body is only
+`{productId, baseCode, langId, publicationNo}` - no user context, which is why it 500s otherwise)
+and the library hands back the same publication as a real PDF. `_us_lit()` does exactly that."""
 
 from __future__ import annotations
 
@@ -195,9 +210,85 @@ def _base(c: httpx.Client, base: str, seen: set[tuple[str, str, str]]) -> Iterat
     log.info("yamaha_intl %s (%s): %d models x %s -> %d manuals", base, market, len(models), langs, found)
 
 
+PUBS = "https://yamahapubs.com/api/owners-manuals/"
+PUBS_HEADERS = {
+    "Content-Type": "application/json; charset=UTF-8",
+    "Origin": "https://www.yamaha-owners-manuals.com",
+    "Referer": "https://www.yamaha-owners-manuals.com/",
+}
+PUBS_THROTTLE = Throttle(2.0)
+US_BASE = "6150"
+US_CATEGORIES = {"3": "Motorcycle", "5": "Scooter"}
+FIRST_YEAR = 1971
+
+
+def _pubs(c: httpx.Client, body: dict[str, Any]) -> Any:
+    return post_json(c, PUBS, json=body, headers=PUBS_HEADERS, throttle=PUBS_THROTTLE)
+
+
+def _us_lit(c: httpx.Client, seen: set[tuple[str, str, str]]) -> Iterator[RegistryEntry]:
+    """US model years by LIT number, for publications the displacement browser does not list."""
+    if not keep_lang("en"):
+        return
+    pairs: list[tuple[str, str, str]] = []
+    for cat in US_CATEGORIES:
+        years = [str(y.get("YEAR") or "") for y in (_pubs(c, {"method": "getYearBasedOnCategoryId", "cat_id": cat}) or [])]
+        for year in [y for y in years if y.isdigit() and int(y) >= FIRST_YEAR]:
+            families = _pubs(c, {"method": "getFamilyByYearAndCategory", "cat_id": cat, "year": year}) or []
+            pairs += [(cat, year, str(f.get("family_name") or "").strip()) for f in families if f.get("family_name")]
+
+    def lit(pair: tuple[str, str, str]) -> str | None:
+        cat, year, family = pair
+        out = _pubs(c, {"method": "getLitNumberFromCategoryYearProduct", "cat_id": cat, "year": year, "family": family})
+        number = (out or {}).get("lit_number") if isinstance(out, dict) else None
+        return str(number).strip() or None if number else None
+
+    numbers = set(pmap(lit, pairs))
+
+    def publication(number: str) -> list[dict]:
+        body = {"productId": MOTORCYCLES, "baseCode": US_BASE, "langId": ENGLISH, "publicationNo": number}
+        out = post_json(c, OMB + "model_list_pub", json=body, headers=HEADERS, throttle=THROTTLE)
+        return [r for r in ((out or {}).get("modelDataCollection") or []) if isinstance(r, dict)]
+
+    found = 0
+    for docs in pmap(publication, sorted(numbers)):
+        for row in docs:
+            url = (row.get("pdffileURL") or "").strip()
+            if not url:
+                continue
+            url = "https:" + url if url.startswith("//") else url
+            # "MT-07 - MTN690" -> "MT-07", the spelling the model browser (and yamaha.py) uses
+            name = (row.get("dispModelName") or "").split(" - ")[0].strip()
+            year = str(row.get("modelYear") or "")
+            lang = LANGS.get(str(row.get("publicationLangId") or ""), "")
+            if not name or not lang or not keep_lang(lang):
+                continue
+            key = (url, name.lower(), year)
+            if key in seen:
+                continue
+            seen.add(key)
+            found += 1
+            pub = str(row.get("publicationNo") or "")
+            yield RegistryEntry(
+                id=slug(SITE, name, year, "US", lang, "owner", pub[:16]),
+                make="Yamaha",
+                model=name,
+                years=[int(year)] if year.isdigit() else [],
+                market="US",
+                type="owner",
+                lang=lang,
+                url=url,
+                access="free",
+                site=SITE,
+                title=f"{year} {row.get('dispModelName') or name} Owner's Manual ({row.get('litNo') or pub})".strip(),
+            )
+    log.info("yamaha_intl US LIT: %d year/family pairs, %d LIT numbers, %d new manuals", len(pairs), len(numbers), found)
+
+
 def rows() -> Iterable[RegistryEntry]:
     with client(ua=BROWSER_UA) as c:
         seen: set[tuple[str, str, str]] = set()
         for base in BASES:
             yield from _base(c, base, seen)
-        log.info("yamaha_intl: %d manuals over %d distributors", len(seen), len(BASES))
+        yield from _us_lit(c, seen)
+        log.info("yamaha_intl: %d manuals over %d distributors plus the US LIT index", len(seen), len(BASES))
