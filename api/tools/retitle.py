@@ -10,15 +10,51 @@ from __future__ import annotations
 
 import argparse
 import sys
+import tempfile
+from contextlib import contextmanager
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import httpx  # noqa: E402
 import pymupdf  # noqa: E402
 
 from app import ingest  # noqa: E402
 from app.ingest import pages as pagelib  # noqa: E402
 from app.store import get_store  # noqa: E402
+
+
+@contextmanager
+def open_pdf(store, manual_id: str):
+    """The PDF of a manual ingested on the server only exists in blob; pull it down for the length of the pass."""
+    local = ingest.pdf_path(manual_id)
+    if local.exists():
+        yield local
+        return
+    tmp = Path(tempfile.gettempdir()) / f"retitle-{manual_id}.pdf"
+    try:
+        blob = getattr(store, "_blob", None)
+        if blob is not None:
+            with tmp.open("wb") as fh:
+                blob(f"{manual_id}.pdf", store.pdf).download_blob().readinto(fh)
+        else:
+            url = store.pdf_url(manual_id)
+            if not url:
+                yield None
+                return
+            with httpx.stream("GET", url, follow_redirects=True, timeout=300.0) as r:
+                r.raise_for_status()
+                with tmp.open("wb") as fh:
+                    for chunk in r.iter_bytes(1 << 16):
+                        fh.write(chunk)
+        if tmp.stat().st_size < 5 or tmp.open("rb").read(4) != b"%PDF":
+            raise ValueError("not a PDF")
+        yield tmp
+    except Exception as exc:
+        print(f"-   {manual_id:<44} cannot read the PDF: {type(exc).__name__}: {exc}"[:140])
+        yield None
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 def bike_of(manual):
@@ -43,15 +79,20 @@ def rechapter(store, only: list[str], write: bool) -> int:
     for manual in store.manuals():
         if only and not any(o.lower() in manual.id for o in only):
             continue
-        path = ingest.pdf_path(manual.id)
-        if not path.exists() or not manual.sections:
+        if not manual.sections:
             continue
         current = [s.chapter for s in manual.sections]
         if not unusable(current, len(manual.sections)):
             continue
-        doc = pymupdf.open(path)
-        chaps = pagelib.chapters(pagelib.toc(doc), doc.page_count) or pagelib.text_chapters(doc)
-        doc.close()
+        # The manual's own outline is already in the store, so try it before reaching for the PDF at all.
+        chaps = pagelib.chapters(pagelib.flatten(manual.outline), manual.pages)
+        if len(chaps) < pagelib.MIN_CHAPTERS:
+            with open_pdf(store, manual.id) as path:
+                if path is None:
+                    continue
+                doc = pymupdf.open(path)
+                chaps = pagelib.chapters(pagelib.toc(doc), doc.page_count) or pagelib.text_chapters(doc)
+                doc.close()
         fresh = [pagelib.chapter_of(chaps, s.pageStart) for s in manual.sections]
         if len({c for c in fresh if c}) <= len({c for c in current if c}) or any(pagelib.filename_like(c) for c in fresh if c):
             print(f"-   {manual.id:<44} no better grouping found")
@@ -81,14 +122,13 @@ def main(argv: list[str] | None = None) -> int:
     for manual in store.manuals():
         if args.only and not any(o.lower() in manual.id for o in args.only):
             continue
-        path = ingest.pdf_path(manual.id)
-        if not path.exists():
-            print(f"-   {manual.id}: no PDF")
-            continue
         make, model, year = bike_of(manual)
-        doc = pymupdf.open(path)
-        title = pagelib.cover_title(doc, make, model, year)
-        doc.close()
+        with open_pdf(store, manual.id) as path:
+            if path is None:
+                continue
+            doc = pymupdf.open(path)
+            title = pagelib.cover_title(doc, make, model, year)
+            doc.close()
         if title == manual.title:
             print(f"=   {manual.id:<40} {manual.title!r}")
             continue

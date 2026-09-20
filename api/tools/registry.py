@@ -345,10 +345,12 @@ def cmd_enrich(args: argparse.Namespace) -> int:
     for _b, e, _k in weak:
         by_site[e.site] = by_site.get(e.site, 0) + 1
     print(f"{len(weak)} vehicle(s) have no owner's manual; by site: " + ", ".join(f"{s} {n}" for s, n in sorted(by_site.items(), key=lambda kv: -kv[1])))
-    names = select(args.brand)
-    if not names:
-        print("nothing to re-query: pass --brand for an adapter that owns one of those sites")
+    for b, e, kind in sorted(weak, key=lambda w: (w[0].make, w[0].model, w[0].year))[: args.list]:
+        print(f"    {b.make:<12}{b.model[:26]:<26}{b.year}  {kind:<11}{e.site}")
+    if not args.brand:  # re-querying every OEM would be a full crawl, so an adapter must be named
+        print("pass --brand <adapter> to re-query one of those sites")
         return 0
+    names = select(args.brand)
     known = {e.url for e in store.registry()}
     wanted = {(b.make.lower(), b.model.lower()) for b, _e, _k in weak}
     FRAGMENTS.mkdir(parents=True, exist_ok=True)
@@ -461,6 +463,7 @@ def main(argv: list[str] | None = None) -> int:
 
     c7 = sub.add_parser("enrich", help="re-ask an OEM endpoint for vehicles that only have a brochure")
     c7.add_argument("--brand", action="append")
+    c7.add_argument("--list", type=int, default=20, help="how many of the affected vehicles to print")
     c7.set_defaults(fn=cmd_enrich)
 
     c6 = sub.add_parser("merge-fragments", help="fold data/registry-fragments/*.json into the registry")

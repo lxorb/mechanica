@@ -82,8 +82,28 @@ def filename_like(title: str) -> bool:
     digits = sum(c.isdigit() for c in text)
     if " " not in text and ("_" in text or digits >= 4):
         return True
+    # a part number or a build date stamp: '84570408A', '2021MAY14'. A printed model range ('85/105') is neither.
+    if any(len(w) >= 6 and "/" not in w and sum(c.isdigit() for c in w) >= 5 for w in text.split()):
+        return True
     longest = max((len(w) for w in text.split()), default=0)
     return digits >= 8 and longest >= 12
+
+
+_LOCALE = re.compile(r"[_-][a-z]{2}[_-][A-Z]{2}$")
+_FILE_ORDER = re.compile(r"^\d{2}[-_]")
+
+
+def tidy_chapter(title: str) -> str:
+    """Strip the two artifacts a production toolchain leaves on an outline node, and nothing else.
+
+    GM ships '01-Keys, Doors, and Windows_en_US'; the ordering prefix and the locale suffix are not printed
+    anywhere in the manual. A chapter numbered the way the manual prints it ('1 Means of representation') is
+    left exactly as it is.
+    """
+    text = " ".join((title or "").split())
+    text = _LOCALE.sub("", text)
+    text = _FILE_ORDER.sub("", text)
+    return " ".join(text.replace("_", " ").split()).strip(" -.") if "_" in text else text.strip(" -.")
 
 
 def _ranges(entries: list[tuple[int, str]], page_count: int) -> list[tuple[int, int, str]]:
@@ -104,12 +124,29 @@ def chapters(items: list[tuple[int, str, int]], page_count: int) -> list[tuple[i
     order that entry would claim the whole manual.
     """
     for level in (1, 2, 3):
-        entries = [(p, t) for lvl, t, p in items if lvl == level]
+        entries = [(p, tidy_chapter(t)) for lvl, t, p in items if lvl == level]
         if len(entries) < MIN_CHAPTERS or any(filename_like(t) for _, t in entries):
             continue
         return _ranges(entries, page_count)
-    clean = [(p, t) for _, t, p in items if not filename_like(t)]
+    clean = [(p, tidy_chapter(t)) for _, t, p in items]
+    clean = [(p, t) for p, t in clean if not filename_like(t)]
     return _ranges(clean, page_count) if len(clean) >= MIN_CHAPTERS else []
+
+
+def flatten(nodes, level: int = 1) -> list[tuple[int, str, int]]:
+    """A stored Manual.outline back into the (level, title, page) shape chapters() reads.
+
+    Lets a re-chapter pass work on a manual whose PDF is not reachable from this machine.
+    """
+    items: list[tuple[int, str, int]] = []
+    for node in nodes or []:
+        title = getattr(node, "title", None) or (node.get("title") if isinstance(node, dict) else "")
+        page = getattr(node, "page", None) or (node.get("page") if isinstance(node, dict) else 0)
+        children = getattr(node, "children", None) or (node.get("children") if isinstance(node, dict) else None)
+        if title and page:
+            items.append((level, clean(str(title)), int(page)))
+        items += flatten(children, level + 1)
+    return items
 
 
 _NUMBERED = re.compile(r"^\s*(\d{1,2})\s*[.)]?\s+([A-Z][^\d].{2,58})$")
