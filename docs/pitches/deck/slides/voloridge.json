@@ -1,0 +1,284 @@
+{
+  "pitch": "voloridge",
+  "order": 9,
+  "title": "Signal in the noise",
+  "target": "Voloridge",
+  "length": "5:00",
+  "angle": "The manual's own printed rules, resolved against 600 GB of NOAA weather reduced in-stream to 4 MB. The only pitch whose five minutes are mostly not the core product.",
+  "endline": "The manufacturer printed the rule. We only worked out that it applies to you.",
+  "marks": [
+    { "t": "0:00", "do": "The product, fast. A real tool for a real person." },
+    { "t": "1:30", "do": "The noise is upstream of us. The registry as a data-quality problem." },
+    { "t": "2:15", "do": "The dataset we made out of PDFs. 522 of 529." },
+    { "t": "3:00", "do": "The pipeline. 600 GB in, 4.34 MB out — built, not projected." },
+    { "t": "3:45", "do": "The finding: 227 manuals, nine markets, one number." },
+    { "t": "4:10", "do": "20.7% — and say what the denominator is." },
+    { "t": "4:30", "do": "LIVE. Minneapolis → International Falls → tap the row → Bangkok." },
+    { "t": "4:50", "do": "Close." }
+  ],
+  "slides": [
+    {
+      "kind": "statement",
+      "at": "0:00",
+      "kicker": "Status, before a judge asks",
+      "text": "Climate Fit is built, deploying. The routes are live; the deployed replica carries no climatology yet, so `POST /api/climate/fit` answers *no climatology* today.",
+      "sub": "Demo it locally, and say that sentence rather than let a judge find it. Everything else on these slides is already true, and measured on 2026-09-20.",
+      "notes": [
+        "Say it once, early, and move on.",
+        "Then the product, fast: a friend's motorcycle workshop, 20% of his working time, 400 hours a year. He does not use AI — 95% right and he is liable for the 5%, and one question cost about $4.",
+        "\"Mechanica makes the manual the answer. The model may emit a page number, and the *server* slices the quote out of the original page. It cannot invent a torque figure, because it is never allowed to type one.\""
+      ],
+      "defs": [
+        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate (assumed)." },
+        { "n": "400 h", "d": "20% × 2,000 h (computed)." },
+        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed)." },
+        { "n": "$0.00038", "d": "our $ per ask (measured)." },
+        { "n": "$12.40", "d": "naive $/question, largest deployed manual (measured)." }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "1:30",
+      "kicker": "The noise is the problem, and it is upstream of us",
+      "items": [
+        { "value": "53,557", "label": "registry rows", "sub": "84 hosts · 80 makes · 59 markets · 43 languages · 34 adapter modules + 26 crawl fragments" },
+        { "value": "28,200", "label": "distinct URLs behind them", "sub": "47% of rows point at a file another row already points at" },
+        { "value": "17", "label": "makes documented as unreachable", "sub": "CFMOTO, LiveWire, Beta, Norton, Ural, Energica, Sur-Ron… written down so nobody re-walks them" }
+      ],
+      "sub": "*The row lies about what it is.* Honda files the Gold Wing brochure in the same listing as the owner's manual. Piaggio calls the owner's manual a \"use and maintenance booklet\". `doctype.py` classifies 8 document kinds from the URL and title alone — *never by downloading*.",
+      "notes": [
+        "Nobody publishes a dataset of manuals. We built one adapter per portal, and the registry that came out is a dataset-quality problem in miniature.",
+        "*The file lies about being a manual.* Of 773 ingest attempts, 38 URLs were 3-page flyers and 23 were not PDFs at all. The pipeline rejects them on page count and magic bytes and writes the reason down: 648 done, 80 error, 24 duplicate, 21 suspicious.",
+        "*Retraction.* A portal that drops a model must be able to un-say it — a retracted row stops being advertised instead of lingering as a dead link.",
+        "We copy no manuals at crawl time. RegistryEntry has no field that could hold one."
+      ],
+      "defs": [
+        { "n": "53,557", "d": "registry rows — len(registry.json) (measured)." },
+        { "n": "28,200", "d": "distinct URLs behind those rows (measured)." },
+        { "n": "84", "d": "portals — distinct row.site (measured)." },
+        { "n": "80", "d": "makes in the registry (measured)." },
+        { "n": "17", "d": "portals walked to the end and written off — docs/MANUALS.md (measured)." },
+        { "n": "648", "d": "manuals ingested in the bulk run — count(status=='done') in mass_report.jsonl; the file has 773 lines, the rest error / duplicate / suspicious (measured)." }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "2:15",
+      "kicker": "The dataset we made out of PDFs",
+      "items": [
+        { "value": "535", "label": "manuals · 95,914 printed pages", "sub": "91,388 sections with per-block page coordinates" },
+        { "value": "431,292", "label": "highlights — normalised rectangles over the real page", "sub": "0 discarded by the grounding gate" },
+        { "value": "137,379", "label": "typed specs", "sub": "torque · capacity · clearance · pressure · grade · size · electrical — each with a page number and a character-for-character quote" }
+      ],
+      "sub": "Then we asked one question of that corpus: *how many of these manuals print a rule that depends on where the vehicle actually is?* — **522 of 529. 98.7%.** The manual knows the rule. It has no idea whether it applies to you. *NOAA does.*",
+      "notes": [
+        "\"They turned unstructured documents into something you could actually query.\" That is what should land here.",
+        "The grounding gate is the load-bearing part: a quote that cannot be found in the PDF text layer is dropped, and the log says how many. On this corpus, 290 of 110,094 sections dropped (0.3%) and 0 of 431,292 highlights discarded.",
+        "Clause families: road salt / coastal 518 manuals · dusty / sandy 487 · antifreeze 394 · wet / muddy 371 · ambient temperature 340."
+      ],
+      "defs": [
+        { "n": "535", "d": "manuals indexed and searchable now — live GET /api/manuals (measured)." },
+        { "n": "95,914", "d": "printed pages behind them (measured)." },
+        { "n": "91,388", "d": "sections indexed (measured)." },
+        { "n": "431,292", "d": "highlights — normalised rectangles over the real page; 0 discarded by the grounding gate.", "src": "voloridge.md" },
+        { "n": "137,379", "d": "typed specs, each with a page number and a character-for-character quote.", "src": "voloridge.md" },
+        { "n": "522 of 529", "d": "manuals printing at least one environment-dependent clause — full scan of api/data/pages/*.json, 93,932 pages.", "src": "voloridge.md" }
+      ]
+    },
+    {
+      "kind": "diagram",
+      "at": "3:00",
+      "title": "The noisy half, and the curated half",
+      "caption": "600 GB in, 4.34 MB out — built, not projected. Nothing raw was ever written to disk.",
+      "flow": {
+        "bands": [
+          {
+            "label": "The noisy half — 84 OEM publisher hosts",
+            "tone": "ghost",
+            "rows": [
+              {
+                "gap": 28,
+                "items": [
+                  { "tone": "white", "t": "34 adapters · 84 hosts" },
+                  { "tone": "white", "t": "registry: 53,557 rows", "sub": "28,200 distinct URLs" },
+                  { "tone": "green", "t": "docKind from url+title", "sub": "8 kinds, no download · brochure / warranty / flyer rejected, reason logged" },
+                  { "tone": "green", "t": "SHA-256 dedupe", "sub": "498 hashes · 24 duplicate ingests caught" },
+                  { "tone": "green", "t": "grounding gate", "sub": "the quote must exist in the page · 0 of 431,292 highlights discarded" }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Rule extraction — the new dataset",
+            "tone": "orange",
+            "labelColor": "#e85d04",
+            "rows": [
+              {
+                "gap": 30,
+                "items": [
+                  { "tone": "white", "t": "Pass A: deterministic regex", "sub": "8 rule types · zero cost" },
+                  { "tone": "orange", "t": "Pass B: one cheap|structured call", "sub": "per candidate window" },
+                  { "tone": "green", "t": "Pass C: the same|grounding gate", "sub": "drop any ungrounded threshold — the model never produces the number as free text" },
+                  { "tone": "ink", "t": "ClimateRule[]", "sub": "per manual, per page" }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Curated public datasets — reduced in the stream",
+            "tone": "ghost",
+            "rows": [
+              {
+                "gap": 30,
+                "items": [
+                  { "tone": "white", "t": "NOAA ISD", "sub": "s3://noaa-isd-pds · ~600 GB · 29,661 stations" },
+                  { "tone": "orange", "t": "reduce in-stream", "sub": "chars 88–92 · drop quality codes 2/3/6/7/9 · nothing raw hits disk" },
+                  { "tone": "ink", "t": "climatology.json", "sub": "4.34 MB over 10,715 usable station-years" },
+                  { "tone": "green", "t": "haversine join, ≤ 25 km", "sub": "the distance is PRINTED · past 50 km renders unknown, never ok" },
+                  { "tone": "ink", "t": "/climate/fit", "sub": "0 tokens · 3–6 ms warm · every row carries a page" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "notes": [
+        "*The cleaning is small and decisive.* ISD puts a quality code at character 93. Re-running the reduction with that filter off, over 400 station-years: only *0.12%* of readings are flagged — but at Russian station 263240-99999 the 2024 minimum moves from −21.5 °C to −25.1 °C. A 0.12% cleaning step decides the answer. *That is the whole challenge in one line.*",
+        "*The join is where we actually got burned.* Our first pass matched stations by name: \"Boston\" landed on a buoy, \"Moscow\" on Moscow Idaho, \"Chicago\" on a Canadian station reporting −46.9 °C. The shipped join is geodesic, filters the 16,885 stations that stopped reporting, and prints the distance.",
+        "Do not imply we swept all 600 GB. Say which slice ran: one full year, 2024. Six years is the same command with --years 2019:2024."
+      ],
+      "defs": [
+        { "n": "53,557", "d": "registry rows (measured)." },
+        { "n": "28,200", "d": "distinct URLs behind those rows (measured)." },
+        { "n": "431,292", "d": "highlights, 0 discarded by the grounding gate.", "src": "voloridge.md" },
+        { "n": "29,661", "d": "NOAA ISD stations in the archive; 12,776 still actively reporting.", "src": "voloridge.md" },
+        { "n": "4.34 MB", "d": "climatology.json — the whole reduced table, committed.", "src": "voloridge.md" },
+        { "n": "10,715", "d": "usable station-years in the 2024 build (1,701 dropped for fewer than 2,000 quality-passed readings).", "src": "voloridge.md" },
+        { "n": "3–6 ms", "d": "a /climate/fit verdict, measured warm, at zero tokens (the first call in a process also loads the table, ~120 ms).", "src": "voloridge.md" }
+      ]
+    },
+    {
+      "kind": "numbers",
+      "at": "3:20",
+      "kicker": "600 GB in, 4.34 MB out — the 2024 sweep, measured",
+      "items": [
+        { "value": "12,225", "label": "station-years reduced", "sub": "of 12,585 attempted" },
+        { "value": "121,751,290", "label": "observations parsed", "sub": "4,260 MB streamed over public HTTPS" },
+        { "value": "537 s", "label": "at 48 threads, from Switzerland", "sub": "7.9 MB/s. Nothing raw was written to disk." },
+        { "value": "4.34 MB", "label": "out the other end", "sub": "climatology.json, 10,715 stations, committed to the repo" }
+      ],
+      "notes": [
+        "\"One full year, all of it, and we will not imply more.\" The shipped slice is 2024. Six years is the same command and about 26 GB.",
+        "Each station-year .gz is reduced *in the stream* to one row: the share of readings below 5/0/−5/…/−40 °C and above 30/35/40/45 °C, freeze–thaw days, min, max, mean, p01, p99.",
+        "Reproducible: docs/pitches/voloridge/isd_probe.py, seed 11, anonymous HTTPS, no AWS account, no key."
+      ],
+      "defs": [
+        { "n": "12,225", "d": "station-years reduced in the 2024 sweep, of 12,585 attempted.", "src": "voloridge.md" },
+        { "n": "121,751,290", "d": "observations parsed in that sweep.", "src": "voloridge.md" },
+        { "n": "4,260 MB", "d": "streamed in that sweep.", "src": "voloridge.md" },
+        { "n": "537 s", "d": "wall time at 48 threads from Switzerland — 7.9 MB/s.", "src": "voloridge.md" },
+        { "n": "4.34 MB", "d": "climatology.json, the reduced table that ships.", "src": "voloridge.md" }
+      ]
+    },
+    {
+      "kind": "number",
+      "at": "3:45",
+      "label": "227 manuals · 9 markets · 4 makes · model years 2006–2026",
+      "value": "−25 °C",
+      "sub": "Every one of them prints *the same antifreeze floor*, on 1,028 distinct pages. Spread *0.0000* — zero variance. Somebody in Austria typed it once, and it shipped to every market on earth.",
+      "notes": [
+        "Of the eight rule types we extract, antifreeze_floor is the *only* one with a spread of 0.0. Cold-start, dusty, wet, salt and heat clauses spread 0.74–0.85 across makes.",
+        "*The one rule the whole industry agrees on is the one that is wrong for a fifth of the planet's weather stations.*",
+        "The earlier 206 came from the 508 spec files; same finding, smaller denominator. Both scripts are in the repo."
+      ],
+      "defs": [
+        { "n": "227", "d": "manuals printing an antifreeze floor, all of them −25 °C, over all 529 stored page files — findings.py → findings.md.", "src": "voloridge/findings.md" },
+        { "n": "1,028", "d": "distinct pages carrying that printed floor.", "src": "voloridge.md" },
+        { "n": "0.0000", "d": "the spread of the antifreeze floor across makes — zero variance, the only one of eight rule types with none.", "src": "voloridge.md" }
+      ]
+    },
+    {
+      "kind": "table",
+      "at": "4:10",
+      "dense": true,
+      "title": "How often is that wrong?",
+      "line": "We no longer sample. This is the whole 2024 population — 10,715 usable station-years.",
+      "head": ["stations recording a 2024 temperature below…", "share"],
+      "align": ["l", "r"],
+      "rows": [
+        ["−20 °C", "27.4%"],
+        { "emph": true, "cells": ["*−25 °C — the floor every one of those 227 manuals prints*", "*20.7%* — 2,215 of 10,715"] },
+        ["−30 °C", "14.0%"],
+        ["−35 °C", "9.1%"]
+      ],
+      "note": "*Say the denominator.* That is 20.7% of the world's *actively reporting weather stations*, not 20.7% of riders — and ISD station density is heavy in the US, Russia and Canada. To make a rider-weighted claim we would need registrations, and we do not have them. *And 113 of the breaching stations sit above 1,500 m* — the manual's single number fails on the vertical axis too.",
+      "notes": [
+        "The seeded 260-station draw we quoted before reproduces exactly off the rebuilt data — 210 usable, 48 breaching, 22.9% — so the estimator was unbiased and the population number is the one to use now.",
+        "*Do not say \"22.9% of riders\".* It is 22.9% of actively reporting weather stations, and the sample is biased toward the US, Russia and Canada.",
+        "The unexpected part: Tibetan-plateau stations at 4,613 m and 4,535 m, a US station at 4,113 m, Tajikistan at 3,940 m. Those are *altitude* stations, not latitude ones — which is why altitude became its own rule type."
+      ],
+      "defs": [
+        { "n": "20.7%", "d": "2,215 of 10,715 usable 2024 station-years recorded a temperature below −25 °C — docs/pitches/voloridge/findings.md.", "src": "voloridge/findings.md" },
+        { "n": "22.9%", "d": "the seeded 260-station draw (seed 11): 210 usable, 48 breaching. Reproduces exactly off the full build.", "src": "voloridge/findings.md" },
+        { "n": "27.4%", "d": "the same population below −20 °C.", "src": "voloridge.md" },
+        { "n": "14.0%", "d": "below −30 °C.", "src": "voloridge.md" },
+        { "n": "9.1%", "d": "below −35 °C.", "src": "voloridge.md" },
+        { "n": "113", "d": "breaching stations above 1,500 m — altitude, not latitude.", "src": "voloridge.md" }
+      ]
+    },
+    {
+      "kind": "two-up",
+      "at": "4:30",
+      "title": "Change one field, and the verdict flips",
+      "left": { "image": "voloridge/shots/02-conditions-minneapolis.png", "label": "Minneapolis", "caption": "MINNEAPOLIS–ST PAUL INTL · 10.8 km · ENGINE OIL GRADE, action needed · 20.7% of readings below 0 °C · p. 215" },
+      "right": { "image": "voloridge/shots/03-conditions-international-falls.png", "label": "International Falls, MN", "caption": "COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 215" },
+      "caption": "Then *tap the coolant row*: the PDF opens on p. 215 with \"Antifreeze protection to at least −25 °C\" highlighted. *KTM said it. We only worked out that it applies to you.*",
+      "notes": [
+        "Then change it to Bangkok: every cold rule goes grey and the dust rule lights up. *The negative control is part of the demo on purpose.* Bangkok, Dubai, Miami and Delhi are negative controls in CI — if a cold rule ever fires there, the join is broken.",
+        "KTM does print a temperature-banded oil grade: *\"Engine oil grade at ambient temperature ≥ 0 °C: SAE 10W/50; < 0 °C: SAE 5W/40\"*, KTM 1390 Super Adventure R 2026 US, p. 215.",
+        "Phoenix 0.0% below 0 °C · Zurich 6.1% · Minneapolis 20.7% · International Falls 34.6% · Bangkok 0.0%.",
+        "The close: \"the manual is still the only thing we show you. What the manufacturer could never print is *whether the rule is about you* — and that took 600 GB of somebody else's data to answer, reduced to 4.34 MB, for zero tokens and three to six milliseconds a look.\""
+      ],
+      "defs": [
+        { "n": "20.7%", "d": "share of Minneapolis's 2024 readings below 0 °C (and, separately, the share of all station-years below −25 °C).", "src": "voloridge.md" },
+        { "n": "34.6%", "d": "share of International Falls's 2024 readings below 0 °C.", "src": "voloridge.md" },
+        { "n": "10.8", "d": "km from Minneapolis to its nearest reporting station, printed on the row.", "src": "voloridge.md" },
+        { "n": "3–6 ms", "d": "a verdict, measured warm, at zero tokens.", "src": "voloridge.md" }
+      ]
+    },
+    {
+      "kind": "qa",
+      "presenterOnly": true,
+      "at": "5:00",
+      "title": "voloridge.md — check this list the morning of",
+      "groups": [
+        {
+          "label": "This pitch",
+          "items": [
+            "Do not say Climate Fit is deployed and working. The routes are live, the climatology is not in the replica.",
+            "Do not say \"22.9% of riders\" — it is 22.9% of actively reporting weather stations, and the sample is biased toward the US, Russia and Canada.",
+            "Do not imply we swept all 600 GB. Say which slice ran: 2024.",
+            "Do not quote the † numbers (the hand-labelled precision/recall) as measured.",
+            "Do not claim a failure rate from running the wrong coolant — we have exposure data, not outcome data."
+          ]
+        },
+        {
+          "label": "All nine, global",
+          "items": [
+            "ElevenLabs voice is never \"live\" — \"built, one key away\". The live voice is Deepgram.",
+            "The 3D backdrop is a technical grid. No panorama, no photographic workshop scene.",
+            "Dropbox folder sync is \"built, deploying\", not deployed.",
+            "Never quote a running ledger total without the date beside it.",
+            "Never call 13,537 \"manuals\" — distinct fetchable PDFs is 14,770.",
+            "Never call 4,081 and 1,489 the same number.",
+            "There is no checkout. \"Live prices\", never \"buy\"."
+          ]
+        }
+      ],
+      "notes": [
+        "Presenter-only. The audience sees the end card.",
+        "What we got wrong, if asked: the name-based station join; shipping the first reduction without the ISD quality filter; and reading \"−45 … −25 °C\" as a promise of −45 °C when it is a mixing range — 188 manuals were briefly wrong in the safe-looking direction, which is the worse direction."
+      ]
+    }
+  ]
+}

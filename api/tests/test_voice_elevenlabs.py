@@ -296,7 +296,7 @@ def test_the_prompt_is_the_deepgram_grounding_policy_not_a_second_one(prompt, cl
         "You do not know anything about this motorcycle",
         "NEVER guess, round, convert or recall a value",
         "NEVER tell anyone to visit, consult or contact a dealer",
-        "Say the page whenever a figure came off one",
+        "The page first, in the same sentence as the figure",
     ):
         assert sentence in prompt
     assert "find_procedure" in prompt and "show_page" in prompt

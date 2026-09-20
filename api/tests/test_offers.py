@@ -241,7 +241,7 @@ def test_offers_drops_the_dead_url_and_sorts_by_price(wired):
     ]
     assert DEAD not in [o.url for o in out.offers]
     assert all(o.price > 0 and o.url.startswith("http") for o in out.offers)
-    assert out.usd == 0.021 and out.complete is True
+    assert out.usd == 0.042 and out.complete is True  # two legs, one bill
 
 
 def test_every_offer_carries_a_usd_price_beside_the_shop_price(wired):
@@ -286,7 +286,7 @@ def test_offers_refetches_when_the_cache_is_a_day_old(wired):
     mod.offers("m1", "spark-plug", BIKE)
     stale = result(wired).model_copy(update={"fetchedAt": time.time() - mod.FRESH - 1})
     wired.put_offers("m1", "spark-plug", stale.model_dump())
-    assert mod.offers("m1", "spark-plug", BIKE).usd == 0.021
+    assert mod.offers("m1", "spark-plug", BIKE).usd == 0.042
 
 
 def test_an_empty_answer_is_only_cached_for_an_hour(wired, monkeypatch):
@@ -386,7 +386,7 @@ def test_a_stream_that_cannot_be_opened_falls_back_to_the_plain_search(wired, mo
 
     monkeypatch.setattr(mod, "stream_lines", broken)
     out = mod.offers("m1", "spark-plug", BIKE)
-    assert len(out.offers) == 3 and out.usd == 0.021
+    assert len(out.offers) == 3 and out.usd == 0.042
 
 
 def test_a_half_finished_answer_is_never_served_from_the_cache(wired):
@@ -402,11 +402,12 @@ def test_a_half_finished_answer_is_never_served_from_the_cache(wired):
 
 
 def test_two_clicks_on_one_part_share_a_single_search(wired, monkeypatch):
+    """Two legs for the one lookup, and the second click joins it rather than starting another."""
     wired.put_manual(_manual())
     calls = []
 
-    def counted(*a, **k):
-        calls.append(1)
+    def counted(route, *a, **k):
+        calls.append(route)
         return fake_stream(before=0.2)()
 
     monkeypatch.setattr(mod, "stream_lines", counted)
@@ -414,7 +415,17 @@ def test_two_clicks_on_one_part_share_a_single_search(wired, monkeypatch):
     mod.offers("m1", "spark-plug", BIKE)
     mod.offers("m1", "spark-plug", BIKE)
     assert wait_for_cache(wired) is not None
-    assert len(calls) == 1
+    assert sorted(calls) == ["offers", "offers.fast"]
+
+
+def test_a_prefetch_does_not_pay_for_the_leg_that_answers_first(wired, monkeypatch):
+    """Nobody waits on /parts/offers/warm, so it buys depth only."""
+    wired.put_manual(_manual())
+    calls = []
+    monkeypatch.setattr(mod, "stream_lines", lambda route, *a, **k: (calls.append(route), fake_stream()())[1])
+    mod.warm("m1", BIKE, ["spark-plug"])
+    assert wait_for_cache(wired) is not None
+    assert calls == ["offers"]
 
 
 # --- warming --------------------------------------------------------------

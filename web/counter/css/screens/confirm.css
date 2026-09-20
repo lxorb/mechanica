@@ -11,7 +11,7 @@
   max-width: 720px;
   overflow: hidden;
   border: 3px solid var(--line);
-  background: var(--ink);
+  background: var(--slab);
 }
 
 [data-screen="confirm"] .confirm-bike {
@@ -55,7 +55,7 @@
   height: 100%;
   min-width: 0;
   object-fit: cover;
-  background: var(--ink);
+  background: var(--slab);
 }
 
 [data-screen="confirm"] .confirm-photo.is-split .confirm-bike.is-fit,
@@ -94,7 +94,7 @@
   min-height: 44px;
   padding: 0 0 6px;
   text-align: left;
-  color: var(--ink);
+  color: var(--fg);
   font: inherit;
   cursor: pointer;
   appearance: none;
@@ -102,7 +102,7 @@
 }
 
 [data-screen="confirm"] .confirm-alt.is-on {
-  border-color: var(--orange);
+  border-color: var(--accent);
 }
 
 [data-screen="confirm"] .confirm-alt-art {
@@ -110,12 +110,12 @@
   width: 100%;
   aspect-ratio: 3 / 2;
   border-bottom: 3px solid var(--line);
-  background: var(--paper);
+  background: var(--bg);
   overflow: hidden;
 }
 
 [data-screen="confirm"] .confirm-alt.is-on .confirm-alt-art {
-  border-bottom-color: var(--orange);
+  border-bottom-color: var(--accent);
 }
 
 [data-screen="confirm"] .confirm-alt-art.is-bare {
@@ -163,7 +163,7 @@
   left: 0;
   bottom: 0;
   height: 3px;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 [data-screen="confirm"] .confirm-body {
@@ -186,7 +186,7 @@
   line-height: 0.95;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--fg);
 }
 
 [data-screen="confirm"] .confirm-stamps {
@@ -224,7 +224,7 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  background: var(--card);
+  background: var(--page);
   pointer-events: none;
 }
 
@@ -238,8 +238,8 @@
   right: 0;
   bottom: 0;
   z-index: 1;
-  background: var(--yellow);
-  color: var(--ink);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.7rem;
@@ -263,7 +263,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-align: center;
-  color: var(--ink);
+  color: var(--fg);
   margin: 16px 0 10px;
 }
 
@@ -303,13 +303,13 @@
 }
 
 [data-screen="confirm"] .confirm-none {
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
 }
 
 [data-screen="confirm"] .confirm-none:disabled {
   background: var(--slab-off);
-  color: #fff;
+  color: var(--slab-fg);
   opacity: 1;
   cursor: not-allowed;
 }
@@ -318,7 +318,7 @@
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: var(--ink);
+  background: var(--slab);
   touch-action: none;
   user-select: none;
   overscroll-behavior: none;
@@ -345,7 +345,7 @@
   object-fit: fill;
   display: block;
   pointer-events: none;
-  background: var(--card);
+  background: var(--page);
 }
 
 [data-screen="confirm"] .confirm-over-close {
@@ -407,8 +407,8 @@
 }
 
 [data-screen="confirm"] .confirm-add {
-  background: var(--yellow);
-  color: var(--ink);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
 }
 
 [data-screen="confirm"] .confirm-source {
@@ -452,7 +452,7 @@
   display: block;
   height: 100%;
   width: 0;
-  background: var(--orange);
+  background: var(--accent);
   transition: width 900ms linear;
 }
 

@@ -239,7 +239,18 @@ async function run() {
           problems += 1;
           console.log(`  !! ${theme}/${view.id}/${name}: ${String(error.message).slice(0, 90)}`);
         }
-        const shot = Buffer.from(await page.screenshot({ encoding: "binary" }));
+        // Capturing a page with a live WebGL canvas fails sporadically under swiftshader; the
+        // next frame is always fine, so one retry is the whole fix.
+        let raw = null;
+        for (let tries = 0; tries < 3 && !raw; tries += 1) {
+          try {
+            raw = await page.screenshot({ encoding: "binary" });
+          } catch (error) {
+            if (tries === 2) throw error;
+            await nap(900);
+          }
+        }
+        const shot = Buffer.from(raw);
         const applied = await page.evaluate(() => ({
           attr: document.documentElement.getAttribute("data-theme"),
           meta: document.querySelector('meta[name="theme-color"]')?.getAttribute("content"),

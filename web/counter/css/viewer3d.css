@@ -59,6 +59,7 @@
 .viewer3d[data-viewer3d="error"]::after {
   content: "Tap to retry";
   background: var(--danger);
+  color: var(--danger-ink);
 }
 
 .viewer3d[data-viewer3d="ready"]::after {

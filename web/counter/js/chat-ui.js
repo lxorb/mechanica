@@ -27,7 +27,10 @@
  *                                     inside it; AUX below is injected through it instead.
  *   introMessage                      deliberately never set: the first bubble is empty.
  *
- * VOICE. The header's VOICE toggle opens a Deepgram Voice Agent session (./voice-deepgram.js).
+ * VOICE. The header's VOICE toggle opens a Deepgram Voice Agent session (./voice-deepgram.js),
+ * and ./voice-orb.js puts the orb over the conversation for as long as it lasts — the orb owns
+ * everything the rider sees in voice mode (state, level, the live line, interrupt, leave), so the
+ * only thing this file does with it is mount it, feed it the session's meters and forward events.
  * Every finished turn it reports lands in the same `sessions` history as a typed one, so the
  * conversation is one conversation whichever way the question was asked, and `show_page` from
  * the agent takes the same jump() a citation chip takes. Hidden unless /voice/config says the
@@ -46,6 +49,7 @@
 import * as T from "./ttm.js";
 import { registerOverlay, openOverlay, closeOverlay, overlayOpen } from "./bus.js";
 import * as agent from "./voice-deepgram.js";
+import { mountOrb } from "./voice-orb.js";
 
 const BUNDLE = "../../vendor/deep-chat/deepChat.bundle.js";
 const OVERLAY = "chat";
@@ -323,6 +327,16 @@ export function mountChat(host, opts = {}) {
   wrap.append(sheet);
   document.body.append(wrap);
 
+  // The orb lives over the conversation, not over the header: Back and ✕ stay reachable, and
+  // nothing enters or leaves the flow when voice mode starts, so there is no layout shift.
+  const orb = mountOrb(body, {
+    levels: () => (voice ? { mic: voice.level(), out: voice.out() } : { mic: 0, out: 0 }),
+    onInterrupt: () => {
+      if (voice) voice.interrupt();
+    },
+    onLeave: stopVoice,
+  });
+
   voiceBtn.addEventListener("click", toggleVoice);
 
   registerOverlay(OVERLAY, { mount: () => {}, open: opened, close: closed });
@@ -578,8 +592,11 @@ export function mountChat(host, opts = {}) {
     voiceBtn.setAttribute("aria-pressed", on ? "true" : "false");
     voiceBtn.classList.toggle("is-on", on);
     const text = status == null ? "" : SAY[status] ?? "";
-    strip.hidden = !on;
+    // The orb says what the session is doing; the strip stays for the one thing the orb has no
+    // word for, which is a session that failed to start.
+    strip.hidden = true;
     sheet.classList.toggle("is-voice", on);
+    if (orb) orb.setState(on ? status || "connecting" : "closed");
     if (text) said.textContent = text;
     if (!on) {
       said.textContent = "";
@@ -608,17 +625,31 @@ export function mountChat(host, opts = {}) {
     raf = 0;
   }
 
-  /** Every finished turn joins the typed conversation, so the history is one history. */
-  function transcribe(role, text) {
+  /**
+   * Every finished turn joins the typed conversation, so the history is one history.
+   *
+   * The agent answers one SENTENCE per ConversationText, so a two-sentence answer would land as
+   * two bubbles from the same breath. `part` marks every sentence after the first of a turn and
+   * it is appended to the message already there instead.
+   */
+  function transcribe(role, text, part) {
     const clean = String(text || "").trim();
     if (!clean) return;
-    remember(manualId, role === "user" ? { role: "user", content: clean } : { role: "assistant", content: clean, citations: [], saved: 0 });
+    const rows = sessions.get(manualId) ?? [];
+    const last = rows[rows.length - 1];
+    if (part && last && last.role === "assistant") {
+      last.content = `${last.content} ${clean}`.trim();
+    } else {
+      remember(manualId, role === "user" ? { role: "user", content: clean } : { role: "assistant", content: clean, citations: [], saved: 0 });
+    }
+    if (orb) orb.setLine(clean);
     said.textContent = clean;
     if (!chat) return;
     try {
-      chat.addMessage({ text: clean, role: role === "user" ? "user" : "ai" });
+      if (part) chat.addMessage({ text: clean, role: "ai" });
+      else chat.addMessage({ text: clean, role: role === "user" ? "user" : "ai" });
     } catch {
-      /* the strip already showed it */
+      /* the orb already showed it */
     }
   }
 
@@ -656,7 +687,12 @@ export function mountChat(host, opts = {}) {
             return;
           }
           if (event.type === "text") {
-            transcribe(event.role, event.text);
+            transcribe(event.role, event.text, event.part);
+            return;
+          }
+          if (event.type === "interrupted") {
+            // The rider talked over the answer. Say so where he is already looking.
+            if (orb) orb.setLine("…");
             return;
           }
           if (event.type === "page") {
@@ -664,6 +700,7 @@ export function mountChat(host, opts = {}) {
             return;
           }
           if (event.type === "error") {
+            strip.hidden = false;
             said.textContent = event.message || "Voice failed.";
             stopMeter();
           }
@@ -766,6 +803,7 @@ export function mountChat(host, opts = {}) {
   function destroy() {
     close();
     stopVoice();
+    if (orb) orb.destroy();
     if (chat) chat.remove();
     chat = null;
     wrap.remove();

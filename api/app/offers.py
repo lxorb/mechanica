@@ -15,23 +15,34 @@ Every surviving offer is then fetched (HEAD, GET on a 405) with a 2.5 s timeout,
 or a dead host drops it. Offers carry `priceUsd` beside `price`/`currency` and arrive sorted by it, so a
 list of eight shops in five currencies still reads cheapest-first without the browser doing arithmetic.
 
-Cold latency. Measured: one web_search answer is 14-18 s wall clock, nearly all of it the model writing
-15 offer lines; a second parallel search leg is just as slow as the first, so splitting the query buys
-nothing. What the request used to do was wait 4.5 s, return zero offers, and leave the Parts sheet to
-ask again 10 s later - 15.4 s before a rider saw a price.
+Cold latency. What a cold click used to cost a rider was 15.4 s: the request waited 4.5 s, returned zero
+offers, and the Parts sheet asked again 10 s later. Measured where those seconds are, per search:
 
-So the answer is read as it is written. The line-per-offer format was chosen to be parseable; streaming
-it makes it parseable *early*. Each completed line is parsed the moment its newline arrives and its URL
-goes straight into the verification pool, so shops are being checked while the model is still writing
-the next one. The request leaves as soon as ENOUGH offers are verified - typically well before the model
-has finished - and the lookup thread keeps going, verifies the rest and writes the finished answer to the
-cache, so the next click, or the /parts/offers/warm prefetch the Parts view fires on open, is a
-millisecond. DEADLINE is the ceiling, not the wait.
+  model            first search call -> first offer line    whole answer    offers   usd
+  gpt-5.6-terra x2            16.4 s                           21.8 s         13     .074
+  gpt-5.6-terra x1            12.6 s                           16.7 s          9     .052
+  gpt-5.6-luna  x1             4.1 s                            5.5 s          5     .023
+
+So the cost is not the writing, it is the looking-up before the first word, and a second parallel leg of
+the same model is exactly as slow as the first. Two things follow, and both are here:
+
+1. The answer is read as it is written. The line-per-offer format was chosen to be parseable; streaming
+   makes it parseable *early*. A completed line is parsed the moment its newline lands and its URL goes
+   straight into the verification pool, so shops are being checked while the model writes the next line.
+2. A cold click that someone is waiting on runs two legs at once: the fast model answers the deadline,
+   the thorough one fills the cache. One search call each, so the bill for a cold part is what one
+   two-call terra search used to cost, and the rider sees prices at ~6 s instead of 15.4 s.
+
+The request leaves as soon as ENOUGH offers are verified; DEADLINE is the ceiling, not the wait. The
+lookup thread keeps going, verifies the rest and writes the finished answer to the cache, so the next
+click - or the /parts/offers/warm prefetch the Parts view fires on open - is a millisecond. `warm()`
+skips the fast leg: nobody is waiting on a prefetch, so it pays for depth only.
 
 Cache: store.put_offers(manual_id, part_id, result); a result under 24 h old is served as-is for $0.
 A result that found nothing expires after an hour instead, so one bad search does not sit there all day.
 """
 
+import os
 import re
 import threading
 import time
@@ -53,13 +64,19 @@ FRESH_EMPTY = 3600.0
 MAX_OFFERS = 15
 VERIFY_TIMEOUT = 2.5
 VERIFY_WORKERS = 16
-SEARCH_CALLS = 2
+SEARCH_CALLS = 1  # a second tool call measured +5 s and +$0.022 for four more offers; the fast leg is cheaper
 CONTEXT_SIZE = "low"
+# The leg that answers the deadline. It lives here rather than in config.py because it is not a choice
+# about quality - settings.model_offers stays the model that decides what the cache ends up holding -
+# it is a choice about which model starts writing first, and that is this module's problem.
+FAST_MODEL = os.getenv("MODEL_OFFERS_FAST", "gpt-5.6-luna")
+FAST_CALLS = 1
+FAST_OFFERS = 8
 # The ceiling on a cold click, not the wait: the request leaves the moment ENOUGH shops have been
 # verified. ttm.js allows 25 s (OFFERS_MS) and the Parts sheet re-asks 10 s after an empty answer,
 # so anything that returns real offers inside this beats a 15 s empty-then-retry by a mile.
 DEADLINE = 7.5
-ENOUGH = 4
+ENOUGH = 2  # two verified shops is already a comparison; the rest arrives in the cache
 WARM_PARTS = 12
 WARM_WORKERS = 12
 
@@ -80,7 +97,9 @@ SYSTEM = (
     "List every variant separately, one line each - pack sizes, bottle sizes, lengths, brands, colours - "
     "and keep several lines from the same shop when they are different products or different variants. "
     "Only lines for a product page whose price and URL you actually saw - never a category page, never a "
-    "search page, never a price you reconstructed. Write 'unknown' for a field the page does not state."
+    "search page, never a price you reconstructed. Write 'unknown' for a field the page does not state.\n"
+    "Write each line the moment you have that one product; never hold them back to list them together. "
+    "The first line is read and shown while you are still finding the rest."
 )
 
 # Hosts that carry prices but nothing to buy.
@@ -430,7 +449,7 @@ def dedupe(offers: list[Offer]) -> list[Offer]:
     return list(best.values())
 
 
-def _user(query: str, part: Part, bike: Bike | None, hint: str | None) -> str:
+def _user(query: str, part: Part, bike: Bike | None, hint: str | None, want: int = MAX_OFFERS) -> str:
     ride = f"{bike.make} {bike.model} {bike.year}" if bike else "this motorcycle"
     printed = part.oem or part.spec or hint or part.name
     return (
@@ -438,11 +457,11 @@ def _user(query: str, part: Part, bike: Bike | None, hint: str | None) -> str:
         f"Printed in the manual: {printed}\n"
         f"Bike: {ride}\n"
         f"Search: {query}\n"
-        f"Up to {MAX_OFFERS} offers, variants on their own lines."
+        f"Up to {want} offers, variants on their own lines."
     )
 
 
-def stream_lines(route: str, system: str, user: str) -> Iterator[tuple[str, object]]:
+def stream_lines(route: str, system: str, user: str, model: str, calls: int) -> Iterator[tuple[str, object]]:
     """The same search llm.web_search makes, read as it is written: yields ("delta", text) while
     the model writes and exactly one ("usd", float) when it stops.
 
@@ -451,14 +470,14 @@ def stream_lines(route: str, system: str, user: str) -> Iterator[tuple[str, obje
     shape. Same tool, same effort, same cost accounting, same door; llm.web_search is still the
     fallback in search() below when a stream cannot be opened at all."""
     usage = None
-    calls = 0
+    searches = 0
     with llm.client().responses.stream(
-        model=settings.model_offers,
+        model=model,
         instructions=system,
         input=[{"role": "user", "content": [llm.text_part(user)]}],
         tools=[{"type": "web_search", "search_context_size": CONTEXT_SIZE}],
         reasoning={"effort": "low"},
-        max_tool_calls=SEARCH_CALLS,
+        max_tool_calls=calls,
     ) as events:
         for event in events:
             kind = getattr(event, "type", "")
@@ -469,18 +488,18 @@ def stream_lines(route: str, system: str, user: str) -> Iterator[tuple[str, obje
             elif kind == "response.completed":
                 response = getattr(event, "response", None)
                 usage = getattr(response, "usage", None)
-                calls = sum(
+                searches = sum(
                     1
                     for item in (getattr(response, "output", None) or [])
                     if getattr(item, "type", "") == "web_search_call"
                 )
     cost = 0.0
     if usage is not None:
-        cost = llm.log(route, settings.model_offers, usage, extra_usd=calls * llm.WEB_SEARCH_CALL_USD)
+        cost = llm.log(route, model, usage, extra_usd=searches * llm.WEB_SEARCH_CALL_USD)
     yield "usd", cost
 
 
-def _read(route: str, user: str, on_offer) -> tuple[list[Offer], float, str]:
+def _read(route: str, user: str, on_offer, model: str, calls: int) -> tuple[list[Offer], float, str]:
     """Stream the answer and parse every line the moment its newline lands. A stream that cannot be
     opened at all - an SDK without it, a proxy that buffers - falls back to the plain request, which
     is the behaviour this had before and is only slower, never wrong."""
@@ -496,7 +515,7 @@ def _read(route: str, user: str, on_offer) -> tuple[list[Offer], float, str]:
     try:
         cost = 0.0
         buffer = ""
-        for kind, value in stream_lines(route, SYSTEM, user):
+        for kind, value in stream_lines(route, SYSTEM, user, model, calls):
             if kind == "usd":
                 cost = float(value or 0.0)
                 continue
@@ -508,7 +527,7 @@ def _read(route: str, user: str, on_offer) -> tuple[list[Offer], float, str]:
         take(buffer)
         return offers, cost, text
     except Exception:
-        text, cost = llm.web_search(route, settings.model_offers, SYSTEM, user, max_calls=SEARCH_CALLS)
+        text, cost = llm.web_search(route, model, SYSTEM, user, max_calls=calls)
         offers = []
         take(text)
         return offers, cost, text
@@ -521,11 +540,15 @@ def search(
     bike: Bike | None,
     hint: str | None = None,
     on_offer=None,
+    model: str | None = None,
+    calls: int = SEARCH_CALLS,
+    want: int = MAX_OFFERS,
 ) -> tuple[list[Offer], float]:
     """`on_offer` is handed each offer the moment its line is complete, so verification of the
     first shop starts while the model is still writing the fifteenth."""
-    user = _user(query, part, bike, hint)
-    offers, cost, text = _read(route, user, on_offer)
+    model = model or settings.model_offers
+    user = _user(query, part, bike, hint, want)
+    offers, cost, text = _read(route, user, on_offer, model, calls)
     if not offers and URL_IN.search(text or ""):
         # the format drifted but there is something there: one cheap structured re-read of the same text
         rows = llm.structured(
@@ -613,6 +636,9 @@ def resolve(manual: Manual, part_id: str, bike: Bike | None) -> tuple[Part, str 
 # --- one lookup, on its own thread ---------------------------------------
 
 _POOL = ThreadPoolExecutor(max_workers=WARM_WORKERS + 4, thread_name_prefix="offers")
+# The fast leg needs a thread of its own, and it must not be able to queue behind the thorough legs
+# already holding _POOL - that would put the answer back behind the thing it is racing.
+_SEARCH = ThreadPoolExecutor(max_workers=WARM_WORKERS + 4, thread_name_prefix="offers-fast")
 _running: dict[tuple[str, str], "_Lookup"] = {}
 _running_lock = threading.Lock()
 
@@ -622,12 +648,21 @@ class _Lookup:
     deadline can be answered with what is verified so far while this keeps running and caches the
     finished answer. Two clicks on the same part share one lookup, and one search bill."""
 
-    def __init__(self, manual_id: str, part_id: str, part: Part, hint: str | None, bike: Bike | None):
+    def __init__(
+        self,
+        manual_id: str,
+        part_id: str,
+        part: Part,
+        hint: str | None,
+        bike: Bike | None,
+        fast: bool = True,
+    ):
         self.manual_id = manual_id
         self.part_id = part_id
         self.part = part
         self.hint = hint
         self.bike = bike
+        self.fast = fast  # someone is waiting: pay for the leg that answers first
         self.query = build_query(part, bike, hint)
         self.cost = 0.0
         self.finished = False
@@ -637,20 +672,35 @@ class _Lookup:
         # ENOUGH verified shops is a good enough answer to send: the rest lands in the cache.
         self.ready = threading.Event()
 
+    def _leg(self, route: str, model: str | None, calls: int, want: int, checker) -> list[Offer]:
+        found, cost = search(
+            route, self.query, self.part, self.bike, self.hint,
+            on_offer=checker.add, model=model, calls=calls, want=want,
+        )
+        with self.lock:
+            self.cost += cost
+        return found
+
     def run(self) -> None:
         checker = Checker(self._keep)
+        quick = _SEARCH.submit(self._leg, "offers.fast", FAST_MODEL, FAST_CALLS, FAST_OFFERS, checker) if self.fast else None
         try:
-            found, self.cost = search(
-                "offers", self.query, self.part, self.bike, self.hint, on_offer=checker.add
-            )
+            found = self._leg("offers", None, SEARCH_CALLS, MAX_OFFERS, checker)
+            if quick is not None:
+                try:
+                    found += quick.result()
+                except Exception:  # the thorough leg alone is still an answer
+                    pass
             checker.close()
-            if not self.live and found:  # a search that answered after the stream (the fallback)
+            if not self.live and found:  # the non-streaming fallback answered in one piece
                 verify(dedupe(found), on_live=self._keep)
             self.finished = True
             self._cache()
         except Exception:  # an outage is never cached: the next click tries again
             self.finished = False
         finally:
+            if quick is not None:
+                quick.cancel()
             checker.close()
             self.ready.set()
             self.done.set()
@@ -691,13 +741,15 @@ class _Lookup:
             write(self.manual_id, self.part_id, self.result().model_dump())
 
 
-def _start(manual_id: str, part_id: str, part: Part, hint: str | None, bike: Bike | None) -> _Lookup:
+def _start(
+    manual_id: str, part_id: str, part: Part, hint: str | None, bike: Bike | None, fast: bool = True
+) -> _Lookup:
     key = (manual_id, part_id)
     with _running_lock:
         current = _running.get(key)
         if current is not None:
             return current
-        lookup = _Lookup(manual_id, part_id, part, hint, bike)
+        lookup = _Lookup(manual_id, part_id, part, hint, bike, fast)
         _running[key] = lookup
     _POOL.submit(lookup.run)
     return lookup
@@ -775,6 +827,6 @@ def warm(manual_id: str, bike: Bike | None, part_ids: list[str] | None = None) -
         if cached(manual_id, part_id, part) is not None:
             ready.append(part_id)
             continue
-        _start(manual_id, part_id, part, hint, bike)
+        _start(manual_id, part_id, part, hint, bike, fast=False)  # nobody is waiting on a prefetch
         queued.append(part_id)
     return {"manualId": manual_id, "queued": queued, "cached": ready, "unknown": unknown}

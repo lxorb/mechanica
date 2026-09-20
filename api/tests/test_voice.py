@@ -198,11 +198,15 @@ def test_find_procedure(client, monkeypatch):
     assert calls == [(BMW, "check my oil")]
     assert body["firstPage"] == wanted[0].pageStart
     assert [s["id"] for s in body["sections"]] == [s.id for s in wanted]
-    for got, want in zip(body["sections"], wanted):
-        assert set(got) == {"id", "title", "chapter", "pageStart", "pageEnd"}
+    keys = {"id", "title", "chapter", "pageStart", "pageEnd"}
+    for i, (got, want) in enumerate(zip(body["sections"], wanted)):
+        # Improvement #4: the BEST section comes back with the manual's printed text for its pages,
+        # so a procedure question is one call instead of find_procedure plus four read_page. Every
+        # other match stays a place to go, so the result does not grow with the number of matches.
+        assert set(got) == (keys | {"text", "textPages"} if i == 0 else keys)
         assert got["title"] == want.title
         assert got["pageStart"] == want.pageStart
-    assert "text" not in json.dumps(body["sections"][0])
+    assert "text" not in json.dumps(body["sections"][1])
 
 
 def test_find_procedure_with_no_matches_reports_page_zero(client, monkeypatch):

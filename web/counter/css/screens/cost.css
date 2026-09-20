@@ -3,7 +3,7 @@
   inset: 0;
   z-index: 50;
   overflow-y: auto;
-  background: repeating-linear-gradient(0deg, var(--paper) 0 24px, var(--rule) 24px 25px), var(--paper);
+  background: var(--ground);
   padding: 0 12px calc(32px + env(safe-area-inset-bottom));
 }
 
@@ -56,7 +56,8 @@
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: var(--yellow);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   padding: 6px 8px;
 }
 

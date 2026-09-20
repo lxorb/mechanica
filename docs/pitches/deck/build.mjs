@@ -30,12 +30,20 @@
  * image          title?, line?, image, caption?, points? (≤3 short lines)
  * two-up         title?, left: panel, right: panel          (panel = {image|value, label, caption?})
  * diagram        title?, caption?, flow: {…}  |  svgFile: "dropbox/rows-per-portal.svg"
+ * table          title?, line?, head?, rows: [ [cell…] | {emph, cells} ], align?, note?, dense?
+ * quote          text, cite?
  * demo           title, line?, rows: [{ do, see }]
  * qa             title, groups: [{ label, items: [ "…" ] }]   — set "presenterOnly": true
  *
+ * flow = { w?, legend?: [{tone,label}], bands: [ { label?, tone?, labelColor?, rows: [ {
+ *   items: [{ tone, t, sub }], gap?, link?: "none", down?: true, caption? } ] } ] }
+ * tones: paper · white · orange · green · ink · yellow · ghost. "|" in t/sub forces a line break.
+ *
  * Inline markup in any string: *bold*  ~orange~
- * Every number on a slide is listed in `defs` with the definition from numbers.md; the build
- * fails if the figure is not found in numbers.md, and the definitions are shown in presenter view.
+ * Every number on a slide is listed in `defs` as { n, d, src? }. Without src the figure must
+ * appear in numbers.md, which is the source of truth; src points at the per-pitch working file
+ * numbers.md itself defers to (ramp/numbers.md, token-company/cost-report.md, …) and the figure
+ * must be findable there. The build fails otherwise, and presenter view shows every definition.
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
@@ -299,6 +307,11 @@ function srcText(rel) {
  * numbers.md itself points at (ramp/numbers.md, token-company/cost-report.md, …), and the
  * figure still has to be findable there.
  */
+function qaGroups(slide) {
+  return (slide.groups || []).map((g) =>
+    `<div class="group"><h4>${rich(g.label)}</h4><ul>${g.items.map((i) => `<li>${rich(i)}</li>`).join("")}</ul></div>`).join("");
+}
+
 function defsBlock(slide) {
   if (!slide.defs || !slide.defs.length) return "";
   const rows = slide.defs.map((d) => {
@@ -314,7 +327,10 @@ function defsBlock(slide) {
 
 function notesHtml(slide) {
   const notes = (slide.notes || []).map((n) => `<p>${rich(n)}</p>`).join("");
-  return `<div class="pv-note">${notes || "<p class=\"muted\">no notes</p>"}</div>` + defsBlock(slide);
+  const card = slide.kind === "qa"
+    ? `<div class="pv-qa"><div class="stamp">DO NOT SAY</div><h5>${rich(slide.title)}</h5>${qaGroups(slide)}</div>`
+    : "";
+  return card + `<div class="pv-note">${notes || "<p class=\"muted\">no notes</p>"}</div>`;
 }
 
 async function panelHtml(p) {
@@ -418,8 +434,7 @@ async function body(slide) {
     }
 
     case "qa": {
-      const groups = (slide.groups || []).map((g) =>
-        `<div class="group"><h4>${rich(g.label)}</h4><ul>${g.items.map((i) => `<li>${rich(i)}</li>`).join("")}</ul></div>`).join("");
+      const groups = qaGroups(slide);
       return `<div class="s-qa"><div class="stamp">DO NOT SAY</div><h3>${rich(slide.title)}</h3><div class="groups">${groups}</div></div>`;
     }
 
@@ -611,14 +626,15 @@ body.presenter #pv{display:flex;width:var(--pw)}
 #clock{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-size:82px;line-height:.9;letter-spacing:.02em}
 #clock.warn{color:var(--yellow)}
 #clock.over{color:var(--orange)}
-#clock small{display:block;font-family:Barlow,sans-serif;font-weight:400;font-size:14px;letter-spacing:.1em;
+#clock small{display:block;font-family:Barlow,sans-serif;font-weight:400;font-size:12px;letter-spacing:.06em;
   text-transform:uppercase;color:#8e867a;margin-top:6px}
 #marks{list-style:none;font-size:15px;line-height:1.3;max-height:150px;overflow:auto}
 #marks li{display:flex;gap:10px;padding:3px 0;color:#8e867a}
 #marks li b{color:#ece7dc;font-variant-numeric:tabular-nums;flex:0 0 46px}
 #marks li.now{color:#ece7dc}
 #marks li.now b{color:var(--orange)}
-#notes{flex:1 1 auto;overflow:auto;line-height:1.42;font-size:17px}
+#notes{flex:1 1 auto;overflow:auto;line-height:1.42;font-size:17px;min-height:0}
+#defs{flex:0 0 auto;max-height:190px;overflow:auto}
 #notes p{margin-bottom:10px}
 #notes .muted{color:#6f675c}
 .pv-defs{margin-top:12px;border-top:1px solid #2e2e2e;padding-top:10px}
@@ -627,9 +643,17 @@ body.presenter #pv{display:flex;width:var(--pw)}
 .pv-defs li{margin-bottom:5px}
 .pv-defs b{color:var(--yellow);font-weight:700}
 .pv-defs i{display:block;font-style:normal;font-size:12px;color:#6f675c;letter-spacing:.04em}
+.pv-qa{margin-bottom:12px}
+.pv-qa .stamp{display:inline-block;background:var(--yellow);color:var(--ink);font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-size:15px;letter-spacing:.2em;padding:3px 10px}
+.pv-qa h5{font-size:16px;font-weight:700;margin:8px 0 4px;color:#b5ad9e}
+.pv-qa .group{margin-top:8px}
+.pv-qa h4{font-size:13px;letter-spacing:.14em}
+.pv-qa ul{margin-top:4px;padding-left:16px}
+.pv-qa li{font-size:14.5px;line-height:1.34;margin-top:4px}
 #nextwrap{flex:0 0 auto}
+#nextwrap.last #nextbox{display:none}
 #nextbox{position:relative;width:100%;overflow:hidden;border:1px solid #2e2e2e;background:#000}
-#nextbox .slide{position:absolute;display:flex!important;transform-origin:0 0}
+#nextbox .slide{position:absolute;inset:auto;left:0;top:0;width:1600px;height:900px;display:flex!important;transform-origin:0 0}
 #nextbox .bar,#nextbox .chrome{opacity:.6}
 #pvfoot{font-size:13px;color:#6f675c;line-height:1.5}
 #jump{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:var(--ink);color:var(--yellow);
@@ -695,10 +719,12 @@ const JS = `
     location.hash='#'+(i+1);
     var s=meta.slides[i]||{};
     document.getElementById('notes').innerHTML=s.notes||'';
+    document.getElementById('defs').innerHTML=s.defs||'';
     var box=document.getElementById('nextbox');
     box.innerHTML='';
     if(i+1<N){var c=slides[i+1].cloneNode(true); c.classList.add('on'); box.appendChild(c);}
     document.getElementById('nextlabel').textContent=i+1<N?('next · '+(i+2)+'/'+N):'last slide';
+    document.getElementById('nextwrap').classList.toggle('last',i+1>=N);
     layout(); tick();
   }
 
@@ -749,7 +775,7 @@ async function buildDeck(deck) {
   const runtime = {
     seconds: clock(deck.length || "5:00"),
     marks: marks.map((m) => ({ t: m.t, s: m.s })),
-    slides: deck.slides.map((s) => ({ notes: notesHtml(s) })),
+    slides: deck.slides.map((s) => ({ notes: notesHtml(s), defs: defsBlock(s) })),
   };
 
   const markList = marks.map((m) => `<li><b>${esc(m.t)}</b><span>${esc(m.do)}</span></li>`).join("");
@@ -766,6 +792,7 @@ ${CSS}</style>
   <div><h4>time left</h4><div id="clock">5:00<small>starts on the first advance · R restart · T reset</small></div></div>
   <div><h4>the clock</h4><ul id="marks">${markList}</ul></div>
   <div style="flex:1 1 auto;min-height:0;display:flex;flex-direction:column"><h4>notes</h4><div id="notes"></div></div>
+  <div id="defs"></div>
   <div id="nextwrap"><h4 id="nextlabel">next</h4><div id="nextbox"></div></div>
   <div id="pvfoot">→ ← space · Home/End · digits+Enter jump · S presenter · F fullscreen · Ctrl+P prints one slide per page</div>
 </aside>
@@ -811,10 +838,10 @@ const DIAGRAMS = {
 function diagramStrip(pitch) {
   const list = DIAGRAMS[pitch] || [];
   if (!list.length) return "";
-  const figs = list.map(([file, caption]) => `<figure class="dg">
-      <div class="dg-svg">${inlineSvgFile(file)}</div>
+  const figs = list.map(([file, caption]) => `<figure class="pd">
+      <div class="pd-svg">${inlineSvgFile(file)}</div>
       <figcaption><b>${esc(file)}</b>${esc(caption)}</figcaption></figure>`).join("");
-  return `<details class="dgs"><summary>${list.length} diagram${list.length > 1 ? "s" : ""} — ${list.map((l) => l[0].split("/")[1]).join(" · ")}</summary>${figs}</details>`;
+  return `<details class="pd-list" open><summary>${list.length} diagram${list.length > 1 ? "s" : ""} — ${list.map((l) => l[0].split("/")[1]).join(" · ")}</summary>${figs}</details>`;
 }
 
 function indexHtml(decks) {
@@ -840,16 +867,16 @@ h1{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-si
 .item{border-bottom:2px solid #ddd5c4}
 .row{display:flex;gap:22px;align-items:center;padding:20px 8px;text-decoration:none;color:inherit}
 .row:hover{background:#fff}
-.dgs{padding:0 8px 18px}
-.dgs summary{cursor:pointer;font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:700;font-size:17px;
+.pd-list{padding:0 8px 18px}
+.pd-list summary{cursor:pointer;font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:700;font-size:17px;
   letter-spacing:.11em;text-transform:uppercase;color:var(--dim);padding:6px 0}
-.dgs summary:hover{color:var(--orange)}
-.dgs[open] summary{color:var(--orange)}
-.dg{margin:14px 0 22px;background:#fff;border:2px solid #ddd5c4}
-.dg-svg{padding:14px;overflow-x:auto}
-.dg-svg svg{display:block;width:100%;height:auto;max-height:640px}
-.dg figcaption{border-top:2px solid #ddd5c4;padding:11px 14px;font-size:16px;line-height:1.4;color:#3b362e}
-.dg figcaption b{display:block;font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:700;font-size:16px;
+.pd-list summary:hover{color:var(--orange)}
+.pd-list[open] summary{color:var(--orange)}
+.pd{margin:14px 0 22px;background:#fff;border:2px solid #ddd5c4}
+.pd-svg{padding:14px;overflow:auto;max-height:78vh}
+.pd-svg svg{display:block;width:100%;height:auto}
+.pd figcaption{border-top:2px solid #ddd5c4;padding:11px 14px;font-size:16px;line-height:1.4;color:#3b362e}
+.pd figcaption b{display:block;font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:700;font-size:16px;
   letter-spacing:.11em;text-transform:uppercase;color:var(--orange);margin-bottom:3px}
 .n{font-family:"Big Shoulders Display",Barlow,sans-serif;font-weight:800;font-size:56px;color:var(--orange);
   flex:0 0 52px;line-height:.9;text-align:right}

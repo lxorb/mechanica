@@ -305,7 +305,16 @@ function inspect(file, modelKey) {
       const bind = dominant != null ? bindOf(node.skin) : null;
       if (bind) matrix = multiply(worldOf(skin.joints[dominant]), Array.from(bind.slice(dominant * 16, dominant * 16 + 16)));
     }
-    const sources = [...new Set([...joints, own, mesh.name || "", ...up].filter(Boolean))];
+    /* The names matchPart is given, in the SAME order and with the same contents the viewer uses
+     * (viewer3d.js::buildGroups): joint, node name, parent name. The mesh name is a fallback for
+     * an unnamed node only, because three's GLTFLoader overwrites `object.name` with the node's
+     * name whenever the node has one.
+     *
+     * Feeding it unconditionally was a real trap: glTF-Transform numbers meshes and nodes in two
+     * separate sequences, so node "Object_10" carries mesh "Object_8". A `^Object_8$` pin then
+     * matched a mesh the browser would never match, and this tool reported groups that do not
+     * exist on the page. */
+    const sources = [...new Set([...joints, own || mesh.name || "", ...up].filter(Boolean))];
     const primitiveTris = (mesh.primitives || []).reduce((n, primitive) => n + triangles(gltf, primitive), 0);
     tris += primitiveTris;
     const key = matchPart(modelKey, ...sources);

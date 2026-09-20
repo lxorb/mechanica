@@ -174,7 +174,7 @@ def test_the_think_model_is_overridable_without_a_deploy(client, monkeypatch):
 
 def test_greeting_names_the_make_model_and_year(client, ktm):
     assert ktm["bike"] == "KTM 390 Duke 2024"
-    assert ktm["settings"]["agent"]["greeting"] == "I see you're looking at the KTM 390 Duke 2024."
+    assert ktm["settings"]["agent"]["greeting"] == "KTM 390 Duke 2024. Go ahead."
 
 
 def test_an_explicit_bike_id_wins_over_the_manuals_first_bike(client):
@@ -185,7 +185,7 @@ def test_an_explicit_bike_id_wins_over_the_manuals_first_bike(client):
 def test_an_unknown_bike_id_falls_back_to_the_manual_rather_than_greeting_nobody(client):
     body = client.get(SETTINGS, params={"manualId": KTM, "bikeId": "no-such-bike"}).json()
     assert body["bike"] == "KTM 390 Duke 2024"
-    assert body["settings"]["agent"]["greeting"].endswith("KTM 390 Duke 2024.")
+    assert body["settings"]["agent"]["greeting"].startswith("KTM 390 Duke 2024.")
 
 
 # ---------------------------------------------------------------- the digest
@@ -243,12 +243,14 @@ def test_a_manual_with_no_outline_still_gets_a_digest_from_its_sections(client, 
 @pytest.mark.parametrize(
     "phrase",
     [
-        "One or two sentences",
+        "One sentence. A second one only when it carries a different fact",
         "No bullet points",
         "no markdown",
         "Answer ONLY from what a function gave you back",
         "NEVER guess",
-        "Say the page whenever a figure came off one",
+        "The page first, in the same sentence as the figure",
+        "NEVER finish with a question, an offer or a check-in",
+        "EVERY QUESTION IS A NEW QUESTION",
     ],
 )
 def test_the_spoken_style_is_spelled_out(agent, phrase):
@@ -298,8 +300,14 @@ def test_a_job_the_manual_names_but_does_not_print_gets_the_general_steps(agent)
 
 
 def test_the_prompt_says_what_to_do_when_the_manual_does_not_cover_it_at_all(agent):
-    assert "offer to open the closest" in agent["think"]["prompt"]
-    assert "Never carry a figure over from another motorcycle" in agent["think"]["prompt"]
+    """One sentence, and no offer on the end of it. The offer used to be in this rule and the
+    agent duly ended a live turn with "do you want the page on the brake system opened?", which
+    is a question a mechanic with both hands on a wheel cannot answer.
+    """
+    prompt = agent["think"]["prompt"]
+    assert "say so in one sentence" in prompt
+    assert "Never carry a figure over from another motorcycle" in prompt
+    assert "offer to open the closest" not in prompt
 
 
 # ---------------------------------------------------------------- the functions

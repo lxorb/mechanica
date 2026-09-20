@@ -40,17 +40,22 @@
 
   /* ---- status. Workshop's livery has two hues, so both land on the accents. ---- */
   --danger: #e85d04;
+  --danger-ink: #fff;
   --ok: #ffe600;
+  --ok-ink: #141414;
 
   /* ---- paper: the manual. Never themed — see the note above. ---- */
   --page: #fff;                  /* the PDF sheet and any manual diagram behind it */
   --page-ink: #141414;           /* line art printed on paper */
   --page-tint: #f6f2e9;          /* the frame behind part photography */
+  --page-wait: #ece7dc;          /* a page-shaped hole that has not painted yet */
   --highlight: rgba(232, 93, 4, 0.34);  /* the marker, multiplied over the page */
 
   /* ---- loading ---- */
   --shim: #f1ece1;               /* skeleton row */
   --shim-hi: #e2dccd;            /* the band that travels across it */
+  --sweep: color-mix(in srgb, var(--accent) 16%, transparent);       /* over the 3D stage */
+  --sweep-page: color-mix(in srgb, var(--accent) 10%, transparent);  /* over a waiting page */
 
   /* ---- depth and focus ---- */
   --shadow: rgba(20, 20, 20, 0.5);   /* the veil under a sheet */
@@ -161,6 +166,47 @@ body {
   font-size: 1.6rem;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- theme switch ----------
+ * One 44 px target at the right of the ticket bar, where the job number used to sit. The disc
+ * is the whole label: left half the NEXT theme's ground, right half its accent. No word, no
+ * menu, no icon set — tapping it is how you see what it does, and one more tap undoes it.
+ */
+
+.ticket-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: -10px -16px -10px 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+}
+
+.ticket-theme i {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-ink);
+  background: linear-gradient(
+    90deg,
+    var(--swatch-a, var(--bg)) 0 50%,
+    var(--swatch-b, var(--accent-2)) 50% 100%
+  );
+  transition: transform 120ms ease-out;
+}
+
+.ticket-theme:active i {
+  transform: scale(0.88);
 }
 
 .rail {
@@ -420,6 +466,24 @@ body[data-here="book"] main {
   padding: 12px 12px calc(16px + env(safe-area-inset-bottom));
 }
 
+/* ---------- the theme crossfade ----------
+ * js/theme.js puts [data-swapping] on <html> for one frame longer than --theme-swap, so the
+ * transition exists only while a swap is running. A standing transition on every element would
+ * also slow every hover, press and state change in the app — a different product.
+ * Colour properties only: nothing here can move a box.
+ */
+html[data-swapping] *,
+html[data-swapping] *::before,
+html[data-swapping] *::after {
+  transition:
+    background-color var(--theme-swap) linear,
+    border-color var(--theme-swap) linear,
+    outline-color var(--theme-swap) linear,
+    color var(--theme-swap) linear,
+    fill var(--theme-swap) linear,
+    stroke var(--theme-swap) linear !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -428,5 +492,12 @@ body[data-here="book"] main {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* outranks the swap rule above, which is more specific and also !important */
+  html[data-swapping] *,
+  html[data-swapping] *::before,
+  html[data-swapping] *::after {
+    transition: none !important;
   }
 }

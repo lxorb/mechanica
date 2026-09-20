@@ -19,6 +19,13 @@
  * Tokens only, from css/counter.css: --orange (the accent), --ink, --paper, --card, --rule.
  */
 
+/* The one rule in here that reaches outside the orb: the orb is absolutely placed over the
+   conversation, so the conversation has to be the containing block. chat-ui.css is another
+   agent's file, and a one-line `position` is a smaller intrusion than a wrapper element. */
+.cv-body {
+  position: relative;
+}
+
 .vo {
   position: absolute;
   inset: 0;

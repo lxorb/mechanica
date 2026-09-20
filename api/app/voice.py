@@ -61,9 +61,26 @@ LISTEN = {
     "eager_eot_threshold": 0.4,
     "eot_timeout_ms": 2000,
 }
-# Aura-2. Deepgram describes asteria as "clear, confident, knowledgeable" and thalia as
-# "energetic, enthusiastic"; this assistant reads torque figures to someone holding a spanner,
-# so knowledgeable wins. Measured within noise of thalia and a second faster than luna.
+# Aura-2, and this one was auditioned rather than chosen off the adjectives. "Most natural for a
+# workshop" is not a taste question when the room has an impact wrench in it: it is whether the
+# sentence survives the noise. Each candidate spoke the six lines this agent actually says (a page
+# and a torque, a tyre pressure, an oil grade, the acknowledgement, a general procedure), the same
+# synthetic shop noise was mixed in at 3 dB and 0 dB SNR, and nova-3 transcribed it back. WER
+# against what we asked for, plus the pace it read at:
+#
+#   voice      pace       clean   3 dB    0 dB
+#   asteria    2.50 w/s    8.5%    8.5%   13.6%   <- keeps it
+#   orpheus    2.94 w/s   11.9%   16.9%   18.6%
+#   arcas      2.78 w/s   11.9%   22.0%   23.7%
+#   harmonia   3.17 w/s   25.4%   18.6%   22.0%
+#
+# Deepgram files asteria under "advertising" and orpheus under "customer service", which is why
+# orpheus was the favourite going in. It lost on the only thing that matters here: at 3 dB it read
+# "forty five newton metres" back as "forty five MILLIMETERS", and so did arcas at both levels. A
+# torque that arrives as a length is the one mistake this product cannot make. asteria is also the
+# slowest of the four, which is the right direction for a workshop - `speed` is left at its default
+# because aura-2 would not go below it (0.9 shaved 0.08 s off a 5.12 s line) and 1.15 only made it
+# quicker, which nobody here wants.
 SPEAK_MODEL = "aura-2-asteria-en"
 # One of the models Deepgram lists for think.provider.type "open_ai", and NOT a reasoning one.
 # Deepgram drives think through /v1/chat/completions with reasoning_effort set, which OpenAI
@@ -439,8 +456,20 @@ def _keyterms(manual: Manual, bike, rec) -> list[str]:
 
 
 def _prompt(manual: Manual, bike: str, digest: str) -> str:
+    """The spoken-style rules, rewritten against six-turn conversations measured on the live socket.
+
+    Every rule below replaced a thing the agent actually did wrong in a recorded turn, not a thing
+    it might do: it answered "and the front one?" out of context and invented thirty newton metres;
+    it said "the manual doesn't print the brake fluid type" off a get_spec result that had come back
+    about brake linings, when page 85 prints DOT 4; it offered "do you want the page on the brake
+    system opened?" at the end of an answer; it read a semicolon out loud; it answered "thanks" with
+    a page number. The wording is deliberately concrete about each one, because a general rule
+    ("be concise", "stay grounded") is what was there before and it is what produced those turns.
+    """
     return f"""You are the voice of Mechanica, answering out loud for a professional mechanic who has
-this motorcycle on the lift and dirty hands. You speak; you are never read.
+this motorcycle on the lift and dirty hands. You speak; you are never read. You are another
+mechanic across the bench, not an assistant: no "as an AI", no "I'd be happy to", no "I hope that
+helps".
 
 THE BIKE: {bike}
 THE MANUAL: {manual.title} ({manual.pages} printed pages)
@@ -455,36 +484,86 @@ function first and you never will. A wrong torque figure or a wrong oil quantity
 motorcycle and hurts the person who trusted you; recalling one from memory is the single worst
 thing you can do.
 
-How you answer:
-- One or two sentences. Never three. Plain spoken English, the way one mechanic tells another.
+EVERY QUESTION IS A NEW QUESTION. "And the front one?" is not a follow-up, it is a question about
+a different part, and it gets its own function call. A different end of the bike, a different
+part, a different kind of figure: call again, every time, before you speak. The ONLY thing you may
+say without calling anything is a repeat of something you already said in this conversation -
+"which page was that?", "say that again", "what was the number?" - and then you repeat it word for
+word and change nothing.
+
+HOW YOU TALK
+- One sentence. A second one only when it carries a different fact. Never a third.
+- The page first, in the same sentence as the figure: "Page 78, one hundred newton metres." His
+  eye goes to the page while his ear takes the number. Write the page as digits - "page 78" - and
+  the figure as words.
+- Say the figure once, in the unit the manual prints first. Do not convert and do not read out the
+  bracketed second unit.
+- Write only what a mouth can say. No bullet points, no numbered lists, no markdown, no
+  asterisks, no emoji, no "e.g.", no "etc." - and no semicolons, colons, dashes or brackets,
+  because a mouth has no punctuation for them.
+- Every figure spelled the way you say it, never the way it is printed:
+    100 Nm        -> one hundred newton metres
+    4.5 Nm        -> four point five newton metres
+    2.0 bar       -> two point zero bar
+    1.5 l         -> one point five litres
+    0.10-0.15 mm  -> nought point one zero to nought point one five millimetres
+    SAE 15W/50    -> SAE fifteen W fifty
+    DOT 4         -> DOT four
+    M10x1.25      -> M ten by one point two five
+- Use his words for the part. He said rear axle nut, you say rear axle nut, even if the manual
+  indexes it as "Nut, rear wheel spindle". Correct him only when the manual's row is genuinely a
+  different part, and then say which.
 - Start with the answer. No filler, ever: never open with "sure", "of course", "great question",
-  "let me check", "one moment", "I found that", "according to the manual". The first word out of
-  your mouth is part of the answer.
-- No bullet points, no numbered lists, no markdown, no headers, no asterisks, no emoji. Nothing that
-  only works on a screen. Say "four point five newton metres", not "4.5 Nm".
-- Answer ONLY from what a function gave you back. That text is the manual's own words. If you have
-  not called a function for this question yet, call one first and wait for it.
+  "I found that", "according to the manual", "let me check". The first word out of your mouth
+  is part of the answer.
+- End on the answer. NEVER finish with a question, an offer or a check-in. Not "do you want the
+  page opened", not "anything else", not "let me know if". If the next step is genuinely his to
+  choose, say nothing - he will ask. The only exception is a question you must ask to answer at
+  all, such as which end of the bike he means when the manual prints two different figures.
+- When he thanks you, "you're welcome" is the whole answer. No page, no figure, nothing else.
+- No safety boilerplate, no disclaimers, no "if you are unsure", no apologies for how long
+  something took.
+
+WHAT YOU MAY SAY
+- Answer ONLY from what a function gave you back. That text is the manual's own words.
 - NEVER guess, round, convert or recall a value. A torque, a capacity, a pressure, a clearance, a
   gap, an interval, a fuse rating or a part number may only leave your mouth if a function result
   you have already received printed it, word for word. If no result printed the figure asked for,
   say the manual does not print it - do not supply one from anywhere else.
-- Say the page whenever a figure came off one: "page 114 says ...". The rider is holding the book.
+- A PAGE NUMBER IS A FIGURE. Say a page only if a function result printed that page for this
+  thing. Never estimate one, never offer a range, never say "check page 82 or 83".
+- Before you tell him the manual does not print something, you must have looked twice. If nothing
+  in the get_spec result names the part he asked for, get_spec missed it and you have not looked
+  yet: call find_procedure with his own words, read what it names, and only then answer. Saying
+  "the manual does not print it" off a get_spec result that came back about some other part is the
+  worst answer you can give, because the page is usually right there.
 - Owner manuals name a hundred jobs and print the procedure for twenty. When a function result
   shows this manual naming the job but printing no steps, say so in four words - "the manual
   doesn't print the steps" - then give the ordinary workshop procedure, and say every figure the
   manual DOES print for that job with its page. Mark the general part as general: "the usual way
-  is ...", "normally you ...". This licence covers STEPS AND ORDER ONLY. It never covers a number:
-  general steps carry no figures, only the manual's own pages do.
+  is ...", "normally you ...". This licence covers STEPS AND ORDER ONLY:
+  general steps carry no figures, only the manual's own pages do. It never covers a number, a
+  page, or which fluid, grade, oil, coolant or brake fluid to use - those are specifications,
+  and a specification you were not handed is one you do not have.
 - NEVER tell anyone to visit, consult or contact a dealer, a retailer, an authorised workshop, a
   specialist or a service centre. They ARE the workshop. Owner manuals pad every job with that
   sentence; it is the one thing you must not pass on. Answer the question instead.
-- If this manual says nothing about it at all, say so in one sentence and offer to open the closest
-  page you can see in the contents above. Never carry a figure over from another motorcycle.
-- No safety boilerplate, no disclaimers, no "if you are unsure", no offers to help further.
+- If this manual says nothing about it at all, say so in one sentence.
+  Never carry a figure over from another motorcycle.
 
-Your functions:
-- find_procedure(query): which chapters and pages of THIS manual cover something. Start here.
-- read_page(page, offset): the printed text of one page, verbatim. Read this before you quote steps.
+BEING INTERRUPTED
+He will talk over you, with both hands on the bike and a spanner in one of them. When he does, the
+sentence you were saying is dead. Answer what he just asked. Do not apologise, do not say "sorry",
+do not say "as I was saying", do not finish the old sentence, do not ask whether he still wants
+the first answer.
+If a line like "One sec, checking the manual." appears as something you already said, the app said
+it for you while a lookup ran. Do not repeat it and do not mention the wait - just give the answer.
+
+YOUR FUNCTIONS
+- find_procedure(query): which chapters and pages of THIS manual cover something, and the printed
+  text of the best one. Start here, and read the text it gives you before reaching for read_page.
+- read_page(page, offset): the printed text of one page, verbatim. Only when find_procedure's text
+  ran out or the page you want is a different one.
 - get_spec(name): the printed figures - torques, capacities, pressures, clearances, intervals.
 - list_parts(sectionId): the parts this manual names, with the page they are printed on.
 - show_page(page): put a page on the rider's screen. Call it whenever you name a page worth reading."""
@@ -510,7 +589,7 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
     return [
         {
             "name": "find_procedure",
-            "description": "Find which chapters and printed pages of this manual cover a job or a topic. Call this first.",
+            "description": "Find which chapters and printed pages of this manual cover a job or a topic, and get the best section's printed text back with it. Call this first; you usually will not need read_page after it.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -522,7 +601,7 @@ def _functions(manual_id: str, pages: int) -> list[dict]:
         },
         {
             "name": "read_page",
-            "description": "The verbatim printed text of one page of this manual. Use it before quoting any step or figure.",
+            "description": "The verbatim printed text of one page of this manual. Use it only when find_procedure's own text stopped short or you need a different page.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -602,7 +681,7 @@ def agent_settings(manualId: str, bikeId: str | None = None):
                     "functions": _functions(manual.id, manual.pages),
                 },
                 "speak": {"provider": {"type": "deepgram", "model": SPEAK_MODEL}},
-                "greeting": f"I see you're looking at the {bike}.",
+                "greeting": f"{bike}. Go ahead.",
             },
         },
     }
@@ -613,6 +692,44 @@ def agent_settings(manualId: str, bikeId: str | None = None):
     # failures - a warm-up may never break the session it is warming.
     threading.Thread(target=ask_mod.warm, args=(manual.id,), daemon=True).start()
     return settings_message
+
+
+# How much of a section find_procedure hands back with it. Three pages covers every procedure the
+# KTM prints (the longest is two); SECTION_CHARS is roughly two printed pages of text and keeps the
+# result inside the think model's context without a second call.
+SECTION_PAGES = 3
+SECTION_CHARS = 3600
+
+
+def _printed(manual_id: str, start: int, end: int) -> tuple[str, list[int]]:
+    """The manual's own text for a section's pages — the same bytes read_page serves, never
+    rewritten — with the page each run of it is printed on marked in the manual's own words."""
+    first = max(1, int(start or 0))
+    if not first:
+        return "", []
+    last = max(first, min(int(end or first), first + SECTION_PAGES - 1))
+    out: list[str] = []
+    pages: list[int] = []
+    budget = SECTION_CHARS
+    for page in range(first, last + 1):
+        try:
+            text = _page_text(manual_id, page).strip()
+        except HTTPException:
+            break
+        if not text:
+            continue
+        # Not a paraphrase and not a summary: a cut, at a line, with the page it came off named.
+        if len(text) > budget:
+            cut = text.rfind("\n", 0, budget)
+            text = text[: cut if cut > budget // 2 else budget]
+        if not text:
+            break
+        out.append(f"[page {page}]\n{text}")
+        pages.append(page)
+        budget -= len(text)
+        if budget <= 200:
+            break
+    return "\n\n".join(out), pages
 
 
 @tools.post("/find_procedure")
@@ -636,6 +753,16 @@ def find_procedure(body: FindBody, manualId: str | None = Query(default=None)):
         }
         for m in answer.matches
     ]
+    if sections:
+        # Improvement #4. Measured on the live socket, a procedure question was find_procedure
+        # followed by four to six read_page calls, and the whole chain took 5-10 s while the rider
+        # heard nothing: every single round trip is 250-650 ms, so the cost is the number of hops,
+        # not any one hop. The pages the best section is printed on come back WITH it, verbatim out
+        # of the same page text read_page serves, so the ordinary case is one call.
+        text, pages = _printed(manual_id, sections[0]["pageStart"], sections[0]["pageEnd"])
+        if text:
+            sections[0]["text"] = text
+            sections[0]["textPages"] = pages
     return {"sections": sections, "firstPage": sections[0]["pageStart"] if sections else 0}
 
 

@@ -28,7 +28,7 @@
   top: 0;
   z-index: 6;
   /* the paper texture must not show through the model while the list slides under it */
-  background: var(--paper);
+  background: var(--bg);
   margin-bottom: 8px;
 }
 
@@ -52,8 +52,8 @@
   min-height: 34px;
   padding: 3px 10px 3px 3px;
   border: 0;
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
   cursor: pointer;
   text-align: left;
   appearance: none;
@@ -81,7 +81,7 @@
 }
 
 [data-screen="pick"] .who:active {
-  background: var(--orange);
+  background: var(--accent);
 }
 
 /* ------------------------------------------------------------------ search field */
@@ -95,14 +95,14 @@
 [data-screen="pick"] .meter {
   height: 3px;
   overflow: hidden;
-  background: var(--ink);
+  background: var(--slab);
 }
 
 [data-screen="pick"] .meter i {
   display: block;
   height: 100%;
   width: 34%;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 [data-screen="pick"] .meter.run i {
@@ -136,8 +136,8 @@
 [data-screen="pick"] .ask .send {
   border-right: 0;
   border-left: 3px solid var(--line);
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
   font-family: "Big Shoulders Display", sans-serif;
   font-size: 1.5rem;
   line-height: 1;
@@ -151,8 +151,8 @@
 }
 
 [data-screen="pick"] .ask .mic.is-on {
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 [data-screen="pick"] .ask .btn:disabled {
@@ -166,7 +166,7 @@
   padding: 0 12px;
   border: 0;
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 600;
   font-size: 1rem;
@@ -200,7 +200,7 @@
   0%,
   33%,
   66% {
-    background: var(--orange);
+    background: var(--danger);
   }
   16%,
   50%,
@@ -267,7 +267,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   line-height: 1;
-  color: var(--orange);
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -280,8 +280,8 @@
 }
 
 [data-screen="pick"] .hit-t mark {
-  background: var(--yellow);
-  color: inherit;
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   padding: 0 1px;
 }
 
@@ -313,7 +313,7 @@
   border: 0;
   border-left: 3px solid var(--line);
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.6rem;
@@ -324,30 +324,30 @@
 }
 
 [data-screen="pick"] .hit-x.is-on {
-  background: var(--ink);
-  color: var(--yellow);
+  background: var(--slab);
+  color: var(--accent-2);
   transform: rotate(90deg);
 }
 
 [data-screen="pick"] .hit.is-on {
-  border-color: var(--orange);
-  outline: 3px solid var(--focus);
+  border-color: var(--accent);
+  outline: 3px solid var(--accent);
   outline-offset: -6px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
 }
 
 [data-screen="pick"] .hit.is-on .hit-n {
-  color: var(--yellow);
+  color: var(--accent-2);
 }
 
 [data-screen="pick"] .hit.is-on .hit-t mark {
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 [data-screen="pick"] .hit.is-on .part-icon {
-  --part-icon-tile: #fff;
+  --part-icon-tile: var(--page);
   --part-icon-edge: transparent;
 }
 
@@ -357,7 +357,7 @@
   padding: 12px;
   border: 3px dashed var(--line);
   background: transparent;
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.8rem;
@@ -382,7 +382,7 @@
   display: flex;
   justify-content: flex-end;
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--paper);
+  background: var(--bg);
 }
 
 [data-screen="pick"] .open {
@@ -420,7 +420,7 @@
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--yellow);
+  color: var(--accent-2);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   overflow: hidden;

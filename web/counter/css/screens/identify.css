@@ -10,7 +10,7 @@
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-top: -12px;
-  background: var(--paper);
+  background: var(--bg);
 }
 
 [data-screen="identify"] .id-search {
@@ -35,7 +35,7 @@
   margin: auto 0 auto 3px;
   padding: 0;
   border: 0;
-  background: var(--ink);
+  background: var(--slab);
   cursor: pointer;
   appearance: none;
   flex: none;
@@ -55,7 +55,7 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1rem;
@@ -88,8 +88,8 @@
   flex: none;
   margin-right: 10px;
   padding: 4px 7px;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.66rem;
@@ -108,7 +108,7 @@
   border-left: 3px solid var(--line);
   border-radius: 0;
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   cursor: pointer;
   appearance: none;
   flex: none;
@@ -120,7 +120,7 @@
 
 [data-screen="identify"] .id-progress {
   height: 3px;
-  background: var(--orange);
+  background: var(--accent);
   transform-origin: left center;
   animation: id-scan 0.8s linear infinite;
 }
@@ -211,7 +211,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   min-width: 0;
   padding: 0;
   text-align: left;
-  color: var(--ink);
+  color: var(--fg);
   font: inherit;
   cursor: pointer;
   appearance: none;
@@ -223,7 +223,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   display: block;
   aspect-ratio: 3 / 2;
   border-bottom: 3px solid var(--line);
-  background: var(--paper);
+  background: var(--bg);
   overflow: hidden;
 }
 
@@ -276,13 +276,13 @@ body.id-landing [data-screen="identify"] .id-cam {
   justify-content: center;
   width: 26px;
   height: 26px;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 [data-screen="identify"] .id-flag.is-ondemand {
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   border-right: 3px solid var(--line);
   border-bottom: 3px solid var(--line);
 }
@@ -326,9 +326,9 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-make b,
 [data-screen="identify"] .id-model b {
   font-weight: inherit;
-  background: var(--yellow);
-  color: var(--ink);
-  box-shadow: 0 0 0 1px var(--yellow);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
+  box-shadow: 0 0 0 1px var(--accent-2);
 }
 
 [data-screen="identify"] .id-span {
@@ -343,8 +343,8 @@ body.id-landing [data-screen="identify"] .id-cam {
 
 [data-screen="identify"] .id-span.is-pin {
   align-self: flex-start;
-  background: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 800;
   padding: 2px 7px;
 }
@@ -366,7 +366,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   width: 100%;
   aspect-ratio: 3 / 2;
   border-bottom: 3px solid var(--line);
-  background: var(--paper);
+  background: var(--bg);
   overflow: hidden;
 }
 
@@ -404,7 +404,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   line-height: 0.95;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--fg);
   overflow-wrap: anywhere;
 }
 
@@ -422,7 +422,7 @@ body.id-landing [data-screen="identify"] .id-cam {
   padding: 0 12px;
   border: 3px solid var(--line);
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 700;
   font-size: 1rem;
@@ -434,7 +434,8 @@ body.id-landing [data-screen="identify"] .id-cam {
 }
 
 [data-screen="identify"] .id-year.is-ready {
-  background: var(--yellow);
+  background: var(--ok);
+  color: var(--ok-ink);
   font-weight: 800;
 }
 
@@ -445,8 +446,8 @@ body.id-landing [data-screen="identify"] .id-cam {
 }
 
 [data-screen="identify"] .id-year.is-pin {
-  border-color: var(--orange);
-  color: var(--ink);
+  border-color: var(--accent);
+  color: var(--fg);
   font-weight: 800;
 }
 

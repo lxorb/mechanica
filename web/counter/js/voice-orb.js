@@ -67,8 +67,25 @@ function el(tag, attrs = {}) {
 
 const CHEVRON = "M6 9l6 6 6-6";
 
+/**
+ * The stylesheet comes with the module rather than with a <link> in index.html or an @import in
+ * another agent's screen CSS: this is the only file that needs it and it is the only file that
+ * knows where it lives. Once per document, idempotent.
+ */
+function styled() {
+  if (typeof document === "undefined") return;
+  const href = new URL("../css/voice-orb.css", import.meta.url).href;
+  if (document.querySelector(`link[data-voice-orb]`)) return;
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  link.setAttribute("data-voice-orb", "");
+  document.head.append(link);
+}
+
 export function mountOrb(host, opts = {}) {
   if (!host) return null;
+  styled();
   const levels = typeof opts.levels === "function" ? opts.levels : () => ({ mic: 0, out: 0 });
   const onInterrupt = typeof opts.onInterrupt === "function" ? opts.onInterrupt : () => {};
   const onLeave = typeof opts.onLeave === "function" ? opts.onLeave : () => {};

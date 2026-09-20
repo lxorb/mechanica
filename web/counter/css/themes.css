@@ -1,0 +1,200 @@
+/**
+ * The alternative themes. Owner: theme agent. Pairs with js/theme.js.
+ *
+ * Every block below overrides tokens declared on :root in counter.css and NOTHING else — no
+ * selector in this file may name a component. If a theme needs a rule, the rule belongs in the
+ * component's own file, behind a token.
+ *
+ * "Workshop" is not here: it IS the :root block in counter.css, so the default costs no bytes
+ * and no cascade, and a theme that fails to load leaves the app looking exactly as shipped.
+ *
+ * Two tokens are deliberately never themed, in every block below:
+ *   --page / --page-ink / --page-tint / --page-wait  the manual is printed on white paper, and
+ *                                                    it looks the same at night as at noon.
+ *   --highlight                                      the marker has to stay legible on that
+ *                                                    white paper, so it stays the same orange.
+ * Product rule 2: the page is the answer. Themes dress the app around it, never the page.
+ *
+ * Contrast: every text-on-ground pair below is >= 4.5:1, checked by
+ * `node web/tools/theme-contrast.mjs`. The one pair that does not reach it in Workshop
+ * (--accent on --card, 3.63:1, the chapter numbers) is fixed in all four themes here.
+ */
+
+/* ------------------------------------------------------------------ Night
+ * A dim garage at 23:00, one lamp over the bench. Warm near-black ground so the white page is
+ * the brightest thing in the room by a distance, and the orange survives as the only hue.
+ */
+[data-theme="night"] {
+  --bg: #15181a;
+  --card: #212629;
+  --slab: #0a0c0d;
+  --slab-fg: #f3efe6;
+  --slab-off: #3a4045;
+  --slab-line: rgba(255, 255, 255, 0.45);
+
+  --fg: #f1ece1;
+  --muted: #a7adaf;
+  --muted-2: #c4c9cb;
+  --faint: #7c8489;
+  --line: #6e777d;
+  --rule: #23282c;
+
+  --accent: #ff7a1f;
+  --accent-ink: #1a0a00;
+  --accent-2: #ffd400;
+  --accent-2-ink: #171200;
+
+  --danger: #ff7a1f;
+  --danger-ink: #1a0a00;
+  --ok: #ffd400;
+  --ok-ink: #171200;
+
+  --shim: #23282c;
+  --shim-hi: #333a3f;
+
+  --shadow: rgba(0, 0, 0, 0.7);
+  --glass: rgba(0, 0, 0, 0.5);
+  --focus: #ff9a4d;
+
+  --stage: radial-gradient(120% 90% at 50% 12%, #2c3338 0%, #1c2125 55%, #0f1315 100%);
+  --stage-fg: #ece7dc;
+  --stage-track: rgba(255, 255, 255, 0.18);
+  --grid: #828c93;
+  --grid-bg: #0e1214;
+}
+
+/* ------------------------------------------------------------------ Blueprint
+ * The drawing the part came from. Deep drafting blue, white technical lines, cyan for the live
+ * one. The ground is a real 24 px grid instead of ruled lines — that is a token, not a rule.
+ */
+[data-theme="blueprint"] {
+  --bg: #0e2742;
+  --card: #14355a;
+  --slab: #081a2c;
+  --slab-fg: #eaf4ff;
+  --slab-off: #2d4f74;
+  --slab-line: rgba(255, 255, 255, 0.5);
+  --ground:
+    repeating-linear-gradient(0deg, transparent 0 23px, var(--rule) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, var(--rule) 23px 24px),
+    var(--bg);
+
+  --fg: #eaf3fb;
+  --muted: #a2c0da;
+  --muted-2: #c6dcee;
+  --faint: #6d94b6;
+  --line: #5f93c4;
+  --rule: #17395e;
+
+  --accent: #3fd0f7;
+  --accent-ink: #04212e;
+  --accent-2: #ffffff;
+  --accent-2-ink: #0e2742;
+
+  --danger: #ff8a6b;
+  --danger-ink: #2a0c02;
+  --ok: #ffffff;
+  --ok-ink: #0e2742;
+
+  --shim: #17395e;
+  --shim-hi: #21507f;
+
+  --shadow: rgba(3, 14, 25, 0.72);
+  --glass: rgba(3, 14, 25, 0.55);
+  --focus: #7fe0ff;
+
+  --stage: radial-gradient(120% 90% at 50% 12%, #1d4b74 0%, #103a5e 55%, #071a2d 100%);
+  --stage-fg: #eaf3fb;
+  --stage-track: rgba(255, 255, 255, 0.22);
+  --grid: #7dc0ea;
+  --grid-bg: #07182a;
+}
+
+/* ------------------------------------------------------------------ Track
+ * Pit-lane livery: asphalt, hazard yellow across the top, marshal red on everything you press.
+ * The ground carries the diagonal hazard rake instead of the paper ruling.
+ */
+[data-theme="track"] {
+  --bg: #111111;
+  --card: #1d1d1d;
+  --slab: #000000;
+  --slab-fg: #ffffff;
+  --slab-off: #3c3c3c;
+  --slab-line: rgba(255, 255, 255, 0.5);
+  --ground: repeating-linear-gradient(135deg, var(--bg) 0 14px, var(--rule) 14px 28px), var(--bg);
+
+  --fg: #f6f6f4;
+  --muted: #a3a39d;
+  --muted-2: #c9c9c3;
+  --faint: #797973;
+  --line: #72726c;
+  --rule: #1a1a1a;
+
+  --accent: #ffd100;
+  --accent-ink: #141000;
+  --accent-2: #ff5a2b;
+  --accent-2-ink: #170500;
+
+  --danger: #ff5a2b;
+  --danger-ink: #170500;
+  --ok: #ffd100;
+  --ok-ink: #141000;
+
+  --shim: #1a1a1a;
+  --shim-hi: #2a2a2a;
+
+  --shadow: rgba(0, 0, 0, 0.72);
+  --glass: rgba(0, 0, 0, 0.52);
+  --focus: #ffd100;
+
+  --stage: radial-gradient(120% 90% at 50% 12%, #2e2e2e 0%, #1b1b1b 55%, #0a0a0a 100%);
+  --stage-fg: #f6f6f4;
+  --stage-track: rgba(255, 255, 255, 0.2);
+  --grid: #93938c;
+  --grid-bg: #0a0a0a;
+}
+
+/* ------------------------------------------------------------------ Paper
+ * Midday on the forecourt, phone at arm's length, screen fighting the sun. Pure white ground,
+ * black rules, one red for the live thing and one green for "you already have it". Nothing is
+ * tinted, nothing is grey-on-grey, and the ground carries no texture to scatter the glare.
+ */
+[data-theme="paper"] {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --slab: #000000;
+  --slab-fg: #ffffff;
+  --slab-off: #666666;
+  --slab-line: rgba(255, 255, 255, 0.72);
+  --ground: var(--bg);
+
+  --fg: #000000;
+  --muted: #4b4b4b;
+  --muted-2: #262626;
+  --faint: #6f6f6f;
+  --line: #000000;
+  --rule: #cccccc;
+
+  --accent: #cc0000;
+  --accent-ink: #ffffff;
+  --accent-2: #ffffff;
+  --accent-2-ink: #000000;
+
+  --danger: #cc0000;
+  --danger-ink: #ffffff;
+  --ok: #0a7a2e;
+  --ok-ink: #ffffff;
+
+  --shim: #ececec;
+  --shim-hi: #d8d8d8;
+
+  --shadow: rgba(0, 0, 0, 0.55);
+  --glass: rgba(0, 0, 0, 0.5);
+  --focus: #cc0000;
+
+  --stage: radial-gradient(120% 90% at 50% 12%, #ffffff 0%, #f1f1f1 55%, #dedede 100%);
+  --stage-fg: #000000;
+  --stage-track: rgba(0, 0, 0, 0.2);
+  --grid: #9aa0a6;
+  --grid-bg: #20242a;
+}

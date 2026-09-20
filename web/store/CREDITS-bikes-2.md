@@ -290,6 +290,9 @@ the source link for the full terms.
 | `store/img/bikes2/kawasaki-klx250s.hero.webp` | KLX250S 2009.jpg | armycopter | https://commons.wikimedia.org/wiki/File:KLX250S_2009.jpg | CC BY-SA 3.0 | search | three_quarter |
 | `store/img/bikes2/kawasaki-klx250s.webp` | KLX250S 2009.jpg | armycopter | https://commons.wikimedia.org/wiki/File:KLX250S_2009.jpg | CC BY-SA 3.0 | search | three_quarter |
 | `store/img/bikes2/kawasaki-klx250s.thumb.webp` | KLX250S 2009.jpg | armycopter | https://commons.wikimedia.org/wiki/File:KLX250S_2009.jpg | CC BY-SA 3.0 | search | three_quarter |
+| `store/img/bikes2/kawasaki-kx125.hero.webp` | 1975 Kawasaki KX125 @ National Motor Museum, Birdwood 20250109-121512.jpg | RegionVisitor90 | https://commons.wikimedia.org/wiki/File:1975_Kawasaki_KX125_%40_National_Motor_Museum,_Birdwood_20250109-121512.jpg | CC0 | search | side |
+| `store/img/bikes2/kawasaki-kx125.webp` | 1975 Kawasaki KX125 @ National Motor Museum, Birdwood 20250109-121512.jpg | RegionVisitor90 | https://commons.wikimedia.org/wiki/File:1975_Kawasaki_KX125_%40_National_Motor_Museum,_Birdwood_20250109-121512.jpg | CC0 | search | side |
+| `store/img/bikes2/kawasaki-kx125.thumb.webp` | 1975 Kawasaki KX125 @ National Motor Museum, Birdwood 20250109-121512.jpg | RegionVisitor90 | https://commons.wikimedia.org/wiki/File:1975_Kawasaki_KX125_%40_National_Motor_Museum,_Birdwood_20250109-121512.jpg | CC0 | search | side |
 | `store/img/bikes2/kawasaki-kx250f.hero.webp` | International Motocross, Downpatrick, August 2011 (011).JPG | Ardfern | https://commons.wikimedia.org/wiki/File:International_Motocross,_Downpatrick,_August_2011_(011).JPG | CC BY-SA 3.0 | wikipedia | three_quarter |
 | `store/img/bikes2/kawasaki-kx250f.webp` | International Motocross, Downpatrick, August 2011 (011).JPG | Ardfern | https://commons.wikimedia.org/wiki/File:International_Motocross,_Downpatrick,_August_2011_(011).JPG | CC BY-SA 3.0 | wikipedia | three_quarter |
 | `store/img/bikes2/kawasaki-kx250f.thumb.webp` | International Motocross, Downpatrick, August 2011 (011).JPG | Ardfern | https://commons.wikimedia.org/wiki/File:International_Motocross,_Downpatrick,_August_2011_(011).JPG | CC BY-SA 3.0 | wikipedia | three_quarter |
@@ -429,6 +432,9 @@ the source link for the full terms.
 | `store/img/bikes2/suzuki-katana.hero.webp` | Suzuki Katana 1000.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Suzuki_Katana_1000.jpg | CC BY-SA 4.0 | category | side |
 | `store/img/bikes2/suzuki-katana.webp` | Suzuki Katana 1000.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Suzuki_Katana_1000.jpg | CC BY-SA 4.0 | category | side |
 | `store/img/bikes2/suzuki-katana.thumb.webp` | Suzuki Katana 1000.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Suzuki_Katana_1000.jpg | CC BY-SA 4.0 | category | side |
+| `store/img/bikes2/suzuki-rm-z450.hero.webp` | Suzuki RM-Z450 - EICMA 2024.jpg | Saggittarius A | https://commons.wikimedia.org/wiki/File:Suzuki_RM-Z450_-_EICMA_2024.jpg | CC BY 4.0 | search | side |
+| `store/img/bikes2/suzuki-rm-z450.webp` | Suzuki RM-Z450 - EICMA 2024.jpg | Saggittarius A | https://commons.wikimedia.org/wiki/File:Suzuki_RM-Z450_-_EICMA_2024.jpg | CC BY 4.0 | search | side |
+| `store/img/bikes2/suzuki-rm-z450.thumb.webp` | Suzuki RM-Z450 - EICMA 2024.jpg | Saggittarius A | https://commons.wikimedia.org/wiki/File:Suzuki_RM-Z450_-_EICMA_2024.jpg | CC BY 4.0 | search | side |
 | `store/img/bikes2/suzuki-sv-7gx.hero.webp` | Suzuki SV-7 GX 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Suzuki_SV-7_GX_2026.jpg | CC BY-SA 4.0 | category | three_quarter |
 | `store/img/bikes2/suzuki-sv-7gx.webp` | Suzuki SV-7 GX 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Suzuki_SV-7_GX_2026.jpg | CC BY-SA 4.0 | category | three_quarter |
 | `store/img/bikes2/suzuki-sv-7gx.thumb.webp` | Suzuki SV-7 GX 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Suzuki_SV-7_GX_2026.jpg | CC BY-SA 4.0 | category | three_quarter |
@@ -638,6 +644,9 @@ the source link for the full terms.
 | `store/img/bikes2/yamaha-tt-r125.hero.webp` | 2007 Yamaha TT-R125L image 1.jpg | 2geriatrics2furious | https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_image_1.jpg | CC0 | wikipedia | three_quarter |
 | `store/img/bikes2/yamaha-tt-r125.webp` | 2007 Yamaha TT-R125L image 1.jpg | 2geriatrics2furious | https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_image_1.jpg | CC0 | wikipedia | three_quarter |
 | `store/img/bikes2/yamaha-tt-r125.thumb.webp` | 2007 Yamaha TT-R125L image 1.jpg | 2geriatrics2furious | https://commons.wikimedia.org/wiki/File:2007_Yamaha_TT-R125L_image_1.jpg | CC0 | wikipedia | three_quarter |
+| `store/img/bikes2/yamaha-wr250r.hero.webp` | YAMAHA WR250R.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg | Public domain | search | three_quarter |
+| `store/img/bikes2/yamaha-wr250r.webp` | YAMAHA WR250R.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg | Public domain | search | three_quarter |
+| `store/img/bikes2/yamaha-wr250r.thumb.webp` | YAMAHA WR250R.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg | Public domain | search | three_quarter |
 | `store/img/bikes2/yamaha-x-ride-125.hero.webp` | 2020 Yamaha X-Ride 125 (20220111).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2020_Yamaha_X-Ride_125_(20220111).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/yamaha-x-ride-125.webp` | 2020 Yamaha X-Ride 125 (20220111).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2020_Yamaha_X-Ride_125_(20220111).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/yamaha-x-ride-125.thumb.webp` | 2020 Yamaha X-Ride 125 (20220111).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2020_Yamaha_X-Ride_125_(20220111).jpg | CC BY-SA 4.0 | search | three_quarter |

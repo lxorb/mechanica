@@ -7,22 +7,70 @@
   "angle": "No tech words: a real mechanic, a real page. The spine — get this one muscle-memory and eight of the nine are 80% rehearsed.",
   "endline": "Don't trust the AI. Trust the manual.",
   "marks": [
-    { "t": "0:00", "do": "Phone down. The friend's workshop." },
-    { "t": "0:20", "do": "Type mt-07 → 2018 → ✓. Leave the ingest running." },
-    { "t": "0:35", "do": "20% → 400 hours → EUR 36–48k." },
-    { "t": "1:00", "do": "His two reasons: 95%, and $4 a question." },
-    { "t": "1:20", "do": "\"The opposite of a chatbot.\"" },
-    { "t": "1:35", "do": "Type 390 duke." },
-    { "t": "1:50", "do": "Tap KTM 390 DUKE → 2024." },
-    { "t": "2:00", "do": "Type chain is loose." },
-    { "t": "2:20", "do": "Open the page. STOP TALKING." },
-    { "t": "2:45", "do": "Tap ALL — 143 sheets." },
-    { "t": "2:55", "do": "PARTS → the Chain tile." },
-    { "t": "3:15", "do": "CHAT → chain is loose, what do I do." },
-    { "t": "3:40", "do": "Mic → how much engine oil does it take." },
-    { "t": "3:50", "do": "Back — the MT-07 is ready. Type oil." },
-    { "t": "4:05", "do": "Why now." },
-    { "t": "4:35", "do": "Today, and the close." }
+    {
+      "t": "0:00",
+      "do": "Phone down. The friend's workshop."
+    },
+    {
+      "t": "0:20",
+      "do": "Type mt-07 → 2018 → ✓. Leave the ingest running."
+    },
+    {
+      "t": "0:35",
+      "do": "20% → 400 hours → EUR 36–48k."
+    },
+    {
+      "t": "1:00",
+      "do": "His two reasons: 95%, and $4 a question."
+    },
+    {
+      "t": "1:20",
+      "do": "\"The opposite of a chatbot.\""
+    },
+    {
+      "t": "1:35",
+      "do": "Type 390 duke."
+    },
+    {
+      "t": "1:50",
+      "do": "Tap KTM 390 DUKE → 2024."
+    },
+    {
+      "t": "2:00",
+      "do": "Type chain is loose."
+    },
+    {
+      "t": "2:20",
+      "do": "Open the page. STOP TALKING."
+    },
+    {
+      "t": "2:45",
+      "do": "Tap ALL — 143 sheets."
+    },
+    {
+      "t": "2:55",
+      "do": "PARTS → the Chain tile."
+    },
+    {
+      "t": "3:15",
+      "do": "CHAT → chain is loose, what do I do."
+    },
+    {
+      "t": "3:40",
+      "do": "Mic → how much engine oil does it take."
+    },
+    {
+      "t": "3:50",
+      "do": "Back — the MT-07 is ready. Type oil."
+    },
+    {
+      "t": "4:05",
+      "do": "Why now."
+    },
+    {
+      "t": "4:35",
+      "do": "Today, and the close."
+    }
   ],
   "slides": [
     {
@@ -49,9 +97,18 @@
         "While this is on screen the MT-07 2018 ingest you started at 0:20 is running in the background. Do not look at it."
       ],
       "defs": [
-        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate, reported by the founder (assumed). Always say \"he says\"." },
-        { "n": "400 h", "d": "20% × 2,000 h — arithmetic on his number and an assumed 2,000-hour year (computed)." },
-        { "n": "EUR 36k-48k", "d": "400 h × EUR 90–120/h (computed). ramp/numbers.md defends EUR 24,640 after recovery and utilisation." }
+        {
+          "n": "20%",
+          "d": "share of his working time spent looking for a page — HIS estimate, reported by the founder (assumed). Always say \"he says\"."
+        },
+        {
+          "n": "400 h",
+          "d": "20% × 2,000 h — arithmetic on his number and an assumed 2,000-hour year (computed)."
+        },
+        {
+          "n": "EUR 36k-48k",
+          "d": "400 h × EUR 90–120/h (computed). ramp/numbers.md defends EUR 24,640 after recovery and utilisation."
+        }
       ]
     },
     {
@@ -59,8 +116,16 @@
       "at": "1:00",
       "kicker": "Why he won't use AI",
       "items": [
-        { "value": "95%", "label": "right — and he signs for the 5%", "sub": "\"95% right isn't enough when I sign for the 5%.\"" },
-        { "value": "$4", "label": "a question, when he tried it", "sub": "The model had to read a 500-page manual. He hit his limit by lunchtime." }
+        {
+          "value": "95%",
+          "label": "right — and he signs for the 5%",
+          "sub": "\"95% right isn't enough when I sign for the 5%.\""
+        },
+        {
+          "value": "$4",
+          "label": "a question, when he tried it",
+          "sub": "The model had to read a 500-page manual. He hit his limit by lunchtime."
+        }
       ],
       "sub": "His reasons. Not our argument.",
       "notes": [
@@ -69,8 +134,15 @@
         "His ~$4 is *his* bill on *his* manual. Our own measured naive worst case is $12.40 and our median is $1.37. Three different numbers — never blend them."
       ],
       "defs": [
-        { "n": "95%", "d": "his line, quoted: \"95% right isn't enough when I sign for the 5%.\" His number, not ours.", "src": "BRIEF.md" },
-        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed). Not the same measurement as our $12.40." }
+        {
+          "n": "95%",
+          "d": "his line, quoted: \"95% right isn't enough when I sign for the 5%.\" His number, not ours.",
+          "src": "BRIEF.md"
+        },
+        {
+          "n": "~$4",
+          "d": "what one question cost him when he tried an LLM — HIS bill (assumed). Not the same measurement as our $12.40."
+        }
       ]
     },
     {
@@ -84,20 +156,45 @@
             "rows": [
               {
                 "items": [
-                  { "tone": "paper", "t": "Type the name|Snap a photo|Scan the VIN" },
-                  { "tone": "paper", "t": "Confirm the|exact year", "sub": "a 2021 and a 2024 are different machines" },
-                  { "tone": "paper", "t": "Say what's wrong,|in your own words", "sub": "slang, typos, German" },
-                  { "tone": "white", "t": "The manual's own headings,|the part lit on a 3D bike", "sub": "those aren't our words" }
+                  {
+                    "tone": "paper",
+                    "t": "Type the name|Snap a photo|Scan the VIN"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "Confirm the|exact year",
+                    "sub": "a 2021 and a 2024 are different machines"
+                  },
+                  {
+                    "tone": "paper",
+                    "t": "Say what's wrong,|in your own words",
+                    "sub": "slang, typos, German"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "The manual's own headings,|the part lit on a 3D bike",
+                    "sub": "those aren't our words"
+                  }
                 ]
               },
               {
                 "gap": 60,
                 "items": [
-                  { "tone": "ink", "t": "THE PRINTED PAGE|answering lines marked", "sub": "the marker is only there because we found that exact text in the PDF" },
-                  { "tone": "white", "t": "Parts the manual specs,|live prices" },
-                  { "tone": "white", "t": "Chat or voice — every|sentence ends in a page number" }
+                  {
+                    "tone": "ink",
+                    "t": "THE PRINTED PAGE|answering lines marked",
+                    "sub": "the marker is only there because we found that exact text in the PDF"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "Parts the manual specs,|live prices"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "Chat or voice — every|sentence ends in a page number"
+                  }
                 ],
-                "link": "none"
+                "down": true
               }
             ]
           }
@@ -126,12 +223,30 @@
         "Do not say ~17,556 manuals~ or \"seventeen thousand\". Never call 13,537 manuals — it is vehicles carrying a free manual."
       ],
       "defs": [
-        { "n": "27,751", "d": "vehicles you can pick — rows in live GET /api/catalog (measured)." },
-        { "n": "23,140", "d": "motorcycles in the catalog — row.kind != 'car' (measured)." },
-        { "n": "4,611", "d": "cars in the catalog — row.kind == 'car' (measured)." },
-        { "n": "77", "d": "makes in the catalog (measured). The registry has 80; a make with no usable row never becomes a vehicle." },
-        { "n": "13,537", "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs — many years share one file." },
-        { "n": "1.3 s", "d": "VIN → the exact bike — live POST /api/identify/vin VBKJSA40XXXXXXXXX → KTM 390 Duke 2024, 2026-09-20 (measured)." }
+        {
+          "n": "27,751",
+          "d": "vehicles you can pick — rows in live GET /api/catalog (measured)."
+        },
+        {
+          "n": "23,140",
+          "d": "motorcycles in the catalog — row.kind != 'car' (measured)."
+        },
+        {
+          "n": "4,611",
+          "d": "cars in the catalog — row.kind == 'car' (measured)."
+        },
+        {
+          "n": "77",
+          "d": "makes in the catalog (measured). The registry has 80; a make with no usable row never becomes a vehicle."
+        },
+        {
+          "n": "13,537",
+          "d": "catalog rows carrying a manualUrl (measured). NOT the same as distinct PDFs — many years share one file."
+        },
+        {
+          "n": "1.3 s",
+          "d": "VIN → the exact bike — live POST /api/identify/vin VBKJSA40XXXXXXXXX → KTM 390 Duke 2024, 2026-09-20 (measured)."
+        }
       ]
     },
     {
@@ -139,7 +254,10 @@
       "at": "1:50",
       "title": "The exact one",
       "line": "Year and market, because a torque figure from the wrong year is how you strip a thread.",
-      "points": ["A 2024 and a 2021 are different machines.", "They care about the boring part — that is the point."],
+      "points": [
+        "A 2024 and a 2021 are different machines.",
+        "They care about the boring part — that is the point."
+      ],
       "image": "general/03-chooser.png",
       "notes": [
         "Tap the KTM 390 DUKE card, then 2024. Two taps, no explanation.",
@@ -168,7 +286,9 @@
       "at": "2:20",
       "title": "The answer is a page",
       "line": "KTM's page 77, marked on the two lines that answer — and *only* where we found that ink.",
-      "points": ["\"If we can't find the ink, we don't draw the marker.\""],
+      "points": [
+        "\"If we can't find the ink, we don't draw the marker.\""
+      ],
       "image": "general/05-book.png",
       "caption": "143 printed pages, a hand-curated 20-section index. Tap ALL and the whole book is there.",
       "notes": [
@@ -177,17 +297,35 @@
         "Right section first on *100% of the 130 in-scope* eval questions, and *0 of 20* off-topic questions answered instead of refused. Say it only if asked."
       ],
       "defs": [
-        { "n": "143", "d": "printed pages in the demo manual, KTM 390 Duke 2024 (ktm-390-duke-2024-om-en).", "src": "README.md" },
-        { "n": "100%", "d": "right section first, in-scope questions — 100% of 130, api/eval/report.md (measured)." },
-        { "n": "20 of 20", "d": "off-topic questions returned empty instead of guessed at — the oos category, 100% empty (measured)." }
+        {
+          "n": "143",
+          "d": "printed pages in the demo manual, KTM 390 Duke 2024 (ktm-390-duke-2024-om-en).",
+          "src": "README.md"
+        },
+        {
+          "n": "100%",
+          "d": "right section first, in-scope questions — 100% of 130, api/eval/report.md (measured)."
+        },
+        {
+          "n": "20 of 20",
+          "d": "off-topic questions returned empty instead of guessed at — the oos category, 100% empty (measured)."
+        }
       ]
     },
     {
       "kind": "two-up",
       "at": "2:55",
       "title": "What it needs, and what it costs",
-      "left": { "image": "general/06-parts.png", "label": "135 parts for this bike", "caption": "in 11 groups — each one there because the manual prints a spec for it" },
-      "right": { "image": "general/07-part-detail.png", "label": "Chain · 5/8 × 1/4\" (520) X-ring · p. 126", "caption": "the chain size is KTM's, not a guess — then the live price" },
+      "left": {
+        "image": "general/06-parts.png",
+        "label": "135 parts for this bike",
+        "caption": "in 11 groups — each one there because the manual prints a spec for it"
+      },
+      "right": {
+        "image": "general/07-part-detail.png",
+        "label": "Chain · 5/8 × 1/4\" (520) X-ring · p. 126",
+        "caption": "the chain size is KTM's, not a guess — then the live price"
+      },
       "caption": "*Live prices.* There is no checkout — never say \"buy\".",
       "notes": [
         "*Don't oversell the shop.* Say \"live prices\", not \"checkout\". There is no checkout.",
@@ -195,7 +333,10 @@
         "If asked about the 3D model: it is a *part locator*, not a manufacturer parts catalogue. Pick the Honda CBR650R 2023 and it is that bike."
       ],
       "defs": [
-        { "n": "135", "d": "parts for the demo bike — live GET /api/parts/catalog?manualId=ktm-390-duke-2024-om-en, in 11 groups; 14 carry a spec this manual itself prints (measured)." }
+        {
+          "n": "135",
+          "d": "parts for the demo bike — live GET /api/parts/catalog?manualId=ktm-390-duke-2024-om-en, in 11 groups; 14 carry a spec this manual itself prints (measured)."
+        }
       ]
     },
     {
@@ -215,9 +356,18 @@
         "Tap a [p. 78] chip live — the page appears. Even the chatty part is leashed."
       ],
       "defs": [
-        { "n": "100% of 48", "d": "chat claim sentences carrying a page number — api/eval/chat-report.md (measured)." },
-        { "n": "100% of 43", "d": "chat quotes verbatim on the page they name — the server slices the quote out of the page, the model only names it (measured)." },
-        { "n": "0 · 0", "d": "invented numbers · dealer referrals, of 25 answers — api/eval/chat-report.md (measured)." }
+        {
+          "n": "100% of 48",
+          "d": "chat claim sentences carrying a page number — api/eval/chat-report.md (measured)."
+        },
+        {
+          "n": "100% of 43",
+          "d": "chat quotes verbatim on the page they name — the server slices the quote out of the page, the model only names it (measured)."
+        },
+        {
+          "n": "0 · 0",
+          "d": "invented numbers · dealer referrals, of 25 answers — api/eval/chat-report.md (measured)."
+        }
       ]
     },
     {
@@ -225,10 +375,26 @@
       "at": "4:35",
       "kicker": "Today",
       "items": [
-        { "value": "14,770", "label": "free official manuals we can reach", "sub": "distinct free English PDFs behind the registry" },
-        { "value": "535", "label": "already indexed and searchable", "sub": "95,914 printed pages · 91,388 sections" },
-        { "value": "40.4 s", "label": "any of the others, brought online", "sub": "readable in 1.3 s · $0.095, once, forever" },
-        { "value": "$0.00038", "label": "a question, after that", "sub": "four hundredths of a cent · reading the whole manual instead is $12.40" }
+        {
+          "value": "14,770",
+          "label": "free official manuals we can reach",
+          "sub": "distinct free English PDFs behind the registry"
+        },
+        {
+          "value": "535",
+          "label": "already indexed and searchable",
+          "sub": "95,914 printed pages · 91,388 sections"
+        },
+        {
+          "value": "40.4 s",
+          "label": "any of the others, brought online",
+          "sub": "readable in 1.3 s · $0.095, once, forever"
+        },
+        {
+          "value": "$0.00038",
+          "label": "a question, after that",
+          "sub": "four hundredths of a cent · reading the whole manual instead is $12.40"
+        }
       ],
       "notes": [
         "*End on him, not on us.* The last sentence is about the mechanic, not the technology.",
@@ -236,16 +402,46 @@
         "If you quote a running total say the date with it: the deployed app had spent $8.93 over 1,633 model calls at 2026-09-20 09:55, and it moves every hour. Prefer not quoting it."
       ],
       "defs": [
-        { "n": "14,770", "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable registry rows (computed). The honest \"manuals we can reach\" number." },
-        { "n": "535", "d": "manuals indexed and searchable now — live GET /api/manuals (measured)." },
-        { "n": "95,914", "d": "printed pages behind them — sum(manual.pages) (measured)." },
-        { "n": "91,388", "d": "sections indexed — sum(manual.sections) (measured)." },
-        { "n": "40.4 s", "d": "a brand-new manual → fully searchable, /ingest job to status=done; live run, KTM 390 Duke 2014, 182 p, 2026-09-20 (measured)." },
-        { "n": "1.3 s", "d": "a brand-new manual → readable, same run (measured)." },
-        { "n": "$0.095", "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests, mean 177 pages (measured)." },
-        { "n": "$0.00038", "d": "our $ per ask — eval cost-log delta on ask.* over 150 controlled queries / 150 (measured). THE number to quote." },
-        { "n": "$12.40", "d": "naive $/question, largest deployed manual — naive_usd(775) = 775p × 800 tok × $10/M × 2 past the 272k long-context line (measured)." },
-        { "n": "$8.93", "d": "what the DEPLOYED app has spent — live GET /api/cost over 1,633 calls, 2026-09-20. In-replica; moves every hour and resets on redeploy (measured)." }
+        {
+          "n": "14,770",
+          "d": "distinct free English PDFs we can fetch — distinct URLs of ingestable registry rows (computed). The honest \"manuals we can reach\" number."
+        },
+        {
+          "n": "535",
+          "d": "manuals indexed and searchable now — live GET /api/manuals (measured)."
+        },
+        {
+          "n": "95,914",
+          "d": "printed pages behind them — sum(manual.pages) (measured)."
+        },
+        {
+          "n": "91,388",
+          "d": "sections indexed — sum(manual.sections) (measured)."
+        },
+        {
+          "n": "40.4 s",
+          "d": "a brand-new manual → fully searchable, /ingest job to status=done; live run, KTM 390 Duke 2014, 182 p, 2026-09-20 (measured)."
+        },
+        {
+          "n": "1.3 s",
+          "d": "a brand-new manual → readable, same run (measured)."
+        },
+        {
+          "n": "$0.095",
+          "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests, mean 177 pages (measured)."
+        },
+        {
+          "n": "$0.00038",
+          "d": "our $ per ask — eval cost-log delta on ask.* over 150 controlled queries / 150 (measured). THE number to quote."
+        },
+        {
+          "n": "$12.40",
+          "d": "naive $/question, largest deployed manual — naive_usd(775) = 775p × 800 tok × $10/M × 2 past the 272k long-context line (measured)."
+        },
+        {
+          "n": "$8.93",
+          "d": "what the DEPLOYED app has spent — live GET /api/cost over 1,633 calls, 2026-09-20. In-replica; moves every hour and resets on redeploy (measured)."
+        }
       ]
     },
     {

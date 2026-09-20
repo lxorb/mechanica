@@ -330,7 +330,7 @@ export async function start(opts = {}) {
     dead: false,
     pages: 0, // printed pages in this manual; 0 until the settings arrive
     page: 0, // the page already on the rider's screen
-    status: "connecting",
+    status: "",
     lookups: 0, // server-side function calls still out
     ack: 0, // the "one sec" timer for this turn
     acked: false, // this turn has already had its one acknowledgement
@@ -417,7 +417,7 @@ function fresh(session) {
 }
 
 async function run(session, opts, say) {
-  say({ type: "status", value: "connecting" });
+  status(session, "connecting", say);
 
   const relay = proxy("/ws/deepgram/agent");
   const [config, token] = await Promise.all([
@@ -620,6 +620,37 @@ function run_function(session, ws, call, say) {
   ws.send(JSON.stringify({ type: "FunctionCallResponse", id: call.id, name: call.name, content }));
 }
 
+/**
+ * One frame of the mic, judged only for whether the rider has started talking over the answer.
+ * Deepgram's own UserStartedSpeaking is authoritative and this is not, so this only DUCKS - it
+ * never throws audio away - and it undoes itself if the server never agrees.
+ */
+function listen(session, rms, say) {
+  if (session.dead || !session.play) return;
+  if (!session.play.busy() || session.ducked) {
+    if (!session.play.busy()) session.loud = 0;
+    return;
+  }
+  if (rms < DUCK_RMS) {
+    session.loud = 0;
+    return;
+  }
+  session.loud += 1;
+  if (session.loud < DUCK_FRAMES) return;
+  session.loud = 0;
+  session.ducked = true;
+  session.play.duck(true);
+  say({ type: "interrupted" });
+  session.unduck = window.setTimeout(() => {
+    session.unduck = 0;
+    // No UserStartedSpeaking: nobody was talking. Give the answer back rather than leaving the
+    // rider with a voice he can no longer hear and no way to ask for it again.
+    if (session.dead || !session.ducked) return;
+    session.ducked = false;
+    session.play.duck(false);
+  }, UNDUCK_MS);
+}
+
 /** Mic -> fixed-size linear16 frames -> socket, with a decaying level for the meter. */
 async function capture(session, ws, rate, say) {
   const ctx = session.ctx;
@@ -672,7 +703,6 @@ async function capture(session, ws, rate, say) {
   src.connect(node);
   session.src = src;
   session.node = node;
-  say({ type: "status", value: "connecting" });
 }
 
 /** Type a turn into a live session — the same path a spoken turn takes. Used by the tests. */

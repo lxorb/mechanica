@@ -7,13 +7,34 @@
   "angle": "Live. Four grounded tools are the agent's whole vocabulary, and Deepgram calls our API server-to-server so the manual never enters the tab.",
   "endline": "Don't trust the voice. Trust the page.",
   "marks": [
-    { "t": "0:00", "do": "The lift. 20% of his week. He refuses AI, and he is right to." },
-    { "t": "0:30", "do": "The one rule, verbatim. \"Not a style guide — a permission set.\"" },
-    { "t": "1:00", "do": "Four functions, one book. The architecture." },
-    { "t": "1:30", "do": "LIVE. Six utterances. Interrupt it. Ask it about a Ducati." },
-    { "t": "3:00", "do": "Where the milliseconds go. Volunteer the slow one." },
-    { "t": "3:45", "do": "What of Deepgram, and why — including what we could not prove." },
-    { "t": "4:30", "do": "Don't trust the voice. Trust the page." }
+    {
+      "t": "0:00",
+      "do": "The lift. 20% of his week. He refuses AI, and he is right to."
+    },
+    {
+      "t": "0:30",
+      "do": "The one rule, verbatim. \"Not a style guide — a permission set.\""
+    },
+    {
+      "t": "1:00",
+      "do": "Four functions, one book. The architecture."
+    },
+    {
+      "t": "1:30",
+      "do": "LIVE. Six utterances. Interrupt it. Ask it about a Ducati."
+    },
+    {
+      "t": "3:00",
+      "do": "Where the milliseconds go. Volunteer the slow one."
+    },
+    {
+      "t": "3:45",
+      "do": "What of Deepgram, and why — including what we could not prove."
+    },
+    {
+      "t": "4:30",
+      "do": "Don't trust the voice. Trust the page."
+    }
   ],
   "slides": [
     {
@@ -28,9 +49,18 @@
         "Say ~he says~. Thirty seconds, then move to the rule."
       ],
       "defs": [
-        { "n": "20%", "d": "share of his working time spent looking for a page — HIS estimate (assumed)." },
-        { "n": "EUR 36k-48k", "d": "400 h × EUR 90–120/h (computed)." },
-        { "n": "~$4", "d": "what one question cost him when he tried an LLM — HIS bill (assumed)." }
+        {
+          "n": "20%",
+          "d": "share of his working time spent looking for a page — HIS estimate (assumed)."
+        },
+        {
+          "n": "EUR 36k-48k",
+          "d": "400 h × EUR 90–120/h (computed)."
+        },
+        {
+          "n": "~$4",
+          "d": "what one question cost him when he tried an LLM — HIS bill (assumed)."
+        }
       ]
     },
     {
@@ -57,20 +87,52 @@
               {
                 "gap": 32,
                 "items": [
-                  { "tone": "paper", "t": "mic · AudioWorklet", "sub": "24 kHz linear16 · 1,024-sample frames" },
-                  { "tone": "white", "t": "Cloudflare Worker", "sub": "/ws/deepgram/agent · HOLDS THE KEY · a browser WebSocket cannot set headers" },
-                  { "tone": "green", "t": "listen · flux-general-en v2", "sub": "end of turn decided inside the model · eager EOT 0.4 · keyterms built per manual" },
-                  { "tone": "green", "t": "think · open_ai", "sub": "prompt and tools built by OUR server, per manual" },
-                  { "tone": "green", "t": "speak · aura-2-asteria-en", "sub": "\"clear, confident, knowledgeable\"" }
+                  {
+                    "tone": "paper",
+                    "t": "mic · AudioWorklet",
+                    "sub": "24 kHz linear16 · 1,024-sample frames"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "Cloudflare Worker",
+                    "sub": "/ws/deepgram/agent · HOLDS THE KEY · a browser WebSocket cannot set headers"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "listen · flux-general-en v2",
+                    "sub": "end of turn decided inside the model · eager EOT 0.4 · keyterms built per manual"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "think · open_ai",
+                    "sub": "prompt and tools built by OUR server, per manual"
+                  },
+                  {
+                    "tone": "green",
+                    "t": "speak · aura-2-asteria-en",
+                    "sub": "\"clear, confident, knowledgeable\""
+                  }
                 ]
               },
               {
                 "down": true,
                 "gap": 32,
                 "items": [
-                  { "tone": "orange", "t": "our API · /voice/tools/*", "sub": "find_procedure · read_page · get_spec · list_parts — the agent's entire vocabulary" },
-                  { "tone": "ink", "t": "the manufacturer's PDF|+ its page index", "sub": "the manual's own words, and the page they are printed on" },
-                  { "tone": "white", "t": "the reader", "sub": "the page number in the agent's own transcript moves it — same millisecond as the first byte of audio" }
+                  {
+                    "tone": "orange",
+                    "t": "our API · /voice/tools/*",
+                    "sub": "find_procedure · read_page · get_spec · list_parts — the agent's entire vocabulary"
+                  },
+                  {
+                    "tone": "ink",
+                    "t": "the manufacturer's PDF|+ its page index",
+                    "sub": "the manual's own words, and the page they are printed on"
+                  },
+                  {
+                    "tone": "white",
+                    "t": "the reader",
+                    "sub": "the page number in the agent's own transcript moves it — same millisecond as the first byte of audio"
+                  }
                 ]
               }
             ]
@@ -90,12 +152,30 @@
       "title": "Live — six utterances",
       "line": "KTM 390 Duke 2024, 143 printed pages, already warm. Tap VOICE. The greeting lands *724 ms* after the socket opens.",
       "rows": [
-        { "do": "\"What's the torque on the rear axle nut?\"", "see": "get_spec fires → *\"Page 78 says tighten the rear axle nut to one hundred newton metres\"* — and page 78 opens. First audio 1,793 ms." },
-        { "do": "\"And the front one?\"", "see": "no repeat of the bike, no repeat of the part — multi-turn context resolves it. *forty five newton metres*, page 130. First audio 1,733 ms." },
-        { "do": "\"What is the tyre pressure?\"", "see": "already in the session's context — *no tool call at all*. First audio 780 ms." },
-        { "do": "\"Show me the brake fluid procedure.\"", "see": "find_procedure → four read_page calls → the steps in the manual's order, page 85 on screen. *9,878 ms — the slow one. Say so.*" },
-        { "do": "*Interrupt it mid-sentence*", "see": "the voice stops dead and listens. Scheduled audio dies in <3 ms." },
-        { "do": "\"What's the valve clearance on a Ducati Panigale?\"", "see": "*\"That is not in this manual.\"* No figure, no guess, no carry-over from another bike." }
+        {
+          "do": "\"What's the torque on the rear axle nut?\"",
+          "see": "get_spec fires → *\"Page 78 says tighten the rear axle nut to one hundred newton metres\"* — and page 78 opens. First audio 1,793 ms."
+        },
+        {
+          "do": "\"And the front one?\"",
+          "see": "no repeat of the bike, no repeat of the part — multi-turn context resolves it. *forty five newton metres*, page 130. First audio 1,733 ms."
+        },
+        {
+          "do": "\"What is the tyre pressure?\"",
+          "see": "already in the session's context — *no tool call at all*. First audio 780 ms."
+        },
+        {
+          "do": "\"Show me the brake fluid procedure.\"",
+          "see": "find_procedure → four read_page calls → the steps in the manual's order, page 85 on screen. *9,878 ms — the slow one. Say so.*"
+        },
+        {
+          "do": "*Interrupt it mid-sentence*",
+          "see": "the voice stops dead and listens. Scheduled audio dies in <3 ms."
+        },
+        {
+          "do": "\"What's the valve clearance on a Ducati Panigale?\"",
+          "see": "*\"That is not in this manual.\"* No figure, no guess, no carry-over from another bike."
+        }
       ],
       "notes": [
         "*Do not hide turn 4.* \"That one took ten seconds, because the question walks our search pipeline and then reads four printed pages. A spec question that lands on get_spec is a two-second answer. We know exactly which hop costs what — it's on the next slide.\"",
@@ -104,12 +184,61 @@
         "Turn 2 needs the get_spec ranking deployed to be deterministic. If it is not deployed, drop turn 2 to \"what's the tyre pressure?\"."
       ],
       "defs": [
-        { "n": "143", "d": "printed pages in the demo manual, KTM 390 Duke 2024.", "src": "README.md" },
-        { "n": "535", "d": "manuals indexed and searchable now — live GET /api/manuals (measured)." },
-        { "n": "45 Nm", "d": "the printed front-axle figure in Chassis tightening torques, p.128–130 of the KTM 390 Duke 2024 manual.", "src": "README.md" },
-        { "n": "1,793", "d": "first audio byte, ms from the last sample of \"what's the torque on the rear axle nut?\" — saved message trace, 2026-09-20.", "src": "deepgram.md" },
-        { "n": "9,878", "d": "first audio byte, ms, for the procedure question — the tail, and we say so.", "src": "deepgram.md" },
-        { "n": "724 ms", "d": "socket open → greeting audio (measured).", "src": "deepgram.md" }
+        {
+          "n": "143",
+          "d": "printed pages in the demo manual, KTM 390 Duke 2024.",
+          "src": "README.md"
+        },
+        {
+          "n": "535",
+          "d": "manuals indexed and searchable now — live GET /api/manuals (measured)."
+        },
+        {
+          "n": "45 Nm",
+          "d": "the printed front-axle figure in Chassis tightening torques, p.128–130 of the KTM 390 Duke 2024 manual.",
+          "src": "README.md"
+        },
+        {
+          "n": "1,793",
+          "d": "first audio byte, ms from the last sample of \"what's the torque on the rear axle nut?\" — saved message trace, 2026-09-20.",
+          "src": "deepgram.md"
+        },
+        {
+          "n": "9,878",
+          "d": "first audio byte, ms, for the procedure question — the tail, and we say so.",
+          "src": "deepgram.md"
+        },
+        {
+          "n": "724 ms",
+          "d": "socket open → greeting audio (measured).",
+          "src": "deepgram.md"
+        }
+      ]
+    },
+    {
+      "kind": "number",
+      "at": "2:55",
+      "label": "You stop talking → it starts talking",
+      "value": "2.08 s",
+      "sub": "median over *5 spec turns, 4 sessions* — range 1.73–4.01 s. A *procedure* question is *9.9 s*, and we say so.",
+      "notes": [
+        "Do not quote 2 s for a procedure question. A spec question is ~2 s; a procedure question is 9.9 s.",
+        "Every number comes from a saved message trace taken against the live Worker proxy, with Deepgram TTS speaking the question into the socket at real speed. We can open the trace on stage.",
+        "The greeting lands 724 ms after the socket opens. Welcome at 4 ms, SettingsApplied at 154 ms, FunctionCallRequest get_spec at 730 ms, FunctionCallResponse carrying \"100 Nm\" and page 78 at 1,025 ms, first audio at 1,793 ms."
+      ],
+      "defs": [
+        {
+          "n": "2.08 s",
+          "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)."
+        },
+        {
+          "n": "9.9 s",
+          "d": "the same measurement for a procedure question (measured)."
+        },
+        {
+          "n": "1.5-2.0 s",
+          "d": "voice (shipped engine): end of speech to first audio — web/docs/VOICE.md (measured)."
+        }
       ]
     },
     {
@@ -118,18 +247,57 @@
       "dense": true,
       "title": "Where the milliseconds go",
       "line": "Measured live through the Worker proxy, with Deepgram's own TTS speaking the question into the socket at real speed. Four sessions, eight spoken turns, traces saved.",
-      "head": ["hop", "measured"],
-      "align": ["l", "r"],
+      "head": [
+        "hop",
+        "measured"
+      ],
+      "align": [
+        "l",
+        "r"
+      ],
       "rows": [
-        ["socket open → Welcome", "4–10 ms"],
-        ["→ SettingsApplied", "154–166 ms"],
-        ["→ greeting audio", "*724 ms*"],
-        ["get_spec round trip", "260–770 ms"],
-        ["read_page round trip", "110–330 ms"],
-        { "emph": true, "cells": ["find_procedure round trip", "*1,970 ms and 6,519 ms* — the tail; it runs the full router → BM25 → picker pipeline"] },
-        { "emph": true, "cells": ["5 spec turns, 4 sessions: end of speech → first audio", "*median 2.08 s*, range 1.73–4.01 s. A procedure question is *9.9 s*"] },
-        ["barge-in, local stop", "<3 ms, plus a 500 ms window that drops the abandoned answer's in-flight chunks"],
-        ["cost", "*$0.075 per connected minute* — the socket exists only between the two taps on VOICE"]
+        [
+          "socket open → Welcome",
+          "4–10 ms"
+        ],
+        [
+          "→ SettingsApplied",
+          "154–166 ms"
+        ],
+        [
+          "→ greeting audio",
+          "*724 ms*"
+        ],
+        [
+          "get_spec round trip",
+          "260–770 ms"
+        ],
+        [
+          "read_page round trip",
+          "110–330 ms"
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "find_procedure round trip",
+            "*1,970 ms and 6,519 ms* — the tail; it runs the full router → BM25 → picker pipeline"
+          ]
+        },
+        {
+          "emph": true,
+          "cells": [
+            "5 spec turns, 4 sessions: end of speech → first audio",
+            "*median 2.08 s*, range 1.73–4.01 s. A procedure question is *9.9 s*"
+          ]
+        },
+        [
+          "barge-in, local stop",
+          "<3 ms, plus a 500 ms window that drops the abandoned answer's in-flight chunks"
+        ],
+        [
+          "cost",
+          "*$0.075 per connected minute* — the socket exists only between the two taps on VOICE"
+        ]
       ],
       "note": "What we would fix next: find_procedure is 85% of the worst case. Returning the section's printed text with the hit collapses a find_procedure + 4 × read_page chain into one call, and takes turn 4 from ~10 s to ~3 s.",
       "notes": [
@@ -138,11 +306,29 @@
         "A typical spec question is a ~10-second session — about 1.2 cents. The Cloudflare Worker bills CPU time, not socket duration, so proxying is effectively free."
       ],
       "defs": [
-        { "n": "2.08 s", "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)." },
-        { "n": "9.9 s", "d": "the same measurement for a procedure question — say so rather than quoting 2 s for everything (measured)." },
-        { "n": "724 ms", "d": "socket open → greeting audio (measured).", "src": "deepgram.md" },
-        { "n": "6,519", "d": "find_procedure round trip, ms, worst observed — it runs the full router → BM25 → picker ask pipeline.", "src": "deepgram.md" },
-        { "n": "$0.075 per connected minute", "d": "Deepgram's hosted-LLM tier: STT, LLM and TTS bundled, billed on socket time.", "src": "deepgram.md" }
+        {
+          "n": "2.08 s",
+          "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)."
+        },
+        {
+          "n": "9.9 s",
+          "d": "the same measurement for a procedure question — say so rather than quoting 2 s for everything (measured)."
+        },
+        {
+          "n": "724 ms",
+          "d": "socket open → greeting audio (measured).",
+          "src": "deepgram.md"
+        },
+        {
+          "n": "6,519",
+          "d": "find_procedure round trip, ms, worst observed — it runs the full router → BM25 → picker ask pipeline.",
+          "src": "deepgram.md"
+        },
+        {
+          "n": "$0.075 per connected minute",
+          "d": "Deepgram's hosted-LLM tier: STT, LLM and TTS bundled, billed on socket time.",
+          "src": "deepgram.md"
+        }
       ]
     },
     {
@@ -150,13 +336,34 @@
       "at": "3:45",
       "dense": true,
       "title": "What of Deepgram, and why",
-      "head": ["", "why"],
-      "align": ["l", "l"],
+      "head": [
+        "",
+        "why"
+      ],
+      "align": [
+        "l",
+        "l"
+      ],
       "rows": [
-        ["*Voice Agent API*, not STT + LLM + TTS stitched", "One socket carries mic up, voice down and the JSON events interleaved — so the turn boundary, the barge-in signal and the function call are decided next to the audio. And the tool calls are *server-side*, which is what makes the grounding airtight."],
-        ["*flux-general-en* endpointing", "End of turn is detected inside the model, not by a silence timer. Eager EOT starts the LLM before the sentence ends and throws the speculative turn away on TurnResumed. *1.35 s to first audio against nova-3's 1.97 s.*"],
-        ["*Barge-in*", "A workshop answer is often wrong-question-shaped. Scheduled audio dies on the next render quantum, *<3 ms*."],
-        { "emph": true, "cells": ["*Keyterm prompting* — 100 terms, built per manual", "Accepted live with zero errors. *We could not measure a win:* 11.4% vs 13.6% WER at 3 dB, 14.1% vs 13.3% at 0 dB. That is noise, not a result. It ships because it is the documented lever, it costs nothing, and it protects the proper nouns."] }
+        [
+          "*Voice Agent API*, not STT + LLM + TTS stitched",
+          "One socket carries mic up, voice down and the JSON events interleaved — so the turn boundary, the barge-in signal and the function call are decided next to the audio. And the tool calls are *server-side*, which is what makes the grounding airtight."
+        ],
+        [
+          "*flux-general-en* endpointing",
+          "End of turn is detected inside the model, not by a silence timer. Eager EOT starts the LLM before the sentence ends and throws the speculative turn away on TurnResumed. *1.35 s to first audio against nova-3's 1.97 s.*"
+        ],
+        [
+          "*Barge-in*",
+          "A workshop answer is often wrong-question-shaped. Scheduled audio dies on the next render quantum, *<3 ms*."
+        ],
+        {
+          "emph": true,
+          "cells": [
+            "*Keyterm prompting* — 100 terms, built per manual",
+            "Accepted live with zero errors. *We could not measure a win:* 11.4% vs 13.6% WER at 3 dB, 14.1% vs 13.3% at 0 dB. That is noise, not a result. It ships because it is the documented lever, it costs nothing, and it protects the proper nouns."
+          ]
+        }
       ],
       "note": "The claim we are entitled to make is *\"built and wired\"*, not *\"X% better\"*. A real number needs real mechanics in a real shop — and that is the first thing we would spend a Deepgram credit on.",
       "notes": [

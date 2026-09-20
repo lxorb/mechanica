@@ -3,7 +3,7 @@
    (manual, chapter, page) and never leaves; the bottom rows are what you do, under the thumb. */
 
 [data-screen="book"] [data-root] {
-  --mark: rgba(232, 93, 4, 0.34);
+  --mark: var(--highlight);
   --bar-h: 44px;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
   max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   min-height: 0;
   overflow: hidden;
-  background: var(--ink);
+  background: var(--slab);
 }
 
 /* ---------- the bar: identity and position only ---------- */
@@ -24,8 +24,8 @@
   height: var(--bar-h);
   min-height: var(--bar-h);
   padding: 0 4px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--slab);
+  color: var(--slab-fg);
 }
 
 /**
@@ -48,7 +48,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: var(--slab-fg);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.3rem;
@@ -63,7 +63,7 @@
 }
 
 [data-screen="book"] .bar-btn:active {
-  color: var(--yellow);
+  color: var(--accent-2);
 }
 
 [data-screen="book"] .bar-back {
@@ -80,7 +80,7 @@
   flex: 0 0 auto;
   min-height: 48px;
   padding: 2px 6px 4px;
-  background: var(--ink);
+  background: var(--slab);
 }
 
 [data-screen="book"] .book-acts .bar-btn {
@@ -102,9 +102,9 @@
 
 [data-screen="book"] .bar-word.is-on,
 [data-screen="book"] .book-mic[aria-pressed="true"] {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 /* 44 px of tap, a 28 x 34 plate of ink inside it — the target stays a thumb, the mark stays small. */
@@ -122,7 +122,7 @@
 }
 
 [data-screen="book"] .book-cover.is-back::before {
-  border-color: var(--yellow);
+  border-color: var(--accent-2);
 }
 
 [data-screen="book"] .book-cover.is-plain img {
@@ -135,9 +135,9 @@
   position: absolute;
   inset: 5px 8px;
   background:
-    linear-gradient(#fff 0 0) 50% 28% / 58% 2px no-repeat,
-    linear-gradient(#fff 0 0) 50% 50% / 58% 2px no-repeat,
-    linear-gradient(#fff 0 0) 50% 72% / 38% 2px no-repeat;
+    linear-gradient(var(--slab-fg) 0 0) 50% 28% / 58% 2px no-repeat,
+    linear-gradient(var(--slab-fg) 0 0) 50% 50% / 58% 2px no-repeat,
+    linear-gradient(var(--slab-fg) 0 0) 50% 72% / 38% 2px no-repeat;
 }
 
 [data-screen="book"] .book-cover img {
@@ -195,7 +195,7 @@
   overflow: auto;
   overscroll-behavior: contain;
   scroll-snap-type: y proximity;
-  background: var(--ink);
+  background: var(--slab);
   scrollbar-width: none;
   touch-action: pan-x pan-y;
 }
@@ -221,7 +221,7 @@
   width: var(--sheet-w, 100%);
   margin: 4px 0;
   scroll-snap-align: start;
-  background: var(--card);
+  background: var(--page);
   overflow: hidden;
 }
 
@@ -242,8 +242,8 @@
  */
 [data-screen="book"] .page-sheet:not(.is-ready) {
   background:
-    linear-gradient(100deg, transparent 38%, rgba(232, 93, 4, 0.1) 50%, transparent 62%),
-    var(--paper);
+    linear-gradient(100deg, transparent 38%, var(--sweep-page) 50%, transparent 62%),
+    var(--page-wait);
   background-size: 260% 100%, 100% 100%;
   animation: page-sweep 1.3s linear infinite;
 }
@@ -266,18 +266,18 @@
    whole error state — a page of apology would be louder than the thing one tap fixes. */
 [data-screen="book"] .page-sheet.is-stalled {
   animation: none;
-  background: var(--paper);
+  background: var(--page-wait);
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-screen="book"] .page-sheet:not(.is-ready) {
-    background: var(--paper);
+    background: var(--page-wait);
     animation: none;
   }
 }
 
 [data-screen="book"] .page-sheet.ask-flash {
-  outline: 3px solid var(--focus);
+  outline: 3px solid var(--accent);
   outline-offset: -3px;
 }
 
@@ -320,7 +320,7 @@
   height: 48px;
   min-height: 48px;
   padding: 0 6px;
-  background: var(--ink);
+  background: var(--slab);
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
@@ -338,9 +338,9 @@
   min-width: 44px;
   height: 44px;
   padding: 0 8px;
-  border: 2px solid var(--card);
+  border: 2px solid var(--slab-fg);
   background: transparent;
-  color: #fff;
+  color: var(--slab-fg);
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.15rem;
@@ -353,14 +353,14 @@
 }
 
 [data-screen="book"] .strip-chip.seen {
-  background: var(--card);
-  color: var(--ink);
+  background: var(--slab-fg);
+  color: var(--slab);
 }
 
 [data-screen="book"] .strip-chip.now {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 /* ---------- outline fallback ---------- */
@@ -388,7 +388,7 @@
   border: 0;
   border-bottom: 3px solid var(--line);
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
@@ -410,7 +410,7 @@
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1.1rem;
-  color: var(--orange);
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -457,7 +457,7 @@
   border: 3px solid var(--line);
   border-radius: 0;
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1rem;
@@ -481,14 +481,14 @@
   display: block;
   height: 3px;
   margin-top: 8px;
-  background: var(--paper);
+  background: var(--bg);
 }
 
 [data-screen="book"] .ask-bar i {
   display: block;
   height: 100%;
   width: 0;
-  background: var(--orange);
+  background: var(--accent);
 }
 
 [data-screen="book"] .ask-hits {

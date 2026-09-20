@@ -39,7 +39,7 @@
   flex: 0 0 auto;
   padding: 8px 12px;
   border-bottom: 1px solid var(--rule);
-  background: var(--paper);
+  background: var(--bg);
 }
 
 .cf-q {
@@ -49,7 +49,7 @@
   border: 2px solid var(--line);
   border-radius: 0;
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 600;
   font-size: 1rem;
@@ -80,7 +80,8 @@
 }
 
 .cf-count {
-  background: var(--ink);
+  background: var(--slab);
+  color: var(--slab-fg);
 }
 
 .cf-tallyword {
@@ -109,7 +110,7 @@
   border-left: 6px solid var(--rule);
   border-radius: 0;
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -117,7 +118,7 @@
 }
 
 .cf-row:active {
-  background: var(--paper);
+  background: var(--bg);
 }
 
 .cf-head,
@@ -173,15 +174,15 @@
 /* Status is carried by the left rule and the flag word, never by a coloured blob. */
 .cf-row[data-status="breached"],
 .cf-chip[data-status="breached"] {
-  border-left-color: var(--orange);
+  border-left-color: var(--danger);
 }
 
 .cf-row[data-status="breached"] .cf-flag {
-  color: var(--orange);
+  color: var(--danger);
 }
 
 .cf-row[data-status="borderline"] {
-  border-left-color: var(--ink);
+  border-left-color: var(--line);
 }
 
 .cf-row[data-status="borderline"] .cf-flag {
@@ -194,7 +195,7 @@
 }
 
 .cf-row[data-status="unknown"] {
-  background: var(--paper);
+  background: var(--bg);
 }
 
 .cf-row[data-status="unknown"] .cf-claim,
@@ -221,7 +222,7 @@
   flex: 0 0 auto;
   padding: 8px 12px;
   border-bottom: 1px solid var(--rule);
-  background: var(--paper);
+  background: var(--bg);
 }
 
 .cf-chip {
@@ -233,10 +234,10 @@
   min-height: 44px;
   padding: 6px 10px;
   border: 1px solid var(--rule);
-  border-left: 6px solid var(--orange);
+  border-left: 6px solid var(--danger);
   border-radius: 0;
   background: var(--card);
-  color: var(--ink);
+  color: var(--fg);
   font: inherit;
   text-align: left;
   cursor: pointer;
