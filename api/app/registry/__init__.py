@@ -149,7 +149,7 @@ def pdf_index() -> dict[str, list[RegistryEntry]]:
     """bike id -> every free English owner's-manual PDF covering it, best market first."""
     found: dict[str, list[RegistryEntry]] = {}
     for e in get_store().registry():
-        if not _ingestable(e) or not e.model or e.model == "All models":
+        if not _ingestable(e) or not e.model or e.model.strip().lower() == "all models":
             continue
         for year in e.years:
             found.setdefault(slug(e.make, e.model, year), []).append(e)
@@ -206,7 +206,7 @@ def bikes_from_registry() -> list[Bike]:
     known = {b.id: b for b in store.bikes()}  # re-read late: other passes write manualId concurrently
     out: dict[str, Bike] = {}
     for e in store.registry():
-        if e.type != "owner" or not e.years or not e.model or e.model == "All models":
+        if e.type != "owner" or not e.years or not e.model or e.model.strip().lower() == "all models":
             continue
         for year in e.years:
             bid = slug(e.make, e.model, year)

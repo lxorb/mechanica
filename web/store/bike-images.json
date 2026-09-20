@@ -1,4 +1,76 @@
 {
+  "acura|ilx": {
+    "image": "store/img/bikes/acura-ilx.webp",
+    "thumb": "store/img/bikes/acura-ilx-thumb.webp",
+    "kind": "car",
+    "title": "2019 Acura ILX DSC 2881.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Acura_ILX_DSC_2881.jpg"
+  },
+  "acura|integra": {
+    "image": "store/img/bikes/acura-integra.webp",
+    "thumb": "store/img/bikes/acura-integra-thumb.webp",
+    "kind": "car",
+    "title": "2023 Acura Integra A-Spec, front 12.29.22.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Acura_Integra_A-Spec,_front_12.29.22.jpg"
+  },
+  "acura|mdx": {
+    "image": "store/img/bikes/acura-mdx.webp",
+    "thumb": "store/img/bikes/acura-mdx-thumb.webp",
+    "kind": "car",
+    "title": "ACURA MDX (YD2) China (3).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:ACURA_MDX_(YD2)_China_(3).jpg"
+  },
+  "acura|rdx": {
+    "image": "store/img/bikes/acura-rdx.webp",
+    "thumb": "store/img/bikes/acura-rdx-thumb.webp",
+    "kind": "car",
+    "title": "ACURA RDX TC1 China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:ACURA_RDX_TC1_China.jpg"
+  },
+  "alfa-romeo|giulia": {
+    "image": "store/img/bikes/alfa-romeo-giulia.webp",
+    "thumb": "store/img/bikes/alfa-romeo-giulia-thumb.webp",
+    "kind": "car",
+    "title": "Alfa Romeo Giulia Nuova Super 1300 (parkend 2016-06-05 Sp).JPG",
+    "author": "Lothar Spurzem",
+    "license": "CC BY-SA 2.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Giulia_Nuova_Super_1300_(parkend_2016-06-05_Sp).JPG"
+  },
+  "alfa-romeo|giulietta": {
+    "image": "store/img/bikes/alfa-romeo-giulietta.webp",
+    "thumb": "store/img/bikes/alfa-romeo-giulietta-thumb.webp",
+    "kind": "car",
+    "title": "\" 12 - ALFA ROMEO GIULIETTA 2010 - white hatchback in unknow location.JPG",
+    "author": "Pava",
+    "license": "CC BY-SA 3.0 it",
+    "source": "https://commons.wikimedia.org/wiki/File:%22_12_-_ALFA_ROMEO_GIULIETTA_2010_-_white_hatchback_in_unknow_location.JPG"
+  },
+  "alfa-romeo|stelvio": {
+    "image": "store/img/bikes/alfa-romeo-stelvio.webp",
+    "thumb": "store/img/bikes/alfa-romeo-stelvio-thumb.webp",
+    "kind": "car",
+    "title": "2017 Alfa Romeo Stelvio Milano Edizione TD Automatic 2.1.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Alfa_Romeo_Stelvio_Milano_Edizione_TD_Automatic_2.1.jpg"
+  },
+  "alfa-romeo|tonale": {
+    "image": "store/img/bikes/alfa-romeo-tonale.webp",
+    "thumb": "store/img/bikes/alfa-romeo-tonale-thumb.webp",
+    "kind": "car",
+    "title": "2022 Alfa Romeo Tonale Speciale in Verde Montreal, front left (NYIAS 2022).jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Alfa_Romeo_Tonale_Speciale_in_Verde_Montreal,_front_left_(NYIAS_2022).jpg"
+  },
   "aprilia|atlantic-250": {
     "image": "store/img/bikes/aprilia-atlantic-250.webp",
     "thumb": "store/img/bikes/aprilia-atlantic-250-thumb.webp",
@@ -1176,6 +1248,33 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG",
     "hero": "store/img/bikes/bmw-s-1000-xr-hero.webp"
   },
+  "brightdrop|ev600": {
+    "image": "store/img/bikes/brightdrop-ev600.webp",
+    "thumb": "store/img/bikes/brightdrop-ev600-thumb.webp",
+    "kind": "car",
+    "title": "2022 BrightDrop EV600.jpg",
+    "author": "42-BRT",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_BrightDrop_EV600.jpg"
+  },
+  "brightdrop|zevo-600": {
+    "image": "store/img/bikes/brightdrop-zevo-600.webp",
+    "thumb": "store/img/bikes/brightdrop-zevo-600-thumb.webp",
+    "kind": "car",
+    "title": "BrightDrop Zevo 600.jpg",
+    "author": "BrightDrop",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg"
+  },
+  "buick|cascada": {
+    "image": "store/img/bikes/buick-cascada.webp",
+    "thumb": "store/img/bikes/buick-cascada-thumb.webp",
+    "kind": "car",
+    "title": "2016 Buick Cascada Premium.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Buick_Cascada_Premium.jpg"
+  },
   "buick|enclave": {
     "image": "store/img/bikes/buick-enclave.webp",
     "thumb": "store/img/bikes/buick-enclave-thumb.webp",
@@ -1185,6 +1284,132 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Buick_Enclave_Sanming_01_2022-08-12.jpg"
   },
+  "buick|encore": {
+    "image": "store/img/bikes/buick-encore.webp",
+    "thumb": "store/img/bikes/buick-encore-thumb.webp",
+    "kind": "car",
+    "title": "Buick Encore GX 001.jpg",
+    "author": "Jengtingchen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Buick_Encore_GX_001.jpg"
+  },
+  "buick|encore-gx": {
+    "image": "store/img/bikes/buick-encore-gx.webp",
+    "thumb": "store/img/bikes/buick-encore-gx-thumb.webp",
+    "kind": "car",
+    "title": "2024 Buick Encore GX Avenir AWD, rear left, 10-29-2023.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Buick_Encore_GX_Avenir_AWD,_rear_left,_10-29-2023.jpg"
+  },
+  "buick|envision": {
+    "image": "store/img/bikes/buick-envision.webp",
+    "thumb": "store/img/bikes/buick-envision-thumb.webp",
+    "kind": "car",
+    "title": "Buick Envision S IMG003.jpg",
+    "author": "Zotyefan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg"
+  },
+  "buick|envista": {
+    "image": "store/img/bikes/buick-envista.webp",
+    "thumb": "store/img/bikes/buick-envista-thumb.webp",
+    "kind": "car",
+    "title": "2024 Buick Envista Preferred in White.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Buick_Envista_Preferred_in_White.jpg"
+  },
+  "buick|lacrosse": {
+    "image": "store/img/bikes/buick-lacrosse.webp",
+    "thumb": "store/img/bikes/buick-lacrosse-thumb.webp",
+    "kind": "car",
+    "title": "BUICK LACROSSE SECOND GENERATION China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BUICK_LACROSSE_SECOND_GENERATION_China.jpg"
+  },
+  "buick|regal": {
+    "image": "store/img/bikes/buick-regal.webp",
+    "thumb": "store/img/bikes/buick-regal-thumb.webp",
+    "kind": "car",
+    "title": "Buick Regal P4250792.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Buick_Regal_P4250792.jpg"
+  },
+  "buick|verano": {
+    "image": "store/img/bikes/buick-verano.webp",
+    "thumb": "store/img/bikes/buick-verano-thumb.webp",
+    "kind": "car",
+    "title": "2012 Buick Verano -- 04-30-2012.JPG",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Buick_Verano_--_04-30-2012.JPG"
+  },
+  "cadillac|ats": {
+    "image": "store/img/bikes/cadillac-ats.webp",
+    "thumb": "store/img/bikes/cadillac-ats-thumb.webp",
+    "kind": "car",
+    "title": "2013 Cadillac ATS -- 2012 DC.JPG",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Cadillac_ATS_--_2012_DC.JPG"
+  },
+  "cadillac|celestiq": {
+    "image": "store/img/bikes/cadillac-celestiq.webp",
+    "thumb": "store/img/bikes/cadillac-celestiq-thumb.webp",
+    "kind": "car",
+    "title": "2025 Cadillac Celestiq, rear right (Greenwich 2025).jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Cadillac_Celestiq,_rear_right_(Greenwich_2025).jpg"
+  },
+  "cadillac|ct4": {
+    "image": "store/img/bikes/cadillac-ct4.webp",
+    "thumb": "store/img/bikes/cadillac-ct4-thumb.webp",
+    "kind": "car",
+    "title": "2023 Cadillac CT4 Luxury+ in Summit White, front left.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Cadillac_CT4_Luxury%2B_in_Summit_White,_front_left.jpg"
+  },
+  "cadillac|ct5": {
+    "image": "store/img/bikes/cadillac-ct5.webp",
+    "thumb": "store/img/bikes/cadillac-ct5-thumb.webp",
+    "kind": "car",
+    "title": "2021 Cadillac CT5-V, Front Right 2, 11-21-2021.jpg",
+    "author": "Elise240SX",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Cadillac_CT5-V,_Front_Right_2,_11-21-2021.jpg"
+  },
+  "cadillac|ct6": {
+    "image": "store/img/bikes/cadillac-ct6.webp",
+    "thumb": "store/img/bikes/cadillac-ct6-thumb.webp",
+    "kind": "car",
+    "title": "CADILLAC CT6 China(3).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_CT6_China(3).jpg"
+  },
+  "cadillac|cts": {
+    "image": "store/img/bikes/cadillac-cts.webp",
+    "thumb": "store/img/bikes/cadillac-cts-thumb.webp",
+    "kind": "car",
+    "title": "2012 Cadillac CTS coupe with Premium Collection, front left, 08-27-2023.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Cadillac_CTS_coupe_with_Premium_Collection,_front_left,_08-27-2023.jpg"
+  },
+  "cadillac|cts-v": {
+    "image": "store/img/bikes/cadillac-cts-v.webp",
+    "thumb": "store/img/bikes/cadillac-cts-v-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac CTS-V - Mondial de l'Automobile de Paris 2012 - 005.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_CTS-V_-_Mondial_de_l'Automobile_de_Paris_2012_-_005.jpg"
+  },
   "cadillac|escalade": {
     "image": "store/img/bikes/cadillac-escalade.webp",
     "thumb": "store/img/bikes/cadillac-escalade-thumb.webp",
@@ -1193,6 +1418,24 @@
     "author": "Calreyn88",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2009_Cadillac_Escalade.jpg"
+  },
+  "cadillac|escalade-iq": {
+    "image": "store/img/bikes/cadillac-escalade-iq.webp",
+    "thumb": "store/img/bikes/cadillac-escalade-iq-thumb.webp",
+    "kind": "car",
+    "title": "2025 Cadillac Escalade IQ (cropped).jpg",
+    "author": "Wlb5V",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Cadillac_Escalade_IQ_(cropped).jpg"
+  },
+  "cadillac|escalade-iql": {
+    "image": "store/img/bikes/cadillac-escalade-iql.webp",
+    "thumb": "store/img/bikes/cadillac-escalade-iql-thumb.webp",
+    "kind": "car",
+    "title": "2026 Cadillac Escalade IQL 1000E4.jpg",
+    "author": "2000chevymontecarlo",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Cadillac_Escalade_IQL_1000E4.jpg"
   },
   "cadillac|lyriq": {
     "image": "store/img/bikes/cadillac-lyriq.webp",
@@ -1221,6 +1464,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Optiq_Auto_Zuerich_2025_DSC_3328.jpg"
   },
+  "cadillac|srx": {
+    "image": "store/img/bikes/cadillac-srx.webp",
+    "thumb": "store/img/bikes/cadillac-srx-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac SRX II Facelift Shishi 02 2022-03-10.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_SRX_II_Facelift_Shishi_02_2022-03-10.jpg"
+  },
   "cadillac|vistiq": {
     "image": "store/img/bikes/cadillac-vistiq.webp",
     "thumb": "store/img/bikes/cadillac-vistiq-thumb.webp",
@@ -1229,6 +1481,42 @@
     "author": "Mr.choppers",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2026_Cadillac_Vistiq_Sport_900e4_in_Stellar_Black,_front_left.jpg"
+  },
+  "cadillac|xt4": {
+    "image": "store/img/bikes/cadillac-xt4.webp",
+    "thumb": "store/img/bikes/cadillac-xt4-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac XT4 0001 China 2019-03-13.jpg",
+    "author": "Navigator84",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT4_0001_China_2019-03-13.jpg"
+  },
+  "cadillac|xt5": {
+    "image": "store/img/bikes/cadillac-xt5.webp",
+    "thumb": "store/img/bikes/cadillac-xt5-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac XT5 Classic-Days 2022 DSC 0065.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT5_Classic-Days_2022_DSC_0065.jpg"
+  },
+  "cadillac|xt6": {
+    "image": "store/img/bikes/cadillac-xt6.webp",
+    "thumb": "store/img/bikes/cadillac-xt6-thumb.webp",
+    "kind": "car",
+    "title": "Cadillac XT6 IMG002.jpg",
+    "author": "Zotyefan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT6_IMG002.jpg"
+  },
+  "cadillac|xts": {
+    "image": "store/img/bikes/cadillac-xts.webp",
+    "thumb": "store/img/bikes/cadillac-xts-thumb.webp",
+    "kind": "car",
+    "title": "CADILLAC XTS China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_XTS_China.jpg"
   },
   "can-am|2014-spyder-rt": {
     "image": "store/img/bikes/can-am-2014-spyder-rt.webp",
@@ -1275,6 +1563,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:CanAm_Spyder_RT_(51826170573).jpg",
     "hero": "store/img/bikes/can-am-spyder-rt-hero.webp"
   },
+  "chevrolet|blazer": {
+    "image": "store/img/bikes/chevrolet-blazer.webp",
+    "thumb": "store/img/bikes/chevrolet-blazer-thumb.webp",
+    "kind": "car",
+    "title": "98-05 Chevrolet S-10 Blazer 2door.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:98-05_Chevrolet_S-10_Blazer_2door.jpg"
+  },
   "chevrolet|blazer-ev": {
     "image": "store/img/bikes/chevrolet-blazer-ev.webp",
     "thumb": "store/img/bikes/chevrolet-blazer-ev-thumb.webp",
@@ -1293,6 +1590,51 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Bolt_EV_Premier_front_6.20.18.jpg"
   },
+  "chevrolet|bolt-euv": {
+    "image": "store/img/bikes/chevrolet-bolt-euv.webp",
+    "thumb": "store/img/bikes/chevrolet-bolt-euv-thumb.webp",
+    "kind": "car",
+    "title": "23 Chevrolet Bolt EUV Premier.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:23_Chevrolet_Bolt_EUV_Premier.jpg"
+  },
+  "chevrolet|bolt-ev": {
+    "image": "store/img/bikes/chevrolet-bolt-ev.webp",
+    "thumb": "store/img/bikes/chevrolet-bolt-ev-thumb.webp",
+    "kind": "car",
+    "title": "2019 Chevrolet Bolt EV - April 2019 (2736).jpg",
+    "author": "Gregory Varnum",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Bolt_EV_-_April_2019_(2736).jpg"
+  },
+  "chevrolet|brightdrop-600": {
+    "image": "store/img/bikes/chevrolet-brightdrop-600.webp",
+    "thumb": "store/img/bikes/chevrolet-brightdrop-600-thumb.webp",
+    "kind": "car",
+    "title": "2024 Chevrolet BrightDrop Zevo 600.jpg",
+    "author": "This picture has been taken by Oleg Yunakov . Contact e-mail: yunakov gmail.com . Image can be used in accordance with the terms of the СС-BY-SA license. Other photos can be seen here .",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_BrightDrop_Zevo_600.jpg"
+  },
+  "chevrolet|camaro": {
+    "image": "store/img/bikes/chevrolet-camaro.webp",
+    "thumb": "store/img/bikes/chevrolet-camaro-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Camaro Hudiksvall 2014.jpg",
+    "author": "Arild Vågen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Camaro_Hudiksvall_2014.jpg"
+  },
+  "chevrolet|colorado": {
+    "image": "store/img/bikes/chevrolet-colorado.webp",
+    "thumb": "store/img/bikes/chevrolet-colorado-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Colorado High Country 2018 (46414614972).jpg",
+    "author": "RL GNZLZ from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Colorado_High_Country_2018_(46414614972).jpg"
+  },
   "chevrolet|corvette": {
     "image": "store/img/bikes/chevrolet-corvette.webp",
     "thumb": "store/img/bikes/chevrolet-corvette-thumb.webp",
@@ -1301,6 +1643,15 @@
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_C8_IAA_2021_1X7A0156.jpg"
+  },
+  "chevrolet|cruze": {
+    "image": "store/img/bikes/chevrolet-cruze.webp",
+    "thumb": "store/img/bikes/chevrolet-cruze-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Cruze Back P4250805.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Cruze_Back_P4250805.jpg"
   },
   "chevrolet|engine": {
     "image": "store/img/bikes/chevrolet-engine.webp",
@@ -1338,6 +1689,33 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_Express_LT_3500_Extended,_12-29-2025.jpg"
   },
+  "chevrolet|gmc-suburban": {
+    "image": "store/img/bikes/chevrolet-gmc-suburban.webp",
+    "thumb": "store/img/bikes/chevrolet-gmc-suburban-thumb.webp",
+    "kind": "car",
+    "title": "GM Heritage Center - 025 - Cars - GMC Suburban Carrier.jpg",
+    "author": "Tino Rossini",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:GM_Heritage_Center_-_025_-_Cars_-_GMC_Suburban_Carrier.jpg"
+  },
+  "chevrolet|impala": {
+    "image": "store/img/bikes/chevrolet-impala.webp",
+    "thumb": "store/img/bikes/chevrolet-impala-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Impala (2014–2020) 1X7A7173.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Impala_(2014%E2%80%932020)_1X7A7173.jpg"
+  },
+  "chevrolet|malibu": {
+    "image": "store/img/bikes/chevrolet-malibu.webp",
+    "thumb": "store/img/bikes/chevrolet-malibu-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Malibu VIII Shishi 02 2022-03-01.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Malibu_VIII_Shishi_02_2022-03-01.jpg"
+  },
   "chevrolet|silverado": {
     "image": "store/img/bikes/chevrolet-silverado.webp",
     "thumb": "store/img/bikes/chevrolet-silverado-thumb.webp",
@@ -1347,6 +1725,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_C-K_Silverado_Hirschaid_2022-20220709-RM-110037.jpg"
   },
+  "chevrolet|silverado-ev": {
+    "image": "store/img/bikes/chevrolet-silverado-ev.webp",
+    "thumb": "store/img/bikes/chevrolet-silverado-ev-thumb.webp",
+    "kind": "car",
+    "title": "2025 Chevrolet Silverado EV au salon auto Lanaudière 2025.JPG",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Chevrolet_Silverado_EV_au_salon_auto_Lanaudi%C3%A8re_2025.JPG"
+  },
   "chevrolet|silverado-hd": {
     "image": "store/img/bikes/chevrolet-silverado-hd.webp",
     "thumb": "store/img/bikes/chevrolet-silverado-hd-thumb.webp",
@@ -1355,6 +1742,33 @@
     "author": "Bull-Doser",
     "license": "Public domain",
     "source": "https://commons.wikimedia.org/wiki/File:2025_Chevrolet_Silverado_HD_Crew_Cab.jpg"
+  },
+  "chevrolet|sonic": {
+    "image": "store/img/bikes/chevrolet-sonic.webp",
+    "thumb": "store/img/bikes/chevrolet-sonic-thumb.webp",
+    "kind": "car",
+    "title": "2012 Chevrolet Sonic LT sedan, front right, 09-07-2024.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Sonic_LT_sedan,_front_right,_09-07-2024.jpg"
+  },
+  "chevrolet|spark": {
+    "image": "store/img/bikes/chevrolet-spark.webp",
+    "thumb": "store/img/bikes/chevrolet-spark-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Spark M150 Shishi 01 2022-10-03.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Spark_M150_Shishi_01_2022-10-03.jpg"
+  },
+  "chevrolet|ss": {
+    "image": "store/img/bikes/chevrolet-ss.webp",
+    "thumb": "store/img/bikes/chevrolet-ss-thumb.webp",
+    "kind": "car",
+    "title": "2017 Chevrolet Camaro SS Convertible.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Camaro_SS_Convertible.jpg"
   },
   "chevrolet|suburban": {
     "image": "store/img/bikes/chevrolet-suburban.webp",
@@ -1374,6 +1788,24 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2015_Chevrolet_Tahoe_LT_5.3L_front_3.24.19.jpg"
   },
+  "chevrolet|towing": {
+    "image": "store/img/bikes/chevrolet-towing.webp",
+    "thumb": "store/img/bikes/chevrolet-towing-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Golden State Towing Truck Roseville 2024.jpg",
+    "author": "TaurusEmerald",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Golden_State_Towing_Truck_Roseville_2024.jpg"
+  },
+  "chevrolet|trailblazer": {
+    "image": "store/img/bikes/chevrolet-trailblazer.webp",
+    "thumb": "store/img/bikes/chevrolet-trailblazer-thumb.webp",
+    "kind": "car",
+    "title": "Moscow, Chevrolet Trailblazer, Aug 2025 15.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Chevrolet_Trailblazer,_Aug_2025_15.jpg"
+  },
   "chevrolet|traverse": {
     "image": "store/img/bikes/chevrolet-traverse.webp",
     "thumb": "store/img/bikes/chevrolet-traverse-thumb.webp",
@@ -1382,6 +1814,204 @@
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Traverse_LS_AWD,_08-14-2022.jpg"
+  },
+  "chevrolet|trax": {
+    "image": "store/img/bikes/chevrolet-trax.webp",
+    "thumb": "store/img/bikes/chevrolet-trax-thumb.webp",
+    "kind": "car",
+    "title": "Chevrolet Trax 1.2 RS 2024 (2).jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Trax_1.2_RS_2024_(2).jpg"
+  },
+  "chevrolet|volt": {
+    "image": "store/img/bikes/chevrolet-volt.webp",
+    "thumb": "store/img/bikes/chevrolet-volt-thumb.webp",
+    "kind": "car",
+    "title": "2012 Chevrolet Volt qJake.jpg",
+    "author": "qJake",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Volt_qJake.jpg"
+  },
+  "chrysler|300": {
+    "image": "store/img/bikes/chrysler-300.webp",
+    "thumb": "store/img/bikes/chrysler-300-thumb.webp",
+    "kind": "car",
+    "title": "Chrysler 300C Sanming 01 2023-02-08.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chrysler_300C_Sanming_01_2023-02-08.jpg"
+  },
+  "chrysler|pacifica": {
+    "image": "store/img/bikes/chrysler-pacifica.webp",
+    "thumb": "store/img/bikes/chrysler-pacifica-thumb.webp",
+    "kind": "car",
+    "title": "Chrysler Pacifica RU 003 China 2019-03-28.jpg",
+    "author": "Navigator84",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chrysler_Pacifica_RU_003_China_2019-03-28.jpg"
+  },
+  "chrysler|pacifica-hybrid": {
+    "image": "store/img/bikes/chrysler-pacifica-hybrid.webp",
+    "thumb": "store/img/bikes/chrysler-pacifica-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "2023 Chrysler Pacifica Hybrid minivan in Velvet Red Pearl Coat charging 1of2.jpg",
+    "author": "CZmarlin — Christopher Ziemnowicz, a photo credit would be appreciated if this image is used anywhere other than Wikipedia.",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Chrysler_Pacifica_Hybrid_minivan_in_Velvet_Red_Pearl_Coat_charging_1of2.jpg"
+  },
+  "chrysler|voyager": {
+    "image": "store/img/bikes/chrysler-voyager.webp",
+    "thumb": "store/img/bikes/chrysler-voyager-thumb.webp",
+    "kind": "car",
+    "title": "2000 Chrysler Voyager, front left, 09-06-2025.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2000_Chrysler_Voyager,_front_left,_09-06-2025.jpg"
+  },
+  "citroen|c3": {
+    "image": "store/img/bikes/citroen-c3.webp",
+    "thumb": "store/img/bikes/citroen-c3-thumb.webp",
+    "kind": "car",
+    "title": "Citroën C3 Aircross, IAA 2017, Frankfurt (1Y7A3195).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_Aircross,_IAA_2017,_Frankfurt_(1Y7A3195).jpg"
+  },
+  "citroen|c4-c41": {
+    "image": "store/img/bikes/citroen-c4-c41.webp",
+    "thumb": "store/img/bikes/citroen-c4-c41-thumb.webp",
+    "kind": "car",
+    "title": "Citroën C4 C41 Caramel Brown (3).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C4_C41_Caramel_Brown_(3).jpg"
+  },
+  "cupra|ateca": {
+    "image": "store/img/bikes/cupra-ateca.webp",
+    "thumb": "store/img/bikes/cupra-ateca-thumb.webp",
+    "kind": "car",
+    "title": "Cupra Ateca 3 Genf 2018.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Ateca_3_Genf_2018.jpg"
+  },
+  "cupra|born": {
+    "image": "store/img/bikes/cupra-born.webp",
+    "thumb": "store/img/bikes/cupra-born-thumb.webp",
+    "kind": "car",
+    "title": "Cupra Born IAA 2021 1X7A0250.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Born_IAA_2021_1X7A0250.jpg"
+  },
+  "cupra|formentor": {
+    "image": "store/img/bikes/cupra-formentor.webp",
+    "thumb": "store/img/bikes/cupra-formentor-thumb.webp",
+    "kind": "car",
+    "title": "2022 Cupra Formentor V1 TSi (56008).jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Cupra_Formentor_V1_TSi_(56008).jpg"
+  },
+  "dacia|bigster": {
+    "image": "store/img/bikes/dacia-bigster.webp",
+    "thumb": "store/img/bikes/dacia-bigster-thumb.webp",
+    "kind": "car",
+    "title": "Dacia Bigster BIG854 Berlin 2025.jpg",
+    "author": "Pedant01",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Bigster_BIG854_Berlin_2025.jpg"
+  },
+  "dacia|duster": {
+    "image": "store/img/bikes/dacia-duster.webp",
+    "thumb": "store/img/bikes/dacia-duster-thumb.webp",
+    "kind": "car",
+    "title": "Dacia Duster II Facelift IAA 2021 1X7A0132.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Duster_II_Facelift_IAA_2021_1X7A0132.jpg"
+  },
+  "dacia|jogger": {
+    "image": "store/img/bikes/dacia-jogger.webp",
+    "thumb": "store/img/bikes/dacia-jogger-thumb.webp",
+    "kind": "car",
+    "title": "2024 Dacia Jogger Hybrid GIMS 2024 1X7A2409.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Dacia_Jogger_Hybrid_GIMS_2024_1X7A2409.jpg"
+  },
+  "dacia|logan": {
+    "image": "store/img/bikes/dacia-logan.webp",
+    "thumb": "store/img/bikes/dacia-logan-thumb.webp",
+    "kind": "car",
+    "title": "2023 Dacia Logan III IMG 9671.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Dacia_Logan_III_IMG_9671.jpg"
+  },
+  "dacia|sandero": {
+    "image": "store/img/bikes/dacia-sandero.webp",
+    "thumb": "store/img/bikes/dacia-sandero-thumb.webp",
+    "kind": "car",
+    "title": "2023 Dacia Sandero III 1X7A6192.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Dacia_Sandero_III_1X7A6192.jpg"
+  },
+  "dacia|spring": {
+    "image": "store/img/bikes/dacia-spring.webp",
+    "thumb": "store/img/bikes/dacia-spring-thumb.webp",
+    "kind": "car",
+    "title": "Dacia Spring IAA 2021 1X7A0215.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Spring_IAA_2021_1X7A0215.jpg"
+  },
+  "dodge|challenger": {
+    "image": "store/img/bikes/dodge-challenger.webp",
+    "thumb": "store/img/bikes/dodge-challenger-thumb.webp",
+    "kind": "car",
+    "title": "Dodge Challenger (LC) Hemi Leimershof -20190907-RM-171215.jpg",
+    "author": "Ermell",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dodge_Challenger_(LC)_Hemi_Leimershof_-20190907-RM-171215.jpg"
+  },
+  "dodge|charger": {
+    "image": "store/img/bikes/dodge-charger.webp",
+    "thumb": "store/img/bikes/dodge-charger-thumb.webp",
+    "kind": "car",
+    "title": "2023 Dodge Charger Hellcat.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Dodge_Charger_Hellcat.jpg"
+  },
+  "dodge|charger-srt": {
+    "image": "store/img/bikes/dodge-charger-srt.webp",
+    "thumb": "store/img/bikes/dodge-charger-srt-thumb.webp",
+    "kind": "car",
+    "title": "2015 Dodge Charger SRT Hellcat (21607570552).jpg",
+    "author": "Sicnag",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Dodge_Charger_SRT_Hellcat_(21607570552).jpg"
+  },
+  "dodge|durango": {
+    "image": "store/img/bikes/dodge-durango.webp",
+    "thumb": "store/img/bikes/dodge-durango-thumb.webp",
+    "kind": "car",
+    "title": "2014 Dodge Durango RT.jpg",
+    "author": "DestinationFearFan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Dodge_Durango_RT.jpg"
+  },
+  "ds-automobiles|ds7": {
+    "image": "store/img/bikes/ds-automobiles-ds7.webp",
+    "thumb": "store/img/bikes/ds-automobiles-ds7-thumb.webp",
+    "kind": "car",
+    "title": "DS 7 Crossback Shishi 01 2022-11-04.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:DS_7_Crossback_Shishi_01_2022-11-04.jpg"
   },
   "ducati|1198": {
     "image": "store/img/bikes/ducati-1198.webp",
@@ -1968,6 +2598,384 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_XDiavel,_Windsor,_Ontario,_2025-07-01.jpg",
     "hero": "store/img/bikes/ducati-xdiavel-hero.webp"
   },
+  "fiat|124-spider": {
+    "image": "store/img/bikes/fiat-124-spider.webp",
+    "thumb": "store/img/bikes/fiat-124-spider-thumb.webp",
+    "kind": "car",
+    "title": "Fiat 124 Spider, 1,4 l, Bj. 1970 (2016-07-02 Sp).JPG",
+    "author": "Lothar Spurzem",
+    "license": "CC BY-SA 2.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_124_Spider,_1,4_l,_Bj._1970_(2016-07-02_Sp).JPG"
+  },
+  "fiat|500": {
+    "image": "store/img/bikes/fiat-500.webp",
+    "thumb": "store/img/bikes/fiat-500-thumb.webp",
+    "kind": "car",
+    "title": "Fiat 500 Luxus BW 2016-07-17 14-02-29.jpg",
+    "author": "Berthold Werner",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500_Luxus_BW_2016-07-17_14-02-29.jpg"
+  },
+  "fiat|500e": {
+    "image": "store/img/bikes/fiat-500e.webp",
+    "thumb": "store/img/bikes/fiat-500e-thumb.webp",
+    "kind": "car",
+    "title": "Fiat 500e Trepiuno Rasant Automobilmesse Metzingen 2024 IMG 2198.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500e_Trepiuno_Rasant_Automobilmesse_Metzingen_2024_IMG_2198.jpg"
+  },
+  "fiat|500l": {
+    "image": "store/img/bikes/fiat-500l.webp",
+    "thumb": "store/img/bikes/fiat-500l-thumb.webp",
+    "kind": "car",
+    "title": "Fiat 500L diesel 1248cc registered March 2013.JPG",
+    "author": "Charles01",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500L_diesel_1248cc_registered_March_2013.JPG"
+  },
+  "fiat|ducato": {
+    "image": "store/img/bikes/fiat-ducato.webp",
+    "thumb": "store/img/bikes/fiat-ducato-thumb.webp",
+    "kind": "car",
+    "title": "Moscow, Fiat Ducato (2014) Sept 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Fiat_Ducato_(2014)_Sept_2025_01.jpg"
+  },
+  "fiat|educato": {
+    "image": "store/img/bikes/fiat-educato.webp",
+    "thumb": "store/img/bikes/fiat-educato-thumb.webp",
+    "kind": "car",
+    "title": "2022 Fiat eDucato.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Fiat_eDucato.jpg"
+  },
+  "fiat|nuova500": {
+    "image": "store/img/bikes/fiat-nuova500.webp",
+    "thumb": "store/img/bikes/fiat-nuova500-thumb.webp",
+    "kind": "car",
+    "title": "Fiat Nuova 500 shell.jpg",
+    "author": "andreboeni",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Nuova_500_shell.jpg"
+  },
+  "fiat|panda": {
+    "image": "store/img/bikes/fiat-panda.webp",
+    "thumb": "store/img/bikes/fiat-panda-thumb.webp",
+    "kind": "car",
+    "title": "2010 Fiat Panda Cross Multi-Jet 4x4.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2010_Fiat_Panda_Cross_Multi-Jet_4x4.jpg"
+  },
+  "fiat|qubo": {
+    "image": "store/img/bikes/fiat-qubo.webp",
+    "thumb": "store/img/bikes/fiat-qubo-thumb.webp",
+    "kind": "car",
+    "title": "Fiat Qubo 2018 (37158712554).jpg",
+    "author": "RL GNZLZ from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Qubo_2018_(37158712554).jpg"
+  },
+  "fiat|spider": {
+    "image": "store/img/bikes/fiat-spider.webp",
+    "thumb": "store/img/bikes/fiat-spider-thumb.webp",
+    "kind": "car",
+    "title": "Fiat 124 Spider (2016) 1X7A0822.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_124_Spider_(2016)_1X7A0822.jpg"
+  },
+  "fiat|tipo": {
+    "image": "store/img/bikes/fiat-tipo.webp",
+    "thumb": "store/img/bikes/fiat-tipo-thumb.webp",
+    "kind": "car",
+    "title": "Fiat Tipo - przód (MSP16).jpg",
+    "author": "Jakub \"Flyz1\" Maciejewski",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Tipo_-_prz%C3%B3d_(MSP16).jpg"
+  },
+  "ford|bronco-sport": {
+    "image": "store/img/bikes/ford-bronco-sport.webp",
+    "thumb": "store/img/bikes/ford-bronco-sport-thumb.webp",
+    "kind": "car",
+    "title": "2022 Ford Bronco Sport Big Bend, front left, 09-03-2022.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Ford_Bronco_Sport_Big_Bend,_front_left,_09-03-2022.jpg"
+  },
+  "ford|c-max-hybrid": {
+    "image": "store/img/bikes/ford-c-max-hybrid.webp",
+    "thumb": "store/img/bikes/ford-c-max-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Ford C-Max Hybrid SE (II) – f 26072025.jpg",
+    "author": "© M 93",
+    "license": "CC BY-SA 3.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_C-Max_Hybrid_SE_(II)_%E2%80%93_f_26072025.jpg"
+  },
+  "ford|c-max-hybrid-energi": {
+    "image": "store/img/bikes/ford-c-max-hybrid-energi.webp",
+    "thumb": "store/img/bikes/ford-c-max-hybrid-energi-thumb.webp",
+    "kind": "car",
+    "title": "Ford C-MAX Energi Plug-In Hybrid.jpg",
+    "author": "Overlaet",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_C-MAX_Energi_Plug-In_Hybrid.jpg"
+  },
+  "ford|e-350": {
+    "image": "store/img/bikes/ford-e-350.webp",
+    "thumb": "store/img/bikes/ford-e-350-thumb.webp",
+    "kind": "car",
+    "title": "2006 Ford E-350 school bus.jpg",
+    "author": "Thomasfan1916",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2006_Ford_E-350_school_bus.jpg"
+  },
+  "ford|e-450": {
+    "image": "store/img/bikes/ford-e-450.webp",
+    "thumb": "store/img/bikes/ford-e-450-thumb.webp",
+    "kind": "car",
+    "title": "2005 Ford E-450 Super Duty.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2005_Ford_E-450_Super_Duty.jpg"
+  },
+  "ford|ecosport": {
+    "image": "store/img/bikes/ford-ecosport.webp",
+    "thumb": "store/img/bikes/ford-ecosport-thumb.webp",
+    "kind": "car",
+    "title": "Ford Ecosport small crossover.jpg",
+    "author": "Ee2mba",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Ecosport_small_crossover.jpg"
+  },
+  "ford|edge": {
+    "image": "store/img/bikes/ford-edge.webp",
+    "thumb": "store/img/bikes/ford-edge-thumb.webp",
+    "kind": "car",
+    "title": "Ford Edge, IAA 2017, (1Y7A3333).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Edge,_IAA_2017,_(1Y7A3333).jpg"
+  },
+  "ford|escape": {
+    "image": "store/img/bikes/ford-escape.webp",
+    "thumb": "store/img/bikes/ford-escape-thumb.webp",
+    "kind": "car",
+    "title": "Ford Escape 2014 EcoBoost.jpg",
+    "author": "Tyanroon-chan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Escape_2014_EcoBoost.jpg"
+  },
+  "ford|expedition": {
+    "image": "store/img/bikes/ford-expedition.webp",
+    "thumb": "store/img/bikes/ford-expedition-thumb.webp",
+    "kind": "car",
+    "title": "Ford Expedition Limited 3.5 EcoBoost 2019.jpg",
+    "author": "RL GNZLZ",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Expedition_Limited_3.5_EcoBoost_2019.jpg"
+  },
+  "ford|explorer": {
+    "image": "store/img/bikes/ford-explorer.webp",
+    "thumb": "store/img/bikes/ford-explorer-thumb.webp",
+    "kind": "car",
+    "title": "Ford Explorer EV IAA 2023 1X7A0565.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Explorer_EV_IAA_2023_1X7A0565.jpg"
+  },
+  "ford|f-150": {
+    "image": "store/img/bikes/ford-f-150.webp",
+    "thumb": "store/img/bikes/ford-f-150-thumb.webp",
+    "kind": "car",
+    "title": "Ford F-150 XL SuperCrew -- 03-10-2010.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_F-150_XL_SuperCrew_--_03-10-2010.jpg"
+  },
+  "ford|f-150-lightning": {
+    "image": "store/img/bikes/ford-f-150-lightning.webp",
+    "thumb": "store/img/bikes/ford-f-150-lightning-thumb.webp",
+    "kind": "car",
+    "title": "2023 Ford F-150 Lightning.jpg",
+    "author": "WMrapids",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Ford_F-150_Lightning.jpg"
+  },
+  "ford|f-250": {
+    "image": "store/img/bikes/ford-f-250.webp",
+    "thumb": "store/img/bikes/ford-f-250-thumb.webp",
+    "kind": "car",
+    "title": "Ford F-250 BW 2016-07-17 14-00-31.jpg",
+    "author": "Berthold Werner",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_F-250_BW_2016-07-17_14-00-31.jpg"
+  },
+  "ford|f-350": {
+    "image": "store/img/bikes/ford-f-350.webp",
+    "thumb": "store/img/bikes/ford-f-350-thumb.webp",
+    "kind": "car",
+    "title": "2005 Ford F-350.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2005_Ford_F-350.jpg"
+  },
+  "ford|f-450": {
+    "image": "store/img/bikes/ford-f-450.webp",
+    "thumb": "store/img/bikes/ford-f-450-thumb.webp",
+    "kind": "car",
+    "title": "2008 Ford F-450.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2008_Ford_F-450.jpg"
+  },
+  "ford|f-550": {
+    "image": "store/img/bikes/ford-f-550.webp",
+    "thumb": "store/img/bikes/ford-f-550-thumb.webp",
+    "kind": "car",
+    "title": "2020-2022 Ford Super Duty F-550 Tow Regular Cab.jpg",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2020-2022_Ford_Super_Duty_F-550_Tow_Regular_Cab.jpg"
+  },
+  "ford|f-600": {
+    "image": "store/img/bikes/ford-f-600.webp",
+    "thumb": "store/img/bikes/ford-f-600-thumb.webp",
+    "kind": "car",
+    "title": "Ford F-600 Diesel 1968 (3).jpg",
+    "author": "Just a Man",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_F-600_Diesel_1968_(3).jpg"
+  },
+  "ford|fiesta": {
+    "image": "store/img/bikes/ford-fiesta.webp",
+    "thumb": "store/img/bikes/ford-fiesta-thumb.webp",
+    "kind": "car",
+    "title": "2013 Ford Fiesta R5.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Ford_Fiesta_R5.jpg"
+  },
+  "ford|flex": {
+    "image": "store/img/bikes/ford-flex.webp",
+    "thumb": "store/img/bikes/ford-flex-thumb.webp",
+    "kind": "car",
+    "title": "2009 Ford Flex (1).jpg",
+    "author": "Ford Motor Company from USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009_Ford_Flex_(1).jpg"
+  },
+  "ford|focus": {
+    "image": "store/img/bikes/ford-focus.webp",
+    "thumb": "store/img/bikes/ford-focus-thumb.webp",
+    "kind": "car",
+    "title": "2018 Ford Focus ST-Line EcoBoost 1.0 (1).jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Ford_Focus_ST-Line_EcoBoost_1.0_(1).jpg"
+  },
+  "ford|focus-electric": {
+    "image": "store/img/bikes/ford-focus-electric.webp",
+    "thumb": "store/img/bikes/ford-focus-electric-thumb.webp",
+    "kind": "car",
+    "title": "2012 Ford Focus Electric Vehicle MSVG 02.jpg",
+    "author": "MSVG (Michael Gil)",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Ford_Focus_Electric_Vehicle_MSVG_02.jpg"
+  },
+  "ford|fusion": {
+    "image": "store/img/bikes/ford-fusion.webp",
+    "thumb": "store/img/bikes/ford-fusion-thumb.webp",
+    "kind": "car",
+    "title": "2011 Ford Fusion SE.jpg",
+    "author": "DestinationFearFan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Ford_Fusion_SE.jpg"
+  },
+  "ford|maverick": {
+    "image": "store/img/bikes/ford-maverick.webp",
+    "thumb": "store/img/bikes/ford-maverick-thumb.webp",
+    "kind": "car",
+    "title": "Ford Maverick (4532455253).jpg",
+    "author": "Spanish Coches",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Maverick_(4532455253).jpg"
+  },
+  "ford|mustang": {
+    "image": "store/img/bikes/ford-mustang.webp",
+    "thumb": "store/img/bikes/ford-mustang-thumb.webp",
+    "kind": "car",
+    "title": "Ford Mustang Kulmbach 2018 6170295.jpg",
+    "author": "Ermell",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Mustang_Kulmbach_2018_6170295.jpg"
+  },
+  "ford|mustang-mach-e": {
+    "image": "store/img/bikes/ford-mustang-mach-e.webp",
+    "thumb": "store/img/bikes/ford-mustang-mach-e-thumb.webp",
+    "kind": "car",
+    "title": "Ford Mustang Mach-E GT IAA 2021 1X7A0176.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Mustang_Mach-E_GT_IAA_2021_1X7A0176.jpg"
+  },
+  "ford|police-interceptor-sedan": {
+    "image": "store/img/bikes/ford-police-interceptor-sedan.webp",
+    "thumb": "store/img/bikes/ford-police-interceptor-sedan-thumb.webp",
+    "kind": "car",
+    "title": "2016 Ford Police Interceptor Sedan.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Ford_Police_Interceptor_Sedan.jpg"
+  },
+  "ford|police-interceptor-utility": {
+    "image": "store/img/bikes/ford-police-interceptor-utility.webp",
+    "thumb": "store/img/bikes/ford-police-interceptor-utility-thumb.webp",
+    "kind": "car",
+    "title": "2021 Ford Police Interceptor Utility - 01.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Ford_Police_Interceptor_Utility_-_01.jpg"
+  },
+  "ford|ranger": {
+    "image": "store/img/bikes/ford-ranger.webp",
+    "thumb": "store/img/bikes/ford-ranger-thumb.webp",
+    "kind": "car",
+    "title": "Ford Ranger Raptor IAA 2019 JM 0492.jpg",
+    "author": "Johannes Maximilian",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Ranger_Raptor_IAA_2019_JM_0492.jpg"
+  },
+  "ford|super-duty": {
+    "image": "store/img/bikes/ford-super-duty.webp",
+    "thumb": "store/img/bikes/ford-super-duty-thumb.webp",
+    "kind": "car",
+    "title": "Ford F-450 Super Duty - 01.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_F-450_Super_Duty_-_01.jpg"
+  },
+  "ford|taurus": {
+    "image": "store/img/bikes/ford-taurus.webp",
+    "thumb": "store/img/bikes/ford-taurus-thumb.webp",
+    "kind": "car",
+    "title": "Ford Taurus Bahrain 2013-2019.jpg",
+    "author": "ToyGTone",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Taurus_Bahrain_2013-2019.jpg"
+  },
+  "ford|transit": {
+    "image": "store/img/bikes/ford-transit.webp",
+    "thumb": "store/img/bikes/ford-transit-thumb.webp",
+    "kind": "car",
+    "title": "Ford Transit BW 2016-09-03 13-49-03.jpg",
+    "author": "Berthold Werner",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Transit_BW_2016-09-03_13-49-03.jpg"
+  },
   "gasgas|ec-125": {
     "image": "store/img/bikes/gasgas-ec-125.webp",
     "thumb": "store/img/bikes/gasgas-ec-125-thumb.webp",
@@ -2031,6 +3039,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:GASGAS_TXT_PRO_250.JPG",
     "hero": "store/img/bikes/gasgas-txt-pro-250-hero.webp"
   },
+  "genesis|g70": {
+    "image": "store/img/bikes/genesis-g70.webp",
+    "thumb": "store/img/bikes/genesis-g70-thumb.webp",
+    "kind": "car",
+    "title": "2024 Genesis G70 Track Taxi Nordschleife.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Genesis_G70_Track_Taxi_Nordschleife.jpg"
+  },
   "genesis|g80": {
     "image": "store/img/bikes/genesis-g80.webp",
     "thumb": "store/img/bikes/genesis-g80-thumb.webp",
@@ -2039,6 +3056,42 @@
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Genesis_G80_(RG3)_IAA_2021_1X7A0161.jpg"
+  },
+  "genesis|g80-ev": {
+    "image": "store/img/bikes/genesis-g80-ev.webp",
+    "thumb": "store/img/bikes/genesis-g80-ev-thumb.webp",
+    "kind": "car",
+    "title": "Genesis G80 EV Magma Concept 002.jpg",
+    "author": "JustAnotherCarDesigner",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_G80_EV_Magma_Concept_002.jpg"
+  },
+  "genesis|g80-sport": {
+    "image": "store/img/bikes/genesis-g80-sport.webp",
+    "thumb": "store/img/bikes/genesis-g80-sport-thumb.webp",
+    "kind": "car",
+    "title": "Genesis G80 Sport RG3 Verbier White (5).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_G80_Sport_RG3_Verbier_White_(5).jpg"
+  },
+  "genesis|g90": {
+    "image": "store/img/bikes/genesis-g90.webp",
+    "thumb": "store/img/bikes/genesis-g90-thumb.webp",
+    "kind": "car",
+    "title": "2024 Genesis G90 (RS4) DSC 7460.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Genesis_G90_(RS4)_DSC_7460.jpg"
+  },
+  "genesis|genesis-coupe": {
+    "image": "store/img/bikes/genesis-genesis-coupe.webp",
+    "thumb": "store/img/bikes/genesis-genesis-coupe-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Genesis Coupe IMG 6750.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Genesis_Coupe_IMG_6750.jpg"
   },
   "genesis|gv60": {
     "image": "store/img/bikes/genesis-gv60.webp",
@@ -2067,6 +3120,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV70_IAA_2021_1X7A0228.jpg"
   },
+  "genesis|gv70-ev": {
+    "image": "store/img/bikes/genesis-gv70-ev.webp",
+    "thumb": "store/img/bikes/genesis-gv70-ev-thumb.webp",
+    "kind": "car",
+    "title": "Genesis GV70 EV 001.jpg",
+    "author": "JustAnotherCarDesigner",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV70_EV_001.jpg"
+  },
   "genesis|gv80": {
     "image": "store/img/bikes/genesis-gv80.webp",
     "thumb": "store/img/bikes/genesis-gv80-thumb.webp",
@@ -2075,6 +3137,15 @@
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV80_IAA_2021_1X7A0230.jpg"
+  },
+  "genesis|gv80-coupe": {
+    "image": "store/img/bikes/genesis-gv80-coupe.webp",
+    "thumb": "store/img/bikes/genesis-gv80-coupe-thumb.webp",
+    "kind": "car",
+    "title": "Genesis GV80 Coupe 002.jpg",
+    "author": "JustAnotherCarDesigner",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Genesis_GV80_Coupe_002.jpg"
   },
   "gmc|acadia": {
     "image": "store/img/bikes/gmc-acadia.webp",
@@ -2085,6 +3156,24 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2013_GMC_Acadia_front_4.27.18.jpg"
   },
+  "gmc|canyon": {
+    "image": "store/img/bikes/gmc-canyon.webp",
+    "thumb": "store/img/bikes/gmc-canyon-thumb.webp",
+    "kind": "car",
+    "title": "2023 GMC Canyon.jpg",
+    "author": "42-BRT",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_GMC_Canyon.jpg"
+  },
+  "gmc|gmc-hummer": {
+    "image": "store/img/bikes/gmc-gmc-hummer.webp",
+    "thumb": "store/img/bikes/gmc-gmc-hummer-thumb.webp",
+    "kind": "car",
+    "title": "2022 GMC Hummer EV Truck (Black).jpg",
+    "author": "42-BRT",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_GMC_Hummer_EV_Truck_(Black).jpg"
+  },
   "gmc|savana": {
     "image": "store/img/bikes/gmc-savana.webp",
     "thumb": "store/img/bikes/gmc-savana-thumb.webp",
@@ -2093,6 +3182,33 @@
     "author": "Kevauto",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2007_GMC_Savana_2500_Cargo_4.8L,_front_7.7.19.jpg"
+  },
+  "gmc|sierra": {
+    "image": "store/img/bikes/gmc-sierra.webp",
+    "thumb": "store/img/bikes/gmc-sierra-thumb.webp",
+    "kind": "car",
+    "title": "2019 GMC Sierra AT4 5.3L V8, front 12.31.19.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_GMC_Sierra_AT4_5.3L_V8,_front_12.31.19.jpg"
+  },
+  "gmc|sierra-ev": {
+    "image": "store/img/bikes/gmc-sierra-ev.webp",
+    "thumb": "store/img/bikes/gmc-sierra-ev-thumb.webp",
+    "kind": "car",
+    "title": "2024 GMC Sierra EV Denali Edition 1 (United States) front view.jpg",
+    "author": "Charles",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_GMC_Sierra_EV_Denali_Edition_1_(United_States)_front_view.jpg"
+  },
+  "gmc|sierra-hd": {
+    "image": "store/img/bikes/gmc-sierra-hd.webp",
+    "thumb": "store/img/bikes/gmc-sierra-hd-thumb.webp",
+    "kind": "car",
+    "title": "GMC Sierra HD Crew Cab GMTT1XX TMP.jpg",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:GMC_Sierra_HD_Crew_Cab_GMTT1XX_TMP.jpg"
   },
   "gmc|terrain": {
     "image": "store/img/bikes/gmc-terrain.webp",
@@ -2606,6 +3722,15 @@
     "license": "CC BY 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Pantheon_150_in_Avellino.jpg",
     "hero": "store/img/bikes/honda-150-hero.webp"
+  },
+  "honda|accord": {
+    "image": "store/img/bikes/honda-accord.webp",
+    "thumb": "store/img/bikes/honda-accord-thumb.webp",
+    "kind": "car",
+    "title": "Honda Accord 1993 Finland.JPG",
+    "author": "MattiPaavola",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Accord_1993_Finland.JPG"
   },
   "honda|activa": {
     "image": "store/img/bikes/honda-activa.webp",
@@ -3264,6 +4389,24 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CGL_125_2014_(15887071072).jpg",
     "hero": "store/img/bikes/honda-cgl-125-hero.webp"
   },
+  "honda|civic-hatchback": {
+    "image": "store/img/bikes/honda-civic-hatchback.webp",
+    "thumb": "store/img/bikes/honda-civic-hatchback-thumb.webp",
+    "kind": "car",
+    "title": "1991 Honda Civic STD Hatchback in Frost White, front right, 05-15-2022.jpg",
+    "author": "Cutlass",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:1991_Honda_Civic_STD_Hatchback_in_Frost_White,_front_right,_05-15-2022.jpg"
+  },
+  "honda|civic-sedan": {
+    "image": "store/img/bikes/honda-civic-sedan.webp",
+    "thumb": "store/img/bikes/honda-civic-sedan-thumb.webp",
+    "kind": "car",
+    "title": "2022 Honda Civic LX Sedan, front right, 11-02-2022.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Honda_Civic_LX_Sedan,_front_right,_11-02-2022.jpg"
+  },
   "honda|click-125": {
     "image": "store/img/bikes/honda-click-125.webp",
     "thumb": "store/img/bikes/honda-click-125-thumb.webp",
@@ -3290,6 +4433,15 @@
     "author": "EurovisionNim",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2018_Honda_CR-V_(RW_MY18)_%2BSport_2WD_wagon_(2018-10-22)_02.jpg"
+  },
+  "honda|cr-v-hybrid": {
+    "image": "store/img/bikes/honda-cr-v-hybrid.webp",
+    "thumb": "store/img/bikes/honda-cr-v-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "HONDA CR-V HYBRID FIFTH GENERATION China (2).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HONDA_CR-V_HYBRID_FIFTH_GENERATION_China_(2).jpg"
   },
   "honda|crf1000": {
     "image": "store/img/bikes/honda-crf1000.webp",
@@ -3488,6 +4640,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR_1000_RR_Fireblade,_c._2005_model.jpg",
     "hero": "store/img/bikes/honda-fireblade-hero.webp"
+  },
+  "honda|fit": {
+    "image": "store/img/bikes/honda-fit.webp",
+    "thumb": "store/img/bikes/honda-fit-thumb.webp",
+    "kind": "car",
+    "title": "2020-2022 Honda Fit e-HEV Home rear.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020-2022_Honda_Fit_e-HEV_Home_rear.jpg"
   },
   "honda|fmx-650": {
     "image": "store/img/bikes/honda-fmx-650.webp",
@@ -3705,6 +4866,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_Hornet_900_4.jpg",
     "hero": "store/img/bikes/honda-hornet-900-hero.webp"
   },
+  "honda|hr-v": {
+    "image": "store/img/bikes/honda-hr-v.webp",
+    "thumb": "store/img/bikes/honda-hr-v-thumb.webp",
+    "kind": "car",
+    "title": "2025 Honda HR-V Hybrid DSC 7908.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_HR-V_Hybrid_DSC_7908.jpg"
+  },
   "honda|interceptor": {
     "image": "store/img/bikes/honda-interceptor.webp",
     "thumb": "store/img/bikes/honda-interceptor-thumb.webp",
@@ -3903,6 +5073,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_NX650_Dominator.jpg",
     "hero": "store/img/bikes/honda-nx-650-dominator-hero.webp"
   },
+  "honda|odyssey": {
+    "image": "store/img/bikes/honda-odyssey.webp",
+    "thumb": "store/img/bikes/honda-odyssey-thumb.webp",
+    "kind": "car",
+    "title": "HONDA ODYSSEY(INTERNATIONAL) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HONDA_ODYSSEY(INTERNATIONAL)_China.jpg"
+  },
   "honda|paneuropean": {
     "image": "store/img/bikes/honda-paneuropean.webp",
     "thumb": "store/img/bikes/honda-paneuropean-thumb.webp",
@@ -4002,6 +5181,15 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_PCX150_2013.JPG",
     "hero": "store/img/bikes/honda-pcx150-hero.webp"
   },
+  "honda|pilot": {
+    "image": "store/img/bikes/honda-pilot.webp",
+    "thumb": "store/img/bikes/honda-pilot-thumb.webp",
+    "kind": "car",
+    "title": "Honda Pilot (second generation) IMG 4032.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Pilot_(second_generation)_IMG_4032.jpg"
+  },
   "honda|ps-125i": {
     "image": "store/img/bikes/honda-ps-125i.webp",
     "thumb": "store/img/bikes/honda-ps-125i-thumb.webp",
@@ -4073,6 +5261,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2020_Honda_Rebel_500.jpg",
     "hero": "store/img/bikes/honda-rebel-500-hero.webp"
+  },
+  "honda|ridgeline": {
+    "image": "store/img/bikes/honda-ridgeline.webp",
+    "thumb": "store/img/bikes/honda-ridgeline-thumb.webp",
+    "kind": "car",
+    "title": "2019 Honda Ridgeline RTL-E Offroad.jpg",
+    "author": "Jennie Logan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Honda_Ridgeline_RTL-E_Offroad.jpg"
   },
   "honda|rs-125": {
     "image": "store/img/bikes/honda-rs-125.webp",
@@ -4803,6 +6000,42 @@
     "source": "https://commons.wikimedia.org/wiki/File:Husqvarna_Vitpilen_701_(2).jpg",
     "hero": "store/img/bikes/husqvarna-vitpilen-701-hero.webp"
   },
+  "hyundai|accent": {
+    "image": "store/img/bikes/hyundai-accent.webp",
+    "thumb": "store/img/bikes/hyundai-accent-thumb.webp",
+    "kind": "car",
+    "title": "2012 Hyundai Accent (RB) Premium sedan (2018-10-01) 02.jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Hyundai_Accent_(RB)_Premium_sedan_(2018-10-01)_02.jpg"
+  },
+  "hyundai|azera": {
+    "image": "store/img/bikes/hyundai-azera.webp",
+    "thumb": "store/img/bikes/hyundai-azera-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Azera, TG, Silver 2.jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Azera,_TG,_Silver_2.jpg"
+  },
+  "hyundai|elantra": {
+    "image": "store/img/bikes/hyundai-elantra.webp",
+    "thumb": "store/img/bikes/hyundai-elantra-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Elantra Langdong Facelift Shishi 02 2022-05-20.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Elantra_Langdong_Facelift_Shishi_02_2022-05-20.jpg"
+  },
+  "hyundai|elantra-gt": {
+    "image": "store/img/bikes/hyundai-elantra-gt.webp",
+    "thumb": "store/img/bikes/hyundai-elantra-gt-thumb.webp",
+    "kind": "car",
+    "title": "2019 Hyundai i30 N-Line PD (Elantra GT) 1.6 T-GDi.jpg",
+    "author": "Avante2025",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Hyundai_i30_N-Line_PD_(Elantra_GT)_1.6_T-GDi.jpg"
+  },
   "hyundai|elantra-hybrid": {
     "image": "store/img/bikes/hyundai-elantra-hybrid.webp",
     "thumb": "store/img/bikes/hyundai-elantra-hybrid-thumb.webp",
@@ -4811,6 +6044,132 @@
     "author": "Charles from Port Chester, New York",
     "license": "CC BY 2.0",
     "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Elantra_Hybrid_Limited_(2024)_(53625589026).jpg"
+  },
+  "hyundai|elantra-n": {
+    "image": "store/img/bikes/hyundai-elantra-n.webp",
+    "thumb": "store/img/bikes/hyundai-elantra-n-thumb.webp",
+    "kind": "car",
+    "title": "2022 Hyundai Elantra N in Fiery Red, Front Left, 04-18-2022.jpg",
+    "author": "Elise240SX",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Elantra_N_in_Fiery_Red,_Front_Left,_04-18-2022.jpg"
+  },
+  "hyundai|elantra-n-line": {
+    "image": "store/img/bikes/hyundai-elantra-n-line.webp",
+    "thumb": "store/img/bikes/hyundai-elantra-n-line-thumb.webp",
+    "kind": "car",
+    "title": "MIAS 2025 - Hyundai Elantra CN7 1.6T N Line 01.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MIAS_2025_-_Hyundai_Elantra_CN7_1.6T_N_Line_01.jpg"
+  },
+  "hyundai|ioniq-5": {
+    "image": "store/img/bikes/hyundai-ioniq-5.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-5-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq 5 N TA Spec Auto Zuerich 2025 DSC 3735.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_5_N_TA_Spec_Auto_Zuerich_2025_DSC_3735.jpg"
+  },
+  "hyundai|ioniq-5-n": {
+    "image": "store/img/bikes/hyundai-ioniq-5-n.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-5-n-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq 5 N Line Automesse Ludwigsburg 2025 DSC 2639.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_5_N_Line_Automesse_Ludwigsburg_2025_DSC_2639.jpg"
+  },
+  "hyundai|ioniq-5n": {
+    "image": "store/img/bikes/hyundai-ioniq-5n.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-5n-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq 5N.jpg",
+    "author": "EIS30",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_5N.jpg"
+  },
+  "hyundai|ioniq-6": {
+    "image": "store/img/bikes/hyundai-ioniq-6.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-6-thumb.webp",
+    "kind": "car",
+    "title": "2023 Hyundai ioniq 6 Ultimate.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Hyundai_ioniq_6_Ultimate.jpg"
+  },
+  "hyundai|ioniq-electric": {
+    "image": "store/img/bikes/hyundai-ioniq-electric.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-electric-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq Electric CRI 01 2022 3616.jpg",
+    "author": "Mariordo (Mario Roberto Durán Ortiz)",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_Electric_CRI_01_2022_3616.jpg"
+  },
+  "hyundai|ioniq-ev": {
+    "image": "store/img/bikes/hyundai-ioniq-ev.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-ev-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq EV CRI 03 2021 7549.jpg",
+    "author": "Mariordo (Mario Roberto Durán Ortiz)",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_EV_CRI_03_2021_7549.jpg"
+  },
+  "hyundai|ioniq-hev": {
+    "image": "store/img/bikes/hyundai-ioniq-hev.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-hev-thumb.webp",
+    "kind": "car",
+    "title": "2019 Hyundai Ioniq Premium HEV - 1580cc 1.6 (141PS) Petrol Hybrid - Polar White - 04-2024, Front.jpg",
+    "author": "Harvey Bold",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Hyundai_Ioniq_Premium_HEV_-_1580cc_1.6_(141PS)_Petrol_Hybrid_-_Polar_White_-_04-2024,_Front.jpg"
+  },
+  "hyundai|ioniq-hybrid": {
+    "image": "store/img/bikes/hyundai-ioniq-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "2020 Hyundai Ioniq Hybrid.jpg",
+    "author": "Alawadhi3000",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Hyundai_Ioniq_Hybrid.jpg"
+  },
+  "hyundai|ioniq-phev": {
+    "image": "store/img/bikes/hyundai-ioniq-phev.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-phev-thumb.webp",
+    "kind": "car",
+    "title": "2018 Hyundai Ioniq Premium SE PHEV S-A 1.6 Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Hyundai_Ioniq_Premium_SE_PHEV_S-A_1.6_Front.jpg"
+  },
+  "hyundai|ioniq-plug-in-hybrid": {
+    "image": "store/img/bikes/hyundai-ioniq-plug-in-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-plug-in-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "2020 Hyundai Ioniq Plug-in Hybrid Premium SE facelift 1.6.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Hyundai_Ioniq_Plug-in_Hybrid_Premium_SE_facelift_1.6.jpg"
+  },
+  "hyundai|ioniq-plugin": {
+    "image": "store/img/bikes/hyundai-ioniq-plugin.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq-plugin-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq Plugin (SIAM 2019).jpg",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_Plugin_(SIAM_2019).jpg"
+  },
+  "hyundai|ioniq5": {
+    "image": "store/img/bikes/hyundai-ioniq5.webp",
+    "thumb": "store/img/bikes/hyundai-ioniq5-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Ioniq 5 Leonberg 2022 1X7A0510.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Ioniq_5_Leonberg_2022_1X7A0510.jpg"
   },
   "hyundai|kona": {
     "image": "store/img/bikes/hyundai-kona.webp",
@@ -4821,6 +6180,60 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2018_Hyundai_Kona_SE_1.0.jpg"
   },
+  "hyundai|kona-ev": {
+    "image": "store/img/bikes/hyundai-kona-ev.webp",
+    "thumb": "store/img/bikes/hyundai-kona-ev-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Kona EV CRI 03 2021 7544.jpg",
+    "author": "Mariordo (Mario Roberto Durán Ortiz)",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Kona_EV_CRI_03_2021_7544.jpg"
+  },
+  "hyundai|kona-n": {
+    "image": "store/img/bikes/hyundai-kona-n.webp",
+    "thumb": "store/img/bikes/hyundai-kona-n-thumb.webp",
+    "kind": "car",
+    "title": "2022 Hyundai Kona N T-GDi Auto.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Kona_N_T-GDi_Auto.jpg"
+  },
+  "hyundai|nexo": {
+    "image": "store/img/bikes/hyundai-nexo.webp",
+    "thumb": "store/img/bikes/hyundai-nexo-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Nexo IAA 2021 1X7A0241.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Nexo_IAA_2021_1X7A0241.jpg"
+  },
+  "hyundai|nexo-fuel-cell": {
+    "image": "store/img/bikes/hyundai-nexo-fuel-cell.webp",
+    "thumb": "store/img/bikes/hyundai-nexo-fuel-cell-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Nexo Fuel Cell NH2 Ocean Indigo Matte (8).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Nexo_Fuel_Cell_NH2_Ocean_Indigo_Matte_(8).jpg"
+  },
+  "hyundai|palisade": {
+    "image": "store/img/bikes/hyundai-palisade.webp",
+    "thumb": "store/img/bikes/hyundai-palisade-thumb.webp",
+    "kind": "car",
+    "title": "2020 Hyundai Palisade 08-11-2019.jpg",
+    "author": "SsmIntrigue",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Hyundai_Palisade_08-11-2019.jpg"
+  },
+  "hyundai|santa-cruz": {
+    "image": "store/img/bikes/hyundai-santa-cruz.webp",
+    "thumb": "store/img/bikes/hyundai-santa-cruz-thumb.webp",
+    "kind": "car",
+    "title": "2022 Hyundai Santa Cruz 2.5T Limited (United States) front view (cropped).jpg",
+    "author": "Zeometric",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Santa_Cruz_2.5T_Limited_(United_States)_front_view_(cropped).jpg"
+  },
   "hyundai|santa-fe": {
     "image": "store/img/bikes/hyundai-santa-fe.webp",
     "thumb": "store/img/bikes/hyundai-santa-fe-thumb.webp",
@@ -4829,6 +6242,15 @@
     "author": "Matti Blume",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Santa_Fe,_GIMS_2018,_Le_Grand-Saconnex_(1X7A1735).jpg"
+  },
+  "hyundai|santa-fe-hev": {
+    "image": "store/img/bikes/hyundai-santa-fe-hev.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-hev-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Santa Fe Calligraphy HEV (2024) (54537622755).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Santa_Fe_Calligraphy_HEV_(2024)_(54537622755).jpg"
   },
   "hyundai|santa-fe-hybrid": {
     "image": "store/img/bikes/hyundai-santa-fe-hybrid.webp",
@@ -4839,6 +6261,33 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Santa_Fe_(MX5)_Hybrid_Automesse_Ludwigsburg_2024_IMG_1448.jpg"
   },
+  "hyundai|santa-fe-phev": {
+    "image": "store/img/bikes/hyundai-santa-fe-phev.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-phev-thumb.webp",
+    "kind": "car",
+    "title": "23 Hyundai Santa Fe PHEV Limited.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:23_Hyundai_Santa_Fe_PHEV_Limited.jpg"
+  },
+  "hyundai|santa-fe-sport": {
+    "image": "store/img/bikes/hyundai-santa-fe-sport.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-sport-thumb.webp",
+    "kind": "car",
+    "title": "2018 Hyundai Santa Fe Sport 4WD in Becketts Black, front right.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Hyundai_Santa_Fe_Sport_4WD_in_Becketts_Black,_front_right.jpg"
+  },
+  "hyundai|santa-fe-xl": {
+    "image": "store/img/bikes/hyundai-santa-fe-xl.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-xl-thumb.webp",
+    "kind": "car",
+    "title": "2019 Hyundai Santa Fe XL au SIAM 2019.jpg",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Hyundai_Santa_Fe_XL_au_SIAM_2019.jpg"
+  },
   "hyundai|sonata": {
     "image": "store/img/bikes/hyundai-sonata.webp",
     "thumb": "store/img/bikes/hyundai-sonata-thumb.webp",
@@ -4848,6 +6297,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_EF_China.jpg"
   },
+  "hyundai|sonata-hev": {
+    "image": "store/img/bikes/hyundai-sonata-hev.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-hev-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Sonata Hybrid LF HEV Midnight Black (13).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Sonata_Hybrid_LF_HEV_Midnight_Black_(13).jpg"
+  },
   "hyundai|sonata-hybrid": {
     "image": "store/img/bikes/hyundai-sonata-hybrid.webp",
     "thumb": "store/img/bikes/hyundai-sonata-hybrid-thumb.webp",
@@ -4856,6 +6314,123 @@
     "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_HYBRID_(LF)_China.jpg"
+  },
+  "hyundai|sonata-n-line": {
+    "image": "store/img/bikes/hyundai-sonata-n-line.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-n-line-thumb.webp",
+    "kind": "car",
+    "title": "HYUNDAI SONATA N-LINE (DN8) China (4).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_N-LINE_(DN8)_China_(4).jpg"
+  },
+  "hyundai|sonata-phev": {
+    "image": "store/img/bikes/hyundai-sonata-phev.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-phev-thumb.webp",
+    "kind": "car",
+    "title": "HYUNDAI SONATA PHEV (LF) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_PHEV_(LF)_China.jpg"
+  },
+  "hyundai|sonata-plug-in-hybrid": {
+    "image": "store/img/bikes/hyundai-sonata-plug-in-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-plug-in-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Sonata Plug-in Hybrid LF Midnight Black (10).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Sonata_Plug-in_Hybrid_LF_Midnight_Black_(10).jpg"
+  },
+  "hyundai|sonata-plugin-hybrid": {
+    "image": "store/img/bikes/hyundai-sonata-plugin-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-plugin-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "2019 Hyundai Sonata Plugin Hybrid (SIAM 2019).png",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Hyundai_Sonata_Plugin_Hybrid_(SIAM_2019).png"
+  },
+  "hyundai|tucson": {
+    "image": "store/img/bikes/hyundai-tucson.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Tucson (NX4) PHEV IMG 4375.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Tucson_(NX4)_PHEV_IMG_4375.jpg"
+  },
+  "hyundai|tucson-hev": {
+    "image": "store/img/bikes/hyundai-tucson-hev.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-hev-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Tucson 1.6 T-GDI HEV 2WD (2023) (53326804713).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Tucson_1.6_T-GDI_HEV_2WD_(2023)_(53326804713).jpg"
+  },
+  "hyundai|tucson-hybrid": {
+    "image": "store/img/bikes/hyundai-tucson-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "2022 Hyundai Tucson Hybrid.jpg",
+    "author": "UltraTech66",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Hyundai_Tucson_Hybrid.jpg"
+  },
+  "hyundai|tucson-phev": {
+    "image": "store/img/bikes/hyundai-tucson-phev.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-phev-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Tucson 1.6 T-GDI PHEV 2WD N-Line (2024) (54858985424).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Tucson_1.6_T-GDI_PHEV_2WD_N-Line_(2024)_(54858985424).jpg"
+  },
+  "hyundai|tucson-plug-in-hybrid": {
+    "image": "store/img/bikes/hyundai-tucson-plug-in-hybrid.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-plug-in-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "25 Hyundai Tucson Plug-In Hybrid SEL.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:25_Hyundai_Tucson_Plug-In_Hybrid_SEL.jpg"
+  },
+  "hyundai|veloster": {
+    "image": "store/img/bikes/hyundai-veloster.webp",
+    "thumb": "store/img/bikes/hyundai-veloster-thumb.webp",
+    "kind": "car",
+    "title": "2021 Hyundai Veloster N TCR.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Hyundai_Veloster_N_TCR.jpg"
+  },
+  "hyundai|veloster-n": {
+    "image": "store/img/bikes/hyundai-veloster-n.webp",
+    "thumb": "store/img/bikes/hyundai-veloster-n-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Veloster N Black 2.jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Veloster_N_Black_2.jpg"
+  },
+  "hyundai|veloster-turbo": {
+    "image": "store/img/bikes/hyundai-veloster-turbo.webp",
+    "thumb": "store/img/bikes/hyundai-veloster-turbo-thumb.webp",
+    "kind": "car",
+    "title": "Hyundai Veloster Turbo 1.6 FS Young Gun (2).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyundai_Veloster_Turbo_1.6_FS_Young_Gun_(2).jpg"
+  },
+  "hyundai|venue": {
+    "image": "store/img/bikes/hyundai-venue.webp",
+    "thumb": "store/img/bikes/hyundai-venue-thumb.webp",
+    "kind": "car",
+    "title": "2021 Hyundai Venue SE, front left, 08-24-2022.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Hyundai_Venue_SE,_front_left,_08-24-2022.jpg"
   },
   "indian|2025-indian-motorcycle": {
     "image": "store/img/bikes/indian-2025-indian-motorcycle.webp",
@@ -4928,6 +6503,276 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:The_frontview_of_Indian_Motorcycle_Super_Chief_Limited_mid-year_2023.jpg",
     "hero": "store/img/bikes/indian-super-chief-limited-hero.webp"
+  },
+  "infiniti|q50": {
+    "image": "store/img/bikes/infiniti-q50.webp",
+    "thumb": "store/img/bikes/infiniti-q50-thumb.webp",
+    "kind": "car",
+    "title": "Infiniti Q50 S HYBRID (V37) – Frontansicht, 17. August 2014, Düsseldorf.jpg",
+    "author": "M 93",
+    "license": "CC BY-SA 3.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Infiniti_Q50_S_HYBRID_(V37)_%E2%80%93_Frontansicht,_17._August_2014,_D%C3%BCsseldorf.jpg"
+  },
+  "infiniti|q50-hybrid": {
+    "image": "store/img/bikes/infiniti-q50-hybrid.webp",
+    "thumb": "store/img/bikes/infiniti-q50-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Infiniti Q50 S HYBRID (V37) – Heckansicht, 17. August 2014, Düsseldorf.jpg",
+    "author": "M 93",
+    "license": "CC BY-SA 3.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Infiniti_Q50_S_HYBRID_(V37)_%E2%80%93_Heckansicht,_17._August_2014,_D%C3%BCsseldorf.jpg"
+  },
+  "infiniti|q60-coupe": {
+    "image": "store/img/bikes/infiniti-q60-coupe.webp",
+    "thumb": "store/img/bikes/infiniti-q60-coupe-thumb.webp",
+    "kind": "car",
+    "title": "Q60 Coupe (24951709356).jpg",
+    "author": "Tino Rossini from Toronto, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Q60_Coupe_(24951709356).jpg"
+  },
+  "infiniti|q70": {
+    "image": "store/img/bikes/infiniti-q70.webp",
+    "thumb": "store/img/bikes/infiniti-q70-thumb.webp",
+    "kind": "car",
+    "title": "Infiniti Q70 - Mondial de l'Automobile de Paris 2014 - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Infiniti_Q70_-_Mondial_de_l'Automobile_de_Paris_2014_-_001.jpg"
+  },
+  "infiniti|q70-hybrid": {
+    "image": "store/img/bikes/infiniti-q70-hybrid.webp",
+    "thumb": "store/img/bikes/infiniti-q70-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Infiniti Q70 Hybrid (2016) (52920734498).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Infiniti_Q70_Hybrid_(2016)_(52920734498).jpg"
+  },
+  "infiniti|qx30": {
+    "image": "store/img/bikes/infiniti-qx30.webp",
+    "thumb": "store/img/bikes/infiniti-qx30-thumb.webp",
+    "kind": "car",
+    "title": "Infiniti QX30 2.2d AWD Premium Tech – Frontansicht, 4. Juni 2017, Düsseldorf.jpg",
+    "author": "© M 93",
+    "license": "CC BY-SA 3.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Infiniti_QX30_2.2d_AWD_Premium_Tech_%E2%80%93_Frontansicht,_4._Juni_2017,_D%C3%BCsseldorf.jpg"
+  },
+  "infiniti|qx50": {
+    "image": "store/img/bikes/infiniti-qx50.webp",
+    "thumb": "store/img/bikes/infiniti-qx50-thumb.webp",
+    "kind": "car",
+    "title": "2019 Infiniti QX50 front 5.22.18.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Infiniti_QX50_front_5.22.18.jpg"
+  },
+  "infiniti|qx55": {
+    "image": "store/img/bikes/infiniti-qx55.webp",
+    "thumb": "store/img/bikes/infiniti-qx55-thumb.webp",
+    "kind": "car",
+    "title": "2022 Infiniti QX55 (United States) front view 03.png",
+    "author": "Gold Pony",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Infiniti_QX55_(United_States)_front_view_03.png"
+  },
+  "infiniti|qx60": {
+    "image": "store/img/bikes/infiniti-qx60.webp",
+    "thumb": "store/img/bikes/infiniti-qx60-thumb.webp",
+    "kind": "car",
+    "title": "INFINITI QX60 HYBRID (L50) China (2).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:INFINITI_QX60_HYBRID_(L50)_China_(2).jpg"
+  },
+  "infiniti|qx60-hybrid": {
+    "image": "store/img/bikes/infiniti-qx60-hybrid.webp",
+    "thumb": "store/img/bikes/infiniti-qx60-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "INFINITI QX60 HYBRID (L50) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:INFINITI_QX60_HYBRID_(L50)_China.jpg"
+  },
+  "infiniti|qx80": {
+    "image": "store/img/bikes/infiniti-qx80.webp",
+    "thumb": "store/img/bikes/infiniti-qx80-thumb.webp",
+    "kind": "car",
+    "title": "Moscow, Infiniti QX80 black, Mar 2026 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Infiniti_QX80_black,_Mar_2026_01.jpg"
+  },
+  "jaguar|e-pace": {
+    "image": "store/img/bikes/jaguar-e-pace.webp",
+    "thumb": "store/img/bikes/jaguar-e-pace-thumb.webp",
+    "kind": "car",
+    "title": "Jaguar E-Pace (1) - Vienna Autoshow 2018.jpg",
+    "author": "Dispvas2018",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jaguar_E-Pace_(1)_-_Vienna_Autoshow_2018.jpg"
+  },
+  "jaguar|f-pace": {
+    "image": "store/img/bikes/jaguar-f-pace.webp",
+    "thumb": "store/img/bikes/jaguar-f-pace-thumb.webp",
+    "kind": "car",
+    "title": "2017 Jaguar F-Pace 2.5t Premium rear 3.25.18.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Jaguar_F-Pace_2.5t_Premium_rear_3.25.18.jpg"
+  },
+  "jaguar|f-type": {
+    "image": "store/img/bikes/jaguar-f-type.webp",
+    "thumb": "store/img/bikes/jaguar-f-type-thumb.webp",
+    "kind": "car",
+    "title": "2020 Jaguar F-Type coupe IMG 5392.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Jaguar_F-Type_coupe_IMG_5392.jpg"
+  },
+  "jaguar|i-pace": {
+    "image": "store/img/bikes/jaguar-i-pace.webp",
+    "thumb": "store/img/bikes/jaguar-i-pace-thumb.webp",
+    "kind": "car",
+    "title": "Jaguar I-Pace IAA 2019 JM 1016.jpg",
+    "author": "Johannes Maximilian",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jaguar_I-Pace_IAA_2019_JM_1016.jpg"
+  },
+  "jaguar|xe": {
+    "image": "store/img/bikes/jaguar-xe.webp",
+    "thumb": "store/img/bikes/jaguar-xe-thumb.webp",
+    "kind": "car",
+    "title": "2017 Jaguar XE (X760 MY17) 20d Prestige sedan (2018-10-01) 02.jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Jaguar_XE_(X760_MY17)_20d_Prestige_sedan_(2018-10-01)_02.jpg"
+  },
+  "jaguar|xf": {
+    "image": "store/img/bikes/jaguar-xf.webp",
+    "thumb": "store/img/bikes/jaguar-xf-thumb.webp",
+    "kind": "car",
+    "title": "Jaguar XF Sportsbrake, IAA 2017, Frankfurt (1Y7A3100).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jaguar_XF_Sportsbrake,_IAA_2017,_Frankfurt_(1Y7A3100).jpg"
+  },
+  "jaguar|xj": {
+    "image": "store/img/bikes/jaguar-xj.webp",
+    "thumb": "store/img/bikes/jaguar-xj-thumb.webp",
+    "kind": "car",
+    "title": "2011 Jaguar XJ-L -- 05-05-2010.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Jaguar_XJ-L_--_05-05-2010.jpg"
+  },
+  "jeep|avenger": {
+    "image": "store/img/bikes/jeep-avenger.webp",
+    "thumb": "store/img/bikes/jeep-avenger-thumb.webp",
+    "kind": "car",
+    "title": "Jeep Avenger Auto Zuerich 2023 1X7A0909.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jeep_Avenger_Auto_Zuerich_2023_1X7A0909.jpg"
+  },
+  "jeep|cherokee": {
+    "image": "store/img/bikes/jeep-cherokee.webp",
+    "thumb": "store/img/bikes/jeep-cherokee-thumb.webp",
+    "kind": "car",
+    "title": "2019 Jeep Cherokee Latitude front 5.27.18.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Jeep_Cherokee_Latitude_front_5.27.18.jpg"
+  },
+  "jeep|compass": {
+    "image": "store/img/bikes/jeep-compass.webp",
+    "thumb": "store/img/bikes/jeep-compass-thumb.webp",
+    "kind": "car",
+    "title": "JEEP COMPASS (MK49) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:JEEP_COMPASS_(MK49)_China.jpg"
+  },
+  "jeep|gladiator": {
+    "image": "store/img/bikes/jeep-gladiator.webp",
+    "thumb": "store/img/bikes/jeep-gladiator-thumb.webp",
+    "kind": "car",
+    "title": "Jeep Gladiator 3.6 Sport V6 2022.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jeep_Gladiator_3.6_Sport_V6_2022.jpg"
+  },
+  "jeep|grand-cherokee": {
+    "image": "store/img/bikes/jeep-grand-cherokee.webp",
+    "thumb": "store/img/bikes/jeep-grand-cherokee-thumb.webp",
+    "kind": "car",
+    "title": "Jeep Grand Cherokee 2017 Makarska.jpg",
+    "author": "Elishur19",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jeep_Grand_Cherokee_2017_Makarska.jpg"
+  },
+  "jeep|grand-cherokee-4xe": {
+    "image": "store/img/bikes/jeep-grand-cherokee-4xe.webp",
+    "thumb": "store/img/bikes/jeep-grand-cherokee-4xe-thumb.webp",
+    "kind": "car",
+    "title": "2023 Jeep Grand Cherokee 4xe Summit Reserve.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Jeep_Grand_Cherokee_4xe_Summit_Reserve.jpg"
+  },
+  "jeep|grand-cherokee-l": {
+    "image": "store/img/bikes/jeep-grand-cherokee-l.webp",
+    "thumb": "store/img/bikes/jeep-grand-cherokee-l-thumb.webp",
+    "kind": "car",
+    "title": "2022 Jeep Grand Cherokee L Limited Canada.jpg",
+    "author": "Whydoesitfeelsogood",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Jeep_Grand_Cherokee_L_Limited_Canada.jpg"
+  },
+  "jeep|grand-wagoneer": {
+    "image": "store/img/bikes/jeep-grand-wagoneer.webp",
+    "thumb": "store/img/bikes/jeep-grand-wagoneer-thumb.webp",
+    "kind": "car",
+    "title": "88 Jeep Grand Wagoneer (7707694978).jpg",
+    "author": "Greg Gjerdingen from Willmar, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:88_Jeep_Grand_Wagoneer_(7707694978).jpg"
+  },
+  "jeep|renegade": {
+    "image": "store/img/bikes/jeep-renegade.webp",
+    "thumb": "store/img/bikes/jeep-renegade-thumb.webp",
+    "kind": "car",
+    "title": "Jeep Renegade, GIMS 2019, Le Grand-Saconnex (GIMS0538).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jeep_Renegade,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0538).jpg"
+  },
+  "jeep|wagoneer-s": {
+    "image": "store/img/bikes/jeep-wagoneer-s.webp",
+    "thumb": "store/img/bikes/jeep-wagoneer-s-thumb.webp",
+    "kind": "car",
+    "title": "2024 Jeep Wagoneer S Launch Edition in Bright White, front left, 2025-04-21.jpg",
+    "author": "Elise240SX",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Jeep_Wagoneer_S_Launch_Edition_in_Bright_White,_front_left,_2025-04-21.jpg"
+  },
+  "jeep|wrangler": {
+    "image": "store/img/bikes/jeep-wrangler.webp",
+    "thumb": "store/img/bikes/jeep-wrangler-thumb.webp",
+    "kind": "car",
+    "title": "Jeep Wrangler Rubicon - October 2025 - Sarah Stierch.jpg",
+    "author": "Missvain",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Jeep_Wrangler_Rubicon_-_October_2025_-_Sarah_Stierch.jpg"
+  },
+  "jeep|wrangler-4xe": {
+    "image": "store/img/bikes/jeep-wrangler-4xe.webp",
+    "thumb": "store/img/bikes/jeep-wrangler-4xe-thumb.webp",
+    "kind": "car",
+    "title": "2025 Jeep Wrangler 4xe charging - February 2025 - Sarah Stierch.jpg",
+    "author": "Missvain",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Jeep_Wrangler_4xe_charging_-_February_2025_-_Sarah_Stierch.jpg"
   },
   "kawasaki|1400-gtr": {
     "image": "store/img/bikes/kawasaki-1400-gtr.webp",
@@ -6351,6 +8196,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Discovery_5,_IAA_2017,_Frankfurt_(1Y7A3088).jpg"
   },
+  "land-rover|discovery-sport": {
+    "image": "store/img/bikes/land-rover-discovery-sport.webp",
+    "thumb": "store/img/bikes/land-rover-discovery-sport-thumb.webp",
+    "kind": "car",
+    "title": "Land Rover Discovery Sport HSE Luxury TD4 2016.jpg",
+    "author": "DeFacto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Discovery_Sport_HSE_Luxury_TD4_2016.jpg"
+  },
   "land-rover|range-rover": {
     "image": "store/img/bikes/land-rover-range-rover.webp",
     "thumb": "store/img/bikes/land-rover-range-rover-thumb.webp",
@@ -6359,6 +8213,15 @@
     "author": "DeFacto",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Range_Rover_Evoque_Convertible_2016_-_side.jpg"
+  },
+  "land-rover|range-rover-evoque": {
+    "image": "store/img/bikes/land-rover-range-rover-evoque.webp",
+    "thumb": "store/img/bikes/land-rover-range-rover-evoque-thumb.webp",
+    "kind": "car",
+    "title": "Land Rover Range Rover Evoque Convertible 2016 - front three-quarter.jpg",
+    "author": "DeFacto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Land_Rover_Range_Rover_Evoque_Convertible_2016_-_front_three-quarter.jpg"
   },
   "land-rover|range-rover-sport": {
     "image": "store/img/bikes/land-rover-range-rover-sport.webp",
@@ -6369,6 +8232,681 @@
     "license": "Public domain",
     "source": "https://commons.wikimedia.org/wiki/File:2005_Land_Rover_Range_Rover_Sport_(L320_MY06)_TDV6_wagon_(2015-12-07)_01.jpg"
   },
+  "land-rover|range-rover-velar": {
+    "image": "store/img/bikes/land-rover-range-rover-velar.webp",
+    "thumb": "store/img/bikes/land-rover-range-rover-velar-thumb.webp",
+    "kind": "car",
+    "title": "2018 Land Rover Range Rover Velar 12.17.17.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Land_Rover_Range_Rover_Velar_12.17.17.jpg"
+  },
+  "lexus|es-300h": {
+    "image": "store/img/bikes/lexus-es-300h.webp",
+    "thumb": "store/img/bikes/lexus-es-300h-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS ES 300h(XZ10) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_ES_300h(XZ10)_China.jpg"
+  },
+  "lexus|es-350": {
+    "image": "store/img/bikes/lexus-es-350.webp",
+    "thumb": "store/img/bikes/lexus-es-350-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS ES 350 (XV40) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_ES_350_(XV40)_China.jpg"
+  },
+  "lexus|gs-350": {
+    "image": "store/img/bikes/lexus-gs-350.webp",
+    "thumb": "store/img/bikes/lexus-gs-350-thumb.webp",
+    "kind": "car",
+    "title": "2013 Lexus GS 350 Monterey world debut 01.jpg",
+    "author": "2013_Lexus_GS_350_Monterey_wrld_event_01.jpg : Motohide Miwa from USA derivative work: Altair78 ( talk )",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Lexus_GS_350_Monterey_world_debut_01.jpg"
+  },
+  "lexus|gx-460": {
+    "image": "store/img/bikes/lexus-gx-460.webp",
+    "thumb": "store/img/bikes/lexus-gx-460-thumb.webp",
+    "kind": "car",
+    "title": "2020 Lexus GX 460 in Sonic Titanium, rear right.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Lexus_GX_460_in_Sonic_Titanium,_rear_right.jpg"
+  },
+  "lexus|gx-550": {
+    "image": "store/img/bikes/lexus-gx-550.webp",
+    "thumb": "store/img/bikes/lexus-gx-550-thumb.webp",
+    "kind": "car",
+    "title": "2024 Lexus GX 550 Overtrail (United States) front view 01.jpg",
+    "author": "Charles",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Lexus_GX_550_Overtrail_(United_States)_front_view_01.jpg"
+  },
+  "lexus|is-300": {
+    "image": "store/img/bikes/lexus-is-300.webp",
+    "thumb": "store/img/bikes/lexus-is-300-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS IS 300 (XE30) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_IS_300_(XE30)_China.jpg"
+  },
+  "lexus|is-350": {
+    "image": "store/img/bikes/lexus-is-350.webp",
+    "thumb": "store/img/bikes/lexus-is-350-thumb.webp",
+    "kind": "car",
+    "title": "Lexus IS 350 GSE31 FL2 F Sport White Nova Glass Flake 02.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_IS_350_GSE31_FL2_F_Sport_White_Nova_Glass_Flake_02.jpg"
+  },
+  "lexus|lc-500": {
+    "image": "store/img/bikes/lexus-lc-500.webp",
+    "thumb": "store/img/bikes/lexus-lc-500-thumb.webp",
+    "kind": "car",
+    "title": "2017 Lexus LC 500 in Radiant Red Contrast Layering, front right.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Lexus_LC_500_in_Radiant_Red_Contrast_Layering,_front_right.jpg"
+  },
+  "lexus|ls-500": {
+    "image": "store/img/bikes/lexus-ls-500.webp",
+    "thumb": "store/img/bikes/lexus-ls-500-thumb.webp",
+    "kind": "car",
+    "title": "Lexus LS 500 VXFA50 Luxury Sonic Quartz - rear.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_LS_500_VXFA50_Luxury_Sonic_Quartz_-_rear.jpg"
+  },
+  "lexus|lx-570": {
+    "image": "store/img/bikes/lexus-lx-570.webp",
+    "thumb": "store/img/bikes/lexus-lx-570-thumb.webp",
+    "kind": "car",
+    "title": "Lexus LX 570 (URJ201W) IMG 4913.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_LX_570_(URJ201W)_IMG_4913.jpg"
+  },
+  "lexus|lx-600": {
+    "image": "store/img/bikes/lexus-lx-600.webp",
+    "thumb": "store/img/bikes/lexus-lx-600-thumb.webp",
+    "kind": "car",
+    "title": "Lexus LX 600 F Sport 2022 (2).jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_LX_600_F_Sport_2022_(2).jpg"
+  },
+  "lexus|lx-700h": {
+    "image": "store/img/bikes/lexus-lx-700h.webp",
+    "thumb": "store/img/bikes/lexus-lx-700h-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS LX 700h (J310) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_LX_700h_(J310)_China.jpg"
+  },
+  "lexus|nx-200t": {
+    "image": "store/img/bikes/lexus-nx-200t.webp",
+    "thumb": "store/img/bikes/lexus-nx-200t-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS NX 200t China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_NX_200t_China.jpg"
+  },
+  "lexus|nx-250": {
+    "image": "store/img/bikes/lexus-nx-250.webp",
+    "thumb": "store/img/bikes/lexus-nx-250-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS NX 250 (NX 260) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_NX_250_(NX_260)_China.jpg"
+  },
+  "lexus|nx-300": {
+    "image": "store/img/bikes/lexus-nx-300.webp",
+    "thumb": "store/img/bikes/lexus-nx-300-thumb.webp",
+    "kind": "car",
+    "title": "2019 Lexus NX 300 F Sport (18).jpg",
+    "author": "Bindydad123",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Lexus_NX_300_F_Sport_(18).jpg"
+  },
+  "lexus|nx-300h": {
+    "image": "store/img/bikes/lexus-nx-300h.webp",
+    "thumb": "store/img/bikes/lexus-nx-300h-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS NX 300h China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_NX_300h_China.jpg"
+  },
+  "lexus|nx-350": {
+    "image": "store/img/bikes/lexus-nx-350.webp",
+    "thumb": "store/img/bikes/lexus-nx-350-thumb.webp",
+    "kind": "car",
+    "title": "2022 Lexus NX 350, front 3.7.22.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Lexus_NX_350,_front_3.7.22.jpg"
+  },
+  "lexus|nx-350h": {
+    "image": "store/img/bikes/lexus-nx-350h.webp",
+    "thumb": "store/img/bikes/lexus-nx-350h-thumb.webp",
+    "kind": "car",
+    "title": "Lexus NX 350h AWD 2022.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_NX_350h_AWD_2022.jpg"
+  },
+  "lexus|rc-350": {
+    "image": "store/img/bikes/lexus-rc-350.webp",
+    "thumb": "store/img/bikes/lexus-rc-350-thumb.webp",
+    "kind": "car",
+    "title": "Lexus RC 350 P4250853.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_RC_350_P4250853.jpg"
+  },
+  "lexus|rx-350": {
+    "image": "store/img/bikes/lexus-rx-350.webp",
+    "thumb": "store/img/bikes/lexus-rx-350-thumb.webp",
+    "kind": "car",
+    "title": "Lexus RX 350 2021.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_RX_350_2021.jpg"
+  },
+  "lexus|rx-350h": {
+    "image": "store/img/bikes/lexus-rx-350h.webp",
+    "thumb": "store/img/bikes/lexus-rx-350h-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS RX 350h (AL10, 2022) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_RX_350h_(AL10,_2022)_China.jpg"
+  },
+  "lexus|rx-350l": {
+    "image": "store/img/bikes/lexus-rx-350l.webp",
+    "thumb": "store/img/bikes/lexus-rx-350l-thumb.webp",
+    "kind": "car",
+    "title": "2018 Lexus RX 350L 3.5L rear 3.24.19.jpg",
+    "author": "Kevauto",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Lexus_RX_350L_3.5L_rear_3.24.19.jpg"
+  },
+  "lexus|rx-450h": {
+    "image": "store/img/bikes/lexus-rx-450h.webp",
+    "thumb": "store/img/bikes/lexus-rx-450h-thumb.webp",
+    "kind": "car",
+    "title": "LEXUS RX 450h (AL20) China (2).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:LEXUS_RX_450h_(AL20)_China_(2).jpg"
+  },
+  "lexus|rx-450hl": {
+    "image": "store/img/bikes/lexus-rx-450hl.webp",
+    "thumb": "store/img/bikes/lexus-rx-450hl-thumb.webp",
+    "kind": "car",
+    "title": "19 Lexus RX 450hL Luxury.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:19_Lexus_RX_450hL_Luxury.jpg"
+  },
+  "lexus|rx-500h": {
+    "image": "store/img/bikes/lexus-rx-500h.webp",
+    "thumb": "store/img/bikes/lexus-rx-500h-thumb.webp",
+    "kind": "car",
+    "title": "Lexus RX 500h F Sport Performance (TALH17) 1X7A7073.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_RX_500h_F_Sport_Performance_(TALH17)_1X7A7073.jpg"
+  },
+  "lexus|rz-300e": {
+    "image": "store/img/bikes/lexus-rz-300e.webp",
+    "thumb": "store/img/bikes/lexus-rz-300e-thumb.webp",
+    "kind": "car",
+    "title": "Lexus RZ 300e (XEBM10) IMG 3578.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_RZ_300e_(XEBM10)_IMG_3578.jpg"
+  },
+  "lexus|rz-450e": {
+    "image": "store/img/bikes/lexus-rz-450e.webp",
+    "thumb": "store/img/bikes/lexus-rz-450e-thumb.webp",
+    "kind": "car",
+    "title": "Lexus RZ 450e (XEBM15) Auto Zuerich 2023 1X7A1248.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_RZ_450e_(XEBM15)_Auto_Zuerich_2023_1X7A1248.jpg"
+  },
+  "lexus|tx-350": {
+    "image": "store/img/bikes/lexus-tx-350.webp",
+    "thumb": "store/img/bikes/lexus-tx-350-thumb.webp",
+    "kind": "car",
+    "title": "2024 Lexus TX350 in Wind Chill Pearl, front right.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Lexus_TX350_in_Wind_Chill_Pearl,_front_right.jpg"
+  },
+  "lexus|tx-500h": {
+    "image": "store/img/bikes/lexus-tx-500h.webp",
+    "thumb": "store/img/bikes/lexus-tx-500h-thumb.webp",
+    "kind": "car",
+    "title": "Lexus TX 500h (2023) (53492076926).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_TX_500h_(2023)_(53492076926).jpg"
+  },
+  "lexus|ux-250h": {
+    "image": "store/img/bikes/lexus-ux-250h.webp",
+    "thumb": "store/img/bikes/lexus-ux-250h-thumb.webp",
+    "kind": "car",
+    "title": "Lexus UX 250h Genf 2018.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lexus_UX_250h_Genf_2018.jpg"
+  },
+  "lexus|ux-300h": {
+    "image": "store/img/bikes/lexus-ux-300h.webp",
+    "thumb": "store/img/bikes/lexus-ux-300h-thumb.webp",
+    "kind": "car",
+    "title": "2024 Lexus UX300h Grand Luxury.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Lexus_UX300h_Grand_Luxury.jpg"
+  },
+  "mazda|cx-3": {
+    "image": "store/img/bikes/mazda-cx-3.webp",
+    "thumb": "store/img/bikes/mazda-cx-3-thumb.webp",
+    "kind": "car",
+    "title": "2018 Mazda CX-3 Sport Nav+ 4X4 2.0 Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Mazda_CX-3_Sport_Nav%2B_4X4_2.0_Front.jpg"
+  },
+  "mazda|cx-30": {
+    "image": "store/img/bikes/mazda-cx-30.webp",
+    "thumb": "store/img/bikes/mazda-cx-30-thumb.webp",
+    "kind": "car",
+    "title": "Mazda CX-30 (DM) in Slovakia 2020.jpg",
+    "author": "Jakub CA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mazda_CX-30_(DM)_in_Slovakia_2020.jpg"
+  },
+  "mazda|cx-5": {
+    "image": "store/img/bikes/mazda-cx-5.webp",
+    "thumb": "store/img/bikes/mazda-cx-5-thumb.webp",
+    "kind": "car",
+    "title": "2026 Mazda CX-5 e-SKYACTIV G 2.5 L.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Mazda_CX-5_e-SKYACTIV_G_2.5_L.jpg"
+  },
+  "mazda|cx-50": {
+    "image": "store/img/bikes/mazda-cx-50.webp",
+    "thumb": "store/img/bikes/mazda-cx-50-thumb.webp",
+    "kind": "car",
+    "title": "2023 Mazda CX-50 GT in Zircon Sand Metallic, Front Left, 06-18-2022.jpg",
+    "author": "Elise240SX",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Mazda_CX-50_GT_in_Zircon_Sand_Metallic,_Front_Left,_06-18-2022.jpg"
+  },
+  "mazda|cx-70": {
+    "image": "store/img/bikes/mazda-cx-70.webp",
+    "thumb": "store/img/bikes/mazda-cx-70-thumb.webp",
+    "kind": "car",
+    "title": "2025 Mazda CX-70 au salon auto Lanaudière 2025.jpg",
+    "author": "Bull-Doser",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Mazda_CX-70_au_salon_auto_Lanaudi%C3%A8re_2025.jpg"
+  },
+  "mazda|cx-70-phev": {
+    "image": "store/img/bikes/mazda-cx-70-phev.webp",
+    "thumb": "store/img/bikes/mazda-cx-70-phev-thumb.webp",
+    "kind": "car",
+    "title": "2025 Mazda CX-70 PHEV Premium Plus (United States) front view.png",
+    "author": "Motor1",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Mazda_CX-70_PHEV_Premium_Plus_(United_States)_front_view.png"
+  },
+  "mazda|cx-9": {
+    "image": "store/img/bikes/mazda-cx-9.webp",
+    "thumb": "store/img/bikes/mazda-cx-9-thumb.webp",
+    "kind": "car",
+    "title": "2016 Mazda CX-9 (TC MY16) Azami 2WD wagon (2017-01-30).jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Mazda_CX-9_(TC_MY16)_Azami_2WD_wagon_(2017-01-30).jpg"
+  },
+  "mazda|cx-90": {
+    "image": "store/img/bikes/mazda-cx-90.webp",
+    "thumb": "store/img/bikes/mazda-cx-90-thumb.webp",
+    "kind": "car",
+    "title": "Mazda CX-90 3.3 e-Skyactiv-G AWD HEV Turbo Exclusive 2024 (2).jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mazda_CX-90_3.3_e-Skyactiv-G_AWD_HEV_Turbo_Exclusive_2024_(2).jpg"
+  },
+  "mazda|cx-90-phev": {
+    "image": "store/img/bikes/mazda-cx-90-phev.webp",
+    "thumb": "store/img/bikes/mazda-cx-90-phev-thumb.webp",
+    "kind": "car",
+    "title": "2024 Mazda CX-90 PHEV Premium in Rhodium White Metallic, front left.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Mazda_CX-90_PHEV_Premium_in_Rhodium_White_Metallic,_front_left.jpg"
+  },
+  "mazda|mazda3": {
+    "image": "store/img/bikes/mazda-mazda3.webp",
+    "thumb": "store/img/bikes/mazda-mazda3-thumb.webp",
+    "kind": "car",
+    "title": "MAZDA3 SEDAN (BL) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MAZDA3_SEDAN_(BL)_China.jpg"
+  },
+  "mazda|mazda6": {
+    "image": "store/img/bikes/mazda-mazda6.webp",
+    "thumb": "store/img/bikes/mazda-mazda6-thumb.webp",
+    "kind": "car",
+    "title": "Mazda6 2016 model 003.jpg",
+    "author": "Photograph by Mike Peel ( www.mikepeel.net ).",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mazda6_2016_model_003.jpg"
+  },
+  "mazda|mx-30": {
+    "image": "store/img/bikes/mazda-mx-30.webp",
+    "thumb": "store/img/bikes/mazda-mx-30-thumb.webp",
+    "kind": "car",
+    "title": "2022 Mazda MX-30 Sport Lux.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Mazda_MX-30_Sport_Lux.jpg"
+  },
+  "mazda|mx-5-miata": {
+    "image": "store/img/bikes/mazda-mx-5-miata.webp",
+    "thumb": "store/img/bikes/mazda-mx-5-miata-thumb.webp",
+    "kind": "car",
+    "title": "2001 Mazda MX-5 Miata, rear left, 07-09-2023.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2001_Mazda_MX-5_Miata,_rear_left,_07-09-2023.jpg"
+  },
+  "mercedes-benz|amg-cla-(c118)": {
+    "image": "store/img/bikes/mercedes-benz-amg-cla-c118.webp",
+    "thumb": "store/img/bikes/mercedes-benz-amg-cla-c118-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz CLA-Klasse Coupé (C118) CLA 45 4MATIC AMG (2021) (52228180962).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_CLA-Klasse_Coup%C3%A9_(C118)_CLA_45_4MATIC_AMG_(2021)_(52228180962).jpg"
+  },
+  "mercedes-benz|amg-cle-cabriolet-(a236)": {
+    "image": "store/img/bikes/mercedes-benz-amg-cle-cabriolet-a236.webp",
+    "thumb": "store/img/bikes/mercedes-benz-amg-cle-cabriolet-a236-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz CLE 53 AMG 4MATIC+ Cabriolet (A236, 2026) (55214634610).jpg",
+    "author": "Charles from Port Chester, New York",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_CLE_53_AMG_4MATIC%2B_Cabriolet_(A236,_2026)_(55214634610).jpg"
+  },
+  "mercedes-benz|amg-g-class-(w463)": {
+    "image": "store/img/bikes/mercedes-benz-amg-g-class-w463.webp",
+    "thumb": "store/img/bikes/mercedes-benz-amg-g-class-w463-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz G-Class W463 II 63 AMG Sanming 02 2022-11-15.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_G-Class_W463_II_63_AMG_Sanming_02_2022-11-15.jpg"
+  },
+  "mercedes-benz|amg-gls-(x167)": {
+    "image": "store/img/bikes/mercedes-benz-amg-gls-x167.webp",
+    "thumb": "store/img/bikes/mercedes-benz-amg-gls-x167-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz X167 FL GLS 580 4MATIC AMG Line Obsidian Black (7).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_X167_FL_GLS_580_4MATIC_AMG_Line_Obsidian_Black_(7).jpg"
+  },
+  "mercedes-benz|amg-gt-(c190)": {
+    "image": "store/img/bikes/mercedes-benz-amg-gt-c190.webp",
+    "thumb": "store/img/bikes/mercedes-benz-amg-gt-c190-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-AMG GT (C190) rear.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-AMG_GT_(C190)_rear.jpg"
+  },
+  "mercedes-benz|c-class-coupe-(c205)": {
+    "image": "store/img/bikes/mercedes-benz-c-class-coupe-c205.webp",
+    "thumb": "store/img/bikes/mercedes-benz-c-class-coupe-c205-thumb.webp",
+    "kind": "car",
+    "title": "MERCEDES-BENZ C-CLASS COUPE (C205) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MERCEDES-BENZ_C-CLASS_COUPE_(C205)_China.jpg"
+  },
+  "mercedes-benz|cla-(c117)": {
+    "image": "store/img/bikes/mercedes-benz-cla-c117.webp",
+    "thumb": "store/img/bikes/mercedes-benz-cla-c117-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz CLA C117 01 China 2015-04-06.jpg",
+    "author": "Navigator84",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_CLA_C117_01_China_2015-04-06.jpg"
+  },
+  "mercedes-benz|cla-(c118)": {
+    "image": "store/img/bikes/mercedes-benz-cla-c118.webp",
+    "thumb": "store/img/bikes/mercedes-benz-cla-c118-thumb.webp",
+    "kind": "car",
+    "title": "MERCEDES-BENZ CLA (C118) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MERCEDES-BENZ_CLA_(C118)_China.jpg"
+  },
+  "mercedes-benz|cle-coupe-(c236)": {
+    "image": "store/img/bikes/mercedes-benz-cle-coupe-c236.webp",
+    "thumb": "store/img/bikes/mercedes-benz-cle-coupe-c236-thumb.webp",
+    "kind": "car",
+    "title": "MERCEDES-BENZ CLE COUPE (C236) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MERCEDES-BENZ_CLE_COUPE_(C236)_China.jpg"
+  },
+  "mercedes-benz|e-class-wagon": {
+    "image": "store/img/bikes/mercedes-benz-e-class-wagon.webp",
+    "thumb": "store/img/bikes/mercedes-benz-e-class-wagon-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz W210 E-Class wagon.jpg",
+    "author": "No machine-readable author provided. Sfoskett~commonswiki assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_W210_E-Class_wagon.jpg"
+  },
+  "mercedes-benz|eqb-(x243)": {
+    "image": "store/img/bikes/mercedes-benz-eqb-x243.webp",
+    "thumb": "store/img/bikes/mercedes-benz-eqb-x243-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz EQB (X243, European specifications) rear.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_EQB_(X243,_European_specifications)_rear.jpg"
+  },
+  "mercedes-benz|g-class-(w463)": {
+    "image": "store/img/bikes/mercedes-benz-g-class-w463.webp",
+    "thumb": "store/img/bikes/mercedes-benz-g-class-w463-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz G-Class W463 II 63 AMG Sanming 01 2022-08-02.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_G-Class_W463_II_63_AMG_Sanming_01_2022-08-02.jpg"
+  },
+  "mercedes-benz|gla-(h247)": {
+    "image": "store/img/bikes/mercedes-benz-gla-h247.webp",
+    "thumb": "store/img/bikes/mercedes-benz-gla-h247-thumb.webp",
+    "kind": "car",
+    "title": "MERCEDES-BENZ GLA (H247) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MERCEDES-BENZ_GLA_(H247)_China.jpg"
+  },
+  "mercedes-benz|glb-(x247)": {
+    "image": "store/img/bikes/mercedes-benz-glb-x247.webp",
+    "thumb": "store/img/bikes/mercedes-benz-glb-x247-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz GLB X247 Shishi 01 2023-02-22.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_GLB_X247_Shishi_01_2023-02-22.jpg"
+  },
+  "mercedes-benz|gle-coupe-(c167)": {
+    "image": "store/img/bikes/mercedes-benz-gle-coupe-c167.webp",
+    "thumb": "store/img/bikes/mercedes-benz-gle-coupe-c167-thumb.webp",
+    "kind": "car",
+    "title": "MERCEDES-BENZ GLE COUPE (C167) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MERCEDES-BENZ_GLE_COUPE_(C167)_China.jpg"
+  },
+  "mercedes-benz|s-class-coupe-(c217)": {
+    "image": "store/img/bikes/mercedes-benz-s-class-coupe-c217.webp",
+    "thumb": "store/img/bikes/mercedes-benz-s-class-coupe-c217-thumb.webp",
+    "kind": "car",
+    "title": "Mercedes-Benz S-Class Coupe (C217) (16321004945).jpg",
+    "author": "Yahya S. from Livonia, United States",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_S-Class_Coupe_(C217)_(16321004945).jpg"
+  },
+  "mini|clubman-(f54)": {
+    "image": "store/img/bikes/mini-clubman-f54.webp",
+    "thumb": "store/img/bikes/mini-clubman-f54-thumb.webp",
+    "kind": "car",
+    "title": "Mini Clubman F54 Sanming 01 2022-07-19.jpg",
+    "author": "JamesYoung8167",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mini_Clubman_F54_Sanming_01_2022-07-19.jpg"
+  },
+  "mini|convertible-(f57)": {
+    "image": "store/img/bikes/mini-convertible-f57.webp",
+    "thumb": "store/img/bikes/mini-convertible-f57-thumb.webp",
+    "kind": "car",
+    "title": "Mini F57 LCI Convertible Cooper S Pepper White (16).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mini_F57_LCI_Convertible_Cooper_S_Pepper_White_(16).jpg"
+  },
+  "mini|cooper-(f66)": {
+    "image": "store/img/bikes/mini-cooper-f66.webp",
+    "thumb": "store/img/bikes/mini-cooper-f66-thumb.webp",
+    "kind": "car",
+    "title": "Mini Hatch (F66) John Cooper Works DSC 9313.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mini_Hatch_(F66)_John_Cooper_Works_DSC_9313.jpg"
+  },
+  "mini|cooper-se-(f56-electric)": {
+    "image": "store/img/bikes/mini-cooper-se-f56-electric.webp",
+    "thumb": "store/img/bikes/mini-cooper-se-f56-electric-thumb.webp",
+    "kind": "car",
+    "title": "Mini F56 Hatch Cooper SE Electric MINI Yours Enigmatic Black Metallic (1).jpg",
+    "author": "Damian B Oh",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mini_F56_Hatch_Cooper_SE_Electric_MINI_Yours_Enigmatic_Black_Metallic_(1).jpg"
+  },
+  "mini|countryman-(f60)": {
+    "image": "store/img/bikes/mini-countryman-f60.webp",
+    "thumb": "store/img/bikes/mini-countryman-f60-thumb.webp",
+    "kind": "car",
+    "title": "Mini Countryman (F60) Plug-In-Hybrid FL IMG 4348.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mini_Countryman_(F60)_Plug-In-Hybrid_FL_IMG_4348.jpg"
+  },
+  "mini|countryman-(u25)": {
+    "image": "store/img/bikes/mini-countryman-u25.webp",
+    "thumb": "store/img/bikes/mini-countryman-u25-thumb.webp",
+    "kind": "car",
+    "title": "Mini Countryman (U25) SE IAA 2023 1X7A0735.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mini_Countryman_(U25)_SE_IAA_2023_1X7A0735.jpg"
+  },
+  "mitsubishi|asx": {
+    "image": "store/img/bikes/mitsubishi-asx.webp",
+    "thumb": "store/img/bikes/mitsubishi-asx-thumb.webp",
+    "kind": "car",
+    "title": "MITSUBISHI ASX China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:MITSUBISHI_ASX_China.jpg"
+  },
+  "mitsubishi|eclipse-cross": {
+    "image": "store/img/bikes/mitsubishi-eclipse-cross.webp",
+    "thumb": "store/img/bikes/mitsubishi-eclipse-cross-thumb.webp",
+    "kind": "car",
+    "title": "2018 Mitsubishi Eclipse Cross 3 4X2 1.5 Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Mitsubishi_Eclipse_Cross_3_4X2_1.5_Front.jpg"
+  },
+  "mitsubishi|i-miev": {
+    "image": "store/img/bikes/mitsubishi-i-miev.webp",
+    "thumb": "store/img/bikes/mitsubishi-i-miev-thumb.webp",
+    "kind": "car",
+    "title": "Mitsubishi i-Miev Hedemora Energi 02.jpg",
+    "author": "Calle Eklund/ V-wolf",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mitsubishi_i-Miev_Hedemora_Energi_02.jpg"
+  },
+  "mitsubishi|l200": {
+    "image": "store/img/bikes/mitsubishi-l200.webp",
+    "thumb": "store/img/bikes/mitsubishi-l200-thumb.webp",
+    "kind": "car",
+    "title": "Mitsubishi L200 (2019) Leonberg 2019 IMG 0069.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mitsubishi_L200_(2019)_Leonberg_2019_IMG_0069.jpg"
+  },
+  "mitsubishi|mirage": {
+    "image": "store/img/bikes/mitsubishi-mirage.webp",
+    "thumb": "store/img/bikes/mitsubishi-mirage-thumb.webp",
+    "kind": "car",
+    "title": "Mitsubishi Mirage 1.2 GLS 2017.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mitsubishi_Mirage_1.2_GLS_2017.jpg"
+  },
+  "mitsubishi|mirage-g4": {
+    "image": "store/img/bikes/mitsubishi-mirage-g4.webp",
+    "thumb": "store/img/bikes/mitsubishi-mirage-g4-thumb.webp",
+    "kind": "car",
+    "title": "2017 Mitsubishi Mirage G4 ES, front left (Silver).jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Mitsubishi_Mirage_G4_ES,_front_left_(Silver).jpg"
+  },
+  "mitsubishi|outlander": {
+    "image": "store/img/bikes/mitsubishi-outlander.webp",
+    "thumb": "store/img/bikes/mitsubishi-outlander-thumb.webp",
+    "kind": "car",
+    "title": "2022 Mitsubishi Outlander.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Mitsubishi_Outlander.jpg"
+  },
+  "mitsubishi|outlander-phev": {
+    "image": "store/img/bikes/mitsubishi-outlander-phev.webp",
+    "thumb": "store/img/bikes/mitsubishi-outlander-phev-thumb.webp",
+    "kind": "car",
+    "title": "Mitsubishi Outlander Phev Concept-S - Mondial de l'Automobile de Paris 2014 - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mitsubishi_Outlander_Phev_Concept-S_-_Mondial_de_l'Automobile_de_Paris_2014_-_001.jpg"
+  },
   "mitsubishi|rvr": {
     "image": "store/img/bikes/mitsubishi-rvr.webp",
     "thumb": "store/img/bikes/mitsubishi-rvr-thumb.webp",
@@ -6377,6 +8915,24 @@
     "author": "SsmIntrigue",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:2013_Mitsubishi_RVR_12-02-2019.jpg"
+  },
+  "mitsubishi|shogun": {
+    "image": "store/img/bikes/mitsubishi-shogun.webp",
+    "thumb": "store/img/bikes/mitsubishi-shogun-thumb.webp",
+    "kind": "car",
+    "title": "Mitsubishi Pajero (Shogun) (WEL 621).jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mitsubishi_Pajero_(Shogun)_(WEL_621).jpg"
+  },
+  "mitsubishi|shogun-sport": {
+    "image": "store/img/bikes/mitsubishi-shogun-sport.webp",
+    "thumb": "store/img/bikes/mitsubishi-shogun-sport-thumb.webp",
+    "kind": "car",
+    "title": "2002 Mitsubishi Shogun Sport Equippe TD 2.5.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Mitsubishi_Shogun_Sport_Equippe_TD_2.5.jpg"
   },
   "moto-guzzi|1200-sport": {
     "image": "store/img/bikes/moto-guzzi-1200-sport.webp",
@@ -6837,6 +9393,258 @@
     "source": "https://commons.wikimedia.org/wiki/File:MV_Agusta_Turismo_Veloce_800_Lusso_SCS_(2).jpg",
     "hero": "store/img/bikes/mv-agusta-turismo-veloce-800-scs-hero.webp"
   },
+  "nissan|370z-coupe": {
+    "image": "store/img/bikes/nissan-370z-coupe.webp",
+    "thumb": "store/img/bikes/nissan-370z-coupe-thumb.webp",
+    "kind": "car",
+    "title": "2012 Nissan 370Z Coupe (27666380923).jpg",
+    "author": "Sicnag",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Nissan_370Z_Coupe_(27666380923).jpg"
+  },
+  "nissan|370z-roadster": {
+    "image": "store/img/bikes/nissan-370z-roadster.webp",
+    "thumb": "store/img/bikes/nissan-370z-roadster-thumb.webp",
+    "kind": "car",
+    "title": "2011 Nissan 370z Roadster (6235222044).jpg",
+    "author": "Spanish Coches",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Nissan_370z_Roadster_(6235222044).jpg"
+  },
+  "nissan|altima": {
+    "image": "store/img/bikes/nissan-altima.webp",
+    "thumb": "store/img/bikes/nissan-altima-thumb.webp",
+    "kind": "car",
+    "title": "2023 Nissan Altima SR.png",
+    "author": "LukaCali",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Nissan_Altima_SR.png"
+  },
+  "nissan|ariya": {
+    "image": "store/img/bikes/nissan-ariya.webp",
+    "thumb": "store/img/bikes/nissan-ariya-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Ariya Automesse Ludwigsburg 2022 1X7A5877.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Ariya_Automesse_Ludwigsburg_2022_1X7A5877.jpg"
+  },
+  "nissan|armada": {
+    "image": "store/img/bikes/nissan-armada.webp",
+    "thumb": "store/img/bikes/nissan-armada-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Armada SL (2023).jpg",
+    "author": "Charles",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Armada_SL_(2023).jpg"
+  },
+  "nissan|frontier": {
+    "image": "store/img/bikes/nissan-frontier.webp",
+    "thumb": "store/img/bikes/nissan-frontier-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Frontier (D41) Pro-4X Automesse Ludwigsburg 2022 1X7A5885.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Frontier_(D41)_Pro-4X_Automesse_Ludwigsburg_2022_1X7A5885.jpg"
+  },
+  "nissan|gt-r": {
+    "image": "store/img/bikes/nissan-gt-r.webp",
+    "thumb": "store/img/bikes/nissan-gt-r-thumb.webp",
+    "kind": "car",
+    "title": "2015 Nissan GT-R 2.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Nissan_GT-R_2.jpg"
+  },
+  "nissan|juke": {
+    "image": "store/img/bikes/nissan-juke.webp",
+    "thumb": "store/img/bikes/nissan-juke-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Juke Hybrid Auto Zuerich 2023 1X7A1295.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Juke_Hybrid_Auto_Zuerich_2023_1X7A1295.jpg"
+  },
+  "nissan|juke-hybrid": {
+    "image": "store/img/bikes/nissan-juke-hybrid.webp",
+    "thumb": "store/img/bikes/nissan-juke-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Juke Hybrid Auto Zuerich 2023 1X7A1296.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Juke_Hybrid_Auto_Zuerich_2023_1X7A1296.jpg"
+  },
+  "nissan|kicks": {
+    "image": "store/img/bikes/nissan-kicks.webp",
+    "thumb": "store/img/bikes/nissan-kicks-thumb.webp",
+    "kind": "car",
+    "title": "NISSAN KICKS China (2).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:NISSAN_KICKS_China_(2).jpg"
+  },
+  "nissan|leaf": {
+    "image": "store/img/bikes/nissan-leaf.webp",
+    "thumb": "store/img/bikes/nissan-leaf-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Leaf - Mondial de l'Automobile de Paris 2012 - 006.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Leaf_-_Mondial_de_l'Automobile_de_Paris_2012_-_006.jpg"
+  },
+  "nissan|maxima": {
+    "image": "store/img/bikes/nissan-maxima.webp",
+    "thumb": "store/img/bikes/nissan-maxima-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Maxima P4220658.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Maxima_P4220658.jpg"
+  },
+  "nissan|micra": {
+    "image": "store/img/bikes/nissan-micra.webp",
+    "thumb": "store/img/bikes/nissan-micra-thumb.webp",
+    "kind": "car",
+    "title": "2020 Nissan Micra Acenta in der Tiefgarage.jpg",
+    "author": "JoachimKohler-HB",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Nissan_Micra_Acenta_in_der_Tiefgarage.jpg"
+  },
+  "nissan|murano": {
+    "image": "store/img/bikes/nissan-murano.webp",
+    "thumb": "store/img/bikes/nissan-murano-thumb.webp",
+    "kind": "car",
+    "title": "NISSAN MURANO Z51 China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:NISSAN_MURANO_Z51_China.jpg"
+  },
+  "nissan|pathfinder": {
+    "image": "store/img/bikes/nissan-pathfinder.webp",
+    "thumb": "store/img/bikes/nissan-pathfinder-thumb.webp",
+    "kind": "car",
+    "title": "2018 Nissan Pathfinder (R52 MY18) ST-L wagon (2018-09-28) 01.jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Nissan_Pathfinder_(R52_MY18)_ST-L_wagon_(2018-09-28)_01.jpg"
+  },
+  "nissan|qashqai": {
+    "image": "store/img/bikes/nissan-qashqai.webp",
+    "thumb": "store/img/bikes/nissan-qashqai-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Qashqai (J12) Automesse Ludwigsburg 2022 1X7A5875.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Qashqai_(J12)_Automesse_Ludwigsburg_2022_1X7A5875.jpg"
+  },
+  "nissan|qashqai-e-power": {
+    "image": "store/img/bikes/nissan-qashqai-e-power.webp",
+    "thumb": "store/img/bikes/nissan-qashqai-e-power-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Qashqai e-Power Automesse Ludwigsburg 2022 1X7A5884.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Qashqai_e-Power_Automesse_Ludwigsburg_2022_1X7A5884.jpg"
+  },
+  "nissan|quest": {
+    "image": "store/img/bikes/nissan-quest.webp",
+    "thumb": "store/img/bikes/nissan-quest-thumb.webp",
+    "kind": "car",
+    "title": "2011 Nissan Quest SL -- 04-22-2011.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Nissan_Quest_SL_--_04-22-2011.jpg"
+  },
+  "nissan|rogue": {
+    "image": "store/img/bikes/nissan-rogue.webp",
+    "thumb": "store/img/bikes/nissan-rogue-thumb.webp",
+    "kind": "car",
+    "title": "2024 Nissan Rogue SV rear left, Atlanta, GA.jpg",
+    "author": "BuickCentury04",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Nissan_Rogue_SV_rear_left,_Atlanta,_GA.jpg"
+  },
+  "nissan|rogue-hybrid": {
+    "image": "store/img/bikes/nissan-rogue-hybrid.webp",
+    "thumb": "store/img/bikes/nissan-rogue-hybrid-thumb.webp",
+    "kind": "car",
+    "title": "Nissan Rogue 2017 CUV Hybrid Side Front.jpg",
+    "author": "Alistair Fernandez",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Rogue_2017_CUV_Hybrid_Side_Front.jpg"
+  },
+  "nissan|rogue-sport": {
+    "image": "store/img/bikes/nissan-rogue-sport.webp",
+    "thumb": "store/img/bikes/nissan-rogue-sport-thumb.webp",
+    "kind": "car",
+    "title": "2020 Nissan Rogue Sport S, front left, 05-01-2024.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Nissan_Rogue_Sport_S,_front_left,_05-01-2024.jpg"
+  },
+  "nissan|sentra": {
+    "image": "store/img/bikes/nissan-sentra.webp",
+    "thumb": "store/img/bikes/nissan-sentra-thumb.webp",
+    "kind": "car",
+    "title": "2013 Nissan Sentra SR front left.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2013_Nissan_Sentra_SR_front_left.jpg"
+  },
+  "nissan|titan": {
+    "image": "store/img/bikes/nissan-titan.webp",
+    "thumb": "store/img/bikes/nissan-titan-thumb.webp",
+    "kind": "car",
+    "title": "2016 Nissan Titan XD.jpg",
+    "author": "Ryan Hildebrand",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Nissan_Titan_XD.jpg"
+  },
+  "nissan|versa": {
+    "image": "store/img/bikes/nissan-versa.webp",
+    "thumb": "store/img/bikes/nissan-versa-thumb.webp",
+    "kind": "car",
+    "title": "2024 Nissan Versa front view.jpg",
+    "author": "Deathpallie325",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Nissan_Versa_front_view.jpg"
+  },
+  "nissan|versa-note": {
+    "image": "store/img/bikes/nissan-versa-note.webp",
+    "thumb": "store/img/bikes/nissan-versa-note-thumb.webp",
+    "kind": "car",
+    "title": "2015 Nissan Versa Note SV, rear right side.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Nissan_Versa_Note_SV,_rear_right_side.jpg"
+  },
+  "nissan|versa-sedan": {
+    "image": "store/img/bikes/nissan-versa-sedan.webp",
+    "thumb": "store/img/bikes/nissan-versa-sedan-thumb.webp",
+    "kind": "car",
+    "title": "2011 Nissan Versa 1.6 Sedan.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Nissan_Versa_1.6_Sedan.jpg"
+  },
+  "nissan|x-trail": {
+    "image": "store/img/bikes/nissan-x-trail.webp",
+    "thumb": "store/img/bikes/nissan-x-trail-thumb.webp",
+    "kind": "car",
+    "title": "Nissan X-Trail e-Power 1X7A6301.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_X-Trail_e-Power_1X7A6301.jpg"
+  },
+  "nissan|x-trail-e-power": {
+    "image": "store/img/bikes/nissan-x-trail-e-power.webp",
+    "thumb": "store/img/bikes/nissan-x-trail-e-power-thumb.webp",
+    "kind": "car",
+    "title": "Nissan X-Trail e-Power 1X7A7056.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_X-Trail_e-Power_1X7A7056.jpg"
+  },
   "niu|fqi-500": {
     "image": "store/img/bikes/niu-fqi-500.webp",
     "thumb": "store/img/bikes/niu-fqi-500-thumb.webp",
@@ -6854,6 +9662,294 @@
     "license": "CC BY 2.0",
     "source": "https://commons.wikimedia.org/wiki/File:Niu_NQI_E-Scooter.jpg",
     "hero": "store/img/bikes/niu-nqi-hero.webp"
+  },
+  "peugeot|108": {
+    "image": "store/img/bikes/peugeot-108.webp",
+    "thumb": "store/img/bikes/peugeot-108-thumb.webp",
+    "kind": "car",
+    "title": "2018 Peugeot 108 Active 1.0 Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Peugeot_108_Active_1.0_Front.jpg"
+  },
+  "peugeot|208": {
+    "image": "store/img/bikes/peugeot-208.webp",
+    "thumb": "store/img/bikes/peugeot-208-thumb.webp",
+    "kind": "car",
+    "title": "Peugeot 208 T16 - Mondial de l'Automobile de Paris 2014 - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Peugeot_208_T16_-_Mondial_de_l'Automobile_de_Paris_2014_-_001.jpg"
+  },
+  "peugeot|3008": {
+    "image": "store/img/bikes/peugeot-3008.webp",
+    "thumb": "store/img/bikes/peugeot-3008-thumb.webp",
+    "kind": "car",
+    "title": "2021 Peugeot 3008 B 1X7A0344.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Peugeot_3008_B_1X7A0344.jpg"
+  },
+  "peugeot|5008": {
+    "image": "store/img/bikes/peugeot-5008.webp",
+    "thumb": "store/img/bikes/peugeot-5008-thumb.webp",
+    "kind": "car",
+    "title": "Peugeot 5008 facelift 001.jpg",
+    "author": "Jengtingchen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Peugeot_5008_facelift_001.jpg"
+  },
+  "peugeot|expert": {
+    "image": "store/img/bikes/peugeot-expert.webp",
+    "thumb": "store/img/bikes/peugeot-expert-thumb.webp",
+    "kind": "car",
+    "title": "2003 Peugeot Expert Diesel 1.9.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2003_Peugeot_Expert_Diesel_1.9.jpg"
+  },
+  "porsche|718": {
+    "image": "store/img/bikes/porsche-718.webp",
+    "thumb": "store/img/bikes/porsche-718-thumb.webp",
+    "kind": "car",
+    "title": "Porsche 718 Cayman GT4 Solitude Revival 2022 1X7A0107.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Porsche_718_Cayman_GT4_Solitude_Revival_2022_1X7A0107.jpg"
+  },
+  "porsche|911": {
+    "image": "store/img/bikes/porsche-911.webp",
+    "thumb": "store/img/bikes/porsche-911-thumb.webp",
+    "kind": "car",
+    "title": "Porsche 911 Carrera RS, Bj. 1972-73 (2016-07-02 01 Sp).JPG",
+    "author": "Lothar Spurzem",
+    "license": "CC BY-SA 2.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Porsche_911_Carrera_RS,_Bj._1972-73_(2016-07-02_01_Sp).JPG"
+  },
+  "porsche|cayenne": {
+    "image": "store/img/bikes/porsche-cayenne.webp",
+    "thumb": "store/img/bikes/porsche-cayenne-thumb.webp",
+    "kind": "car",
+    "title": "Porsche Cayenne Turbo GT Auto Zuerich 2021 IMG 0298.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Porsche_Cayenne_Turbo_GT_Auto_Zuerich_2021_IMG_0298.jpg"
+  },
+  "porsche|macan": {
+    "image": "store/img/bikes/porsche-macan.webp",
+    "thumb": "store/img/bikes/porsche-macan-thumb.webp",
+    "kind": "car",
+    "title": "2022 Porsche Macan 1X7A6048.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Porsche_Macan_1X7A6048.jpg"
+  },
+  "porsche|panamera": {
+    "image": "store/img/bikes/porsche-panamera.webp",
+    "thumb": "store/img/bikes/porsche-panamera-thumb.webp",
+    "kind": "car",
+    "title": "Porsche Panamera Turbo S Sport Turismo e-hybrid, 70 Years Porsche Sports Car, Berlin (1X7A3892).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Porsche_Panamera_Turbo_S_Sport_Turismo_e-hybrid,_70_Years_Porsche_Sports_Car,_Berlin_(1X7A3892).jpg"
+  },
+  "porsche|taycan": {
+    "image": "store/img/bikes/porsche-taycan.webp",
+    "thumb": "store/img/bikes/porsche-taycan-thumb.webp",
+    "kind": "car",
+    "title": "Porsche Taycan IAA 2019 JM 0787.jpg",
+    "author": "Johannes Maximilian",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Porsche_Taycan_IAA_2019_JM_0787.jpg"
+  },
+  "ram|1500": {
+    "image": "store/img/bikes/ram-1500.webp",
+    "thumb": "store/img/bikes/ram-1500-thumb.webp",
+    "kind": "car",
+    "title": "Dodge RAM 1500 in Switzerland.jpg",
+    "author": "JoachimKohler-HB",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dodge_RAM_1500_in_Switzerland.jpg"
+  },
+  "ram|1500-classic": {
+    "image": "store/img/bikes/ram-1500-classic.webp",
+    "thumb": "store/img/bikes/ram-1500-classic-thumb.webp",
+    "kind": "car",
+    "title": "RAM 1500 Classic Crew Cab.jpg",
+    "author": "Ruben de Rijcke",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:RAM_1500_Classic_Crew_Cab.jpg"
+  },
+  "ram|1500-dt": {
+    "image": "store/img/bikes/ram-1500-dt.webp",
+    "thumb": "store/img/bikes/ram-1500-dt-thumb.webp",
+    "kind": "car",
+    "title": "Ram 1500 (DT) Hirschaid 2022-20220709-RM-111330.jpg",
+    "author": "Ermell",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ram_1500_(DT)_Hirschaid_2022-20220709-RM-111330.jpg"
+  },
+  "ram|2500": {
+    "image": "store/img/bikes/ram-2500.webp",
+    "thumb": "store/img/bikes/ram-2500-thumb.webp",
+    "kind": "car",
+    "title": "2011 Ram 2500 Power Wagon -- 2011 DC.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Ram_2500_Power_Wagon_--_2011_DC.jpg"
+  },
+  "ram|3500": {
+    "image": "store/img/bikes/ram-3500.webp",
+    "thumb": "store/img/bikes/ram-3500-thumb.webp",
+    "kind": "car",
+    "title": "2018 Ram 3500 Laramie Crew Cab 4x4 with 8' Box, front left, 12-08-2022.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Ram_3500_Laramie_Crew_Cab_4x4_with_8'_Box,_front_left,_12-08-2022.jpg"
+  },
+  "ram|promaster": {
+    "image": "store/img/bikes/ram-promaster.webp",
+    "thumb": "store/img/bikes/ram-promaster-thumb.webp",
+    "kind": "car",
+    "title": "2014 Ram 1500 ProMaster Tradesman SWB std roof front.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Ram_1500_ProMaster_Tradesman_SWB_std_roof_front.jpg"
+  },
+  "renault|arkana": {
+    "image": "store/img/bikes/renault-arkana.webp",
+    "thumb": "store/img/bikes/renault-arkana-thumb.webp",
+    "kind": "car",
+    "title": "Renault Arkana Hybrid 2021.jpg",
+    "author": "Peter Broster",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Arkana_Hybrid_2021.jpg"
+  },
+  "renault|austral": {
+    "image": "store/img/bikes/renault-austral.webp",
+    "thumb": "store/img/bikes/renault-austral-thumb.webp",
+    "kind": "car",
+    "title": "Renault Austral 1X7A6198.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Austral_1X7A6198.jpg"
+  },
+  "renault|captur": {
+    "image": "store/img/bikes/renault-captur.webp",
+    "thumb": "store/img/bikes/renault-captur-thumb.webp",
+    "kind": "car",
+    "title": "2024 Renault Captur II IMG 9302.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Renault_Captur_II_IMG_9302.jpg"
+  },
+  "renault|clio": {
+    "image": "store/img/bikes/renault-clio.webp",
+    "thumb": "store/img/bikes/renault-clio-thumb.webp",
+    "kind": "car",
+    "title": "Renault Clio V 1X7A0392.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Clio_V_1X7A0392.jpg"
+  },
+  "renault|clio-5": {
+    "image": "store/img/bikes/renault-clio-5.webp",
+    "thumb": "store/img/bikes/renault-clio-5-thumb.webp",
+    "kind": "car",
+    "title": "Renault Clio 5 Dynamique by Bburago Street Fire.jpg",
+    "author": "Sherwin",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Clio_5_Dynamique_by_Bburago_Street_Fire.jpg"
+  },
+  "renault|espace": {
+    "image": "store/img/bikes/renault-espace.webp",
+    "thumb": "store/img/bikes/renault-espace-thumb.webp",
+    "kind": "car",
+    "title": "2025 Renault Espace VI IMG 5634.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Renault_Espace_VI_IMG_5634.jpg"
+  },
+  "renault|express": {
+    "image": "store/img/bikes/renault-express.webp",
+    "thumb": "store/img/bikes/renault-express-thumb.webp",
+    "kind": "car",
+    "title": "Renault Express 1.1 (14929330543).jpg",
+    "author": "Dennis Elzinga",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Express_1.1_(14929330543).jpg"
+  },
+  "renault|kangoo": {
+    "image": "store/img/bikes/renault-kangoo.webp",
+    "thumb": "store/img/bikes/renault-kangoo-thumb.webp",
+    "kind": "car",
+    "title": "2024 Renault Kangoo Advance ML19 E-Tech.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Renault_Kangoo_Advance_ML19_E-Tech.jpg"
+  },
+  "renault|master": {
+    "image": "store/img/bikes/renault-master.webp",
+    "thumb": "store/img/bikes/renault-master-thumb.webp",
+    "kind": "car",
+    "title": "Renault Master IV, Frontansicht, Feb. 2025.jpg",
+    "author": "Ziv",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Master_IV,_Frontansicht,_Feb._2025.jpg"
+  },
+  "renault|megane": {
+    "image": "store/img/bikes/renault-megane.webp",
+    "thumb": "store/img/bikes/renault-megane-thumb.webp",
+    "kind": "car",
+    "title": "2019 Renault Megane R.S. 300 Trophy 1.8 Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Renault_Megane_R.S._300_Trophy_1.8_Front.jpg"
+  },
+  "renault|rafale": {
+    "image": "store/img/bikes/renault-rafale.webp",
+    "thumb": "store/img/bikes/renault-rafale-thumb.webp",
+    "kind": "car",
+    "title": "Renault Rafale IAA 2023 1X7A0325.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Rafale_IAA_2023_1X7A0325.jpg"
+  },
+  "renault|scenic": {
+    "image": "store/img/bikes/renault-scenic.webp",
+    "thumb": "store/img/bikes/renault-scenic-thumb.webp",
+    "kind": "car",
+    "title": "Renault Scénic E-Tech GIMS 2024 1X7A2035.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Sc%C3%A9nic_E-Tech_GIMS_2024_1X7A2035.jpg"
+  },
+  "renault|symbioz": {
+    "image": "store/img/bikes/renault-symbioz.webp",
+    "thumb": "store/img/bikes/renault-symbioz-thumb.webp",
+    "kind": "car",
+    "title": "Renault Symbioz Automesse Ludwigsburg 2024 IMG 1691.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Symbioz_Automesse_Ludwigsburg_2024_IMG_1691.jpg"
+  },
+  "renault|trafic": {
+    "image": "store/img/bikes/renault-trafic.webp",
+    "thumb": "store/img/bikes/renault-trafic-thumb.webp",
+    "kind": "car",
+    "title": "2009 Renault Trafic LL29 dCi - 1995cc 2.0 (115PS) Diesel - Bleu Myosotis - 06-2024, Front.jpg",
+    "author": "Harvey Bold",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009_Renault_Trafic_LL29_dCi_-_1995cc_2.0_(115PS)_Diesel_-_Bleu_Myosotis_-_06-2024,_Front.jpg"
+  },
+  "renault|twingo": {
+    "image": "store/img/bikes/renault-twingo.webp",
+    "thumb": "store/img/bikes/renault-twingo-thumb.webp",
+    "kind": "car",
+    "title": "Renault Twingo Liberty, Generation 1 (2017-07-28 Sp).JPG",
+    "author": "Lothar Spurzem",
+    "license": "CC BY-SA 2.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Renault_Twingo_Liberty,_Generation_1_(2017-07-28_Sp).JPG"
   },
   "royal-enfield|500-bullet-classic": {
     "image": "store/img/bikes/royal-enfield-500-bullet-classic.webp",
@@ -7061,6 +10157,114 @@
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:Re_thunderbird.png",
     "hero": "store/img/bikes/royal-enfield-thunderbird-hero.webp"
+  },
+  "seat|alhambra": {
+    "image": "store/img/bikes/seat-alhambra.webp",
+    "thumb": "store/img/bikes/seat-alhambra-thumb.webp",
+    "kind": "car",
+    "title": "Alhambra of a different kind (73491284).jpg",
+    "author": "Andy / Andrew Fogg from near Cambridge, UK",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Alhambra_of_a_different_kind_(73491284).jpg"
+  },
+  "subaru|ascent": {
+    "image": "store/img/bikes/subaru-ascent.webp",
+    "thumb": "store/img/bikes/subaru-ascent-thumb.webp",
+    "kind": "car",
+    "title": "Subaru Evoltis (Ascent) 2.4 Touring 'EyeSight' 2023 (pre-facelift, 3).jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Subaru_Evoltis_(Ascent)_2.4_Touring_'EyeSight'_2023_(pre-facelift,_3).jpg"
+  },
+  "subaru|brz": {
+    "image": "store/img/bikes/subaru-brz.webp",
+    "thumb": "store/img/bikes/subaru-brz-thumb.webp",
+    "kind": "car",
+    "title": "2020 Subaru BRZ ts.jpg",
+    "author": "zombieite",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Subaru_BRZ_ts.jpg"
+  },
+  "subaru|crosstrek": {
+    "image": "store/img/bikes/subaru-crosstrek.webp",
+    "thumb": "store/img/bikes/subaru-crosstrek-thumb.webp",
+    "kind": "car",
+    "title": "Subaru Crosstrek (GU) Auto Zuerich 2023 1X7A0896.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Subaru_Crosstrek_(GU)_Auto_Zuerich_2023_1X7A0896.jpg"
+  },
+  "subaru|forester": {
+    "image": "store/img/bikes/subaru-forester.webp",
+    "thumb": "store/img/bikes/subaru-forester-thumb.webp",
+    "kind": "car",
+    "title": "2015-2018 Subaru Forester XT rear.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015-2018_Subaru_Forester_XT_rear.jpg"
+  },
+  "subaru|impreza": {
+    "image": "store/img/bikes/subaru-impreza.webp",
+    "thumb": "store/img/bikes/subaru-impreza-thumb.webp",
+    "kind": "car",
+    "title": "2021 Subaru Impreza Sedan, front left, 02-06-2023.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Subaru_Impreza_Sedan,_front_left,_02-06-2023.jpg"
+  },
+  "subaru|legacy": {
+    "image": "store/img/bikes/subaru-legacy.webp",
+    "thumb": "store/img/bikes/subaru-legacy-thumb.webp",
+    "kind": "car",
+    "title": "SUBARU LEGACY (BN,BS) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:SUBARU_LEGACY_(BN,BS)_China.jpg"
+  },
+  "subaru|outback": {
+    "image": "store/img/bikes/subaru-outback.webp",
+    "thumb": "store/img/bikes/subaru-outback-thumb.webp",
+    "kind": "car",
+    "title": "2018 Subaru Outback SE Premium Symmetrical CVT 2.5 Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Subaru_Outback_SE_Premium_Symmetrical_CVT_2.5_Front.jpg"
+  },
+  "subaru|solterra": {
+    "image": "store/img/bikes/subaru-solterra.webp",
+    "thumb": "store/img/bikes/subaru-solterra-thumb.webp",
+    "kind": "car",
+    "title": "Subaru Solterra ST-E Auto Zuerich 2023 1X7A1257.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Subaru_Solterra_ST-E_Auto_Zuerich_2023_1X7A1257.jpg"
+  },
+  "subaru|trailseeker": {
+    "image": "store/img/bikes/subaru-trailseeker.webp",
+    "thumb": "store/img/bikes/subaru-trailseeker-thumb.webp",
+    "kind": "car",
+    "title": "2026 Subaru Trailseeker (Prototype) at the 2025 NYC Auto Show.jpg",
+    "author": "Raszbeary",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Subaru_Trailseeker_(Prototype)_at_the_2025_NYC_Auto_Show.jpg"
+  },
+  "subaru|uncharted": {
+    "image": "store/img/bikes/subaru-uncharted.webp",
+    "thumb": "store/img/bikes/subaru-uncharted-thumb.webp",
+    "kind": "car",
+    "title": "Subaru Uncharted Auto Zuerich 2025 DSC 3071.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Subaru_Uncharted_Auto_Zuerich_2025_DSC_3071.jpg"
+  },
+  "subaru|wrx": {
+    "image": "store/img/bikes/subaru-wrx.webp",
+    "thumb": "store/img/bikes/subaru-wrx-thumb.webp",
+    "kind": "car",
+    "title": "2022 Subaru WRX.jpg",
+    "author": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Subaru_WRX.jpg"
   },
   "suzuki|access-125": {
     "image": "store/img/bikes/suzuki-access-125.webp",
@@ -8115,6 +11319,51 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_XF650_Freewind.jpg",
     "hero": "store/img/bikes/suzuki-xf-650-freewind-hero.webp"
   },
+  "tesla|cybertruck": {
+    "image": "store/img/bikes/tesla-cybertruck.webp",
+    "thumb": "store/img/bikes/tesla-cybertruck-thumb.webp",
+    "kind": "car",
+    "title": "2024 Tesla Cybertruck, Moab 02.jpg",
+    "author": "A1C6",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Tesla_Cybertruck,_Moab_02.jpg"
+  },
+  "tesla|model-3": {
+    "image": "store/img/bikes/tesla-model-3.webp",
+    "thumb": "store/img/bikes/tesla-model-3-thumb.webp",
+    "kind": "car",
+    "title": "Tesla Model 3 (2023) Auto Zuerich 2023 1X7A1313.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(2023)_Auto_Zuerich_2023_1X7A1313.jpg"
+  },
+  "tesla|model-s": {
+    "image": "store/img/bikes/tesla-model-s.webp",
+    "thumb": "store/img/bikes/tesla-model-s-thumb.webp",
+    "kind": "car",
+    "title": "20180630 Tesla Model S 70D 2015 midnight blue left front.jpg",
+    "author": "Granada",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:20180630_Tesla_Model_S_70D_2015_midnight_blue_left_front.jpg"
+  },
+  "tesla|model-x": {
+    "image": "store/img/bikes/tesla-model-x.webp",
+    "thumb": "store/img/bikes/tesla-model-x-thumb.webp",
+    "kind": "car",
+    "title": "2018 Tesla Model X 75D.jpg",
+    "author": "Calreyn88",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Tesla_Model_X_75D.jpg"
+  },
+  "tesla|model-y": {
+    "image": "store/img/bikes/tesla-model-y.webp",
+    "thumb": "store/img/bikes/tesla-model-y-thumb.webp",
+    "kind": "car",
+    "title": "Tesla Model Y 2025 at Santana Row dllu 02.jpg",
+    "author": "Dllu",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_2025_at_Santana_Row_dllu_02.jpg"
+  },
   "toyota|4runner": {
     "image": "store/img/bikes/toyota-4runner.webp",
     "thumb": "store/img/bikes/toyota-4runner-thumb.webp",
@@ -8133,6 +11382,15 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Toyota_86_Hakone.jpg"
   },
+  "toyota|avalon": {
+    "image": "store/img/bikes/toyota-avalon.webp",
+    "thumb": "store/img/bikes/toyota-avalon-thumb.webp",
+    "kind": "car",
+    "title": "TOYOTA AVALON China (4).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:TOYOTA_AVALON_China_(4).jpg"
+  },
   "toyota|bz": {
     "image": "store/img/bikes/toyota-bz.webp",
     "thumb": "store/img/bikes/toyota-bz-thumb.webp",
@@ -8141,6 +11399,33 @@
     "author": "Bull-Doser",
     "license": "Public domain",
     "source": "https://commons.wikimedia.org/wiki/File:2026_Toyota_bZ_Woodland_au_SIAM_2026_--_arri%C3%A8re.JPG"
+  },
+  "toyota|bz4x": {
+    "image": "store/img/bikes/toyota-bz4x.webp",
+    "thumb": "store/img/bikes/toyota-bz4x-thumb.webp",
+    "kind": "car",
+    "title": "Toyota bZ4X, Auto 2024, Zurich (PANA0765).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_bZ4X,_Auto_2024,_Zurich_(PANA0765).jpg"
+  },
+  "toyota|c-hr": {
+    "image": "store/img/bikes/toyota-c-hr.webp",
+    "thumb": "store/img/bikes/toyota-c-hr-thumb.webp",
+    "kind": "car",
+    "title": "TOYOTA C-HR China (4).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:TOYOTA_C-HR_China_(4).jpg"
+  },
+  "toyota|camry": {
+    "image": "store/img/bikes/toyota-camry.webp",
+    "thumb": "store/img/bikes/toyota-camry-thumb.webp",
+    "kind": "car",
+    "title": "2017 Toyota Camry Exclusive brown rear.jpg",
+    "author": "Throwawayacc222",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017_Toyota_Camry_Exclusive_brown_rear.jpg"
   },
   "toyota|corolla": {
     "image": "store/img/bikes/toyota-corolla.webp",
@@ -8151,6 +11436,33 @@
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Toyota_Corolla_Trek_Hybrid_Genf_2019_1Y7A5587.jpg"
   },
+  "toyota|gr86": {
+    "image": "store/img/bikes/toyota-gr86.webp",
+    "thumb": "store/img/bikes/toyota-gr86-thumb.webp",
+    "kind": "car",
+    "title": "2022 Toyota GR86 ZN8 Track Bred.jpg",
+    "author": "Nathan Dimartino",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Toyota_GR86_ZN8_Track_Bred.jpg"
+  },
+  "toyota|highlander": {
+    "image": "store/img/bikes/toyota-highlander.webp",
+    "thumb": "store/img/bikes/toyota-highlander-thumb.webp",
+    "kind": "car",
+    "title": "Mariposa (CA, USA), Fremont's Fort Historical Marker, Toyota Highlander -- 2022 -- 141813.jpg",
+    "author": "Dietmar Rabich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mariposa_(CA,_USA),_Fremont's_Fort_Historical_Marker,_Toyota_Highlander_--_2022_--_141813.jpg"
+  },
+  "toyota|mirai": {
+    "image": "store/img/bikes/toyota-mirai.webp",
+    "thumb": "store/img/bikes/toyota-mirai-thumb.webp",
+    "kind": "car",
+    "title": "Toyota Mirai, IAA 2017, Frankfurt (1Y7A1888).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Mirai,_IAA_2017,_Frankfurt_(1Y7A1888).jpg"
+  },
   "toyota|prius": {
     "image": "store/img/bikes/toyota-prius.webp",
     "thumb": "store/img/bikes/toyota-prius-thumb.webp",
@@ -8159,6 +11471,78 @@
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Toyota_Prius_(XW60)_Plug-in_Hybrid_Automesse_Ludwigsburg_2023_1X7A0004.jpg"
+  },
+  "toyota|rav4": {
+    "image": "store/img/bikes/toyota-rav4.webp",
+    "thumb": "store/img/bikes/toyota-rav4-thumb.webp",
+    "kind": "car",
+    "title": "Toyota RAV4 Hybrid, GIMS 2019, Le Grand-Saconnex (GIMS0518).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_RAV4_Hybrid,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0518).jpg"
+  },
+  "toyota|sequoia": {
+    "image": "store/img/bikes/toyota-sequoia.webp",
+    "thumb": "store/img/bikes/toyota-sequoia-thumb.webp",
+    "kind": "car",
+    "title": "2018+ Toyota Sequoia Limited, Silver Sky Metallic, 6.22.19.jpg",
+    "author": "Syntaxlord",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018%2B_Toyota_Sequoia_Limited,_Silver_Sky_Metallic,_6.22.19.jpg"
+  },
+  "toyota|sienna": {
+    "image": "store/img/bikes/toyota-sienna.webp",
+    "thumb": "store/img/bikes/toyota-sienna-thumb.webp",
+    "kind": "car",
+    "title": "Toyota Sienna -- 07-09-2009.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Sienna_--_07-09-2009.jpg"
+  },
+  "toyota|supra": {
+    "image": "store/img/bikes/toyota-supra.webp",
+    "thumb": "store/img/bikes/toyota-supra-thumb.webp",
+    "kind": "car",
+    "title": "Dülmen, Auto Bertels, Toyota GR Supra -- 2021 -- 9537.jpg",
+    "author": "Dietmar Rabich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Auto_Bertels,_Toyota_GR_Supra_--_2021_--_9537.jpg"
+  },
+  "toyota|tacoma": {
+    "image": "store/img/bikes/toyota-tacoma.webp",
+    "thumb": "store/img/bikes/toyota-tacoma-thumb.webp",
+    "kind": "car",
+    "title": "Second Gen Toyota Tacoma on Snowy Mountain - 2019.jpg",
+    "author": "Noah Wulf",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Second_Gen_Toyota_Tacoma_on_Snowy_Mountain_-_2019.jpg"
+  },
+  "toyota|tundra": {
+    "image": "store/img/bikes/toyota-tundra.webp",
+    "thumb": "store/img/bikes/toyota-tundra-thumb.webp",
+    "kind": "car",
+    "title": "Toyota Tundra at 2019 SF Auto Show.jpg",
+    "author": "DestinationFearFan",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Tundra_at_2019_SF_Auto_Show.jpg"
+  },
+  "toyota|venza": {
+    "image": "store/img/bikes/toyota-venza.webp",
+    "thumb": "store/img/bikes/toyota-venza-thumb.webp",
+    "kind": "car",
+    "title": "2011 Toyota Venza -- NHTSA 2.jpg",
+    "author": "U.S. National Highway Traffic Safety Administration",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Toyota_Venza_--_NHTSA_2.jpg"
+  },
+  "toyota|yaris": {
+    "image": "store/img/bikes/toyota-yaris.webp",
+    "thumb": "store/img/bikes/toyota-yaris-thumb.webp",
+    "kind": "car",
+    "title": "Toyota Yaris GRMN IMG 0856.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Toyota_Yaris_GRMN_IMG_0856.jpg"
   },
   "triumph|america": {
     "image": "store/img/bikes/triumph-america.webp",
@@ -8807,6 +12191,213 @@
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_002.jpg",
     "hero": "store/img/bikes/victory-vision-hero.webp"
+  },
+  "volkswagen|arteon": {
+    "image": "store/img/bikes/volkswagen-arteon.webp",
+    "thumb": "store/img/bikes/volkswagen-arteon-thumb.webp",
+    "kind": "car",
+    "title": "Volkswagen Arteon (2020) 1X7A0291.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Arteon_(2020)_1X7A0291.jpg"
+  },
+  "volkswagen|atlas": {
+    "image": "store/img/bikes/volkswagen-atlas.webp",
+    "thumb": "store/img/bikes/volkswagen-atlas-thumb.webp",
+    "kind": "car",
+    "title": "2021 Volkswagen Atlas 1X7A0389.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Volkswagen_Atlas_1X7A0389.jpg"
+  },
+  "volkswagen|atlas-cross-sport": {
+    "image": "store/img/bikes/volkswagen-atlas-cross-sport.webp",
+    "thumb": "store/img/bikes/volkswagen-atlas-cross-sport-thumb.webp",
+    "kind": "car",
+    "title": "Volkswagen Atlas Cross Sport, Motortreff Bella Italia 2024, Munich (P1190266).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Atlas_Cross_Sport,_Motortreff_Bella_Italia_2024,_Munich_(P1190266).jpg"
+  },
+  "volkswagen|e-golf": {
+    "image": "store/img/bikes/volkswagen-e-golf.webp",
+    "thumb": "store/img/bikes/volkswagen-e-golf-thumb.webp",
+    "kind": "car",
+    "title": "2018 Volkswagen e-Golf Front.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Volkswagen_e-Golf_Front.jpg"
+  },
+  "volkswagen|golf-/-golf-gti-/-golf-r": {
+    "image": "store/img/bikes/volkswagen-golf-golf-gti-golf-r.webp",
+    "thumb": "store/img/bikes/volkswagen-golf-golf-gti-golf-r-thumb.webp",
+    "kind": "car",
+    "title": "VPReloaded Golf 7 R ,Audi A3 S-line, Golf 7.5 GTi , Golf 7 Clubsport.jpg",
+    "author": "ZoBuyani",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:VPReloaded_Golf_7_R_,Audi_A3_S-line,_Golf_7.5_GTi_,_Golf_7_Clubsport.jpg"
+  },
+  "volkswagen|golf-gti": {
+    "image": "store/img/bikes/volkswagen-golf-gti.webp",
+    "thumb": "store/img/bikes/volkswagen-golf-gti-thumb.webp",
+    "kind": "car",
+    "title": "Volkswagen Golf GTI G60, 18. ADAC Stormarn Classic, Zarpen (TR257275).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Golf_GTI_G60,_18._ADAC_Stormarn_Classic,_Zarpen_(TR257275).jpg"
+  },
+  "volkswagen|id.4": {
+    "image": "store/img/bikes/volkswagen-id-4.webp",
+    "thumb": "store/img/bikes/volkswagen-id-4-thumb.webp",
+    "kind": "car",
+    "title": "2020 Volkswagen ID.4 Pro (Netherlands) front view.jpg",
+    "author": "Dennis Elzinga",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Volkswagen_ID.4_Pro_(Netherlands)_front_view.jpg"
+  },
+  "volkswagen|id.buzz": {
+    "image": "store/img/bikes/volkswagen-id-buzz.webp",
+    "thumb": "store/img/bikes/volkswagen-id-buzz-thumb.webp",
+    "kind": "car",
+    "title": "Volkswagen ID. Buzz 1X7A6256.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_ID._Buzz_1X7A6256.jpg"
+  },
+  "volkswagen|jetta": {
+    "image": "store/img/bikes/volkswagen-jetta.webp",
+    "thumb": "store/img/bikes/volkswagen-jetta-thumb.webp",
+    "kind": "car",
+    "title": "2022 Volkswagen Jetta VII 1X7A0154.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Volkswagen_Jetta_VII_1X7A0154.jpg"
+  },
+  "volkswagen|passat": {
+    "image": "store/img/bikes/volkswagen-passat.webp",
+    "thumb": "store/img/bikes/volkswagen-passat-thumb.webp",
+    "kind": "car",
+    "title": "Volkswagen Passat Variant R-Line, GIMS 2019, Le Grand-Saconnex (GIMS0226).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Passat_Variant_R-Line,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0226).jpg"
+  },
+  "volkswagen|taos": {
+    "image": "store/img/bikes/volkswagen-taos.webp",
+    "thumb": "store/img/bikes/volkswagen-taos-thumb.webp",
+    "kind": "car",
+    "title": "2022 Volkswagen Taos 1.5T SE in Cornflower Blue, front left.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Volkswagen_Taos_1.5T_SE_in_Cornflower_Blue,_front_left.jpg"
+  },
+  "volkswagen|tiguan": {
+    "image": "store/img/bikes/volkswagen-tiguan.webp",
+    "thumb": "store/img/bikes/volkswagen-tiguan-thumb.webp",
+    "kind": "car",
+    "title": "Volkswagen Tiguan III IAA 2023 1X7A0489.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_III_IAA_2023_1X7A0489.jpg"
+  },
+  "volvo|ex30": {
+    "image": "store/img/bikes/volvo-ex30.webp",
+    "thumb": "store/img/bikes/volvo-ex30-thumb.webp",
+    "kind": "car",
+    "title": "Volvo EX30 Auto Zuerich 2023 1X7A0954.jpg",
+    "author": "Alexander-93",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX30_Auto_Zuerich_2023_1X7A0954.jpg"
+  },
+  "volvo|ex40": {
+    "image": "store/img/bikes/volvo-ex40.webp",
+    "thumb": "store/img/bikes/volvo-ex40-thumb.webp",
+    "kind": "car",
+    "title": "Volvo EX40, Auto 2024, Zurich (PANA0988).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX40,_Auto_2024,_Zurich_(PANA0988).jpg"
+  },
+  "volvo|ex90": {
+    "image": "store/img/bikes/volvo-ex90.webp",
+    "thumb": "store/img/bikes/volvo-ex90-thumb.webp",
+    "kind": "car",
+    "title": "Volvo EX90 autoMOBIL Tübingen 2025 DSC 2740.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_EX90_autoMOBIL_T%C3%BCbingen_2025_DSC_2740.jpg"
+  },
+  "volvo|s60": {
+    "image": "store/img/bikes/volvo-s60.webp",
+    "thumb": "store/img/bikes/volvo-s60-thumb.webp",
+    "kind": "car",
+    "title": "Volvo S60 2013.jpg",
+    "author": "Arild Vågen",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_S60_2013.jpg"
+  },
+  "volvo|s90": {
+    "image": "store/img/bikes/volvo-s90.webp",
+    "thumb": "store/img/bikes/volvo-s90-thumb.webp",
+    "kind": "car",
+    "title": "Volvo S90 - przód (MSP16).jpg",
+    "author": "Jakub \"Flyz1\" Maciejewski",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_S90_-_prz%C3%B3d_(MSP16).jpg"
+  },
+  "volvo|v60": {
+    "image": "store/img/bikes/volvo-v60.webp",
+    "thumb": "store/img/bikes/volvo-v60-thumb.webp",
+    "kind": "car",
+    "title": "Volvo V60 Genf 2018.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V60_Genf_2018.jpg"
+  },
+  "volvo|v90": {
+    "image": "store/img/bikes/volvo-v90.webp",
+    "thumb": "store/img/bikes/volvo-v90-thumb.webp",
+    "kind": "car",
+    "title": "Volvo V90 - przód (MSP16).jpg",
+    "author": "Jakub \"Flyz1\" Maciejewski",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V90_-_prz%C3%B3d_(MSP16).jpg"
+  },
+  "volvo|v90-cross-country": {
+    "image": "store/img/bikes/volvo-v90-cross-country.webp",
+    "thumb": "store/img/bikes/volvo-v90-cross-country-thumb.webp",
+    "kind": "car",
+    "title": "Volvo V90 Cross Country - prawy przód (MSP17).jpg",
+    "author": "Jakub \"flyz1\" Maciejewski",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Volvo_V90_Cross_Country_-_prawy_prz%C3%B3d_(MSP17).jpg"
+  },
+  "volvo|xc60": {
+    "image": "store/img/bikes/volvo-xc60.webp",
+    "thumb": "store/img/bikes/volvo-xc60-thumb.webp",
+    "kind": "car",
+    "title": "2026 Volvo XC60 (SPA) DSC 2675.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Volvo_XC60_(SPA)_DSC_2675.jpg"
+  },
+  "volvo|xc90": {
+    "image": "store/img/bikes/volvo-xc90.webp",
+    "thumb": "store/img/bikes/volvo-xc90-thumb.webp",
+    "kind": "car",
+    "title": "2025 Volvo XC90 II DSC 7420.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Volvo_XC90_II_DSC_7420.jpg"
+  },
+  "wagoneer|wagoneer": {
+    "image": "store/img/bikes/wagoneer-wagoneer.webp",
+    "thumb": "store/img/bikes/wagoneer-wagoneer-thumb.webp",
+    "kind": "car",
+    "title": "1964 Jeep Grand Wagoneer (12670036305).jpg",
+    "author": "Sicnag",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1964_Jeep_Grand_Wagoneer_(12670036305).jpg"
   },
   "yamaha|aerox": {
     "image": "store/img/bikes/yamaha-aerox.webp",

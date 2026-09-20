@@ -913,25 +913,69 @@ class Run:
 # ---------------------------------------------------------------- cli
 
 
-def cmd_sweep(write: bool) -> int:
-    """Drop manuals the pipeline never finished (0 sections) or that turned out to be a 3-page supplement."""
-    from app.ingest import curate as _c  # noqa: F401  (keeps the store import path identical to a run)
+SWEEP_MIN_SECTIONS = 10
 
-    gone = 0
-    for path in sorted((DATA / "manuals").glob("*.json")):
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
+
+def _unlink_bikes(store, manual_id: str, bike_ids: list[str]) -> int:
+    """A removed manual must not stay on any bike: BlobStore keeps the link in its own little blob."""
+    wanted = {b for b in bike_ids}
+    wanted |= {b.id for b in store.bikes() if b.manualId == manual_id}
+    freed = 0
+    for bike_id in sorted(wanted):
+        bike = store.bike(bike_id)
+        if bike is None or bike.manualId != manual_id:
             continue
-        count = len(data.get("sections") or [])
-        if count >= 10:
+        store.put_bikes([bike.model_copy(update={"manualId": None})])
+        if (store.bike(bike_id) or bike).manualId == manual_id:
+            # model_dump(exclude_none=True) drops the field, so an overlay cannot clear what the base row holds
+            blob = getattr(store, "_blob", None)
+            if blob is not None:
+                blob(f"links/{bike_id}.json").delete_blob()
+                store._lists.drop("bikes")
+        freed += 1
+    return freed
+
+
+def _remove_manual(store, manual_id: str) -> None:
+    blob = getattr(store, "_blob", None)
+    if blob is None:
+        for folder in ("manuals", "pages", "specs"):
+            (DATA / folder / f"{manual_id}.json").unlink(missing_ok=True)
+        ingest.pdf_path(manual_id).unlink(missing_ok=True)
+        return
+    for name in (f"manuals/{manual_id}.json", f"pages/{manual_id}.json", f"specs/{manual_id}.json"):
+        try:
+            blob(name).delete_blob()
+        except Exception:
+            pass
+    try:
+        blob(f"{manual_id}.pdf", store.pdf).delete_blob()
+    except Exception:
+        pass
+    store._lists.clear()
+
+
+def cmd_sweep(write: bool, only: list[str] | None = None) -> int:
+    """Drop manuals the pipeline never finished (0 sections) or that turned out to be a 3-page supplement.
+
+    Goes through the Store, so it sweeps the blob-backed store exactly the same way it sweeps DATA_DIR.
+    """
+    store = get_store()
+    wanted = [o.lower() for o in (only or [])]
+    gone = 0
+    for manual in store.manuals():
+        count = len(manual.sections)
+        if count >= SWEEP_MIN_SECTIONS:
+            continue
+        if wanted and not any(w in manual.id.lower() for w in wanted):
             continue
         gone += 1
-        print(f"{'-' if write else '~'} {path.stem:<44} {count} sections")
+        print(f"{'-' if write else '~'} {manual.id:<44} {count} sections, {len(manual.bikeIds)} bikes")
         if write:
-            path.unlink(missing_ok=True)
-            (DATA / "pages" / path.name).unlink(missing_ok=True)
-            (DATA / "specs" / path.name).unlink(missing_ok=True)
+            freed = _unlink_bikes(store, manual.id, manual.bikeIds)
+            _remove_manual(store, manual.id)
+            if freed:
+                print(f"    unlinked {freed} bike(s)")
     print(f"\n{gone} manuals {'removed' if write else 'would be removed'}")
     return 0
 
@@ -967,6 +1011,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--status", action="store_true")
     p.add_argument("--sweep", action="store_true")
     p.add_argument("--write", action="store_true")
+    p.add_argument("--only", action="append", default=[])
     p.add_argument("--budget", type=float, default=None)
     p.add_argument("--hours", type=float, default=12.0)
     p.add_argument("--concurrency", type=int, default=None)
@@ -978,7 +1023,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.status:
         return cmd_status()
     if args.sweep:
-        return cmd_sweep(args.write)
+        return cmd_sweep(args.write, args.only)
     if args.bench:
         return cmd_bench([m.strip() for m in args.models.split(",") if m.strip()], [int(s) for s in args.sizes.split(",")])
     if args.plan:

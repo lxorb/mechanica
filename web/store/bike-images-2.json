@@ -709,6 +709,18 @@
     "via": "alias",
     "aliasOf": "bmw|c-evolution"
   },
+  "bmw|f-450-gs": {
+    "image": "store/img/bikes2/bmw-f-450-gs.webp",
+    "thumb": "store/img/bikes2/bmw-f-450-gs.thumb.webp",
+    "title": "BMW F 450 GS (1b).jpg",
+    "author": "Cjp24",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_F_450_GS_(1b).jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/bmw-f-450-gs.hero.webp"
+  },
   "bmw|f-650-gs-dakar": {
     "image": "store/img/bikes/bmw-f-650-gs.webp",
     "thumb": "store/img/bikes/bmw-f-650-gs-thumb.webp",
@@ -1085,6 +1097,18 @@
     "view": "three_quarter",
     "score": 7.5,
     "hero": "store/img/bikes2/bmw-k-1600-gtl.hero.webp"
+  },
+  "bmw|m-1000-r": {
+    "image": "store/img/bikes2/bmw-m-1000-r.webp",
+    "thumb": "store/img/bikes2/bmw-m-1000-r.thumb.webp",
+    "title": "BMW M1000R with M1000RR-in-the-left.jpg",
+    "author": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_M1000R_with_M1000RR-in-the-left.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/bmw-m-1000-r.hero.webp"
   },
   "bmw|m-1000-rr": {
     "image": "store/img/bikes2/bmw-m-1000-rr.webp",
@@ -3340,6 +3364,18 @@
     "via": "alias",
     "aliasOf": "honda|adv160"
   },
+  "honda|adv350a": {
+    "image": "store/img/bikes2/honda-adv350a.webp",
+    "thumb": "store/img/bikes2/honda-adv350a.thumb.webp",
+    "title": "2022 Honda ADV350.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Honda_ADV350.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-adv350a.hero.webp"
+  },
   "honda|africa-twin-adventure-sports": {
     "image": "store/img/bikes/honda-africa-twin.webp",
     "thumb": "store/img/bikes/honda-africa-twin-thumb.webp",
@@ -3485,6 +3521,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB_500_Four_(2).jpg",
     "via": "alias",
     "aliasOf": "honda|cb-500"
+  },
+  "honda|cb1000-hornet-sp": {
+    "image": "store/img/bikes2/honda-cb1000-hornet-sp.webp",
+    "thumb": "store/img/bikes2/honda-cb1000-hornet-sp.thumb.webp",
+    "title": "2025 Honda CB1000 Hornet SP.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cb1000-hornet-sp.hero.webp"
   },
   "honda|cb1000r-5four": {
     "image": "store/img/bikes/honda-cb1000r.webp",
@@ -4177,6 +4225,18 @@
     "via": "alias",
     "aliasOf": "honda|cd70"
   },
+  "honda|cl500a": {
+    "image": "store/img/bikes2/honda-cl500a.webp",
+    "thumb": "store/img/bikes2/honda-cl500a.thumb.webp",
+    "title": "2023 Honda CL500.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Honda_CL500.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-cl500a.hero.webp"
+  },
   "honda|cmx1100": {
     "image": "store/img/bikes2/honda-cmx1100.webp",
     "thumb": "store/img/bikes2/honda-cmx1100.thumb.webp",
@@ -4188,6 +4248,18 @@
     "view": "three_quarter",
     "score": 7.5,
     "hero": "store/img/bikes2/honda-cmx1100.hero.webp"
+  },
+  "honda|cmx500": {
+    "image": "store/img/bikes2/honda-cmx500.webp",
+    "thumb": "store/img/bikes2/honda-cmx500.thumb.webp",
+    "title": "Honda CMX500 Rebel parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg",
+    "author": "Chris Woodrich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CMX500_Rebel_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-cmx500.hero.webp"
   },
   "honda|crf1000l-adventure-sports": {
     "image": "store/img/bikes/honda-crf1000l.webp",
@@ -4989,6 +5061,18 @@
     "via": "alias",
     "aliasOf": "honda|metropolitan"
   },
+  "honda|msx125a": {
+    "image": "store/img/bikes2/honda-msx125a.webp",
+    "thumb": "store/img/bikes2/honda-msx125a.thumb.webp",
+    "title": "Honda MSX125 Grom.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_MSX125_Grom.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-msx125a.hero.webp"
+  },
   "honda|navi": {
     "image": "store/img/bikes2/honda-navi.webp",
     "thumb": "store/img/bikes2/honda-navi.thumb.webp",
@@ -5113,6 +5197,18 @@
     "view": "three_quarter",
     "score": 9.5,
     "hero": "store/img/bikes2/honda-nt1100.hero.webp"
+  },
+  "honda|nt1100-dct": {
+    "image": "store/img/bikes2/honda-nt1100-dct.webp",
+    "thumb": "store/img/bikes2/honda-nt1100-dct.thumb.webp",
+    "title": "Honda NT1100 2022.jpg",
+    "author": "CheminduCret",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_NT1100_2022.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-nt1100-dct.hero.webp"
   },
   "honda|nt700v-abs": {
     "image": "store/img/bikes/honda-nt700v.webp",
@@ -5412,6 +5508,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_ST_1300_police_motorcycle_at_Legendy_2018_in_Prague.jpg",
     "via": "alias",
     "aliasOf": "honda|st-1300-pan-european"
+  },
+  "honda|st125a": {
+    "image": "store/img/bikes2/honda-st125a.webp",
+    "thumb": "store/img/bikes2/honda-st125a.thumb.webp",
+    "title": "2022 Honda Dax ST125.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Honda_Dax_ST125.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-st125a.hero.webp"
   },
   "honda|st1300-abs": {
     "image": "store/img/bikes/honda-st1300.webp",
@@ -5871,6 +5979,18 @@
     "via": "alias",
     "aliasOf": "honda|xl700v-transalp"
   },
+  "honda|xl750": {
+    "image": "store/img/bikes2/honda-xl750.webp",
+    "thumb": "store/img/bikes2/honda-xl750.thumb.webp",
+    "title": "2023 Honda XL750 Transalp.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Honda_XL750_Transalp.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-xl750.hero.webp"
+  },
   "honda|xr-650-l": {
     "image": "store/img/bikes/honda-xr-650.webp",
     "thumb": "store/img/bikes/honda-xr-650-thumb.webp",
@@ -5985,6 +6105,18 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/husqvarna-svartpilen-125.hero.webp"
+  },
+  "husqvarna|svartpilen-801-se": {
+    "image": "store/img/bikes2/husqvarna-svartpilen-801-se.webp",
+    "thumb": "store/img/bikes2/husqvarna-svartpilen-801-se.thumb.webp",
+    "title": "Husqvarna Svartpilen 801 custom1 - EICMA 2024.jpg",
+    "author": "Saggittarius A",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Husqvarna_Svartpilen_801_custom1_-_EICMA_2024.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/husqvarna-svartpilen-801-se.hero.webp"
   },
   "husqvarna|te-250": {
     "image": "store/img/bikes2/husqvarna-te-250.webp",
@@ -6529,6 +6661,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Dtrackerx.jpg",
     "via": "alias",
     "aliasOf": "kawasaki|d-tracker-x"
+  },
+  "kawasaki|eliminator": {
+    "image": "store/img/bikes2/kawasaki-eliminator.webp",
+    "thumb": "store/img/bikes2/kawasaki-eliminator.thumb.webp",
+    "title": "Kawasaki Eliminator at 50th Tokyo Motorcycle Show (2023).jpg",
+    "author": "Ohgud.kibn7ewyu2",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Eliminator_at_50th_Tokyo_Motorcycle_Show_(2023).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/kawasaki-eliminator.hero.webp"
   },
   "kawasaki|er-5-twister": {
     "image": "store/img/bikes/kawasaki-er-5.webp",
