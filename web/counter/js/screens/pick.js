@@ -173,7 +173,9 @@ function mount(el) {
   const send = node("button", { type: "submit", class: "btn btn-icon send", "aria-label": "Ask" });
   send.append(glyph([SEND_PATH], true));
 
-  form.append(mic, cam, input, send);
+  // No camera here: the landing is where a photo identifies a bike, and on this screen it
+  // duplicated a control the rider had already used.
+  form.append(mic, input, send);
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     onSubmit();

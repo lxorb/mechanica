@@ -68,6 +68,7 @@ let askBar = null;
 let askBarFill = null;
 let askHits = null;
 let climateBtn = null;
+let footEl = null;
 let stageEl = null;
 let vxEl = null;
 let viewer = null;
@@ -338,7 +339,10 @@ function build(root) {
   askHits = el("div", { class: "ask-hits" });
   askSheet.append(askInput, askBar, askHits);
 
-  root.append(barEl, stageEl, viewEl, outlineEl, stripEl, actsEl, askSheet);
+  // One bottom row, not two: the page chips scroll on the left, the actions sit on the right.
+  footEl = el("div", { class: "book-foot" });
+  footEl.append(stripEl, actsEl);
+  root.append(barEl, stageEl, viewEl, outlineEl, footEl, askSheet);
 
   backBtn.addEventListener("click", onBack);
   coverEl.addEventListener("click", onContents);

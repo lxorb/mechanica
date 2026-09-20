@@ -446,8 +446,8 @@ body[data-here="book"] main {
   gap: 8px;
 }
 
-/* Only where there is something to talk about. Identify and Confirm have no manual yet. */
-body[data-here="pick"] .dock,
+/* Book and the Parts sheet only. Pick's search bar already carries a mic of its own, so a
+   second one in the corner was two controls for one job. */
 body[data-here="book"] .dock {
   display: flex;
 }

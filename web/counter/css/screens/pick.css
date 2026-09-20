@@ -135,7 +135,7 @@
    the chat button and the submit arrow do the same at the right end. */
 [data-screen="pick"] .ask {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: stretch;
 }
 
@@ -152,10 +152,6 @@
 
 [data-screen="pick"] .ask .btn:active {
   transform: none;
-}
-
-[data-screen="pick"] .ask .cam {
-  border-left: var(--hair) solid var(--edge-soft);
 }
 
 [data-screen="pick"] .ask .send {

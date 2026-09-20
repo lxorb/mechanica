@@ -64,9 +64,19 @@
  * never part of it: a stray tap must never be able to leave the reader with no chapter, no page
  * number and no way out.
  */
-[data-screen="book"] [data-root].immersive .page-strip,
-[data-screen="book"] [data-root].immersive .book-acts {
+[data-screen="book"] [data-root].immersive .book-foot {
   display: none;
+}
+
+/* The page chips and the actions are one row, 40 px tall, never wrapping: at 390 px the
+   chips take what the buttons leave and scroll inside it. */
+[data-screen="book"] .book-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 2px 6px 4px;
+  background: var(--slab);
 }
 
 [data-screen="book"] .bar-btn {
@@ -109,29 +119,31 @@
   align-items: stretch;
   gap: 4px;
   flex: 0 0 auto;
-  min-height: 48px;
-  padding: 2px 6px 4px;
-  background: var(--slab);
+  min-height: 40px;
+  padding: 0;
+  background: transparent;
 }
 
 /* Icons keep their square, words share what is left: "Conditions" spelled out needs the
    room, and the row's own height (48 px min, 2/6/4 padding) is unchanged - the voice orb
    docks against it. */
 [data-screen="book"] .book-acts .bar-btn {
-  flex: 1 1 0;
+  flex: 0 0 auto;
   width: auto;
-  min-width: 44px;
-  height: auto;
-  min-height: 44px;
-  padding: 0 4px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0 8px;
   border: var(--hair) solid var(--slab-line);
   border-radius: var(--r-sm);
   transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
 }
 
+/* A button that has a glyph needs no word beside it. */
 [data-screen="book"] .book-acts .book-ask,
 [data-screen="book"] .book-acts .book-mic {
-  flex: 0 0 52px;
+  width: 40px;
+  padding: 0;
 }
 
 [data-screen="book"] .bar-word {
@@ -143,7 +155,7 @@
 [data-screen="book"] .bar-word {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   letter-spacing: 0.01em;
 }
 
@@ -364,12 +376,13 @@
 [data-screen="book"] .page-strip {
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex: 0 0 auto;
-  height: 48px;
-  min-height: 48px;
-  padding: 0 6px;
-  background: var(--slab);
+  gap: 5px;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  background: transparent;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
@@ -384,9 +397,9 @@
 
 [data-screen="book"] .strip-chip {
   flex: 0 0 auto;
-  min-width: 44px;
-  height: 44px;
-  padding: 0 12px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 9px;
   border: var(--hair) solid var(--slab-fg);
   background: transparent;
   color: var(--slab-fg);
@@ -529,17 +542,12 @@
     grid-row: 1;
   }
 
-  [data-screen="book"] .page-strip {
+  [data-screen="book"] .book-foot {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 2 / span 2;
   }
 
-  [data-screen="book"] .book-acts {
-    grid-column: 2;
-    grid-row: 3;
-  }
-
-  /* Immersive still hides the two bottom rows; the bike then takes the height back. */
+  /* Immersive still hides the bottom row; the bike then takes the height back. */
   [data-screen="book"] [data-root].immersive {
     grid-template-rows: minmax(0, 1fr);
   }
