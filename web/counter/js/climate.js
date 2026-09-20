@@ -189,7 +189,10 @@ function node() {
     "aria-label": "Conditions",
     "data-root": true,
   });
-  const aside = h("aside", { class: "ov cv", "data-overlay": "conditions", hidden: true });
+  // `ov` alone. It used to carry chat-ui's `cv` as well, and that file's `.cv{justify-content:
+  // stretch; z-index:60}` turned this bottom sheet into a 202 px slab pinned to the TOP of the
+  // viewport, over the reader's own bar. Conditions owns `cf-*`; nothing here is a chat view.
+  const aside = h("aside", { class: "ov cf", "data-overlay": "conditions", hidden: true });
   aside.append(h("div", { class: "ov-veil", "data-ov-close": true }), sheet);
   document.body.append(aside);
   return aside;

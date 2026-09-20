@@ -378,14 +378,26 @@ class BudgetReached(RuntimeError):
 # --- driver -----------------------------------------------------------------------------------------
 
 def manual_ids(store) -> list[str]:
+    """Every manual id, without downloading a single Manual.
+
+    build() wants ids and nothing else. `store.manuals()` parses every document to hand back
+    objects this function throws away - on the deployed store that is ~535 manuals and ~72 MB of
+    JSON, the load /cost used to do (docs/qa/BUGS.md BUG-01, BUG-14). FileStore answers from its
+    own directory and BlobStore from the blob listing's metadata; the download is the last resort
+    for a store that offers neither, and a listing that fails falls through to it rather than
+    taking the build down.
+    """
     root = getattr(store, "root", None)
     if root:
         folder = Path(root) / "pages"
         if folder.exists():
             return sorted(p.stem for p in folder.glob("*.json"))
     summaries = getattr(store, "manual_summaries", None)
-    if summaries:
-        return sorted(s["id"] for s in summaries())
+    if summaries is not None:
+        try:
+            return sorted(str(row["id"]) for row in summaries())
+        except Exception:
+            pass
     return sorted(m.id for m in store.manuals())
 
 

@@ -514,9 +514,10 @@ function bindCard(rec, row, text) {
   rec.flag.className = row.rank === RANK.ready ? "id-flag is-ready" : "id-flag is-ondemand";
   paintName(rec.make, rec.model, row, text);
   const hit = Boolean(pin) && row.at.has(pin);
-  rec.span.textContent = hit ? pin : row.span;
+  const code = cardLang(row, hit ? pin : "");
+  paintSpan(rec.span, hit ? pin : row.span, code);
   rec.span.className = hit ? "id-span is-pin" : "id-span";
-  const label = `${row.bike.make ?? ""} ${row.bike.model ?? ""} ${hit ? pin : row.span}`;
+  const label = `${row.bike.make ?? ""} ${row.bike.model ?? ""} ${hit ? pin : row.span} ${code}`;
   rec.box.setAttribute("aria-label", label.replace(/\s+/g, " ").trim());
 }
 
@@ -553,6 +554,38 @@ function yearState(row, raw) {
   return raw.state === "none" && row.rank < RANK.none ? "ondemand" : raw.state;
 }
 
+/**
+ * The manual's language, when it is not English. The registry assigns a foreign-language
+ * manual only where no English one exists, so `bike.lang` is set on exactly those years.
+ * A card covers a whole model: it only carries the tag when every year that has a manual
+ * is in the same one language — a mixed model says nothing and the year chips do the telling.
+ */
+function langOf(bike) {
+  const code = bike && typeof bike.lang === "string" ? bike.lang.trim() : "";
+  return code && code.toLowerCase() !== "en" ? code.toUpperCase() : "";
+}
+
+function cardLang(row, year) {
+  if (year) {
+    const hit = row.at.get(year);
+    return hit ? langOf(hit.bike) : "";
+  }
+  let found = "";
+  for (const entry of row.years) {
+    if (entry.state === "none") continue;
+    const code = langOf(entry.bike);
+    if (!code || (found && found !== code)) return "";
+    found = code;
+  }
+  return found;
+}
+
+/** `<span>text</span>` plus a quiet uppercase language tag, when there is one. */
+function paintSpan(node, text, code) {
+  node.replaceChildren(document.createTextNode(text));
+  if (code) node.append(el("i", { className: "id-lang", text: code }));
+}
+
 function renderChooser() {
   const row = chooserRow;
   chooserEl.hidden = !row;
@@ -567,10 +600,12 @@ function renderChooser() {
     const st = yearState(row, raw);
     const entry = st === raw.state ? raw : { ...raw, state: st };
     const chip = chipAt(i);
+    const code = entry.state === "none" ? "" : langOf(entry.bike);
     chip.hidden = false;
     chip.entry = entry;
-    chip.textContent = entry.year;
+    paintSpan(chip, entry.year, code);
     chip.className = `id-year is-${entry.state}${entry.year === pin ? " is-pin" : ""}`;
+    chip.setAttribute("aria-label", code ? `${entry.year} ${code}` : entry.year);
     chip.disabled = entry.state === "none" && off;
   }
   for (let i = years.length; i < chips.length; i++) {

@@ -1203,6 +1203,57 @@ def alias_pass(models: list, entries: dict, filled: dict, known: set | None = No
     return added
 
 
+DIGITS = re.compile(r"\d+")
+
+
+def lengthen_pass(models: list, entries: dict, filled: dict, known: set | None = None) -> int:
+    """Fill a short name from a photo filed under a LONGER name of the same bike.
+
+    `lookupImage` in ttm.js shortens a model name but never lengthens one, and for
+    good reason: the same rule would hand a Land Rover Discovery the Discovery
+    Sport's photo. It is safe in exactly one case -- when the longer name simply
+    adds trim words after the short one AND both carry the identical run of
+    digits. "V-STAR 650" may take `yamaha|v-star-650-classic`, because a 650 is a
+    650; "Explorer" may not take "Explorer Sport Trac", because neither has a
+    number to pin them together. Returns how many keys were filled.
+    """
+    by_make: dict = defaultdict(list)
+    for source in (filled, entries):
+        for key, entry in source.items():
+            make, _, model = key.partition("|")
+            if model:
+                by_make[make].append((model, entry))
+
+    added = 0
+    for m in models:
+        if m.key in entries or m.key in filled:
+            continue
+        make, _, short = m.key.partition("|")
+        sizes = DIGITS.findall(short)
+        if not sizes:
+            continue  # no displacement to pin the two names together
+        best = None
+        for longer, entry in by_make.get(make, ()):
+            if len(longer) <= len(short) or not longer.startswith(short):
+                continue
+            # the longer name must only ADD words, and add no new number
+            if longer[len(short)] not in "-":
+                continue
+            if DIGITS.findall(longer) != sizes:
+                continue
+            if not on_disk(entry, known):
+                continue
+            if best is None or len(longer) < len(best[0]):
+                best = (longer, entry)  # the closest longer name wins
+        if best:
+            entry = {k: best[1][k] for k in ALIAS_FIELDS if best[1].get(k)}
+            entry["via"] = "alias"
+            entry["aliasOf"] = f"{make}|{best[0]}"
+            entries[m.key] = entry
+            added += 1
+    return added
+
+
 def verify(entries: dict, known: set | None = None) -> int:
     """Drop every entry whose image has gone missing. Returns how many went."""
     if known is None:
@@ -1259,6 +1310,11 @@ def main() -> int:
     ap.add_argument("--wiki-tier", type=int, default=1, help="sweep wikis up to this tier")
     ap.add_argument("--retry-misses", action="store_true", help="ignore the no-candidate cache")
     ap.add_argument(
+        "--lengthen",
+        action="store_true",
+        help="with --verify: also fill short names from a longer name of the same displacement",
+    )
+    ap.add_argument(
         "--openverse",
         action="store_true",
         help="also query Openverse (200 requests/day anonymous - use with --only)",
@@ -1279,11 +1335,17 @@ def main() -> int:
     if args.verify:
         entries = json.loads(OUT_JSON.read_text(encoding="utf-8")) if OUT_JSON.exists() else {}
         before = len(entries)
-        gone = verify(entries)
+        known = stored_files()
+        gone = verify(entries, known)
         filled, _ = first_pass()
-        added = alias_pass(build_models(), entries, filled)
+        roster = build_models()
+        added = alias_pass(roster, entries, filled, known)
+        longer = lengthen_pass(roster, entries, filled, known) if args.lengthen else 0
         write_outputs(entries)
-        print(f"verify: {before} -> {len(entries)} entries ({gone} stale dropped, {added} re-aliased)")
+        print(
+            f"verify: {before} -> {len(entries)} entries "
+            f"({gone} stale dropped, {added} re-aliased, {longer} filled from a longer name)"
+        )
         return 0
     quality = tuple(int(x) for x in args.quality.split(","))
 

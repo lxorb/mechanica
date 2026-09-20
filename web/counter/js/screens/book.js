@@ -1496,6 +1496,51 @@ async function runAsk() {
 
 /* ---------- screen ---------- */
 
+/**
+ * A job for a page the index never named. Pick parks these on the manual record it is
+ * holding, so they die with a reload — and most headings are bare (the KTM manual has 20
+ * indexed sections behind 270 outline rows), which meant that reloading inside the reader
+ * threw the reader away and dropped the mechanic back on Pick. app.js keeps the bike, the
+ * job id and the page across a reload; that is enough to open the same page again.
+ */
+async function reviveJob() {
+  const page = Math.max(1, Math.floor(Number(state.page) || 0));
+  if (!page || !state.bikeId) return null;
+  const rec = Q.bike(state.bikeId);
+  const made = await Q.manual((rec && rec.manualId) || state.bikeId).catch(() => null);
+  if (!made || !Array.isArray(made.jobs)) return null;
+  const wanted = String(state.jobId || "");
+  const sectionId = wanted.includes("/") ? wanted.slice(wanted.indexOf("/") + 1) : `reload-p${page}`;
+  const found = made.jobs.find((j) => j.id === wanted || j.sectionId === sectionId);
+  if (found) return found;
+  const job = {
+    id: wanted || `${state.bikeId}/${sectionId}`,
+    bikeId: state.bikeId,
+    sectionId,
+    manualId: made.id,
+    systemId: state.systemId || null,
+    chapter: "",
+    title: `Page ${page}`,
+    partId: state.partId || null,
+    partIds: [],
+    pages: [page],
+    page,
+    pageStart: page,
+    pageEnd: page,
+    printedPage: null,
+    steps: [{ page }],
+    related: [],
+    highlights: [],
+    keywords: [],
+    oem: null,
+    links: [],
+    synthetic: true,
+  };
+  made.jobs.push(job);
+  if (made.jobsById && typeof made.jobsById.set === "function") made.jobsById.set(job.id, job);
+  return job;
+}
+
 async function enterScreen() {
   if (!state.bikeId) {
     bounce("identify");
@@ -1514,8 +1559,12 @@ async function enterScreen() {
   ensureBusy = false;
   // One A4 placeholder with the ring on it, from the first frame: the job itself is a fetch.
   bootSkeleton();
-  const job = await Q.jobById(state.jobId);
+  let job = await Q.jobById(state.jobId);
   if (my !== enterGen) return;
+  if (!job) {
+    job = await reviveJob();
+    if (my !== enterGen) return;
+  }
   if (!job) {
     bounce("pick");
     return;

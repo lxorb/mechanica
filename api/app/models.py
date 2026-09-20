@@ -170,6 +170,12 @@ class IngestJob(BaseModel):
     done: int = 0
     error: str | None = None
     stage: str | None = None
+    # Wall clock of the last write by the replica that owns this job - its heartbeat. A job that
+    # still says "queued"/"running" long after its last write is a job whose replica is gone, and
+    # GET /ingest/{id} reports that as an error instead of letting the Confirm screen poll a dead
+    # id for fifteen minutes (docs/qa/BUGS.md BUG-13). None on a job written before this field
+    # existed, which app.ondemand.alive() treats as "no heartbeat, ask the lease".
+    updatedAt: float | None = None
 
 
 class CostEvent(BaseModel):

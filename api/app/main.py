@@ -1,11 +1,12 @@
 import re
 import secrets
+import threading
 import uuid
 from collections import defaultdict
 
-from fastapi import BackgroundTasks, FastAPI, File, Header, HTTPException, UploadFile
+from fastapi import BackgroundTasks, FastAPI, File, Header, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi.middleware.gzip import GZipMiddleware
 from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES
 from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
@@ -41,8 +42,39 @@ from .store import get_store, max_manual_pages
 
 MAX_UPLOAD = 60 * 1024 * 1024
 MAX_IMAGE = 12 * 1024 * 1024
+# A VIN is 17 characters. The field is passed on to the per-make dynamic resolvers, so it is
+# capped here rather than a few calls deeper (docs/qa/BUGS.md BUG-19).
+MAX_VIN = 32
 
 app = FastAPI(title="Trust the manual", version="0.1.0")
+
+
+class HeadAsGet:
+    """Answer HEAD wherever we answer GET.
+
+    FastAPI's APIRoute does not add HEAD to a GET route the way Starlette's Route does, so every
+    route answered 405 (docs/qa/BUGS.md BUG-18). Rewriting the method one layer above the router
+    is the whole fix: the route runs exactly as it would for GET, the headers are therefore the
+    ones GET would send, and the body is dropped on the way out - which is what HEAD means. Doing
+    it here instead of adding HEAD to `route.methods` also keeps the OpenAPI schema (and its
+    operation ids) unchanged.
+    """
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") != "http" or scope.get("method") != "HEAD":
+            return await self.app(scope, receive, send)
+
+        async def drop_body(message):
+            if message.get("type") == "http.response.body":
+                message = {**message, "body": b""}
+            await send(message)
+
+        await self.app({**scope, "method": "GET"}, receive, drop_body)
+
+
 app.add_middleware(
     GZipMiddleware,
     minimum_size=1024,
@@ -57,6 +89,8 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["Accept-Ranges", "Content-Range", "Content-Length", "Content-Encoding"],
 )
+# Added last, so it is the outermost layer: everything below it only ever sees GET.
+app.add_middleware(HeadAsGet)
 app.include_router(voice.router)
 app.include_router(voice_elevenlabs.router)
 app.include_router(cost_ttc.router)
@@ -118,7 +152,7 @@ def manuals():
 
 class EnsureRequest(BaseModel):
     bikeId: str
-    vin: str | None = None
+    vin: str | None = Field(default=None, max_length=MAX_VIN)
 
 
 @app.post("/manuals/ensure")
@@ -129,14 +163,36 @@ def manuals_ensure(req: EnsureRequest):
 
 
 @app.get("/manuals/{manual_id}", response_model=Manual)
-def manual(manual_id: str):
+def manual(manual_id: str, response: Response):
     m = get_store().manual(manual_id)
     if not m:
         raise HTTPException(404)
+    # An ingest publishes the manual early - outline and PDF, no sections - so the rider can read
+    # it at once, and overwrites it minutes later with the real one. Cached for the Worker's
+    # minute, that provisional document outlives the real one in the browser and Pick shows no
+    # sections (docs/qa/BUGS.md BUG-15), so it is the one manual shape that is never cached.
+    response.headers["Cache-Control"] = "public, max-age=60" if m.sections else "no-store"
     return public(m)
 
 
+# Bounded, and claimed atomically. The set grew with every manual this replica ever served, and
+# `add` outside a lock let a second request return early while the first was still uploading - or
+# had already failed (docs/qa/BUGS.md BUG-20). Past the ceiling the whole set is dropped: an entry
+# only ever saves a repeat upload, and once the blob exists pdf_url() answers before the route
+# gets here at all.
+_PUSHED_MAX = 512
 _pushed: set[str] = set()
+_push_lock = threading.Lock()
+
+
+def _claim_push(manual_id: str) -> bool:
+    with _push_lock:
+        if manual_id in _pushed:
+            return False
+        if len(_pushed) >= _PUSHED_MAX:
+            _pushed.clear()
+        _pushed.add(manual_id)
+        return True
 
 
 def _push_pdf(manual_id: str, path) -> None:
@@ -144,13 +200,13 @@ def _push_pdf(manual_id: str, path) -> None:
     replica - and the browser - can reach it. Once per process; a failure only means we serve it again."""
     store = get_store()
     upload = getattr(store, "put_pdf", None)
-    if upload is None or manual_id in _pushed:
+    if upload is None or not _claim_push(manual_id):
         return
-    _pushed.add(manual_id)
     try:
         upload(manual_id, path)
     except Exception:
-        _pushed.discard(manual_id)
+        with _push_lock:
+            _pushed.discard(manual_id)
 
 
 @app.get("/manuals/{manual_id}/file")
@@ -308,10 +364,18 @@ async def ingest_upload(
 
 
 @app.get("/ingest/{job_id}", response_model=IngestJob)
-def ingest_status(job_id: str):
+def ingest_status(job_id: str, response: Response):
     job = get_store().job(job_id)
     if not job:
         raise HTTPException(404)
+    response.headers["Cache-Control"] = "no-store"
+    if ondemand.stalled(job):
+        # The replica that was building this manual is gone (recycled, crashed, or wedged): it has
+        # not written this job for ondemand.STALE_AFTER seconds and it no longer holds the manual's
+        # lease. Reported as running, the Confirm screen polls a dead id for the full fifteen
+        # minutes; reported as an error, the client retries and ensure() starts a fresh job
+        # (docs/qa/BUGS.md BUG-13).
+        return job.model_copy(update={"status": "error", "error": "stalled"})
     return job
 
 

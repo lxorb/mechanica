@@ -69,8 +69,20 @@ export function decorate(bikes) {
     if (!b || typeof b !== "object") continue;
     if (!Array.isArray(b.aliases)) b.aliases = aliasesOf(b.make, b.model);
     b.kind = b.kind === "car" ? "car" : "motorcycle";
+    b.lang = langOf(b.lang);
   }
   return bikes;
+}
+
+/**
+ * The language the assigned manual is written in. The registry sets it only when no English
+ * manual exists for that vehicle, so null / "en" both mean "English" and the screens show
+ * nothing; anything else is a two-letter code the cards, the year chips and Confirm stamp.
+ */
+export function langOf(raw) {
+  const code = String(raw == null ? "" : raw).trim().toLowerCase();
+  if (!code || code === "en") return null;
+  return code.slice(0, 5);
 }
 
 function yearsOf(packed) {
@@ -96,7 +108,7 @@ function marketOf(packed, year) {
 
 /**
  * web/store/ttm-catalog.json -> Bike[] with aliases.
- * Row: [make, model, years, manuals, market, extra?] where extra is {i:ids, o:[years], k:1}
+ * Row: [make, model, years, manuals, market, extra?] where extra is {i:ids, o:[years], k:1, l:langs}
  * — see web/tools/catalog.mjs. `ondemand` is a flag, not a URL: /manuals/ensure resolves the
  * PDF server-side from the bikeId, and bundling 13k URLs would cost 1.4 MB.
  */
@@ -110,6 +122,9 @@ export function expandBundle(bundle) {
     const ids = extra?.i;
     const ondemand = extra?.o ? new Set(extra.o) : null;
     const kind = extra?.k ? "car" : "motorcycle";
+    // `l` is per year, like `manuals`: the language of the manual assigned to that year, set
+    // only where no English one exists.
+    const langs = extra?.l;
     for (const year of yearsOf(years)) {
       const id = (ids && ids[year]) || bikeId(make, model, year);
       if (seen.has(id)) continue;
@@ -124,6 +139,7 @@ export function expandBundle(bundle) {
         manualId: (manuals && manuals[year]) || null,
         manualUrl: null,
         ondemand: ondemand ? ondemand.has(year) : false,
+        lang: langOf(langs && langs[year]),
         aliases,
       });
     }

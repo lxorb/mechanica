@@ -247,6 +247,10 @@ function leave() {
   clearMiss();
   clearView();
   askGen += 1;
+  // load() checks this token before it paints and before it mounts the viewer. Without the
+  // bump, a catalog fetch that lands after the screen is gone re-mounts the 3D stage behind
+  // whatever the user is now looking at — a live WebGL context nothing will ever dispose.
+  gen += 1;
   busy = false;
   setBusy(false);
   stopViewer();

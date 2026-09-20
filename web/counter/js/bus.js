@@ -164,6 +164,20 @@ function onlyReplace(params) {
   return keys.length === 1 && keys[0] === "replace" && params.replace === true;
 }
 
+/**
+ * The URL of a screen, carrying the overlay that is open over it. Writing a bare "#book"
+ * while the Parts sheet is up threw that sheet's own history entry away: the browser's Back
+ * then landed on an entry that no longer said "+invoice", so one press closed nothing and
+ * the next did nothing at all.
+ */
+function hashFor(id) {
+  return overlayId ? `#${id}+${overlayId}` : `#${id}`;
+}
+
+function histFor(id) {
+  return overlayId ? { screen: id, overlay: overlayId } : { screen: id };
+}
+
 function showSection(id) {
   document.querySelectorAll("section[data-screen]").forEach((section) => {
     section.hidden = section.getAttribute("data-screen") !== id;
@@ -201,7 +215,7 @@ export function go(id, params) {
   if (id === currentId && !(next && next.replace)) return;
 
   if (id === currentId && onlyReplace(next)) {
-    history.replaceState({ screen: id }, "", "#" + id);
+    history.replaceState(histFor(id), "", hashFor(id));
     return;
   }
 
@@ -226,8 +240,8 @@ export function go(id, params) {
 
   currentId = id;
 
-  const hist = { screen: id };
-  const url = "#" + id;
+  const hist = histFor(id);
+  const url = hashFor(id);
   if (next && next.replace) history.replaceState(hist, "", url);
   else history.pushState(hist, "", url);
 
@@ -242,8 +256,16 @@ export function splitHash(raw) {
   return { screen: value.slice(0, cut), overlay: value.slice(cut + 1) };
 }
 
-const initialHash =
+/**
+ * The hash the page was opened with, captured before anything rewrites it. bus.js is the
+ * first module in the graph, so this is the URL the user actually typed or shared — a
+ * non-step hash (#cost) is rewritten to #identify by the time the module that owns it runs,
+ * which is why that module needs this instead of reading location.hash for itself.
+ */
+export const bootHash =
   typeof location !== "undefined" ? splitHash(location.hash).screen : "";
+
+const initialHash = bootHash;
 
 function bootFromHash() {
   if (booted || !initialHash) return;
@@ -259,14 +281,10 @@ function onPop(event) {
   const fromState = event.state && event.state.screen;
   const id = hash || fromState;
   if (!id) {
+    // An entry with neither a hash nor a screen: land on Identify rather than hiding every
+    // section, which used to leave a ground-coloured blank page with nothing to tap.
     syncOverlay(null);
-    if (currentId) {
-      const prev = screens.get(currentId);
-      if (prev && typeof prev.leave === "function") prev.leave();
-    }
-    showSection(null);
-    updateRail(null);
-    currentId = null;
+    go("identify", { replace: true });
     return;
   }
   syncOverlay(overlays.has(overlay) ? overlay : null);

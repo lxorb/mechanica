@@ -3,7 +3,7 @@
  * It is an overlay, not a flow screen, so bus.js keeps owning the six steps.
  */
 
-import { state, go, on } from "../bus.js";
+import { state, go, on, bootHash } from "../bus.js";
 import { cost } from "../ttm.js";
 
 const CELLS = ["total", "per ask", "naive per ask", "calls"];
@@ -16,7 +16,13 @@ let prevScreen = null;
 let costBack = null;
 let gen = 0;
 
-const wanted = readHash() === "cost";
+/**
+ * Was the page opened at #cost? It cannot be `location.hash`: this module is loaded from
+ * screens/pick.js, by which time bus.js has already routed the unknown hash to #identify
+ * and rewritten the URL — so a cold load on the meter's own address showed the landing page
+ * and nothing else. bus.js captures the address the page was opened with; that is the truth.
+ */
+const wanted = bootHash === "cost" || readHash() === "cost";
 
 function readHash() {
   if (typeof location === "undefined") return "";

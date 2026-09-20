@@ -51,46 +51,288 @@ NOT_A_MANUAL = ("_ebook",)
 THIN = ("/99888-",)
 
 FAIL_COOLDOWN = 6 * 3600
+# A job nobody has written for this long is a job whose replica is gone: GET /ingest/{id} reports
+# it as an error, and the next ensure() starts a fresh one. The worker beats every HEARTBEAT
+# seconds, so this is twelve missed beats, not a slow stage.
+STALE_AFTER = 60.0
+HEARTBEAT = 5.0
 
 _jobs: dict[str, str] = {}
 _fails: dict[str, dict] = {}
 _lock = threading.Lock()
+_record_lock = threading.Lock()
+
+# --- records every replica must agree on ----------------------------------------------------------
+#
+# The deployment is 1-3 replicas of the same container, so a dict in this process is not a lock and
+# a file under DATA_DIR is not a record - DATA_DIR is the container's own ephemeral disk. Both the
+# ingest lease (BUG-13) and the ingest-failure markers (BUG-16) are exactly that kind of state.
+#
+# BlobStore is the only store that spans replicas and its ETag compare-and-set is the only atomic
+# primitive it has, so that is what a lease is built on; it is reached by name so that a store
+# without one - FileStore in dev and in the tests - falls back to a file under DATA_DIR, which is
+# all a single-process deployment needs. A store we cannot reach at all never blocks an ingest:
+# the lease simply stops being a lease and we are back to the old, duplicate-work behaviour.
 
 
-def _fail_path(manual_id: str):
-    return settings.data_dir / "failed" / f"{manual_id}.json"
+def _shared():
+    """The store when it can compare-and-set a shared JSON document, else None."""
+    store = get_store()
+    ok = all(callable(getattr(store, name, None)) for name in ("_cas", "_read_json", "_write_json"))
+    return store if ok else None
 
 
-def forget_failure(manual_id: str) -> None:
-    _fails.pop(manual_id, None)
+def _read_record(name: str) -> dict | None:
+    store = _shared()
+    if store is not None:
+        try:
+            doc = store._read_json(name, None)
+        except Exception as exc:
+            log.warning("%s: shared read failed: %s", name, exc)
+            return None
+        return doc if isinstance(doc, dict) else None
+    path = settings.data_dir / name
+    if not path.exists():
+        return None
     try:
-        _fail_path(manual_id).unlink(missing_ok=True)
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return doc if isinstance(doc, dict) else None
+
+
+def _write_record(name: str, doc: dict) -> None:
+    store = _shared()
+    if store is not None:
+        try:
+            store._write_json(name, doc)
+        except Exception as exc:
+            log.warning("%s: shared write failed: %s", name, exc)
+        return
+    path = settings.data_dir / name
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(doc), encoding="utf-8")
+    except OSError as exc:
+        log.warning("%s: could not write the record: %s", name, exc)
+
+
+def _drop_record(name: str) -> None:
+    store = _shared()
+    if store is not None:
+        _write_record(name, {})
+        return
+    try:
+        (settings.data_dir / name).unlink(missing_ok=True)
     except OSError:
         pass
 
 
+def _swap_record(name: str, decide) -> dict | None:
+    """`decide(current) -> the document to put in force`, applied atomically.
+
+    Returning `current` unchanged is how a caller says "somebody else won"; the write still happens
+    (identical bytes) so the compare-and-set stays one round trip. None means the store could not be
+    reached and nothing is in force.
+    """
+    store = _shared()
+    if store is not None:
+        chosen: dict | None = None
+
+        def merge(current):
+            nonlocal chosen
+            chosen = decide(current if isinstance(current, dict) else None)
+            return chosen
+
+        try:
+            store._cas(name, merge)
+        except Exception as exc:
+            log.warning("%s: shared compare-and-set failed: %s", name, exc)
+            return None
+        return chosen
+    with _record_lock:
+        chosen = decide(_read_record(name))
+        _write_record(name, chosen)
+        return chosen
+
+
+# --- one ingest per manual, across replicas ---------------------------------------------------------
+#
+# `leases/{manualId}.json` holds {"jobId": ..., "at": <unix seconds>} and is only honoured for
+# STALE_AFTER seconds after its last renewal. A replica may start an ingest only if its own job id
+# came back from take_lease(): of two replicas reading the same free or expired lease exactly one
+# wins the ETag race and the other is handed the winner's job id, which it joins instead of paying
+# a second time for the same manual. The owner renews every HEARTBEAT seconds while it works, so a
+# replica that is recycled mid-ingest releases the manual by simply going quiet - and never holds it
+# for longer than STALE_AFTER. Renewal never steals a lease back once it has lapsed and somebody
+# else has taken it, so there is at most one owner at any moment.
+
+
+def _lease_name(manual_id: str) -> str:
+    return f"leases/{manual_id}.json"
+
+
+def _lease_live(doc: dict | None, now: float | None = None) -> bool:
+    if not doc or not doc.get("jobId"):
+        return False
+    return (now or time.time()) - float(doc.get("at") or 0) <= STALE_AFTER
+
+
+def lease_holder(manual_id: str) -> str | None:
+    """The job id currently building this manual, as far as the shared record knows."""
+    doc = _read_record(_lease_name(manual_id))
+    return str(doc["jobId"]) if _lease_live(doc) else None
+
+
+def take_lease(manual_id: str, job_id: str, force: bool = False) -> str | None:
+    """Try to become the one replica building this manual.
+
+    Returns the job id that owns it afterwards - `job_id` when we took it, somebody else's when
+    they hold a live one - or None when the record could not be written at all.
+    """
+
+    def decide(current):
+        if not force and _lease_live(current) and current.get("jobId") != job_id:
+            return current
+        return {"jobId": job_id, "at": time.time()}
+
+    doc = _swap_record(_lease_name(manual_id), decide)
+    if doc is None:
+        return None
+    holder = doc.get("jobId")
+    return str(holder) if holder else None
+
+
+def renew_lease(manual_id: str, job_id: str) -> bool:
+    """Push the lease forward. False once somebody else owns it, which can only happen after ours
+    has already lapsed - a beat that slept through STALE_AFTER must not steal the manual back."""
+
+    def decide(current):
+        if _lease_live(current) and current.get("jobId") != job_id:
+            return current
+        return {"jobId": job_id, "at": time.time()}
+
+    doc = _swap_record(_lease_name(manual_id), decide)
+    return bool(doc) and doc.get("jobId") == job_id
+
+
+def release_lease(manual_id: str, job_id: str) -> None:
+    def decide(current):
+        if current and current.get("jobId") not in (None, job_id):
+            return current
+        return {"jobId": None, "at": 0.0}
+
+    _swap_record(_lease_name(manual_id), decide)
+
+
+def alive(job: IngestJob | None, now: float | None = None) -> bool:
+    """Is somebody still working on this job?
+
+    `updatedAt` is the cheap signal and answers without leaving the process on every poll of a
+    healthy ingest. The lease is the authoritative one, because two stages are legitimately silent
+    for minutes: waiting for one of the three ingest slots, and a single slow LLM batch.
+    """
+    if job is None or job.status not in ("queued", "running"):
+        return False
+    now = now or time.time()
+    if now - float(job.updatedAt or 0) <= STALE_AFTER:
+        return True
+    doc = _read_record(_lease_name(job.manualId))
+    return _lease_live(doc, now) and doc.get("jobId") == job.id
+
+
+def stalled(job: IngestJob | None) -> bool:
+    """A job that says it is being worked on and is not. See docs/qa/BUGS.md BUG-13."""
+    return job is not None and job.status in ("queued", "running") and not alive(job)
+
+
+def touch(job_id: str) -> bool:
+    """Stamp the job so a watcher can see it is still being worked on. False once it has reached a
+    terminal state, which is the beat's signal to stop."""
+    store = get_store()
+    job = store.job(job_id)
+    if job is None or job.status not in ("queued", "running"):
+        return False
+    store.put_job(job.model_copy(update={"updatedAt": time.time()}))
+    return True
+
+
+def settle(job_id: str) -> None:
+    """Called once the beat is stopped, so the terminal state is the last word.
+
+    The beat writes back the job document it read a moment earlier; if ingest.run() wrote "done"
+    inside that one round trip the beat would put "running" back and nothing would ever move it
+    again. One re-read closes the window.
+    """
+    store = get_store()
+    job = store.job(job_id)
+    if job is not None and job.status in ("queued", "running"):
+        store.put_job(
+            job.model_copy(
+                update={
+                    "status": "done",
+                    "done": max(job.done, job.pages),
+                    "stage": "done",
+                    "error": None,
+                    "updatedAt": time.time(),
+                }
+            )
+        )
+
+
+class Beat:
+    """Proof that this replica is still on this manual: it renews the lease and stamps the job
+    every HEARTBEAT seconds. A recycled replica stops beating and STALE_AFTER seconds later its job
+    reads as an error instead of leaving the Confirm screen polling a dead id for fifteen minutes."""
+
+    def __init__(self, job_id: str, manual_id: str):
+        self.job_id = job_id
+        self.manual_id = manual_id
+        self.beats = 0
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._run, daemon=True, name=f"beat-{manual_id}")
+
+    def start(self) -> "Beat":
+        self._thread.start()
+        return self
+
+    def _run(self) -> None:
+        while not self._stop.wait(HEARTBEAT):
+            try:
+                renew_lease(self.manual_id, self.job_id)
+                if not touch(self.job_id):
+                    return
+                self.beats += 1
+            except Exception as exc:  # a beat that throws must never take the ingest down with it
+                log.warning("%s: heartbeat failed: %s", self.manual_id, exc)
+
+    def stop(self) -> None:
+        self._stop.set()
+        if self._thread.is_alive():
+            self._thread.join(timeout=10.0)
+
+
+def forget_failure(manual_id: str) -> None:
+    _fails.pop(manual_id, None)
+    _drop_record(f"failed/{manual_id}.json")
+
+
 def remember_failure(manual_id: str, url: str, error: str) -> dict:
-    """A manual that cannot be built must stay broken for a while, or every poll starts the job again."""
+    """A manual that cannot be built must stay broken for a while, or every poll starts the job again.
+
+    Shared, not per-replica: on the container's own disk replica A refused a broken manual for six
+    hours while replica B cheerfully retried it every time (BUG-16).
+    """
     record = {"manualId": manual_id, "url": url, "error": error[:500], "at": time.time()}
     _fails[manual_id] = record
-    try:
-        path = _fail_path(manual_id)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(record), encoding="utf-8")
-    except OSError as exc:
-        log.warning("%s: could not persist the failure marker: %s", manual_id, exc)
+    _write_record(f"failed/{manual_id}.json", record)
     return record
 
 
 def recent_failure(manual_id: str) -> dict | None:
     record = _fails.get(manual_id)
     if record is None:
-        path = _fail_path(manual_id)
-        if path.exists():
-            try:
-                record = json.loads(path.read_text(encoding="utf-8"))
-            except Exception:
-                record = None
+        record = _read_record(f"failed/{manual_id}.json")
         if record:
             _fails[manual_id] = record
     if not record:
@@ -200,6 +442,7 @@ def _link(bike_id: str, manual_id: str) -> None:
 def _work(job_id: str, source: Source, bike: Bike) -> None:
     store = get_store()
     url, manual_id = source.url, source.manualId
+    beat = Beat(job_id, manual_id).start()
     try:
         manual = ingest.run(
             job_id,
@@ -214,18 +457,23 @@ def _work(job_id: str, source: Source, bike: Bike) -> None:
             early=True,
             needs_ua=source.needsUa,
         )
+        beat.stop()
+        settle(job_id)
         from .ingest import curate
 
         curate.apply(manual.model_copy(update={"source": url}))
         _link(bike.id, manual_id)
         forget_failure(manual_id)
     except Exception as exc:
+        beat.stop()
         message = f"{type(exc).__name__}: {exc}"[:500]
         log.warning("%s: on-demand ingest failed: %s", manual_id, message)
         remember_failure(manual_id, url, message)
         job = store.job(job_id) or IngestJob(id=job_id, manualId=manual_id, status="error")
-        store.put_job(job.model_copy(update={"status": "error", "error": message}))
+        store.put_job(job.model_copy(update={"status": "error", "error": message, "updatedAt": time.time()}))
     finally:
+        beat.stop()
+        release_lease(manual_id, job_id)
         with _lock:
             if _jobs.get(manual_id) == job_id:
                 _jobs.pop(manual_id, None)
@@ -268,15 +516,38 @@ def ensure(bike_id: str, vin: str | None = None) -> dict:
 
     with _lock:
         running = _jobs.get(manual_id)
-        if running is None:
-            job_id = uuid.uuid4().hex[:12]
-            _jobs[manual_id] = job_id
-            store.put_job(IngestJob(id=job_id, manualId=manual_id, status="queued"))
-            threading.Thread(target=_work, args=(job_id, source, bike), daemon=True, name=f"ondemand-{manual_id}").start()
-        else:
-            job_id = running
+    if running is not None:
+        if alive(store.job(running)):
+            return _running(manual_id, running)
+        # this replica's own job died without unwinding (the thread is gone, the entry is not)
+        with _lock:
+            if _jobs.get(manual_id) == running:
+                _jobs.pop(manual_id, None)
 
-    job = store.job(job_id)
+    # Nobody here is on it. Take the manual across replicas before spending a cent on it.
+    job_id = uuid.uuid4().hex[:12]
+    holder = take_lease(manual_id, job_id)
+    if holder is not None and holder != job_id:
+        other = store.job(holder)
+        # `other is None` is the winner of a race a millisecond ago: it holds a live lease and is
+        # about to write its job document. A live lease is enough - never race it for the manual.
+        if other is None or alive(other):
+            return _running(manual_id, holder, other)
+        # the lease names a finished job nobody unwound (a crash between the last write and the
+        # release): its replica is gone, so take the manual over rather than wait out the TTL
+        holder = take_lease(manual_id, job_id, force=True)
+        if holder is not None and holder != job_id:
+            return _running(manual_id, holder)
+
+    with _lock:
+        _jobs[manual_id] = job_id
+    store.put_job(IngestJob(id=job_id, manualId=manual_id, status="queued", updatedAt=time.time()))
+    threading.Thread(target=_work, args=(job_id, source, bike), daemon=True, name=f"ondemand-{manual_id}").start()
+    return _running(manual_id, job_id)
+
+
+def _running(manual_id: str, job_id: str, job: IngestJob | None = None) -> dict:
+    job = job or get_store().job(job_id)
     return {
         "status": "running",
         "manualId": manual_id,

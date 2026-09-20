@@ -340,6 +340,45 @@ async function run() {
     await page.screenshot({ path: join(SHOTS, `reduced-motion-${label}.png`) });
     await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "no-preference" }]);
 
+    // Themes. chat-ui.js writes the transcript's colours as inline styles into a shadow root, and
+    // the orb writes its own stylesheet: both are tokens now, so both have to survive a livery
+    // swap. Workshop is the :root default; Night and Paper are the two furthest from it.
+    for (const theme of ["night", "paper"]) {
+      const painted = await page.evaluate(async (id) => {
+        document.documentElement.setAttribute("data-theme", id);
+        const chat = document.querySelector(".cv-body deep-chat");
+        try {
+          chat.addMessage({ text: "what's the torque on the rear axle nut", role: "user" });
+          chat.addMessage({ text: "Page 78, one hundred newton metres.", role: "ai" });
+        } catch {
+          /* the component may not have finished building; the chrome is what matters here */
+        }
+        window.__orb.setState("speaking");
+        window.__setLevel(0.6);
+        await new Promise((r) => setTimeout(r, 400));
+        const seen = (el, prop) => (el ? getComputedStyle(el).getPropertyValue(prop).trim() : "");
+        const shadow = chat && chat.shadowRoot;
+        return {
+          // a token that did not resolve leaves the property at its initial value, so these are
+          // the proof that the var() chains actually landed rather than silently falling back
+          orbDisc: seen(window.__orb.el.querySelector(".vo-orb::before") || window.__orb.el.querySelector(".vo-orb"), "background-color"),
+          accent: seen(document.documentElement, "--accent"),
+          ground: seen(document.documentElement, "--bg"),
+          messages: seen(shadow && shadow.querySelector("#messages"), "background-color"),
+          bubble: seen(shadow && shadow.querySelector(".message-bubble"), "border-top-color"),
+          veil: seen(window.__orb.el, "background-color"),
+          word: seen(window.__orb.el.querySelector(".vo-state"), "color"),
+        };
+      }, theme);
+      const resolved = painted.accent && painted.ground && painted.messages && painted.veil && painted.word;
+      say(Boolean(resolved), `${theme}: tokens resolved (accent ${painted.accent}, ground ${painted.ground}, transcript ${painted.messages}, veil ${painted.veil})`);
+      // the transcript must have moved with the theme, not stayed Workshop's paper
+      say(painted.messages === `rgb(${painted.ground.replace("#", "").match(/../g).map((h) => parseInt(h, 16)).join(", ")})`,
+        `${theme}: the transcript took the theme's ground (${painted.messages} vs --bg ${painted.ground})`);
+      await page.screenshot({ path: join(SHOTS, `theme-${theme}-${label}.png`) });
+    }
+    await page.evaluate(() => document.documentElement.removeAttribute("data-theme"));
+
     // and it unmounts clean
     // pick.js quietly mounts a chat view of its own once the manual resolves, so what is asserted
     // is that OURS leaves nothing behind, not that the page ends up empty.

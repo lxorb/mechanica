@@ -583,15 +583,22 @@ function stale(token, part) {
  * and fills its own cache — one more 10 s later. A route that is simply not there answers
  * instantly and empty, and gets the pills straight away instead of a 35 s wait.
  */
+/** The offers an answer carries, or [] for anything else — a 500 included. */
+function offersOf(body) {
+  return body && Array.isArray(body.offers) ? body.offers : [];
+}
+
 async function fetchOffers(row) {
   const token = ++offersGen;
   const part = row.part;
   const manualId = part.manualId || head.manualId;
 
   const started = Date.now();
-  let body = await T.partOffers(manualId, part.id, state.bikeId);
+  // Every await here is caught: a throw used to leave the skeleton and its crawling bar on
+  // screen for ever, because the only catch was on the caller and it painted nothing.
+  let body = await T.partOffers(manualId, part.id, state.bikeId).catch(() => null);
   if (stale(token, part)) return;
-  if (body && body.offers.length) {
+  if (offersOf(body).length) {
     paintOffers(body.offers);
     return;
   }
@@ -602,9 +609,9 @@ async function fetchOffers(row) {
 
   await sleep(RECHECK_MS);
   if (stale(token, part)) return;
-  body = await T.partOffers(manualId, part.id, state.bikeId, { fresh: true });
+  body = await T.partOffers(manualId, part.id, state.bikeId, { fresh: true }).catch(() => null);
   if (stale(token, part)) return;
-  paintOffers(body && Array.isArray(body.offers) ? body.offers : []);
+  paintOffers(offersOf(body));
 }
 
 function paintOffers(list) {

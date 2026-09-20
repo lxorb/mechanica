@@ -514,3 +514,19 @@ body.id-landing [data-screen="identify"] .id-cam {
     transform: scaleX(0.12);
   }
 }
+
+/* ---------------------------------------------------------- manual language
+   The registry assigns a foreign-language manual only where no English one exists, so a
+   tag appears on exactly those years. It rides inside the year span / year chip and takes
+   its colour from whatever state that chip is in, so it works in all five themes. */
+[data-screen="identify"] .id-lang {
+  margin-left: 5px;
+  font-family: Barlow, system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+  opacity: 0.72;
+}

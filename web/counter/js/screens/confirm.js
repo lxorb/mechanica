@@ -395,6 +395,13 @@ function paintBike(rec) {
     els.catStamp.textContent = "";
   }
 
+  // The manual assigned to this vehicle is not in English: say which language, nothing more.
+  // The registry sets `lang` only where no English manual exists.
+  const lang = typeof rec.lang === "string" ? rec.lang.trim() : "";
+  const code = lang && lang.toLowerCase() !== "en" ? lang.toUpperCase() : "";
+  els.langStamp.hidden = !code;
+  els.langStamp.textContent = code;
+
   const shot = state.photoUrl ? Q.asset(state.photoUrl) : "";
   const main = src || shot;
 
@@ -747,7 +754,11 @@ registerScreen("confirm", {
     catStamp.className = "stamp";
     catStamp.hidden = true;
 
-    stamps.append(yearStamp, ccStamp, catStamp);
+    const langStamp = document.createElement("span");
+    langStamp.className = "stamp confirm-lang";
+    langStamp.hidden = true;
+
+    stamps.append(yearStamp, ccStamp, catStamp, langStamp);
     sheet.append(name, stamps);
 
     const ref = document.createElement("button");
@@ -907,6 +918,7 @@ registerScreen("confirm", {
       yearStamp,
       ccStamp,
       catStamp,
+      langStamp,
       ref,
       refImg,
       refCap,

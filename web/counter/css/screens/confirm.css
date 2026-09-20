@@ -519,3 +519,11 @@
     max-height: 40vh;
   }
 }
+
+/* The manual's language, when it is not English. Quieter than the year and cc stamps
+   beside it: this is a caveat, not an identity. */
+[data-screen="confirm"] .confirm-stamps .confirm-lang {
+  background: var(--slab);
+  color: var(--slab-fg);
+  letter-spacing: 0.12em;
+}

@@ -197,7 +197,16 @@ export default {
       const rewritten = backToApi(location, url);
       if (rewritten) out.headers.set("Location", rewritten);
     }
-    if (request.method === "GET" && upstream.status === 200 && CACHEABLE.test(path)) {
+    // An upstream that states a policy knows something we do not: GET /manuals/<id> answers
+    // `no-store` for the section-less manual an ingest publishes early, which would otherwise sit
+    // in the browser for a minute after the real one landed (docs/qa/BUGS.md BUG-15). Everything
+    // else on /catalog and /manuals sends no Cache-Control and still gets the edge's minute.
+    if (
+      request.method === "GET" &&
+      upstream.status === 200 &&
+      CACHEABLE.test(path) &&
+      !out.headers.has("Cache-Control")
+    ) {
       out.headers.set("Cache-Control", "public, max-age=60");
     } else if (!out.headers.has("Cache-Control")) {
       out.headers.set("Cache-Control", "no-store");

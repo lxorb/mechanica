@@ -361,6 +361,7 @@
 }
 
 .pv-mentions .pv-page {
+  min-width: 44px; /* "p. 9" is 42 px wide at this size — still a 44 px target */
   min-height: 44px;
   padding: 0 10px;
   font-size: 0.72rem;
