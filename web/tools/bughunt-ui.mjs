@@ -4,6 +4,7 @@
  *   node web/tools/bughunt-ui.mjs                 # every check, phone viewport
  *   node web/tools/bughunt-ui.mjs --view desk     # 1280x800
  *   node web/tools/bughunt-ui.mjs --only cost     # one check by name fragment
+ *   node web/tools/bughunt-ui.mjs --only themes   # the five-theme walk (opt-in, ~6 min)
  *
  * Every line is one fixed bug: it fails on the code as it was and passes on the code as it
  * is. Serves web/ on a throwaway port with /api/* proxied to the live worker (bodies and
@@ -439,6 +440,87 @@ const CHECKS = [
     return "";
   }],
 
+  // Opt-in (`--only themes`): ten walks is six minutes. It is theme-shots' two assertions —
+  // the theme applies at every stop and the console stays silent — without the twenty
+  // full-page WebGL captures that make that tool slow and flaky, plus the two things this
+  // pass fixed that a contact sheet cannot see: the Conditions sheet's edge and a cold #cost.
+  ["themes: all five survive the walk, in both viewports", async (page, base, state, browser, view) => {
+    const faults = [];
+    for (const theme of ["workshop", "night", "blueprint", "track", "paper"]) {
+      const tab = await browser.newPage();
+      await tab.setViewport(view);
+      const errs = [];
+      tab.on("pageerror", (e) => errs.push(`pageerror: ${e.message.slice(0, 80)}`));
+      tab.on("console", (m) => {
+        if (m.type() !== "error") return;
+        const t = m.text();
+        if (/404|favicon|fonts\.g|Failed to load resource|net::ERR/.test(t)) return;
+        errs.push(t.slice(0, 80));
+      });
+      await tab.evaluateOnNewDocument((id) => {
+        try { localStorage.setItem("mechanica.theme", id); } catch { /* private */ }
+        if (navigator.serviceWorker) navigator.serviceWorker.register = () => Promise.reject(new Error("off"));
+      }, theme);
+      const seen = [];
+      const at = async (label) => {
+        seen.push(`${label}:${await tab.evaluate(() => document.documentElement.getAttribute("data-theme"))}`);
+      };
+      try {
+        await tab.goto(`${base}/counter/`, { waitUntil: "load", timeout: 60000 });
+        await tab.waitForSelector(".id-q", { timeout: 40000 });
+        await at("landing");
+        await tab.type(".id-q", "390 duke", { delay: 20 });
+        await tab.waitForSelector(".id-card", { timeout: 30000 });
+        await nap(500);
+        await at("cards");
+        await tab.click(".id-card");
+        await tab.waitForSelector(".id-chooser", { timeout: 25000 });
+        await at("chooser");
+        await tab.evaluate(async (id) => {
+          const bus = await import("/counter/js/bus.js");
+          bus.set({ bikeId: id });
+          bus.go("confirm");
+        }, BIKE);
+        await nap(1500);
+        await at("confirm");
+        await tab.evaluate(async () => { (await import("/counter/js/bus.js")).go("pick"); });
+        await tab.waitForSelector("[data-screen='pick'] .hit", { timeout: 90000 });
+        await at("pick");
+        await tab.evaluate(() => document.querySelector(".hit-go")?.click());
+        await nap(400);
+        await tab.evaluate(() => document.querySelector("[data-screen='pick'] .open")?.click());
+        await tab.waitForFunction(() => document.body.getAttribute("data-here") === "book", { timeout: 60000 });
+        await nap(2500);
+        await at("book");
+        await tab.evaluate(() => document.querySelector(".book-parts")?.click());
+        await tab.waitForSelector(".pv-sheet .pv-tile", { timeout: 60000 });
+        await at("parts");
+        await tab.evaluate(() => history.back());
+        await nap(800);
+        await tab.evaluate(() => document.querySelector(".book-climate")?.click());
+        await tab.waitForSelector(".cf-sheet", { timeout: 30000 });
+        await nap(600);
+        const cf = await tab.evaluate(() => {
+          const r = document.querySelector(".cf-sheet").getBoundingClientRect();
+          return { bottom: Math.round(r.bottom), vh: window.innerHeight };
+        });
+        if (Math.abs(cf.bottom - cf.vh) > 2) errs.push(`conditions sits ${cf.bottom}/${cf.vh}`);
+        await at("conditions");
+        await tab.goto(`${base}/counter/#cost`, { waitUntil: "load", timeout: 45000 });
+        await tab.waitForFunction(() => document.querySelector(".cost-veil") && !document.querySelector(".cost-veil").hidden, { timeout: 30000 });
+        await at("cost");
+      } catch (error) {
+        errs.push(`stop failed: ${String(error.message).slice(0, 70)}`);
+      }
+      const wrong = seen.filter((s) => !s.endsWith(`:${theme}`));
+      if (errs.length || wrong.length || seen.length !== 9) {
+        faults.push(`${theme}: ${seen.length}/9${wrong.length ? ` wrong ${wrong.join(",")}` : ""}${errs.length ? ` ${errs.slice(0, 2).join(" | ")}` : ""}`);
+      }
+      await tab.close();
+    }
+    return faults.join(" ;; ");
+  }, { optIn: true }],
+
   ["geometry: nothing escapes, nothing under 44 px, on every stop", async (page, base) => {
     const faults = [];
     const at = async (name) => {
@@ -506,8 +588,9 @@ async function run() {
 
   let passed = 0;
   let failed = 0;
-  for (const [name, fn] of CHECKS) {
+  for (const [name, fn, opts] of CHECKS) {
     if (only && !name.includes(only)) continue;
+    if (!only && opts && opts.optIn) continue;
     const page = await browser.newPage();
     await page.setViewport(view);
     const noise = [];
@@ -523,7 +606,7 @@ async function run() {
     });
     let why = "";
     try {
-      why = (await fn(page, base, state)) || "";
+      why = (await fn(page, base, state, browser, view)) || "";
     } catch (error) {
       why = `threw: ${String(error.message).slice(0, 120)}`;
     }

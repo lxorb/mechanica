@@ -1,0 +1,231 @@
+{
+  "origin": "http://127.0.0.1:65302/counter/",
+  "when": "2026-09-20T11:33:14.932Z",
+  "rows": [
+    {
+      "label": "local fast4g-cold",
+      "requests": 61,
+      "bytes": 404747,
+      "byType": {
+        "html": 1877,
+        "css": 31875,
+        "manifest": 609,
+        "js": 37949,
+        "font": 35468,
+        "api": 86034,
+        "other": 22924,
+        "json": 188011,
+        "cache": 0,
+        "img": 0
+      },
+      "cached": 1,
+      "sw": 29,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 56,
+        "bytes": 404747
+      },
+      "slow": [
+        {
+          "url": "/api/manuals",
+          "at": 13463,
+          "ms": 5058,
+          "kb": 84
+        },
+        {
+          "url": "/counter/js/chat-ui.js",
+          "at": 21656,
+          "ms": 3667,
+          "kb": 0
+        },
+        {
+          "url": "/counter/js/particons.js",
+          "at": 21656,
+          "ms": 3566,
+          "kb": 0
+        },
+        {
+          "url": "/counter/js/viewer3d.js",
+          "at": 21655,
+          "ms": 3512,
+          "kb": 0
+        },
+        {
+          "url": "/counter/js/pick-search.js",
+          "at": 21655,
+          "ms": 3495,
+          "kb": 0
+        },
+        {
+          "url": "/counter/js/screens/cost.js",
+          "at": 21655,
+          "ms": 3477,
+          "kb": 0
+        },
+        {
+          "url": "/counter/js/deepgram.js",
+          "at": 21655,
+          "ms": 3380,
+          "kb": 0
+        },
+        {
+          "url": "/store/ttm-catalog.json",
+          "at": 5624,
+          "ms": 3345,
+          "kb": 102
+        },
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 487,
+          "ms": 2443,
+          "kb": 1
+        },
+        {
+          "url": "/counter/manifest.webmanifest",
+          "at": 546,
+          "ms": 1875,
+          "kb": 1
+        }
+      ],
+      "wall": 33296,
+      "fcp": 2782,
+      "lcp": 32332,
+      "field": 29635,
+      "card": 31529,
+      "ttfb": 243,
+      "dcl": 3772,
+      "load": 4494,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 13482,
+          "dur": 6473,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 27256,
+          "dur": 2377,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 29965,
+          "dur": 1626,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9090,
+          "dur": 1446,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 12199,
+          "dur": 1277,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 29634,
+          "dur": 309,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 8979,
+          "dur": 107,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2485,
+          "dur": 90,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 12116,
+          "dur": 79,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 22980,
+          "dur": 79,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 20342,
+          "dur": 72,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 20598,
+          "dur": 67,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 14059,
+      "longCount": 13,
+      "phases": [
+        {
+          "name": "health",
+          "start": 3757,
+          "dur": 1873
+        },
+        {
+          "name": "bundle",
+          "start": 5631,
+          "dur": 4523
+        },
+        {
+          "name": "merge",
+          "start": 10154,
+          "dur": 293
+        },
+        {
+          "name": "images",
+          "start": 10447,
+          "dur": 2802
+        },
+        {
+          "name": "index-ids",
+          "start": 13249,
+          "dur": 217
+        }
+      ]
+    }
+  ]
+}

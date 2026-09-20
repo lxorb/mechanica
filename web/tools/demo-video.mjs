@@ -17,10 +17,19 @@
  * Why the live site and not a local server: the point of the video is that these numbers came
  * off the deployed thing. A judge who pauses on a frame should see the same URL they can open.
  *
- * Bitrate. puppeteer's screencast hard-codes `-b:v 0`, so its VP9 is quality-targeted and a
- * mostly-static UI lands around 1 Mbps — below what the submission asks for. The capture is
- * therefore taken at CRF 12 (visually lossless for screen content) and re-encoded once to a
- * fixed 8 Mbps, which is also what produces the .mp4.
+ * Why not `page.screencast()`. Puppeteer's recorder shells out to `ffmpeg -vcodec vp9 -deadline
+ * realtime`, and the ffmpeg on this machine is a winarm64 build configured `--disable-libvpx`:
+ * there is no VP9 encoder in it and `-deadline` is not even a recognised option, so the recorder
+ * spawns ffmpeg, ffmpeg exits on the argument list, and the capture silently writes a zero-byte
+ * file. So the CDP screencast is driven directly here and the frames are piped to an encoder we
+ * choose. `FFMPEG_VPX` is a second ffmpeg that does have libvpx (npm `ffmpeg-static`), used only
+ * for the WebM; everything else runs on the ffmpeg already on PATH.
+ *
+ * Bitrate. Capture goes to a near-lossless H.264 intermediate that keeps up with 24 fps, and the
+ * two deliverables are encoded from it: the .mp4 at a true 8 Mbps CBR (`nal-hrd=cbr`, which is
+ * what actually guarantees a floor — `-minrate` alone does not make x264 pad), and the .webm at
+ * VP9 constrained quality, which on screen content with a 3D stage in it lands well above the
+ * 6 Mbps the submission asks for. Both numbers are measured back out of the files and printed.
  *
  * Cold bike. Take 2 needs a vehicle with a free manual URL and no index yet; the first run
  * warms it forever. The list is re-read from the live catalog at record time and the first
@@ -28,7 +37,7 @@
  */
 
 import { mkdirSync, existsSync, readFileSync, writeFileSync, rmSync, statSync } from "node:fs";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -828,9 +837,30 @@ function writeShotlist(report) {
 function header() {
   return `# Demo video — shot list
 
-Recorded on the live site, https://mechanica.emilvinu.ch/counter/, in headless Chrome at
-1280×720. No narration and no captions: the presenter talks over it. Re-record with
-\`node web/tools/demo-video.mjs\`.
+Two takes, recorded on the live site (https://mechanica.emilvinu.ch/counter/) in headless Chrome
+at 1280×720, 24 fps, 8 Mbps. **No narration and no captions** — the presenter talks over it, and
+every beat below is a timestamp to talk to or to seek to. Re-record with
+\`node web/tools/demo-video.mjs\` (\`--dry\` drives the path without recording;
+\`TTM_TRACE=1\` prints how long each wait really took).
+
+Each take ships four files: \`<take>.webm\` (VP9), \`<take>.mp4\` (H.264, for anything that will
+not play WebM), \`<take>-sheet.png\` (twelve labelled frames, 4×3) and the table below.
+
+## How to use it in a 5-minute pitch
+
+\`general.md\` is the script. Take 1 is the demo it describes, in the same order, minus the
+voice turn. Take 2 is the 0:20 beat — the manual that does not exist yet — played in full
+instead of left running in the background. If you only have one screen, play take 1 and cut to
+take 2 at the "So the catalogue isn't the limit" line.
+
+## Beats that are not in these takes, and why
+
+| beat | why not |
+|---|---|
+| **Voice mode** (tap the mic, speak, it reads the manual back) | It needs microphone permission and a live audio input. Headless Chrome has neither: \`stt.supported\` is false, so the mic button hides itself and there is nothing on screen to film. The Deepgram turn has to be demoed live, or captured on a real phone. |
+| **Photo identify** (snap the bike, /api/identify/photo) | The file input opens the OS camera/file picker, which is outside the page and cannot be recorded from inside it. \`identifyPhoto\` itself is exercised in the QA harness, not here. |
+| **VIN scan** | Same picker problem for the camera path. Typing a VIN into the same field does work and could be added as a third take if a judge asks. |
+| **Offline** (aeroplane mode, the pages already opened still open) | Nothing moves on screen, so a video is the worst way to show it. Demo it live by killing wifi. |
 
 `;
 }

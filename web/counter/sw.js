@@ -1,6 +1,6 @@
 // Stamped by deploy/web.sh on every deploy (git sha + time), so each release installs a fresh
 // worker, drops the previous caches and takes over every open tab.
-const VERSION = "a7dc0cb7-202609201107";
+const VERSION = "4eacffa0-202609201012";
 const SHELL = `mechanica-shell-${VERSION}`;
 const RUNTIME = `mechanica-runtime-${VERSION}`;
 const DATA = `mechanica-data-${VERSION}`;
@@ -10,27 +10,34 @@ const PDFS = `mechanica-pdfs-${VERSION}`;
 const RUNTIME_MAX = 300;
 const SCREENS = ["identify", "confirm", "pick", "book", "invoice"];
 
-/**
- * The shell a first paint and a working search field are made of. Taken at install, which on a
- * first visit is while the page is still loading — so it is kept to what that page is fetching
- * anyway (one conditional request each, answered 304 off the HTTP cache) plus the handful of
- * icons and the theme sheet the page did not ask for.
- */
 const PRECACHE = [
   "./",
   "index.html",
   "css/counter.css",
-  "css/themes.css",
   "css/particons.css",
-  "css/screens/identify.css",
+  ...SCREENS.map((id) => `css/screens/${id}.css`),
   "js/app.js",
   "js/bus.js",
-  "js/theme.js",
+  "js/query.js",
   "js/ttm.js",
   "js/index-data.js",
   "js/search.js",
+  "js/ask.js",
+  "js/pdf.js",
+  "js/speech.js",
+  "js/deepgram.js",
+  "js/voice.js",
   "js/vision.js",
-  "js/screens/identify.js",
+  "js/particons.js",
+  ...SCREENS.map((id) => `js/screens/${id}.js`),
+  "js/screens/cost.js",
+  "css/screens/cost.css",
+  "../store/ttm-catalog.json",
+  "../store/bike-images.json",
+  "../vendor/deep-chat/deepChat.bundle.js",
+  "js/chat-ui.js",
+  "css/chat-ui.css",
+  "../store/catalog.json",
   "manifest.webmanifest",
   "icons/favicon.ico",
   "icons/favicon-32.png",
@@ -38,40 +45,6 @@ const PRECACHE = [
   "icons/icon-192.png",
   "icons/icon-512.png",
   "icons/icon-512-maskable.png",
-];
-
-/**
- * Everything the *second* visit needs: the rest of the flow, the reader, the chat bundle, the
- * roster and the photo index. Half a megabyte of it, and on the first visit none of it is on
- * the critical path — so it is taken only when the page says it is done loading (app.js posts
- * "precache-rest"), and with the HTTP cache allowed to answer, so the roster the page has just
- * downloaded is not downloaded a second time.
- */
-const PRECACHE_REST = [
-  ...SCREENS.filter((id) => id !== "identify").map((id) => `css/screens/${id}.css`),
-  "css/screens/cost.css",
-  "css/chat-ui.css",
-  "css/viewer3d.css",
-  "css/climate.css",
-  "js/query.js",
-  "js/ask.js",
-  "js/pdf.js",
-  "js/speech.js",
-  "js/deepgram.js",
-  "js/voice.js",
-  "js/particons.js",
-  "js/climate.js",
-  "js/pick-search.js",
-  "js/parts-search.js",
-  "js/vehicle-type.js",
-  ...SCREENS.filter((id) => id !== "identify").map((id) => `js/screens/${id}.js`),
-  "js/screens/cost.js",
-  "../store/ttm-catalog.json",
-  "../store/bike-images.json",
-  "../store/bike-images-2.json",
-  "../vendor/deep-chat/deepChat.bundle.js",
-  "js/chat-ui.js",
-  "../store/catalog.json",
 ];
 
 /** Exactly the href in index.html, so the page's own request matches this cache entry. */
@@ -155,35 +128,6 @@ async function precache() {
       })
     )
   );
-}
-
-let restDone = false;
-
-/**
- * The second-visit half. Two rules keep it off the first visit's wire: it runs only when the
- * page asks, and it lets the HTTP cache answer — every one of these files either was just
- * fetched by the page (so this is a 304, or nothing at all when the fetch handler already
- * cached it) or is something the page never asks for on the landing. Four at a time, so a
- * conference wifi is not asked for forty sockets at once.
- */
-async function precacheRest() {
-  if (restDone) return;
-  restDone = true;
-  const cache = await caches.open(SHELL);
-  const queue = PRECACHE_REST.slice();
-  const worker = async () => {
-    while (queue.length) {
-      const url = queue.shift();
-      try {
-        const request = new Request(url);
-        if (await cache.match(request, { ignoreSearch: true })) continue;
-        await cache.add(request);
-      } catch (err) {
-        console.warn("precache skip", url, err);
-      }
-    }
-  };
-  await Promise.all([worker(), worker(), worker(), worker()]);
 }
 
 /**
@@ -407,29 +351,8 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  // Nothing slow belongs in here: a worker is "activating" until this promise settles, and every
-  // fetch from the page it just claimed waits for that. (It cost a warm load 20 seconds once.)
   event.waitUntil(dropOldCaches().then(() => self.clients.claim()));
 });
-
-self.addEventListener("message", (event) => {
-  const type = event.data && event.data.type;
-  if (type === "precache-rest") event.waitUntil(precacheRest());
-});
-
-let restArmed = false;
-
-/**
- * The fallback for a page that never sends "precache-rest" — an old app.js out of someone's
- * cache, or a tab closed mid-load. Hung off the first fetch event rather than off activate,
- * because a worker is not activated until its activate handler settles and every request from
- * the page it has claimed waits for that.
- */
-function armRest(event) {
-  if (restArmed || restDone) return;
-  restArmed = true;
-  event.waitUntil(new Promise((done) => setTimeout(done, 15000)).then(() => precacheRest()));
-}
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
@@ -437,8 +360,6 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.protocol !== "http:" && url.protocol !== "https:") return;
-
-  armRest(event);
 
   if (isOnnx(url)) {
     event.respondWith(fetch(request));

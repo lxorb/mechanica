@@ -4536,6 +4536,30 @@
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-road-glide.hero.webp"
   },
+  "harley-davidson|road-glide-custom": {
+    "image": "store/img/bikes2/harley-davidson-road-glide.webp",
+    "thumb": "store/img/bikes2/harley-davidson-road-glide.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-road-glide.hero.webp",
+    "title": "Harley Davidson Road Glide Prague Czech Republic 2021 D.jpg",
+    "author": "Mojmir Churavy",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_Glide_Prague_Czech_Republic_2021_D.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|road-glide"
+  },
+  "harley-davidson|road-glide-limited": {
+    "image": "store/img/bikes2/harley-davidson-road-glide.webp",
+    "thumb": "store/img/bikes2/harley-davidson-road-glide.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-road-glide.hero.webp",
+    "title": "Harley Davidson Road Glide Prague Czech Republic 2021 D.jpg",
+    "author": "Mojmir Churavy",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_Glide_Prague_Czech_Republic_2021_D.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|road-glide"
+  },
   "harley-davidson|road-glide-special": {
     "image": "store/img/bikes2/harley-davidson-road-glide-special.webp",
     "thumb": "store/img/bikes2/harley-davidson-road-glide-special.thumb.webp",
@@ -4547,6 +4571,18 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/harley-davidson-road-glide-special.hero.webp"
+  },
+  "harley-davidson|road-glide-ultra": {
+    "image": "store/img/bikes2/harley-davidson-road-glide.webp",
+    "thumb": "store/img/bikes2/harley-davidson-road-glide.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-road-glide.hero.webp",
+    "title": "Harley Davidson Road Glide Prague Czech Republic 2021 D.jpg",
+    "author": "Mojmir Churavy",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_Glide_Prague_Czech_Republic_2021_D.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|road-glide"
   },
   "harley-davidson|road-king-fire-rescue": {
     "image": "store/img/bikes/harley-davidson-road-king.webp",
@@ -5068,6 +5104,18 @@
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-tri-glide-ultra.hero.webp"
   },
+  "harley-davidson|tri-glide-ultra-classic": {
+    "image": "store/img/bikes2/harley-davidson-tri-glide-ultra.webp",
+    "thumb": "store/img/bikes2/harley-davidson-tri-glide-ultra.thumb.webp",
+    "hero": "store/img/bikes2/harley-davidson-tri-glide-ultra.hero.webp",
+    "title": "Harley Davidson Tri Glide taken 2013.jpg",
+    "author": "Cullen328",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Tri_Glide_taken_2013.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "harley-davidson|tri-glide-ultra"
+  },
   "harley-davidson|trike": {
     "image": "store/img/bikes2/harley-davidson-trike.webp",
     "thumb": "store/img/bikes2/harley-davidson-trike.thumb.webp",
@@ -5338,6 +5386,18 @@
     "via": "alias",
     "aliasOf": "hero|xtreme"
   },
+  "honda|400x": {
+    "image": "store/img/bikes2/honda-400x.webp",
+    "thumb": "store/img/bikes2/honda-400x.thumb.webp",
+    "title": "HONDA 400X 2013.jpg",
+    "author": "ja:User:ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HONDA_400X_2013.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-400x.hero.webp"
+  },
   "honda|accord-coupe": {
     "image": "store/img/bikes/honda-accord.webp",
     "thumb": "store/img/bikes/honda-accord-thumb.webp",
@@ -5481,6 +5541,18 @@
     "via": "alias",
     "aliasOf": "honda|adv160"
   },
+  "honda|adv350": {
+    "image": "store/img/bikes2/honda-adv350.webp",
+    "thumb": "store/img/bikes2/honda-adv350.thumb.webp",
+    "title": "Honda ADV 350 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_ADV_350_2026.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-adv350.hero.webp"
+  },
   "honda|adv350a": {
     "image": "store/img/bikes2/honda-adv350a.webp",
     "thumb": "store/img/bikes2/honda-adv350a.thumb.webp",
@@ -5557,6 +5629,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda-1000-Africa-Twin-2016-700px3.jpg",
     "via": "alias",
     "aliasOf": "honda|africa-twin"
+  },
+  "honda|air-blade-125": {
+    "image": "store/img/bikes2/honda-air-blade-125.webp",
+    "thumb": "store/img/bikes2/honda-air-blade-125.thumb.webp",
+    "title": "Honda Airblade 125 scooters. Cambodia. Sihanoukville.jpg",
+    "author": "Dmitry Makeev",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Airblade_125_scooters._Cambodia._Sihanoukville.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/honda-air-blade-125.hero.webp"
   },
   "honda|ape-50-type-d": {
     "image": "store/img/bikes/honda-ape-50.webp",
@@ -5638,6 +5722,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB_500_Four_(2).jpg",
     "via": "alias",
     "aliasOf": "honda|cb-500"
+  },
+  "honda|cb-twister": {
+    "image": "store/img/bikes2/honda-cb-twister.webp",
+    "thumb": "store/img/bikes2/honda-cb-twister.thumb.webp",
+    "title": "NATIM1.jpg",
+    "author": "NATIM87",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:NATIM1.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.0,
+    "hero": "store/img/bikes2/honda-cb-twister.hero.webp"
   },
   "honda|cb1000": {
     "image": "store/img/bikes2/honda-cb1000-hornet-sp.webp",
@@ -6131,6 +6227,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:CB1300_SUPER_BOL_D'OR_ABS%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB.JPG",
     "via": "alias",
     "aliasOf": "honda|cb1300"
+  },
+  "honda|cb223s": {
+    "image": "store/img/bikes2/honda-cb223s.webp",
+    "thumb": "store/img/bikes2/honda-cb223s.thumb.webp",
+    "title": "Cb223s.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cb223s.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-cb223s.hero.webp"
   },
   "honda|cb300f-abs": {
     "image": "store/img/bikes/honda-cb300f.webp",
@@ -7478,6 +7586,18 @@
     "via": "alias",
     "aliasOf": "honda|crf150r"
   },
+  "honda|crf250-rally": {
+    "image": "store/img/bikes2/honda-crf250-rally.webp",
+    "thumb": "store/img/bikes2/honda-crf250-rally.thumb.webp",
+    "title": "Honda Welcome Plaza Aoyama 16.jpg",
+    "author": "Syced",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Welcome_Plaza_Aoyama_16.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-crf250-rally.hero.webp"
+  },
   "honda|crf250f": {
     "image": "store/img/bikes2/honda-crf250f.webp",
     "thumb": "store/img/bikes2/honda-crf250f.thumb.webp",
@@ -8013,6 +8133,42 @@
     "score": 8.5,
     "hero": "store/img/bikes2/honda-dream.hero.webp"
   },
+  "honda|dream-neo": {
+    "image": "store/img/bikes2/honda-dream.webp",
+    "thumb": "store/img/bikes2/honda-dream.thumb.webp",
+    "hero": "store/img/bikes2/honda-dream.hero.webp",
+    "title": "64 Honda Dream CA77 (8795645624).jpg",
+    "author": "Greg Gjerdingen from Willmar, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:64_Honda_Dream_CA77_(8795645624).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|dream"
+  },
+  "honda|dream-yuga": {
+    "image": "store/img/bikes2/honda-dream.webp",
+    "thumb": "store/img/bikes2/honda-dream.thumb.webp",
+    "hero": "store/img/bikes2/honda-dream.hero.webp",
+    "title": "64 Honda Dream CA77 (8795645624).jpg",
+    "author": "Greg Gjerdingen from Willmar, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:64_Honda_Dream_CA77_(8795645624).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|dream"
+  },
+  "honda|dunk": {
+    "image": "store/img/bikes2/honda-dunk.webp",
+    "thumb": "store/img/bikes2/honda-dunk.thumb.webp",
+    "title": "Honda DUNK Tokyo Motor Show 2013.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_DUNK_Tokyo_Motor_Show_2013.JPG",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-dunk.hero.webp"
+  },
   "honda|ev-neo-pro": {
     "image": "store/img/bikes/honda-ev-neo.webp",
     "thumb": "store/img/bikes/honda-ev-neo-thumb.webp",
@@ -8142,6 +8298,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "honda|fury"
+  },
+  "honda|gb250-clubman": {
+    "image": "store/img/bikes2/honda-gb250-clubman.webp",
+    "thumb": "store/img/bikes2/honda-gb250-clubman.thumb.webp",
+    "title": "Honda GB250 Clubman 00.jpg",
+    "author": "yoppy",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_GB250_Clubman_00.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-gb250-clubman.hero.webp"
   },
   "honda|gb350s": {
     "image": "store/img/bikes2/honda-gb350s.webp",
@@ -8454,6 +8622,18 @@
     "via": "alias",
     "aliasOf": "honda|grom"
   },
+  "honda|hornet": {
+    "image": "store/img/bikes2/honda-hornet.webp",
+    "thumb": "store/img/bikes2/honda-hornet.thumb.webp",
+    "title": "Moscow, Honda Hornet, Aug 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Honda_Hornet,_Aug_2025_01.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-hornet.hero.webp"
+  },
   "honda|inspire": {
     "image": "store/img/bikes2/honda-inspire.webp",
     "thumb": "store/img/bikes2/honda-inspire.thumb.webp",
@@ -8735,6 +8915,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_nc700x_sw_03.jpg",
     "via": "alias",
     "aliasOf": "honda|nc700x"
+  },
+  "honda|nc750s": {
+    "image": "store/img/bikes2/honda-nc750s.webp",
+    "thumb": "store/img/bikes2/honda-nc750s.thumb.webp",
+    "title": "Nc750s.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nc750s.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-nc750s.hero.webp"
+  },
+  "honda|nc750sa": {
+    "image": "store/img/bikes2/honda-nc750s.webp",
+    "thumb": "store/img/bikes2/honda-nc750s.thumb.webp",
+    "hero": "store/img/bikes2/honda-nc750s.hero.webp",
+    "title": "Nc750s.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nc750s.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "honda|nc750s"
   },
   "honda|nc750x-dct": {
     "image": "store/img/bikes/honda-nc750x.webp",
@@ -9320,6 +9524,18 @@
     "via": "alias",
     "aliasOf": "honda|silver-wing"
   },
+  "honda|spacy125": {
+    "image": "store/img/bikes2/honda-spacy125.webp",
+    "thumb": "store/img/bikes2/honda-spacy125.thumb.webp",
+    "title": "Spacy125striker.jpg",
+    "author": "Saber Honda",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Spacy125striker.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-spacy125.hero.webp"
+  },
   "honda|st-1300-abs": {
     "image": "store/img/bikes/honda-st-1300.webp",
     "thumb": "store/img/bikes/honda-st-1300-thumb.webp",
@@ -9756,6 +9972,18 @@
     "via": "alias",
     "aliasOf": "honda|vt-600-c-shadow"
   },
+  "honda|vt1300cx": {
+    "image": "store/img/bikes2/honda-vt1300cx.webp",
+    "thumb": "store/img/bikes2/honda-vt1300cx.thumb.webp",
+    "title": "Honda VT1300CX (12404800023).jpg",
+    "author": "Bob Adams from George, South Africa",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_VT1300CX_(12404800023).jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-vt1300cx.hero.webp"
+  },
   "honda|vtr-1000-f-firestorm-super-hawk": {
     "image": "store/img/bikes/honda-vtr-1000-f-firestorm.webp",
     "thumb": "store/img/bikes/honda-vtr-1000-f-firestorm-thumb.webp",
@@ -9966,6 +10194,18 @@
     "via": "alias",
     "aliasOf": "honda|wave-125"
   },
+  "honda|wave-alpha": {
+    "image": "store/img/bikes2/honda-wave-alpha.webp",
+    "thumb": "store/img/bikes2/honda-wave-alpha.thumb.webp",
+    "title": "Honda Wave S-DX 2023.jpg",
+    "author": "Zaldi.txiki.75",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Wave_S-DX_2023.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-wave-alpha.hero.webp"
+  },
   "honda|xl700v-transalp-abs": {
     "image": "store/img/bikes/honda-xl700v-transalp.webp",
     "thumb": "store/img/bikes/honda-xl700v-transalp-thumb.webp",
@@ -10044,6 +10284,54 @@
     "source": "https://commons.wikimedia.org/wiki/File:XR650R_ED-Type_in_Snow_Wikipedia.jpg",
     "via": "alias",
     "aliasOf": "honda|xr-650"
+  },
+  "honda|xr230": {
+    "image": "store/img/bikes2/honda-xr230.webp",
+    "thumb": "store/img/bikes2/honda-xr230.thumb.webp",
+    "title": "Xr230.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Xr230.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-xr230.hero.webp"
+  },
+  "honda|xr230-motard": {
+    "image": "store/img/bikes2/honda-xr230.webp",
+    "thumb": "store/img/bikes2/honda-xr230.thumb.webp",
+    "hero": "store/img/bikes2/honda-xr230.hero.webp",
+    "title": "Xr230.jpg",
+    "author": "ウェルワィ",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Xr230.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "honda|xr230"
+  },
+  "honda|xr250": {
+    "image": "store/img/bikes2/honda-xr250.webp",
+    "thumb": "store/img/bikes2/honda-xr250.thumb.webp",
+    "title": "1994 Honda XR250R in 2016.jpg",
+    "author": "Jamesm113",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1994_Honda_XR250R_in_2016.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/honda-xr250.hero.webp"
+  },
+  "honda|xr250-tornado": {
+    "image": "store/img/bikes2/honda-xr250.webp",
+    "thumb": "store/img/bikes2/honda-xr250.thumb.webp",
+    "hero": "store/img/bikes2/honda-xr250.hero.webp",
+    "title": "1994 Honda XR250R in 2016.jpg",
+    "author": "Jamesm113",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1994_Honda_XR250R_in_2016.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|xr250"
   },
   "honda|xre300-sahara": {
     "image": "store/img/bikes/honda-xre300.webp",
@@ -16638,6 +16926,18 @@
     "via": "alias",
     "aliasOf": "royal-enfield|classic-500"
   },
+  "royal-enfield|continental-gt-650": {
+    "image": "store/img/bikes2/royal-enfield-continental-gt-650.webp",
+    "thumb": "store/img/bikes2/royal-enfield-continental-gt-650.thumb.webp",
+    "title": "Royal Enfield Continental GT 650.jpg",
+    "author": "Kiranpawar3210",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_650.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/royal-enfield-continental-gt-650.hero.webp"
+  },
   "royal-enfield|thunderbird-350": {
     "image": "store/img/bikes2/royal-enfield-thunderbird-350.webp",
     "thumb": "store/img/bikes2/royal-enfield-thunderbird-350.thumb.webp",
@@ -20046,6 +20346,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Triumph-Scrambler-400X.jpg",
     "via": "alias",
     "aliasOf": "triumph|scrambler-400-x"
+  },
+  "triumph|scrambler-900": {
+    "image": "store/img/bikes2/triumph-scrambler-900.webp",
+    "thumb": "store/img/bikes2/triumph-scrambler-900.thumb.webp",
+    "title": "Triumph Scrambler 900 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Scrambler_900_2026.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/triumph-scrambler-900.hero.webp"
   },
   "triumph|scrambler-efi": {
     "image": "store/img/bikes/triumph-scrambler.webp",
@@ -25869,6 +26181,54 @@
     "via": "alias",
     "aliasOf": "yamaha|xt660z-tenere"
   },
+  "yamaha|xv1900a": {
+    "image": "store/img/bikes2/yamaha-xv1900a.webp",
+    "thumb": "store/img/bikes2/yamaha-xv1900a.thumb.webp",
+    "title": "Yamaha XV1900.jpg",
+    "author": "Reinhard Wolf",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XV1900.jpg",
+    "via": "wikipedia",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-xv1900a.hero.webp"
+  },
+  "yamaha|xv1900a-casual-full-dress": {
+    "image": "store/img/bikes2/yamaha-xv1900a.webp",
+    "thumb": "store/img/bikes2/yamaha-xv1900a.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-xv1900a.hero.webp",
+    "title": "Yamaha XV1900.jpg",
+    "author": "Reinhard Wolf",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XV1900.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|xv1900a"
+  },
+  "yamaha|xv1900a-midnight-star": {
+    "image": "store/img/bikes2/yamaha-xv1900a.webp",
+    "thumb": "store/img/bikes2/yamaha-xv1900a.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-xv1900a.hero.webp",
+    "title": "Yamaha XV1900.jpg",
+    "author": "Reinhard Wolf",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XV1900.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|xv1900a"
+  },
+  "yamaha|xv1900acfd": {
+    "image": "store/img/bikes2/yamaha-xv1900a.webp",
+    "thumb": "store/img/bikes2/yamaha-xv1900a.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-xv1900a.hero.webp",
+    "title": "Yamaha XV1900.jpg",
+    "author": "Reinhard Wolf",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XV1900.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|xv1900a"
+  },
   "yamaha|xv250-virago": {
     "image": "store/img/bikes/yamaha-xv250.webp",
     "thumb": "store/img/bikes/yamaha-xv250-thumb.webp",
@@ -25890,6 +26250,18 @@
     "view": "side",
     "score": 7.5,
     "hero": "store/img/bikes2/yamaha-xv950r.hero.webp"
+  },
+  "yamaha|xv950r-abs": {
+    "image": "store/img/bikes2/yamaha-xv950r.webp",
+    "thumb": "store/img/bikes2/yamaha-xv950r.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-xv950r.hero.webp",
+    "title": "Yamaha Xv 950 (199434915).jpeg",
+    "author": "Aleksey Potapov",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Xv_950_(199434915).jpeg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|xv950r"
   },
   "yamaha|xvs1100": {
     "image": "store/img/bikes2/yamaha-xvs1100.webp",
