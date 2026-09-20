@@ -38,7 +38,7 @@ the only place a cost event is written: `route · model · inputTokens · cached
 | # | capability | where it is used | route · model | measured |
 |---|---|---|---|---|
 | 1 | **Structured outputs** (`responses.parse`, strict `json_schema` from Pydantic) | 7 of our 9 call sites | `ask.router`, `ask.picker`, `ingest.struct`, `ingest.keywords`, `identify.photo`, `identify.part`, `images.score`, `parts.map`, `offers.*.extract` | **All but 362 of our logged calls** are strict-schema calls — everything except the 248 streamed chat answers, the 102 image generations and the 12 web-search calls. The app never parses free text from a model — the only free text we take is the `offers` line format, and that is regex-parsed and then verified |
-| 2 | **Model tiering** by task | luna for the volume, terra for the judgement calls | `gpt-5.6-luna` $0.20/M · `gpt-5.6-terra` $2/M · `gpt-6-astra` $10/M | **$75.96 of $83.05 is luna — 91% of the build ledger.** The log carries both prices for the same route: photo id on astra **$0.0247/call**, on luna **$0.00046** (**53×**); part id on astra $0.0140, on luna $0.00024 (**59×**). Once the catalog constraint and the fuzzy match were doing the accuracy work, the flagship stopped earning its price |
+| 2 | **Model tiering** by task | luna for the volume, terra for the judgement calls | `gpt-5.6-luna` $0.20/M · `gpt-5.6-terra` $2/M · `gpt-6-astra` $10/M | **$75.96 of $83.05 is luna — 91% of the build ledger.** The log carries both prices for the same route: photo id on astra **$0.0247/call**, on luna **$0.00053** (**46×**); part id on astra $0.0140, on luna $0.00024 (**59×**). Once the catalog constraint and the fuzzy match were doing the accuracy work, the flagship stopped earning its price |
 | 3 | **Prompt caching** (`prompt_cache_key` pinned per route+model; big static system prompts on purpose) | router (5.3 KB system prompt), picker, chat, ingest | `ask.router` | **99.5% cache hit on 3.45M input tokens** → $0.000132/call. `ingest.struct` 47.0% of 70.4M. `chat.answer` 42.7%. `ask.picker` 34.6% |
 | 4 | **Responses API streaming** | the chat drawer | `chat.answer` · terra | **first token p50 2.64 s / p95 5.87 s**, full answer p50 4.18 s (`api/eval/chat-report.md`) |
 | 5 | **Built-in `web_search` tool** | fitment-exact parts with live prices | `offers` · terra, `search_context_size: "low"`, `max_tool_calls: 2` | ~7 ¢ cold, **$0 cached** (24 h). Fee modelled explicitly: `$10/1k calls` on top of tokens (`WEB_SEARCH_CALL_USD`) |
@@ -91,7 +91,7 @@ flowchart LR
     S1["PHOTO of the bike"]:::ui
     S2["VIN"]:::ui
     D0["400 catalog names —<br/>half cars, half bikes —<br/>injected into the prompt"]:::det
-    A1["<b>identify.photo</b> · VISION<br/>gpt-5.6-luna · strict json_schema<br/>make · model · generation · kind<br/>cues · alternatives<br/><b>$0.00046 per photo</b>"]:::ai
+    A1["<b>identify.photo</b> · VISION<br/>gpt-5.6-luna · strict json_schema<br/>make · model · generation · kind<br/>cues · alternatives<br/><b>$0.00053 per photo</b>"]:::ai
     G1["match back to a real catalog row,<br/>floor 0.80 · kind-locked<br/><b>a bike we hold no manual for<br/>cannot win</b>"]:::guard
     D1["NHTSA vPIC decode<br/><b>zero LLM</b>"]:::det
     R1["THE EXACT BIKE"]:::ship
@@ -349,7 +349,7 @@ written against the same `Index` protocol but has never run against a live clust
 **"Why three different models?"**
 Because they cost 10× apart and the tasks are not the same task. Our cost log carries both for the same
 route: `identify.photo` on `gpt-6-astra` is $0.0247 a call; on `gpt-5.6-luna`, constrained to 400 catalog
-names and fuzzy-matched back to a real row afterwards, it is $0.00046 — 53×. The constraint and the match
+names and fuzzy-matched back to a real row afterwards, it is $0.00053 — 46×. The constraint and the match
 are doing the accuracy work, so the flagship stopped being worth its price. `identify.part` is the same
 story at 59×. The router runs on luna because its job is vocabulary translation against a
 cached prompt. The picker and chat run on terra because ordering printed sections and writing a terse,

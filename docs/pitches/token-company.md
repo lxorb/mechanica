@@ -119,7 +119,7 @@ Two routes ran on a flagship first and a cheap model after, on identical work:
 
 | route | flagship | what we ship | factor |
 |---|---|---|---|
-| `identify.photo` | `gpt-6-astra` $0.024661 | `gpt-5.6-luna` $0.000464 | **53x** |
+| `identify.photo` | `gpt-6-astra` $0.024661 | `gpt-5.6-luna` $0.000532 | **46x** |
 | `identify.part` | `gpt-6-astra` $0.014047 | `gpt-5.6-luna` $0.000239 | **59x** |
 
 Five routes, two price tiers: vision-id, router and structurer on `luna` ($0.20/M), picker and chat on
@@ -290,7 +290,7 @@ every digit in an answer is checked against the printed pages, and the ones that
 
 **Why not just use a smaller model everywhere?**
 Two of five routes already are, and two more went that way after measurement — `identify.photo` moved off
-the flagship for a **53x** saving, `identify.part` for **59x**. The router runs on `gpt-5.6-luna` at
+the flagship for a **46x** saving, `identify.part` for **59x**. The router runs on `gpt-5.6-luna` at
 $0.000132 a call. The picker and chat stay on `gpt-5.6-terra` because those two touch the manual's own
 printed text, and the failure modes are *a wrong page id* and *a dropped torque figure* — the 5% the
 mechanic is liable for. Our cost problem was never the model tier; it was **400,000 tokens**. Note the
