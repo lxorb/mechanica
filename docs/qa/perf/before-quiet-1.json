@@ -1,0 +1,205 @@
+{
+  "origin": "http://127.0.0.1:64244/counter/",
+  "when": "2026-09-20T12:58:39.933Z",
+  "rows": [
+    {
+      "label": "local fast4g-cold",
+      "requests": 58,
+      "bytes": 281549,
+      "byType": {
+        "html": 1887,
+        "link": 30437,
+        "js": 38012,
+        "css": 2050,
+        "api": 86290,
+        "json": 99855,
+        "other": 23018,
+        "cache/sw": 0
+      },
+      "cached": 28,
+      "sw": 29,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 54,
+        "bytes": 281549
+      },
+      "slow": [
+        {
+          "url": "/api/manuals",
+          "at": 3355,
+          "ms": 1787,
+          "kb": 84
+        },
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 167,
+          "ms": 1517,
+          "kb": 1
+        },
+        {
+          "url": "/api/health",
+          "at": 561,
+          "ms": 1083,
+          "kb": 0
+        },
+        {
+          "url": "/health",
+          "at": 565,
+          "ms": 1064,
+          "kb": 0
+        },
+        {
+          "url": "display/v24/fC1_PZJEZG-e9gHhdI4-NBbfd2ys3SjJCx1czNDu.woff2",
+          "at": 1738,
+          "ms": 652,
+          "kb": 35
+        },
+        {
+          "url": "/store/bike-images-2.json",
+          "at": 2389,
+          "ms": 268,
+          "kb": 97
+        },
+        {
+          "url": "/counter/js/app.js",
+          "at": 143,
+          "ms": 134,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 136,
+          "ms": 118,
+          "kb": 3
+        },
+        {
+          "url": "/counter/js/theme.js",
+          "at": 140,
+          "ms": 113,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 139,
+          "ms": 106,
+          "kb": 2
+        }
+      ],
+      "wall": 9080,
+      "fcp": 461,
+      "lcp": 7688,
+      "field": 6769,
+      "card": 7462,
+      "ttfb": 7,
+      "dcl": 570,
+      "load": 1704,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 3374,
+          "dur": 3001,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2723,
+          "dur": 641,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6921,
+          "dur": 626,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1835,
+          "dur": 557,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6768,
+          "dur": 149,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 321,
+          "dur": 62,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2661,
+          "dur": 59,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1700,
+          "dur": 50,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1778,
+          "dur": 50,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 5195,
+      "longCount": 9,
+      "phases": [
+        {
+          "name": "health",
+          "start": 551,
+          "dur": 1100
+        },
+        {
+          "name": "bundle",
+          "start": 1653,
+          "dur": 556
+        },
+        {
+          "name": "merge",
+          "start": 2210,
+          "dur": 173
+        },
+        {
+          "name": "images",
+          "start": 2383,
+          "dur": 838
+        },
+        {
+          "name": "index-ids",
+          "start": 3221,
+          "dur": 124
+        }
+      ]
+    }
+  ]
+}

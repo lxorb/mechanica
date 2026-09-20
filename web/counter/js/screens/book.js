@@ -12,8 +12,7 @@ import {
   renderPage,
   releaseCanvas,
 } from "../pdf.js";
-import { agentId as voiceAgent, start as voiceStart } from "../voice.js";
-import { openConditions } from "../climate.js";
+import * as voice from "../voice-session.js";
 
 const STAGGER = 60;
 const MAX_W = 900;
@@ -48,7 +47,6 @@ let stampEl = null;
 let backBtn = null;
 let modeBtn = null;
 let partsBtn = null;
-let climateBtn = null;
 let micBtn = null;
 let askBtn = null;
 let barEl = null;
@@ -111,8 +109,6 @@ let touchAt = 0;
 let tapTimer = 0;
 let immersive = false;
 
-let voiceId = null;
-let session = null;
 let askPages = [];
 let askFetchTok = 0;
 let askRunTok = 0;
@@ -276,22 +272,18 @@ function build(root) {
     "aria-label": "Parts",
     text: "Parts",
   });
-  // Climate Fit: the manual's own environment-conditional rules, resolved against the measured
-  // climate where the vehicle lives. Opens as an overlay, exactly like Parts.
-  climateBtn = el("button", {
-    class: "bar-btn bar-word book-climate",
-    type: "button",
-    "aria-label": "Conditions",
-    text: "Cond",
-  });
 
   // The bar carries only identity and position — which manual, which chapter, which page.
   // It is never hidden, so no gesture can leave the reader without an answer to "where am I".
   barEl.append(backBtn, coverEl, titleEl, stampEl);
 
   // Everything you do sits in a thumb row at the bottom, 44 px targets, one handed.
+  // COND came off on 2026-09-20: "I have no clue what the conditions submenu does in the pdf
+  // view". Climate Fit is not gone - it is the Parts sheet's own strip, where the rules it
+  // resolves are next to the parts they are about. A button in the reader that opens a sheet
+  // nobody can name is a button that costs a tap and teaches nothing.
   actsEl = el("div", { class: "book-acts" });
-  actsEl.append(modeBtn, askBtn, micBtn, climateBtn, partsBtn);
+  actsEl.append(modeBtn, askBtn, micBtn, partsBtn);
 
   viewEl = el("div", { class: "page-view" });
   padEl = el("div", { class: "page-pad" });
@@ -322,12 +314,16 @@ function build(root) {
   coverEl.addEventListener("click", onContents);
   modeBtn.addEventListener("click", toggleMode);
   partsBtn.addEventListener("click", () => openOverlay("invoice"));
-  climateBtn.addEventListener("click", openConditions);
   micBtn.addEventListener("click", onMic);
   askBtn.addEventListener("click", onAskToggle);
   askInput.addEventListener("keydown", onAskKey);
   window.addEventListener("keydown", onEsc);
   window.addEventListener("resize", measure);
+  // The assistant is not this screen's: it belongs to js/voice-session.js and it was probably
+  // already running before the manual opened. This is the whole of the reader's side of it -
+  // an answer that names a page turns the page and pulses its marker, "next" and "previous"
+  // step, and nothing here imports a line of voice code.
+  window.addEventListener("mechanica:voice", onVoice);
 
   viewEl.addEventListener("touchstart", onTouchStart, { passive: true });
   viewEl.addEventListener("touchmove", onTouchMove, { passive: false });
@@ -1279,48 +1275,73 @@ async function ensureFile(job) {
   if (ring) ring.fail(() => ensureFile(job));
 }
 
-/* ---------- voice ---------- */
+/* ---------- voice ----------
+ *
+ * The reader does not own the assistant and never stops it: it is one session for the whole
+ * repair (js/voice-session.js), started from the chat or from this button, docked into the
+ * corner the moment the manual is up, still listening while he reads. This screen's entire
+ * share of it is a toggle and two commands.
+ */
 
 async function syncVoice(job) {
-  endVoice();
   micBtn.hidden = true;
   const my = enterGen;
-  voiceId = await voiceAgent();
-  if (my !== enterGen || !voiceId) return;
+  const cfg = await Q.voiceConfig().catch(() => null);
+  if (my !== enterGen || !cfg || !cfg.deepgram || !voice.supported) return;
   micBtn.hidden = false;
   const bike = Q.bike(job.bikeId);
-  micBtn.dataset.bike = bike ? `${bike.make} ${bike.model} ${bike.year}` : "";
-  micBtn.dataset.manual = job.manualId || "";
-}
-
-function endVoice() {
-  if (session) session.end();
-  session = null;
-  if (micBtn) micBtn.setAttribute("aria-pressed", "false");
-}
-
-async function onMic() {
-  if (session) {
-    endVoice();
-    return;
-  }
-  micBtn.setAttribute("aria-pressed", "true");
-  const handle = await voiceStart({
-    id: voiceId,
-    dynamicVariables: {
-      bike_name: micBtn.dataset.bike || "",
-      manual_id: micBtn.dataset.manual || "",
-    },
-    onPage: (n) => jump(n),
-    onStatus: (status) => {
-      if (status === "disconnected") endVoice();
-    },
+  // The session needs to know which book it is answering out of before the first word.
+  voice.setContext({
+    manualId: job.manualId || "",
+    bikeId: job.bikeId || "",
+    bike: bike ? `${bike.make} ${bike.model} ${bike.year}` : "",
   });
-  if (!handle) {
-    micBtn.setAttribute("aria-pressed", "false");
-    return;
+  paintMic();
+}
+
+function paintMic() {
+  if (micBtn) micBtn.setAttribute("aria-pressed", voice.isLive() ? "true" : "false");
+}
+
+function onMic() {
+  voice.toggle();
+  // The reader is where the docked orb belongs, and starting from here means he wants it here.
+  if (voice.isLive()) voice.dock("compact");
+  paintMic();
+}
+
+/** The page an answer named, opened even when this mode is not showing it. */
+function showPage(n) {
+  const page = Math.floor(Number(n) || 0);
+  if (page <= 0) return;
+  if (!sheets.has(page)) {
+    // The relevant-pages mode is a filter, not a boundary: an answer that names page 85 opens
+    // page 85, and the strip quietly becomes the whole manual so the next one can too.
+    if (!allList().includes(page)) return;
+    mode = "all";
+    writeMode(jobRec && jobRec.manualId, mode);
+    paintModeBtn();
+    setPages(allList(), { strip: readList, at: page });
   }
-  session = handle;
+  if (immersive) setImmersive(false);
+  jump(page);
+  flash(page);
+}
+
+/** One step through whatever is on the strip. Said out loud, answered with no round trip. */
+function stepPage(dir) {
+  if (current == null || !pages.length) return;
+  const at = pages.indexOf(current);
+  if (at < 0) return;
+  const next = pages[dir === "prev" ? at - 1 : at + 1];
+  if (next != null) jump(next);
+}
+
+function onVoice(e) {
+  const d = (e && e.detail) || {};
+  if (d.kind === "page") showPage(d.page);
+  else if (d.kind === "step") stepPage(d.dir);
+  else if (d.kind === "status" || d.kind === "ended" || d.kind === "started") paintMic();
 }
 
 /* ---------- ask ---------- */
@@ -1598,7 +1619,9 @@ registerScreen("book", {
   leave() {
     enterGen += 1;
     cancelTap();
-    endVoice();
+    // The assistant is deliberately NOT ended here. Leaving the manual is a step in the job,
+    // not the end of it, and a voice that hangs up when he walks back to the parts list is the
+    // bug this whole session was moved out of the chat to fix.
     closeAsk();
     setImmersive(false);
     resetZoom();

@@ -27,14 +27,14 @@
  *                                     inside it; AUX below is injected through it instead.
  *   introMessage                      deliberately never set: the first bubble is empty.
  *
- * VOICE. The header's VOICE toggle opens a Deepgram Voice Agent session (./voice-deepgram.js),
- * and ./voice-orb.js puts the orb over the conversation for as long as it lasts — the orb owns
- * everything the rider sees in voice mode (state, level, the live line, interrupt, leave), so the
- * only thing this file does with it is mount it, feed it the session's meters and forward events.
- * Every finished turn it reports lands in the same `sessions` history as a typed one, so the
- * conversation is one conversation whichever way the question was asked, and `show_page` from
- * the agent takes the same jump() a citation chip takes. Hidden unless /voice/config says the
- * backend has a Deepgram key.
+ * VOICE. The VOICE button in the input row is a toggle and nothing else. The session itself -
+ * socket, microphone, playback, transcript, orb - belongs to ./voice-session.js and outlives
+ * this view by design: the first thing a spoken question does is open the manual, which closes
+ * the chat, and a session owned by the chat would hang up on the way. So this file mounts the
+ * toggle, tells the session which manual and bike it is answering about, hands it the one thing
+ * it cannot know (`jump`, the way from anywhere to a printed page), and listens on the
+ * `mechanica:voice` event for finished turns so a spoken answer lands in the same `sessions`
+ * history as a typed one. Hidden unless /voice/config says the backend has a Deepgram key.
  *
  * mountChat(host, {manualId, bike, bikeId, onPage}) -> {open, close, toggle, isOpen, setContext, destroy}
  * `onPage(N)` is called with a printed page number when a citation chip is tapped or the agent
@@ -48,8 +48,7 @@
 
 import * as T from "./ttm.js";
 import { registerOverlay, openOverlay, closeOverlay, overlayOpen } from "./bus.js";
-import * as agent from "./voice-deepgram.js";
-import { mountOrb } from "./voice-orb.js";
+import * as voice from "./voice-session.js";
 
 const BUNDLE = "../../vendor/deep-chat/deepChat.bundle.js";
 const OVERLAY = "chat";
@@ -338,16 +337,6 @@ export function mountChat(host, opts = {}) {
   wrap.append(sheet);
   document.body.append(wrap);
 
-  // The orb lives over the conversation, not over the header: Back and ✕ stay reachable, and
-  // nothing enters or leaves the flow when voice mode starts, so there is no layout shift.
-  const orb = mountOrb(body, {
-    levels: () => (voice ? { mic: voice.level(), out: voice.out() } : { mic: 0, out: 0 }),
-    onInterrupt: () => {
-      if (voice) voice.interrupt();
-    },
-    onLeave: stopVoice,
-  });
-
   voiceBtn.addEventListener("click", toggleVoice);
 
   registerOverlay(OVERLAY, { mount: () => {}, open: opened, close: closed });
@@ -593,13 +582,10 @@ export function mountChat(host, opts = {}) {
 
   /* ---------------------------------------------------------- voice mode */
 
-  let voice = null; // the live session handle
-  let voiceBusy = false;
-  let raf = 0;
   let offered = null; // the /voice/config probe, once
 
   function paintVoice(status) {
-    const on = Boolean(voice) || voiceBusy;
+    const on = voice.isLive();
     voiceBtn.setAttribute("aria-pressed", on ? "true" : "false");
     voiceBtn.classList.toggle("is-on", on);
     const text = status == null ? "" : SAY[status] ?? "";
@@ -607,33 +593,11 @@ export function mountChat(host, opts = {}) {
     // word for, which is a session that failed to start.
     strip.hidden = true;
     sheet.classList.toggle("is-voice", on);
-    if (orb) orb.setState(on ? status || "connecting" : "closed");
     if (text) said.textContent = text;
     if (!on) {
       said.textContent = "";
       for (const bar of bars) bar.style.transform = "scaleY(0.12)";
     }
-  }
-
-  function tick() {
-    raf = 0;
-    if (!voice) return;
-    const level = Math.min(1, voice.level() * 2.2);
-    for (let i = 0; i < bars.length; i++) {
-      // Middle bars lead, outer bars trail: a voice, not an equaliser demo.
-      const weight = 1 - Math.abs(i - (bars.length - 1) / 2) / bars.length;
-      bars[i].style.transform = `scaleY(${(0.12 + level * weight).toFixed(3)})`;
-    }
-    raf = requestAnimationFrame(tick);
-  }
-
-  function startMeter() {
-    if (!raf) raf = requestAnimationFrame(tick);
-  }
-
-  function stopMeter() {
-    if (raf) cancelAnimationFrame(raf);
-    raf = 0;
   }
 
   /**
@@ -653,7 +617,6 @@ export function mountChat(host, opts = {}) {
     } else {
       remember(manualId, role === "user" ? { role: "user", content: clean } : { role: "assistant", content: clean, citations: [], saved: 0 });
     }
-    if (orb) orb.setLine(clean);
     said.textContent = clean;
     if (!chat) return;
     try {
@@ -664,83 +627,59 @@ export function mountChat(host, opts = {}) {
     }
   }
 
-  function stopVoice() {
-    const live = voice;
-    voice = null;
-    voiceBusy = false;
-    stopMeter();
-    if (live) {
-      try {
-        live.stop();
-      } catch {
-        /* already gone */
-      }
+  /**
+   * The session's own events, arriving on the window rather than through a callback, because the
+   * session belongs to nobody and may already have been running before this view existed.
+   * Everything here is bookkeeping for the typed conversation; the orb has already shown it.
+   */
+  function onVoiceEvent(event) {
+    const d = (event && event.detail) || {};
+    if (d.kind === "status") {
+      paintVoice(d.status === "closed" ? null : d.status);
+      return;
     }
-    paintVoice(null);
-  }
-
-  async function startVoice() {
-    if (voice || voiceBusy || !manualId) return;
-    voiceBusy = true;
-    paintVoice("connecting");
-    await ensure();
-    try {
-      voice = await agent.start({
-        manualId,
-        bikeId,
-        on: (event) => {
-          if (event.type === "status") {
-            if (event.value === "closed") {
-              stopVoice();
-              return;
-            }
-            paintVoice(event.value);
-            return;
-          }
-          if (event.type === "text") {
-            transcribe(event.role, event.text, event.part);
-            return;
-          }
-          if (event.type === "interrupted") {
-            // The rider talked over the answer. Say so where he is already looking.
-            if (orb) orb.setLine("…");
-            return;
-          }
-          if (event.type === "page") {
-            jump(event.page);
-            return;
-          }
-          if (event.type === "error") {
-            strip.hidden = false;
-            said.textContent = event.message || "Voice failed.";
-            stopMeter();
-          }
-        },
-      });
-      voiceBusy = false;
-      paintVoice("listening");
-      startMeter();
-    } catch {
-      voiceBusy = false;
-      voice = null;
+    if (d.kind === "ended") {
       paintVoice(null);
+      return;
+    }
+    if (d.kind === "text") {
+      transcribe(d.role, d.text, d.part);
+      return;
+    }
+    if (d.kind === "page") {
+      // The reader is not the screen on show, so getting to the page is a navigation and this is
+      // the only module that knows the way. (When it IS on show the session skips this entirely.)
+      jump(d.page);
+      return;
+    }
+    if (d.kind === "error") {
       strip.hidden = false;
-      said.textContent = "Voice unavailable.";
+      said.textContent = d.message || "Voice failed.";
       window.setTimeout(() => {
-        if (!voice) strip.hidden = true;
+        if (!voice.isLive()) strip.hidden = true;
       }, 2600);
     }
   }
 
+  window.addEventListener("mechanica:voice", onVoiceEvent);
+
+  async function startVoice() {
+    if (voice.isLive() || !manualId) return;
+    paintVoice("connecting");
+    await ensure();
+    voice.start({ manualId, bikeId, bike: label });
+  }
+
   function toggleVoice() {
-    if (voice || voiceBusy) stopVoice();
+    if (voice.isLive()) voice.stop();
     else startVoice();
   }
 
   /** The toggle only exists when the backend has a Deepgram key and this browser can capture. */
   function offerVoice() {
     if (offered) return offered;
-    offered = (agent.supported ? T.voiceConfig() : Promise.resolve(null))
+    voice.onPage(jump);
+    offered = (voice.supported ? T.voiceConfig() : Promise.resolve(null))
       .then((cfg) => {
         const ok = Boolean(cfg && cfg.deepgram);
         voiceBtn.hidden = !ok;
@@ -769,10 +708,16 @@ export function mountChat(host, opts = {}) {
     });
   }
 
-  /** bus closed the overlay — by ✕, Escape, Back, or a screen change. */
+  /**
+   * bus closed the overlay — by ✕, Escape, Back, or a screen change.
+   *
+   * The session is NOT stopped here, and that is the whole point of moving it out of this file:
+   * the first thing a spoken question does is open the manual, which closes the chat, and the
+   * old code hung up at exactly that moment. The orb docks itself and keeps listening.
+   */
   function closed() {
     shown = false;
-    stopVoice();
+    paintVoice(voice.isLive() ? voice.status() : null);
   }
 
   function open() {
@@ -801,7 +746,9 @@ export function mountChat(host, opts = {}) {
     const id = String(next.manualId || "");
     if (id === manualId) return;
     manualId = id;
-    stopVoice();
+    // A different manual is a different book: the session decides whether the agent it has open
+    // is still grounded in the right one, and hangs up if it is not.
+    voice.setContext({ manualId, bikeId, bike: label });
     if (chat) {
       chat.remove();
       chat = null;
@@ -813,8 +760,8 @@ export function mountChat(host, opts = {}) {
 
   function destroy() {
     close();
-    stopVoice();
-    if (orb) orb.destroy();
+    window.removeEventListener("mechanica:voice", onVoiceEvent);
+    voice.stop();
     if (chat) chat.remove();
     chat = null;
     wrap.remove();

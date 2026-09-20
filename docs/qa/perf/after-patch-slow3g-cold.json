@@ -1,0 +1,229 @@
+{
+  "origin": "http://127.0.0.1:53535/counter/",
+  "when": "2026-09-20T13:04:42.493Z",
+  "rows": [
+    {
+      "label": "local slow3g-cold",
+      "requests": 30,
+      "bytes": 300590,
+      "byType": {
+        "html": 2007,
+        "json": 196272,
+        "other": 48277,
+        "link": 30437,
+        "js": 7692,
+        "api": 13855,
+        "css": 2050
+      },
+      "cached": 0,
+      "sw": 0,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 28,
+        "bytes": 207948
+      },
+      "slow": [
+        {
+          "url": "/counter/css/climate.css",
+          "at": 2146,
+          "ms": 11616,
+          "kb": 2
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 2143,
+          "ms": 9607,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 2145,
+          "ms": 9574,
+          "kb": 1
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 2142,
+          "ms": 9405,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/pick.css",
+          "at": 2142,
+          "ms": 8108,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/confirm.css",
+          "at": 2141,
+          "ms": 8001,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/viewer3d.css",
+          "at": 2140,
+          "ms": 7707,
+          "kb": 3
+        },
+        {
+          "url": "/counter/js/theme.js",
+          "at": 2115,
+          "ms": 7528,
+          "kb": 3
+        },
+        {
+          "url": "/counter/manifest.webmanifest",
+          "at": 2171,
+          "ms": 7441,
+          "kb": 1
+        },
+        {
+          "url": "/counter/js/app.js",
+          "at": 2115,
+          "ms": 7342,
+          "kb": 5
+        }
+      ],
+      "wall": 19410,
+      "fcp": 5370,
+      "lcp": 5344,
+      "field": 9752,
+      "card": 14884,
+      "ttfb": 9,
+      "dcl": 9696,
+      "load": 17920,
+      "cards": 60,
+      "store": "remote",
+      "controlled": false,
+      "long": [
+        {
+          "start": 14935,
+          "dur": 2885,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 13114,
+          "dur": 1627,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 12660,
+          "dur": 446,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 18030,
+          "dur": 216,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 12443,
+          "dur": 187,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 14751,
+          "dur": 183,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9751,
+          "dur": 81,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 11987,
+          "dur": 68,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 5235,
+          "dur": 61,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 5754,
+      "longCount": 9,
+      "phases": [
+        {
+          "name": "health",
+          "start": 9679,
+          "dur": 2768
+        },
+        {
+          "name": "identify",
+          "start": 9691,
+          "dur": 30
+        },
+        {
+          "name": "index-force",
+          "start": 9843,
+          "dur": 2
+        },
+        {
+          "name": "bundle",
+          "start": 12447,
+          "dur": 1
+        },
+        {
+          "name": "merge",
+          "start": 12448,
+          "dur": 181
+        },
+        {
+          "name": "index-ids",
+          "start": 12661,
+          "dur": 123
+        },
+        {
+          "name": "manuals",
+          "start": 12787,
+          "dur": 5244
+        },
+        {
+          "name": "index-lead-rows",
+          "start": 13116,
+          "dur": 35
+        },
+        {
+          "name": "index-lead",
+          "start": 13151,
+          "dur": 1219
+        },
+        {
+          "name": "index",
+          "start": 14938,
+          "dur": 2663
+        }
+      ]
+    }
+  ]
+}

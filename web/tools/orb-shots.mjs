@@ -4,20 +4,27 @@
  *   node web/tools/orb-shots.mjs
  *
  * Serves web/ on a throwaway port, walks the real app to Pick, opens the real chat view, and then
- * checks three things that a screenshot alone would not:
+ * checks what a screenshot alone would not:
  *
- *   1. chat-ui.js mounts the orb into the conversation and leaves it hidden until voice starts,
- *      and the orb's stylesheet arrives with the module rather than from index.html.
+ *   1. The orb's home is a body-level `position: fixed` host owned by voice-session.js, and no
+ *      screen and no overlay mounts one of its own. That is what lets a session survive a screen
+ *      change, so it is asserted rather than assumed.
  *   2. Entering and leaving voice mode moves NOTHING: the conversation's box is measured before,
  *      during and after, and any difference is a failure. That is the "no layout shift" claim.
  *   3. The three states animate. The orb writes `--s` and `--g` on itself sixty times a second
  *      and nothing else; the script samples `--s` across a second of frames and fails a state
  *      that should be moving and is not (or is moving and should not be, under reduced motion).
+ *   4. The DOCK. Full screen to a corner companion is one transform on one element: the orb is
+ *      still ≥44 px docked, it clears the reader's thumb row, and the page underneath does not
+ *      move by a pixel.
+ *   5. ACROSS THE APP, with the socket stubbed in the page: one session started from the chat
+ *      survives Pick -> Book, docks itself, turns the reader to the page its answer named, and
+ *      is still listening on the far side of all of it.
  *
- * The states are driven through `setState`, which is exactly what chat-ui.js calls when
+ * The states are driven through `setState`, which is exactly what voice-session.js calls when
  * voice-deepgram.js reports {type:"status"} — the same entry point, with the socket left out of
  * it. `--use-fake-device-for-media-stream` is still on so getUserMedia resolves the way it does
- * on a real phone.
+ * on a real phone. For the loop and the barge-in, see web/tools/voice-echo.mjs.
  *
  * Writes docs/voice/orb/<state>-<viewport>.png and prints a pass/fail line per case.
  */
@@ -146,20 +153,17 @@ async function run() {
 
     say(await openVoiceView(page), "the chat view is up");
 
-    // 1. chat-ui mounted an orb, hidden, and its stylesheet came with the module
+    // 1. nobody's screen owns an orb, and the stylesheet came with the module
     const mounted = await page.evaluate(() => ({
-      inBody: Boolean(document.querySelector(".cv-body > .vo")),
-      hidden: document.querySelector(".cv-body > .vo")?.hidden === true,
-      styled: Boolean(document.querySelector("link[data-voice-orb]")),
+      inChat: Boolean(document.querySelector(".cv-body .vo")),
       orbs: document.querySelectorAll(".vo").length,
-      views: document.querySelectorAll(".cv-body").length,
+      hosts: document.querySelectorAll(".vo-host").length,
     }));
-    say(mounted.inBody, "chat-ui mounted the orb into the conversation");
-    say(mounted.hidden, "and left it hidden until voice starts");
-    say(mounted.styled, "voice-orb.css arrived with the module");
-    say(mounted.orbs === mounted.views, `one orb per chat view (${mounted.orbs}/${mounted.views})`);
+    say(!mounted.inChat, "the chat view mounts no orb of its own");
+    say(mounted.orbs === 0, `nothing is listening until a session starts (${mounted.orbs} orbs)`);
+    say(mounted.hosts === 0, "and the fixed host is not made until then either");
 
-    // 2. no layout shift, entering or leaving
+    // 2. no layout shift, entering or leaving — the orb's host is the viewport, not the view
     const shift = await page.evaluate(async () => {
       const { mountOrb } = await import("/counter/js/voice-orb.js");
       const body = document.querySelector(".cv-body");
@@ -169,7 +173,12 @@ async function run() {
         return [r.x, r.y, r.width, r.height, chat.x, chat.y, chat.width, chat.height].map((n) => Math.round(n));
       };
       let level = 0;
-      const orb = mountOrb(body, { levels: () => ({ mic: level, out: level }) });
+      // The same home voice-session.js makes: one fixed layer on <body>, above everything.
+      const host = document.createElement("div");
+      host.className = "vo-host";
+      document.body.append(host);
+      window.__host = host;
+      const orb = mountOrb(host, { levels: () => ({ mic: level, out: level }) });
       window.__orb = orb;
       window.__setLevel = (v) => {
         level = v;

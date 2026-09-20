@@ -1138,6 +1138,36 @@ def render(raw: bytes, dest: Path, q: tuple) -> tuple:
 # -------------------------------------------------------------------------- output
 
 
+def recompress_heroes(ceiling: int) -> tuple:
+    """Re-encode every stored 1280-px hero down to `ceiling` bytes. One-off.
+
+    The heroes were written with a 130 KB cap and are ~60% of this tool's disk.
+    Lowering the cap reclaims space without dropping the size or the tile, because
+    a WebP at q50 of a photographed motorcycle is still a photographed motorcycle
+    at 1280 px -- the bytes were being spent on gravel and foliage.
+    """
+    before = after = 0
+    touched = 0
+    for path in sorted(IMG_DIR.glob("*.hero.webp")):
+        size = path.stat().st_size
+        before += size
+        if size <= ceiling:
+            after += size
+            continue
+        try:
+            with Image.open(path) as im:
+                im = im.convert("RGB")
+                for q in (62, 54, 46, 38, 32):
+                    im.save(path, "WEBP", quality=q, method=WEBP_METHOD)
+                    if path.stat().st_size <= ceiling:
+                        break
+        except Exception as exc:  # noqa: BLE001
+            print(f"  ! {path.name}: {exc!r}"[:140], flush=True)
+        after += path.stat().st_size
+        touched += 1
+    return touched, before, after
+
+
 def save(path: Path, text: str) -> None:
     """Write, and never raise: a checkpoint must not take the run down."""
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -1359,6 +1389,13 @@ def main() -> int:
     ap.add_argument("--wiki-tier", type=int, default=1, help="sweep wikis up to this tier")
     ap.add_argument("--retry-misses", action="store_true", help="ignore the no-candidate cache")
     ap.add_argument(
+        "--recompress-heroes",
+        type=int,
+        default=0,
+        metavar="BYTES",
+        help="one-off: re-encode every stored hero down to this byte ceiling, then exit",
+    )
+    ap.add_argument(
         "--lengthen",
         action="store_true",
         help="with --verify: also fill short names from a longer name of the same displacement",
@@ -1385,6 +1422,14 @@ def main() -> int:
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     wikis = [w for w in args.wikis.split(",") if w]
+
+    if args.recompress_heroes:
+        touched, before, after = recompress_heroes(args.recompress_heroes)
+        print(
+            f"heroes: re-encoded {touched}, {before / 1e6:.1f} MB -> {after / 1e6:.1f} MB "
+            f"(reclaimed {(before - after) / 1e6:.1f} MB)"
+        )
+        return 0
 
     if args.verify:
         entries = json.loads(OUT_JSON.read_text(encoding="utf-8")) if OUT_JSON.exists() else {}

@@ -5,25 +5,56 @@
 [data-screen="book"] [data-root] {
   --mark: var(--highlight);
   --bar-h: 44px;
+  /* The whole of the bar, notch included. The column below reserves exactly this. */
+  --bar-box: calc(var(--bar-h) + env(safe-area-inset-top));
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  /* 100dvh, not 100dvh MINUS the insets. dvh already tracks the browser's own chrome; taking
+     the insets off the HEIGHT as well - with nothing offsetting the top - made the column
+     shorter than the screen and still drawn from y=0, so on a phone with a notch the top of
+     the reader was under the status bar. The insets belong in padding, which is where they
+     are now: the box is the screen, and the safe area is inside it. */
+  height: 100dvh;
+  max-height: 100dvh;
+  padding-top: var(--bar-box);
+  padding-bottom: env(safe-area-inset-bottom);
   min-height: 0;
   overflow: hidden;
   background: var(--slab);
 }
 
-/* ---------- the bar: identity and position only ---------- */
+/* Browsers without dvh (and any engine that resolves it late) still get a full screen. */
+@supports not (height: 100dvh) {
+  [data-screen="book"] [data-root] {
+    height: 100vh;
+    max-height: 100vh;
+  }
+}
+
+/* ---------- the bar: identity and position only ----------
+ *
+ * FIXED, on the shell layer. "It happens pretty often that I don't see the top bar when I'm in
+ * pdf mode." The bar used to be the first flex child of a column whose height was 100dvh minus
+ * the safe-area insets — so it started underneath the status bar on a notched phone, and on iOS
+ * Safari the column's height changed under it every time the URL bar collapsed or came back
+ * mid-scroll. Fixed to the visual viewport with the notch as padding, it is where it says it is
+ * in every one of those states, and the column above reserves its space so nothing moves. */
 
 [data-screen="book"] .book-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
   display: flex;
   align-items: center;
   gap: 2px;
   flex: 0 0 auto;
-  height: var(--bar-h);
-  min-height: var(--bar-h);
-  padding: 0 4px;
+  box-sizing: border-box;
+  height: var(--bar-box, 44px);
+  min-height: var(--bar-box, 44px);
+  padding: env(safe-area-inset-top) 4px 0;
   background: var(--slab);
   color: var(--slab-fg);
 }

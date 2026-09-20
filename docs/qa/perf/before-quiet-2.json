@@ -1,0 +1,380 @@
+{
+  "origin": "http://127.0.0.1:52461/counter/",
+  "when": "2026-09-20T12:59:56.065Z",
+  "rows": [
+    {
+      "label": "local fast4g-cold.1",
+      "requests": 59,
+      "bytes": 281600,
+      "byType": {
+        "html": 1887,
+        "link": 30437,
+        "js": 38012,
+        "css": 2050,
+        "api": 86290,
+        "other": 23018,
+        "json": 99906,
+        "cache/sw": 0
+      },
+      "cached": 29,
+      "sw": 30,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 55,
+        "bytes": 281600
+      },
+      "slow": [
+        {
+          "url": "/api/manuals",
+          "at": 2967,
+          "ms": 1655,
+          "kb": 84
+        },
+        {
+          "url": "/health",
+          "at": 584,
+          "ms": 765,
+          "kb": 0
+        },
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 163,
+          "ms": 542,
+          "kb": 1
+        },
+        {
+          "url": "/api/health",
+          "at": 580,
+          "ms": 356,
+          "kb": 0
+        },
+        {
+          "url": "display/v24/fC1_PZJEZG-e9gHhdI4-NBbfd2ys3SjJCx1czNDu.woff2",
+          "at": 724,
+          "ms": 321,
+          "kb": 35
+        },
+        {
+          "url": "/store/bike-images-2.json",
+          "at": 2034,
+          "ms": 239,
+          "kb": 97
+        },
+        {
+          "url": "/api/health",
+          "at": 5964,
+          "ms": 136,
+          "kb": 0
+        },
+        {
+          "url": "/counter/js/app.js",
+          "at": 142,
+          "ms": 108,
+          "kb": 3
+        },
+        {
+          "url": "/counter/js/theme.js",
+          "at": 141,
+          "ms": 107,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 136,
+          "ms": 100,
+          "kb": 3
+        }
+      ],
+      "wall": 8705,
+      "fcp": 443,
+      "lcp": 7804,
+      "field": 6367,
+      "card": 7099,
+      "ttfb": 8,
+      "dcl": 589,
+      "load": 717,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 2990,
+          "dur": 2959,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6525,
+          "dur": 654,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2333,
+          "dur": 647,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1472,
+          "dur": 564,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6366,
+          "dur": 151,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 298,
+          "dur": 77,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2275,
+          "dur": 55,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 5107,
+      "longCount": 7,
+      "phases": [
+        {
+          "name": "health",
+          "start": 567,
+          "dur": 792
+        },
+        {
+          "name": "bundle",
+          "start": 1361,
+          "dur": 486
+        },
+        {
+          "name": "merge",
+          "start": 1847,
+          "dur": 182
+        },
+        {
+          "name": "images",
+          "start": 2029,
+          "dur": 793
+        },
+        {
+          "name": "index-ids",
+          "start": 2821,
+          "dur": 137
+        }
+      ]
+    },
+    {
+      "label": "local fast4g-cold.2",
+      "requests": 59,
+      "bytes": 281600,
+      "byType": {
+        "html": 1887,
+        "link": 30437,
+        "js": 38012,
+        "css": 2050,
+        "api": 86290,
+        "other": 23018,
+        "json": 99906,
+        "cache/sw": 0
+      },
+      "cached": 29,
+      "sw": 30,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 55,
+        "bytes": 281600
+      },
+      "slow": [
+        {
+          "url": "/api/manuals",
+          "at": 2909,
+          "ms": 2072,
+          "kb": 84
+        },
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 154,
+          "ms": 741,
+          "kb": 1
+        },
+        {
+          "url": "/health",
+          "at": 555,
+          "ms": 662,
+          "kb": 0
+        },
+        {
+          "url": "display/v24/fC1_PZJEZG-e9gHhdI4-NBbfd2ys3SjJCx1czNDu.woff2",
+          "at": 915,
+          "ms": 338,
+          "kb": 35
+        },
+        {
+          "url": "/api/health",
+          "at": 5964,
+          "ms": 336,
+          "kb": 0
+        },
+        {
+          "url": "/store/bike-images-2.json",
+          "at": 1957,
+          "ms": 246,
+          "kb": 97
+        },
+        {
+          "url": "/api/health",
+          "at": 551,
+          "ms": 189,
+          "kb": 0
+        },
+        {
+          "url": "/counter/icons/favicon.ico?v=4",
+          "at": 934,
+          "ms": 129,
+          "kb": 16
+        },
+        {
+          "url": "/counter/js/theme.js",
+          "at": 133,
+          "ms": 118,
+          "kb": 3
+        },
+        {
+          "url": "/counter/js/app.js",
+          "at": 135,
+          "ms": 117,
+          "kb": 3
+        }
+      ],
+      "wall": 8597,
+      "fcp": 428,
+      "lcp": 7208,
+      "field": 6320,
+      "card": 7016,
+      "ttfb": 6,
+      "dcl": 560,
+      "load": 910,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 2972,
+          "dur": 2967,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2263,
+          "dur": 705,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1365,
+          "dur": 594,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6485,
+          "dur": 573,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6320,
+          "dur": 156,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 296,
+          "dur": 62,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1306,
+          "dur": 56,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2206,
+          "dur": 54,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 5167,
+      "longCount": 8,
+      "phases": [
+        {
+          "name": "health",
+          "start": 543,
+          "dur": 683
+        },
+        {
+          "name": "bundle",
+          "start": 1228,
+          "dur": 544
+        },
+        {
+          "name": "merge",
+          "start": 1772,
+          "dur": 180
+        },
+        {
+          "name": "images",
+          "start": 1952,
+          "dur": 823
+        },
+        {
+          "name": "index-ids",
+          "start": 2776,
+          "dur": 124
+        }
+      ]
+    }
+  ]
+}

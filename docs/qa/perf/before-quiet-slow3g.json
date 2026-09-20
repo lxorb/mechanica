@@ -1,0 +1,235 @@
+{
+  "origin": "http://127.0.0.1:63740/counter/",
+  "when": "2026-09-20T13:01:43.185Z",
+  "rows": [
+    {
+      "label": "local slow3g-cold",
+      "requests": 65,
+      "bytes": 95415,
+      "byType": {
+        "html": 1887,
+        "link": 30437,
+        "js": 37712,
+        "css": 2050,
+        "api": 311,
+        "other": 23018,
+        "cache/sw": 0
+      },
+      "cached": 40,
+      "sw": 41,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 56,
+        "bytes": 95415
+      },
+      "slow": [
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 2142,
+          "ms": 8444,
+          "kb": 1
+        },
+        {
+          "url": "/counter/manifest.webmanifest",
+          "at": 2160,
+          "ms": 6480,
+          "kb": 1
+        },
+        {
+          "url": "/counter/js/app.js",
+          "at": 2122,
+          "ms": 6206,
+          "kb": 3
+        },
+        {
+          "url": "/counter/js/theme.js",
+          "at": 2121,
+          "ms": 4590,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 2121,
+          "ms": 4559,
+          "kb": 2
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 2120,
+          "ms": 4529,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 2119,
+          "ms": 4467,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 2120,
+          "ms": 4388,
+          "kb": 1
+        },
+        {
+          "url": "/counter/css/screens/pick.css",
+          "at": 2118,
+          "ms": 4155,
+          "kb": 3
+        },
+        {
+          "url": "/api/catalog",
+          "at": 17586,
+          "ms": 3163,
+          "kb": 0
+        }
+      ],
+      "wall": 27794,
+      "fcp": 8724,
+      "lcp": 26408,
+      "field": 25381,
+      "card": 26227,
+      "ttfb": 7,
+      "dcl": 13487,
+      "load": 13519,
+      "cards": 60,
+      "store": "remote",
+      "controlled": true,
+      "long": [
+        {
+          "start": 17607,
+          "dur": 2994,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 22119,
+          "dur": 2955,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 21014,
+          "dur": 1083,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 25558,
+          "dur": 711,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 16934,
+          "dur": 668,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 16129,
+          "dur": 637,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 20762,
+          "dur": 244,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 25381,
+          "dur": 172,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 8583,
+          "dur": 66,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 16065,
+          "dur": 60,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 16877,
+          "dur": 52,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 9642,
+      "longCount": 11,
+      "phases": [
+        {
+          "name": "health",
+          "start": 13465,
+          "dur": 2520
+        },
+        {
+          "name": "bundle",
+          "start": 15987,
+          "dur": 601
+        },
+        {
+          "name": "merge",
+          "start": 16589,
+          "dur": 169
+        },
+        {
+          "name": "images",
+          "start": 16757,
+          "dur": 690
+        },
+        {
+          "name": "index-ids",
+          "start": 17447,
+          "dur": 133
+        },
+        {
+          "name": "refresh-fetch",
+          "start": 17583,
+          "dur": 3432
+        },
+        {
+          "name": "refresh-merge",
+          "start": 21016,
+          "dur": 423
+        },
+        {
+          "name": "refresh-images",
+          "start": 21494,
+          "dur": 461
+        }
+      ]
+    }
+  ]
+}
