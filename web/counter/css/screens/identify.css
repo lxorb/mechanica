@@ -351,40 +351,41 @@ body.id-landing [data-screen="identify"] .id-cam {
 
 /* ---------------------------------------------------------- year chooser */
 
-/* The chooser tile is served the 160 px thumb, so it stays a tile: sharp at 1x and 2x. */
+/* Tapping a model shows the bike big: a full-width 3:2 hero, the name under it, the years
+   under that. Desktop puts the hero beside the name and years instead. */
 [data-screen="identify"] .id-chooser {
-  margin-top: 12px;
-  padding: 10px;
-}
-
-[data-screen="identify"] .id-chooser-top {
   display: flex;
-  align-items: stretch;
-  gap: 10px;
-  min-width: 0;
+  flex-direction: column;
+  margin-top: 12px;
+  padding: 0;
+  overflow: hidden;
 }
 
 [data-screen="identify"] .id-chooser-art {
   position: relative;
-  flex: none;
-  width: 132px;
+  width: 100%;
   aspect-ratio: 3 / 2;
-  border: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
   background: var(--paper);
   overflow: hidden;
 }
 
 [data-screen="identify"] .id-chooser-art.is-bare {
-  background: repeating-linear-gradient(135deg, var(--card) 0 7px, var(--rule) 7px 14px);
+  background: repeating-linear-gradient(135deg, var(--card) 0 9px, var(--rule) 9px 18px);
+}
+
+[data-screen="identify"] .id-chooser-side {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 12px;
 }
 
 [data-screen="identify"] .id-chooser-head {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 2px;
   min-width: 0;
-  flex: 1;
 }
 
 [data-screen="identify"] .id-chooser-make {
@@ -399,7 +400,7 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-chooser-model {
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 1.8rem;
+  font-size: 2.1rem;
   line-height: 0.95;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -468,6 +469,36 @@ body.id-landing [data-screen="identify"] .id-cam {
 
   [data-screen="identify"] .id-model {
     font-size: 1rem;
+  }
+}
+
+/* The chosen model is the one thing on screen, so it steps out of the 720 px column and
+   sets a ~600 px hero next to the name and the years. */
+@media (min-width: 980px) {
+  [data-screen="identify"] .id-chooser {
+    flex-direction: row;
+    align-items: stretch;
+    width: min(1040px, calc(100vw - 24px));
+    margin-left: calc(50% - min(1040px, calc(100vw - 24px)) / 2);
+    margin-right: calc(50% - min(1040px, calc(100vw - 24px)) / 2);
+  }
+
+  [data-screen="identify"] .id-chooser-art {
+    flex: 0 0 600px;
+    width: 600px;
+    max-width: 60%;
+    border-bottom: 0;
+    border-right: 3px solid var(--ink);
+  }
+
+  [data-screen="identify"] .id-chooser-side {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  [data-screen="identify"] .id-chooser-model {
+    font-size: 2.6rem;
   }
 }
 

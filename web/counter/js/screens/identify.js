@@ -447,7 +447,7 @@ function watchArt(img) {
  */
 const SIZES = {
   card: ["image", "thumb", "hero"],
-  wide: ["hero", "image", "thumb"],
+  hero: ["hero", "image", "thumb"],
   tile: ["thumb", "image", "hero"],
 };
 
@@ -455,7 +455,7 @@ const WIDE_Q = typeof window !== "undefined" && window.matchMedia ? window.match
 
 function artSrc(bike, want) {
   if (!bike) return "";
-  const order = SIZES[want === "card" && WIDE_Q && WIDE_Q.matches ? "wide" : want] || SIZES.card;
+  const order = SIZES[want === "card" && WIDE_Q && WIDE_Q.matches ? "hero" : want] || SIZES.card;
   for (const key of order) {
     if (bike[key]) return Q.asset(bike[key]);
   }
@@ -557,7 +557,7 @@ function renderChooser() {
   const row = chooserRow;
   chooserEl.hidden = !row;
   if (!row) return;
-  setArt(chooserImg, chooserArt, row.bike, "tile");
+  setArt(chooserImg, chooserArt, row.bike, "hero");
   chooserMake.textContent = row.bike.make ?? "";
   chooserModel.textContent = row.bike.model ?? "";
   const off = !Q.online();
@@ -1091,9 +1091,10 @@ registerScreen("identify", {
     const head = el("div", { className: "id-chooser-head" });
     head.append(chooserMake, chooserModel);
     chooserYears = el("div", { className: "id-chooser-years" });
-    const top = el("div", { className: "id-chooser-top" });
-    top.append(chooserArt, head);
-    chooserEl.append(top, chooserYears);
+    // Phone: hero, then the name, then the years. Desktop: hero beside name + years.
+    const side = el("div", { className: "id-chooser-side" });
+    side.append(head, chooserYears);
+    chooserEl.append(chooserArt, side);
 
     gridEl = el("div", { className: "id-grid", hidden: true });
 

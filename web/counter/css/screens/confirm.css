@@ -508,8 +508,14 @@
   }
 }
 
+/* The bike is the question this screen asks, so its frame keeps the full width of the
+   column on phones and stays large on desktop; only the alternatives are thumbs. */
 @media (min-width: 640px) {
   [data-screen="confirm"] .confirm-photo {
-    max-height: 42vh;
+    max-height: 56vh;
+  }
+
+  [data-screen="confirm"] .confirm-photo.is-split {
+    max-height: 40vh;
   }
 }
