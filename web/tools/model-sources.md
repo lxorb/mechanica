@@ -128,3 +128,28 @@ wins — Draco on the Kawasaki (217 clean meshes), meshopt on anything built fro
 primitives, where Draco's per-primitive headers cost more than they save. Every stage is kept only
 if it actually shrank the file.
 
+## The tools, and what each one is for
+
+```sh
+node web/tools/sketchfab-search.mjs --shots   # broad net: 64 queries, detail for the top 700
+node web/tools/sketchfab-pick.mjs --shots     # per (type, licence), when the broad net rate-limits
+# curate by eye into web/tools/model-shortlist.json
+node web/tools/models-fetch.mjs               # download, strip scenery, convert, write parts.json
+node web/tools/models-fetch.mjs --names       # node names, materials and bounding span per model
+node web/tools/credits-generic.mjs            # regenerate the attribution table in CREDITS.md
+node web/tools/env-fetch.mjs <polyhaven-id>   # an environment: hdr for light, jpg for the backdrop
+node web/tools/room-probe.mjs <file.glb>      # is this GLB actually a room?
+
+node web/tools/viewer-shots.mjs --sheet       # every model, one contact sheet
+node web/tools/viewer-shots.mjs --rotations <name>   # nine candidate uprights for one model
+node web/tools/viewer-shots.mjs --states3     # default / exploded / focused, both viewports
+node web/tools/viewer-shots.mjs --envs        # the four environments side by side
+node web/tools/viewer-shots.mjs --frames      # frame-time trace across a focus
+node web/tools/viewer-shots.mjs --states      # the loading ring and the failed-to-load state
+node web/tools/partfor-test.mjs --live        # manual headings -> part keys, against the real API
+node web/tools/bike-types.mjs --check         # classify all 27.7k bikes, print the distribution
+```
+
+`--sheet` earns its keep. Three of the eleven models looked right on their Sketchfab thumbnail and
+were unusable once converted, and two more were upside down or lying on their side. None of that
+is visible from the metadata — the only way to know is to render it and look.

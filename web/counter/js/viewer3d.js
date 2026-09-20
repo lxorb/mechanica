@@ -1442,7 +1442,7 @@ function environmentPicker(host, onPick) {
  *           onUpgrade(viewer),    // the GLB arrived and is on screen
  *           onProgress(0..1|null),// download fraction; null while the size is unknown
  *           onSelect(partKey),    // a tap landed on a part (null = background)
- *           onError(error),       // the GLB could not be loaded; the schematic is revealed
+ *           onError(error),       // the GLB could not be loaded; the ring goes quiet, tap retries
  *           environment: false | "<polyhaven name>",  // false = transparent canvas, no HDRI
  *           url: string,          // override the GLB url (dev)
  *           tint: "#rrggbb"|null, // override the descriptor's tint
@@ -2007,15 +2007,15 @@ function createScene(THREE, host, initialModel, opts) {
     get model() { return model; },
     /**
      * Hide or show the vehicle without tearing the scene down. mount() hides it while the GLB
-     * downloads — the environment keeps rendering behind the loading ring, and the schematic
-     * underneath is only revealed if the download never lands.
+     * downloads — the environment keeps rendering behind the loading ring, and there is nothing
+     * underneath to reveal.
      */
     showModel(on) {
       model.root.visible = !!on;
       shadow.visible = !!on;
       run();
     },
-    /** Swap the schematic for the real model, keeping the current explode/highlight state. */
+    /** Put the loaded model in, keeping the current explode/highlight state. */
     adopt(next) {
       if (disposed || !next || !next.meshes.length) return false;
       const key = selected ? selected.key : null;
