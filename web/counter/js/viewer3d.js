@@ -836,6 +836,20 @@ function fixShading(THREE, materials) {
 
     if (!fixed.isMeshStandardMaterial && !fixed.isMeshPhysicalMaterial) continue;
 
+    // the physical extras each add a shader pass (transmission renders the whole scene to a
+    // texture first); on a GPU that kills the tab under pressure they are not worth it
+    if (fixed.isMeshPhysicalMaterial && weakGpu()) {
+      if (fixed.transmission > 0) {
+        fixed.transmission = 0;
+        fixed.transparent = true;
+        fixed.opacity = Math.min(fixed.opacity, 0.35);
+      }
+      fixed.clearcoat = 0;
+      fixed.sheen = 0;
+      fixed.iridescence = 0;
+      fixed.needsUpdate = true;
+    }
+
     // a perfect mirror has nothing to show until the PMREM is ready, and goes black without one
     if (fixed.metalness > 0.9 && fixed.roughness < 0.08) {
       fixed.metalness = 0.9;
@@ -1662,13 +1676,40 @@ export function mount(host, model, opts = {}) {
 
 /* ------------------------------------------------------------------ the scene itself */
 
+/**
+ * Is this an integrated / mobile GPU? Read once from a throw-away context. Chrome on such parts
+ * (Adreno on Windows-on-ARM, Mali, Intel UHD, SwiftShader) does not lose the WebGL context
+ * gracefully under memory pressure: it kills the whole tab ("Aw, Snap"). So on these the
+ * viewer runs a lighter profile: no MSAA, pixel ratio capped at 1.5, no clearcoat/transmission
+ * passes on the materials. The picture stays the same at arm's length; the tab stays alive.
+ */
+let weakGpuCache = null;
+function weakGpu() {
+  if (weakGpuCache !== null) return weakGpuCache;
+  let name = "";
+  try {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+    const info = gl && gl.getExtension("WEBGL_debug_renderer_info");
+    name = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL) || "") : "";
+    const lose = gl && gl.getExtension("WEBGL_lose_context");
+    if (lose) lose.loseContext();
+  } catch { /* no WebGL at all: the viewer will fail later with its own ring */ }
+  const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent || "");
+  const smallMemory = typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4;
+  weakGpuCache = mobile || smallMemory || /SwiftShader|Basic Render|llvmpipe|Adreno|Qualcomm|Mali|PowerVR|Intel/i.test(name);
+  return weakGpuCache;
+}
+const PIXEL_RATIO_CAP = () => (weakGpu() ? 1.5 : 2);
+
 function createScene(THREE, host, initialModel, opts) {
   // null = nothing has loaded yet: the backdrop lights and renders, the panel is not empty, and
   // adopt() drops the real model in when it lands
   let model = initialModel || emptyModel(THREE, opts.modelKey || "");
   const scene = new THREE.Scene();
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  const light = weakGpu();
+  const renderer = new THREE.WebGLRenderer({ antialias: !light, alpha: true, powerPreference: light ? "default" : "high-performance" });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, PIXEL_RATIO_CAP()));
   renderer.setClearAlpha(0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
@@ -2224,7 +2265,7 @@ function createScene(THREE, host, initialModel, opts) {
     lastHeight = height;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, PIXEL_RATIO_CAP()));
     renderer.setSize(width, height, false);
     if (!cameraTween) fit(boxAtSpacing(target, null), { instant: true });
   }
