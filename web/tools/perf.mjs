@@ -36,7 +36,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const WEB = resolve(HERE, "..");
 const ROOT = resolve(WEB, "..");
 const CHROME = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const PUPPETEER = process.env.PUPPETEER_DIR || resolve(ROOT, "node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js");
+const PUPPETEER = process.env.PUPPETEER_DIR || resolve(ROOT, "node_modules/puppeteer-core/lib/esm/puppeteer/puppeteer-core.js");
 const LIVE = "https://mechanica.emilvinu.ch/counter/";
 
 const TYPES = {
@@ -104,9 +104,9 @@ function serve() {
 const NETS = {
   // Chrome DevTools presets, spelled out so the report can be reproduced.
   none: null,
-  fast4g: { download: (4 * 1024 * 1024) / 8, upload: (3 * 1024 * 1024) / 8, latency: 20 },
-  slow4g: { download: (1.6 * 1024 * 1024) / 8, upload: (750 * 1024) / 8, latency: 150 },
-  slow3g: { download: (400 * 1024) / 8, upload: (400 * 1024) / 8, latency: 2000 },
+  fast4g: { downloadThroughput: (4 * 1024 * 1024) / 8, uploadThroughput: (3 * 1024 * 1024) / 8, latency: 20 },
+  slow4g: { downloadThroughput: (1.6 * 1024 * 1024) / 8, uploadThroughput: (750 * 1024) / 8, latency: 150 },
+  slow3g: { downloadThroughput: (400 * 1024) / 8, uploadThroughput: (400 * 1024) / 8, latency: 2000 },
 };
 
 /* --------------------------------------------------------- in-page probes */
@@ -206,12 +206,13 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
   if (cpu > 1) await client.send("Emulation.setCPUThrottlingRate", { rate: cpu });
 
   const started = Date.now();
-  try {
-    await page.goto(url, { waitUntil: "commit", timeout });
-  } catch (err) {
+  // Not awaited before the probe: on slow 3G `load` is minutes behind the first usable card,
+  // and the numbers that matter are taken from inside the page anyway.
+  const nav = page.goto(url, { waitUntil: "domcontentloaded", timeout }).catch((err) => {
     out.errors.push(`goto: ${err.message.slice(0, 100)}`);
-  }
+  });
   await page.waitForFunction("window.__perf && window.__perf.marks.card != null", { timeout, polling: 200 }).catch(() => {});
+  await nav;
   await new Promise((r) => setTimeout(r, settle));
 
   const perf = await page.evaluate(() => {
