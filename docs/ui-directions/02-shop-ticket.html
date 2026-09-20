@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>02 Shop Ticket — UI direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- neutral lab shell (identical in all five files) ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0c0d10;color:#e7e8ec;font:400 13px/1.5 "Public Sans",system-ui,sans-serif;padding:36px 40px 56px}
+.lab{max-width:1632px}
+.lab h1{font:700 30px/1 "Archivo Narrow",sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.lab h1 em{font-style:normal;color:#F5C518}
+.lab .thesis{margin-top:8px;font-size:14px;color:#a7abb5;max-width:760px}
+.lab .grid2{display:flex;gap:40px;margin:22px 0 30px;flex-wrap:wrap}
+table.tok{border-collapse:collapse;font:400 11.5px/1.4 "Public Sans",sans-serif}
+table.tok th{text-align:left;font:700 10px/1 "Archivo Narrow",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6f747f;padding:0 14px 7px 0;border-bottom:1px solid #22242c}
+table.tok td{padding:5px 14px 5px 0;border-bottom:1px solid #191b21;color:#c3c6ce;white-space:nowrap}
+table.tok td b{color:#fff;font-weight:600}
+table.tok i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:6px;border:1px solid #33363f}
+.note{font-size:12.5px;color:#9aa0ab;max-width:420px}
+.note b{display:block;font:700 10px/1 "Archivo Narrow",sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;color:#6f747f}
+.note p+b{margin-top:14px}
+.row{display:flex;gap:24px}
+.cap{font:700 10px/1 "Archivo Narrow",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#6f747f;margin-bottom:9px}
+.cap span{color:#F5C518}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.desk{width:1280px;height:580px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.deskwrap{margin-top:34px}
+
+/* ================= DIRECTION 02 — SHOP TICKET ================= */
+.d{
+  --paper:#EFE9DB; --card:#FBF8F1; --ink:#17160F; --dim:#6F6B5C;
+  --blue:#1E4C87; --hi:#F5C518; --acc:#F5C518; --red:#C4311C; --rule:#CFC7B4;
+  position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--paper);color:var(--ink);
+  font:400 15px/1.4 "Public Sans",system-ui,sans-serif;
+}
+.d .strip,.d .lb{font-family:"Archivo Narrow",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.13em}
+.d .mono{font-family:"Courier Prime",monospace;font-weight:700}
+/* the signature: a punched black label strip */
+.d .lb{display:inline-flex;align-items:center;background:var(--ink);color:#F6F2E6;font-size:11px;line-height:1;padding:5px 8px 6px}
+.d .lb.y{background:var(--hi);color:var(--ink)}
+.d .lb.r{background:var(--red);color:#fff}
+
+.d .top{flex:0 0 auto;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:var(--ink);color:#F6F2E6}
+.d .top .job{font:700 12px/1 "Archivo Narrow",sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.d .top .no{margin-left:auto;font:700 12px/1 "Courier Prime",monospace;color:var(--hi)}
+.d .top .steps{display:flex;gap:4px;margin-left:8px}
+.d .top .steps b{width:19px;height:19px;display:grid;place-items:center;font:700 11px/1 "Courier Prime",monospace;border:1px solid #4A4739;color:#8B8676}
+.d .top .steps b.on{background:var(--hi);border-color:var(--hi);color:var(--ink)}
+.d .top .steps b.done{background:#F6F2E6;border-color:#F6F2E6;color:var(--ink)}
+
+/* form field on a job card */
+.d .field{flex:0 0 auto;margin:12px;background:var(--card);border:1px solid var(--ink);position:relative}
+.d .field .cap2{position:absolute;left:8px;top:-7px;z-index:2}
+.d .field .in{display:flex;align-items:center;height:56px;padding:0 6px 0 12px}
+.d .field .in .val{flex:1;font:400 25px/1 "Public Sans",sans-serif;font-weight:600;letter-spacing:-.01em}
+.d .field .in .val s{text-decoration:none;display:inline-block;width:2px;height:24px;background:var(--red);vertical-align:-3px;margin-left:1px}
+.d .field .in .cam{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--ink);background:var(--hi)}
+.d .field .in .cam svg{width:20px;height:20px}
+.d .field .rule{height:0;border-top:1px dashed var(--rule)}
+
+.d .scroll{flex:1;min-height:0;overflow:hidden;padding:0 12px 12px;display:flex;flex-direction:column}
+
+/* index rows with dot leaders — the ticket's own line-item language */
+.d .ixhead{display:flex;align-items:center;gap:8px;padding:14px 0 7px}
+.d .ixhead u{flex:1;height:2px;background:var(--ink);text-decoration:none}
+.d .ix{display:flex;align-items:center;gap:9px;min-height:46px;padding:5px 0;border-bottom:1px solid var(--rule)}
+.d .ix .th{width:62px;height:44px;flex:0 0 auto;overflow:hidden;border:1px solid var(--ink);background:#fff}
+.d .ix .th img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:grayscale(1) contrast(1.12) brightness(1.03)}
+.d .ix svg.pi{width:24px;height:24px;flex:0 0 auto;color:var(--ink)}
+.d .ix .t{font-size:14.5px;line-height:1.2}
+.d .ix .t em{font-style:normal;font-family:"Courier Prime",monospace;font-weight:700;font-size:13px;margin-right:6px}
+.d .ix .dots{flex:1;min-width:14px;border-bottom:2px dotted #B9B1A0;transform:translateY(4px)}
+.d .ix .p{font:700 16px/1 "Courier Prime",monospace}
+.d .ix.on{background:rgba(245,197,24,.3);box-shadow:inset 3px 0 0 var(--red);padding-left:8px;padding-right:6px;margin:0 -8px}
+.d .ix.on .t{font-weight:700}
+
+/* bike line item with punch-boxes for the years */
+.d .bike{border-bottom:1px solid var(--rule);padding:9px 0;display:flex;gap:10px;align-items:center}
+.d .bike .th{width:86px;height:58px;flex:0 0 auto;overflow:hidden;border:1px solid var(--ink);background:#fff}
+.d .bike .th img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:grayscale(1) contrast(1.14) brightness(1.04)}
+.d .bike .nm{flex:1;font:600 17px/1.1 "Public Sans",sans-serif}
+.d .bike .nm s{display:block;text-decoration:none;font:400 11.5px/1.4 "Courier Prime",monospace;color:var(--dim);margin-top:3px}
+.d .pick{border:1px solid var(--ink);background:var(--card);margin:2px 0 10px;box-shadow:4px 4px 0 rgba(23,22,15,.14)}
+.d .pick .hd{display:flex;align-items:center;gap:10px;padding:10px 10px 8px}
+.d .pick .hd .th{width:104px;height:70px;overflow:hidden;border:1px solid var(--ink)}
+.d .pick .hd .th img{width:100%;height:100%;object-fit:cover;object-position:52% 56%}
+.d .pick .hd .nm{font:700 20px/1.05 "Public Sans",sans-serif}
+.d .pick .hd .nm s{display:block;text-decoration:none;font:400 11px/1 "Courier Prime",monospace;color:var(--dim);margin-top:5px;letter-spacing:.02em}
+.d .boxes{display:flex;border-top:1px dashed var(--rule)}
+.d .boxes b{flex:1;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-right:1px dashed var(--rule);font:700 16px/1 "Courier Prime",monospace;color:var(--ink)}
+.d .boxes b:last-child{border-right:0}
+.d .boxes b em{font:700 8px/1 "Archivo Narrow",sans-serif;letter-spacing:.14em;font-style:normal;text-transform:uppercase;color:var(--dim)}
+.d .boxes b.on{background:var(--hi)}
+.d .boxes b.off{color:#B5AE9C}
+
+/* 3D fiche on grid paper */
+.d .fiche{flex:0 0 auto;position:relative;height:242px;overflow:hidden;background:
+  linear-gradient(rgba(30,76,135,.09) 1px,transparent 1px) 0 0/100% 14px,
+  linear-gradient(90deg,rgba(30,76,135,.09) 1px,transparent 1px) 0 0/14px 100%,
+  #FBF8F1;
+  border-bottom:2px solid var(--ink)}
+.d .fiche img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.3);filter:grayscale(1) contrast(1.15);mix-blend-mode:multiply}
+.d .fiche .circ{position:absolute;left:58.2%;top:66.5%;width:76px;height:64px;border:3px solid var(--red);border-radius:50%;transform:rotate(-9deg);opacity:.9}
+.d .fiche .lead{display:none}
+.d .fiche .call{position:absolute;left:10px;bottom:10px;display:flex;gap:0}
+.d .fiche .tl{position:absolute;right:10px;top:10px;font:700 10px/1 "Archivo Narrow",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.d .fichebar{flex:0 0 auto;display:flex;border-bottom:2px solid var(--ink);background:var(--card)}
+.d .fichebar b{flex:1;height:38px;display:grid;place-items:center;border-right:1px solid var(--rule);font:700 11px/1 "Archivo Narrow",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.d .fichebar b:last-child{border-right:0}
+.d .fichebar b.on{background:var(--ink);color:#F6F2E6}
+
+/* reader */
+.d .rdtop{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 10px;background:var(--ink);color:#F6F2E6}
+.d .rdtop .bk{width:28px;height:28px;display:grid;place-items:center;border:1px solid #4A4739;font-size:14px;flex:0 0 auto}
+.d .rdtop .ti{flex:1;min-width:0}
+.d .rdtop .ti b{display:block;font:700 13px/1.1 "Archivo Narrow",sans-serif;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rdtop .ti s{display:block;text-decoration:none;font:400 10.5px/1.3 "Courier Prime",monospace;color:#A19C8B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rdtop .pn{font:700 20px/1 "Courier Prime",monospace;color:var(--hi)}
+.d .rdtop .pn s{text-decoration:none;font-size:11px;color:#A19C8B}
+.d .sw{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--rule)}
+.d .sw .seg{display:flex;border:1px solid var(--ink)}
+.d .sw .seg b{padding:5px 9px 6px;font:700 10px/1 "Archivo Narrow",sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--dim)}
+.d .sw .seg b.on{background:var(--ink);color:#F6F2E6}
+.d .sw .qa{margin-left:auto;display:flex;gap:5px}
+.d .sw .qa em{font:700 13px/1 "Courier Prime",monospace;font-style:normal;padding:5px 6px;border:1px solid var(--rule);color:var(--dim);background:#fff}
+.d .sw .qa em.on{background:var(--hi);border-color:var(--ink);color:var(--ink)}
+
+.d .stack{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#DED7C6;padding:0 30px 0 8px;position:relative}
+.d .pg{position:relative;isolation:isolate;width:100%;background:#fff;box-shadow:0 2px 0 rgba(23,22,15,.18),5px 8px 0 rgba(23,22,15,.10)}
+.d .pg img{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.03)}
+.d .mk{position:absolute;background:rgba(245,197,24,.55);mix-blend-mode:multiply;transform:rotate(-.35deg)}
+.d .mk::after{content:"";position:absolute;left:-5px;top:-1px;bottom:-1px;width:3px;background:var(--red);mix-blend-mode:normal}
+.d .tabs{position:absolute;right:-26px;top:16px;display:flex;flex-direction:column;gap:5px;z-index:3}
+.d .tabs b{width:34px;height:30px;display:grid;place-items:center;font:700 13px/1 "Courier Prime",monospace;background:var(--card);border:1px solid var(--ink);border-right:0;color:var(--dim)}
+.d .tabs b.on{background:var(--red);border-color:var(--red);color:#fff}
+.d .tabs b.seen{background:var(--hi);color:var(--ink)}
+.d .foot{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:9px 10px;background:var(--paper);border-top:2px solid var(--ink)}
+.d .foot .ask{margin-left:auto;display:flex;align-items:center;gap:7px;background:var(--ink);color:#F6F2E6;padding:9px 13px;font:700 11px/1 "Archivo Narrow",sans-serif;letter-spacing:.15em;text-transform:uppercase}
+
+/* carbon-copy slip */
+.d .veil{position:absolute;inset:0;background:rgba(23,22,15,.5)}
+.d .slip{position:absolute;left:0;right:0;bottom:0;background:var(--card);border-top:2px solid var(--ink);max-height:76%;display:flex;flex-direction:column;
+  background-image:repeating-linear-gradient(0deg,rgba(23,22,15,.028) 0 1px,transparent 1px 22px)}
+.d .slip .perf{height:9px;background:radial-gradient(circle at 5px 4px,var(--paper) 3.4px,transparent 3.6px) 0 0/10px 9px;margin-top:-1px}
+.d .slip .qq{display:flex;align-items:center;gap:9px;padding:4px 12px 11px}
+.d .slip .qq b{flex:1;font:700 21px/1.1 "Public Sans",sans-serif}
+.d .ans{padding:0 12px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.d .quote{border-top:1px solid var(--ink);padding-top:9px}
+.d .quote p{font-size:14.5px;line-height:1.4}
+.d .quote p mark{background:rgba(245,197,24,.62);color:inherit;box-decoration-break:clone;padding:1px 0}
+.d .quote .cite{display:flex;align-items:center;gap:8px;margin-top:8px}
+.d .quote .cite .src{font:400 11px/1 "Courier Prime",monospace;color:var(--dim)}
+.d .part{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--ink);padding-top:9px}
+.d .part svg{width:28px;height:28px;flex:0 0 auto}
+.d .part .nm{font:700 15px/1.1 "Public Sans",sans-serif}
+.d .part .sp{font:400 12px/1.35 "Courier Prime",monospace;color:var(--dim);margin-top:3px}
+.d .askbar{flex:0 0 auto;display:flex;align-items:center;margin:12px;border:1px solid var(--ink);background:#fff;height:50px}
+.d .askbar .mic,.d .askbar .snd{width:48px;height:48px;display:grid;place-items:center}
+.d .askbar .snd{background:var(--hi);border-left:1px solid var(--ink)}
+.d .askbar svg{width:19px;height:19px}
+.d .askbar .ph{flex:1;padding:0 11px;color:#9A9484;font-size:15px}
+
+/* desktop */
+.d.wide .sheetd{flex:1;min-height:0;display:flex;gap:22px;padding:20px 22px 22px}
+.d.wide .colA{flex:1;min-width:0;display:flex;flex-direction:column}
+.d.wide .field{margin:0 0 16px}
+.d.wide .field .in{height:64px}
+.d.wide .field .in .val{font-size:30px}
+.d.wide .gridc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.d.wide .pc{background:var(--card);border:1px solid var(--ink);box-shadow:4px 4px 0 rgba(23,22,15,.12)}
+.d.wide .pc.on{box-shadow:4px 4px 0 var(--hi),0 0 0 2px var(--ink)}
+.d.wide .pc .im{height:112px;overflow:hidden;border-bottom:1px solid var(--ink);background:#fff}
+.d.wide .pc .im img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:grayscale(1) contrast(1.12) brightness(1.04)}
+.d.wide .pc .ln{display:flex;align-items:center;gap:6px;padding:8px 9px}
+.d.wide .pc .ln b{font:600 14px/1.1 "Public Sans",sans-serif;flex:1}
+.d.wide .pc .ln s{text-decoration:none;font:700 11px/1 "Courier Prime",monospace;color:var(--dim)}
+.d.wide .polar{width:306px;flex:0 0 auto;background:var(--card);border:1px solid var(--ink);box-shadow:6px 6px 0 rgba(23,22,15,.16);align-self:flex-start;padding:10px 10px 12px;transform:rotate(-1.1deg)}
+.d.wide .polar .tape{position:absolute}
+.d.wide .polar .shot{height:200px;overflow:hidden;border:1px solid var(--ink);position:relative;background:#fff}
+.d.wide .polar .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:grayscale(1) contrast(1.1)}
+.d.wide .polar .shot i{position:absolute;left:13%;top:24%;width:58%;height:56%;border:3px solid var(--red);border-radius:6px}
+.d.wide .polar .nm{font:700 22px/1.05 "Public Sans",sans-serif;margin:11px 2px 3px}
+.d.wide .polar .sub{font:400 12px/1 "Courier Prime",monospace;color:var(--dim);margin:0 2px 11px}
+.d.wide .polar .yn{display:flex;gap:8px}
+.d.wide .polar .yn b{flex:1;height:46px;display:grid;place-items:center;border:1px solid var(--ink);font:700 12px/1 "Archivo Narrow",sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.d.wide .polar .yn b.go{background:var(--hi)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-brakedisc" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="48" cy="48" r="8" fill="var(--acc)" stroke="none"/><circle cx="48" cy="48" r="34"/><circle cx="48" cy="48" r="16"/><circle cx="48" cy="48" r="8"/><circle cx="48" cy="23" r="3.5"/><circle cx="69.7" cy="35.5" r="3.5"/><circle cx="69.7" cy="60.5" r="3.5"/><circle cx="48" cy="73" r="3.5"/><circle cx="26.3" cy="60.5" r="3.5"/><circle cx="26.3" cy="35.5" r="3.5"/></symbol>
+<symbol id="i-brakefluid" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 55c6-5 12 5 18 0s12-5 18 0v17a6 6 0 0 1-6 6H36a6 6 0 0 1-6-6z" fill="var(--acc)" stroke="none"/><rect x="38" y="18" width="20" height="12" rx="3"/><path d="M26 38v34a6 6 0 0 0 6 6h32a6 6 0 0 0 6-6V38a8 8 0 0 0-8-8H34a8 8 0 0 0-8 8z"/><path d="M48 34c4 6 7 9 7 12a7 7 0 0 1-14 0c0-3 3-6 7-12z"/></symbol>
+<symbol id="i-brakepads" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="36" y="18" width="44" height="12" rx="3" fill="var(--acc)" stroke="none"/><rect x="16" y="46" width="44" height="12" rx="3" fill="var(--acc)" stroke="none"/><rect x="36" y="18" width="44" height="12" rx="3"/><rect x="32" y="30" width="52" height="14" rx="4"/><rect x="16" y="46" width="44" height="12" rx="3"/><rect x="12" y="58" width="52" height="14" rx="4"/></symbol>
+<symbol id="i-chain" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-22 48 48)"><path d="M13 37A11 11 0 0 0 13 59H35A11 11 0 0 1 35 37Z"/><path d="M35 37A11 11 0 0 0 35 59H57A11 11 0 0 1 57 37Z"/><path d="M57 37A11 11 0 0 0 57 59H79A11 11 0 0 1 79 37Z"/><circle cx="13" cy="48" r="4.5" fill="var(--acc)" stroke="none"/><circle cx="35" cy="48" r="4.5" fill="var(--acc)" stroke="none"/><circle cx="57" cy="48" r="4.5" fill="var(--acc)" stroke="none"/><circle cx="79" cy="48" r="4.5" fill="var(--acc)" stroke="none"/></g></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.2-2h6.2l1.2 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="11.9" cy="12.4" r="3.6"/></symbol>
+<symbol id="i-find" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5m0 0-6 6m6-6 6 6"/></symbol>
+</defs></svg>
+
+<div class="lab">
+  <h1>02 · <em>Shop Ticket</em></h1>
+  <p class="thesis">The app is the paperwork. Warm stock, dashed rules, punched black label strips, part numbers in typewriter mono, a blueprint grid under the exploded fiche. Everything on screen is printed matter — <b>Different because</b> it is the only direction where the interface and the document are made of the same material, so the PDF page never looks pasted in.</p>
+
+  <div class="grid2">
+    <table class="tok">
+      <tr><th>token</th><th>value</th><th>use</th></tr>
+      <tr><td><b>--paper</b></td><td><i style="background:#EFE9DB"></i>#EFE9DB</td><td>app ground (the ticket)</td></tr>
+      <tr><td><b>--card</b></td><td><i style="background:#FBF8F1"></i>#FBF8F1</td><td>fields, fiche, slip</td></tr>
+      <tr><td><b>--ink</b></td><td><i style="background:#17160F"></i>#17160F</td><td>text, label strips, 2px frames</td></tr>
+      <tr><td><b>--rule</b></td><td><i style="background:#CFC7B4"></i>#CFC7B4</td><td>dashed + dotted leaders</td></tr>
+      <tr><td><b>--hi</b></td><td><i style="background:#F5C518"></i>#F5C518</td><td>highlighter, selected year, send</td></tr>
+      <tr><td><b>--red</b></td><td><i style="background:#C4311C"></i>#C4311C</td><td>grease pencil: the one part, the one page</td></tr>
+      <tr><td><b>--blue</b></td><td><i style="background:#1E4C87"></i>#1E4C87</td><td>blueprint grid, 8% only</td></tr>
+      <tr><td><b>radius</b></td><td>0 everywhere</td><td>paper is cut, not rounded</td></tr>
+      <tr><td><b>display</b></td><td>Public Sans 600/700</td><td>model names, questions</td></tr>
+      <tr><td><b>labels</b></td><td>Archivo Narrow 700 · .13em</td><td>label strips, controls</td></tr>
+      <tr><td><b>data</b></td><td>Courier Prime 700</td><td>pages, years, specs, torques</td></tr>
+      <tr><td><b>shadow</b></td><td>4px 4px 0 ink/12%</td><td>stacked paper, never blurred</td></tr>
+      <tr><td><b>motion</b></td><td>90ms step (no ease)</td><td>press: card drops onto its shadow</td></tr>
+      <tr><td><b>motion</b></td><td>300ms cubic(.2,.9,.2,1)</td><td>slip pulls up, fiche explodes</td></tr>
+      <tr><td><b>motion</b></td><td>240ms + 50ms stagger</td><td>wax-pencil marker, L→R</td></tr>
+    </table>
+    <div class="note">
+      <b>3D step</b>
+      <p>The model is a parts fiche: the exploded render printed in grey multiply straight onto a 14&nbsp;px blueprint grid, no panel, no frame. Explode pulls the groups apart along their leader lines over 300&nbsp;ms. The chosen part is not tinted — it is ringed in red grease pencil with a leader running to a black label strip: FRONT BRAKE · p.84. One circle, one line, the way a parts catalogue calls out item ❶.</p>
+      <b>Marker</b>
+      <p>Wax-pencil yellow at 55% multiply, rotated −0.35° so it never lines up perfectly with the type, drawn L→R in 240&nbsp;ms. Every marked band carries a 3&nbsp;px red bar in the margin, and the relevant pages stick out of the sheet as red index tabs on the right edge — the marker you can see with the phone in your pocket.</p>
+      <b>Risk</b>
+      <p>Warm paper + mono is close to what is already shipped, so it reads as a refinement rather than a change of mind; and a light UI in a garage at night is the wrong brightness.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="cap">1 · Find the bike <span>— search, photo, year</span></div>
+      <div class="frame"><div class="d">
+        <div class="top"><span class="job">Mechanica</span><span class="steps"><b class="on">1</b><b>2</b><b>3</b><b>4</b></span><span class="no">A-17</span></div>
+        <div class="field"><span class="cap2 lb">Make, model</span><div class="in"><span class="val">duk<s></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div></div>
+        <div class="scroll">
+          <div class="pick">
+            <div class="hd"><span class="th"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></span><span class="nm">KTM 390 Duke<s>OWNER'S MANUAL · EN · 143 pp.</s></span></div>
+            <div class="boxes"><b class="on">2024<em>OM EN</em></b><b>2023<em>OM EN</em></b><b>2022<em>OM EN</em></b><b class="off">2021<em>—</em></b><b class="off">2020<em>—</em></b></div>
+          </div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></span><span class="nm">KTM 125 Duke<s>2011–2025</s></span><span class="lb">Pick</span></div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></span><span class="nm">KTM 790 Duke<s>2018–2025</s></span><span class="lb">Pick</span></div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></span><span class="nm">KTM 890 Duke<s>2020–2025</s></span><span class="lb">Pick</span></div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></span><span class="nm">KTM 1290 Super Duke R<s>2014–2025</s></span><span class="lb">Pick</span></div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></span><span class="nm">KTM 990 Duke<s>2024–2025</s></span><span class="lb">Pick</span></div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""></span><span class="nm">KTM 690 Duke<s>2008–2025</s></span><span class="lb">Pick</span></div>
+          <div class="bike"><span class="th"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""></span><span class="nm">KTM 200 Duke<s>2012–2023</s></span><span class="lb">Pick</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">2 · Find the part <span>— fiche + index</span></div>
+      <div class="frame"><div class="d">
+        <div class="top"><span class="job">KTM 390 Duke · 2024</span><span class="steps"><b class="done">1</b><b class="on">2</b><b>3</b><b>4</b></span><span class="no">A-17</span></div>
+        <div class="fiche">
+          <img src="assets/viewer-highlight.png" alt="">
+          <span class="circ"></span>
+          <span class="tl">Exploded · fig. 13.4</span>
+          <span class="call"><span class="lb r">Front brake</span><span class="lb">p. 84</span></span>
+        </div>
+        <div class="fichebar"><b class="on">Explode</b><b>Section</b><b>Rotate</b><b>Reset</b></div>
+        <div class="field" style="margin:10px 12px"><span class="cap2 lb">What are you doing?</span><div class="in" style="height:48px"><span class="val" style="font-size:21px">brake<s style="height:20px"></s></span></div></div>
+        <div class="scroll" style="padding-top:0">
+          <div class="ixhead"><span class="lb">13 Brake system</span><u></u></div>
+          <div class="ix on"><svg class="pi"><use href="#i-brakefluid"/></svg><span class="t"><em>13.4</em>Checking the front brake fluid level</span><span class="dots"></span><span class="p">84</span></div>
+          <div class="ix"><svg class="pi"><use href="#i-brakefluid"/></svg><span class="t"><em>13.5</em>Adding front brake fluid</span><span class="dots"></span><span class="p">85</span></div>
+          <div class="ix"><svg class="pi"><use href="#i-brakepads"/></svg><span class="t"><em>13.6</em>Brake linings, front — secured</span><span class="dots"></span><span class="p">86</span></div>
+          <div class="ix"><svg class="pi"><use href="#i-brakefluid"/></svg><span class="t"><em>13.7</em>Checking the rear brake fluid level</span><span class="dots"></span><span class="p">86</span></div>
+          <div class="ixhead"><span class="lb">22 Technical specifications</span><u></u></div>
+          <div class="ix"><svg class="pi"><use href="#i-brakedisc"/></svg><span class="t"><em>22.9</em>Chassis tightening torques</span><span class="dots"></span><span class="p">128</span></div>
+          <div class="ix"><svg class="pi"><use href="#i-chain"/></svg><span class="t"><em>22.6</em>Chain</span><span class="dots"></span><span class="p">126</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">3 · The manual <span>— relevant pages, tabs</span></div>
+      <div class="frame"><div class="d">
+        <div class="rdtop"><span class="bk">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 BRAKE SYSTEM · 13.4 Checking the front brake fluid level</s></span><span class="pn">84<s>/143</s></span></div>
+        <div class="sw"><span class="seg"><b class="on">Relevant 3</b><b>All 143</b></span><span class="qa"><em class="on">84</em><em>85</em><em>86</em></span></div>
+        <div class="stack">
+          <div class="pg">
+            <img src="assets/page84.png" alt="">
+            <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+            <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+            <i class="mk" style="left:55.1%;top:73.6%;width:14.2%;height:2.1%"></i>
+          <div class="tabs"><b class="on">84</b><b class="seen">85</b><b>86</b></div></div>
+        </div>
+        <div class="foot"><span class="lb">3 of 143</span><span class="ask"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12a8 8 0 1 1-3.1-6.3"/><path d="M12 8v5"/></svg>Ask</span></div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">4 · Ask <span>— carbon copy, cited</span></div>
+      <div class="frame"><div class="d">
+        <div class="rdtop"><span class="bk">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 BRAKE SYSTEM · 13.4 Checking the front brake fluid level</s></span><span class="pn">84<s>/143</s></span></div>
+        <div class="sw"><span class="seg"><b class="on">Relevant 3</b><b>All 143</b></span><span class="qa"><em class="on">84</em><em>85</em><em>86</em></span></div>
+        <div class="stack">
+          <div class="pg">
+            <img src="assets/page84.png" alt="">
+            <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+            <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+            <i class="mk" style="left:55.1%;top:73.6%;width:14.2%;height:2.1%"></i>
+          </div>
+        </div>
+        <div class="veil"></div>
+        <div class="slip">
+          <div class="perf"></div>
+          <div class="qq"><b>Brake fluid low?</b><span class="lb">3 pages</span></div>
+          <div class="ans">
+            <div class="quote"><p><mark>Move the brake reservoir mounted on the handlebar into a horizontal position.</mark> <mark>Check the brake fluid level in the level viewer ❶.</mark></p><div class="cite"><span class="lb r">p. 84</span><span class="src">13.4 Checking the front brake fluid level</span></div></div>
+            <div class="quote"><p>Minimum thickness <b class="mono">≥ 1 mm (≥ 0.04 in)</b></p><div class="cite"><span class="lb">p. 86</span><span class="src">13.6 Brake linings, front</span></div></div>
+            <div class="part"><svg><use href="#i-brakefluid"/></svg><div style="flex:1"><div class="nm">Brake fluid DOT 4 / DOT 5.1</div><div class="sp">Castrol REACT PERFORMANCE DOT 4<br>MOTOREX® Brake Fluid DOT 5.1</div></div><span class="lb">p. 132</span></div>
+          </div>
+          <div class="askbar"><span class="mic"><svg><use href="#i-mic"/></svg></span><span class="ph">Ask the manual</span><span class="snd"><svg><use href="#i-send"/></svg></span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="deskwrap">
+    <div class="cap">Desktop 1280 · landing <span>— search + camera confirm</span></div>
+    <div class="desk"><div class="d wide">
+      <div class="top"><span class="job">Mechanica</span><span class="steps"><b class="on">1</b><b>2</b><b>3</b><b>4</b></span><span class="no">JOB A-17 · 2026-09-20</span></div>
+      <div class="sheetd">
+        <div class="colA">
+          <div class="field"><span class="cap2 lb">Make, model</span><div class="in"><span class="val">duk<s style="height:28px"></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div></div>
+          <div class="gridc">
+            <div class="pc on"><div class="im"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></div><div class="ln"><b>KTM 390 Duke</b><s>143 pp.</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></div><div class="ln"><b>KTM 125 Duke</b><s>11–25</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></div><div class="ln"><b>KTM 790 Duke</b><s>18–25</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></div><div class="ln"><b>KTM 890 Duke</b><s>20–25</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></div><div class="ln"><b>KTM 1290 S. Duke R</b><s>14–25</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></div><div class="ln"><b>KTM 990 Duke</b><s>24–25</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""></div><div class="ln"><b>KTM 690 Duke</b><s>08–25</s></div></div>
+            <div class="pc"><div class="im"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""></div><div class="ln"><b>KTM 200 Duke</b><s>12–23</s></div></div>
+          </div>
+        </div>
+        <div class="polar">
+          <div class="shot"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><i></i></div>
+          <div class="nm">KTM 390 Duke 2024</div>
+          <div class="sub">PHOTO MATCH 98% · OM EN 143 pp.</div>
+          <div class="yn"><b class="go">Yes</b><b>No</b></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>05 Index — UI direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- neutral lab shell (identical in all five files) ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0c0d10;color:#e7e8ec;font:400 13px/1.5 "Inter Tight",system-ui,sans-serif;padding:36px 40px 56px}
+.lab{max-width:1632px}
+.lab h1{font:700 30px/1 "Inter Tight",sans-serif;letter-spacing:-.025em;text-transform:uppercase}
+.lab h1 em{font-style:normal;color:#FF3355}
+.lab .thesis{margin-top:8px;font-size:14px;color:#a7abb5;max-width:760px}
+.lab .grid2{display:flex;gap:40px;margin:22px 0 30px;flex-wrap:wrap}
+table.tok{border-collapse:collapse;font:400 11.5px/1.4 "Inter Tight",sans-serif}
+table.tok th{text-align:left;font:700 10px/1 "Inter Tight",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6f747f;padding:0 14px 7px 0;border-bottom:1px solid #22242c}
+table.tok td{padding:5px 14px 5px 0;border-bottom:1px solid #191b21;color:#c3c6ce;white-space:nowrap}
+table.tok td b{color:#fff;font-weight:600}
+table.tok i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:6px;border:1px solid #33363f}
+.note{font-size:12.5px;color:#9aa0ab;max-width:420px}
+.note b{display:block;font:700 10px/1 "Inter Tight",sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;color:#6f747f}
+.note p+b{margin-top:14px}
+.row{display:flex;gap:24px}
+.cap{font:700 10px/1 "Inter Tight",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#6f747f;margin-bottom:9px}
+.cap span{color:#FF3355}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.desk{width:1280px;height:580px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.deskwrap{margin-top:34px}
+
+/* ================= DIRECTION 05 — INDEX ================= */
+.d{
+  --w:#FFFFFF; --w2:#F2F2F0; --k:#000000; --k60:#6E6E6E; --k30:#B8B8B6;
+  --red:#E4002B; --acc:#E4002B; --mark:rgba(228,0,43,.14);
+  --m:16px;
+  position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--w);color:var(--k);
+  font:400 15px/1.35 "Inter Tight",system-ui,sans-serif;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.d .n{font-variant-numeric:tabular-nums;font-weight:500}
+
+/* every division is a 1px rule on the same grid */
+.d .hd{flex:0 0 auto;display:flex;align-items:baseline;gap:10px;padding:14px var(--m) 8px;border-bottom:1px solid var(--k)}
+.d .hd .wm{font:700 12px/1 "Inter Tight",sans-serif;letter-spacing:.02em;text-transform:uppercase}
+.d .hd .bk{font-size:14px;line-height:1;margin-right:-2px}
+.d .hd .sp{flex:1}
+.d .hd .st{font:500 11px/1 "Inter Tight",sans-serif;color:var(--k60);text-transform:uppercase;letter-spacing:.06em}
+.d .hd .st b{color:var(--k);font-weight:600}
+
+.d .q{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:16px var(--m) 14px;border-bottom:1px solid var(--k)}
+.d .q .v{flex:1;font:500 34px/1 "Inter Tight",sans-serif;letter-spacing:-.035em}
+.d .q .v s{text-decoration:none;display:inline-block;width:2px;height:28px;background:var(--red);vertical-align:-3px;margin-left:2px}
+.d .q .cam{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--k);flex:0 0 auto}
+.d .q .cam svg{width:18px;height:18px}
+
+.d .list{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+
+/* bike rows: thumbnail · name · years, all on one rule */
+.d .r{display:flex;align-items:center;gap:12px;padding:9px var(--m);border-bottom:1px solid var(--k30)}
+.d .r .th{width:72px;height:52px;flex:0 0 auto;overflow:hidden;background:var(--w2)}
+.d .r .th img{width:100%;height:100%;object-fit:cover;object-position:52% 56%}
+.d .r .nm{flex:1;font:500 16px/1.2 "Inter Tight",sans-serif;letter-spacing:-.012em}
+.d .r .yr{font:400 12px/1 "Inter Tight",sans-serif;color:var(--k60)}
+.d .r.sel{border-bottom:1px solid var(--k)}
+.d .r.sel .nm{font-weight:600}
+.d .years{display:flex;gap:0;border-bottom:1px solid var(--k);padding:0 var(--m) 14px}
+.d .years b{width:56px;font:500 15px/1 "Inter Tight",sans-serif;color:var(--k30);padding-top:4px;border-top:2px solid transparent}
+.d .years b.on{color:var(--k);border-top-color:var(--red)}
+.d .years b.live{color:var(--k60)}
+.d .years .lab{margin-left:auto;font:500 10px/1 "Inter Tight",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--k60);align-self:flex-end;width:auto;white-space:nowrap}
+
+/* 3D plate: flat, flush, with crosshair rules instead of a badge */
+.d .plate{flex:0 0 auto;position:relative;height:232px;background:var(--w2);overflow:hidden;border-bottom:1px solid var(--k)}
+.d .plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.3);filter:grayscale(1) contrast(1.06)}
+.d .plate .xh,.d .plate .xv{position:absolute;background:var(--red)}
+.d .plate .xh{left:0;right:0;height:1px;top:81.4%}
+.d .plate .xv{top:0;bottom:0;width:1px;left:70.2%}
+.d .plate .ax{position:absolute;left:70.2%;top:81.4%;width:9px;height:9px;margin:-4px 0 0 -4px;background:var(--red)}
+.d .plate .cp{position:absolute;left:var(--m);bottom:10px;display:flex;align-items:baseline;gap:8px}
+.d .plate .cp b{font:600 14px/1 "Inter Tight",sans-serif}
+.d .plate .cp s{text-decoration:none;font:500 12px/1 "Inter Tight",sans-serif;color:var(--red)}
+.d .plate .rt{position:absolute;right:var(--m);top:10px;font:500 10px/1 "Inter Tight",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--k60)}
+.d .ctl{flex:0 0 auto;display:flex;gap:18px;padding:9px var(--m);border-bottom:1px solid var(--k)}
+.d .ctl b{font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--k60)}
+.d .ctl b.on{color:var(--k);box-shadow:0 5px 0 -3px var(--red)}
+
+/* the index: the manual's own contents, set as a table */
+.d .ch{display:flex;align-items:baseline;gap:10px;padding:16px var(--m) 5px;border-bottom:1px solid var(--k)}
+.d .ch b{font:600 13px/1 "Inter Tight",sans-serif;letter-spacing:.02em}
+.d .ch span{font:400 13px/1 "Inter Tight",sans-serif;color:var(--k60);text-transform:uppercase;letter-spacing:.09em}
+.d .e{display:flex;align-items:flex-start;gap:10px;padding:11px var(--m);border-bottom:1px solid var(--k30)}
+.d .e .id{width:34px;flex:0 0 auto;font:400 13px/1.3 "Inter Tight",sans-serif;color:var(--k60)}
+.d .e .t{flex:1;font:400 15px/1.3 "Inter Tight",sans-serif;letter-spacing:-.008em}
+.d .e .p{width:34px;flex:0 0 auto;text-align:right;font:500 15px/1.3 "Inter Tight",sans-serif}
+.d .e.on{border-bottom:1px solid var(--k)}
+.d .e.on .t{font-weight:600}
+.d .e.on .id{color:var(--red);font-weight:500}
+.d .e.on .p{color:var(--red);font-weight:600}
+
+/* reader */
+.d .rh{flex:0 0 auto;display:flex;align-items:flex-start;gap:10px;padding:12px var(--m) 9px;border-bottom:1px solid var(--k)}
+.d .rh .ti{flex:1;min-width:0}
+.d .rh .ti b{display:block;font:600 13px/1.2 "Inter Tight",sans-serif;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rh .ti s{display:block;text-decoration:none;font:400 12px/1.3 "Inter Tight",sans-serif;color:var(--k60);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.d .rh .pn{flex:0 0 auto;text-align:right;font:500 15px/1.2 "Inter Tight",sans-serif}
+.d .rh .pn b{color:var(--red);font-weight:600}
+.d .rh .pn s{display:block;text-decoration:none;font-size:11px;color:var(--k60);margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
+.d .tg{flex:0 0 auto;display:flex;align-items:center;gap:18px;padding:8px var(--m);border-bottom:1px solid var(--k)}
+.d .tg b{font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--k60)}
+.d .tg b.on{color:var(--k);box-shadow:0 5px 0 -3px var(--red)}
+.d .tg .pp{margin-left:auto;display:flex;gap:11px}
+.d .tg .pp em{font:500 13px/1 "Inter Tight",sans-serif;font-style:normal;color:var(--k30)}
+.d .tg .pp em.on{color:var(--red);font-weight:600}
+.d .tg .pp em.seen{color:var(--k)}
+
+.d .sheet{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:14px var(--m);background:var(--w)}
+.d .pg{position:relative;isolation:isolate;width:100%;border:1px solid var(--k30)}
+.d .pg img{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.02)}
+.d .mk{position:absolute;background:var(--mark);mix-blend-mode:multiply}
+.d .mk::before{content:"";position:absolute;left:-9px;top:0;bottom:0;width:2px;background:var(--red)}
+.d .ft{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:12px var(--m) 16px;border-top:1px solid var(--k)}
+.d .ft .lb{font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--k60)}
+.d .ft .ask{margin-left:auto;border:1px solid var(--k);padding:10px 16px;font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.12em;text-transform:uppercase}
+
+/* ask panel */
+.d .veil{position:absolute;inset:0;background:rgba(255,255,255,.72)}
+.d .panel{position:absolute;left:0;right:0;bottom:0;top:250px;background:var(--w);border-top:2px solid var(--k);display:flex;flex-direction:column}
+.d .panel .qq{display:flex;align-items:baseline;gap:10px;padding:14px var(--m) 12px;border-bottom:1px solid var(--k)}
+.d .panel .qq b{flex:1;font:600 24px/1.1 "Inter Tight",sans-serif;letter-spacing:-.03em}
+.d .panel .qq s{text-decoration:none;font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--k60)}
+.d .ans{flex:1;min-height:0;overflow:hidden}
+.d .a{display:flex;align-items:flex-start;gap:12px;padding:13px var(--m);border-bottom:1px solid var(--k30)}
+.d .a .bd{flex:1}
+.d .a .bd p{font:400 15px/1.36 "Inter Tight",sans-serif}
+.d .a .bd p mark{background:var(--mark);color:inherit;padding:0 1px}
+.d .a .bd .src{font:400 12px/1.3 "Inter Tight",sans-serif;color:var(--k60);margin-top:7px}
+.d .a .p{width:44px;flex:0 0 auto;text-align:right;font:600 15px/1.4 "Inter Tight",sans-serif;color:var(--red)}
+.d .ab{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:12px var(--m) 16px;border-top:1px solid var(--k)}
+.d .ab .f{flex:1;font:400 16px/1 "Inter Tight",sans-serif;color:var(--k30)}
+.d .ab svg{width:18px;height:18px;color:var(--k60)}
+.d .ab .snd{width:36px;height:36px;display:grid;place-items:center;background:var(--k)}
+.d .ab .snd svg{color:#fff}
+
+/* desktop — one 12-column grid */
+.d.wide .db{flex:1;min-height:0;display:grid;grid-template-columns:repeat(12,1fr);column-gap:16px;padding:0 24px 24px}
+.d.wide .q{grid-column:1/10;border-bottom:1px solid var(--k);padding:18px 0 14px;margin-bottom:18px}
+.d.wide .q .v{font-size:44px}
+.d.wide .q .v s{height:36px}
+.d.wide .dgrid{grid-column:1/10;display:grid;grid-template-columns:repeat(4,1fr);gap:18px 16px;align-content:start}
+.d.wide .c{display:flex;flex-direction:column}
+.d.wide .c .im{height:104px;overflow:hidden;background:var(--w2)}
+.d.wide .c .im img{width:100%;height:100%;object-fit:cover;object-position:52% 56%}
+.d.wide .c .ln{display:flex;align-items:baseline;gap:8px;border-top:1px solid var(--k);padding-top:6px;margin-top:7px}
+.d.wide .c .ln b{font:500 14px/1.15 "Inter Tight",sans-serif;letter-spacing:-.012em}
+.d.wide .c .ln s{text-decoration:none;margin-left:auto;font:400 11px/1 "Inter Tight",sans-serif;color:var(--k60)}
+.d.wide .c.on .ln{border-top:2px solid var(--red);padding-top:5px}
+.d.wide .c.on .ln b{font-weight:600}
+.d.wide .dside{grid-column:10/13;display:flex;flex-direction:column;padding-top:18px}
+.d.wide .dside .ey{font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--k60);border-bottom:1px solid var(--k);padding-bottom:9px}
+.d.wide .dside .shot{height:212px;position:relative;overflow:hidden;background:var(--w2);margin-top:14px}
+.d.wide .dside .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.d.wide .dside .shot i{position:absolute;left:13%;top:24%;width:58%;height:56%;border:1px solid var(--red)}
+.d.wide .dside .nm{font:600 24px/1.05 "Inter Tight",sans-serif;letter-spacing:-.03em;border-top:1px solid var(--k);padding-top:10px;margin-top:12px}
+.d.wide .dside .sub{font:400 13px/1 "Inter Tight",sans-serif;color:var(--k60);margin-top:6px}
+.d.wide .dside .yn{display:flex;gap:10px;margin-top:auto}
+.d.wide .dside .yn b{flex:1;height:44px;display:grid;place-items:center;border:1px solid var(--k);font:500 11px/1 "Inter Tight",sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.d.wide .dside .yn b.go{background:var(--k);color:#fff}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.2-2h6.2l1.2 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="11.9" cy="12.4" r="3.6"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5m0 0-6 6m6-6 6 6"/></symbol>
+</defs></svg>
+
+<div class="lab">
+  <h1>05 · <em>Index</em></h1>
+  <p class="thesis">No containers. White, a 12-column grid, 1&nbsp;px black rules, one family at five sizes, tabular numerals everywhere, and a single Swiss red that appears only on the marker and the page you are on. The manual's table of contents is not styled into the app — it <i>is</i> the app. <b>Different because</b> it spends nothing: no cards, no fills, no shadows, no second typeface, and the page number sits on the same grid line on all four screens.</p>
+
+  <div class="grid2">
+    <table class="tok">
+      <tr><th>token</th><th>value</th><th>use</th></tr>
+      <tr><td><b>--w</b></td><td><i style="background:#FFFFFF"></i>#FFFFFF</td><td>ground and the PDF sheet — same white</td></tr>
+      <tr><td><b>--w2</b></td><td><i style="background:#F2F2F0"></i>#F2F2F0</td><td>the 3D plate only</td></tr>
+      <tr><td><b>--k</b></td><td><i style="background:#000000"></i>#000000</td><td>type, structural rules</td></tr>
+      <tr><td><b>--k30</b></td><td><i style="background:#B8B8B6"></i>#B8B8B6</td><td>list rules (lighter than structure)</td></tr>
+      <tr><td><b>--k60</b></td><td><i style="background:#6E6E6E"></i>#6E6E6E</td><td>meta, chapter words, years</td></tr>
+      <tr><td><b>--red</b></td><td><i style="background:#E4002B"></i>#E4002B</td><td>marker, current page, crosshair. only</td></tr>
+      <tr><td><b>--mark</b></td><td>rgba(228,0,43,.14) + 2px rule</td><td>wash + a margin rule on the grid</td></tr>
+      <tr><td><b>radius</b></td><td>0 · shadows none</td><td>no depth anywhere</td></tr>
+      <tr><td><b>grid</b></td><td>12 col · gutter 16 · margin 16</td><td>page no. always in the last 34px</td></tr>
+      <tr><td><b>type</b></td><td>Inter Tight 400/500/600</td><td>one family, no exceptions</td></tr>
+      <tr><td><b>scale</b></td><td>11 · 13 · 15 · 24 · 34 · 44</td><td>five sizes, tabular numerals</td></tr>
+      <tr><td><b>tracking</b></td><td>−.035em at 34px · +.14em at 11px</td><td>the only ornament</td></tr>
+      <tr><td><b>motion</b></td><td>120ms opacity</td><td>nothing moves; things appear</td></tr>
+      <tr><td><b>motion</b></td><td>200ms width</td><td>marker wash widens L→R, no stagger</td></tr>
+    </table>
+    <div class="note">
+      <b>3D step</b>
+      <p>The model sits on a flat grey plate that is flush with the grid — no border radius, no shadow, no controls chrome; the three actions are text, underlined in red when live. The chosen part is not tinted or ringed: two 1&nbsp;px red rules run the full width and height of the plate and cross on it, with a 9&nbsp;px red square at the intersection. It reads as a measurement on a drawing, and it works at any model scale because the rules always reach the edges.</p>
+      <b>Marker</b>
+      <p>A 14% red wash over the marked band plus a 2&nbsp;px red rule 9&nbsp;px into the sheet's left margin, aligned with the app's own left column. The wash widens L→R in 200&nbsp;ms with no stagger. Because red appears nowhere else on any screen, the marker is findable at arm's length even though it is the quietest of the five.</p>
+      <b>Risk</b>
+      <p>It has no personality of its own on purpose, which reads as unfinished to anyone expecting a brand; and pure white at full brightness is hostile in a dark garage — this direction needs a dark mode before it ships, which is the one thing the other four get for free.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="cap">1 · Find the bike <span>— search, photo, year</span></div>
+      <div class="frame"><div class="d">
+        <div class="hd"><span class="wm">Mechanica</span><span class="sp"></span><span class="st"><b>1</b> / 4 Bike</span></div>
+        <div class="q"><span class="v">duk<s></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+        <div class="list">
+          <div class="r sel"><span class="th"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></span><span class="nm">KTM 390 Duke</span><span class="yr">2011–2025</span></div>
+          <div class="years"><b class="on">2024</b><b class="live">2023</b><b class="live">2022</b><b>2021</b><b>2020</b><span class="lab">Manual EN</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></span><span class="nm">KTM 125 Duke</span><span class="yr">2011–2025</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></span><span class="nm">KTM 790 Duke</span><span class="yr">2018–2025</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></span><span class="nm">KTM 890 Duke</span><span class="yr">2020–2025</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></span><span class="nm">KTM 1290 Super Duke R</span><span class="yr">2014–2025</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></span><span class="nm">KTM 990 Duke</span><span class="yr">2024–2025</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""></span><span class="nm">KTM 690 Duke</span><span class="yr">2008–2025</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""></span><span class="nm">KTM 200 Duke</span><span class="yr">2012–2023</span></div>
+          <div class="r"><span class="th"><img src="../../web/store/img/bikes/ktm-640-duke-ii.webp" alt=""></span><span class="nm">KTM 640 Duke II</span><span class="yr">1999–2006</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">2 · Find the part <span>— 3D plate + index</span></div>
+      <div class="frame"><div class="d">
+        <div class="hd"><span class="bk">←</span><span class="wm">KTM 390 Duke 2024</span><span class="sp"></span><span class="st"><b>2</b> / 4 Part</span></div>
+        <div class="plate">
+          <img src="assets/viewer-highlight.png" alt="">
+          <span class="xh"></span><span class="xv"></span><span class="ax"></span>
+          <span class="rt">Exploded</span>
+          <span class="cp"><b>Front brake</b><s>p. 84</s></span>
+        </div>
+        <div class="ctl"><b class="on">Explode</b><b>Rotate</b><b>Reset</b></div>
+        <div class="q" style="padding:12px 16px 10px"><span class="v" style="font-size:26px">brake<s style="height:22px"></s></span></div>
+        <div class="list">
+          <div class="ch"><b>13</b><span>Brake system</span></div>
+          <div class="e on"><span class="id">13.4</span><span class="t">Checking the front brake fluid level</span><span class="p">84</span></div>
+          <div class="e"><span class="id">13.5</span><span class="t">Adding front brake fluid</span><span class="p">85</span></div>
+          <div class="e"><span class="id">13.6</span><span class="t">Checking that the brake linings of the front brake are secured</span><span class="p">86</span></div>
+          <div class="e"><span class="id">13.7</span><span class="t">Checking the rear brake fluid level</span><span class="p">86</span></div>
+          <div class="ch"><b>22</b><span>Technical specifications</span></div>
+          <div class="e"><span class="id">22.9</span><span class="t">Chassis tightening torques</span><span class="p">128</span></div>
+          <div class="e"><span class="id">22.4</span><span class="t">Brake fluid DOT 4 / DOT 5.1</span><span class="p">132</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">3 · The manual <span>— relevant pages, markers</span></div>
+      <div class="frame"><div class="d">
+        <div class="rh"><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 Brake system · 13.4 Checking the front brake fluid level</s></span><span class="pn"><b>84</b><s>of 143</s></span></div>
+        <div class="tg"><b class="on">Relevant 3</b><b>All 143</b><span class="pp"><em class="on">84</em><em class="seen">85</em><em>86</em></span></div>
+        <div class="sheet"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+          <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+          <i class="mk" style="left:55.1%;top:73.6%;width:14.2%;height:2.1%"></i>
+        </div></div>
+        <div class="ft"><span class="lb">13 Brake system</span><span class="ask">Ask</span></div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">4 · Ask <span>— answers on the same grid</span></div>
+      <div class="frame"><div class="d">
+        <div class="rh"><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 Brake system · 13.4 Checking the front brake fluid level</s></span><span class="pn"><b>84</b><s>of 143</s></span></div>
+        <div class="tg"><b class="on">Relevant 3</b><b>All 143</b><span class="pp"><em class="on">84</em><em class="seen">85</em><em>86</em></span></div>
+        <div class="sheet" style="align-items:flex-start"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+          <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+        </div></div>
+        <div class="veil"></div>
+        <div class="panel">
+          <div class="qq"><b>Brake fluid low?</b><s>3 pages</s></div>
+          <div class="ans">
+            <div class="a"><div class="bd"><p><mark>Move the brake reservoir mounted on the handlebar into a horizontal position.</mark> <mark>Check the brake fluid level in the level viewer ❶.</mark></p><div class="src">13.4 Checking the front brake fluid level</div></div><span class="p">84</span></div>
+            <div class="a"><div class="bd"><p>Minimum thickness ≥ 1 mm (≥ 0.04 in)</p><div class="src">13.6 Checking that the brake linings of the front brake are secured</div></div><span class="p">86</span></div>
+            <div class="a"><div class="bd"><p>Brake fluid DOT 4 / DOT 5.1</p><div class="src">Castrol REACT PERFORMANCE DOT 4 · MOTOREX® Brake Fluid DOT 5.1</div></div><span class="p">132</span></div>
+          </div>
+          <div class="ab"><svg><use href="#i-mic"/></svg><span class="f">Ask the manual</span><span class="snd"><svg><use href="#i-send"/></svg></span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="deskwrap">
+    <div class="cap">Desktop 1280 · landing <span>— search + camera confirm</span></div>
+    <div class="desk"><div class="d wide">
+      <div class="hd" style="padding:14px 24px 9px"><span class="wm">Mechanica</span><span class="sp"></span><span class="st"><b>1</b> / 4 Bike</span></div>
+      <div class="db">
+        <div class="q"><span class="v">duk<s></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+        <div class="dgrid">
+          <div class="c on"><div class="im"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></div><div class="ln"><b>KTM 390 Duke</b><s>2024</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></div><div class="ln"><b>KTM 125 Duke</b><s>11–25</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></div><div class="ln"><b>KTM 790 Duke</b><s>18–25</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></div><div class="ln"><b>KTM 890 Duke</b><s>20–25</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></div><div class="ln"><b>KTM 1290 S Duke R</b><s>14–25</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></div><div class="ln"><b>KTM 990 Duke</b><s>24–25</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""></div><div class="ln"><b>KTM 690 Duke</b><s>08–25</s></div></div>
+          <div class="c"><div class="im"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""></div><div class="ln"><b>KTM 200 Duke</b><s>12–23</s></div></div>
+        </div>
+        <div class="dside">
+          <div class="ey">Is this it?</div>
+          <div class="shot"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><i></i></div>
+          <div class="nm">KTM 390 Duke 2024</div>
+          <div class="sub">Owner's Manual · 143 pages</div>
+          <div class="yn"><b class="go">Yes</b><b>No</b></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+</body>
+</html>

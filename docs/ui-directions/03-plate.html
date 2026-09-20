@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>03 Plate — UI direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ---------- neutral lab shell (identical in all five files) ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0c0d10;color:#e7e8ec;font:400 13px/1.5 Archivo,system-ui,sans-serif;padding:36px 40px 56px}
+.lab{max-width:1632px}
+.lab h1{font:700 30px/1 Archivo,sans-serif;font-variation-settings:'wdth' 118;letter-spacing:-.01em;text-transform:uppercase}
+.lab h1 em{font-style:normal;color:#5E78FF}
+.lab .thesis{margin-top:8px;font-size:14px;color:#a7abb5;max-width:760px}
+.lab .grid2{display:flex;gap:40px;margin:22px 0 30px;flex-wrap:wrap}
+table.tok{border-collapse:collapse;font:400 11.5px/1.4 Archivo,sans-serif}
+table.tok th{text-align:left;font:700 10px/1 Archivo,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6f747f;padding:0 14px 7px 0;border-bottom:1px solid #22242c}
+table.tok td{padding:5px 14px 5px 0;border-bottom:1px solid #191b21;color:#c3c6ce;white-space:nowrap}
+table.tok td b{color:#fff;font-weight:600}
+table.tok i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:6px;border:1px solid #33363f}
+.note{font-size:12.5px;color:#9aa0ab;max-width:420px}
+.note b{display:block;font:700 10px/1 Archivo,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;color:#6f747f}
+.note p+b{margin-top:14px}
+.row{display:flex;gap:24px}
+.cap{font:700 10px/1 Archivo,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#6f747f;margin-bottom:9px}
+.cap span{color:#5E78FF}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.desk{width:1280px;height:580px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.deskwrap{margin-top:34px}
+
+/* ================= DIRECTION 03 — PLATE ================= */
+.d{
+  --black:#08080A; --ink:#111114; --rule:#2A2A30; --fg:#F4F3F0; --dim:#85858E;
+  --paper:#F3EFE6; --blue:#1B39FF; --acc:#1B39FF; --mark:rgba(27,57,255,.24);
+  position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--black);color:var(--fg);
+  font:400 15px/1.4 Archivo,system-ui,sans-serif;
+}
+.d .plate{font-family:Archivo,sans-serif;font-weight:700;font-variation-settings:'wdth' 122;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:.82}
+.d .ser{font-family:"Instrument Serif",Georgia,serif;font-weight:400}
+.d .ey{font:700 9.5px/1 Archivo,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+
+/* eyebrow row — the magazine masthead line */
+.d .mast{flex:0 0 auto;display:flex;align-items:center;gap:10px;height:34px;padding:0 18px;border-bottom:1px solid var(--rule)}
+.d .mast .wm{font:700 11px/1 Archivo,sans-serif;font-variation-settings:'wdth' 118;letter-spacing:.24em;text-transform:uppercase}
+.d .mast .sp{flex:1}
+.d .mast .st{font:700 9.5px/1 Archivo,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.d .mast .st b{color:var(--fg)}
+.d .mast .bk{width:22px;height:22px;display:grid;place-items:center;font-size:14px;color:var(--dim);margin-left:-6px}
+
+/* search as a bare editorial line */
+.d .line{flex:0 0 auto;padding:16px 18px 12px;border-bottom:1px solid var(--rule);display:flex;align-items:flex-end;gap:12px}
+.d .line .lbl{position:absolute}
+.d .line .v{flex:1;font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 108;font-size:44px;line-height:.9;letter-spacing:-.025em;text-transform:lowercase}
+.d .line .v s{text-decoration:none;display:inline-block;width:3px;height:36px;background:var(--blue);vertical-align:-4px;margin-left:3px}
+.d .line .cam{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--rule);color:var(--fg);flex:0 0 auto}
+.d .line .cam svg{width:19px;height:19px}
+
+.d .scroll{flex:1;min-height:0;overflow:hidden}
+
+/* bike rows — full-bleed b/w photo bands with the name set over them */
+.d .band{position:relative;height:104px;overflow:hidden;border-bottom:1px solid var(--rule)}
+.d .band img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:grayscale(1) contrast(1.12) brightness(.66)}
+.d .band .nm{position:absolute;left:18px;bottom:0;right:18px;display:flex;align-items:baseline;gap:9px;padding-bottom:12px}
+.d .band .nm b{font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 108;font-size:24px;white-space:nowrap;line-height:1;letter-spacing:-.02em;text-transform:uppercase}
+.d .band .nm i{font-style:normal;font-family:"Instrument Serif",serif;font-size:17px;color:#C9C8C4;white-space:nowrap}
+.d .band .nm span{margin-left:auto;font:700 10px/1 Archivo,sans-serif;letter-spacing:.16em;color:#B6B5B1}
+.d .lead{position:relative;border-bottom:1px solid var(--rule)}
+.d .lead .im{height:186px;overflow:hidden;position:relative}
+.d .lead .im img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:grayscale(1) contrast(1.1) brightness(.78)}
+.d .lead .im::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,10,.06) 40%,rgba(8,8,10,.86))}
+.d .lead .ttl{position:absolute;left:18px;bottom:96px;z-index:2;font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 118;font-size:38px;line-height:.92;letter-spacing:-.03em;text-transform:uppercase}
+.d .yrs{display:flex;align-items:flex-end;gap:14px;padding:12px 18px 14px}
+.d .yrs b{font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 118;font-variant-numeric:tabular-nums;font-size:30px;line-height:.85;letter-spacing:-.03em;color:#4A4A52}
+.d .yrs b.on{color:var(--fg);box-shadow:0 5px 0 -1px var(--blue)}
+.d .yrs b.dead{color:#26262C}
+
+/* 3D on black */
+.d .stage{flex:0 0 auto;position:relative;height:250px;overflow:hidden;border-bottom:1px solid var(--rule);background:var(--black)}
+.d .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.3);filter:invert(1) grayscale(1) contrast(1.15) brightness(.92)}
+.d .stage .big{position:absolute;left:14px;top:2px;font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 125;font-size:120px;line-height:.78;letter-spacing:-.05em;color:rgba(244,243,240,.085);z-index:2;pointer-events:none}
+.d .stage .dot{position:absolute;left:68.4%;top:78.6%;width:14px;height:14px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 5px rgba(27,57,255,.22)}
+.d .stage .cap3{position:absolute;left:18px;bottom:12px;display:flex;align-items:baseline;gap:8px}
+.d .stage .cap3 b{font-family:"Instrument Serif",serif;font-weight:400;font-size:22px}
+.d .stage .cap3 em{font-style:normal;font:700 10px/1 Archivo,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.d .stage .rt{position:absolute;right:18px;top:12px;font:700 9.5px/1 Archivo,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#55555E}
+
+/* editorial index */
+.d .chap{display:flex;align-items:flex-end;gap:10px;padding:18px 18px 8px;border-bottom:1px solid var(--rule)}
+.d .chap b{font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 122;font-variant-numeric:tabular-nums;font-size:34px;line-height:.8;letter-spacing:-.03em}
+.d .chap span{font-family:"Instrument Serif",serif;font-size:19px;color:var(--dim);padding-bottom:1px}
+.d .en{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--rule)}
+.d .en .t{flex:1;font-family:"Instrument Serif",serif;font-size:19.5px;line-height:1.16;color:#E9E8E4}
+.d .en .t i{font-style:normal;font-family:Archivo;font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--dim);display:block;margin-bottom:2px}
+.d .en .p{font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 120;font-variant-numeric:tabular-nums;font-size:26px;line-height:.8;letter-spacing:-.02em;color:#54545C}
+.d .en.on{background:var(--ink)}
+.d .en.on .t{color:#fff}
+.d .en.on .p{color:var(--blue)}
+.d .en.on .t i{color:var(--blue)}
+
+/* reader */
+.d .rd{flex:0 0 auto;display:flex;align-items:flex-start;gap:12px;padding:10px 16px 11px;border-bottom:1px solid var(--rule)}
+.d .rd .bk{width:26px;height:26px;display:grid;place-items:center;font-size:15px;color:var(--dim);margin-top:5px}
+.d .rd .ti{flex:1;min-width:0;padding-top:2px}
+.d .rd .ti b{display:block;font:700 12px/1.15 Archivo,sans-serif;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rd .ti s{display:block;text-decoration:none;font-family:"Instrument Serif",serif;font-size:16px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.d .rd .pl{text-align:right;flex:0 0 auto}
+.d .rd .pl b{display:block;font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 122;font-variant-numeric:tabular-nums;font-size:46px;line-height:.78;letter-spacing:-.04em;color:var(--blue)}
+.d .rd .pl s{display:block;text-decoration:none;font:700 9.5px/1 Archivo,sans-serif;letter-spacing:.18em;color:var(--dim);margin-top:4px}
+.d .tabrow{flex:0 0 auto;display:flex;align-items:center;gap:16px;padding:0 18px;height:34px;border-bottom:1px solid var(--rule)}
+.d .tabrow b{font:700 9.5px/1 Archivo,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);align-self:stretch;display:flex;align-items:center}
+.d .tabrow b.on{color:var(--fg);box-shadow:inset 0 -2px 0 var(--blue)}
+.d .tabrow .qa{margin-left:auto;display:flex;gap:11px}
+.d .tabrow .qa em{font-family:Archivo;font-weight:700;font-variant-numeric:tabular-nums;font-style:normal;font-size:14px;color:#45454D}
+.d .tabrow .qa em.on{color:var(--blue)}
+.d .tabrow .qa em.seen{color:var(--paper)}
+
+.d .sw{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 16px;background:var(--black)}
+.d .pg{position:relative;isolation:isolate;width:100%;background:var(--paper)}
+.d .pg img{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.02) sepia(.06)}
+.d .mk{position:absolute;background:var(--mark);mix-blend-mode:multiply;box-shadow:0 2px 0 0 var(--blue)}
+.d .foot{flex:0 0 auto;display:flex;align-items:center;gap:14px;height:56px;padding:0 18px;border-top:1px solid var(--rule)}
+.d .foot .ask{margin-left:auto;display:flex;align-items:center;gap:8px;font:700 10px/1 Archivo,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--black);background:var(--fg);padding:11px 15px}
+
+/* ask column */
+.d .veil{position:absolute;inset:0;background:rgba(8,8,10,.8)}
+.d .col{position:absolute;left:0;right:0;bottom:0;top:120px;background:var(--black);border-top:2px solid var(--blue);display:flex;flex-direction:column}
+.d .col .q{padding:20px 18px 14px;border-bottom:1px solid var(--rule)}
+.d .col .q i{font-style:normal;display:block;font:700 9.5px/1 Archivo,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.d .col .q b{font-family:"Instrument Serif",serif;font-weight:400;font-style:italic;font-size:32px;line-height:1.05;display:block}
+.d .ans{flex:1;min-height:0;overflow:hidden;padding:0 18px}
+.d .pull{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.d .pull .n{font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 122;font-variant-numeric:tabular-nums;font-size:34px;line-height:.78;letter-spacing:-.03em;color:var(--blue);flex:0 0 auto;width:54px}
+.d .pull .n s{display:block;text-decoration:none;font:700 8.5px/1 Archivo,sans-serif;letter-spacing:.18em;color:var(--dim);margin-top:5px}
+.d .pull .bd p{font-family:"Instrument Serif",serif;font-size:19px;line-height:1.28;color:#EDECE8}
+.d .pull .bd p mark{background:var(--mark);color:inherit;box-shadow:0 2px 0 0 var(--blue);padding:0 1px}
+.d .pull .bd .src{font:600 10.5px/1 Archivo,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:9px}
+.d .pull .bd .spec{font-family:Archivo;font-size:13px;color:#A9A9B1;margin-top:6px;line-height:1.35}
+.d .bar{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:0 18px;height:60px;border-top:1px solid var(--rule)}
+.d .bar .ph{flex:1;font-family:"Instrument Serif",serif;font-size:20px;color:#4E4E57}
+.d .bar svg{width:19px;height:19px;color:var(--dim)}
+.d .bar .snd{width:40px;height:40px;display:grid;place-items:center;background:var(--blue);color:#fff}
+.d .bar .snd svg{color:#fff}
+
+/* desktop */
+.d.wide .dbody{flex:1;min-height:0;display:flex;gap:0}
+.d.wide .dmain{flex:1;min-width:0;display:flex;flex-direction:column;border-right:1px solid var(--rule)}
+.d.wide .line{padding:22px 28px 16px}
+.d.wide .line .v{font-size:58px}
+.d.wide .line .v s{height:48px}
+.d.wide .dgrid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr}
+.d.wide .cell{position:relative;overflow:hidden;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.d.wide .cell img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:grayscale(1) contrast(1.12) brightness(.62)}
+.d.wide .cell .lb2{position:absolute;left:14px;right:14px;bottom:11px;display:flex;align-items:baseline;gap:7px}
+.d.wide .cell .lb2 b{font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 112;font-size:19px;line-height:1;letter-spacing:-.02em;text-transform:uppercase}
+.d.wide .cell .lb2 s{text-decoration:none;margin-left:auto;font:600 10px/1 Archivo,sans-serif;letter-spacing:.14em;color:#ADACA8}
+.d.wide .cell.on img{filter:grayscale(1) contrast(1.1) brightness(.85)}
+.d.wide .cell.on{box-shadow:inset 0 -3px 0 var(--blue)}
+.d.wide .dside{width:330px;flex:0 0 auto;display:flex;flex-direction:column}
+.d.wide .dside .ey2{padding:14px 20px 10px;border-bottom:1px solid var(--rule)}
+.d.wide .dside .shot{height:224px;position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.d.wide .dside .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:grayscale(1) contrast(1.1) brightness(.8)}
+.d.wide .dside .shot i{position:absolute;left:13%;top:24%;width:58%;height:56%;border:2px solid var(--blue)}
+.d.wide .dside .nm{padding:18px 20px 6px;font-family:Archivo;font-weight:700;font-variation-settings:'wdth' 118;font-size:30px;line-height:.95;letter-spacing:-.03em;text-transform:uppercase}
+.d.wide .dside .sub{padding:0 20px 18px;font-family:"Instrument Serif",serif;font-size:18px;color:var(--dim)}
+.d.wide .dside .yn{margin-top:auto;display:flex;border-top:1px solid var(--rule)}
+.d.wide .dside .yn b{flex:1;height:58px;display:grid;place-items:center;font:700 10px/1 Archivo,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.d.wide .dside .yn b.go{background:var(--fg);color:var(--black)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.2-2h6.2l1.2 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="11.9" cy="12.4" r="3.6"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5m0 0-6 6m6-6 6 6"/></symbol>
+</defs></svg>
+
+<div class="lab">
+  <h1>03 · <em>Plate</em></h1>
+  <p class="thesis">A magazine about your machine. Black ground, ivory paper, one ultramarine used for nothing except the marker and the page you are on. The manual's own numbering is set as display type — the page number is the largest object on the reader because the page number <i>is</i> the answer. Serif for the manual's words, grotesk for the machine's. <b>Different because</b> it has no cards, no chrome and no second colour: the layout is a grid of hairlines and the photography carries the weight.</p>
+
+  <div class="grid2">
+    <table class="tok">
+      <tr><th>token</th><th>value</th><th>use</th></tr>
+      <tr><td><b>--black</b></td><td><i style="background:#08080A"></i>#08080A</td><td>ground</td></tr>
+      <tr><td><b>--ink</b></td><td><i style="background:#111114"></i>#111114</td><td>the one selected row</td></tr>
+      <tr><td><b>--rule</b></td><td><i style="background:#2A2A30"></i>#2A2A30</td><td>every division is a hairline</td></tr>
+      <tr><td><b>--fg</b></td><td><i style="background:#F4F3F0"></i>#F4F3F0</td><td>type</td></tr>
+      <tr><td><b>--paper</b></td><td><i style="background:#F3EFE6"></i>#F3EFE6</td><td>the PDF sheet — brightest object</td></tr>
+      <tr><td><b>--blue</b></td><td><i style="background:#1B39FF"></i>#1B39FF</td><td>marker + current page. nothing else</td></tr>
+      <tr><td><b>--mark</b></td><td>rgba(27,57,255,.24)</td><td>wash, multiply, + 2px underline</td></tr>
+      <tr><td><b>radius</b></td><td>0</td><td>none, anywhere</td></tr>
+      <tr><td><b>plate</b></td><td>Archivo 700 · wdth 122 · tnum</td><td>years, chapters, p.N — up to 112px</td></tr>
+      <tr><td><b>editorial</b></td><td>Instrument Serif 19–32px</td><td>manual titles, quotes, the question</td></tr>
+      <tr><td><b>body</b></td><td>Archivo 400/600</td><td>specs, meta</td></tr>
+      <tr><td><b>eyebrow</b></td><td>Archivo 700 · 9.5px · .22em</td><td>masthead, toggles</td></tr>
+      <tr><td><b>motion</b></td><td>180ms cubic(.3,0,0,1)</td><td>crossfades only; nothing slides</td></tr>
+      <tr><td><b>motion</b></td><td>300ms counter</td><td>the big page numeral rolls to the new page</td></tr>
+      <tr><td><b>motion</b></td><td>240ms + 55ms stagger</td><td>marker underline draws L→R</td></tr>
+    </table>
+    <div class="note">
+      <b>3D step</b>
+      <p>The render is inverted to a white ghost on black and sits inside the grid with no panel and no controls bar; the chapter numeral (13) is set at 112&nbsp;px behind it in near-black, so the model floats over its own chapter. Nothing is tinted. The chosen part is a single 14&nbsp;px ultramarine dot with a soft ring — the only colour on the screen — and the caption below it is set in serif, like a plate caption: <i>Front brake</i> · p. 84.</p>
+      <b>Marker</b>
+      <p>A 24% ultramarine wash with a solid 2&nbsp;px ultramarine rule under each marked band, drawn L→R in 240&nbsp;ms, 55&nbsp;ms apart. It reads as an editor's underline rather than a highlighter, and it is the only place blue appears on the sheet, so the eye lands there before it reads a word.</p>
+      <b>Risk</b>
+      <p>Editorial restraint at 390&nbsp;px is unforgiving: one wrong line length and it looks empty rather than composed. It is also the coldest of the five — beautiful in a portfolio, distant in a garage.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="cap">1 · Find the bike <span>— search, photo, year</span></div>
+      <div class="frame"><div class="d">
+        <div class="mast"><span class="wm">Mechanica</span><span class="sp"></span><span class="st"><b>01</b> Bike</span></div>
+        <div class="line"><span class="v">duk<s></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+        <div class="scroll">
+          <div class="lead">
+            <div class="im"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></div>
+            <div class="ttl">KTM<br>390 Duke</div>
+            <div class="yrs"><b class="on">2024</b><b>2023</b><b>2022</b><b class="dead">2021</b><b class="dead">2020</b></div>
+          </div>
+          <div class="band"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""><span class="nm"><b>KTM 125 Duke</b><i>2011–2025</i></span></div>
+          <div class="band"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""><span class="nm"><b>KTM 790 Duke</b><i>2018–2025</i></span></div>
+          <div class="band"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""><span class="nm"><b>KTM 890 Duke</b><i>2020–2025</i></span></div>
+          <div class="band"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""><span class="nm"><b>KTM 1290 S Duke R</b><i>2014–2025</i></span></div>
+          <div class="band"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""><span class="nm"><b>KTM 990 Duke</b><i>2024–2025</i></span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">2 · Find the part <span>— 3D sticky + chapter search</span></div>
+      <div class="frame"><div class="d">
+        <div class="mast"><span class="bk">←</span><span class="wm">KTM 390 Duke 2024</span><span class="sp"></span><span class="st"><b>02</b> Part</span></div>
+        <div class="stage">
+          <span class="big">13</span>
+          <img src="assets/viewer-highlight.png" alt="">
+          <span class="rt">Exploded</span>
+          <span class="dot"></span>
+          <span class="cap3"><b>Front brake</b><em>p. 84</em></span>
+        </div>
+        <div class="line" style="padding:12px 18px 10px"><span class="v" style="font-size:30px">brake<s style="height:25px"></s></span></div>
+        <div class="scroll">
+          <div class="chap"><b>13</b><span>Brake system</span></div>
+          <div class="en on"><span class="t"><i>13.4</i>Checking the front brake fluid level</span><span class="p">84</span></div>
+          <div class="en"><span class="t"><i>13.5</i>Adding front brake fluid</span><span class="p">85</span></div>
+          <div class="en"><span class="t"><i>13.6</i>Checking that the brake linings of the front brake are secured</span><span class="p">86</span></div>
+          <div class="en"><span class="t"><i>13.7</i>Checking the rear brake fluid level</span><span class="p">86</span></div>
+          <div class="chap"><b>22</b><span>Technical specifications</span></div>
+          <div class="en"><span class="t"><i>22.9</i>Chassis tightening torques</span><span class="p">128</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">3 · The manual <span>— relevant pages, markers</span></div>
+      <div class="frame"><div class="d">
+        <div class="rd"><span class="bk">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 Brake system · 13.4 Checking the front brake fluid level</s></span><span class="pl"><b>84</b><s>of 143</s></span></div>
+        <div class="tabrow"><b class="on">Relevant 3</b><b>All 143</b><span class="qa"><em class="on">84</em><em class="seen">85</em><em>86</em></span></div>
+        <div class="sw"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+          <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+          <i class="mk" style="left:55.1%;top:73.6%;width:14.2%;height:2.1%"></i>
+        </div></div>
+        <div class="foot"><span class="ey">Brake system</span><span class="ask">Ask</span></div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">4 · Ask <span>— pull quotes, page plates</span></div>
+      <div class="frame"><div class="d">
+        <div class="rd"><span class="bk">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 Brake system · 13.4 Checking the front brake fluid level</s></span><span class="pl"><b>84</b><s>of 143</s></span></div>
+        <div class="tabrow"><b class="on">Relevant 3</b><b>All 143</b><span class="qa"><em class="on">84</em><em class="seen">85</em><em>86</em></span></div>
+        <div class="sw"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+          <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+        </div></div>
+        <div class="veil"></div>
+        <div class="col">
+          <div class="q"><i>Asked</i><b>Brake fluid low?</b></div>
+          <div class="ans">
+            <div class="pull"><span class="n">84<s>page</s></span><div class="bd"><p><mark>Move the brake reservoir mounted on the handlebar into a horizontal position.</mark> <mark>Check the brake fluid level in the level viewer ❶.</mark></p><div class="src">13.4 Checking the front brake fluid level</div></div></div>
+            <div class="pull"><span class="n">86<s>page</s></span><div class="bd"><p>Minimum thickness ≥ 1 mm (≥ 0.04 in)</p><div class="src">13.6 Brake linings, front</div></div></div>
+            <div class="pull"><span class="n">132<s>page</s></span><div class="bd"><p>Brake fluid DOT 4 / DOT 5.1</p><div class="spec">Castrol REACT PERFORMANCE DOT 4 · MOTOREX® Brake Fluid DOT 5.1</div></div></div>
+          </div>
+          <div class="bar"><svg><use href="#i-mic"/></svg><span class="ph">Ask the manual</span><span class="snd"><svg><use href="#i-send"/></svg></span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="deskwrap">
+    <div class="cap">Desktop 1280 · landing <span>— search + camera confirm</span></div>
+    <div class="desk"><div class="d wide">
+      <div class="mast"><span class="wm">Mechanica</span><span class="sp"></span><span class="st"><b>01</b> Bike</span></div>
+      <div class="dbody">
+        <div class="dmain">
+          <div class="line"><span class="v">duk<s></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+          <div class="dgrid">
+            <div class="cell on"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><span class="lb2"><b>390 Duke</b><s>2024</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""><span class="lb2"><b>125 Duke</b><s>11–25</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""><span class="lb2"><b>790 Duke</b><s>18–25</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""><span class="lb2"><b>890 Duke</b><s>20–25</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""><span class="lb2"><b>1290 S Duke R</b><s>14–25</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""><span class="lb2"><b>990 Duke</b><s>24–25</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""><span class="lb2"><b>690 Duke</b><s>08–25</s></span></div>
+            <div class="cell"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""><span class="lb2"><b>200 Duke</b><s>12–23</s></span></div>
+          </div>
+        </div>
+        <div class="dside">
+          <div class="ey2 ey">Is this it?</div>
+          <div class="shot"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><i></i></div>
+          <div class="nm">KTM<br>390 Duke</div>
+          <div class="sub">2024 · Owner's Manual, 143 pages</div>
+          <div class="yn"><b class="go">Yes</b><b>No</b></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+</body>
+</html>

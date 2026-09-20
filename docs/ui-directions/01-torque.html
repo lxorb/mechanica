@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>01 Torque — UI direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:ital,wght@0,500;0,700;0,800;1,700;1,800&family=Saira:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ---------- neutral lab shell (identical in all five files) ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0c0d10;color:#e7e8ec;font:400 13px/1.5 "Inter Tight",system-ui,sans-serif;padding:36px 40px 56px}
+.lab{max-width:1632px}
+.lab h1{font:800 30px/1 "Saira Condensed",sans-serif;letter-spacing:.01em;text-transform:uppercase}
+.lab h1 em{font-style:normal;color:#FFB000}
+.lab .thesis{margin-top:8px;font-size:14px;color:#a7abb5;max-width:760px}
+.lab .grid2{display:flex;gap:40px;margin:22px 0 30px;flex-wrap:wrap}
+table.tok{border-collapse:collapse;font:400 11.5px/1.4 "Saira",sans-serif}
+table.tok th{text-align:left;font:600 10px/1 "Saira Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6f747f;padding:0 14px 7px 0;border-bottom:1px solid #22242c}
+table.tok td{padding:5px 14px 5px 0;border-bottom:1px solid #191b21;color:#c3c6ce;white-space:nowrap}
+table.tok td b{color:#fff;font-weight:600}
+table.tok i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:6px;border:1px solid #33363f}
+.note{font-size:12.5px;color:#9aa0ab;max-width:420px}
+.note b{color:#e7e8ec;font-weight:600;display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-family:"Saira Condensed",sans-serif;margin-bottom:5px;color:#6f747f}
+.note p+b{margin-top:14px}
+.row{display:flex;gap:24px}
+.cap{font:600 10px/1 "Saira Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#6f747f;margin-bottom:9px}
+.cap span{color:#FFB000}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.desk{width:1280px;height:580px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.deskwrap{margin-top:34px}
+
+/* ================= DIRECTION 01 — TORQUE ================= */
+.d{
+  --carbon:#0B0D0F; --panel:#13171A; --panel2:#1B2024; --line:#252C31;
+  --amber:#FFB000; --acc:#FFB000; --redline:#FF3B1F;
+  --fg:#EDF1F2; --dim:#79858B; --paper:#F6F4EF;
+  --mark:rgba(255,176,0,.42);
+  --r:2px;
+  position:absolute;inset:0;background:var(--carbon);color:var(--fg);
+  font:400 15px/1.35 "Inter Tight",system-ui,sans-serif;
+  display:flex;flex-direction:column;overflow:hidden;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.012) 0 2px,transparent 2px 4px);
+}
+.d .num{font-family:"Saira",sans-serif;font-variant-numeric:tabular-nums;font-weight:700}
+.d .lbl{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+
+/* rev rail — the signature: four steps drawn as an instrument sweep with a redline tail */
+.d .rev{flex:0 0 auto;height:30px;display:flex;align-items:center;gap:10px;padding:0 12px;background:#07090A;border-bottom:1px solid var(--line)}
+.d .rev .mark{font:800 11px/1 "Saira Condensed",sans-serif;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+.d .ticks{flex:1;display:flex;align-items:flex-end;gap:2px;height:14px}
+.d .ticks i{flex:1;background:#20262A;height:5px}
+.d .ticks i.tall{height:11px}
+.d .ticks i.on{background:var(--amber)}
+.d .ticks i.red{background:#3A1710}
+.d .ticks i.red.on{background:var(--redline)}
+.d .rev .step{font:700 12px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;color:var(--amber)}
+.d .rev .step s{text-decoration:none;color:#4B565B}
+
+.d .topbar{flex:0 0 auto;display:flex;align-items:center;gap:10px;height:46px;padding:0 12px;border-bottom:1px solid var(--line);background:#0E1114}
+.d .back{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);color:var(--fg);font-size:15px;background:#161B1E}
+.d .topbar .who{font:800 15px/1 "Saira Condensed",sans-serif;letter-spacing:.07em;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.d .topbar .who b{color:var(--amber);font-weight:800}
+
+/* search */
+.d .search{flex:0 0 auto;display:flex;align-items:center;height:54px;margin:12px;border:1px solid var(--line);background:var(--panel);padding-left:12px}
+.d .search svg{width:17px;height:17px;color:var(--dim);flex:0 0 auto}
+.d .search .val{flex:1;padding-left:10px;font:800 24px/1 "Saira Condensed",sans-serif;font-style:italic;letter-spacing:.02em;text-transform:uppercase}
+.d .search .val u{text-decoration:none;color:var(--amber);animation:none}
+.d .search .val s{text-decoration:none;display:inline-block;width:2px;height:22px;background:var(--amber);vertical-align:-3px;margin-left:2px}
+.d .search .cam{width:52px;height:52px;display:grid;place-items:center;border-left:1px solid var(--line);color:var(--fg)}
+.d .search .cam svg{width:20px;height:20px;color:var(--fg)}
+
+.d .scroll{flex:1;min-height:0;overflow:hidden;padding:0 12px 12px;display:flex;flex-direction:column;gap:8px}
+
+/* bike result — hero card carries the photo, the rest are timing rows */
+.d .hero{border:1px solid var(--amber);background:var(--panel)}
+.d .hero .ph{height:132px;position:relative;overflow:hidden;background:#000}
+.d .hero .ph img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:saturate(.72) contrast(1.06) brightness(.92)}
+.d .hero .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,13,15,.1),rgba(11,13,15,.92))}
+.d .hero .ph .nm{position:absolute;left:12px;bottom:9px;z-index:2;font:800 25px/1 "Saira Condensed",sans-serif;font-style:italic;letter-spacing:.02em;text-transform:uppercase}
+.d .hero .ph .nm b{color:var(--amber);font-weight:800}
+.d .years{display:flex;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.d .years b{flex:1;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--panel);font:700 17px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;color:var(--dim)}
+.d .years b.on{background:var(--amber);color:#120C00}
+.d .years b em{font:700 8px/1 "Saira Condensed",sans-serif;letter-spacing:.16em;font-style:normal;text-transform:uppercase;opacity:.75}
+.d .years b.off{color:#39434700;color:#3B4548}
+
+.d .rowcard{display:flex;align-items:center;gap:10px;height:62px;border:1px solid var(--line);background:var(--panel);padding-right:10px}
+.d .rowcard img{width:86px;height:60px;object-fit:cover;object-position:52% 56%;filter:saturate(.6) contrast(1.05) brightness(.9)}
+.d .rowcard .nm{flex:1;font:700 17px/1 "Saira Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.d .rowcard .nm b{color:var(--amber)}
+.d .rowcard .yr{font:600 11px/1 "Saira",sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* 3D stage */
+.d .stage{flex:0 0 auto;position:relative;height:238px;background:radial-gradient(120% 90% at 50% 20%,#1a2024 0%,#0a0d0f 70%);border-bottom:1px solid var(--line);overflow:hidden}
+.d .stage img{width:100%;height:100%;object-fit:cover;object-position:50% 44%;transform:scale(1.28);filter:invert(1) hue-rotate(178deg) saturate(1.25) contrast(1.05);opacity:.95}
+.d .stage .sweep{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;border:1px solid rgba(255,176,0,.16);border-top-color:rgba(255,176,0,.55)}
+.d .stage .tag{position:absolute;left:10px;bottom:10px;display:flex;align-items:stretch;background:var(--amber);color:#120C00}
+.d .stage .tag span{font:800 11px/1 "Saira Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:6px 8px;align-self:center}
+.d .stage .tag b{background:#120C00;color:var(--amber);font:700 12px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;padding:6px 8px;align-self:center}
+.d .stage .hz{position:absolute;right:10px;top:10px;font:700 10px/1 "Saira Condensed",sans-serif;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+.d .ctl{flex:0 0 auto;display:flex;gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.d .ctl b{flex:1;height:38px;display:grid;place-items:center;background:#0E1114;font:700 11px/1 "Saira Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.d .ctl b.on{background:var(--amber);color:#120C00}
+
+/* section rows — lap-timing columns */
+.d .chap{display:flex;align-items:center;gap:8px;padding:12px 2px 6px}
+.d .chap i{font:700 15px/1 "Saira",sans-serif;font-style:normal;color:var(--amber);font-variant-numeric:tabular-nums}
+.d .chap span{font:700 10px/1 "Saira Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.d .chap u{flex:1;height:1px;background:var(--line);text-decoration:none}
+.d .sec{display:flex;align-items:center;gap:10px;min-height:50px;padding:8px 10px;border-left:2px solid var(--line);background:var(--panel)}
+.d .sec+.sec{margin-top:4px}
+.d .sec svg{width:22px;height:22px;flex:0 0 auto;color:var(--dim)}
+.d .sec .t{flex:1;font-size:14.5px;line-height:1.2;color:#D6DBDD}
+.d .sec .t i{font-style:normal;color:var(--dim);font-family:"Saira",sans-serif;font-weight:600;margin-right:5px;font-variant-numeric:tabular-nums}
+.d .sec .p{font:700 17px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;color:var(--fg)}
+.d .sec .p s{text-decoration:none;font:600 9px/1 "Saira Condensed",sans-serif;letter-spacing:.1em;color:var(--dim);display:block;text-align:right;margin-bottom:2px}
+.d .sec.on{border-left-color:var(--amber);background:#20180A}
+.d .sec.on svg{color:var(--amber)}
+.d .sec.on .t{color:#fff}
+.d .sec.on .p{color:var(--amber)}
+
+/* reader */
+.d .rd{flex:0 0 auto;display:flex;align-items:center;gap:10px;height:50px;padding:0 10px;background:#07090A;border-bottom:1px solid var(--line)}
+.d .rd .ti{flex:1;min-width:0}
+.d .rd .ti b{display:block;font:700 13px/1.05 "Saira Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rd .ti span{display:block;font-size:11px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rd .pn{font:700 24px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;color:var(--amber)}
+.d .rd .pn s{text-decoration:none;font-size:12px;color:var(--dim)}
+.d .toggle{flex:0 0 auto;display:flex;align-items:center;gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.d .toggle b{height:32px;display:grid;place-items:center;padding:0 14px;background:#0E1114;font:700 10px/1 "Saira Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.d .toggle b.on{background:var(--amber);color:#120C00}
+.d .toggle .qa{flex:1;display:flex;gap:1px;background:var(--line);justify-content:flex-end}
+.d .toggle .qa em{width:38px;height:32px;display:grid;place-items:center;background:#0E1114;font:700 13px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;font-style:normal;color:var(--dim)}
+.d .toggle .qa em.on{color:var(--amber);box-shadow:inset 0 -2px 0 var(--amber)}
+
+.d .sheetwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 8px;background:#07090A;overflow:hidden}
+.d .pg{position:relative;isolation:isolate;box-shadow:0 14px 34px -12px rgba(0,0,0,.9);background:#fff;width:100%}
+.d .pg img{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.03)}
+.d .mk{position:absolute;background:var(--mark);mix-blend-mode:multiply}
+.d .mk.ln{box-shadow:inset 2px 0 0 var(--redline)}
+
+.d .strip{flex:0 0 auto;display:flex;align-items:center;gap:8px;height:56px;padding:0 10px;background:#0E1114;border-top:1px solid var(--line)}
+.d .strip .pc{width:44px;height:38px;display:grid;place-items:center;border:1px solid var(--line);font:700 15px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;color:var(--dim)}
+.d .strip .pc.on{background:var(--amber);border-color:var(--amber);color:#120C00}
+.d .strip .pc.seen{color:var(--paper);border-color:#3E484C}
+.d .strip .ask{margin-left:auto;height:38px;display:flex;align-items:center;gap:7px;padding:0 13px;background:var(--amber);color:#120C00;font:800 12px/1 "Saira Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase}
+
+/* ask drawer */
+.d .dim{position:absolute;inset:0;background:rgba(7,9,10,.72)}
+.d .drawer{position:absolute;left:0;right:0;bottom:0;background:var(--carbon);border-top:2px solid var(--amber);display:flex;flex-direction:column;max-height:74%}
+.d .drawer .q{display:flex;align-items:center;gap:9px;padding:13px 12px 11px;border-bottom:1px solid var(--line)}
+.d .drawer .q b{font:800 19px/1 "Saira Condensed",sans-serif;font-style:italic;text-transform:uppercase;letter-spacing:.02em;flex:1}
+.d .drawer .q i{font:700 10px/1 "Saira Condensed",sans-serif;font-style:normal;letter-spacing:.14em;color:var(--dim)}
+.d .ans{padding:12px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.d .quote{border-left:2px solid var(--amber);background:var(--panel);padding:10px 11px}
+.d .quote p{font-size:14.5px;line-height:1.36;color:#E3E7E9}
+.d .quote p mark{background:var(--mark);color:inherit;padding:0 1px}
+.d .quote .cite{display:flex;align-items:center;gap:7px;margin-top:8px}
+.d .quote .cite b{font:700 13px/1 "Saira",sans-serif;font-variant-numeric:tabular-nums;color:#120C00;background:var(--amber);padding:4px 7px}
+.d .quote .cite span{font:600 10px/1 "Saira Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.d .spec{display:flex;gap:10px;align-items:flex-start;background:var(--panel);padding:10px 11px;border-left:2px solid var(--line)}
+.d .spec svg{width:26px;height:26px;color:var(--dim);flex:0 0 auto}
+.d .spec .nm{font:700 14px/1.15 "Saira Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.d .spec .sp{font-size:12.5px;line-height:1.3;color:var(--dim);margin-top:3px}
+.d .bar{flex:0 0 auto;display:flex;align-items:center;gap:0;height:52px;margin:0 12px 14px;border:1px solid var(--line);background:var(--panel)}
+.d .bar .ph{flex:1;padding:0 12px;color:#4E585C;font:400 15px/1 "Inter Tight",sans-serif}
+.d .bar .mic,.d .bar .snd{width:50px;height:50px;display:grid;place-items:center;color:var(--dim)}
+.d .bar .snd{background:var(--amber);color:#120C00}
+.d .bar svg{width:19px;height:19px}
+
+/* desktop landing */
+.d.wide{flex-direction:column}
+.d.wide .head{display:flex;align-items:center;gap:18px;padding:0 26px;height:66px;border-bottom:1px solid var(--line);background:#07090A}
+.d.wide .head .wm{font:800 20px/1 "Saira Condensed",sans-serif;font-style:italic;letter-spacing:.1em;text-transform:uppercase}
+.d.wide .head .wm b{color:var(--amber)}
+.d.wide .body{flex:1;min-height:0;display:flex;gap:26px;padding:26px}
+.d.wide .col{flex:1;min-width:0;display:flex;flex-direction:column}
+.d.wide .search{margin:0 0 18px;height:64px}
+.d.wide .search .val{font-size:30px}
+.d.wide .gridcards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.d.wide .gc{border:1px solid var(--line);background:var(--panel)}
+.d.wide .gc.on{border-color:var(--amber)}
+.d.wide .gc .ph{height:118px;overflow:hidden;background:#000}
+.d.wide .gc img{width:100%;height:100%;object-fit:cover;object-position:52% 56%;filter:saturate(.7) contrast(1.05) brightness(.92)}
+.d.wide .gc .nm{padding:9px 10px;font:700 15px/1 "Saira Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.d.wide .gc .nm b{color:var(--amber)}
+.d.wide .gc .yr{padding:0 10px 9px;font:600 10px/1 "Saira",sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}
+.d.wide .side{width:320px;flex:0 0 auto;border:1px solid var(--amber);background:var(--panel);align-self:flex-start}
+.d.wide .side .eyeb{padding:9px 12px;background:var(--amber);color:#120C00;font:800 11px/1 "Saira Condensed",sans-serif;letter-spacing:.18em;text-transform:uppercase;display:flex;justify-content:space-between}
+.d.wide .side .shot{height:176px;overflow:hidden;position:relative;background:#000}
+.d.wide .side .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:saturate(.75) contrast(1.05)}
+.d.wide .side .shot i{position:absolute;left:14%;top:26%;width:56%;height:54%;border:2px solid var(--amber);box-shadow:0 0 0 9999px rgba(7,9,10,.42)}
+.d.wide .side .nm{padding:12px;font:800 22px/1 "Saira Condensed",sans-serif;font-style:italic;text-transform:uppercase;letter-spacing:.02em}
+.d.wide .side .nm b{color:var(--amber)}
+.d.wide .side .yn{display:flex;gap:1px;background:var(--line)}
+.d.wide .side .yn b{flex:1;height:52px;display:grid;place-items:center;background:#0E1114;font:800 13px/1 "Saira Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.d.wide .side .yn b.go{background:var(--amber);color:#120C00}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-brakedisc" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="48" cy="48" r="8" fill="var(--acc)" stroke="none"/><circle cx="48" cy="48" r="34"/><circle cx="48" cy="48" r="16"/><circle cx="48" cy="48" r="8"/><circle cx="48" cy="23" r="3.5"/><circle cx="69.7" cy="35.5" r="3.5"/><circle cx="69.7" cy="60.5" r="3.5"/><circle cx="48" cy="73" r="3.5"/><circle cx="26.3" cy="60.5" r="3.5"/><circle cx="26.3" cy="35.5" r="3.5"/></symbol>
+<symbol id="i-brakefluid" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 55c6-5 12 5 18 0s12-5 18 0v17a6 6 0 0 1-6 6H36a6 6 0 0 1-6-6z" fill="var(--acc)" stroke="none"/><rect x="38" y="18" width="20" height="12" rx="3"/><path d="M26 38v34a6 6 0 0 0 6 6h32a6 6 0 0 0 6-6V38a8 8 0 0 0-8-8H34a8 8 0 0 0-8 8z"/><path d="M48 34c4 6 7 9 7 12a7 7 0 0 1-14 0c0-3 3-6 7-12z"/></symbol>
+<symbol id="i-brakepads" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="36" y="18" width="44" height="12" rx="3" fill="var(--acc)" stroke="none"/><rect x="16" y="46" width="44" height="12" rx="3" fill="var(--acc)" stroke="none"/><rect x="36" y="18" width="44" height="12" rx="3"/><rect x="32" y="30" width="52" height="14" rx="4"/><rect x="16" y="46" width="44" height="12" rx="3"/><rect x="12" y="58" width="52" height="14" rx="4"/></symbol>
+<symbol id="i-chain" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-22 48 48)"><path d="M13 37A11 11 0 0 0 13 59H35A11 11 0 0 1 35 37Z"/><path d="M35 37A11 11 0 0 0 35 59H57A11 11 0 0 1 57 37Z"/><path d="M57 37A11 11 0 0 0 57 59H79A11 11 0 0 1 79 37Z"/><circle cx="13" cy="48" r="4.5" fill="var(--acc)" stroke="none"/><circle cx="35" cy="48" r="4.5" fill="var(--acc)" stroke="none"/><circle cx="57" cy="48" r="4.5" fill="var(--acc)" stroke="none"/><circle cx="79" cy="48" r="4.5" fill="var(--acc)" stroke="none"/></g></symbol>
+<symbol id="i-oil" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 52c6 9 9 13 9 16a9 9 0 0 1-18 0c0-3 3-7 9-16z" fill="var(--acc)" stroke="none"/><rect x="30" y="40" width="44" height="30" rx="7"/><path d="M74 48c10 1 10 15 0 16"/><path d="M31 46 10 34 6 42l25 14z"/></symbol>
+<symbol id="i-tire" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="48" cy="48" r="19" fill="var(--acc)" stroke="none"/><circle cx="48" cy="48" r="36"/><circle cx="48" cy="48" r="27"/><circle cx="48" cy="48" r="19"/><path d="M48 20.5V12.5"/><path d="M69.5 30.9 75.8 25.9"/><path d="M74.8 54.1 82.6 55.9"/><path d="M59.9 72.8 63.4 80"/><path d="M36.1 72.8 32.6 80"/><path d="M21.2 41.9 13.4 40.1"/><path d="M26.5 30.9 20.2 25.9"/></symbol>
+<symbol id="i-coolant" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M44.5 34h7v24a7 7 0 1 1-7 0z" fill="var(--acc)" stroke="none"/><path d="M42 58V22a6 6 0 0 1 12 0v36a10 10 0 1 1-12 0z"/><path d="M12 80c5-6 11-6 16 0s11 6 16 0 11-6 16 0 11 6 16 0"/></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.2-2h6.2l1.2 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="11.9" cy="12.4" r="3.6"/></symbol>
+<symbol id="i-find" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5m0 0-6 6m6-6 6 6"/></symbol>
+</defs></svg>
+
+<div class="lab">
+  <h1>01 · <em>Torque</em></h1>
+  <p class="thesis">A pit-wall instrument: carbon ground, one amber needle colour, a redline that only ever means "last page". Every number in the app — year, chapter, page — is set as an instrument readout in tabular Saira, so the manual's own numbering reads like timing data. <b>Different because</b> it is the only direction where the chrome is an instrument and the page is the readout it points at.</p>
+
+  <div class="grid2">
+    <table class="tok">
+      <tr><th>token</th><th>value</th><th>use</th></tr>
+      <tr><td><b>--carbon</b></td><td><i style="background:#0B0D0F"></i>#0B0D0F</td><td>app ground</td></tr>
+      <tr><td><b>--panel</b></td><td><i style="background:#13171A"></i>#13171A</td><td>cards, rows, input</td></tr>
+      <tr><td><b>--line</b></td><td><i style="background:#252C31"></i>#252C31</td><td>1px hairlines</td></tr>
+      <tr><td><b>--amber</b></td><td><i style="background:#FFB000"></i>#FFB000</td><td>current step · marker · primary</td></tr>
+      <tr><td><b>--redline</b></td><td><i style="background:#FF3B1F"></i>#FF3B1F</td><td>last tick, end-of-marker only</td></tr>
+      <tr><td><b>--paper</b></td><td><i style="background:#F6F4EF"></i>#F6F4EF</td><td>the PDF sheet, visited pages</td></tr>
+      <tr><td><b>--mark</b></td><td>rgba(255,176,0,.42)</td><td>highlighter, multiply</td></tr>
+      <tr><td><b>radius</b></td><td>2px · 0 on strips</td><td>instrument edges, never soft</td></tr>
+      <tr><td><b>display</b></td><td>Saira Condensed 800 italic</td><td>model names, questions</td></tr>
+      <tr><td><b>numerals</b></td><td>Saira 700 tabular</td><td>years, chapters, p.N</td></tr>
+      <tr><td><b>body</b></td><td>Inter Tight 400/500</td><td>section titles, quotes</td></tr>
+      <tr><td><b>labels</b></td><td>Saira Cond 700 · .14em caps</td><td>EXPLODE · RELEVANT · ASK</td></tr>
+      <tr><td><b>motion</b></td><td>120ms linear</td><td>readouts, tick fills</td></tr>
+      <tr><td><b>motion</b></td><td>420ms cubic(.2,0,0,1)</td><td>needle sweep, explode</td></tr>
+      <tr><td><b>motion</b></td><td>260ms + 60ms stagger</td><td>marker stroke L→R</td></tr>
+    </table>
+    <div class="note">
+      <b>3D step</b>
+      <p>The model hangs on a dark stage under a single amber sweep arc. Picking a section drives the explode: parts travel outward along the arc over 420&nbsp;ms and the matched group snaps to amber while everything else drops to 40% — the same move the rev needle makes, reused. The part name and its page sit in one amber tag welded to the stage floor, read as a pit-board line: FRONT BRAKE · 84.</p>
+      <b>Marker</b>
+      <p>Amber at 42% multiply over the grayscale page, stroked left→right in 260&nbsp;ms with a 60&nbsp;ms stagger per line, like a bar filling. The final marked line carries a 2&nbsp;px redline tick at its left edge: the limit, the last thing you need to read.</p>
+      <b>Risk</b>
+      <p>Carbon + amber is the default costume of every bike app on the store, and an instrument is a live gauge while a manual page is static. It survives only because the numbers it instruments are real.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="cap">1 · Find the bike <span>— search, photo, year</span></div>
+      <div class="frame"><div class="d">
+        <div class="rev"><span class="mark">MECHANICA</span><span class="ticks"><i class="tall on"></i><i class="on"></i><i class="on"></i><i class="tall"></i><i></i><i></i><i class="tall"></i><i></i><i></i><i class="tall"></i><i></i><i class="red"></i><i class="red"></i></span><span class="step">1<s>/4</s></span></div>
+        <div class="search"><svg><use href="#i-find"/></svg><span class="val">duk<s></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+        <div class="scroll">
+          <div class="hero">
+            <div class="ph"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><span class="nm">KTM 390 <b>DUKE</b></span></div>
+            <div class="years"><b class="on">2024<em>OM EN</em></b><b>2023<em>OM EN</em></b><b>2022<em>OM EN</em></b><b class="off">2021</b><b class="off">2020</b></div>
+          </div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""><span class="nm">KTM 125 <b>DUKE</b></span><span class="yr">2011–2025</span></div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""><span class="nm">KTM 790 <b>DUKE</b></span><span class="yr">2018–2025</span></div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""><span class="nm">KTM 890 <b>DUKE</b></span><span class="yr">2020–2025</span></div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""><span class="nm">KTM 1290 S. <b>DUKE</b> R</span><span class="yr">2014–2025</span></div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""><span class="nm">KTM 990 <b>DUKE</b></span><span class="yr">2024–2025</span></div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""><span class="nm">KTM 690 <b>DUKE</b></span><span class="yr">2008–2025</span></div>
+          <div class="rowcard"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""><span class="nm">KTM 200 <b>DUKE</b></span><span class="yr">2012–2023</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">2 · Find the part <span>— 3D sticky + chapter search</span></div>
+      <div class="frame"><div class="d">
+        <div class="rev"><span class="mark">MECHANICA</span><span class="ticks"><i class="tall on"></i><i class="on"></i><i class="on"></i><i class="tall on"></i><i class="on"></i><i class="on"></i><i class="tall"></i><i></i><i></i><i class="tall"></i><i></i><i class="red"></i><i class="red"></i></span><span class="step">2<s>/4</s></span></div>
+        <div class="topbar"><span class="back">←</span><span class="who">KTM 390 <b>DUKE</b> · 2024</span></div>
+        <div class="stage">
+          <img src="assets/viewer-highlight.png" alt="">
+          <span class="sweep"></span>
+          <span class="hz">EXPLODED · 1.00</span>
+          <span class="tag"><span>Front brake</span><b>84</b></span>
+        </div>
+        <div class="ctl"><b class="on">Explode</b><b>X-ray</b><b>Rotate</b><b>Reset</b></div>
+        <div class="search" style="height:46px;margin:10px 12px"><svg><use href="#i-find"/></svg><span class="val" style="font-size:20px">brake<s style="height:18px"></s></span></div>
+        <div class="scroll" style="padding-top:0">
+          <div class="chap"><i>13</i><span>Brake system</span><u></u></div>
+          <div class="sec on"><svg><use href="#i-brakefluid"/></svg><span class="t"><i>13.4</i>Checking the front brake fluid level</span><span class="p"><s>PAGE</s>84</span></div>
+          <div class="sec"><svg><use href="#i-brakefluid"/></svg><span class="t"><i>13.5</i>Adding front brake fluid</span><span class="p"><s>PAGE</s>85</span></div>
+          <div class="sec"><svg><use href="#i-brakepads"/></svg><span class="t"><i>13.6</i>Checking that the brake linings of the front brake are secured</span><span class="p"><s>PAGE</s>86</span></div>
+          <div class="sec"><svg><use href="#i-brakefluid"/></svg><span class="t"><i>13.7</i>Checking the rear brake fluid level</span><span class="p"><s>PAGE</s>86</span></div>
+          <div class="chap"><i>22</i><span>Technical specifications</span><u></u></div>
+          <div class="sec"><svg><use href="#i-brakedisc"/></svg><span class="t"><i>22.9</i>Chassis tightening torques</span><span class="p"><s>PAGE</s>128</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">3 · The manual <span>— relevant pages, markers</span></div>
+      <div class="frame"><div class="d">
+        <div class="rd"><span class="back">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><span>13 BRAKE SYSTEM · 13.4 Checking the front brake fluid level</span></span><span class="pn">84<s>/143</s></span></div>
+        <div class="toggle"><b class="on">Relevant</b><b>All 143</b><span class="qa"><em class="on">84</em><em>85</em><em>86</em></span></div>
+        <div class="sheetwrap"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+          <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+          <i class="mk ln" style="left:55.1%;top:73.6%;width:14.2%;height:2.1%"></i>
+        </div></div>
+        <div class="strip"><span class="pc on">84</span><span class="pc seen">85</span><span class="pc">86</span><span class="ask"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12a8 8 0 1 1-3.1-6.3"/><path d="M12 8v5"/></svg>Ask</span></div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">4 · Ask <span>— the manual answers, with pages</span></div>
+      <div class="frame"><div class="d">
+        <div class="rd"><span class="back">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><span>13 BRAKE SYSTEM · 13.4 Checking the front brake fluid level</span></span><span class="pn">84<s>/143</s></span></div>
+        <div class="toggle"><b class="on">Relevant</b><b>All 143</b><span class="qa"><em class="on">84</em><em>85</em><em>86</em></span></div>
+        <div class="sheetwrap"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:24.3%;top:40.9%;width:26.8%;height:2.4%"></i>
+          <i class="mk" style="left:50.1%;top:67.1%;width:41.5%;height:5.2%"></i>
+          <i class="mk ln" style="left:55.1%;top:73.6%;width:14.2%;height:2.1%"></i>
+        </div></div>
+        <div class="dim"></div>
+        <div class="drawer">
+          <div class="q"><b>Brake fluid low?</b><i>3 PAGES</i></div>
+          <div class="ans">
+            <div class="quote"><p><mark>Move the brake reservoir mounted on the handlebar into a horizontal position.</mark> <mark>Check the brake fluid level in the level viewer ❶.</mark></p><div class="cite"><b>p.84</b><span>13.4 Checking the front brake fluid level</span></div></div>
+            <div class="quote"><p>Minimum thickness <b>≥ 1 mm (≥ 0.04 in)</b></p><div class="cite"><b>p.86</b><span>13.6 Brake linings, front</span></div></div>
+            <div class="spec"><svg><use href="#i-brakefluid"/></svg><div><div class="nm">Brake fluid DOT 4 / DOT 5.1</div><div class="sp">Castrol REACT PERFORMANCE DOT 4, MOTOREX® Brake Fluid DOT 5.1</div></div><span class="p" style="font:700 15px/1 Saira,sans-serif;color:var(--amber)">132</span></div>
+          </div>
+          <div class="bar"><span class="mic"><svg><use href="#i-mic"/></svg></span><span class="ph">Ask the manual</span><span class="snd"><svg><use href="#i-send"/></svg></span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="deskwrap">
+    <div class="cap">Desktop 1280 · landing <span>— search + camera confirm</span></div>
+    <div class="desk"><div class="d wide">
+      <div class="head"><span class="wm">Mechanica</span><span class="ticks" style="max-width:420px"><i class="tall on"></i><i class="on"></i><i class="on"></i><i class="tall"></i><i></i><i></i><i class="tall"></i><i></i><i></i><i class="tall"></i><i></i><i class="red"></i><i class="red"></i></span><span class="step" style="margin-left:auto;font:700 13px/1 Saira,sans-serif;color:var(--amber)">1<s style="color:#4B565B;text-decoration:none">/4</s></span></div>
+      <div class="body">
+        <div class="col">
+          <div class="search"><svg><use href="#i-find"/></svg><span class="val">duk<s style="height:26px"></s></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+          <div class="gridcards">
+            <div class="gc on"><div class="ph"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></div><div class="nm">KTM 390 <b>DUKE</b></div><div class="yr">2024 · 2023 · 2022</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></div><div class="nm">KTM 125 <b>DUKE</b></div><div class="yr">2011–2025</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></div><div class="nm">KTM 790 <b>DUKE</b></div><div class="yr">2018–2025</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></div><div class="nm">KTM 890 <b>DUKE</b></div><div class="yr">2020–2025</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></div><div class="nm">KTM 1290 <b>S.DUKE</b> R</div><div class="yr">2014–2025</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></div><div class="nm">KTM 990 <b>DUKE</b></div><div class="yr">2024–2025</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""></div><div class="nm">KTM 690 <b>DUKE</b></div><div class="yr">2008–2025</div></div>
+            <div class="gc"><div class="ph"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""></div><div class="nm">KTM 200 <b>DUKE</b></div><div class="yr">2012–2023</div></div>
+          </div>
+        </div>
+        <div class="side">
+          <div class="eyeb"><span>Is this it?</span><span>98%</span></div>
+          <div class="shot"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><i></i></div>
+          <div class="nm">KTM 390 <b>DUKE</b> 2024</div>
+          <div class="yn"><b class="go">Yes</b><b>No</b></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+</body>
+</html>

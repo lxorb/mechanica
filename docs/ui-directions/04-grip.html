@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>04 Grip — UI direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- neutral lab shell (identical in all five files) ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0c0d10;color:#e7e8ec;font:400 13px/1.5 Outfit,system-ui,sans-serif;padding:36px 40px 56px}
+.lab{max-width:1632px}
+.lab h1{font:800 30px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;text-transform:uppercase}
+.lab h1 em{font-style:normal;color:#C6F24A}
+.lab .thesis{margin-top:8px;font-size:14px;color:#a7abb5;max-width:760px}
+.lab .grid2{display:flex;gap:40px;margin:22px 0 30px;flex-wrap:wrap}
+table.tok{border-collapse:collapse;font:400 11.5px/1.4 Outfit,sans-serif}
+table.tok th{text-align:left;font:700 10px/1 Outfit,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6f747f;padding:0 14px 7px 0;border-bottom:1px solid #22242c}
+table.tok td{padding:5px 14px 5px 0;border-bottom:1px solid #191b21;color:#c3c6ce;white-space:nowrap}
+table.tok td b{color:#fff;font-weight:600}
+table.tok i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:6px;border:1px solid #33363f;border-radius:3px}
+.note{font-size:12.5px;color:#9aa0ab;max-width:420px}
+.note b{display:block;font:700 10px/1 Outfit,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;color:#6f747f}
+.note p+b{margin-top:14px}
+.row{display:flex;gap:24px}
+.cap{font:700 10px/1 Outfit,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#6f747f;margin-bottom:9px}
+.cap span{color:#C6F24A}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.desk{width:1280px;height:580px;overflow:hidden;position:relative;outline:1px solid #2a2c34}
+.deskwrap{margin-top:34px}
+
+/* ================= DIRECTION 04 — GRIP ================= */
+.d{
+  --grass:#103B2F; --deep:#0A2A22; --tile:#FFFDF6; --tile2:#F1EDE0;
+  --lime:#C6F24A; --tang:#FF7A3D; --acc:#FF7A3D; --ink:#0D211B; --dim:#6C7F77;
+  --mark:rgba(255,122,61,.5);
+  --sh:0 4px 0 rgba(6,25,20,.9);
+  position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--grass);color:var(--tile);
+  font:400 15px/1.4 Outfit,system-ui,sans-serif;
+}
+.d .dis{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.025em}
+
+.d .bar{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:12px 14px 8px}
+.d .bar .wm{font:800 17px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+.d .bar .bk{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:var(--deep);color:var(--tile);font-size:16px;flex:0 0 auto}
+.d .bar .dots{margin-left:auto;display:flex;gap:5px;align-items:center}
+.d .bar .dots i{width:8px;height:8px;border-radius:999px;background:rgba(255,253,246,.22)}
+.d .bar .dots i.on{width:26px;background:var(--lime)}
+.d .bar .dots i.done{background:var(--tile)}
+
+/* chunky search tile */
+.d .sq{flex:0 0 auto;display:flex;gap:8px;padding:4px 14px 12px}
+.d .sq .in{flex:1;height:62px;border-radius:20px;background:var(--tile);color:var(--ink);display:flex;align-items:center;padding:0 18px;box-shadow:var(--sh)}
+.d .sq .in span{font:600 24px/1 Outfit,sans-serif}
+.d .sq .in s{text-decoration:none;display:inline-block;width:3px;height:24px;border-radius:2px;background:var(--tang);vertical-align:-4px;margin-left:2px}
+.d .sq .cam{width:62px;height:62px;border-radius:20px;background:var(--lime);color:var(--ink);display:grid;place-items:center;box-shadow:0 4px 0 #8DB222}
+.d .sq .cam svg{width:24px;height:24px}
+
+.d .scroll{flex:1;min-height:0;overflow:hidden;padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+
+/* grip tiles */
+.d .big{border-radius:24px;background:var(--tile);color:var(--ink);box-shadow:var(--sh);overflow:hidden}
+.d .big .im{height:150px;position:relative;overflow:hidden;margin:8px 8px 0;border-radius:18px;background:#DDD8CA}
+.d .big .im img{width:100%;height:100%;object-fit:cover;object-position:52% 56%}
+.d .big .im .tagp{position:absolute;left:10px;top:10px;background:var(--tang);color:#fff;border-radius:999px;padding:5px 11px;font:700 11px/1 Outfit,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.d .big .nm{padding:11px 16px 4px;font:800 26px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em}
+.d .big .yrs{display:flex;gap:7px;padding:8px 14px 14px;overflow:hidden}
+.d .big .yrs b{height:44px;min-width:66px;border-radius:14px;display:grid;place-items:center;background:var(--tile2);color:var(--dim);font:700 17px/1 Outfit,sans-serif}
+.d .big .yrs b.on{background:var(--ink);color:var(--lime)}
+.d .big .yrs b.off{opacity:.42}
+
+.d .tile{display:flex;align-items:center;gap:12px;border-radius:20px;background:rgba(255,253,246,.07);padding:8px 14px 8px 8px;border:1.5px solid rgba(255,253,246,.1)}
+.d .tile .im{width:84px;height:60px;border-radius:14px;overflow:hidden;flex:0 0 auto;background:#DDD8CA}
+.d .tile .im img{width:100%;height:100%;object-fit:cover;object-position:52% 56%}
+.d .tile .nm{flex:1;font:700 18px/1.05 Outfit,sans-serif}
+.d .tile .nm s{display:block;text-decoration:none;font:400 12.5px/1 Outfit,sans-serif;color:rgba(255,253,246,.5);margin-top:5px}
+.d .tile .go{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;background:rgba(255,253,246,.14);font-size:15px}
+
+/* 3D stage — the render's own light ground becomes a cream card */
+.d .stage{flex:0 0 auto;margin:0 14px 10px;height:236px;border-radius:26px;background:var(--tile);position:relative;overflow:hidden;box-shadow:var(--sh)}
+.d .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.32);filter:saturate(.25) contrast(1.06)}
+.d .stage .ring{position:absolute;left:70.8%;top:81.9%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:999px;border:4px solid var(--lime);box-shadow:0 0 0 4px rgba(198,242,74,.28)}
+.d .stage .pill{position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--tile);border-radius:999px;padding:8px 8px 8px 14px}
+.d .stage .pill b{font:700 14px/1 Outfit,sans-serif}
+.d .stage .pill em{font-style:normal;background:var(--lime);color:var(--ink);border-radius:999px;padding:5px 9px;font:800 13px/1 Outfit,sans-serif}
+.d .stage .chips{position:absolute;right:12px;top:12px;display:flex;gap:6px}
+.d .stage .chips b{background:var(--ink);color:var(--tile);border-radius:999px;padding:7px 12px;font:700 11px/1 Outfit,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.d .stage .chips b.on{background:var(--lime);color:var(--ink)}
+
+/* section grip cards */
+.d .ch{display:flex;align-items:center;gap:9px;padding:6px 4px 2px}
+.d .ch b{background:rgba(255,253,246,.14);border-radius:999px;padding:6px 12px;font:800 13px/1 Outfit,sans-serif}
+.d .ch span{font:600 12px/1 Outfit,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,253,246,.55)}
+.d .sec{display:flex;align-items:center;gap:12px;border-radius:20px;background:rgba(255,253,246,.07);border:1.5px solid rgba(255,253,246,.1);padding:11px 12px}
+.d .sec .ic{width:44px;height:44px;border-radius:14px;background:rgba(255,253,246,.12);display:grid;place-items:center;flex:0 0 auto}
+.d .sec .ic svg{width:26px;height:26px;color:var(--tile)}
+.d .sec .t{flex:1;font:500 15px/1.2 Outfit,sans-serif}
+.d .sec .t i{font-style:normal;font-weight:700;color:rgba(255,253,246,.55);margin-right:6px}
+.d .sec .p{border-radius:999px;background:rgba(255,253,246,.14);padding:8px 12px;font:800 15px/1 Outfit,sans-serif}
+.d .sec.on{background:var(--tile);color:var(--ink);border-color:var(--tile);box-shadow:var(--sh)}
+.d .sec.on .ic{background:var(--tang)}
+.d .sec.on .ic svg{color:#fff}
+.d .sec.on .t{font-weight:700}
+.d .sec.on .t i{color:var(--tang)}
+.d .sec.on .p{background:var(--ink);color:var(--lime)}
+
+/* reader */
+.d .rd{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:12px 14px 8px}
+.d .rd .ti{flex:1;min-width:0}
+.d .rd .ti b{display:block;font:700 15px/1.1 Outfit,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d .rd .ti s{display:block;text-decoration:none;font:400 12px/1.25 Outfit,sans-serif;color:rgba(255,253,246,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.d .rd .pp{background:var(--lime);color:var(--ink);border-radius:999px;padding:8px 13px;font:800 17px/1 Outfit,sans-serif;flex:0 0 auto}
+.d .rd .pp s{text-decoration:none;font-size:11px;opacity:.6}
+.d .sw{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:2px 14px 10px}
+.d .sw .seg{display:flex;background:rgba(255,253,246,.1);border-radius:999px;padding:3px}
+.d .sw .seg b{border-radius:999px;padding:8px 14px;font:700 12px/1 Outfit,sans-serif;color:rgba(255,253,246,.62)}
+.d .sw .seg b.on{background:var(--tile);color:var(--ink)}
+.d .sw .qa{margin-left:auto;display:flex;gap:6px}
+.d .sw .qa em{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font:800 14px/1 Outfit,sans-serif;font-style:normal;background:rgba(255,253,246,.1);color:rgba(255,253,246,.6)}
+.d .sw .qa em.on{background:var(--tang);color:#fff}
+.d .sw .qa em.seen{background:var(--tile);color:var(--ink)}
+
+.d .paper{flex:1;min-height:0;margin:0 12px;border-radius:22px 22px 0 0;background:var(--tile2);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px 12px 0;box-shadow:0 -4px 0 rgba(6,25,20,.35)}
+.d .pg{position:relative;isolation:isolate;width:100%;background:var(--tile);box-shadow:0 3px 14px rgba(13,33,27,.18)}
+.d .pg img{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.03)}
+.d .mk{position:absolute;background:var(--mark);mix-blend-mode:multiply;border-radius:8px}
+.d .foot{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 14px 14px;background:var(--grass)}
+.d .foot .ask{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--lime);color:var(--ink);border-radius:999px;padding:14px 20px;font:800 14px/1 Outfit,sans-serif;box-shadow:0 4px 0 #8DB222}
+
+/* ask sheet */
+.d .veil{position:absolute;inset:0;background:rgba(8,32,26,.66)}
+.d .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--tile);color:var(--ink);border-radius:28px 28px 0 0;max-height:76%;display:flex;flex-direction:column;padding-top:8px}
+.d .sheet .grab{width:44px;height:5px;border-radius:999px;background:#D9D4C4;margin:0 auto 6px}
+.d .sheet .qq{display:flex;align-items:center;gap:10px;padding:8px 18px 12px}
+.d .sheet .qq b{flex:1;font:800 23px/1.05 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em}
+.d .sheet .qq em{font-style:normal;background:var(--ink);color:var(--lime);border-radius:999px;padding:6px 11px;font:700 11px/1 Outfit,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.d .ans{padding:0 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.d .bub{background:var(--tile2);border-radius:20px;padding:13px 15px}
+.d .bub p{font-size:15px;line-height:1.38}
+.d .bub p mark{background:var(--mark);border-radius:6px;padding:1px 3px;color:inherit;box-decoration-break:clone}
+.d .bub .cite{display:flex;align-items:center;gap:9px;margin-top:10px}
+.d .bub .cite b{background:var(--ink);color:var(--lime);border-radius:999px;padding:7px 12px;font:800 14px/1 Outfit,sans-serif}
+.d .bub .cite span{font:500 12px/1.2 Outfit,sans-serif;color:#5D6B64}
+.d .bub.part{display:flex;gap:12px;align-items:center}
+.d .bub.part .ic{width:46px;height:46px;border-radius:14px;background:var(--tang);display:grid;place-items:center;flex:0 0 auto}
+.d .bub.part .ic svg{width:27px;height:27px;color:#fff}
+.d .bub.part .nm{font:700 16px/1.15 Outfit,sans-serif}
+.d .bub.part .sp{font-size:12.5px;line-height:1.3;color:#5D6B64;margin-top:3px}
+.d .askbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:12px 14px 16px}
+.d .askbar .f{flex:1;height:54px;border-radius:18px;background:var(--tile2);display:flex;align-items:center;padding:0 16px;color:#8D9992;font-size:15.5px}
+.d .askbar .mic,.d .askbar .snd{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--tile2)}
+.d .askbar .snd{background:var(--lime);box-shadow:0 4px 0 #8DB222}
+.d .askbar svg{width:21px;height:21px;color:var(--ink)}
+
+/* desktop */
+.d.wide .dbody{flex:1;min-height:0;display:flex;gap:16px;padding:0 18px 18px}
+.d.wide .dcol{flex:1;min-width:0;display:flex;flex-direction:column}
+.d.wide .sq{padding:0 0 14px}
+.d.wide .sq .in{height:70px;border-radius:24px}
+.d.wide .sq .in span{font-size:30px}
+.d.wide .sq .cam{width:70px;height:70px;border-radius:24px}
+.d.wide .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.d.wide .gt{border-radius:22px;background:var(--tile);color:var(--ink);box-shadow:var(--sh);padding:8px}
+.d.wide .gt.on{outline:4px solid var(--lime);outline-offset:-1px}
+.d.wide .gt .im{height:108px;border-radius:16px;overflow:hidden;background:#DDD8CA}
+.d.wide .gt .im img{width:100%;height:100%;object-fit:cover;object-position:52% 56%}
+.d.wide .gt .nm{padding:10px 8px 4px;font:800 17px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+.d.wide .gt .yr{padding:0 8px 8px;font:500 12px/1 Outfit,sans-serif;color:#6C7F77}
+.d.wide .dside{width:324px;flex:0 0 auto;border-radius:26px;background:var(--tile);color:var(--ink);box-shadow:var(--sh);padding:10px;align-self:flex-start}
+.d.wide .dside .shot{height:212px;border-radius:20px;overflow:hidden;position:relative;background:#DDD8CA}
+.d.wide .dside .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.d.wide .dside .shot i{position:absolute;left:13%;top:24%;width:58%;height:56%;border:4px solid var(--lime);border-radius:16px}
+.d.wide .dside .qn{position:absolute;left:14px;top:14px;background:var(--ink);color:var(--tile);border-radius:999px;padding:7px 13px;font:700 12px/1 Outfit,sans-serif;z-index:2}
+.d.wide .dside .nm{padding:14px 10px 2px;font:800 26px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em}
+.d.wide .dside .sub{padding:0 10px 14px;font:500 13px/1 Outfit,sans-serif;color:#6C7F77}
+.d.wide .dside .yn{display:flex;gap:10px}
+.d.wide .dside .yn b{flex:1;height:56px;border-radius:18px;display:grid;place-items:center;font:800 15px/1 Outfit,sans-serif;background:var(--tile2)}
+.d.wide .dside .yn b.go{background:var(--lime);box-shadow:0 4px 0 #8DB222}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-brakedisc" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="48" cy="48" r="34"/><circle cx="48" cy="48" r="16"/><circle cx="48" cy="48" r="8"/><circle cx="48" cy="23" r="3.5"/><circle cx="69.7" cy="35.5" r="3.5"/><circle cx="69.7" cy="60.5" r="3.5"/><circle cx="48" cy="73" r="3.5"/><circle cx="26.3" cy="60.5" r="3.5"/><circle cx="26.3" cy="35.5" r="3.5"/></symbol>
+<symbol id="i-brakefluid" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="38" y="18" width="20" height="12" rx="3"/><path d="M26 38v34a6 6 0 0 0 6 6h32a6 6 0 0 0 6-6V38a8 8 0 0 0-8-8H34a8 8 0 0 0-8 8z"/><path d="M48 34c4 6 7 9 7 12a7 7 0 0 1-14 0c0-3 3-6 7-12z"/></symbol>
+<symbol id="i-brakepads" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="36" y="18" width="44" height="12" rx="3"/><rect x="32" y="30" width="52" height="14" rx="4"/><rect x="16" y="46" width="44" height="12" rx="3"/><rect x="12" y="58" width="52" height="14" rx="4"/></symbol>
+<symbol id="i-chain" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-22 48 48)"><path d="M13 37A11 11 0 0 0 13 59H35A11 11 0 0 1 35 37Z"/><path d="M35 37A11 11 0 0 0 35 59H57A11 11 0 0 1 57 37Z"/><path d="M57 37A11 11 0 0 0 57 59H79A11 11 0 0 1 79 37Z"/></g></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.2-2h6.2l1.2 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="11.9" cy="12.4" r="3.6"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5m0 0-6 6m6-6 6 6"/></symbol>
+</defs></svg>
+
+<div class="lab">
+  <h1>04 · <em>Grip</em></h1>
+  <p class="thesis">Built for a gloved thumb. A deep-green ground, cream tiles that sit on a 4&nbsp;px solid edge and drop onto it when pressed, lime for what you touch and tangerine for what the manual says. Targets are 54–62&nbsp;px, corners 18–26&nbsp;px, and the motion overshoots on purpose. <b>Different because</b> it is the only direction with a coloured ground and a physical press — the app feels like a tool, not a document viewer.</p>
+
+  <div class="grid2">
+    <table class="tok">
+      <tr><th>token</th><th>value</th><th>use</th></tr>
+      <tr><td><b>--grass</b></td><td><i style="background:#103B2F"></i>#103B2F</td><td>app ground</td></tr>
+      <tr><td><b>--tile</b></td><td><i style="background:#FFFDF6"></i>#FFFDF6</td><td>cards, 3D stage, the PDF sheet</td></tr>
+      <tr><td><b>--tile2</b></td><td><i style="background:#F1EDE0"></i>#F1EDE0</td><td>quiet fill inside a tile</td></tr>
+      <tr><td><b>--ink</b></td><td><i style="background:#0D211B"></i>#0D211B</td><td>type on cream, pills</td></tr>
+      <tr><td><b>--lime</b></td><td><i style="background:#C6F24A"></i>#C6F24A</td><td>what you touch: camera, send, page</td></tr>
+      <tr><td><b>--tang</b></td><td><i style="background:#FF7A3D"></i>#FF7A3D</td><td>what the manual says: the marker</td></tr>
+      <tr><td><b>--mark</b></td><td>rgba(255,122,61,.5) · r8</td><td>fat rounded swipe, multiply</td></tr>
+      <tr><td><b>radius</b></td><td>14 · 18 · 20 · 26 · 999</td><td>nothing is square</td></tr>
+      <tr><td><b>--sh</b></td><td>0 4px 0 rgba(6,25,20,.9)</td><td>the grip edge — never blurred</td></tr>
+      <tr><td><b>display</b></td><td>Bricolage Grotesque 800</td><td>model names, questions</td></tr>
+      <tr><td><b>body</b></td><td>Outfit 400/500/700</td><td>everything else, incl. numerals</td></tr>
+      <tr><td><b>targets</b></td><td>44 min · 54 field · 62 search</td><td>gloves on</td></tr>
+      <tr><td><b>motion</b></td><td>140ms — press drops 4px</td><td>tile lands on its own shadow</td></tr>
+      <tr><td><b>motion</b></td><td>380ms spring (.34,1.5,.5,1)</td><td>explode, sheet, chip travel</td></tr>
+      <tr><td><b>motion</b></td><td>300ms + 70ms stagger</td><td>marker swipe, overshoots 6px</td></tr>
+    </table>
+    <div class="note">
+      <p><b>3D step</b></p>
+      <p>The render keeps its own cream ground, so the viewer is simply the biggest tile on the screen — rounded 26&nbsp;px, sitting on the same 4&nbsp;px edge as everything else. Explode is a spring: the groups fly apart with a small overshoot and settle. The chosen part gets a 4&nbsp;px lime ring, and a lime pill carrying the part name and its page detaches from the ring and travels down into the list, landing on the matching row. That travel is the only animation that crosses two regions, and it is what makes the list feel caused by the model.</p>
+      <p><b>Marker</b></p>
+      <p>A fat tangerine swipe at 50% multiply with 8&nbsp;px rounded ends that overshoot the text by 6&nbsp;px, drawn in 300&nbsp;ms, 70&nbsp;ms apart — a real highlighter that does not stop neatly at the last letter. The page pill at the top turns lime at the same moment, so the colour of "you are here" and the colour of "this is the bit" stay different.</p>
+      <p><b>Risk</b></p>
+      <p>Friendly can read as unserious next to an official document, and two accents plus a coloured ground is the most colour any of the five spends. Rounded cream tiles are also the house style of every consumer app of the last five years.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="cap">1 · Find the bike <span>— search, photo, year</span></div>
+      <div class="frame"><div class="d">
+        <div class="bar"><span class="wm">Mechanica</span><span class="dots"><i class="on"></i><i></i><i></i><i></i></span></div>
+        <div class="sq"><span class="in"><span>duk<s></s></span></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+        <div class="scroll">
+          <div class="big">
+            <div class="im"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><span class="tagp">Manual ready</span></div>
+            <div class="nm">KTM 390 Duke</div>
+            <div class="yrs"><b class="on">2024</b><b>2023</b><b>2022</b><b class="off">2021</b><b class="off">2020</b></div>
+          </div>
+          <div class="tile"><span class="im"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></span><span class="nm">KTM 125 Duke<s>2011–2025</s></span><span class="go">›</span></div>
+          <div class="tile"><span class="im"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></span><span class="nm">KTM 790 Duke<s>2018–2025</s></span><span class="go">›</span></div>
+          <div class="tile"><span class="im"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></span><span class="nm">KTM 890 Duke<s>2020–2025</s></span><span class="go">›</span></div>
+          <div class="tile"><span class="im"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></span><span class="nm">KTM 1290 Super Duke R<s>2014–2025</s></span><span class="go">›</span></div>
+          <div class="tile"><span class="im"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></span><span class="nm">KTM 990 Duke<s>2024–2025</s></span><span class="go">›</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">2 · Find the part <span>— 3D sticky + chapter search</span></div>
+      <div class="frame"><div class="d">
+        <div class="bar"><span class="bk">←</span><span class="wm">KTM 390 Duke · 2024</span><span class="dots"><i class="done"></i><i class="on"></i><i></i><i></i></span></div>
+        <div class="stage">
+          <img src="assets/viewer-highlight.png" alt="">
+          <span class="ring"></span>
+          <span class="chips"><b class="on">Explode</b><b>Reset</b></span>
+          <span class="pill"><b>Front brake</b><em>p. 84</em></span>
+        </div>
+        <div class="sq" style="padding:0 14px 10px"><span class="in" style="height:54px;border-radius:18px"><span style="font-size:20px">brake<s style="height:20px"></s></span></span></div>
+        <div class="scroll">
+          <div class="ch"><b>13</b><span>Brake system</span></div>
+          <div class="sec on"><span class="ic"><svg><use href="#i-brakefluid"/></svg></span><span class="t"><i>13.4</i>Checking the front brake fluid level</span><span class="p">84</span></div>
+          <div class="sec"><span class="ic"><svg><use href="#i-brakefluid"/></svg></span><span class="t"><i>13.5</i>Adding front brake fluid</span><span class="p">85</span></div>
+          <div class="sec"><span class="ic"><svg><use href="#i-brakepads"/></svg></span><span class="t"><i>13.6</i>Brake linings, front — secured</span><span class="p">86</span></div>
+          <div class="sec"><span class="ic"><svg><use href="#i-brakefluid"/></svg></span><span class="t"><i>13.7</i>Checking the rear brake fluid level</span><span class="p">86</span></div>
+          <div class="ch"><b>22</b><span>Technical specifications</span></div>
+          <div class="sec"><span class="ic"><svg><use href="#i-brakedisc"/></svg></span><span class="t"><i>22.9</i>Chassis tightening torques</span><span class="p">128</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">3 · The manual <span>— relevant pages, markers</span></div>
+      <div class="frame"><div class="d">
+        <div class="rd"><span class="bk">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 Brake system · 13.4 Checking the front brake fluid level</s></span><span class="pp">84<s>/143</s></span></div>
+        <div class="sw"><span class="seg"><b class="on">Relevant 3</b><b>All 143</b></span><span class="qa"><em class="on">84</em><em class="seen">85</em><em>86</em></span></div>
+        <div class="paper"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:23.8%;top:40.6%;width:28.2%;height:2.9%"></i>
+          <i class="mk" style="left:49.6%;top:66.8%;width:42.9%;height:5.7%"></i>
+          <i class="mk" style="left:54.6%;top:73.3%;width:15.6%;height:2.6%"></i>
+        </div></div>
+        <div class="foot"><span style="font:700 13px/1 Outfit,sans-serif;color:rgba(255,253,246,.62)">3 of 143 pages</span><span class="ask">Ask the manual</span></div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="cap">4 · Ask <span>— sheet, cited pages</span></div>
+      <div class="frame"><div class="d">
+        <div class="rd"><span class="bk">←</span><span class="ti"><b>Owner's Manual 2024 390 Duke</b><s>13 Brake system · 13.4 Checking the front brake fluid level</s></span><span class="pp">84<s>/143</s></span></div>
+        <div class="sw"><span class="seg"><b class="on">Relevant 3</b><b>All 143</b></span><span class="qa"><em class="on">84</em><em class="seen">85</em><em>86</em></span></div>
+        <div class="paper"><div class="pg">
+          <img src="assets/page84.png" alt="">
+          <i class="mk" style="left:23.8%;top:40.6%;width:28.2%;height:2.9%"></i>
+          <i class="mk" style="left:49.6%;top:66.8%;width:42.9%;height:5.7%"></i>
+        </div></div>
+        <div class="veil"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <div class="qq"><b>Brake fluid low?</b><em>3 pages</em></div>
+          <div class="ans">
+            <div class="bub"><p><mark>Move the brake reservoir mounted on the handlebar into a horizontal position.</mark> <mark>Check the brake fluid level in the level viewer ❶.</mark></p><div class="cite"><b>p. 84</b><span>13.4 Checking the front brake fluid level</span></div></div>
+            <div class="bub"><p>Minimum thickness <b>≥ 1 mm (≥ 0.04 in)</b></p><div class="cite"><b>p. 86</b><span>13.6 Brake linings, front</span></div></div>
+            <div class="bub part"><span class="ic"><svg><use href="#i-brakefluid"/></svg></span><div style="flex:1"><div class="nm">Brake fluid DOT 4 / DOT 5.1</div><div class="sp">Castrol REACT PERFORMANCE DOT 4 · MOTOREX® Brake Fluid DOT 5.1</div></div><span class="cite" style="margin:0"><b style="background:var(--ink);color:var(--lime);border-radius:999px;padding:7px 12px;font:800 14px/1 Outfit,sans-serif">p. 132</b></span></div>
+          </div>
+          <div class="askbar"><span class="mic"><svg><use href="#i-mic"/></svg></span><span class="f">Ask the manual</span><span class="snd"><svg><use href="#i-send"/></svg></span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="deskwrap">
+    <div class="cap">Desktop 1280 · landing <span>— search + camera confirm</span></div>
+    <div class="desk"><div class="d wide">
+      <div class="bar" style="padding:16px 18px 12px"><span class="wm" style="font-size:21px">Mechanica</span><span class="dots"><i class="on"></i><i></i><i></i><i></i></span></div>
+      <div class="dbody">
+        <div class="dcol">
+          <div class="sq"><span class="in"><span>duk<s style="height:30px"></s></span></span><span class="cam"><svg><use href="#i-cam"/></svg></span></div>
+          <div class="dgrid">
+            <div class="gt on"><div class="im"><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""></div><div class="nm">390 Duke</div><div class="yr">2024 · 2023 · 2022</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-125-duke.webp" alt=""></div><div class="nm">125 Duke</div><div class="yr">2011–2025</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-790-duke.webp" alt=""></div><div class="nm">790 Duke</div><div class="yr">2018–2025</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-890-duke.webp" alt=""></div><div class="nm">890 Duke</div><div class="yr">2020–2025</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-1290-super-duke-r.webp" alt=""></div><div class="nm">1290 S Duke R</div><div class="yr">2014–2025</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-990-duke.webp" alt=""></div><div class="nm">990 Duke</div><div class="yr">2024–2025</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-690-duke.webp" alt=""></div><div class="nm">690 Duke</div><div class="yr">2008–2025</div></div>
+            <div class="gt"><div class="im"><img src="../../web/store/img/bikes/ktm-200-duke.webp" alt=""></div><div class="nm">200 Duke</div><div class="yr">2012–2023</div></div>
+          </div>
+        </div>
+        <div class="dside">
+          <div class="shot"><span class="qn">Is this it?</span><img src="../../web/store/img/bikes/ktm-390-duke.webp" alt=""><i></i></div>
+          <div class="nm">KTM 390 Duke 2024</div>
+          <div class="sub">Owner's Manual · 143 pages</div>
+          <div class="yn"><b class="go">Yes</b><b>No</b></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+</body>
+</html>
