@@ -56,3 +56,57 @@ titles it still returns are increasingly the wrong displacement.
    exercised. Worth one cycle aimed only at Japanese-market models.
 3. `docs/qa/images-gaps.md` (top-30 by row count) did not exist yet. When it
    lands, run it first with `--only` + `--openverse`: highest rows per photo.
+
+---
+
+## Cycle 2 - 2026-09-20, ~60 min (gap list + manual-bearing lane)
+
+| | families | rows |
+|---|---|---|
+| overall | 3,811 -> **3,897** (+86) of 8,816 | 16,316 -> **17,068** (+752) of 30,498 |
+| motorcycles | 3,273 -> **3,325** (+52) of 7,795 | 12,821 -> **13,188** (+367) of 24,135 |
+| manual-bearing bikes | 1,639 -> **1,710** (+71) of 3,950 | 8,997 -> **9,415** (+418) of 15,878 |
+| cars | 538 -> **572** (+34) of 1,021 | 3,495 -> **3,880** (+385) of 6,363 |
+
+**Percentages fell while every count rose**: the catalog grew from 8,286 to 8,816
+families and 27,753 to 30,498 rows mid-cycle (cars alone 810 -> 1,021). Judge this
+cycle by the absolute columns.
+
+10 new photos (own tiles 269 -> 279), 24 keys filled from a longer name, 52 new
+aliases. $0.12 of `images.score`, 51 MB of 150 MB.
+
+**What worked.** The top-30 gap list was by far the best value: 7 photos covering
+178 catalog rows (Ford Explorer/F-150/Expedition, Chevrolet Tahoe, Toyota Corolla,
+Buick Enclave, Subaru Legacy) - roughly 25 rows per photo, against ~1.2 rows per
+photo in the open lane. **Run the gap list first, every cycle.** The
+`--lengthen` pass took 24 of the 67 free keys the gap doc identified.
+
+**What is exhausted.**
+- The `manualId` lane is finished: 162 models walked this cycle for **zero** hits.
+- Commons has been picked clean on the residue cycle 1 rejected: category 1/45,
+  search 0/31, wikipedia 0/4. Cycle 1 took every winner these queries can reach.
+- **Openverse contributed nothing.** It is reachable, but it has no free-licence
+  photos of the models that are missing (KX65, YZ85, KTM 50 SX all returned 0
+  results). The cars above came from Commons search, not Openverse. Still capped
+  at 200 requests/day; the verification e-mail is still unclicked, but on this
+  evidence lifting it is worth much less than it looked yesterday.
+- The remaining 43 of the 67 "rename" keys are **deliberately declined**: 30 have
+  no digit in the name (Explorer / Discovery: exactly the hazard the gap doc
+  warns about) and 1 would cross a digit run. Taking them needs a human to say
+  which are safe, not a rule.
+
+**Bug fixed.** `--retry-misses` was overwriting the no-candidate cache instead of
+ignoring it for selection only, so the scoped gap-list run erased 580 cached dead
+ends and the main lane then re-walked them. That cost this cycle most of its hour.
+The cache is now always carried forward (`skip_misses` vs `misses`).
+
+**Next leads, in order.**
+1. Ask whoever generates `images-gaps.md` for a **top-200**, not a top-30. It is
+   the only lane with real density left, and 27 entries is under ten minutes of work.
+2. Commons categories per **make** (`Category:Kawasaki motorcycles` and its
+   subcategories) rather than per model - the only Commons seam not yet worked.
+3. ja/id/th Wikipedia are wired but barely exercised (4 article hits all cycle);
+   they need a JDM-model list aimed at them, not the generic queue.
+4. The registry-document rows (Harley "Parts Listing", "Shop Dope/Service
+   Bulletins", "Oper./Maint./Spec. Book" - 113 rows) are not vehicles and should
+   be deleted from the catalog, not photographed.

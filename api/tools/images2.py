@@ -1366,13 +1366,17 @@ def main() -> int:
             write_outputs(entries)
             print(f"alias pass: {aliased} variant keys pointed at an existing photo", flush=True)
 
-    misses = set() if args.retry_misses else load_misses()
+    # --retry-misses means "ignore the cache when choosing work", never "forget it":
+    # the cache is still carried forward, or one scoped re-run erases the record of
+    # every dead end the previous cycles paid to discover.
+    misses = load_misses()
+    skip_misses: set = set() if args.retry_misses else set(misses)
     models = [
         m
         for m in all_models
         if m.key not in filled
         and m.key not in entries
-        and m.key not in misses
+        and m.key not in skip_misses
         and m.tier <= args.tier
     ]
     if args.only:

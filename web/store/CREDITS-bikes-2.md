@@ -168,9 +168,9 @@ the source link for the full terms.
 | `store/img/bikes2/honda-adv350a.hero.webp` | 2022 Honda ADV350.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2022_Honda_ADV350.jpg | CC BY-SA 4.0 | category | three_quarter |
 | `store/img/bikes2/honda-adv350a.webp` | 2022 Honda ADV350.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2022_Honda_ADV350.jpg | CC BY-SA 4.0 | category | three_quarter |
 | `store/img/bikes2/honda-adv350a.thumb.webp` | 2022 Honda ADV350.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2022_Honda_ADV350.jpg | CC BY-SA 4.0 | category | three_quarter |
-| `store/img/bikes2/honda-cb1000-hornet-sp.hero.webp` | 2025 Honda CB1000 Hornet SP.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg | CC BY-SA 4.0 | search | three_quarter |
-| `store/img/bikes2/honda-cb1000-hornet-sp.webp` | 2025 Honda CB1000 Hornet SP.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg | CC BY-SA 4.0 | search | three_quarter |
-| `store/img/bikes2/honda-cb1000-hornet-sp.thumb.webp` | 2025 Honda CB1000 Hornet SP.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/honda-cb1000-hornet-sp.hero.webp` | 2025 Honda CB1000 Hornet SP.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/honda-cb1000-hornet-sp.webp` | 2025 Honda CB1000 Hornet SP.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/honda-cb1000-hornet-sp.thumb.webp` | 2025 Honda CB1000 Hornet SP.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB1000_Hornet_SP.jpg | CC BY-SA 4.0 | alias | three_quarter |
 | `store/img/bikes2/honda-cb1000f.hero.webp` | Honda CB1000F.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_CB1000F.jpg | CC BY-SA 4.0 | category | side |
 | `store/img/bikes2/honda-cb1000f.webp` | Honda CB1000F.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_CB1000F.jpg | CC BY-SA 4.0 | category | side |
 | `store/img/bikes2/honda-cb1000f.thumb.webp` | Honda CB1000F.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_CB1000F.jpg | CC BY-SA 4.0 | category | side |
@@ -198,9 +198,9 @@ the source link for the full terms.
 | `store/img/bikes2/honda-cb500f.hero.webp` | Salon de la Moto et du Scooter de Paris 2013 - Honda - CB500F - 009.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Salon_de_la_Moto_et_du_Scooter_de_Paris_2013_-_Honda_-_CB500F_-_009.jpg | CC BY-SA 4.0 | wikipedia | three_quarter |
 | `store/img/bikes2/honda-cb500f.webp` | Salon de la Moto et du Scooter de Paris 2013 - Honda - CB500F - 009.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Salon_de_la_Moto_et_du_Scooter_de_Paris_2013_-_Honda_-_CB500F_-_009.jpg | CC BY-SA 4.0 | wikipedia | three_quarter |
 | `store/img/bikes2/honda-cb500f.thumb.webp` | Salon de la Moto et du Scooter de Paris 2013 - Honda - CB500F - 009.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Salon_de_la_Moto_et_du_Scooter_de_Paris_2013_-_Honda_-_CB500F_-_009.jpg | CC BY-SA 4.0 | wikipedia | three_quarter |
-| `store/img/bikes2/honda-cb750-hornet.hero.webp` | 2025 Honda CB750 Hornet.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg | CC BY-SA 4.0 | category | three_quarter |
-| `store/img/bikes2/honda-cb750-hornet.webp` | 2025 Honda CB750 Hornet.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg | CC BY-SA 4.0 | category | three_quarter |
-| `store/img/bikes2/honda-cb750-hornet.thumb.webp` | 2025 Honda CB750 Hornet.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg | CC BY-SA 4.0 | category | three_quarter |
+| `store/img/bikes2/honda-cb750-hornet.hero.webp` | 2025 Honda CB750 Hornet.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/honda-cb750-hornet.webp` | 2025 Honda CB750 Hornet.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg | CC BY-SA 4.0 | alias | three_quarter |
+| `store/img/bikes2/honda-cb750-hornet.thumb.webp` | 2025 Honda CB750 Hornet.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_CB750_Hornet.jpg | CC BY-SA 4.0 | alias | three_quarter |
 | `store/img/bikes2/honda-cb750-hornet-e-clutch.hero.webp` | Honda CB750 Hornet 2023.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_CB750_Hornet_2023.jpg | CC BY-SA 4.0 | category | three_quarter |
 | `store/img/bikes2/honda-cb750-hornet-e-clutch.webp` | Honda CB750 Hornet 2023.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_CB750_Hornet_2023.jpg | CC BY-SA 4.0 | category | three_quarter |
 | `store/img/bikes2/honda-cb750-hornet-e-clutch.thumb.webp` | Honda CB750 Hornet 2023.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_CB750_Hornet_2023.jpg | CC BY-SA 4.0 | category | three_quarter |
@@ -785,6 +785,9 @@ the source link for the full terms.
 | `store/img/bikes2/yamaha-vega-zr.hero.webp` | 2009 Yamaha Vega ZR 115 (20200810).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2009_Yamaha_Vega_ZR_115_(20200810).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/yamaha-vega-zr.webp` | 2009 Yamaha Vega ZR 115 (20200810).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2009_Yamaha_Vega_ZR_115_(20200810).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/yamaha-vega-zr.thumb.webp` | 2009 Yamaha Vega ZR 115 (20200810).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2009_Yamaha_Vega_ZR_115_(20200810).jpg | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/yamaha-wr-250-f.hero.webp` | Yamaha WR250 R Merivoimien vuosipäivä 2014 01.JPG | MKFI | https://commons.wikimedia.org/wiki/File:Yamaha_WR250_R_Merivoimien_vuosip%C3%A4iv%C3%A4_2014_01.JPG | Public domain | family | three_quarter |
+| `store/img/bikes2/yamaha-wr-250-f.webp` | Yamaha WR250 R Merivoimien vuosipäivä 2014 01.JPG | MKFI | https://commons.wikimedia.org/wiki/File:Yamaha_WR250_R_Merivoimien_vuosip%C3%A4iv%C3%A4_2014_01.JPG | Public domain | family | three_quarter |
+| `store/img/bikes2/yamaha-wr-250-f.thumb.webp` | Yamaha WR250 R Merivoimien vuosipäivä 2014 01.JPG | MKFI | https://commons.wikimedia.org/wiki/File:Yamaha_WR250_R_Merivoimien_vuosip%C3%A4iv%C3%A4_2014_01.JPG | Public domain | family | three_quarter |
 | `store/img/bikes2/yamaha-wr250r.hero.webp` | YAMAHA WR250R.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg | Public domain | search | three_quarter |
 | `store/img/bikes2/yamaha-wr250r.webp` | YAMAHA WR250R.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg | Public domain | search | three_quarter |
 | `store/img/bikes2/yamaha-wr250r.thumb.webp` | YAMAHA WR250R.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250R.jpg | Public domain | search | three_quarter |
@@ -812,6 +815,9 @@ the source link for the full terms.
 | `store/img/bikes2/yamaha-ybr.hero.webp` | Yamaha YBR 125 Full modelo 2011.jpg | Gabriel79 | https://commons.wikimedia.org/wiki/File:Yamaha_YBR_125_Full_modelo_2011.jpg | CC BY-SA 3.0 | category | three_quarter |
 | `store/img/bikes2/yamaha-ybr.webp` | Yamaha YBR 125 Full modelo 2011.jpg | Gabriel79 | https://commons.wikimedia.org/wiki/File:Yamaha_YBR_125_Full_modelo_2011.jpg | CC BY-SA 3.0 | category | three_quarter |
 | `store/img/bikes2/yamaha-ybr.thumb.webp` | Yamaha YBR 125 Full modelo 2011.jpg | Gabriel79 | https://commons.wikimedia.org/wiki/File:Yamaha_YBR_125_Full_modelo_2011.jpg | CC BY-SA 3.0 | category | three_quarter |
+| `store/img/bikes2/yamaha-yz-125.hero.webp` | 1987 Yamaha YZ125M.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1987_Yamaha_YZ125M.JPG | CC BY-SA 4.0 | family | three_quarter |
+| `store/img/bikes2/yamaha-yz-125.webp` | 1987 Yamaha YZ125M.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1987_Yamaha_YZ125M.JPG | CC BY-SA 4.0 | family | three_quarter |
+| `store/img/bikes2/yamaha-yz-125.thumb.webp` | 1987 Yamaha YZ125M.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1987_Yamaha_YZ125M.JPG | CC BY-SA 4.0 | family | three_quarter |
 | `store/img/bikes2/yamaha-yz125.webp` | Yamaha YZ125 Motorcycle.jpg | Goygoo | https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg | CC BY-SA 3.0 | search | side |
 | `store/img/bikes2/yamaha-yz125.thumb.webp` | Yamaha YZ125 Motorcycle.jpg | Goygoo | https://commons.wikimedia.org/wiki/File:Yamaha_YZ125_Motorcycle.jpg | CC BY-SA 3.0 | search | side |
 | `store/img/bikes2/yamaha-yz250.hero.webp` | 1974 Yamaha YZ250 (OW12).JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1974_Yamaha_YZ250_(OW12).JPG | CC BY-SA 4.0 | search | three_quarter |
