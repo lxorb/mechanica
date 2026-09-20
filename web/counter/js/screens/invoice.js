@@ -27,6 +27,7 @@
 import { state, set, emit, go, closeOverlay, registerOverlay } from "../bus.js";
 import * as T from "../ttm.js";
 import { PART_ICONS, iconFor, iconUrl } from "../particons.js";
+import { strip as climateStrip } from "../climate.js";
 import {
   GROUPS,
   index as buildIndex,
@@ -202,7 +203,8 @@ function mount(node) {
   const detail = h("div", { class: "pv-detail" });
   const panes = h("div", { class: "pv-panes" }, grid, detail);
 
-  root.append(header, searchBar, panes);
+  // Climate Fit: the verdicts that need an action, each still carrying its manual page.
+  root.append(header, searchBar, climateStrip(), panes);
   els = {
     bike: title.querySelector(".pv-bike"),
     manual: title.querySelector(".pv-manual"),

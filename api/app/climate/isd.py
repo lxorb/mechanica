@@ -240,12 +240,11 @@ def merge_years(rows: list[dict]) -> dict:
         "minC": min(r["minC"] for r in rows),
         "maxC": max(r["maxC"] for r in rows),
         "meanC": round(sum(r["meanC"] * r["obs"] for r in rows) / obs, 2) if obs else 0.0,
-        "shareBelow": {k: round(v, 6) for k, v in share_below.items()},
-        "shareAbove": {k: round(v, 6) for k, v in share_above.items()},
-        "readingsBelow": below,
-        "readingsAbove": above,
-        "hoursBelow": {k: round(v * HOURS_PER_YEAR, 1) for k, v in share_below.items()},
-        "hoursAbove": {k: round(v * HOURS_PER_YEAR, 1) for k, v in share_above.items()},
+        # Only the measured quantities are stored. Hours are derived as share x 8,766 at render
+        # time, where the UI can say which of the two numbers came out of the archive.
+        "shareBelow": {k: round(v, 5) for k, v in share_below.items() if v},
+        "shareAbove": {k: round(v, 5) for k, v in share_above.items() if v},
+        "readingsBelow": {k: v for k, v in below.items() if v},
         "worstMinC": min(r["minC"] for r in rows),
         "freezeThawPerYear": round(sum(r["freezeThaw"] for r in rows) / len(years), 1),
         "p01C": min(r["p01C"] for r in rows),

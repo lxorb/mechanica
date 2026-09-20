@@ -10,6 +10,7 @@ import {
   releaseCanvas,
 } from "../pdf.js";
 import { agentId as voiceAgent, start as voiceStart } from "../voice.js";
+import { openConditions } from "../climate.js";
 
 const STAGGER = 60;
 const MAX_W = 900;
@@ -35,6 +36,7 @@ let stampEl = null;
 let backBtn = null;
 let modeBtn = null;
 let partsBtn = null;
+let climateBtn = null;
 let micBtn = null;
 let askBtn = null;
 let barEl = null;
@@ -252,8 +254,16 @@ function build(root) {
     "aria-label": "Parts",
     text: "Parts",
   });
+  // Climate Fit: the manual's own environment-conditional rules, resolved against the measured
+  // climate where the vehicle lives. Opens as an overlay, exactly like Parts.
+  climateBtn = el("button", {
+    class: "bar-btn bar-word book-climate",
+    type: "button",
+    "aria-label": "Conditions",
+    text: "Cond",
+  });
 
-  barEl.append(backBtn, coverEl, titleEl, stampEl, modeBtn, micBtn, askBtn, partsBtn);
+  barEl.append(backBtn, coverEl, titleEl, stampEl, modeBtn, micBtn, askBtn, climateBtn, partsBtn);
 
   viewEl = el("div", { class: "page-view" });
   padEl = el("div", { class: "page-pad" });
@@ -284,6 +294,7 @@ function build(root) {
   coverEl.addEventListener("click", onContents);
   modeBtn.addEventListener("click", toggleMode);
   partsBtn.addEventListener("click", () => openOverlay("invoice"));
+  climateBtn.addEventListener("click", openConditions);
   micBtn.addEventListener("click", onMic);
   askBtn.addEventListener("click", onAskToggle);
   askInput.addEventListener("keydown", onAskKey);

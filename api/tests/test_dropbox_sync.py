@@ -10,12 +10,14 @@ files/list_folder, files/list_folder/continue, files/download, and the webhook h
 import hashlib
 import hmac
 import json
+import shutil
 from pathlib import Path
 
 import httpx
 import pytest
 
 from app import dropbox_sync as dbx
+from conftest import DATA_DIR
 
 PDF = b"%PDF-1.4\nfake service manual\n%%EOF\n"
 SECRET = "app-secret"
@@ -25,11 +27,16 @@ SECRET = "app-secret"
 
 
 class FakeDropbox:
-    """list_folder / continue / download / longpoll, keyed by cursor, with the real JSON shapes."""
+    """list_folder / continue / download / longpoll with the real JSON shapes.
 
-    def __init__(self, pages: list[list[dict]], body: bytes = PDF):
+    Pages are served in order and list_folder rewinds, so a second pass against a fresh instance
+    behaves like a folder that still holds the same files - which is the case under test."""
+
+    def __init__(self, pages: list[list[dict]], body: bytes = PDF, bodies: dict[str, bytes] | None = None):
         self.pages = pages
         self.body = body
+        self.bodies = bodies or {}
+        self.at = 0
         self.calls: list[tuple[str, dict]] = []
         self.auth: dict[str, str | None] = {}
 
@@ -37,23 +44,26 @@ class FakeDropbox:
         route = request.url.path.removeprefix("/2/")
         self.auth[route] = request.headers.get("Authorization")
         if route == "files/download":
-            self.calls.append((route, json.loads(request.headers["Dropbox-API-Arg"])))
-            return httpx.Response(200, content=self.body)
+            arg = json.loads(request.headers["Dropbox-API-Arg"])
+            self.calls.append((route, arg))
+            return httpx.Response(200, content=self.bodies.get(arg["path"], self.body))
         arg = json.loads(request.content or b"{}")
         self.calls.append((route, arg))
         if route == "files/list_folder":
-            return httpx.Response(200, json=self._page(0))
+            self.at = 0
+            return httpx.Response(200, json=self._page())
         if route == "files/list_folder/continue":
             if arg["cursor"] == "stale":
                 return httpx.Response(409, json={"error": {".tag": "reset"}, "error_summary": "reset/"})
-            return httpx.Response(200, json=self._page(int(arg["cursor"].split("-")[-1])))
+            return httpx.Response(200, json=self._page())
         if route == "files/list_folder/longpoll":
             return httpx.Response(200, json={"changes": False})
         return httpx.Response(404, json={"error_summary": "unknown"})
 
-    def _page(self, index: int) -> dict:
-        entries = self.pages[index] if index < len(self.pages) else []
-        return {"entries": entries, "cursor": f"cur-{index + 1}", "has_more": index + 1 < len(self.pages)}
+    def _page(self) -> dict:
+        entries = self.pages[self.at] if self.at < len(self.pages) else []
+        self.at += 1
+        return {"entries": entries, "cursor": f"cur-{self.at}", "has_more": self.at < len(self.pages)}
 
 
 def entry(name: str, *, file_id: str | None = None, rev: str = "a1") -> dict:
@@ -70,20 +80,25 @@ def entry(name: str, *, file_id: str | None = None, rev: str = "a1") -> dict:
 
 @pytest.fixture
 def dropbox(monkeypatch, tmp_path):
-    """A token, a private data dir, no watcher thread, and every HTTP call on a MockTransport."""
+    """A token, a private data dir with the real catalog in it, no watcher thread, and every HTTP
+    call on a MockTransport. The catalog is copied rather than shared because a shop's manual
+    re-points a bike, and no other test may see that."""
+    shutil.copy(DATA_DIR / "bikes.json", tmp_path / "bikes.json")
     monkeypatch.setattr(dbx.settings, "dropbox_token", f"token-123\n{SECRET}")
     monkeypatch.setattr(dbx.settings, "data_dir", tmp_path)
     monkeypatch.setenv("DROPBOX_FOLDER", "/Manuals")
     monkeypatch.setattr(dbx, "start", lambda: False)
+    dbx._makes = (0.0, [])
 
-    def make(pages, body: bytes = PDF) -> FakeDropbox:
-        fake = FakeDropbox(pages, body)
+    def make(pages, body: bytes = PDF, bodies: dict[str, bytes] | None = None) -> FakeDropbox:
+        fake = FakeDropbox(pages, body, bodies)
         monkeypatch.setattr(
             dbx, "_client", lambda longpoll=False: httpx.Client(transport=httpx.MockTransport(fake.handler))
         )
         return fake
 
-    return make
+    yield make
+    dbx._makes = (0.0, [])
 
 
 @pytest.fixture
@@ -208,7 +223,8 @@ def test_pagination_follows_has_more(dropbox, ingested):
         [
             [entry("/Manuals/Yamaha MT-07 2019 service manual.pdf")],
             [entry("/Manuals/KTM 390 Duke 2024 workshop.pdf", rev="b2")],
-        ]
+        ],
+        bodies={"id:/Manuals/KTM 390 Duke 2024 workshop.pdf": PDF + b"ktm\n"},
     )
     result = dbx.sync_once()
     assert result["seen"] == 2 and result["done"] == 2

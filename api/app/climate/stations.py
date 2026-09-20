@@ -125,7 +125,8 @@ def station_model(row: dict, km: float | None = None) -> StationClimate:
         id=row["id"], name=row["name"], ctry=row.get("ctry") or "", lat=row["lat"], lon=row["lon"],
         elevM=row.get("elevM"), years=row.get("years") or [], obs=row.get("obs") or 0,
         minC=row.get("minC", 0.0), maxC=row.get("maxC", 0.0), meanC=row.get("meanC", 0.0),
-        hoursBelow=row.get("hoursBelow") or {}, hoursAbove=row.get("hoursAbove") or {},
+        hoursBelow={k: round(v * HOURS_PER_YEAR, 1) for k, v in (row.get("shareBelow") or {}).items()},
+        hoursAbove={k: round(v * HOURS_PER_YEAR, 1) for k, v in (row.get("shareAbove") or {}).items()},
         shareBelow=row.get("shareBelow") or {}, readingsBelow=row.get("readingsBelow") or {},
         worstMinC=row.get("worstMinC", row.get("minC", 0.0)),
         freezeThawPerYear=row.get("freezeThawPerYear", 0.0),
@@ -188,8 +189,11 @@ def evaluate(rule: ClimateRule, row: dict, km: float) -> ClimateVerdict:
         else:
             status = "ok"
         exact = "" if bucket == rule.thresholdC else f" (nearest measured step {bucket} °C)"
-        evidence = (f"{readings:,} readings below {bucket} °C (~{_hours(share):.0f} h/yr), "
-                    f"low {worst:g} °C at {name}, {years}{exact}")
+        if status == "breached":
+            evidence = (f"{readings:,} readings below {bucket} °C (~{_hours(share):.0f} h/yr), "
+                        f"low {worst:g} °C at {name}, {years}{exact}")
+        else:
+            evidence = f"coldest {years} reading {worst:g} °C at {name}{exact}"
         return ClimateVerdict(**base, status=status, evidence=evidence, magnitude=_hours(share))
 
     if rule.ruleType == "oil_grade_band" and rule.thresholdC is not None:

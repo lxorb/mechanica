@@ -13,7 +13,6 @@ import time
 from .models import ClimateFit, ClimateRule, ClimateVerdict, StationClimate
 from .stations import (
     MAX_KM,
-    anomalies,
     by_name,
     climatology,
     dedupe,
@@ -26,7 +25,7 @@ from .stations import (
 
 __all__ = [
     "ClimateFit", "ClimateRule", "ClimateVerdict", "StationClimate",
-    "fit", "station_at", "station_named", "rules_for", "anomalies", "manuals_with_rules", "MAX_KM",
+    "fit", "station_at", "station_named", "rules_for", "manuals_with_rules", "MAX_KM",
 ]
 
 _STATUS_ORDER = {"breached": 0, "borderline": 1, "ok": 2, "unknown": 3}

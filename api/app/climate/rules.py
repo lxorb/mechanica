@@ -61,6 +61,8 @@ LE = r"≤|<=|max\.|up to"
 _DEGREE = re.compile(rf"({NUM})\s*°\s*([CF])")
 _SAE = re.compile(r"SAE\s*\d{1,2}\s*W\s*[-/]\s*\d{2}", re.I)
 _INTERVAL = re.compile(r"(\d[\d.,]*)\s*(km|mi|miles|hours?|h|months?)\b", re.I)
+# "-25 … -45 °C": a printed range where only the second end carries the unit.
+_RANGE = re.compile(rf"({NUM})\s*(?:…|\.{{2,3}}|to|bis)\s*({NUM})\s*°\s*([CF])", re.I)
 
 # --- pass A: one family per rule type ---------------------------------------------------------------
 # "Antifreeze protection to at least: -25 C (-13.0 F)". Also the four non-English spellings that
@@ -155,6 +157,10 @@ def floor_of(quote: str, first: float) -> float:
     not a promise of -45. The guaranteed floor is the weakest end, so take the value closest to zero.
     Any Fahrenheit twin on the same line converts to the same number and changes nothing."""
     values = []
+    for m in _RANGE.finditer(quote):  # "-25 ... -45 C": the first end carries no unit of its own
+        v = parse_number(m.group(1))
+        if v is not None and -60 <= to_c(v, m.group(3)) <= 10:
+            values.append(to_c(v, m.group(3)))
     for m in _DEGREE.finditer(quote):
         v = parse_number(m.group(1))
         if v is None:

@@ -78,6 +78,7 @@ const OFFERS_MS = 25000; // a cold retailer search is 10-20 s; the UI shows a ba
 const WARM_MS = 8000;
 const PARTS_MS = 12000;
 const CHAT_MS = 120000;
+const CLIMATE_MS = 8000; // two in-memory tables on the API side: this is never a slow route
 const INGEST_POLL_MS = 1000;
 const INGEST_MAX_MS = 15 * 60 * 1000;
 const SECTIONS_POLL_MS = 2000;
@@ -1398,3 +1399,73 @@ export async function voiceSettings(manualId, bikeId) {
   return quiet(`/voice/agent-settings?${params.toString()}`, { ms: 15000 }, null);
 }
 
+
+// ---------------------------------------------------------------- climate fit
+
+/**
+ * Climate Fit — the manual's own environment-conditional rules, resolved against the measured
+ * climate where the vehicle lives. Owner of the endpoints: climate agent.
+ *
+ *   GET  /climate/station?lat&lon | ?q=<city>   -> StationClimate
+ *   POST /climate/fit  {manualId, bikeId, lat, lon} | {manualId, place}
+ *          -> { manualId, station, verdicts: [{rule, status, claim, evidence, ...}],
+ *               breached, checked, ms }
+ *   GET  /climate/anomalies                      -> { rows, manualsWithRules, stations }
+ *
+ * Costs no tokens and no network round trip beyond this one call: the API answers from two
+ * precomputed tables. Resolves to null in LOCAL mode, while the route is a 404, or on a timeout —
+ * the strip then renders nothing rather than guessing.
+ */
+const climateCache = new Map(); // "manualId/key" -> ClimateFit | null
+
+export async function climateStation({ lat, lon, place } = {}) {
+  await loadCatalog();
+  if (mode !== "remote") return null;
+  const query = new URLSearchParams();
+  if (place) query.set("q", String(place));
+  else if (Number.isFinite(lat) && Number.isFinite(lon)) {
+    query.set("lat", String(lat));
+    query.set("lon", String(lon));
+  } else return null;
+  return quiet(`/climate/station?${query}`, { ms: CLIMATE_MS }, null);
+}
+
+export async function climateFit(manualId, { lat, lon, place, bikeId } = {}) {
+  await loadCatalog();
+  if (mode !== "remote") return null;
+  const id = manualIdFor(manualId) || manualId;
+  if (!id) return null;
+  const key = place
+    ? `place:${String(place).toLowerCase()}`
+    : Number.isFinite(lat) && Number.isFinite(lon)
+      ? `${lat.toFixed(2)},${lon.toFixed(2)}`
+      : "";
+  if (!key) return null;
+  const memo = `${id}/${key}`;
+  if (climateCache.has(memo)) return climateCache.get(memo);
+  const body = await quiet(
+    "/climate/fit",
+    {
+      method: "POST",
+      ms: CLIMATE_MS,
+      json: {
+        manualId: String(id),
+        bikeId: bikeId ? String(bikeId) : null,
+        lat: place ? null : lat,
+        lon: place ? null : lon,
+        place: place ? String(place) : null,
+      },
+    },
+    null
+  );
+  const out = body && Array.isArray(body.verdicts) ? body : null;
+  climateCache.set(memo, out);
+  return out;
+}
+
+export async function climateAnomalies(ruleType) {
+  await loadCatalog();
+  if (mode !== "remote") return null;
+  const query = ruleType ? `?ruleType=${encodeURIComponent(ruleType)}` : "";
+  return quiet(`/climate/anomalies${query}`, { ms: CLIMATE_MS }, null);
+}

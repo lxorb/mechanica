@@ -36,9 +36,8 @@
  *
  * THE STAGE
  *   Four environments — Service / Garage / Studio / Warehouse, Poly Haven HDRIs, CC0 — chosen with
- *   the swatches at the top right and remembered in localStorage. The .hdr lights the vehicle
- *   through PMREM; a tonemapped .jpg is the backdrop at backgroundBlurriness 0, 4k first and 8k
- *   swapped in on desktop. ENVIRONMENTS also supports `scene: "<file>.glb"` for a modelled room
+ *   The .hdr (1k) lights the vehicle through PMREM; the backdrop is always the technical grid
+ *   (the panoramas were removed: 30-180 MB of GPU memory each). ENVIRONMENTS also supports `scene: "<file>.glb"` for a modelled room
  *   (loadRoom); see CREDITS.md for why the Garage is currently an HDRI and not the GLB.
  *
  *   Exploding cross-fades the panorama to a technical grid (technicalBackdrop) over 400 ms:
@@ -1149,70 +1148,25 @@ async function loadRoom(THREE, file, radius, height) {
 }
 
 /**
- * The unmasked GPU name, or "" when the browser hides it. Chrome reports a coarse string such as
- * "ANGLE (Qualcomm, Adreno (TM) X1-85 GPU, Direct3D11 ...)", which is all this needs.
+ * The HDRI is the light, not the picture. PMREM resamples it to a 256 px cube either way, so
+ * the 1k file is all it needs; the backdrop is the technical grid, always. (The 4k/8k panoramas
+ * were 30-180 MB of GPU memory per environment, and on integrated GPUs the tab died for it.)
  */
-function gpuName(renderer) {
-  try {
-    const gl = renderer.getContext();
-    const info = gl.getExtension("WEBGL_debug_renderer_info");
-    return info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL) || "") : "";
-  } catch {
-    return "";
-  }
-}
-
-/**
- * Whether the 8k panorama is worth asking for. It is a 32-megapixel texture with a full mip
- * chain and 16x anisotropy: about 180 MB of GPU memory per environment, on top of the 4k it
- * replaces. Discrete GPUs and Apple silicon take it in stride; integrated and mobile parts
- * (Adreno, Mali, Intel UHD/Iris, software renderers) are where the tab dies with an
- * "Aw, Snap" instead, so they stay on the 4k, which is sharp at any laptop size.
- */
-function wantsEightK(renderer) {
-  const gpu = gpuName(renderer);
-  if (!gpu) return false;
-  if (/SwiftShader|Basic Render|llvmpipe|Adreno|Qualcomm|Mali|PowerVR|Intel/i.test(gpu)) return false;
-  return /NVIDIA|GeForce|Radeon|AMD|Apple/i.test(gpu);
-}
-
-function loadEnvironment(THREE, renderer, name, big) {
-  const id = `${name}:${big ? "big" : "small"}`;
-  if (envCache.has(id)) return envCache.get(id);
+function loadEnvironment(THREE, renderer, name) {
+  if (envCache.has(name)) return envCache.get(name);
   const base = new URL("../../store/models/env/", import.meta.url).href;
   const job = (async () => {
     const { RGBELoader } = await loadAddon("loaders/RGBELoader.js");
-    const hdr = await new RGBELoader().loadAsync(`${base}${name}-${big ? "2k" : "1k"}.hdr`);
+    const hdr = await new RGBELoader().loadAsync(`${base}${name}-1k.hdr`);
     hdr.mapping = THREE.EquirectangularReflectionMapping;
     const pmrem = new THREE.PMREMGenerator(renderer);
     const environment = pmrem.fromEquirectangular(hdr);
     pmrem.dispose();
-    /**
-     * The visible panorama, in two passes. The 4k (2.0 MB) is on screen in about a second and is
-     * already sharp at phone size; on desktop the 8k (4.8 MB) is fetched behind it and swapped in
-     * when it lands, which is `upgrade` below. Phones stop at 4k — an 8k equirect is a 32 megapixel
-     * texture and not worth the memory on a handset.
-     *
-     * Both are Poly Haven's tonemapped export, not the HDR: the viewer now renders the backdrop
-     * with backgroundBlurriness = 0, so what you see is the actual pixels, and a tonemapped JPEG
-     * carries far more of them per byte than an HDR does.
-     */
-    const panorama = async (size) => {
-      const texture = await new THREE.TextureLoader().loadAsync(`${base}${name}-${size}.jpg`);
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      texture.colorSpace = THREE.SRGBColorSpace;
-      return texture;
-    };
-    // 4k on both: it is 0.6-2.0 MB per environment, inside the phone budget, and at
-    // backgroundBlurriness 0 a 2k equirect is visibly soft even on a handset
-    const background = await panorama("4k").catch(() => hdr);
-    if (background !== hdr) hdr.dispose();
-    // desktop only, only once the 4k is already up, and only on a GPU that can hold it
-    const upgrade = big && wantsEightK(renderer) ? panorama("8k").catch(() => null) : Promise.resolve(null);
-    return { environment, background, upgrade };
+    hdr.dispose();
+    return { environment };
   })();
-  envCache.set(id, job);
-  job.catch(() => envCache.delete(id));
+  envCache.set(name, job);
+  job.catch(() => envCache.delete(name));
   return job;
 }
 
@@ -1679,27 +1633,11 @@ function createScene(THREE, host, initialModel, opts) {
 
   // the grid the panorama cross-fades to when the vehicle comes apart
   const gridBackdrop = technicalBackdrop(THREE);
+  gridBackdrop.material.uniforms.uOpacity.value = 1;
+  gridBackdrop.visible = true;
   scene.add(gridBackdrop);
-  let gridNow = 0;
-  let gridTarget = 0;
-
-  /**
-   * The panorama. backgroundBlurriness stays at 0 — the founder's note was that it looked like
-   * "blurry pixelated stuff", and it was: a 2k JPEG blurred by the renderer. A sharp, properly
-   * sampled panorama is the point, so this asks for mipmaps and the highest anisotropy the GPU
-   * offers, which is what keeps it crisp while the camera swings.
-   */
-  function setBackdrop(texture) {
-    if (!texture) return;
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = Math.min(16, renderer.capabilities.getMaxAnisotropy());
-    texture.minFilter = THREE.LinearMipmapLinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.generateMipmaps = true;
-    texture.needsUpdate = true;
-    scene.background = texture;
-    scene.backgroundBlurriness = 0;
-  }
+  let gridNow = 1;
+  let gridTarget = 1;
 
   /* ------------------------------------------------------------- auto exposure
    * A safety net, not a look. Some Sketchfab exports come out legible and some come out as a
@@ -1815,10 +1753,9 @@ function createScene(THREE, host, initialModel, opts) {
     // through every doorway and window
     if (room) { scene.remove(room.root); room.dispose(); room = null; }
 
-    const big = Math.max(window.innerWidth || 0, 1) >= 900;
     const lighting = entry.lighting || entry.id;
     try {
-      const loaded = await loadEnvironment(THREE, renderer, lighting, big);
+      const loaded = await loadEnvironment(THREE, renderer, lighting);
       if (disposed || token !== envToken) return;
       scene.environment = loaded.environment.texture;
       scene.environmentIntensity = 1;
@@ -1841,16 +1778,7 @@ function createScene(THREE, host, initialModel, opts) {
         // you cannot orbit through a wall you can see
         if (controls && room.limit > model.radius) controls.maxDistance = Math.min(controls.maxDistance, room.limit);
       } else {
-        setBackdrop(loaded.background);
-        // the 8k, when it arrives, replaces the 4k in place — same framing, more pixels
-        if (loaded.upgrade) {
-          loaded.upgrade.then((texture) => {
-            if (disposed || token !== envToken || !texture) return;
-            setBackdrop(texture);
-            host.setAttribute("data-env-detail", "8k");
-            run();
-          });
-        }
+        scene.background = null;
       }
       applyEnvironment();
       exposureChecked = false;
@@ -1861,9 +1789,8 @@ function createScene(THREE, host, initialModel, opts) {
     }
   }
 
-  const picker = opts.environment === false || opts.picker === false
-    ? null
-    : environmentPicker(host, (id) => { rememberEnv(id); useEnvironment(id); });
+  // No picker: the backdrop is the technical grid in every state, and the HDRI only lights.
+  const picker = null;
 
   if (envId) useEnvironment(envId);
 
@@ -2106,7 +2033,7 @@ function createScene(THREE, host, initialModel, opts) {
       const to = on ? amount : 0;
       target = to;
       host.setAttribute("data-exploded", on ? "on" : "off");
-      gridTarget = on ? 1 : 0;              // cross-fade the panorama to the technical grid
+      gridTarget = 1;                        // the grid is the backdrop in both states
       gridBackdrop.visible = true;
       exposureChecked = false;               // ink behind the parts is a different exposure problem
       settled = 0;
@@ -2247,7 +2174,7 @@ function createScene(THREE, host, initialModel, opts) {
       }
     }
 
-    // panorama <-> technical grid, on the same clock as the explode
+    // grid opacity, on the same clock as the explode (always 1 now; kept for the tween)
     if (Math.abs(gridNow - gridTarget) > 0.002) {
       const step = dt * (1000 / EXPLODE_MS);
       gridNow += Math.sign(gridTarget - gridNow) * Math.min(Math.abs(gridTarget - gridNow), step);

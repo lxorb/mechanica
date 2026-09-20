@@ -99,15 +99,13 @@ The stage the vehicle stands on. Four of them, picked with the swatches at the t
 viewer and remembered per browser (`mechanica.viewer3d.env` in localStorage). All four are
 **Poly Haven HDRIs, CC0** — no attribution required, credited anyway.
 
-Each one is two assets doing two different jobs, and they are not two resolutions of one thing:
-
-- the **.hdr** drives the lighting. It goes through `PMREMGenerator` into `scene.environment`, is
-  never looked at directly, and 1k on phones / 2k on desktop is already finer than the
-  roughness-blurred mips can show.
-- the **.jpg** IS the picture behind the bike. Since `scene.backgroundBlurriness` went to 0
-  nothing hides its pixels, so it ships at 8k on desktop and 4k on phones, loaded progressively
-  (4k paints, 8k replaces it). Poly Haven's own encoding varies from 4 MB to 21 MB for the same
-  image, so `web/tools/env-fetch.mjs` re-encodes every one to a budget.
+Since 2026-09-20 only the **1k .hdr** ships: it drives the lighting through `PMREMGenerator`
+into `scene.environment` and is never looked at directly. The tonemapped **.jpg panoramas
+(4k/8k) and the 2k .hdr were removed** — the backdrop is the technical grid in every state. A
+32-megapixel panorama with a full mip chain was 30-180 MB of GPU memory per environment, and
+on integrated GPUs (Adreno X1 on Windows ARM, for one) Chrome killed the tab for it, reproducibly.
+`web/tools/env-fetch.mjs` can still fetch and re-encode the panoramas if they ever come back.
+The table keeps the sizes for the record.
 
 | swatch | environment | author | .hdr 1k / 2k | .jpg 4k / 8k |
 | --- | --- | --- | --- | --- |

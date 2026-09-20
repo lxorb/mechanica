@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-from conftest import BMW, DATA_DIR
+from conftest import BMW, DATA_DIR, KTM
 
 TOOLS = ["/voice/tools/find_procedure", "/voice/tools/read_page", "/voice/tools/get_spec", "/voice/tools/list_parts"]
 CHUNK = 1200
@@ -115,6 +115,26 @@ def test_get_spec_falls_back_to_single_words(client):
     names = [s["name"].lower() for s in body["specs"]]
     assert names, "the word-level fallback returned nothing"
     assert any("wear limit" in n or "brake" in n for n in names)
+
+
+def test_get_spec_answers_the_end_that_was_asked_for(client):
+    """"and the front one?" is the whole question. A word-level match for "front axle nut torque"
+    used to come back with "Nut, rear wheel spindle" - the right shape, the wrong end, 55 Nm of
+    difference - and spoken aloud there is no page on screen to catch it."""
+    front = client.post("/voice/tools/get_spec", json={"manualId": KTM, "name": "front axle nut torque"}).json()
+    assert front["specs"], "the front spindle torque is printed in this manual"
+    assert "front" in front["specs"][0]["name"].lower()
+    assert not any("rear" in s["name"].lower() for s in front["specs"])
+
+    rear = client.post("/voice/tools/get_spec", json={"manualId": KTM, "name": "rear axle nut torque"}).json()
+    assert "rear" in rear["specs"][0]["name"].lower()
+    assert rear["specs"][0]["value"] != front["specs"][0]["value"]
+
+
+def test_get_spec_prefers_the_kind_of_figure_that_was_asked_for(client):
+    """"torque" is not a word that happens to appear, it says which column of the book to read."""
+    body = client.post("/voice/tools/get_spec", json={"manualId": KTM, "name": "front axle nut torque"}).json()
+    assert "Nm" in body["specs"][0]["value"], "a pressure shares the word 'front' and nothing else"
 
 
 def test_get_spec_unknown_name_returns_an_empty_list_not_a_guess(client):

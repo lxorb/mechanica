@@ -1,0 +1,78 @@
+[
+ {
+  "ruleType": "altitude",
+  "values": [
+   [
+    "500 m",
+    3
+   ]
+  ],
+  "manuals": 3,
+  "distinct": 1,
+  "markets": {
+   "us": 2,
+   "eu": 1
+  },
+  "makes": {
+   "ktm": 3
+  },
+  "spread": 0.0
+ },
+ {
+  "ruleType": "antifreeze_floor",
+  "values": [
+   [
+    "-25 °C",
+    227
+   ]
+  ],
+  "manuals": 227,
+  "distinct": 1,
+  "markets": {
+   "eu": 108,
+   "us": 77,
+   "ww": 31,
+   "rw": 4,
+   "ar": 3,
+   "jp": 1,
+   "ph": 1,
+   "cn": 1,
+   "br": 1
+  },
+  "makes": {
+   "ktm": 122,
+   "husqvarna": 64,
+   "gasgas": 39,
+   "bmw": 2
+  },
+  "spread": 0.0
+ },
+ {
+  "ruleType": "oil_grade_band",
+  "values": [
+   [
+    "SAE5W/40",
+    21
+   ],
+   [
+    "SAE10W/50",
+    21
+   ],
+   [
+    "SAE15W/50",
+    1
+   ]
+  ],
+  "manuals": 43,
+  "distinct": 3,
+  "markets": {
+   "eu": 30,
+   "us": 12,
+   "ph": 1
+  },
+  "makes": {
+   "ktm": 43
+  },
+  "spread": 0.5116
+ }
+]

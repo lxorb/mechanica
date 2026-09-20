@@ -1,0 +1,542 @@
+{
+ "clusters": {
+  "bmw ce 04": [
+   "bmw-ce-04-2024-eu-om",
+   "bmw-ce-04-2025-eu-om"
+  ],
+  "gasgas ec 125": [
+   "gasgas-ec-125-2025-eu-om"
+  ],
+  "gasgas ec 250": [
+   "gasgas-ec-250-2024-eu-om"
+  ],
+  "gasgas ec 250f": [
+   "gasgas-ec-250f-2024-eu-om",
+   "gasgas-ec-250f-2025-eu-om"
+  ],
+  "gasgas ec 300": [
+   "gasgas-ec-300-2026-eu-om"
+  ],
+  "gasgas ec 300 gp": [
+   "gasgas-ec-300-gp-2025-eu-om",
+   "gasgas-ec-300-gp-2026-rw-om"
+  ],
+  "gasgas ec 350f": [
+   "gasgas-ec-350f-2024-eu-om",
+   "gasgas-ec-350f-2025-eu-om",
+   "gasgas-ec-350f-2026-eu-om"
+  ],
+  "gasgas ec 450f": [
+   "gasgas-ec-450f-2024-eu-om",
+   "gasgas-ec-450f-2025-eu-om"
+  ],
+  "gasgas ec 500f": [
+   "gasgas-ec-500f-2026-eu-om"
+  ],
+  "gasgas es 350": [
+   "gasgas-es-350-2024-us-om",
+   "gasgas-es-350-2025-us-om"
+  ],
+  "gasgas es 500": [
+   "gasgas-es-500-2024-us-om",
+   "gasgas-es-500-2025-us-om"
+  ],
+  "gasgas es 700": [
+   "gasgas-es-700-2024-eu-om",
+   "gasgas-es-700-2024-us-om"
+  ],
+  "gasgas ex 250": [
+   "gasgas-ex-250-2024-us-om",
+   "gasgas-ex-250-2025-us-om"
+  ],
+  "gasgas ex 300": [
+   "gasgas-ex-300-2026-us-om"
+  ],
+  "gasgas ex 350f": [
+   "gasgas-ex-350f-2024-us-om",
+   "gasgas-ex-350f-2025-us-om"
+  ],
+  "gasgas mc 125": [
+   "gasgas-mc-125-2025-ww-om",
+   "gasgas-mc-125-2026-ww-om"
+  ],
+  "gasgas mc 250f": [
+   "gasgas-mc-250f-2026-ar-om",
+   "gasgas-mc-250f-factory-edition-2025-us-om"
+  ],
+  "gasgas mc 450f": [
+   "gasgas-mc-450f-2026-ww-om",
+   "gasgas-mc-450f-factory-edition-2025-us-om"
+  ],
+  "gasgas mc 50": [
+   "gasgas-mc-50-2025-ww-om",
+   "gasgas-mc-50-2026-ww-om"
+  ],
+  "gasgas mc 65": [
+   "gasgas-mc-65-2025-ww-om",
+   "gasgas-mc-65-2026-ww-om"
+  ],
+  "gasgas mc 85 17 14": [
+   "gasgas-mc-85-17-14-2025-ww-om",
+   "gasgas-mc-85-17-14-2026-ww-om"
+  ],
+  "gasgas mc e 5": [
+   "gasgas-mc-e-5-2025-us-om"
+  ],
+  "gasgas rx 450f replica": [
+   "gasgas-rx-450f-replica-2025-ww-om"
+  ],
+  "gasgas txt racing 125": [
+   "gasgas-txt-racing-125-2025-eu-om"
+  ],
+  "husqvarna 701 enduro": [
+   "husqvarna-701-enduro-2024-eu-om",
+   "husqvarna-701-enduro-2024-us-om",
+   "husqvarna-701-enduro-2026-eu-om"
+  ],
+  "husqvarna 701 supermoto": [
+   "husqvarna-701-supermoto-2024-eu-om",
+   "husqvarna-701-supermoto-2024-us-om",
+   "husqvarna-701-supermoto-2026-eu-om",
+   "husqvarna-701-supermoto-2026-us-om"
+  ],
+  "husqvarna ee 5": [
+   "husqvarna-ee-5-2025-ww-om"
+  ],
+  "husqvarna fc 250": [
+   "husqvarna-fc-250-factory-edition-2025-us-om",
+   "husqvarna-fc-250-factory-edition-2026-us-om"
+  ],
+  "husqvarna fc 250 rockstar": [
+   "husqvarna-fc-250-rockstar-edition-2024-us-om"
+  ],
+  "husqvarna fc 350": [
+   "husqvarna-fc-350-2024-eu-om"
+  ],
+  "husqvarna fc 350 heritage": [
+   "husqvarna-fc-350-heritage-2025-us-om"
+  ],
+  "husqvarna fc 450": [
+   "husqvarna-fc-450-factory-edition-2025-us-om",
+   "husqvarna-fc-450-factory-edition-2026-us-om"
+  ],
+  "husqvarna fc 450 rockstar": [
+   "husqvarna-fc-450-rockstar-edition-2024-us-om"
+  ],
+  "husqvarna 250": [
+   "husqvarna-fe-250-2024-eu-om",
+   "husqvarna-fe-250-2026-eu-om"
+  ],
+  "husqvarna 250 heritage": [
+   "husqvarna-fe-250-heritage-2025-eu-om"
+  ],
+  "husqvarna 350 heritage": [
+   "husqvarna-fe-350-heritage-2025-eu-om"
+  ],
+  "husqvarna 350 pro": [
+   "husqvarna-fe-350-pro-2026-eu-om"
+  ],
+  "husqvarna 350s": [
+   "husqvarna-fe-350s-2026-us-om"
+  ],
+  "husqvarna 350s heritage": [
+   "husqvarna-fe-350s-heritage-2025-us-om"
+  ],
+  "husqvarna 450": [
+   "husqvarna-fe-450-2026-eu-om"
+  ],
+  "husqvarna 450 heritage": [
+   "husqvarna-fe-450-heritage-2025-eu-om"
+  ],
+  "husqvarna 501s": [
+   "husqvarna-fe-501s-2026-us-om"
+  ],
+  "husqvarna 501s heritage": [
+   "husqvarna-fe-501s-heritage-2025-us-om"
+  ],
+  "husqvarna fr 450 rally": [
+   "husqvarna-fr-450-rally-2025-ww-om"
+  ],
+  "husqvarna fs 450": [
+   "husqvarna-fs-450-2025-ww-om",
+   "husqvarna-fs-450-2026-eu-om"
+  ],
+  "husqvarna fx 350": [
+   "husqvarna-fx-350-2026-us-om"
+  ],
+  "husqvarna norden 901 expedition": [
+   "husqvarna-norden-901-expedition-2025-eu-om",
+   "husqvarna-norden-901-expedition-2025-us-om",
+   "husqvarna-norden-901-expedition-2026-eu-om"
+  ],
+  "husqvarna svartpilen 125": [
+   "husqvarna-svartpilen-125-2025-eu-om"
+  ],
+  "husqvarna svartpilen 250": [
+   "husqvarna-svartpilen-250-2025-jp-om",
+   "husqvarna-svartpilen-250-2025-us-om"
+  ],
+  "husqvarna svartpilen 401": [
+   "husqvarna-svartpilen-401-2025-eu-om",
+   "husqvarna-svartpilen-401-2025-us-om",
+   "husqvarna-svartpilen-401-2026-eu-om"
+  ],
+  "husqvarna svartpilen 801": [
+   "husqvarna-svartpilen-801-2025-us-om",
+   "husqvarna-svartpilen-801-se-2026-eu-om"
+  ],
+  "husqvarna svartpilen 801 l": [
+   "husqvarna-svartpilen-801-l-2025-eu-om"
+  ],
+  "husqvarna tc 125": [
+   "husqvarna-tc-125-2026-us-om"
+  ],
+  "husqvarna tc 125 heritage": [
+   "husqvarna-tc-125-heritage-2025-ww-om"
+  ],
+  "husqvarna tc 250": [
+   "husqvarna-tc-250-2026-ww-om"
+  ],
+  "husqvarna tc 250 heritage": [
+   "husqvarna-tc-250-heritage-2025-ww-om"
+  ],
+  "husqvarna tc 50": [
+   "husqvarna-tc-50-2025-ww-om",
+   "husqvarna-tc-50-2026-ww-om"
+  ],
+  "husqvarna tc 65": [
+   "husqvarna-tc-65-2025-ww-om",
+   "husqvarna-tc-65-2026-ww-om"
+  ],
+  "husqvarna tc 85 17 14": [
+   "husqvarna-tc-85-17-14-2025-ww-om",
+   "husqvarna-tc-85-17-14-2026-ww-om"
+  ],
+  "husqvarna te 125": [
+   "husqvarna-te-125-2025-eu-om",
+   "husqvarna-te-125-2026-eu-om"
+  ],
+  "husqvarna te 250 heritage": [
+   "husqvarna-te-250-heritage-2025-eu-om"
+  ],
+  "husqvarna te 300 pro": [
+   "husqvarna-te-300-pro-2026-eu-om"
+  ],
+  "husqvarna vitpilen 125": [
+   "husqvarna-vitpilen-125-2025-eu-om"
+  ],
+  "husqvarna vitpilen 401": [
+   "husqvarna-vitpilen-401-2025-eu-om",
+   "husqvarna-vitpilen-401-2025-us-om",
+   "husqvarna-vitpilen-401-2026-rw-om"
+  ],
+  "husqvarna vitpilen 801": [
+   "husqvarna-vitpilen-801-2026-eu-om",
+   "husqvarna-vitpilen-801-2026-us-om"
+  ],
+  "husqvarna vitpilen 801 l": [
+   "husqvarna-vitpilen-801-l-2025-eu-om"
+  ],
+  "ktm 105 sx": [
+   "ktm-105-sx-2006-eu-om",
+   "ktm-105-sx-2007-us-om",
+   "ktm-105-sx-2008-us-om"
+  ],
+  "ktm 125 duke": [
+   "ktm-125-duke-2024-eu-om",
+   "ktm-125-duke-2025-eu-om",
+   "ktm-125-duke-2026-eu-om"
+  ],
+  "ktm 125 enduro": [
+   "ktm-125-enduro-r-2025-eu-om",
+   "ktm-125-enduro-r-2026-eu-om"
+  ],
+  "ktm 125 smc": [
+   "ktm-125-smc-r-2025-eu-om",
+   "ktm-125-smc-r-2026-eu-om"
+  ],
+  "ktm 125 sx": [
+   "ktm-125-sx-2024-eu-om",
+   "ktm-125-sx-2025-eu-om",
+   "ktm-125-sx-2026-us-om"
+  ],
+  "ktm 125 xc w": [
+   "ktm-125-xc-w-2025-eu-om",
+   "ktm-125-xc-w-2026-eu-om"
+  ],
+  "ktm 1290": [
+   "ktm-1290-super-adventure-r-2024-eu-om",
+   "ktm-1290-super-adventure-r-2024-us-om",
+   "ktm-1290-super-adventure-s-2024-eu-om",
+   "ktm-1290-super-adventure-s-2024-us-om"
+  ],
+  "ktm 1290 duke": [
+   "ktm-1290-super-duke-gt-2024-eu-om",
+   "ktm-1290-super-duke-gt-2024-us-om"
+  ],
+  "ktm 1390": [
+   "ktm-1390-super-adventure-r-2026-eu-om",
+   "ktm-1390-super-adventure-r-2026-us-om",
+   "ktm-1390-super-adventure-s-2026-eu-om",
+   "ktm-1390-super-adventure-s-evo-2026-eu-om"
+  ],
+  "ktm 1390 duke": [
+   "ktm-1390-super-duke-r-2024-eu-om",
+   "ktm-1390-super-duke-r-2025-eu-om",
+   "ktm-1390-super-duke-r-2026-eu-om",
+   "ktm-1390-super-duke-r-evo-2024-eu-om",
+   "ktm-1390-super-duke-r-evo-2025-eu-om",
+   "ktm-1390-super-duke-r-evo-2025-us-om",
+   "ktm-1390-super-duke-r-evo-2026-eu-om",
+   "ktm-1390-super-duke-r-evo-2026-us-om",
+   "ktm-1390-super-duke-rr-2026-eu-om",
+   "ktm-1390-super-duke-rr-track-2026-eu-om"
+  ],
+  "ktm 1400 brabus signature": [
+   "ktm-1400-brabus-r-2026-signature-edition-2026-eu-om"
+  ],
+  "ktm 200 duke": [
+   "ktm-200-duke-2025-ar-om",
+   "ktm-200-duke-2026-ph-om"
+  ],
+  "ktm 250 duke": [
+   "ktm-250-duke-2025-eu-om",
+   "ktm-250-duke-2025-us-om",
+   "ktm-250-duke-2026-rw-om",
+   "ktm-250-duke-2026-us-om"
+  ],
+  "ktm 250 exc f 6days": [
+   "ktm-250-exc-f-6days-2026-eu-om"
+  ],
+  "ktm 250 exc f champion": [
+   "ktm-250-exc-f-champion-edition-2025-eu-om"
+  ],
+  "ktm 250 sx": [
+   "ktm-250-sx-2025-eu-om",
+   "ktm-250-sx-2026-ww-om"
+  ],
+  "ktm 250 sx f": [
+   "ktm-250-sx-f-factory-edition-2025-us-om",
+   "ktm-250-sx-f-factory-edition-2026-us-om"
+  ],
+  "ktm 300 exc champion": [
+   "ktm-300-exc-champion-edition-2026-rw-om"
+  ],
+  "ktm 300 xc w champion": [
+   "ktm-300-xc-w-champion-edition-2025-us-om"
+  ],
+  "ktm 300 xc w hardenduro": [
+   "ktm-300-xc-w-hardenduro-2026-us-om"
+  ],
+  "ktm 350 exc f": [
+   "ktm-350-exc-f-2026-us-om"
+  ],
+  "ktm 350 exc f 6days": [
+   "ktm-350-exc-f-6days-2026-eu-om"
+  ],
+  "ktm 350 exc f champion": [
+   "ktm-350-exc-f-champion-edition-2025-eu-om",
+   "ktm-350-exc-f-champion-edition-2025-us-om"
+  ],
+  "ktm 350 xc f": [
+   "ktm-350-xc-f-factory-edition-2025-us-om",
+   "ktm-350-xc-f-factory-edition-2026-us-om"
+  ],
+  "ktm 390": [
+   "ktm-390-adventure-2024-eu-om",
+   "ktm-390-adventure-r-2025-eu-om",
+   "ktm-390-adventure-r-2025-us-om",
+   "ktm-390-adventure-r-2026-eu-om",
+   "ktm-390-adventure-r-2026-us-om",
+   "ktm-390-adventure-x-2025-eu-om",
+   "ktm-390-adventure-x-2025-us-om",
+   "ktm-390-adventure-x-2026-eu-om",
+   "ktm-390-adventure-x-2026-us-om"
+  ],
+  "ktm 390 duke": [
+   "ktm-390-duke-2023-eu-om",
+   "ktm-390-duke-2025-eu-om",
+   "ktm-390-duke-2025-us-om",
+   "ktm-390-duke-2026-eu-om",
+   "ktm-390-duke-2026-us-om"
+  ],
+  "ktm 390 duke om en": [
+   "ktm-390-duke-2024-om-en"
+  ],
+  "ktm 390 enduro": [
+   "ktm-390-enduro-r-2025-eu-om",
+   "ktm-390-enduro-r-2025-us-om",
+   "ktm-390-enduro-r-2026-eu-om",
+   "ktm-390-enduro-r-2026-us-om"
+  ],
+  "ktm 390 smc": [
+   "ktm-390-smc-r-2025-eu-om",
+   "ktm-390-smc-r-2025-us-om",
+   "ktm-390-smc-r-2026-eu-om",
+   "ktm-390-smc-r-2026-us-om"
+  ],
+  "ktm 450 exc f 6days": [
+   "ktm-450-exc-f-6days-2026-eu-om"
+  ],
+  "ktm 450 exc f champion": [
+   "ktm-450-exc-f-champion-edition-2025-eu-om"
+  ],
+  "ktm 450 rally replica": [
+   "ktm-450-rally-replica-2025-ww-om",
+   "ktm-450-rally-replica-2026-ww-om"
+  ],
+  "ktm 450 smr": [
+   "ktm-450-smr-2025-eu-om",
+   "ktm-450-smr-2026-eu-om"
+  ],
+  "ktm 450 sx f": [
+   "ktm-450-sx-f-factory-edition-2025-us-om",
+   "ktm-450-sx-f-factory-edition-2026-us-om"
+  ],
+  "ktm 50 sx": [
+   "ktm-50-sx-factory-edition-2025-ww-om",
+   "ktm-50-sx-factory-edition-2026-ww-om"
+  ],
+  "ktm 500 exc f 6days": [
+   "ktm-500-exc-f-6days-2026-us-om"
+  ],
+  "ktm 500 exc f champion": [
+   "ktm-500-exc-f-champion-edition-2025-us-om"
+  ],
+  "ktm 65 sx": [
+   "ktm-65-sx-2025-cn-om",
+   "ktm-65-sx-2026-eu-om"
+  ],
+  "ktm 690 enduro": [
+   "ktm-690-enduro-r-2026-eu-om",
+   "ktm-690-enduro-r-2026-us-om"
+  ],
+  "ktm 690 smc": [
+   "ktm-690-smc-r-2026-eu-om",
+   "ktm-690-smc-r-2026-us-om"
+  ],
+  "ktm 790": [
+   "ktm-790-adventure-2025-eu-om",
+   "ktm-790-adventure-2025-us-om",
+   "ktm-790-adventure-2026-eu-om",
+   "ktm-790-adventure-2026-us-om",
+   "ktm-790-adventure-r-2025-br-om",
+   "ktm-790-adventure-r-2026-ar-om"
+  ],
+  "ktm 790 duke": [
+   "ktm-790-duke-2025-eu-om",
+   "ktm-790-duke-2026-eu-om"
+  ],
+  "ktm 85 sx 17 14": [
+   "ktm-85-sx-17-14-2025-ww-om",
+   "ktm-85-sx-17-14-2026-eu-om"
+  ],
+  "ktm 890": [
+   "ktm-890-adventure-r-2025-eu-om",
+   "ktm-890-adventure-r-2025-us-om",
+   "ktm-890-adventure-r-2026-us-om"
+  ],
+  "ktm 890 rally": [
+   "ktm-890-adventure-r-rally-2026-eu-om"
+  ],
+  "ktm 890 duke": [
+   "ktm-890-duke-r-2023-eu-om"
+  ],
+  "ktm 890 smt": [
+   "ktm-890-smt-2026-eu-om"
+  ],
+  "ktm 990 duke": [
+   "ktm-990-duke-2026-eu-om",
+   "ktm-990-duke-r-2026-eu-om",
+   "ktm-990-duke-r-2026-us-om"
+  ],
+  "ktm 990 rc": [
+   "ktm-990-rc-r-2026-eu-om",
+   "ktm-990-rc-r-2026-us-om",
+   "ktm-990-rc-r-track-2026-ww-om"
+  ],
+  "ktm sx e 3": [
+   "ktm-sx-e-3-2025-ww-om"
+  ],
+  "ktm sx e 5": [
+   "ktm-sx-e-5-2026-us-om"
+  ]
+ },
+ "drift": [
+  {
+   "family": "ktm 1290",
+   "ruleType": "oil_grade_band",
+   "values": [
+    "SAE10W/50 (2024)",
+    "SAE5W/40 (2024)"
+   ],
+   "members": [
+    "ktm-1290-super-adventure-r-2024-eu-om",
+    "ktm-1290-super-adventure-r-2024-us-om",
+    "ktm-1290-super-adventure-s-2024-eu-om",
+    "ktm-1290-super-adventure-s-2024-us-om"
+   ]
+  },
+  {
+   "family": "ktm 1290 duke",
+   "ruleType": "oil_grade_band",
+   "values": [
+    "SAE10W/50 (2024)",
+    "SAE5W/40 (2024)"
+   ],
+   "members": [
+    "ktm-1290-super-duke-gt-2024-eu-om",
+    "ktm-1290-super-duke-gt-2024-us-om"
+   ]
+  },
+  {
+   "family": "ktm 1390",
+   "ruleType": "oil_grade_band",
+   "values": [
+    "SAE10W/50 (2026)",
+    "SAE5W/40 (2026)"
+   ],
+   "members": [
+    "ktm-1390-super-adventure-r-2026-eu-om",
+    "ktm-1390-super-adventure-r-2026-us-om",
+    "ktm-1390-super-adventure-s-2026-eu-om",
+    "ktm-1390-super-adventure-s-evo-2026-eu-om"
+   ]
+  },
+  {
+   "family": "ktm 1390 duke",
+   "ruleType": "oil_grade_band",
+   "values": [
+    "SAE10W/50 (2024)",
+    "SAE10W/50 (2025)",
+    "SAE10W/50 (2026)",
+    "SAE5W/40 (2024)",
+    "SAE5W/40 (2025)",
+    "SAE5W/40 (2026)"
+   ],
+   "members": [
+    "ktm-1390-super-duke-r-2024-eu-om",
+    "ktm-1390-super-duke-r-2025-eu-om",
+    "ktm-1390-super-duke-r-2026-eu-om",
+    "ktm-1390-super-duke-r-evo-2024-eu-om",
+    "ktm-1390-super-duke-r-evo-2025-eu-om",
+    "ktm-1390-super-duke-r-evo-2025-us-om",
+    "ktm-1390-super-duke-r-evo-2026-eu-om",
+    "ktm-1390-super-duke-r-evo-2026-us-om",
+    "ktm-1390-super-duke-rr-2026-eu-om",
+    "ktm-1390-super-duke-rr-track-2026-eu-om"
+   ]
+  },
+  {
+   "family": "ktm 1400 brabus signature",
+   "ruleType": "oil_grade_band",
+   "values": [
+    "SAE10W/50 (2026)",
+    "SAE5W/40 (2026)"
+   ],
+   "members": [
+    "ktm-1400-brabus-r-2026-signature-edition-2026-eu-om"
+   ]
+  }
+ ]
+}
