@@ -1,67 +1,66 @@
 /**
- * "Mechanica." — how fast, and how often when nobody said it. Owner: voice agent.
+ * "Mechanica." — what fires it, what does not, and how long the app takes. Owner: voice agent.
  *
- *   node web/tools/wake-test.mjs            ten minutes of shop speech, live recogniser
- *   node web/tools/wake-test.mjs --minutes 2
+ *   node web/tools/wake-test.mjs
  *
- * WHAT IS BEING MEASURED. Two numbers, and they pull against each other:
+ * WHAT COULD NOT BE MEASURED, AND WHY IT IS SAID FIRST.
  *
- *   latency       from the last sample of "Mechanica, <something>" leaving the speaker to the
- *                 wake callback firing in the page. This is what he feels.
- *   false fires   how many times the matcher fired on ten minutes of shop talk that does NOT
- *                 summon it — including "the mechanic said", "mechanical fault", "mechanics",
- *                 which are the words a workshop actually contains.
+ * The plan was ten minutes of shop audio through `--use-file-for-fake-audio-capture` into a live
+ * `webkitSpeechRecognition`. It does not work, and the way it fails is worth writing down:
+ * **Chrome's SpeechRecognition does not use the WebRTC capture path**, so
+ * `--use-fake-device-for-media-stream` does not apply to it. It opened this machine's real
+ * microphone instead and transcribed the room — the first run came back with a colleague's
+ * conversation, which is both a useless measurement and a thing no harness should ever do. The
+ * live-recogniser section was deleted rather than left in with a caveat.
  *
- * HOW. A ten-minute wav is built from aura-2 lines mixed with synthetic shop noise, twelve of
- * which begin with "Mechanica," at known offsets. Headless Chrome plays it into
- * `webkitSpeechRecognition` through `--use-file-for-fake-audio-capture`, which is the real
- * recogniser on the real audio path — Chrome's Web Speech works headlessly, verified before this
- * harness was written. The page runs js/voice-wake.js's own `heard()` over every result.
+ * So Chrome's own recognition latency is NOT measured here. What Chrome contributes is the delay
+ * before an interim result carrying the word arrives, which it does not document and which
+ * varies with its speech service; on a real device that interim lands while the sentence is
+ * still being spoken, which is the whole reason js/voice-wake.js acts on interims at all.
  *
- * THE HONEST PART. Chrome's recogniser is a network service with its own latency and its own
- * accuracy, and both vary by the hour. So the run reports the DISTRIBUTION, not one number, and
- * the false-fire count is reported against the transcript the recogniser actually produced —
- * which is the only thing `heard()` ever sees. A second, offline pass runs `heard()` over a fixed
- * corpus of shop sentences, so the matcher itself has a number that does not move.
+ * WHAT IS MEASURED — both of them things this code is actually responsible for:
+ *
+ *   1. THE MATCHER, offline. js/voice-wake.js's own `heard()` against every way a mechanic says
+ *      it, and against a workshop's worth of sentences containing "mechanic", "mechanical",
+ *      "mechanics" and "mechanic's" — the words a real shop says every ten minutes.
+ *
+ *   2. THE PIPELINE, in headless Chrome, end to end. A scripted recogniser replays the
+ *      interim/final sequence Chrome produces for one spoken sentence, and the clock runs from
+ *      the first transcript that carries the word to `InjectUserMessage` leaving for Deepgram
+ *      with the rest of his sentence in it. Everything in between is ours.
  */
 
-import { createReadStream, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createReadStream, existsSync, mkdirSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, extname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const WEB = resolve(HERE, "..");
-const CACHE = resolve(HERE, ".voice-echo");
+const SHOTS = resolve(WEB, "..", "docs", "voice", "orb");
 const CHROME = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const PUPPETEER =
   process.env.PUPPETEER_DIR ||
   "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js";
-const KEYFILE = process.env.DEEPGRAM_KEY_FILE || "C:/Users/me/agent-secrets/deepgram.txt";
 
-const RATE = 24000;
-const MINUTES = Number((process.argv.find((a) => a.startsWith("--minutes")) || "").split("=")[1] || 0) ||
-  Number(process.argv[process.argv.indexOf("--minutes") + 1]) || 10;
-
-/** The twelve summons. Each is one breath: the word, then the thing he wants. */
+/** Every way a mechanic summons it, and the sentence he expects to carry with it. */
 const WAKES = [
-  "Mechanica, I'm working on a YZF R1.",
-  "Mechanica, what's the torque on the rear axle nut.",
-  "Mechanica, open the manual.",
-  "Mechanica, it's a 390 Duke, twenty twenty-four.",
-  "Mechanica, chain is loose.",
-  "Mechanica, show me the brake fluid page.",
-  "Mechanica, next page.",
-  "Mechanica, I've got a BMW R twelve GS on the lift.",
-  "Mechanica, what oil does it take.",
-  "Mechanica, open the parts list.",
-  "Mechanica, go back.",
-  "Mechanica, which page was that.",
+  ["Mechanica, I'm working on a YZF R1.", "I'm working on a YZF R1."],
+  ["mechanica what's the torque on the rear axle nut", "what's the torque on the rear axle nut"],
+  ["Mechanica. Open the manual.", "Open the manual."],
+  ["mechanika it's a 390 duke twenty twenty four", "it's a 390 duke twenty twenty four"],
+  ["mecanica chain is loose", "chain is loose"],
+  ["Mechanica, show me the brake fluid page.", "show me the brake fluid page."],
+  ["mechanic a next page", "next page"],
+  ["Mechanica, I've got a BMW R twelve GS on the lift.", "I've got a BMW R twelve GS on the lift."],
+  ["hey mechanica what oil does it take", "what oil does it take"],
+  ["Mechanica — go back", "go back"],
 ];
 
 /**
- * Ten minutes of a workshop that is NOT talking to the app — and deliberately full of the word
- * this thing is named after. If any of these fire, the toggle gets switched off within the hour.
+ * A workshop that is NOT talking to the app, written to be as hostile as the real thing: a shop
+ * says "mechanic" all day. If any of these fire, the toggle gets switched off within the hour
+ * and the feature is dead.
  */
 const SHOP = [
   "Can you pass me the fifteen millimetre socket.",
@@ -80,6 +79,10 @@ const SHOP = [
   "That's a mechanic's job, not mine.",
   "Coolant's low again, check the hoses.",
   "He's a good mechanic but he's slow.",
+  "Ask the mechanic about the mechanical seal.",
+  "Mechanically it's fine, cosmetically it's a mess.",
+  "Two mechanics, one lift, all afternoon.",
+  "The mechanics of it are simple enough.",
 ];
 
 const TYPES = {
@@ -88,98 +91,26 @@ const TYPES = {
   ".mjs": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".png": "image/png",
+  ".webp": "image/webp",
+  ".svg": "image/svg+xml",
+  ".woff2": "font/woff2",
+  ".glb": "model/gltf-binary",
 };
-
-/* ------------------------------------------------------------------ wav */
-
-function wavHeader(samples) {
-  const bytes = samples * 2;
-  const head = Buffer.alloc(44);
-  head.write("RIFF", 0);
-  head.writeUInt32LE(36 + bytes, 4);
-  head.write("WAVE", 8);
-  head.write("fmt ", 12);
-  head.writeUInt32LE(16, 16);
-  head.writeUInt16LE(1, 20);
-  head.writeUInt16LE(1, 22);
-  head.writeUInt32LE(RATE, 24);
-  head.writeUInt32LE(RATE * 2, 28);
-  head.writeUInt16LE(2, 32);
-  head.writeUInt16LE(16, 34);
-  head.write("data", 36);
-  head.writeUInt32LE(bytes, 40);
-  return head;
-}
-
-function writeWav(file, pcm) {
-  const body = Buffer.alloc(pcm.length * 2);
-  for (let i = 0; i < pcm.length; i++) {
-    const s = Math.max(-1, Math.min(1, pcm[i]));
-    body.writeInt16LE(Math.round(s < 0 ? s * 0x8000 : s * 0x7fff), i * 2);
-  }
-  writeFileSync(file, Buffer.concat([wavHeader(pcm.length), body]));
-}
-
-function readWav(file) {
-  const raw = readFileSync(file);
-  let at = 12;
-  while (at + 8 <= raw.length) {
-    const id = raw.toString("ascii", at, at + 4);
-    const size = raw.readUInt32LE(at + 4);
-    if (id === "data") {
-      const count = Math.floor(Math.min(size, raw.length - at - 8) / 2);
-      const out = new Float32Array(count);
-      for (let i = 0; i < count; i++) out[i] = raw.readInt16LE(at + 8 + i * 2) / 0x8000;
-      return out;
-    }
-    at += 8 + size + (size % 2);
-  }
-  throw new Error(`no data chunk in ${file}`);
-}
-
-/** Broadband shop noise: a compressor two benches away, not a hiss generator. */
-function shopNoise(samples, level) {
-  const out = new Float32Array(samples);
-  let lp = 0;
-  for (let i = 0; i < samples; i++) {
-    const white = Math.random() * 2 - 1;
-    lp = lp * 0.96 + white * 0.04;
-    // A slow throb on top: an air line cycling.
-    const throb = 0.7 + 0.3 * Math.sin((i / RATE) * 2 * Math.PI * 0.35);
-    out[i] = lp * 8 * level * throb;
-  }
-  return out;
-}
-
-async function speak(text, voice, file) {
-  if (existsSync(file)) return file;
-  const key = readFileSync(KEYFILE, "utf8").trim();
-  const url = `https://api.deepgram.com/v1/speak?model=${voice}&encoding=linear16&sample_rate=${RATE}&container=wav`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { Authorization: `Token ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ text }),
-  });
-  if (!res.ok) throw new Error(`deepgram speak ${res.status}: ${(await res.text()).slice(0, 200)}`);
-  writeFileSync(file, Buffer.from(await res.arrayBuffer()));
-  return file;
-}
-
-function hash(text) {
-  let h = 0;
-  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) | 0;
-  return (h >>> 0).toString(36);
-}
-
-/* ------------------------------------------------------------------ server */
 
 function serve() {
   return new Promise((done) => {
     const server = createServer((req, res) => {
       const path = decodeURIComponent((req.url || "/").split("?")[0]);
-      if (path === "/" || path === "/wake.html") {
-        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-        res.end("<!doctype html><title>wake</title><body>");
+      if (path.startsWith("/fakeapi/")) {
+        const tail = path.slice("/fakeapi".length);
+        let body = {};
+        if (tail === "/health") body = { ok: true };
+        else if (tail === "/catalog") body = [];
+        else if (tail === "/voice/config") body = { deepgram: true, elevenlabsAgentId: null };
+        else if (tail === "/voice/deepgram-token") body = { scheme: "token", key: "stub" };
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(body));
         return;
       }
       const file = normalize(join(WEB, path));
@@ -197,61 +128,39 @@ function serve() {
   });
 }
 
-/* ------------------------------------------------------------------ run */
-
 async function main() {
-  mkdirSync(CACHE, { recursive: true });
+  mkdirSync(SHOTS, { recursive: true });
 
-  // Every line, once, cached: a re-run costs nothing and the audio is identical, which is what
-  // makes two runs comparable.
-  const clips = new Map();
-  for (const line of [...WAKES, ...SHOP]) {
-    const file = join(CACHE, `say-${hash(line)}.wav`);
-    await speak(line, "aura-2-orpheus-en", file);
-    clips.set(line, readWav(file));
-  }
+  /* ---- 1. the matcher, offline ---- */
+  const url = `file:///${resolve(WEB, "counter/js/voice-wake.js").split("\\").join("/")}`;
+  const { heard } = await import(url);
 
-  // Build the track: shop talk with a summons every ~50 s, 1.2 s of room between lines.
-  const total = Math.round(RATE * 60 * MINUTES);
-  const track = shopNoise(total, 0.045);
-  const marks = [];
-  let at = Math.round(RATE * 1.5);
-  let wake = 0;
-  let chat = 0;
-  const every = Math.max(2, Math.round(WAKES.length ? (SHOP.length * MINUTES) / WAKES.length / 2 : 4));
-  let sinceWake = 0;
-  while (at < total - RATE * 6) {
-    const summon = sinceWake >= every && wake < WAKES.length * Math.max(1, Math.round(MINUTES / 10));
-    const line = summon ? WAKES[wake % WAKES.length] : SHOP[chat % SHOP.length];
-    const pcm = clips.get(line);
-    for (let i = 0; i < pcm.length && at + i < total; i++) {
-      track[at + i] = Math.max(-1, Math.min(1, track[at + i] + pcm[i] * 0.75));
-    }
-    const endAt = at + pcm.length;
-    if (summon) {
-      // The clock starts at the LAST sample of the line: that is when he has finished saying it.
-      marks.push({ line, endMs: (endAt / RATE) * 1000 });
-      wake += 1;
-      sinceWake = 0;
-    } else {
-      chat += 1;
-      sinceWake += 1;
-    }
-    at = endAt + Math.round(RATE * 1.2);
-  }
-  const wav = join(CACHE, `wake-${MINUTES}m.wav`);
-  writeWav(wav, track);
-  console.log(`${MINUTES} min of shop audio: ${marks.length} summons, ${chat} other lines, ${wav}\n`);
+  const clean = (s) => s.toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
+  const missed = WAKES.filter(([said]) => !heard(said));
+  const wrongRest = WAKES.filter(([said, want]) => {
+    const hit = heard(said);
+    return hit && clean(hit.rest) !== clean(want);
+  });
+  // Case and punctuation are the recogniser's, not his: every line is tried three ways.
+  const corpus = SHOP.flatMap((s) => [s, s.toLowerCase(), s.replace(/[.,']/g, "")]);
+  const fired = corpus.filter((s) => heard(s));
 
-  // The matcher on its own, against the transcripts it would ever be handed. No browser, no
-  // network, no variance: this number is the matcher's and nothing else's.
-  const { heard } = await import(`file:///${resolve(WEB, "counter/js/voice-wake.js").split("\\").join("/")}`);
-  const falseCorpus = SHOP.flatMap((s) => [s, s.toLowerCase(), s.replace(/[.,]/g, "")]);
-  const offlineFalse = falseCorpus.filter((s) => heard(s));
-  const offlineHits = WAKES.filter((s) => heard(s));
-  console.log(`matcher, offline: ${offlineHits.length}/${WAKES.length} summons matched, ${offlineFalse.length}/${falseCorpus.length} shop lines fired`);
-  for (const bad of offlineFalse.slice(0, 5)) console.log(`   false: ${bad}`);
+  console.log(`matcher: ${WAKES.length - missed.length}/${WAKES.length} summons taken, rest extracted right on ${WAKES.length - wrongRest.length}`);
+  console.log(`         ${fired.length}/${corpus.length} shop lines fired (${SHOP.length} sentences x 3 spellings)\n`);
+  for (const [said] of missed) console.log(`   missed: ${said}`);
+  for (const [said] of wrongRest) console.log(`   rest wrong: ${said} -> "${heard(said).rest}"`);
+  for (const bad of fired.slice(0, 6)) console.log(`   FALSE: ${bad}`);
 
+  let bad = 0;
+  const say = (ok, line) => {
+    if (!ok) bad += 1;
+    console.log((ok ? "  ok   " : "  FAIL ") + line);
+  };
+  say(missed.length === 0, `every summons is taken (${WAKES.length - missed.length}/${WAKES.length})`);
+  say(wrongRest.length === 0, `and the sentence after it comes out whole (${WAKES.length - wrongRest.length}/${WAKES.length})`);
+  say(fired.length === 0, `no shop line fires it (${fired.length}/${corpus.length}, "the mechanic said" and "mechanical fault" included)`);
+
+  /* ---- 2. the pipeline, in a browser ---- */
   const { server, port } = await serve();
   const puppeteer = (await import(`file:///${PUPPETEER.split("\\").join("/")}`)).default;
   const browser = await puppeteer.launch({
@@ -259,106 +168,200 @@ async function main() {
     headless: "new",
     args: [
       "--no-sandbox",
+      "--hide-scrollbars",
       "--use-fake-device-for-media-stream",
       "--use-fake-ui-for-media-stream",
-      `--use-file-for-fake-audio-capture=${wav}`,
       "--autoplay-policy=no-user-gesture-required",
       "--disable-background-timer-throttling",
       "--disable-renderer-backgrounding",
     ],
-    protocolTimeout: (MINUTES + 3) * 60000,
+    protocolTimeout: 120000,
   });
-  const page = await browser.newPage();
-  await page.goto(`http://127.0.0.1:${port}/wake.html`, { waitUntil: "domcontentloaded" });
 
-  const out = await page.evaluate(
-    async (ms) => {
-      const wake = await import("/counter/js/voice-wake.js");
-      const fires = [];
-      const results = [];
-      const t0 = performance.now();
-      // mountToggle wants the app's header; this page has none, so drive the listener the way
-      // the toggle would. Same module, same recogniser, same heard().
-      const Ctor = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!Ctor) return { fires, results, why: "no recogniser" };
-      let rec = null;
-      let last = 0;
-      const start = () => {
-        rec = new Ctor();
-        rec.lang = "en-US";
-        rec.continuous = true;
-        rec.interimResults = true;
-        rec.onresult = (e) => {
-          for (let i = e.resultIndex; i < e.results.length; i++) {
-            const said = e.results[i][0].transcript;
-            results.push({ t: Math.round(performance.now() - t0), said, final: e.results[i].isFinal });
-            const hit = wake.heard(said);
-            if (!hit) continue;
-            const now = performance.now();
-            if (now - last < 2500) continue;
-            if (!e.results[i].isFinal && !hit.rest) continue;
-            last = now;
-            fires.push({ t: Math.round(now - t0), said, rest: hit.rest });
-          }
-        };
-        rec.onend = () => {
-          if (performance.now() - t0 < ms) setTimeout(start, 200);
-        };
-        rec.onerror = () => {};
-        try {
-          rec.start();
-        } catch {
-          setTimeout(start, 400);
-        }
-      };
-      start();
-      await new Promise((r) => setTimeout(r, ms));
-      try {
-        rec.stop();
-      } catch {
-        /* done */
+  const page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 });
+  await page.emulateMediaFeatures([{ name: "prefers-color-scheme", value: "light" }]);
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.evaluateOnNewDocument((base) => {
+    window.TTM_API = base;
+  }, `http://127.0.0.1:${port}/fakeapi`);
+  await page.goto(`http://127.0.0.1:${port}/counter/index.html`, { waitUntil: "domcontentloaded" });
+
+  const run = await page.evaluate(async () => {
+    const log = [];
+    const mark = (what, extra) => log.push(Object.assign({ what, t: performance.now() }, extra || {}));
+
+    /* The Deepgram socket, stubbed: what is being timed is our side of it. */
+    class Stub {
+      static OPEN = 1;
+      constructor() {
+        this.readyState = 0;
+        window.__sock = this;
+        setTimeout(() => {
+          this.readyState = 1;
+          if (this.onopen) this.onopen({});
+        }, 5);
       }
-      return { fires, results, why: "" };
-    },
-    Math.round(MINUTES * 60000) + 4000,
-  );
+      json(m) {
+        if (this.onmessage) this.onmessage({ data: JSON.stringify(m) });
+      }
+      send(data) {
+        if (typeof data !== "string") return;
+        let msg = {};
+        try {
+          msg = JSON.parse(data);
+        } catch {
+          return;
+        }
+        if (msg.type === "Settings") {
+          this.json({ type: "Welcome", request_id: "wake" });
+          this.json({ type: "SettingsApplied" });
+          return;
+        }
+        if (msg.type === "InjectUserMessage") mark("injected", { said: msg.content });
+      }
+      close() {
+        this.readyState = 3;
+      }
+      addEventListener() {}
+      removeEventListener() {}
+    }
+    window.WebSocket = Stub;
+
+    /**
+     * A scripted recogniser. The sequence and the gaps are the shape Chrome produces for one
+     * spoken sentence: a handful of growing interims, then one final. Nothing here pretends to
+     * measure Chrome's own delay - the clock starts at the interim that first carries the word,
+     * which is the first moment our code could possibly know anything.
+     */
+    const SCRIPT = [
+      [0, "mechanica", false],
+      [180, "mechanica I'm", false],
+      [360, "mechanica I'm working", false],
+      [540, "mechanica I'm working on a", false],
+      [720, "mechanica I'm working on a YZF", false],
+      [900, "mechanica I'm working on a YZF R1", false],
+      [1300, "Mechanica, I'm working on a YZF R1.", true],
+    ];
+    class FakeRec {
+      constructor() {
+        this.continuous = false;
+        this.interimResults = false;
+        this.lang = "";
+        this.running = false;
+        window.__rec = this;
+      }
+      start() {
+        this.running = true;
+        for (const [at, said, final] of SCRIPT) {
+          setTimeout(() => {
+            if (!this.running || !this.onresult) return;
+            const alt = { transcript: said };
+            const result = [alt];
+            result.isFinal = final;
+            if (!seen.length) mark("spoken");
+            seen.push([Math.round(performance.now()), said, final]);
+            this.onresult({ resultIndex: 0, results: [result] });
+          }, at);
+        }
+      }
+      stop() {
+        this.running = false;
+        if (this.onend) this.onend();
+      }
+      abort() {
+        this.stop();
+      }
+      addEventListener() {}
+      removeEventListener() {}
+    }
+    window.SpeechRecognition = FakeRec;
+    window.webkitSpeechRecognition = FakeRec;
+
+    const agent = await import("/counter/js/voice-deepgram.js");
+    agent.tuning.settings = {
+      url: "wss://stub/agent",
+      sampleRate: 24000,
+      pages: 0,
+      session: "wake-session",
+      settings: { type: "Settings" },
+    };
+    const voice = await import("/counter/js/voice-session.js");
+    const wake = await import("/counter/js/voice-wake.js");
+    window.__voice = voice;
+    window.__wake = wake;
+
+    const seen = [];
+    const button = wake.mountToggle((hit) => {
+      // The app's own two-stage join, inlined: see js/app.js.
+      if (!hit.final) {
+        mark("opened", { rest: hit.rest });
+        voice.start({});
+        return;
+      }
+      mark("woke", { rest: hit.rest });
+      voice.ask(hit.rest);
+    });
+    const bar = document.querySelector("header.ticket");
+    const mounted = Boolean(button) && button.parentElement === bar;
+    const beforeTheme =
+      mounted && button.nextElementSibling === document.querySelector("[data-theme-button]");
+
+    // Off by default, and the toggle is the gesture the microphone needs.
+    const offAtFirst = button.getAttribute("aria-pressed") === "false";
+    button.click();
+    const onAfterTap = button.getAttribute("aria-pressed") === "true";
+
+    await new Promise((r) => setTimeout(r, 2800));
+
+    const wokeAt = log.find((r) => r.what === "woke");
+    const openedAt = log.find((r) => r.what === "opened");
+    const injected = log.find((r) => r.what === "injected");
+    const spoken = log.find((r) => r.what === "spoken");
+
+    // While the session is live the wake listener must be off: two recognisers on one microphone
+    // is a fight nobody wins, and the agent's own voice would trigger it.
+    const pausedWhileLive = voice.isLive() && !wake.listening();
+    voice.stop();
+    await new Promise((r) => setTimeout(r, 300));
+    const backAfterEnd = wake.enabled() && wake.listening();
+
+    return {
+      mounted,
+      beforeTheme,
+      offAtFirst,
+      onAfterTap,
+      rest: wokeAt ? wokeAt.rest : "",
+      said: injected ? injected.said : "",
+      openMs: openedAt && spoken ? Math.round(openedAt.t - spoken.t) : null,
+      wakeMs: wokeAt && spoken ? Math.round(wokeAt.t - spoken.t) : null,
+      injectMs: wokeAt && injected ? Math.round(injected.t - wokeAt.t) : null,
+      openedRest: openedAt ? openedAt.rest : null,
+      totalMs: spoken && injected ? Math.round(injected.t - spoken.t) : null,
+      pausedWhileLive,
+      backAfterEnd,
+      seen,
+    };
+  });
+
+  say(run.mounted && run.beforeTheme, "the toggle is in the ticket bar, beside the theme disc");
+  say(run.offAtFirst && run.onAfterTap, "off by default, on by a tap - which is also the gesture the mic needs");
+  say(clean(run.rest) === clean("I'm working on a YZF R1"), `the sentence after the word is what goes in ("${run.rest}")`);
+  say(run.said === run.rest, `and it reaches the socket as one user turn ("${run.said}")`);
+  say(run.openMs != null && run.openMs <= 120, `first transcript with the word -> socket opening: ${run.openMs} ms`);
+  say(run.wakeMs != null, `word heard -> settled sentence in hand: ${run.wakeMs} ms (the recogniser's wait, not ours)`);
+  say(run.injectMs != null && run.injectMs <= 1500, `session start -> his sentence on the wire: ${run.injectMs} ms`);
+  say(run.totalMs != null, `end to end, our side of it: ${run.totalMs} ms`);
+  say(run.pausedWhileLive, "it stops listening while the Deepgram session has the microphone");
+  say(run.backAfterEnd, "and picks it up again when the session ends");
+  say(errors.length === 0, `no console errors${errors.length ? ": " + errors.slice(0, 2).join(" | ") : ""}`);
+
+  if (process.env.WAKE_DUMP) console.log(JSON.stringify(run.seen));
+  await page.screenshot({ path: join(SHOTS, "wake-toggle-phone.png"), clip: { x: 0, y: 0, width: 390, height: 110 } });
 
   await browser.close();
   server.close();
-
-  // Match each fire to the summons it followed. A fire more than 6 s after any summons, or with
-  // no summons before it, is a false start.
-  const lat = [];
-  const used = new Set();
-  let falsePositive = 0;
-  for (const fire of out.fires) {
-    const mark = marks.find((m, i) => !used.has(i) && fire.t >= m.endMs - 1500 && fire.t <= m.endMs + 6000 && (used.add(i), true));
-    if (mark) lat.push(Math.round(fire.t - mark.endMs));
-    else falsePositive += 1;
-  }
-  lat.sort((a, z) => a - z);
-  const pick = (p) => (lat.length ? lat[Math.min(lat.length - 1, Math.floor(lat.length * p))] : null);
-
-  console.log(`\nlive: ${out.results.length} recogniser results, ${out.fires.length} fires against ${marks.length} summons`);
-  console.log(`woke on ${lat.length}/${marks.length}, missed ${marks.length - lat.length}, false starts ${falsePositive}`);
-  if (lat.length) {
-    console.log(`latency ms  min ${lat[0]}  median ${pick(0.5)}  p90 ${pick(0.9)}  max ${lat[lat.length - 1]}`);
-  }
-  console.log(`false starts per 10 min: ${(falsePositive / MINUTES) * 10}`);
-  for (const fire of out.fires.slice(0, 4)) console.log(`   fired at ${fire.t} ms on "${fire.said.trim()}" -> "${fire.rest}"`);
-  if (process.env.WAKE_DUMP) {
-    for (const r of out.results.filter((r) => /me[ck]/i.test(r.said)).slice(0, 25)) console.log(`   heard ${r.t} ${r.final ? "F" : "i"} "${r.said.trim()}"`);
-  }
-
-  let bad = 0;
-  const say = (ok, line) => {
-    if (!ok) bad += 1;
-    console.log((ok ? "\n  ok   " : "\n  FAIL ") + line);
-  };
-  say(offlineHits.length === WAKES.length, `the matcher takes every summons (${offlineHits.length}/${WAKES.length})`);
-  say(offlineFalse.length === 0, `and no shop line at all (${offlineFalse.length}/${falseCorpus.length})`);
-  say(falsePositive === 0, `no false start in ${MINUTES} minutes of shop talk (${falsePositive})`);
-  say(lat.length >= Math.ceil(marks.length * 0.5), `it wakes on most of them (${lat.length}/${marks.length})`);
   console.log(bad ? `\n${bad} failed` : "\nall clear");
   process.exit(bad ? 1 : 0);
 }

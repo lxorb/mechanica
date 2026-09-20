@@ -14,6 +14,7 @@ import {
 } from "../pdf.js";
 import * as voice from "../voice-session.js";
 import { openConditions } from "../climate.js";
+import { ensureDock, setChat, showChat } from "../dock.js";
 import { mount as mountViewer, modelFor, partFor } from "../viewer3d.js";
 
 const STAGGER = 60;
@@ -41,6 +42,7 @@ const RING_R = 22;
 const RING_C = 2 * Math.PI * RING_R;
 /** Below this the reader is the whole screen, exactly as it is on a phone. */
 const WIDE = "(min-width: 1100px)";
+ensureDock();
 
 /* ---------- module state ---------- */
 
@@ -1681,6 +1683,9 @@ async function enterScreen() {
   await paint(job);
   if (my !== enterGen) return;
   syncStage();
+  // The reader's own chat is Pick's: one conversation per manual, opened from either screen.
+  setChat(() => window.dispatchEvent(new CustomEvent("mechanica:chat", { detail: { action: "toggle" } })));
+  showChat(Boolean(manualRec && manualRec.id));
 }
 
 registerScreen("book", {

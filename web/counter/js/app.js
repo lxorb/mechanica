@@ -254,14 +254,17 @@ function armWake() {
   import("./voice-wake.js")
     .then((wake) => {
       if (!wake.supported) return;
+      // TWO STAGES. The word opens the socket while he is still talking — connecting, settings
+      // and greeting are about a second, and it is a second he spends finishing his sentence
+      // rather than waiting. The sentence itself only goes in when the recogniser settles it,
+      // because firing once on the first interim would ask Deepgram about "I'm".
       wake.mountToggle(async (hit) => {
         const voice = await import("./voice-session.js");
-        if (voice.isLive()) return;
-        voice.start({
-          manualId: state.manualId || "",
-          bikeId: state.bikeId || "",
-          first: hit.rest,
-        });
+        if (!hit.final) {
+          voice.start({ manualId: state.manualId || "", bikeId: state.bikeId || "" });
+          return;
+        }
+        if (hit.rest) voice.ask(hit.rest);
       });
     })
     .catch(() => {

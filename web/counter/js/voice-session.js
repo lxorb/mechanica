@@ -67,12 +67,18 @@ let userDock = null; // his own tap wins until the next screen change
 let pageSink = null; // how to get to a page when the reader is not the screen on show
 let transcript = [];
 let wired = false;
+let pending = ""; // a question that beat the socket open; sent the moment it is listening
 
 /* ------------------------------------------------------------------ out */
 
 /** Everything a screen can know about the session, and the only way it learns any of it. */
 function shout(detail) {
   if (typeof window === "undefined") return;
+  // `data-voice` on <body> is the CSS half of the same news: a screen with its own microphone
+  // button hides it while the orb is on screen, so the corner never has two of the same control.
+  if (detail && (detail.kind === "started" || detail.kind === "ended")) {
+    document.body.dataset.voice = detail.kind === "started" ? "live" : "";
+  }
   window.dispatchEvent(new CustomEvent("mechanica:voice", { detail }));
 }
 
@@ -120,14 +126,20 @@ function home() {
   return host;
 }
 
-/** The reader's thumb row is the one thing the docked orb must never cover. Measure it. */
+/**
+ * What the docked orb must never sit on top of: the reader's thumb row, and anything a screen
+ * has marked `data-voice-anchor` — which is the contract for the corner icon pair (chat + mic).
+ * Whichever is highest wins, so the orb is above all of it or above nothing.
+ */
 function dockGap() {
-  const acts = document.querySelector(".book-acts");
-  if (!acts) return DOCK_GAP;
-  const box = acts.getBoundingClientRect();
-  if (!box.height) return DOCK_GAP;
-  // Distance from the bottom of the viewport to the top of the row, plus a thumb's worth.
-  return Math.round(window.innerHeight - box.top + DOCK_CLEARANCE);
+  let top = 0;
+  for (const el of document.querySelectorAll(".book-acts, [data-voice-anchor]")) {
+    const box = el.getBoundingClientRect();
+    if (!box.height || box.top <= 0 || box.top >= window.innerHeight) continue;
+    top = Math.max(top, window.innerHeight - box.top);
+  }
+  if (!top) return DOCK_GAP;
+  return Math.round(top + DOCK_CLEARANCE);
 }
 
 function applyDock(mode) {
@@ -413,6 +425,8 @@ function heard(event) {
       orb.working(event.value === "thinking");
     }
     shout({ kind: "status", status: event.value });
+    // The socket is up: anything he said while it was connecting goes in now.
+    if (event.value === "listening" && pending) flush();
     return;
   }
 
@@ -526,6 +540,30 @@ export async function start(next = {}) {
   }
 }
 
+/**
+ * Ask it something, in words, from anywhere. The wake word's second stage lands here: the socket
+ * was opened the moment the word was heard and the sentence arrives a beat later, so a question
+ * that beats the connection is held rather than lost — one only, because the thing he is waiting
+ * for is the LAST thing he said, not the first.
+ */
+export function ask(text) {
+  const said = String(text || "").trim();
+  if (!said) return false;
+  if (live && live.inject(said)) {
+    shout({ kind: "text", role: "user", text: said });
+    if (orb) orb.say("user", said, false);
+    return true;
+  }
+  pending = said;
+  return false;
+}
+
+function flush() {
+  const said = pending;
+  pending = "";
+  if (said) ask(said);
+}
+
 export function toggle(next = {}) {
   if (isLive()) {
     stop();
@@ -564,14 +602,24 @@ function wire() {
     if (isLive() && orb) orb.el.style.setProperty("--dock-gap", `${dockGap()}px`);
   });
 
-  // A screen asking for the assistant without importing it.
-  window.addEventListener("mechanica:voice-toggle", (e) => {
-    const detail = (e && e.detail) || {};
-    toggle({
+  // A screen asking for the assistant without importing it. Two spellings, because two agents
+  // wrote screens against it: `mechanica:voice-toggle`, and `mechanica:voice` carrying an
+  // `action` (which is how the corner icon pair on Pick, Book and Parts asks). The events this
+  // module SENDS carry `kind` and never `action`, so listening to the same name cannot loop.
+  const asked = (detail = {}) => {
+    const want = {
       manualId: detail.manualId ?? ctx.manualId,
       bikeId: detail.bikeId ?? ctx.bikeId ?? busState.bikeId,
       bike: detail.bike ?? ctx.bike,
-    });
+    };
+    if (detail.action === "start") start(want);
+    else if (detail.action === "stop") stop();
+    else toggle(want);
+  };
+  window.addEventListener("mechanica:voice-toggle", (e) => asked((e && e.detail) || {}));
+  window.addEventListener("mechanica:voice", (e) => {
+    const detail = (e && e.detail) || {};
+    if (detail.action === "start" || detail.action === "stop") asked(detail);
   });
 
   // M for mute, while voice is open and he is not typing into something. One key, because the

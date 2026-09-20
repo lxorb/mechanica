@@ -34,8 +34,12 @@ const RESTART_MS = 250;
 const COOLDOWN_MS = 2500;
 
 const WAKE = /\bme(?:ch|k|c)h?an(?:ic|ik|ica|ika)\s*(?:a|ah|er)?\b/i;
-/** The same word, but as a word we will not fire on: bare "mechanic", "mechanical", "mechanics". */
-const NOT_WAKE = /\bmechanics?\b|\bmechanical(?:ly)?\b/i;
+/**
+ * What the match must NOT be, once its own whitespace is squeezed out. "mechanic a" survives
+ * this and "mechanic" does not, which is the entire distinction: Chrome hears the word as two
+ * and a workshop says the first one on its own all day.
+ */
+const NOT_WAKE = /^(?:mechanics?|mechanical(?:ly)?)$/i;
 
 export const supported =
   typeof window !== "undefined" &&
@@ -52,9 +56,9 @@ export function heard(text) {
   if (!said) return null;
   const hit = WAKE.exec(said);
   if (!hit) return null;
-  // "the mechanic said" is not a summons. Check the actual matched word, not the sentence:
-  // "mechanica, ask the mechanic" must still fire.
-  if (NOT_WAKE.test(hit[0])) return null;
+  // "the mechanic said" is not a summons. Judge the MATCHED WORD, not the sentence, so
+  // "mechanica, ask the mechanic about it" still fires and "the mechanic said" still does not.
+  if (NOT_WAKE.test(hit[0].trim())) return null;
   const rest = said
     .slice(hit.index + hit[0].length)
     .replace(/^[\s,.:;!?-]+/, "")
@@ -67,6 +71,7 @@ let on = false;
 let paused = false;
 let restart = 0;
 let last = 0;
+let opened = 0;
 let onWake = () => {};
 let button = null;
 
@@ -125,19 +130,35 @@ function startRec() {
   // after he has already stopped talking, and the wake word is the one place that second shows.
   r.interimResults = true;
   r.maxAlternatives = 1;
+  /**
+   * TWO STAGES, because the two things he wants pull in opposite directions.
+   *
+   * The socket should open the INSTANT the word is heard — it is a second of connecting,
+   * settings and greeting, and a second he spends finishing his sentence is a second he does not
+   * spend waiting. But the sentence itself is only whole when the recogniser says it is: firing
+   * once on the first interim would hand Deepgram "I'm" out of "I'm working on a YZF R1".
+   *
+   * So: `final:false` the moment the word appears, which starts the session and nothing else,
+   * and `final:true` when the sentence settles, which is what actually gets asked. The app joins
+   * them up — see js/app.js.
+   */
   r.onresult = (event) => {
     for (let i = event.resultIndex; i < event.results.length; i++) {
       const said = event.results[i][0] && event.results[i][0].transcript;
       const hit = heard(said);
       if (!hit) continue;
       const now = performance.now();
-      // An interim result becomes a final result carrying the same words: fire once.
-      if (now - last < COOLDOWN_MS) continue;
-      // Only fire on the interim once the sentence looks finished, OR on the final: "mechanica"
-      // alone, still being spoken, is not yet "mechanica, I'm working on a YZF R1".
-      if (!event.results[i].isFinal && !hit.rest) continue;
+      const final = Boolean(event.results[i].isFinal);
+      if (!final) {
+        // One opening per utterance: every interim after the first carries the same word.
+        if (now - opened < COOLDOWN_MS) continue;
+        opened = now;
+        onWake({ rest: hit.rest, text: String(said || "").trim(), final: false });
+        return;
+      }
+      if (now - last < COOLDOWN_MS && last) continue;
       last = now;
-      onWake({ rest: hit.rest, text: String(said || "").trim(), final: event.results[i].isFinal });
+      onWake({ rest: hit.rest, text: String(said || "").trim(), final: true });
       return;
     }
   };

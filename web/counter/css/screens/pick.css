@@ -135,7 +135,7 @@
    the chat button and the submit arrow do the same at the right end. */
 [data-screen="pick"] .ask {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
   align-items: stretch;
 }
 
@@ -158,10 +158,6 @@
   border-left: var(--hair) solid var(--edge-soft);
 }
 
-[data-screen="pick"] .ask .chat-pill {
-  border-left: var(--hair) solid var(--edge-soft);
-}
-
 [data-screen="pick"] .ask .send {
   border-left: var(--hair) solid var(--edge-soft);
   background: var(--slab);
@@ -170,8 +166,7 @@
 
 [data-screen="pick"] .ask .mic svg,
 [data-screen="pick"] .ask .cam svg,
-[data-screen="pick"] .ask .send svg,
-[data-screen="pick"] .ask .chat-pill svg {
+[data-screen="pick"] .ask .send svg {
   width: 21px;
   height: 21px;
   display: block;
@@ -427,6 +422,7 @@
 
 /* ------------------------------------------------------------------ the one button */
 
+/* The dock pair floats at the viewport's bottom-left, so the button starts to its right. */
 [data-screen="pick"] .foot {
   position: sticky;
   bottom: 0;
@@ -434,6 +430,7 @@
   display: flex;
   justify-content: flex-end;
   padding: var(--gap) 0 calc(var(--gap) + env(safe-area-inset-bottom));
+  padding-left: 112px;
   background: var(--bg);
 }
 

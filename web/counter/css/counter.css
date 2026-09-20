@@ -430,6 +430,77 @@ body[data-here="book"] main {
   border-radius: var(--r);
 }
 
+/* ---------- the thumb dock (chat + voice) ----------
+ * Two icon buttons, body level and fixed, on Pick, Book and the Parts sheet. Bottom LEFT:
+ * the voice orb docks bottom right, and these two may never end up underneath it.
+ * z-index 46 puts them over the Parts sheet (45) and under the chat view (60) and the orb (70).
+ * Pairs with js/dock.js.
+ */
+
+.dock {
+  position: fixed;
+  left: calc(12px + env(safe-area-inset-left));
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 46;
+  display: none;
+  gap: 8px;
+}
+
+/* Only where there is something to talk about. Identify and Confirm have no manual yet. */
+body[data-here="pick"] .dock,
+body[data-here="book"] .dock {
+  display: flex;
+}
+
+.dock-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border: var(--hair) solid var(--edge);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  color: var(--fg);
+  cursor: pointer;
+  appearance: none;
+  box-shadow: var(--lift);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+.dock-btn svg {
+  display: block;
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.dock-btn:active {
+  transform: scale(0.94);
+}
+
+.dock-mic {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.dock-chat {
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
+}
+
+/* The reader keeps two rows of its own at the bottom; the pair clears them. */
+body[data-here="book"] .dock {
+  bottom: calc(108px + env(safe-area-inset-bottom));
+}
+
 /* ---------- overlay sheet (Parts) ---------- */
 
 .ov {
@@ -522,6 +593,11 @@ body[data-here="book"] main {
   overflow: auto;
   overscroll-behavior: contain;
   padding: var(--gutter) var(--gutter) calc(16px + env(safe-area-inset-bottom));
+}
+
+/* Parts opens over Book, where the dock floats at the sheet's bottom-left corner. */
+body[data-here="book"] .pv .ov-body {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
 }
 
 /* ---------- the theme crossfade ----------

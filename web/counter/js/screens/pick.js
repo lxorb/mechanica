@@ -30,12 +30,18 @@ import { build, roots, search, marks, spanOf, byId, normTitle } from "../pick-se
 import { mount as mountViewer, modelFor, partFor, PART_LABELS } from "../viewer3d.js";
 import { iconFor, iconEl } from "../particons.js";
 import { mountChat } from "../chat-ui.js";
+import { ensureDock, setChat, showChat } from "../dock.js";
 
 const MIC_PATH_BODY = "M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z";
 const MIC_PATH_ARC = "M5 11a7 7 0 0 0 14 0M12 18v3";
 const CAM_PATH =
   "M8 5h2l1-2h2l1 2h4v13H4V5h4zm4 3.25A3.75 3.75 0 1 0 12 15.75 3.75 3.75 0 0 0 12 8.25zm0 2A1.75 1.75 0 1 1 12 13.75 1.75 1.75 0 0 1 12 10.25z";
 const CHAT_PATH = "M3 4h18v12H9l-6 5V4z";
+
+ensureDock();
+// Book's dock asks for the same conversation this screen owns - one chat per manual, opened
+// from either screen. The guard inside toggleChat() makes this a no-op before a manual exists.
+window.addEventListener("mechanica:chat", () => toggleChat());
 /** Submit. A stroked path, not the "up arrow" character: a glyph cannot be clipped by its box. */
 const SEND_PATH = "M12 19V5M5 12l7-7 7 7";
 /** The expand twist, rotated 90 degrees by CSS when the group is open. */
@@ -167,14 +173,7 @@ function mount(el) {
   const send = node("button", { type: "submit", class: "btn btn-icon send", "aria-label": "Ask" });
   send.append(glyph([SEND_PATH], true));
 
-  // Ask the manual in words instead of headings. It lives in the search bar, at the same end
-  // as the submit arrow, because it is the same question asked another way - it used to be a
-  // pill floating over the list.
-  const chatPill = node("button", { type: "button", class: "btn btn-icon chat-pill", hidden: "", "aria-label": "Chat" });
-  chatPill.append(glyph([CHAT_PATH], false));
-  chatPill.addEventListener("click", toggleChat);
-
-  form.append(mic, cam, input, chatPill, send);
+  form.append(mic, cam, input, send);
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     onSubmit();
@@ -208,7 +207,7 @@ function mount(el) {
   root.append(stage, hits, foot, file, chatHost);
   stageViewer.append(who);
 
-  els = { stage, stageViewer, who, whoImg, whoName, bar, meter, form, mic, cam, input, send, file, hits, foot, open, openP, chatPill, chatHost };
+  els = { stage, stageViewer, who, whoImg, whoName, bar, meter, form, mic, cam, input, send, file, hits, foot, open, openP, chatHost };
   els.mic.hidden = !stt.supported;
   syncSend();
 }
@@ -225,6 +224,8 @@ function enter() {
     return;
   }
   freezeY = true;
+  setChat(toggleChat);
+  showChat(Boolean(chat));
   if (state.bikeId !== lastBikeId) {
     savedY = 0;
     entries = [];
@@ -805,7 +806,7 @@ function bikeLabel() {
 function syncChat() {
   if (!els) return;
   const id = manualId();
-  els.chatPill.hidden = !id;
+  showChat(Boolean(id));
   if (!id) {
     if (chat) chat.close();
   } else if (!chat) {

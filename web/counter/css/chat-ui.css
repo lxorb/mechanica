@@ -13,31 +13,6 @@
 
 /* ------------------------------------------------------------------ the pill */
 
-/* Chat now rides inside the search bar (pick.css owns its box there), so this only has to
-   say what colour it is. It was a pill floating over the list. */
-[data-screen="pick"] .chat-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  background: var(--accent-2);
-  color: var(--accent-2-ink);
-  cursor: pointer;
-  appearance: none;
-}
-
-[data-screen="pick"] .chat-pill svg {
-  width: 20px;
-  height: 20px;
-  display: block;
-  flex: none;
-}
-
-[data-screen="pick"] .chat-pill:active {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
 /* ------------------------------------------------------------------ the view */
 
 .cv {
