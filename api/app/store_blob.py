@@ -51,6 +51,11 @@ MANUAL_CACHE = 200
 PAGE_CACHE = 50
 OFFER_CACHE = 500
 DOC_TTL = 300.0
+# A document that is not there yet - or is still the early, section-less publish an ingest makes
+# so the PDF is readable at once - is provisional, and another replica may be writing the real one
+# right now. Remembering "missing" for DOC_TTL would 404 a manual for five minutes after it landed,
+# and would make a part whose offers another replica just paid for look cold enough to pay again.
+MISS_TTL = 5.0
 LIST_TTL = 60.0
 COST_TTL = 30.0
 WORKERS = 16
@@ -62,12 +67,16 @@ _MISS = object()
 
 
 class _Cache:
-    """LRU with a TTL. Values are whole parsed documents, so size is bounded by count, not bytes."""
+    """LRU with a TTL. Values are whole parsed documents, so size is bounded by count, not bytes.
+
+    An entry may carry its own shorter TTL: see MISS_TTL. Nothing else about the entry changes,
+    so a caller that does not pass one keeps the cache's default.
+    """
 
     def __init__(self, maxsize: int, ttl: float):
         self.maxsize = maxsize
         self.ttl = ttl
-        self._data: OrderedDict[str, tuple[float, object]] = OrderedDict()
+        self._data: OrderedDict[str, tuple[float, object, float]] = OrderedDict()
         self._lock = threading.Lock()
 
     def get(self, key: str):
@@ -75,16 +84,16 @@ class _Cache:
             hit = self._data.get(key)
             if hit is None:
                 return _MISS
-            born, value = hit
-            if time.monotonic() - born > self.ttl:
+            born, value, ttl = hit
+            if time.monotonic() - born > ttl:
                 self._data.pop(key, None)
                 return _MISS
             self._data.move_to_end(key)
             return value
 
-    def put(self, key: str, value) -> None:
+    def put(self, key: str, value, ttl: float | None = None) -> None:
         with self._lock:
-            self._data[key] = (time.monotonic(), value)
+            self._data[key] = (time.monotonic(), value, self.ttl if ttl is None else ttl)
             self._data.move_to_end(key)
             while len(self._data) > self.maxsize:
                 self._data.popitem(last=False)
@@ -333,7 +342,8 @@ class BlobStore:
             return hit
         data = self._read_json(f"manuals/{manual_id}.json", None)
         out = Manual.model_validate(data) if data else None
-        self._manuals.put(manual_id, out)
+        # Missing, or the early section-less publish: provisional either way, so hold it briefly.
+        self._manuals.put(manual_id, out, None if out is not None and out.sections else MISS_TTL)
         return out
 
     def put_manual(self, manual: Manual) -> None:
@@ -351,7 +361,7 @@ class BlobStore:
         if hit is not _MISS:
             return hit
         out = [Page.model_validate(p) for p in self._read_json(f"pages/{manual_id}.json", [])]
-        self._pages.put(manual_id, out)
+        self._pages.put(manual_id, out, None if out else MISS_TTL)
         return out
 
     def put_pages(self, manual_id: str, pages: list[Page]) -> None:
@@ -363,7 +373,7 @@ class BlobStore:
         if hit is not _MISS:
             return hit
         out = [Spec.model_validate(s) for s in self._read_json(f"specs/{manual_id}.json", [])]
-        self._specs.put(manual_id, out)
+        self._specs.put(manual_id, out, None if out else MISS_TTL)
         return out
 
     def put_specs(self, manual_id: str, specs: list[Spec]) -> None:
@@ -419,7 +429,7 @@ class BlobStore:
         if hit is not _MISS:
             return hit
         out = self._read_json(f"offers/{key}.json", None)
-        self._offers.put(key, out)
+        self._offers.put(key, out, None if out else MISS_TTL)
         return out
 
     def put_offers(self, manual_id: str, part_id: str, result: dict) -> None:

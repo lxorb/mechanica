@@ -216,6 +216,12 @@ the source link for the full terms.
 | `store/img/bikes2/honda-gb350s.hero.webp` | Honda GB350S 2025 (cropped).jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Honda_GB350S_2025_(cropped).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/honda-gb350s.webp` | Honda GB350S 2025 (cropped).jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Honda_GB350S_2025_(cropped).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/honda-gb350s.thumb.webp` | Honda GB350S 2025 (cropped).jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Honda_GB350S_2025_(cropped).jpg | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/honda-gl1800-goldwing.hero.webp` | Hond GL1800 Goldwing in Paris.jpg | "S de Santi" from Madrid, SPAIN | https://commons.wikimedia.org/wiki/File:Hond_GL1800_Goldwing_in_Paris.jpg | CC BY 2.0 | search | side |
+| `store/img/bikes2/honda-gl1800-goldwing.webp` | Hond GL1800 Goldwing in Paris.jpg | "S de Santi" from Madrid, SPAIN | https://commons.wikimedia.org/wiki/File:Hond_GL1800_Goldwing_in_Paris.jpg | CC BY 2.0 | search | side |
+| `store/img/bikes2/honda-gl1800-goldwing.thumb.webp` | Hond GL1800 Goldwing in Paris.jpg | "S de Santi" from Madrid, SPAIN | https://commons.wikimedia.org/wiki/File:Hond_GL1800_Goldwing_in_Paris.jpg | CC BY 2.0 | search | side |
+| `store/img/bikes2/honda-interstate.hero.webp` | Honda Goldwing GL 1100 Interstate (14779830244).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Honda_Goldwing_GL_1100_Interstate_(14779830244).jpg | CC BY-SA 2.0 | search | three_quarter |
+| `store/img/bikes2/honda-interstate.webp` | Honda Goldwing GL 1100 Interstate (14779830244).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Honda_Goldwing_GL_1100_Interstate_(14779830244).jpg | CC BY-SA 2.0 | search | three_quarter |
+| `store/img/bikes2/honda-interstate.thumb.webp` | Honda Goldwing GL 1100 Interstate (14779830244).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Honda_Goldwing_GL_1100_Interstate_(14779830244).jpg | CC BY-SA 2.0 | search | three_quarter |
 | `store/img/bikes2/honda-msx125a.hero.webp` | Honda MSX125 Grom.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_MSX125_Grom.jpg | CC BY-SA 4.0 | search | side |
 | `store/img/bikes2/honda-msx125a.webp` | Honda MSX125 Grom.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_MSX125_Grom.jpg | CC BY-SA 4.0 | search | side |
 | `store/img/bikes2/honda-msx125a.thumb.webp` | Honda MSX125 Grom.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_MSX125_Grom.jpg | CC BY-SA 4.0 | search | side |
@@ -234,6 +240,8 @@ the source link for the full terms.
 | `store/img/bikes2/honda-rebel-300.hero.webp` | 2020 Honda Rebel 300.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2020_Honda_Rebel_300.jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/honda-rebel-300.webp` | 2020 Honda Rebel 300.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2020_Honda_Rebel_300.jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/honda-rebel-300.thumb.webp` | 2020 Honda Rebel 300.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2020_Honda_Rebel_300.jpg | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/honda-sabre-abs.webp` | Honda-shadow-sabre-1100.jpg | Jonhjortur | https://commons.wikimedia.org/wiki/File:Honda-shadow-sabre-1100.jpg | CC BY-SA 3.0 | search | three_quarter |
+| `store/img/bikes2/honda-sabre-abs.thumb.webp` | Honda-shadow-sabre-1100.jpg | Jonhjortur | https://commons.wikimedia.org/wiki/File:Honda-shadow-sabre-1100.jpg | CC BY-SA 3.0 | search | three_quarter |
 | `store/img/bikes2/honda-shadow-phantom.hero.webp` | Honda SHADOW Phantom 750 at the TMS 2009.JPG | PekePON | https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/honda-shadow-phantom.webp` | Honda SHADOW Phantom 750 at the TMS 2009.JPG | PekePON | https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/honda-shadow-phantom.thumb.webp` | Honda SHADOW Phantom 750 at the TMS 2009.JPG | PekePON | https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG | CC BY-SA 4.0 | search | three_quarter |
@@ -476,6 +484,8 @@ the source link for the full terms.
 | `store/img/bikes2/triumph-tiger-1200-xr.hero.webp` | Triumph Tiger 1200 XRt (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Triumph_Tiger_1200_XRt_(1).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/triumph-tiger-1200-xr.webp` | Triumph Tiger 1200 XRt (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Triumph_Tiger_1200_XRt_(1).jpg | CC BY-SA 4.0 | search | three_quarter |
 | `store/img/bikes2/triumph-tiger-1200-xr.thumb.webp` | Triumph Tiger 1200 XRt (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Triumph_Tiger_1200_XRt_(1).jpg | CC BY-SA 4.0 | search | three_quarter |
+| `store/img/bikes2/triumph-trident-750.webp` | T160 Triumph Trident 750cc motorcycle.jpg | meriden.triumph | https://commons.wikimedia.org/wiki/File:T160_Triumph_Trident_750cc_motorcycle.jpg | CC BY 2.0 | search | three_quarter |
+| `store/img/bikes2/triumph-trident-750.thumb.webp` | T160 Triumph Trident 750cc motorcycle.jpg | meriden.triumph | https://commons.wikimedia.org/wiki/File:T160_Triumph_Trident_750cc_motorcycle.jpg | CC BY 2.0 | search | three_quarter |
 | `store/img/bikes2/triumph-trophy-1200.hero.webp` | Triumph Trophy 1200, green.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Triumph_Trophy_1200,_green.jpg | CC BY-SA 4.0 | category | side |
 | `store/img/bikes2/triumph-trophy-1200.webp` | Triumph Trophy 1200, green.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Triumph_Trophy_1200,_green.jpg | CC BY-SA 4.0 | category | side |
 | `store/img/bikes2/triumph-trophy-1200.thumb.webp` | Triumph Trophy 1200, green.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Triumph_Trophy_1200,_green.jpg | CC BY-SA 4.0 | category | side |

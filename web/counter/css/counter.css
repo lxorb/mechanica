@@ -35,8 +35,10 @@
   /* ---- accent ---- */
   --accent: #e85d04;
   --accent-ink: #fff;            /* text on --accent */
-  --accent-2: #ffe600;           /* the livery second colour: buttons, tags, search marks */
+  --accent-2: #ffe600;           /* the livery second colour: buttons, tags, chips */
   --accent-2-ink: #141414;       /* text on --accent-2 */
+  --match: #ffe600;              /* the letters your query matched, inside a title */
+  --match-ink: #141414;          /* text on --match */
 
   /* ---- status. Workshop's livery has two hues, so both land on the accents. ---- */
   --danger: #e85d04;

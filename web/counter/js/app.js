@@ -1,4 +1,4 @@
-import { go, state, on, back, splitHash } from "./bus.js";
+import { go, state, set, on, back, splitHash } from "./bus.js";
 import * as Q from "./ttm.js";
 
 /**
@@ -36,6 +36,7 @@ function armBack() {
     // Book runs fullscreen: counter.css folds the ticket bar and the rail away for it.
     document.body.setAttribute("data-here", here);
     paintBack();
+    stash();
   });
   on("substate", (e) => {
     if (!e || e.screen !== here) return;
@@ -46,14 +47,68 @@ function armBack() {
   paintBack();
 }
 
+/**
+ * Where the mechanic was, across a reload.
+ *
+ * The store survives one: the worker has the shell, the roster, /health, every manual that was
+ * opened and the PDF behind it. The bus does not — `state` is in memory only — so a reload on
+ * #pick or #book found state.bikeId empty, firstGo() bounced to Identify, and offline (where
+ * there is no way to search the bike again) that was the end of the job. These few ids are
+ * therefore written on every state change and read back before the first route.
+ *
+ * sessionStorage, not localStorage: this is "where was I a second ago", not a preference. A
+ * counter phone handed to the next mechanic opens on Identify, as it should.
+ *
+ * photoUrl is deliberately not kept — it is an object URL, and it is dead the moment the page is.
+ */
+const KEEP = ["bikeId", "vin", "manualId", "systemId", "partId", "jobId", "jobIds", "page", "ticket", "email"];
+const SPOT = "ttm.spot";
+
+function stash() {
+  try {
+    const spot = { screen: here };
+    for (const key of KEEP) {
+      const value = state[key];
+      if (value != null && value !== "") spot[key] = value;
+    }
+    sessionStorage.setItem(SPOT, JSON.stringify(spot));
+  } catch {
+    /* private mode, or a browser with site data off: the app just forgets, as it did before */
+  }
+}
+
+function stashed() {
+  try {
+    const spot = JSON.parse(sessionStorage.getItem(SPOT) || "null");
+    return spot && typeof spot === "object" ? spot : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Only a bike the roster can still resolve is restored — offline the roster is the bundled one, and
+ * a bikeId it does not carry would put a screen in front of a vehicle it cannot name.
+ */
+function revive() {
+  const spot = stashed();
+  if (!spot || !spot.bikeId || !Q.bike(spot.bikeId)) return false;
+  const patch = {};
+  for (const key of KEEP) if (spot[key] != null) patch[key] = spot[key];
+  set(patch);
+  return true;
+}
+
 function firstGo() {
   const hash = splitHash(location.hash).screen || "identify";
   const id = SCREENS.includes(hash) ? hash : "identify";
+  if (id !== "identify" && (state.bikeId == null || state.bikeId === "")) revive();
   if (id !== "identify" && (state.bikeId == null || state.bikeId === "")) {
     go("identify", { replace: true });
     return;
   }
   go(id, { replace: true });
+  stash();
 }
 
 /**
@@ -102,6 +157,7 @@ async function boot() {
   registerSw();
   on("state", (patch) => {
     if (patch && Object.prototype.hasOwnProperty.call(patch, "ticket")) paintTicket();
+    stash();
   });
 
   window.Q = await pickStore();

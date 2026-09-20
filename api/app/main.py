@@ -36,7 +36,7 @@ from .models import (
     RegistryEntry,
     VinRequest,
 )
-from .store import get_store
+from .store import get_store, max_manual_pages
 
 MAX_UPLOAD = 60 * 1024 * 1024
 MAX_IMAGE = 12 * 1024 * 1024
@@ -311,12 +311,11 @@ def cost():
     for e in events:
         by_route[e.route] += e.usd
         by_model[e.model] += e.usd
-    pages = [m.pages for m in get_store().manuals()] or [143]
     return CostSummary(
         total=sum(e.usd for e in events),
         count=len(events),
         byRoute=dict(by_route),
         byModel=dict(by_model),
-        naivePerAsk=naive_usd(max(pages)),
+        naivePerAsk=naive_usd(max_manual_pages()),
         asks=sum(1 for e in events if e.route.startswith("ask")),
     )

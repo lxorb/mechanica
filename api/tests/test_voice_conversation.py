@@ -10,7 +10,6 @@ keyterms, the digest. This file is only about how the thing TALKS, plus the one 
 a procedure question stop taking ten seconds (`find_procedure` returning its section's text).
 """
 
- 
 
 import pytest
 

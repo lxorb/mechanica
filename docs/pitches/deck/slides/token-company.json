@@ -25,7 +25,7 @@
     },
     {
       "t": "2:10",
-      "do": "Tiering 53× / 59×. Caching 99.5%."
+      "do": "Tiering 46× / 59×. Caching 99.5%."
     },
     {
       "t": "2:35",
@@ -332,9 +332,9 @@
       "kicker": "Two levers, measured on the same job",
       "items": [
         {
-          "value": "53× / 59×",
+          "value": "46× / 59×",
           "label": "model tiering",
-          "sub": "identify.photo $0.024661 → $0.000464 · identify.part $0.014047 → $0.000239. Tiering is per route, not per product — and *nothing* runs on the flagship."
+          "sub": "identify.photo $0.024661 → $0.000532 · identify.part $0.014047 → $0.000239. Tiering is per route, not per product — and *nothing* runs on the flagship."
         },
         {
           "value": "99.5%",
@@ -346,12 +346,12 @@
         "The constraint and the fuzzy match were doing the accuracy work, so the flagship stopped earning its price. Say it that way — it is a measurement, not a preference.",
         "The expensive tokens are the ones that change. ingest.struct is 47.0% cached over 70.4M tokens; chat.answer 42.7%; ask.picker 34.6%.",
         "Tiering is worth 4.8× here. *Not reading the manual* is worth 48×.",
-        "*Caveat, know it before a judge opens the report.* token-company.md and openai.md both quote identify.photo at $0.000464 and 53×; the regenerated token-company/cost-report.md reports $0.000532 and 46× off a different call window. If anyone has the report open, quote the route and the direction, not the decimal."
+        "*Caveat, know it before a judge opens the report.* token-company.md and openai.md both quote identify.photo at $0.000532 and 46×; the regenerated token-company/cost-report.md reports $0.000532 and 46× off a different call window. If anyone has the report open, quote the route and the direction, not the decimal."
       ],
       "defs": [
         {
-          "n": "$0.000464",
-          "d": "identify.photo on gpt-5.6-luna against $0.024661 on the flagship — 53× on identical work.",
+          "n": "$0.000532",
+          "d": "identify.photo on gpt-5.6-luna against $0.024661 on the flagship — 46× on identical work.",
           "src": "token-company.md"
         },
         {

@@ -23,7 +23,7 @@
  *   keywords · 4 trigram >= 0.5 · 5 one or two typos.
  */
 
-import { fold, tokens } from "./search.js";
+import { fold, foldWithMap, tokens, MAX_QUERY_TOKENS } from "./search.js";
 
 const TIER_EXACT = 0;
 const TIER_PREFIX = 1;
@@ -345,7 +345,9 @@ function scoreToken(entry, qt, qGrams, maxDl) {
  */
 export function search(entries, text, limit = 60) {
   const list = entries || [];
-  const qTokens = tokens(text);
+  // Same ceiling as the bike search: past a dozen words a query cannot narrow any further, and
+  // every extra token is another Damerau pass over every term of every entry.
+  const qTokens = tokens(text).slice(0, MAX_QUERY_TOKENS);
   if (!qTokens.length) return [];
 
   const prepared = qTokens.map((qt) => ({
@@ -395,18 +397,10 @@ export function search(entries, text, limit = 60) {
  */
 export function marks(title, text) {
   const raw = String(title == null ? "" : title);
-  const qs = tokens(text);
+  const qs = tokens(text).slice(0, MAX_QUERY_TOKENS);
   if (!raw || !qs.length) return [];
-  const map = [];
-  let folded = "";
-  const flat = raw.normalize("NFD").replace(/\p{M}/gu, "");
-  for (let i = 0; i < flat.length; i++) {
-    const c = flat[i].toLowerCase();
-    if ((c >= "a" && c <= "z") || (c >= "0" && c <= "9")) {
-      map.push(i);
-      folded += c;
-    }
-  }
+  // Offsets index `raw`, which is what the caller marks up: see foldWithMap in ./search.js.
+  const { folded, map, ends } = foldWithMap(raw);
   const spans = [];
   const whole = fold(text);
   const needles = whole && folded.includes(whole) ? [whole] : qs;
@@ -416,7 +410,7 @@ export function marks(title, text) {
       const at = folded.indexOf(q, from);
       if (at < 0 || at >= map.length) break;
       const last = at + q.length - 1;
-      if (last < map.length) spans.push({ start: map[at], end: map[last] + 1 });
+      if (last < map.length) spans.push({ start: map[at], end: ends[last] });
       from = at + q.length;
     }
   }

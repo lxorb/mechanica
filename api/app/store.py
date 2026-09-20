@@ -160,6 +160,29 @@ class FileStore:
         return None
 
 
+DEFAULT_PAGES = 143
+
+
+def max_manual_pages(store: "Store | None" = None) -> int:
+    """The largest page count in the store, without downloading every Manual.
+
+    /cost needs exactly this number and nothing else about a Manual. Reading it out of
+    `manuals()` meant pulling all 535 documents (~72 MB of JSON, ~7.5 s measured live) on
+    every cold call and holding them in the listings cache for a minute; the blob listing
+    already carries the page count as metadata.
+    """
+    store = store or get_store()
+    summaries = getattr(store, "manual_summaries", None)
+    if summaries is not None:
+        try:
+            counts = [int(row.get("pages") or 0) for row in summaries()]
+        except Exception:
+            counts = []
+    else:
+        counts = [m.pages for m in store.manuals()]
+    return max([n for n in counts if n > 0] or [DEFAULT_PAGES])
+
+
 _store: Store | None = None
 
 

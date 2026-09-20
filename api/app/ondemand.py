@@ -101,12 +101,18 @@ def recent_failure(manual_id: str) -> dict | None:
     return record
 _registry: dict[tuple[str, str], list[RegistryEntry]] = {}
 _registry_at = 0.0
+_registry_built = 0.0
 _registry_lock = threading.Lock()
+# On a blob deployment there is no registry.json on disk, so the mtime stamp is 0.0 forever and
+# the index would be frozen for the life of the process: a manual the registry agent adds could
+# never be found on demand until a redeploy. The store's own listing cache is 60 s, so re-reading
+# it every few minutes costs nothing and is the only thing that lets new rows land.
+REGISTRY_MAX_AGE = 300.0
 
 
 def _index() -> dict[tuple[str, str], list[RegistryEntry]]:
     """The registry is 7k rows on disk; re-validating it per request would cost more than the ingest saves."""
-    global _registry, _registry_at
+    global _registry, _registry_at, _registry_built
     stamp = 0.0
     from .config import settings
 
@@ -114,13 +120,14 @@ def _index() -> dict[tuple[str, str], list[RegistryEntry]]:
     if path.exists():
         stamp = path.stat().st_mtime
     with _registry_lock:
-        if _registry and stamp == _registry_at:
+        fresh = time.monotonic() - _registry_built < REGISTRY_MAX_AGE
+        if _registry and stamp == _registry_at and fresh:
             return _registry
         built: dict[tuple[str, str], list[RegistryEntry]] = {}
         for e in get_store().registry():
             if e.type == "owner" and e.access == "free" and e.lang.lower().startswith("en") and e.url and _is_pdf(e.url):
                 built.setdefault((e.make.lower(), e.model.lower()), []).append(e)
-        _registry, _registry_at = built, stamp
+        _registry, _registry_at, _registry_built = built, stamp, time.monotonic()
         return _registry
 
 

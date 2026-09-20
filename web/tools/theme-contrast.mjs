@@ -31,6 +31,7 @@ const PAIRS = [
   ["--slab-fg", "--slab", "the reader bar, primary button", false],
   ["--accent-ink", "--accent", "MECHANICA on the ticket bar", false],
   ["--accent-2-ink", "--accent-2", "every .btn label", false],
+  ["--match-ink", "--match", "the letters a query matched", false],
   ["--ok-ink", "--ok", "a year whose manual is ready", false],
   ["--danger-ink", "--danger", "the 3D retry stamp", false],
   ["--accent", "--card", "chapter numbers, shop names", true],

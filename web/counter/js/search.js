@@ -3,6 +3,7 @@ const TIER_PREFIX = 1;
 const TIER_TRIGRAM = 2;
 const TIER_TYPO = 3;
 const TIER_NONE = 9;
+export const MAX_QUERY_TOKENS = 12;
 
 let rows = [];
 
@@ -198,7 +199,10 @@ export function indexedCount() {
 
 export function search(text, opts) {
   const limit = opts && opts.limit != null ? opts.limit : 60;
-  const qTokens = tokens(text);
+  // Every token is scored against every one of 27.4k rows, so a pasted paragraph of words that
+  // all happen to match (a VIN dump, a stuck key) is minutes of work on the main thread. Nobody
+  // narrows a bike with more words than this, and the ones past it cannot change the answer.
+  const qTokens = tokens(text).slice(0, MAX_QUERY_TOKENS);
   if (!qTokens.length) return rows.map((row) => row.bike);
 
   const prepared = qTokens.map((qt) => ({
@@ -254,20 +258,36 @@ export function search(text, opts) {
   return out;
 }
 
-function foldWithMap(str) {
+/**
+ * Folded text plus, for every folded character, where it starts and ends in the ORIGINAL string.
+ *
+ * The offsets are what a caller paints a <mark> with, so they have to index the string it is
+ * painting. Normalising the whole label first and then counting characters in the *normalised*
+ * copy silently shifted every offset on a title that was already decomposed ("e" + U+0301 is two
+ * code points that fold to one), which marked the wrong letters. Fold one code point at a time
+ * instead, and let a span swallow the combining marks that trail its base letter so an accent is
+ * never sliced off the end of a highlight.
+ */
+export function foldWithMap(str) {
+  const raw = String(str ?? "");
   const folded = [];
   const map = [];
-  const raw = String(str ?? "")
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "");
-  for (let i = 0; i < raw.length; i++) {
-    const c = raw[i].toLowerCase();
-    if ((c >= "a" && c <= "z") || (c >= "0" && c <= "9")) {
+  const ends = [];
+  let i = 0;
+  while (i < raw.length) {
+    const ch = String.fromCodePoint(raw.codePointAt(i));
+    const next = i + ch.length;
+    const c = ch.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+    if (c.length === 1 && ((c >= "a" && c <= "z") || (c >= "0" && c <= "9"))) {
       map.push(i);
+      ends.push(next);
       folded.push(c);
+    } else if (/\p{M}/u.test(ch) && ends.length) {
+      ends[ends.length - 1] = next; // a combining mark belongs to the letter it sits on
     }
+    i = next;
   }
-  return { folded: folded.join(""), map };
+  return { folded: folded.join(""), map, ends };
 }
 
 function mergeRanges(ranges) {
@@ -294,7 +314,7 @@ export function highlight(bike, text) {
 
   const { general, years, cc } = fieldTokens(bike);
   const tokenList = Array.from(general);
-  const { folded, map } = foldWithMap(label);
+  const { folded, map, ends } = foldWithMap(label);
   const ranges = [];
 
   for (let q = 0; q < qTokens.length; q++) {
@@ -327,7 +347,7 @@ export function highlight(bike, text) {
     if (idx < 0 || idx >= map.length) continue;
     const last = idx + needle.length - 1;
     if (last >= map.length) continue;
-    ranges.push({ start: map[idx], end: map[last] + 1 });
+    ranges.push({ start: map[idx], end: ends[last] });
   }
 
   return mergeRanges(ranges);

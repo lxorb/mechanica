@@ -35,6 +35,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import threading
 import time
 from pathlib import Path
 from typing import Iterable
@@ -253,6 +254,7 @@ class Taxonomy(BaseModel):
 
 
 _taxonomy: Taxonomy | None = None
+_taxonomy_lock = threading.Lock()
 _by_id: dict[str, TaxonomyPart] = {}
 
 
@@ -260,13 +262,24 @@ _fingerprint = ""
 
 
 def taxonomy() -> Taxonomy:
+    """Load once, under a lock, and publish only when the id map is complete.
+
+    /parts/catalog and the warm prefetch land on different threads. Assigning `_taxonomy`
+    before `_by_id` was refilled let a second thread pass the `is None` check and read an
+    empty map, which silently dropped every standard part from that one answer.
+    """
     global _taxonomy, _fingerprint
-    if _taxonomy is None:
+    if _taxonomy is not None:
+        return _taxonomy
+    with _taxonomy_lock:
+        if _taxonomy is not None:
+            return _taxonomy
         raw = TAXONOMY_PATH.read_text(encoding="utf-8")
-        _taxonomy = Taxonomy.model_validate(json.loads(raw))
-        _fingerprint = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
+        loaded = Taxonomy.model_validate(json.loads(raw))
         _by_id.clear()
-        _by_id.update({p.id: p for p in _taxonomy.parts})
+        _by_id.update({p.id: p for p in loaded.parts})
+        _fingerprint = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
+        _taxonomy = loaded
     return _taxonomy
 
 

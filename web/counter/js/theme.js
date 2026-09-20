@@ -123,14 +123,15 @@ function crossfade() {
   swapTimer = setTimeout(() => root.removeAttribute(SWAP), ms + 40);
 }
 
+/**
+ * Re-applying the theme that is already on is not a no-op: the pre-paint script in index.html
+ * sets the attribute but knows nothing about the disc or the event, so arm() calls set() with
+ * the id already in place to finish the job. Only the crossfade is skipped when nothing moves.
+ */
 export function set(id, { fade = true, store = true } = {}) {
   const wanted = has(id) ? id : DEFAULT;
   const previous = current();
-  if (wanted === previous && document.documentElement.hasAttribute(ATTR)) {
-    paintButton(wanted);
-    return wanted;
-  }
-  if (fade) crossfade();
+  if (fade && wanted !== previous) crossfade();
   document.documentElement.setAttribute(ATTR, wanted);
   if (store) remember(wanted);
   paintMeta(wanted);

@@ -77,6 +77,9 @@ def wired(monkeypatch, fresh_store):
     monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (LINES, 0.021))
     monkeypatch.setattr(mod, "verify", fake_verify)
     monkeypatch.setattr(mod, "Checker", FakeChecker)
+    # These tests are about what the finished answer contains. The early return is real behaviour
+    # and has its own tests below; here it would only make every assertion a race.
+    monkeypatch.setattr(mod, "ENOUGH", 999)
     return fresh_store
 
 
@@ -241,7 +244,7 @@ def test_offers_drops_the_dead_url_and_sorts_by_price(wired):
     ]
     assert DEAD not in [o.url for o in out.offers]
     assert all(o.price > 0 and o.url.startswith("http") for o in out.offers)
-    assert out.usd == 0.042 and out.complete is True  # two legs, one bill
+    assert out.usd == 0.063 and out.complete is True  # three legs, one bill
 
 
 def test_every_offer_carries_a_usd_price_beside_the_shop_price(wired):
@@ -286,7 +289,7 @@ def test_offers_refetches_when_the_cache_is_a_day_old(wired):
     mod.offers("m1", "spark-plug", BIKE)
     stale = result(wired).model_copy(update={"fetchedAt": time.time() - mod.FRESH - 1})
     wired.put_offers("m1", "spark-plug", stale.model_dump())
-    assert mod.offers("m1", "spark-plug", BIKE).usd == 0.042
+    assert mod.offers("m1", "spark-plug", BIKE).usd == 0.063
 
 
 def test_an_empty_answer_is_only_cached_for_an_hour(wired, monkeypatch):
@@ -386,7 +389,7 @@ def test_a_stream_that_cannot_be_opened_falls_back_to_the_plain_search(wired, mo
 
     monkeypatch.setattr(mod, "stream_lines", broken)
     out = mod.offers("m1", "spark-plug", BIKE)
-    assert len(out.offers) == 3 and out.usd == 0.042
+    assert len(out.offers) == 3 and out.usd == 0.063
 
 
 def test_a_half_finished_answer_is_never_served_from_the_cache(wired):
@@ -415,7 +418,7 @@ def test_two_clicks_on_one_part_share_a_single_search(wired, monkeypatch):
     mod.offers("m1", "spark-plug", BIKE)
     mod.offers("m1", "spark-plug", BIKE)
     assert wait_for_cache(wired) is not None
-    assert sorted(calls) == ["offers", "offers.fast"]
+    assert calls.count("offers") == 1 and calls.count("offers.fast") == len(mod.FAST_FOCUS)
 
 
 def test_a_prefetch_does_not_pay_for_the_leg_that_answers_first(wired, monkeypatch):

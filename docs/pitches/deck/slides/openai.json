@@ -10,7 +10,7 @@
     { "t": "0:00", "do": "The mechanic. 400 h. 95% and $4." },
     { "t": "0:30", "do": "THE FLOWCHART. 90 seconds. Rehearse the pointing." },
     { "t": "2:00", "do": "mt-07 → a year with no manual → Yes. Leave it." },
-    { "t": "2:10", "do": "Photo path: shoot the KTM. $0.00046." },
+    { "t": "2:10", "do": "Photo path: shoot the KTM. $0.00053." },
     { "t": "2:25", "do": "2024 → Pick → type chain." },
     { "t": "2:45", "do": "Open p.77." },
     { "t": "3:00", "do": "Chat → chain is loose, what do I do → tap a chip." },
@@ -60,7 +60,7 @@
                 "items": [
                   { "tone": "paper", "t": "PHOTO of the bike" },
                   { "tone": "white", "t": "400 catalog names|injected into the prompt", "sub": "zero LLM" },
-                  { "tone": "orange", "t": "identify.photo · VISION", "sub": "luna · strict json_schema · $0.00046 a photo" },
+                  { "tone": "orange", "t": "identify.photo · VISION", "sub": "luna · strict json_schema · $0.00053 a photo" },
                   { "tone": "green", "t": "match back to a real|catalog row", "sub": "floor 0.80 · kind-locked: a bike we hold no manual for cannot win" },
                   { "tone": "ink", "t": "THE EXACT BIKE" }
                 ]
@@ -108,7 +108,7 @@
         "Green is never optional. Ingest is a different clock: $0.095 once per manual, then every question on that manual forever is four hundredths of a cent."
       ],
       "defs": [
-        { "n": "$0.00046", "d": "identify.photo on gpt-5.6-luna, per photo — against $0.0247 on the flagship, 53×.", "src": "openai.md" },
+        { "n": "$0.00053", "d": "identify.photo on gpt-5.6-luna, per photo — against $0.0247 on the flagship, 46×.", "src": "openai.md" },
         { "n": "99.5%", "d": "ask.router prompt-cache hit rate on 3.45M input tokens → $0.000132/call.", "src": "openai.md" },
         { "n": "$0.00013", "d": "ask, spec question — zero LLM after the router.", "src": "openai.md" },
         { "n": "$0.095", "d": "our cost to read a manual once — $0.0951 mean over 648 real ingests (measured)." },
@@ -132,11 +132,11 @@
       "head": ["capability", "route · model", "measured"],
       "rows": [
         ["Structured outputs — strict json_schema", "7 of our 9 call sites", "all but 362 logged calls are strict-schema; the app never parses free text"],
-        ["Model tiering by task", "luna $0.20/M · terra $2/M", "photo id 53× cheaper on luna; part id 59×"],
+        ["Model tiering by task", "luna $0.20/M · terra $2/M", "photo id 46× cheaper on luna; part id 59×"],
         ["Prompt caching, pinned per route+model", "ask.router", "*99.5%* hit on 3.45M input tokens → $0.000132 a call"],
         ["Responses API streaming", "chat.answer · terra", "first token *2.64 s* p50 / 5.87 s p95"],
         ["Built-in web_search tool", "offers · terra", "~7¢ cold, *$0 cached* · the $10/1k call fee modelled explicitly"],
-        ["Vision — vehicle id", "identify.photo · luna", "*$0.00046* a photo, fuzzy-matched back to a real catalog row"],
+        ["Vision — vehicle id", "identify.photo · luna", "*$0.00053* a photo, fuzzy-matched back to a real catalog row"],
         ["Vision — part id", "identify.part · luna", "$0.00024 a call, zero-shot against a fixed label list"],
         ["Image generation", "gpt-image-1", "*102 calls, $4.31* — 97 part illustrations + the logo"],
         ["Vision as a judge", "images.score · luna", "*7,629 calls, $3.66* grading catalog photos against a strict rubric"],
@@ -151,7 +151,7 @@
       "defs": [
         { "n": "99.5%", "d": "ask.router prompt-cache hit on 3.45M input tokens → $0.000132/call.", "src": "openai.md" },
         { "n": "2.64 s", "d": "chat, first word, p50 — api/eval/chat-report.md (measured)." },
-        { "n": "$0.00046", "d": "identify.photo on luna, per photo.", "src": "openai.md" },
+        { "n": "$0.00053", "d": "identify.photo on luna, per photo.", "src": "openai.md" },
         { "n": "102 calls, $4.31", "d": "…of which generating part illustrations — costs.jsonl, route=='illustrations' (gpt-image-1) (measured)." },
         { "n": "7,629 calls, $3.66", "d": "…of which grading catalog photos — costs.jsonl, route=='images.score'. Keeps growing; quote with the date (measured)." },
         { "n": "2.08 s", "d": "voice (Deepgram Agent): you stop talking → it starts — median over 5 spec turns, 4 sessions, 2026-09-20; range 1.73–4.01 s (measured)." }

@@ -72,6 +72,14 @@ CONTEXT_SIZE = "low"
 FAST_MODEL = os.getenv("MODEL_OFFERS_FAST", "gpt-5.6-luna")
 FAST_CALLS = 1
 FAST_OFFERS = 8
+# Two of them, because the fast model is fast but flaky: measured over five real parts it wrote a
+# parseable offer line inside the deadline three times out of five. Two independent legs turn that
+# into four out of five, and they are pointed at different corners of the trade so the second is
+# not simply a re-roll of the first.
+FAST_FOCUS = (
+    "Start with the big catalogue retailers and marketplaces.",
+    "Start with the vehicle maker's own online shop and the national dealer shops.",
+)
 # The ceiling on a cold click, not the wait: the request leaves the moment ENOUGH shops have been
 # verified. ttm.js allows 25 s (OFFERS_MS) and the Parts sheet re-asks 10 s after an empty answer,
 # so anything that returns real offers inside this beats a 15 s empty-then-retry by a mile.
@@ -449,7 +457,9 @@ def dedupe(offers: list[Offer]) -> list[Offer]:
     return list(best.values())
 
 
-def _user(query: str, part: Part, bike: Bike | None, hint: str | None, want: int = MAX_OFFERS) -> str:
+def _user(
+    query: str, part: Part, bike: Bike | None, hint: str | None, want: int = MAX_OFFERS, focus: str = ""
+) -> str:
     ride = f"{bike.make} {bike.model} {bike.year}" if bike else "this motorcycle"
     printed = part.oem or part.spec or hint or part.name
     return (
@@ -458,6 +468,7 @@ def _user(query: str, part: Part, bike: Bike | None, hint: str | None, want: int
         f"Bike: {ride}\n"
         f"Search: {query}\n"
         f"Up to {want} offers, variants on their own lines."
+        + (f"\n{focus}" if focus else "")
     )
 
 
@@ -543,11 +554,12 @@ def search(
     model: str | None = None,
     calls: int = SEARCH_CALLS,
     want: int = MAX_OFFERS,
+    focus: str = "",
 ) -> tuple[list[Offer], float]:
     """`on_offer` is handed each offer the moment its line is complete, so verification of the
     first shop starts while the model is still writing the fifteenth."""
     model = model or settings.model_offers
-    user = _user(query, part, bike, hint, want)
+    user = _user(query, part, bike, hint, want, focus)
     offers, cost, text = _read(route, user, on_offer, model, calls)
     if not offers and URL_IN.search(text or ""):
         # the format drifted but there is something there: one cheap structured re-read of the same text
@@ -662,8 +674,11 @@ class _Lookup:
         self.part = part
         self.hint = hint
         self.bike = bike
-        self.fast = fast  # someone is waiting: pay for the leg that answers first
+        self.fast = fast  # someone is waiting: pay for the legs that answer first
         self.query = build_query(part, bike, hint)
+        self.legs: list = []
+        # Decided here, not in run(): a second click can reach boost() before the thread starts.
+        self.boosted = fast
         self.cost = 0.0
         self.finished = False
         self.live: list[Offer] = []
@@ -671,27 +686,53 @@ class _Lookup:
         self.done = threading.Event()  # for waiting on, never for deciding what is finished
         # ENOUGH verified shops is a good enough answer to send: the rest lands in the cache.
         self.ready = threading.Event()
+        self.checker = Checker(self._keep)
 
-    def _leg(self, route: str, model: str | None, calls: int, want: int, checker) -> list[Offer]:
+    def _leg(self, route: str, model: str | None, calls: int, want: int, focus: str = "") -> list[Offer]:
         found, cost = search(
             route, self.query, self.part, self.bike, self.hint,
-            on_offer=checker.add, model=model, calls=calls, want=want,
+            on_offer=self.checker.add, model=model, calls=calls, want=want, focus=focus,
         )
         with self.lock:
             self.cost += cost
         return found
 
+    def boost(self) -> None:
+        """A click landed on a lookup a prefetch had already started. Nobody was waiting when it
+        began, so it bought depth; someone is waiting now, so buy speed alongside it."""
+        with self.lock:
+            if self.boosted or self.done.is_set():
+                return
+            self.boosted = True
+        self._spawn_fast()
+
+    def _spawn_fast(self) -> None:
+        legs = [
+            _SEARCH.submit(self._leg, "offers.fast", FAST_MODEL, FAST_CALLS, FAST_OFFERS, focus)
+            for focus in FAST_FOCUS
+        ]
+        with self.lock:
+            self.legs += legs
+
+    def _collect(self) -> list[Offer]:
+        found: list[Offer] = []
+        while True:
+            with self.lock:
+                if not self.legs:
+                    return found
+                leg = self.legs.pop()
+            try:
+                found += leg.result()
+            except Exception:  # one flaky leg is not the answer
+                pass
+
     def run(self) -> None:
-        checker = Checker(self._keep)
-        quick = _SEARCH.submit(self._leg, "offers.fast", FAST_MODEL, FAST_CALLS, FAST_OFFERS, checker) if self.fast else None
         try:
-            found = self._leg("offers", None, SEARCH_CALLS, MAX_OFFERS, checker)
-            if quick is not None:
-                try:
-                    found += quick.result()
-                except Exception:  # the thorough leg alone is still an answer
-                    pass
-            checker.close()
+            if self.fast:
+                self._spawn_fast()
+            found = self._leg("offers", None, SEARCH_CALLS, MAX_OFFERS)
+            found += self._collect()
+            self.checker.close()
             if not self.live and found:  # the non-streaming fallback answered in one piece
                 verify(dedupe(found), on_live=self._keep)
             self.finished = True
@@ -699,9 +740,7 @@ class _Lookup:
         except Exception:  # an outage is never cached: the next click tries again
             self.finished = False
         finally:
-            if quick is not None:
-                quick.cancel()
-            checker.close()
+            self.checker.close()
             self.ready.set()
             self.done.set()
             with _running_lock:
@@ -803,6 +842,7 @@ def offers(manual_id: str, part_id: str, bike: Bike | None) -> OffersResult:
     if bike is None and manual.bikeIds:
         bike = store.bike(manual.bikeIds[0])
     lookup = _start(manual_id, part_id, part, hint, bike)
+    lookup.boost()  # a no-op unless a prefetch got here first without the fast legs
     lookup.wait(DEADLINE)
     return lookup.result()
 

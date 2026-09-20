@@ -280,8 +280,8 @@
 }
 
 [data-screen="pick"] .hit-t mark {
-  background: var(--accent-2);
-  color: var(--accent-2-ink);
+  background: var(--match);
+  color: var(--match-ink);
   padding: 0 1px;
 }
 

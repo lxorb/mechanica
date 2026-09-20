@@ -48,6 +48,23 @@ function originOk(origin, url) {
   return host === url.hostname || ORIGIN_ALLOW.has(host);
 }
 
+/**
+ * A Location that points back at the API origin -> the same path under /api on this origin.
+ * Returns "" for anything else (the blob URL a PDF redirect carries, above all), so only a
+ * redirect that would have left the proxy is rewritten.
+ */
+export function backToApi(location, here) {
+  let target;
+  try {
+    target = new URL(location, API_ORIGIN);
+  } catch {
+    return "";
+  }
+  const origin = new URL(API_ORIGIN);
+  if (target.hostname !== origin.hostname) return "";
+  return `${here.origin}/api${target.pathname}${target.search}`;
+}
+
 function json(status, body) {
   return new Response(JSON.stringify(body), {
     status,
@@ -162,7 +179,18 @@ export default {
 
     const out = new Response(upstream.body, upstream);
     // Content-Type, Content-Length, Content-Range, Accept-Ranges and Location all survive
-    // the copy above; only the caching policy is ours.
+    // the copy above; only the caching policy and a self-referential Location are ours.
+    //
+    // FastAPI's redirect_slashes answers `/api/health/` with a 307 to the upstream's own URL, and
+    // Azure Container Apps terminates TLS so that URL comes back as **http://ttm-api…**. Passed
+    // through untouched it is a mixed-content redirect a browser on https refuses to follow, and it
+    // names the origin the proxy exists to hide. Anything pointing back at API_ORIGIN belongs under
+    // /api; the 307 from /manuals/<id>/file points at the blob and must survive verbatim.
+    const location = out.headers.get("Location");
+    if (location) {
+      const rewritten = backToApi(location, url);
+      if (rewritten) out.headers.set("Location", rewritten);
+    }
     if (request.method === "GET" && upstream.status === 200 && CACHEABLE.test(path)) {
       out.headers.set("Cache-Control", "public, max-age=60");
     } else if (!out.headers.has("Cache-Control")) {

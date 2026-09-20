@@ -326,9 +326,9 @@ body.id-landing [data-screen="identify"] .id-cam {
 [data-screen="identify"] .id-make b,
 [data-screen="identify"] .id-model b {
   font-weight: inherit;
-  background: var(--accent-2);
-  color: var(--accent-2-ink);
-  box-shadow: 0 0 0 1px var(--accent-2);
+  background: var(--match);
+  color: var(--match-ink);
+  box-shadow: 0 0 0 1px var(--match);
 }
 
 [data-screen="identify"] .id-span {

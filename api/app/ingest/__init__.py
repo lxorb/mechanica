@@ -118,24 +118,21 @@ def run(
     store.put_job(job)
 
     bar = Progress(store, job)
+    doc = None
     try:
         bar.stage("download")
         path = fetch(source, pdf_path(manual_id), needs_ua, on_bytes=bar.downloading)
         bar.at(bar.total * bar.DOWNLOAD_END)
         doc = pymupdf.open(path)
         if doc.page_count < MIN_PAGES:
-            pages = doc.page_count
-            doc.close()
-            raise ValueError(f"not a manual: {pages} page{'' if pages == 1 else 's'}")
+            raise ValueError(f"not a manual: {doc.page_count} page{'' if doc.page_count == 1 else 's'}")
         bar.total_pages(doc.page_count)
         bar.stage("pages")
 
         page_models = pagelib.extract_pages(doc, manual_id, progress=bar.extracting)
         readable = sum(1 for p in page_models if len(p.text.strip()) >= structure.MIN_CHARS)
         if readable < MIN_READABLE_PAGES:
-            pages = doc.page_count
-            doc.close()
-            raise ValueError(f"no text layer: {readable} readable of {pages} pages")
+            raise ValueError(f"no text layer: {readable} readable of {doc.page_count} pages")
         store.put_pages(manual_id, page_models)
 
         toc = pagelib.toc(doc)
@@ -228,10 +225,17 @@ def run(
         job.error = None
         job.stage = "done"
         store.put_job(job)
-        doc.close()
         return manual
     except Exception as exc:
         job.status = "error"
         job.error = f"{type(exc).__name__}: {exc}"[:500]
         store.put_job(job)
         raise
+    finally:
+        # Every failure above used to leave the pymupdf Document open, and with it the mapped
+        # PDF and the file handle. A replica that fails a few hundred ingests leaks both.
+        if doc is not None:
+            try:
+                doc.close()
+            except Exception:
+                pass

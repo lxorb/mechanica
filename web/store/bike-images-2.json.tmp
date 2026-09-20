@@ -6653,6 +6653,18 @@
     "score": 7.5,
     "hero": "store/img/bikes2/honda-gb350s.hero.webp"
   },
+  "honda|gl1800-(goldwing)": {
+    "image": "store/img/bikes2/honda-gl1800-goldwing.webp",
+    "thumb": "store/img/bikes2/honda-gl1800-goldwing.thumb.webp",
+    "title": "Hond GL1800 Goldwing in Paris.jpg",
+    "author": "\"S de Santi\" from Madrid, SPAIN",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hond_GL1800_Goldwing_in_Paris.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 7.0,
+    "hero": "store/img/bikes2/honda-gl1800-goldwing.hero.webp"
+  },
   "honda|gl1800-gold-wing-dct": {
     "image": "store/img/bikes/honda-gl1800-gold-wing.webp",
     "thumb": "store/img/bikes/honda-gl1800-gold-wing-thumb.webp",
@@ -6933,6 +6945,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:2014_Honda_Interceptor.jpg",
     "via": "alias",
     "aliasOf": "honda|interceptor"
+  },
+  "honda|interstate": {
+    "image": "store/img/bikes2/honda-interstate.webp",
+    "thumb": "store/img/bikes2/honda-interstate.thumb.webp",
+    "title": "Honda Goldwing GL 1100 Interstate (14779830244).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Goldwing_GL_1100_Interstate_(14779830244).jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-interstate.hero.webp"
+  },
+  "honda|interstate-abs": {
+    "image": "store/img/bikes2/honda-interstate.webp",
+    "thumb": "store/img/bikes2/honda-interstate.thumb.webp",
+    "hero": "store/img/bikes2/honda-interstate.hero.webp",
+    "title": "Honda Goldwing GL 1100 Interstate (14779830244).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Goldwing_GL_1100_Interstate_(14779830244).jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "honda|interstate"
   },
   "honda|jazz-250-es-abs": {
     "image": "store/img/bikes/honda-jazz-250.webp",
@@ -7292,6 +7328,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_S-Wing_125-2.JPG",
     "via": "alias",
     "aliasOf": "honda|s-wing-125"
+  },
+  "honda|sabre-abs": {
+    "image": "store/img/bikes2/honda-sabre-abs.webp",
+    "thumb": "store/img/bikes2/honda-sabre-abs.thumb.webp",
+    "title": "Honda-shadow-sabre-1100.jpg",
+    "author": "Jonhjortur",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda-shadow-sabre-1100.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5
   },
   "honda|sh-125i-sporty": {
     "image": "store/img/bikes/honda-sh-125i.webp",
@@ -17522,6 +17569,17 @@
     "via": "alias",
     "aliasOf": "triumph|trident-660"
   },
+  "triumph|trident-750": {
+    "image": "store/img/bikes2/triumph-trident-750.webp",
+    "thumb": "store/img/bikes2/triumph-trident-750.thumb.webp",
+    "title": "T160 Triumph Trident 750cc motorcycle.jpg",
+    "author": "meriden.triumph",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:T160_Triumph_Trident_750cc_motorcycle.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5
+  },
   "triumph|trophy-1200": {
     "image": "store/img/bikes2/triumph-trophy-1200.webp",
     "thumb": "store/img/bikes2/triumph-trophy-1200.thumb.webp",
@@ -18727,6 +18785,18 @@
     "view": "side",
     "score": 9.5,
     "hero": "store/img/bikes2/yamaha-jupiter-rc.hero.webp"
+  },
+  "yamaha|jupiter-z": {
+    "image": "store/img/bikes2/yamaha-jupiter-z.webp",
+    "thumb": "store/img/bikes2/yamaha-jupiter-z.thumb.webp",
+    "title": "Benoa Bali Indonesia-Bakso-street-vendor-01.jpg",
+    "author": "CEphoto, Uwe Aranas",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Benoa_Bali_Indonesia-Bakso-street-vendor-01.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-jupiter-z.hero.webp"
   },
   "yamaha|jupiter-z1": {
     "image": "store/img/bikes2/yamaha-jupiter-z1.webp",
