@@ -35,31 +35,31 @@ catalogues: the source groups say "bodyshell" and "misc_a", not verified service
 
 | type | model | author | licence | size | tris |
 | --- | --- | --- | --- | --- | --- |
-| `generic/adventure` | [Akt Tt Ds 200 repainted](https://sketchfab.com/3d-models/akt-tt-ds-200-repainted-c32f7b87090d4ce4b10c76e844dc86cd) | [e-restrepo1114](https://sketchfab.com/e-restrepo1114) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.93 MB | 27'830 |
+| `generic/adventure` | [Honda CB500X](https://sketchfab.com/3d-models/honda-cb500x-c2e1bff4afa34fc0b1957a5c418d666a) | [DevanirGrau](https://sketchfab.com/DevanirGrau) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 3.13 MB | 457'079 |
 | `generic/car` | [Mazda RX-7 FC](https://sketchfab.com/3d-models/mazda-rx-7-fc-8ac0df459f514950ab83ac37109a06ab) | [Lexyc16](https://sketchfab.com/Lexyc16) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.46 MB | 40'928 |
 | `generic/classic` | [Honda CB 750 F Super Sport 1970](https://sketchfab.com/3d-models/honda-cb-750-f-super-sport-1970-f121301624174b179ca4d50158797b03) | [ᗩᒪE᙭. Kᗩ.](https://sketchfab.com/alex_ka) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.41 MB | 37'041 |
-| `generic/cruiser` | [Harley Davidson Breakout](https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268) | [FWSean](https://sketchfab.com/FWSean) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.95 MB | 79'417 |
+| `generic/cruiser` | [Harley Davidson Motorcycle "EL OHV V-TWIN"](https://sketchfab.com/3d-models/harley-davidson-motorcycle-el-ohv-v-twin-9923aaa519334f48b8dd44fd792475ed) | [matias_romero](https://sketchfab.com/matias_romero) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 6.67 MB | 394'242 |
 | `generic/enduro` | [Honda NXR Bros 2003](https://sketchfab.com/3d-models/none-2e88ff65e98e4d0c802242bdeccaf28d) | [andersonfo](https://sketchfab.com/andersonfo) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 1.91 MB | 43'771 |
 | `generic/motocross` | [2022 Yamaha YZ450F](https://sketchfab.com/3d-models/2022-yamaha-yz450f-dfff1637219f44d6bfa3ed3c9708d523) | [Res1n](https://sketchfab.com/Res1n) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 1.16 MB | 179'747 |
 | `generic/naked` | [2024 Ducati Streetfighter V4 S](https://sketchfab.com/3d-models/2024-ducati-streetfighter-v4-s-c501252f8af64c559bf91dc306c3a550) | [OUTPISTON](https://sketchfab.com/OUTPISTON) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) | 1.45 MB | 101'989 |
-| `generic/scooter` | [Vespa](https://sketchfab.com/3d-models/vespa-hp-5431bb42de5743088c849ba080e7ac33) | [fox_amelie](https://sketchfab.com/fox_amelie) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 1.18 MB | 130'883 |
+| `generic/scooter` | [Worn Out Old School Vespa](https://sketchfab.com/3d-models/worn-out-old-school-vespa-358a77040c53419b9bb50c462a160e6f) | [Jakob_Forseth](https://sketchfab.com/Jakob_Forseth) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 1.66 MB | 79'949 |
 | `generic/sportbike` | [Kawasaki Ninja ZX-6R](https://sketchfab.com/3d-models/kawasaki-ninja-zx-6r-4af2b6840b8045a5af5e8df8a85f04fa) | [valvetin](https://sketchfab.com/valvetin) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 2.33 MB | 335'509 |
-| `generic/supermoto` | [KTM REDBULL](https://sketchfab.com/3d-models/ktm-redbull-8d755ea9d6c249a29cf771a921116a41) | [LEKSA](https://sketchfab.com/LEKSA) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.41 MB | 52'638 |
-| `generic/touring` | [Romanian Police Motorbike](https://sketchfab.com/3d-models/romanian-police-motorbike-high-poly-3d-model-dac59dc8fa064ce380b14cb4ac0b5f99) | [solid3DDD](https://sketchfab.com/solid3DDD) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 4.48 MB | 782'500 |
+| `generic/supermoto` | [KTM REDBULL](https://sketchfab.com/3d-models/ktm-redbull-8d755ea9d6c249a29cf771a921116a41) | [LEKSA](https://sketchfab.com/LEKSA) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.38 MB | 52'638 |
+| `generic/touring` | [Harley-Davidson Police](https://sketchfab.com/3d-models/harley-davidson-police-79dc00298bf449d7bcfdf6eb32bd15ac) | [Comrade1280](https://sketchfab.com/Comrade1280) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 2.17 MB | 650'950 |
 
 Credit lines to reproduce wherever these are shown:
 
-> This work is based on "Akt Tt Ds 200 repainted" by e-restrepo1114, licensed under CC BY 4.0.
+> This work is based on "Honda CB500X" by DevanirGrau, licensed under CC BY 4.0.
 > This work is based on "Mazda RX-7 FC" by Lexyc16, licensed under CC BY 4.0.
 > This work is based on "Honda CB 750 F Super Sport 1970" by ᗩᒪE᙭. Kᗩ., licensed under CC BY 4.0.
-> This work is based on "Harley Davidson Breakout" by FWSean, licensed under CC BY 4.0.
+> This work is based on "Harley Davidson Motorcycle "EL OHV V-TWIN"" by matias_romero, licensed under CC BY 4.0.
 > This work is based on "Honda NXR Bros 2003" by andersonfo, licensed under CC BY 4.0.
 > This work is based on "2022 Yamaha YZ450F" by Res1n, licensed under CC BY 4.0.
 > This work is based on "2024 Ducati Streetfighter V4 S" by OUTPISTON, licensed under CC BY-NC-SA 4.0.
-> This work is based on "Vespa" by fox_amelie, licensed under CC BY 4.0.
+> This work is based on "Worn Out Old School Vespa" by Jakob_Forseth, licensed under CC BY 4.0.
 > This work is based on "Kawasaki Ninja ZX-6R" by valvetin, licensed under CC BY 4.0.
 > This work is based on "KTM REDBULL" by LEKSA, licensed under CC BY 4.0.
-> This work is based on "Romanian Police Motorbike" by solid3DDD, licensed under CC BY 4.0.
+> This work is based on "Harley-Davidson Police" by Comrade1280, licensed under CC BY 4.0.
 
 **1 of these are NC (non-commercial):** naked. Fine for the demo, swap before anything is sold.
 

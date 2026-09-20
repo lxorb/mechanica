@@ -48,11 +48,11 @@
   "name": "cruiser",
   "type": "cruiser",
   "kind": "bike",
-  "uid": "7d446ec9135c4e35892714d117b37268",
-  "title": "Harley Davidson Breakout",
-  "author": "FWSean",
-  "authorUrl": "https://sketchfab.com/FWSean",
-  "url": "https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268",
+  "uid": "9923aaa519334f48b8dd44fd792475ed",
+  "title": "Harley Davidson Motorcycle \"EL OHV V-TWIN\"",
+  "author": "matias_romero",
+  "authorUrl": "https://sketchfab.com/matias_romero",
+  "url": "https://sketchfab.com/3d-models/harley-davidson-motorcycle-el-ohv-v-twin-9923aaa519334f48b8dd44fd792475ed",
   "license": "by",
   "makes": [
    "harley-davidson",
@@ -63,8 +63,8 @@
    "yamaha",
    "honda"
   ],
-  "note": "43k faces, V-twin, raked forks, fat rear — reads as a cruiser at a glance",
-  "orient": 180,
+  "note": "432k faces in 429 SEPARATE meshes, each node named after its part material (Gas Tank, Front Fork, Exhaust Pipes) — 18 groups. The Breakout it replaced was one 79k-triangle mesh called \"Bike\" and could not explode at all",
+  "orient": 0,
   "rotate": [
    0,
    90,
@@ -75,11 +75,11 @@
   "name": "scooter",
   "type": "scooter",
   "kind": "bike",
-  "uid": "5431bb42de5743088c849ba080e7ac33",
-  "title": "Vespa",
-  "author": "fox_amelie",
-  "authorUrl": "https://sketchfab.com/fox_amelie",
-  "url": "https://sketchfab.com/3d-models/vespa-hp-5431bb42de5743088c849ba080e7ac33",
+  "uid": "358a77040c53419b9bb50c462a160e6f",
+  "title": "Worn Out Old School Vespa",
+  "author": "Jakob_Forseth",
+  "authorUrl": "https://sketchfab.com/Jakob_Forseth",
+  "url": "https://sketchfab.com/3d-models/worn-out-old-school-vespa-358a77040c53419b9bb50c462a160e6f",
   "license": "by",
   "makes": [
    "vespa",
@@ -92,9 +92,13 @@
    "suzuki",
    "aprilia"
   ],
-  "note": "131k faces, step-through monocoque — the scooter everyone pictures; 8.3% of the roster",
-  "orient": 180,
-  "rotate": null
+  "note": "131 meshes under a fully named node tree (Seat, Front_Light, Speedomter, Front_Wheel, Hydrolics, Breaks) — the only CC scooter whose author named the parts",
+  "orient": 0,
+  "rotate": [
+   0,
+   90,
+   0
+  ]
  },
  {
   "name": "classic",
@@ -196,12 +200,12 @@
   "name": "touring",
   "type": "touring",
   "kind": "bike",
-  "orient": 90,
-  "uid": "dac59dc8fa064ce380b14cb4ac0b5f99",
-  "title": "Romanian Police Motorbike",
-  "author": "solid3DDD",
-  "authorUrl": "https://sketchfab.com/solid3DDD",
-  "url": "https://sketchfab.com/3d-models/romanian-police-motorbike-high-poly-3d-model-dac59dc8fa064ce380b14cb4ac0b5f99",
+  "orient": 0,
+  "uid": "79dc00298bf449d7bcfdf6eb32bd15ac",
+  "title": "Harley-Davidson Police",
+  "author": "Comrade1280",
+  "authorUrl": "https://sketchfab.com/Comrade1280",
+  "url": "https://sketchfab.com/3d-models/harley-davidson-police-79dc00298bf449d7bcfdf6eb32bd15ac",
   "license": "by",
   "makes": [
    "bmw",
@@ -211,19 +215,23 @@
    "harley-davidson",
    "indian"
   ],
-  "note": "full-fairing tourer with panniers; the Tracer 9 before it ships welded to a display plinth",
-  "rotate": null
+  "note": "a Road King bagger: 81 localised meshes (Object_N, pinned by position) and a floor plane that is stripped. The Romanian Police it replaced was 6 material sweeps, 783k triangles and 4.5 MB",
+  "rotate": [
+   0,
+   90,
+   0
+  ]
  },
  {
   "name": "adventure",
   "type": "adventure",
   "kind": "bike",
   "orient": 0,
-  "uid": "c32f7b87090d4ce4b10c76e844dc86cd",
-  "title": "Akt Tt Ds 200 repainted",
-  "author": "e-restrepo1114",
-  "authorUrl": "https://sketchfab.com/e-restrepo1114",
-  "url": "https://sketchfab.com/3d-models/akt-tt-ds-200-repainted-c32f7b87090d4ce4b10c76e844dc86cd",
+  "uid": "c2e1bff4afa34fc0b1957a5c418d666a",
+  "title": "Honda CB500X",
+  "author": "DevanirGrau",
+  "authorUrl": "https://sketchfab.com/DevanirGrau",
+  "url": "https://sketchfab.com/3d-models/honda-cb500x-c2e1bff4afa34fc0b1957a5c418d666a",
   "license": "by",
   "makes": [
    "bmw",
@@ -235,12 +243,8 @@
    "royal-enfield",
    "aprilia"
   ],
-  "note": "dual-sport: tall stance, beak front mudguard, wire wheels — the adventure shape",
-  "rotate": [
-   0,
-   90,
-   0
-  ]
+  "note": "beak, tall screen, top box — and 121 meshes carrying Honda part names. The Akt Tt Ds 200 it replaced had 84 good meshes and called every one of them defaultMaterial",
+  "rotate": null
  },
  {
   "name": "car",
