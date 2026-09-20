@@ -15,7 +15,7 @@ export const state = {
   page: null,
   channel: null,
   email: "",
-  ticket: "A-17",
+  ticket: "",
 };
 
 /** Four steps. Parts (invoice) is an overlay on Book, not a step of its own. */
