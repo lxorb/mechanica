@@ -26,6 +26,7 @@ from app.config import settings
 from app.models import Bike, IngestJob, RegistryEntry
 from app.registry import (
     ADAPTERS,
+    is_document_title,
     _ingestable,
     _pick,
     bikes_from_registry,
@@ -454,6 +455,37 @@ def cmd_enrich(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_prune_vehicles(args: argparse.Namespace) -> int:
+    """Delete catalog vehicles that were minted out of a document title.
+
+    `bikes_from_registry()` now refuses to derive one (see `registry.names_a_vehicle`), but
+    `put_bikes` only ever merges, so the ones already in bikes.json have to be taken out once. The
+    registry rows are untouched: they are real documents and stay exactly where they are. A vehicle
+    that has somehow been ingested is kept and reported rather than deleted."""
+    store = get_store()
+    bikes = store.bikes()
+    junk = [b for b in bikes if is_document_title(b.model)]
+    ingested = [b for b in junk if b.manualId]
+    drop = {b.id for b in junk if not b.manualId}
+    by_make: dict[str, int] = {}
+    for b in junk:
+        by_make[b.make] = by_make.get(b.make, 0) + 1
+    print(f"{len(junk)} vehicle(s) are really document titles: " + ", ".join(f"{m} {n}" for m, n in sorted(by_make.items(), key=lambda kv: -kv[1])))
+    for model in sorted({f"{b.make} — {b.model}" for b in junk})[: args.list]:
+        print(f"    {model[:110]}")
+    if ingested:
+        print(f"  keeping {len(ingested)} that already have an ingested manual: {', '.join(b.id for b in ingested[:5])}")
+    if not drop:
+        print("nothing to prune")
+        return 0
+    if args.dry_run:
+        print(f"would remove {len(drop)} vehicle(s) (dry run)")
+        return 0
+    _rewrite(store, bikes=[b for b in bikes if b.id not in drop])
+    print(f"removed {len(drop)} vehicle(s); catalog now {len(store.bikes())}")
+    return 0
+
+
 def cmd_stats(args: argparse.Namespace) -> int:
     """Per-brand coverage: rows indexed, free English owner's-manual PDFs, bikes those PDFs cover."""
     store = get_store()
@@ -551,6 +583,11 @@ def main(argv: list[str] | None = None) -> int:
     c6.add_argument("--replace", action="append", help="fragment that owns its site/kind scope: rows it no longer lists are deleted")
     c6.add_argument("--restamp", action="store_true", help="re-classify docKind on every row, not just the unstamped ones")
     c6.set_defaults(fn=cmd_merge_fragments)
+
+    c8 = sub.add_parser("prune-vehicles", help="remove catalog vehicles minted from a document title")
+    c8.add_argument("--list", type=int, default=12, help="how many of the offending names to print")
+    c8.add_argument("--dry-run", action="store_true")
+    c8.set_defaults(fn=cmd_prune_vehicles)
 
     c5 = sub.add_parser("stats", help="per-brand rows and free-PDF totals")
     c5.add_argument("--sites", action="store_true", help="also break the totals down per site")

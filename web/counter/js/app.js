@@ -273,6 +273,7 @@ async function boot() {
     await store;
     await Promise.all([loadScreen("identify"), loadScreen(hash)]);
     firstGo();
+    Q.uiUp();
     loadRest();
     return;
   }
@@ -282,7 +283,13 @@ async function boot() {
   measure("identify", "ttm:identify:a");
   // The field is on screen from here. The roster fills it in when it lands: ttm.js fires
   // "ttm:catalog", which Identify already listens for.
+  //
+  // uiUp() releases the two heavy passes the store holds back until there is a screen to hold
+  // them back for. On a warm load the roster is in hand before this module has even finished
+  // evaluating, and the search index was being built in front of it: 12 s of blocked thread
+  // between the first paint and the search field.
   firstGo();
+  Q.uiUp();
   await store;
 }
 

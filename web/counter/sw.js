@@ -1,6 +1,6 @@
 // Stamped by deploy/web.sh on every deploy (git sha + time), so each release installs a fresh
 // worker, drops the previous caches and takes over every open tab.
-const VERSION = "a7dc0cb7-202609201107";
+const VERSION = "a0d668b5-202609201232";
 const SHELL = `mechanica-shell-${VERSION}`;
 const RUNTIME = `mechanica-runtime-${VERSION}`;
 const DATA = `mechanica-data-${VERSION}`;
@@ -376,11 +376,9 @@ function shouldShellCache(request, response) {
 }
 
 /**
- * App shell (html, css, js, the bundled roster and image maps): network first, cache as
- * the fallback. The edge answers every shell file with max-age=0 + ETag, so online this is
- * one conditional request per file (a 304 when nothing changed) and a reload always shows
- * the version that is deployed; offline the last good copy is served, and a navigation
- * with nothing cached for its path falls back to the precached index.
+ * The page itself (a navigation): network first, cache as the fallback. It is one small
+ * request, it is the file that names every other one, and an agent who has just deployed has
+ * to see the deploy on the next reload rather than the one after it.
  */
 async function shellNetworkFirst(request) {
   const cache = await caches.open(SHELL);
@@ -399,6 +397,36 @@ async function shellNetworkFirst(request) {
     }
     throw err;
   }
+}
+
+/**
+ * Everything the page then asks for — css, js, the bundled roster, the photo index: whatever
+ * this version of the worker has, at once, and a revalidation behind it.
+ *
+ * It used to be network first for all of it, on the reasoning that the edge answers each file
+ * with max-age=0 + ETag so a revalidation is cheap. It is cheap in bytes and expensive in
+ * everything else: measured on a second visit at fast 4G + 4x CPU (worker included, which is
+ * the half that is easy to forget to throttle) thirty conditional requests put the search field
+ * at 21 s, against 2.6 s when they were answered from the cache. Nothing goes stale by it: a
+ * deploy stamps VERSION, which is a new worker, which drops every old cache, precaches the new
+ * shell and claims the page — and app.js reloads on that claim. The navigation above is still
+ * network first, so the reload that follows a deploy lands on the new page immediately.
+ */
+async function shellCacheFirst(event, request) {
+  const cache = await caches.open(SHELL);
+  const cached = await cache.match(request, { ignoreSearch: true });
+  const fresh = fetch(request)
+    .then(async (response) => {
+      if (shouldShellCache(request, response)) await cache.put(request, response.clone());
+      return response;
+    })
+    .catch((err) => {
+      if (cached) return cached;
+      throw err;
+    });
+  if (!cached) return fresh;
+  event.waitUntil(fresh.catch(() => {}));
+  return cached;
 }
 
 self.addEventListener("install", (event) => {
@@ -464,5 +492,9 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(staleWhileRevalidate(event, request, FONTS));
     return;
   }
-  event.respondWith(shellNetworkFirst(request));
+  if (request.mode === "navigate") {
+    event.respondWith(shellNetworkFirst(request));
+    return;
+  }
+  event.respondWith(shellCacheFirst(event, request));
 });

@@ -67,10 +67,11 @@ def _write(path: Path, data) -> None:
 # land inside one clock tick. Either half changing re-reads, so a caller only ever sees what
 # is on disk - the cache is invisible, and nothing about the read path's contract moved.
 #
-# **A cached value is shared, so a caller must not mutate one in place.** That is the same
-# contract the registry rows have always had; every reader in the tree either only reads or
-# copies first (Manual.model_copy in app/main.py, registry.merge_ua, the merge tool).
-# The list itself is never shared: each reader gets a fresh one and may sort or filter it.
+# What is cached is the *parsed JSON*, never the models built from it. A store hands back objects
+# the caller owns - put_bikes, mutate what bike() returned, read it back unchanged is a contract
+# the suite states outright - so every call still validates its own, and holding the models would
+# quietly make them shared. Validation copies every field out of the dict, so the cached JSON is
+# only ever read. `_registry_rows` is the one documented exception and keeps its own rule below.
 
 _cache_lock = threading.Lock()
 _cache: dict[tuple[str, str], tuple[Any, Any]] = {}
@@ -153,8 +154,7 @@ class FileStore:
     def bikes(self) -> list[Bike]:
         with self.lock:
             path = self._bikes_path()
-            rows = _cached(self.root, "bikes", _file_stamp(path), lambda: [Bike.model_validate(b) for b in _read(path, [])])
-            return list(rows)
+            return [Bike.model_validate(b) for b in _cached(self.root, "bikes", _file_stamp(path), lambda: _read(path, []))]
 
     def bike(self, bike_id: str) -> Bike | None:
         return next((b for b in self.bikes() if b.id == bike_id), None)
@@ -177,9 +177,9 @@ class FileStore:
                 self.root,
                 "manuals",
                 _dir_stamp(folder),
-                lambda: [Manual.model_validate(_read(p, {})) for p in sorted(folder.glob("*.json"))] if folder.exists() else [],
+                lambda: [_read(p, {}) for p in sorted(folder.glob("*.json"))] if folder.exists() else [],
             )
-            return list(rows)
+            return [Manual.model_validate(row) for row in rows]
 
     def manual(self, manual_id: str) -> Manual | None:
         with self.lock:
@@ -187,7 +187,7 @@ class FileStore:
             stamp = _file_stamp(path)
             if stamp is None:
                 return None
-            return _cached(self.root, f"manual:{manual_id}", stamp, lambda: Manual.model_validate(_read(path, {})))
+            return Manual.model_validate(_cached(self.root, f"manual:{manual_id}", stamp, lambda: _read(path, {})))
 
     def put_manual(self, manual: Manual) -> None:
         with self.lock:
@@ -218,12 +218,15 @@ class FileStore:
         """Every row, validated once per version of the file.
 
         registry.json is 40 MB and 99k rows: `json.loads` costs ~3.7 s and validating them ~8.9 s,
-        and the API and the test suite both call this many times per process. The cache key is the
-        file's own (mtime_ns, size), so any writer - put_registry here, the merge tool's wholesale
-        rewrite, another process - invalidates it without needing to know the cache exists. A file
-        that vanishes or is unreadable falls back to an empty list, exactly as before.
+        and the API and the test suite both call this many times per process. It rides the module
+        cache above, keyed on the file's own (mtime_ns, size), so any writer - put_registry here,
+        the merge tool's wholesale rewrite, another process - invalidates it without needing to know
+        the cache exists. A file that vanishes or is unreadable falls back to an empty list, exactly
+        as before.
 
-        **The rows are shared, so a caller must not mutate one in place.** Nothing in the tree does:
+        This is the one read that caches the *models*, not the JSON behind them, because validating
+        99k rows is the expensive half and no caller owns a row.
+        **The rows are therefore shared, and a caller must not mutate one in place.** Nothing does:
         the only two mutators (`registry.merge_ua`, which stamps docKind/needsUa, and the merge
         tool's `--restamp`) copy first. Mutating a row here would change what every later reader in
         the process sees, and would survive until the file changed.
@@ -294,9 +297,9 @@ class FileStore:
                 self.root,
                 "costs",
                 _file_stamp(path),
-                lambda: [CostEvent.model_validate(json.loads(line)) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()],
+                lambda: [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()],
             )
-            return list(rows)
+            return [CostEvent.model_validate(row) for row in rows]
 
     def pdf_url(self, manual_id: str) -> str | None:
         return None

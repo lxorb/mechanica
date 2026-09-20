@@ -357,6 +357,36 @@ function indexBikes(bikes) {
 }
 
 /**
+ * Nothing heavy runs before the first screen is on the glass.
+ *
+ * A warm load has the roster in hand in two seconds, which is *before* Identify's own module
+ * has finished evaluating — and the index build then sat in front of it and held the search
+ * field back by twelve seconds. app.js calls uiUp() the moment it has routed to a screen;
+ * until then the index and the photo pass wait here. It is never long: app.js awaits one
+ * module and routes.
+ */
+let uiReady = false;
+const waiting = [];
+
+export function uiUp() {
+  if (uiReady) return;
+  uiReady = true;
+  while (waiting.length) waiting.shift()();
+}
+
+function afterUi(fn) {
+  if (uiReady) {
+    fn();
+    return;
+  }
+  // The gate opens by itself if nobody opens it. A cached older app.js that does not know
+  // about uiUp(), or a boot that threw after the first route, must not leave the store with
+  // no search index at all — three seconds late is a slow app, never a broken one.
+  if (!waiting.length) setTimeout(uiUp, 3000);
+  waiting.push(fn);
+}
+
+/**
  * "The roster changed under you." Identify listens for this and repaints — it is how the
  * screen can be on the glass before the roster is, and how the photos can arrive after the
  * cards. Fired on the first roster, on the image pass and on any later adoption.
@@ -404,7 +434,8 @@ function indexSoon() {
   const bikes = roster;
   indexed = false;
   indexing = true;
-  sliceYield()
+  new Promise((done) => afterUi(done))
+    .then(sliceYield)
     .then(() => {
       if (roster !== bikes || bikes.length < 8000) return null;
       const lead = phase("index-lead-rows", () => leadRows(bikes));
@@ -657,6 +688,7 @@ function sliceYield() {
  * costs the search field a dropped keystroke. Repaints the screen once at the end.
  */
 async function applyImagesLater() {
+  await new Promise((done) => afterUi(done));
   await startImages();
   const bikes = roster;
   if (!bikes.length) return;

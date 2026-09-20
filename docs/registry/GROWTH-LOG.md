@@ -909,3 +909,106 @@ looser than the *maker* held for MG Australia and holds for nobody else tried so
    the cache; a Chinese or Brazilian portal could double it again. Worth asking whether rows that
    can never be fetched (`_is_pdf() == False`, 60k+ of them today) should live in a separate file
    from the ones that can.
+
+---
+
+## Cycle 8 — 2026-09-20
+
+Two pieces of work: the catalogue stopped minting vehicles out of document titles, and the registry
+learned to **print an online-only manual into a PDF we can ingest**.
+
+### 192 vehicles that were really documents, removed
+
+`bikes.json` carried 192 "vehicles" whose model name was a document title — `Parts Listing`,
+`Shop Dope/Service Bulletins`, `The Legend Begins`, `Universal Motorcycle Quick Start Guide`,
+`Owners Handbook Warranty`. They headed every gap list and read as garbage in search.
+
+* **Harley-Davidson 164 · Indian 13 · Voge 6 · Kove 5 · Kymco 2 · Hyundai 2.** None had ever been
+  ingested. **The registry rows are untouched** — they are real documents and stay exactly where
+  they are; only the derivation is refused.
+* `registry.is_document_title()` / `names_a_vehicle()` match **phrases, never single words**, so a
+  real model is safe: `Road Glide`, `Sport Glide`, `Street Glide Special` and `Tri Glide Ultra`
+  survive because the phrase looked for is "user guide", and "spec" alone is not enough — it has to
+  be "spec book". The guard sits in `bikes_from_registry()` *and* in the index builder, because the
+  old code also re-admitted the junk vehicle through `pdf_index` on the next pass.
+* `python -m tools.registry prune-vehicles [--dry-run]` removed the existing ones once and reports
+  what it would touch; anything already ingested is kept and named rather than deleted.
+* 27 cases in `api/tests/test_document_titles.py`, including twelve real models that must survive.
+
+Catalog **30,578 → 30,386 vehicles**, of which 28 had been carrying a `manualUrl`.
+
+### Rendering online-only manuals: `tools/render_html_manual.py` + `tools/render_pdf.mjs`
+
+The pipeline stays PDF-only; the manual becomes a PDF. For one manual the tool walks the
+publisher's own table of contents, fetches each section's HTML from the publisher's own CDN,
+assembles it in the publisher's order, and has headless Chrome print A4:
+
+* a first page with make, model, year, language, the **official source URL** and the fetch date;
+* one printed page per section (`page-break-before`), the publisher's figures and tables at print width;
+* a footer on **every** page: `Official source: <url> · fetched <date>` plus `page/total`;
+* nothing rewritten — the words and pictures are the manufacturer's, only the pagination is ours;
+* nothing behind a login, and ≤ 2 req/s per host.
+
+**Verified, not assumed.** `verify()` opens the result in PyMuPDF and rejects anything under 8
+pages or under 120 characters of text per page, because an ingest that cannot read the text layer
+is worthless. First render: **Lexus CT 200h 2014, 173 sections → 254 pages, 878 chars/page**, cover
+and footer correct, figures present.
+
+Rows point at **our** blob (`pdf/rendered/<make>/<model>-<year>-<lang>.pdf`) with `source` = the
+official page and the new `rendered: true` flag (both fields added additively to `RegistryEntry`),
+so nothing ever pretends this is the manufacturer's own file.
+
+Two things worth knowing before the next site:
+
+* **Chrome's `protocolTimeout` is 180 s** and a 250-page manual blows straight through it —
+  `Page.printToPDF timed out` is what that looks like. The helper sets 30 minutes, and waits on
+  `load` plus an explicit image-settle rather than `networkidle0`, which never fires on a page
+  pulling hundreds of CDN figures.
+* **The files are big: ~49 MB for 254 pages.** The weight is the publisher's PNG figures, and
+  re-saving with `garbage=4, deflate_images=True` buys **0.2 %** (49.23 → 49.15 MB) because they
+  are already compressed. Cutting it needs real downsampling or JPEG recoding, which risks the
+  legibility of wiring and dashboard diagrams — worth doing deliberately, not as a side effect.
+  Budget ~50 MB per rendered manual until then.
+
+### Recipe: Toyota & Lexus Europe (`--site tweddle`)
+
+    GET https://diva-api.tweddle.app/publications?filters={"language":"en","publicationType":"UG"}&limit=100&page=N
+        -> every English User Guide. `limit` caps at 100 and `page` is 1-based and is the ONLY
+           pager it honours: skip, offset, start, from and pageNumber all answer with nothing.
+           566 publications, of which Toyota and Lexus are 457 after de-duplicating to one per
+           (make, model, year) - the rest are other Tweddle customers (Kenworth trucks) and are
+           skipped rather than mislabelled.
+    GET https://diva-api.tweddle.app/pubhub/publications/<ditaId>/content
+        -> {publications:[{contents:[...]}], folders:[119], topics:[202]}; walking
+           publications[0].contents depth-first through each node's own `contents` is the manual's
+           order, and every node carries bodyHtml.url - a public S3 file needing no token.
+
+Render order is **breadth-first across nameplates, newest year first**: every render is one row and
+therefore one vehicle, so reaching the most *models* soonest is what a time-boxed cycle should buy.
+
+### Numbers
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 99,313 | **99,316** | +3 |
+| **free English owner PDFs** | 24,299 | **24,302** | **+3** |
+| distinct PDF files | 14,840 | **14,843** | +3 |
+| catalog vehicles | 30,578 | **30,389** | −192 documents, +3 rendered |
+| …with a `manualUrl` | 18,569 | **18,544** | −28 junk, +3 rendered |
+
+**876 tests pass in 44 s** — down from 15–21 minutes, which is cycle 7's `registry()` memoisation
+finally showing its full effect now that nothing else re-reads the file per call.
+
+Three manuals is what fitted: **each render takes 4–6 minutes** (fetch ~200 CDN sections, lay out,
+print 250–450 pages), so 457 of them is roughly two days of wall clock, not one cycle. The first
+three are Lexus CT 200h 2014 (254 pp), CT 200h 2020 (340 pp) and ES 200 2022 (445 pp), all uploaded
+and re-verified as `%PDF-` **from the public blob url**, not just on disk.
+
+**Resuming is the normal case:** `render --site tweddle --all --upload --max-minutes N` reuses every
+PDF already on disk (and re-uploads it, idempotently) and carries on from where it stopped;
+`--only-rendered` uploads and indexes what exists without rendering anything new. Each render is one
+row and therefore one vehicle, so the remaining 454 are 454 vehicles, English, at ~5 minutes each.
+
+The cache lives in `api/data/uploads/rendered/` on purpose: the test harness copies `api/data` for
+every run and ignores `uploads`, and a 50 MB-per-manual cache has no business in git. The blob is
+the real home.

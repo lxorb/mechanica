@@ -3,7 +3,8 @@
 Pass 1 (`docs/qa/BUGS.md`) read the backend and the routing/search modules and left the screens
 "not exercised in a browser". This pass is that: every screen driven headlessly at **390×844
 (touch, dsf 3)**, **768×1024 (touch, dsf 2)** and **1280×800**, in **Workshop**, **Night** and
-**Paper**, with the API alive, killed mid-flow, and slowed to 400 kbit/s.
+**Paper** by hand and in **all five themes** by the harness, with the API alive, killed mid-flow,
+and slowed to 400 kbit/s.
 
 Surfaces read and driven: `counter/js/bus.js`, `theme.js`, `pdf.js`, `climate.js`, `particons.js`,
 `parts-search.js`, `pick-search.js`, `index-data.js`, `screens/{identify,confirm,pick,book,invoice,cost}.js`,
@@ -18,7 +19,15 @@ holds, the console stays silent, the Conditions sheet's bottom edge is the viewp
 opens cold — theme-shots' two assertions plus the two this pass fixed that a contact sheet cannot
 see.
 
-    node web/tools/bughunt-ui.mjs                  -> 13 passed, 0 failed  (phone; desk the same)
+    node web/tools/bughunt-ui.mjs                  -> 13 passed, 0 failed   (390x844)
+    node web/tools/bughunt-ui.mjs --view desk      -> 13 green at 1280x800, across two runs:
+                                                      12 in one pass, the thirteenth alone after
+                                                      a CDP timeout under load
+    # Each walk drives a real browser with a software-rasterised WebGL stage. On a box running
+    # several agents at once (measured: ~36 Chrome processes) a check times out waiting for
+    # `.hit` or `.id-card` while the API itself answers in 0.1-0.4 s — CPU starvation, not a
+    # finding. Every failure of that shape names the selector it waited for; UI-H1's
+    # empty-roster boot names itself. Re-run the check alone before believing it.
     node web/tools/bughunt-ui.mjs --only themes    -> 1 passed  (5 themes x 9 stops, 0 console errors)
     node docs/qa/book/book-shots.mjs               -> 42 states, 1 flagged (the documented tablet
                                                       harness artifact in docs/qa/book/REPORT.md)
@@ -54,12 +63,14 @@ transient — the number is `here=pick` vs `here=book, p.7/143`, which is what t
 | UI-11 | low | `bus.js` | an entry with no hash and no state hid every section — a blank app with nothing to tap | fixed |
 | UI-12 | low | Parts · `parts-search.js` | no ceiling on query tokens (pass 1's BUG-08, in the one search that was missed) | fixed |
 | UI-13 | low | Book · `book.js` | two answers opened inside 900 ms left the first sheet glowing for ever | fixed |
-| UI-H1 | med | boot · `app.js` (not mine) | the search field waits on the whole catalog: never appeared within 40 s at 400 kbit/s | handoff |
+| UI-H5 | **high** | boot · `app.js` / `ttm.js` (not mine) | nothing called `ttm.js`'s new `uiUp()`, so the search index never built and the landing found nothing — caught on the working tree at 14:23, **fixed by its owner at 14:32**, ten minutes later | closed |
+| UI-H1 | med | boot · `app.js` (not mine) | the whole first frame waits on the catalog: no search field within 40 s at 400 kbit/s, and a reload lands on Identify whenever the roster is not ready at that instant | handoff |
 | UI-H2 | low | `viewer3d.js` (not mine) | the model and the HDRI are fetched and then aborted on every Pick entry | handoff |
 | UI-H3 | low | `ttm.js` (not mine) | `mergeDuplicates()` carries a merged row's `manualId` but not its new `lang` | handoff |
 | UI-H4 | low | registry (not mine) | six Harley "Universal … Quick Start Guide (…)" rows render as six identical cards at 390 px | handoff |
 
-**13 fixed · 0 open · 4 handoff.** By severity: 6 med, 7 low fixed; 1 med, 3 low handed off.
+**13 fixed · 0 open · 4 handoff · 1 caught and closed by its owner.** By severity: 6 med, 7 low
+fixed; 1 high (closed), 1 med, 3 low handed off.
 Zero console errors and zero page errors on every online step of every run, at every viewport, in
 every theme. The only failed requests anywhere in the walk are UI-H2's two aborted model loads.
 
@@ -136,8 +147,9 @@ the outline as it always did.
 ### UI-06 — a hanging font CDN blanked the whole app · med
 **Repro** open the app with `fonts.googleapis.com` unreachable-but-slow (flaky garage wifi, a
 captive portal, a DNS black hole). Measured with a 12 s hang: **first contentful paint 12,100 ms**,
-field usable at 14.2 s. Every other byte of this app is local and service-worker cached.
-`docs/qa/ui-bugs/02-fonts-before.png` (an empty ground) vs `-after.png`.
+field usable at 14.2 s. Every other byte of this app is local and service-worker cached. There is no
+screenshot pair because there is nothing to photograph: the renderer records no paint at all for
+those twelve seconds, and forcing a capture of that page shows pixels the user never gets.
 **Root cause** `index.html` loaded Barlow + Big Shoulders as a plain `<link rel="stylesheet">`, which
 is render-blocking, from a third party.
 **Fix** `media="print" onload="this.media='all'"` plus a `<noscript>` copy. The faces already carry
@@ -208,6 +220,29 @@ unused. Reproduced twice in a row on a contended box (roster 29,938 by the time 
 `ttm:catalog` event when the first attempt found nothing, or await the roster before `revive()`.
 `web/tools/bughunt-ui.mjs`'s reload check retries once and names this case, so it is not confused
 with UI-05.
+
+### UI-H5 — the landing search found nothing at all · **high** · `app.js` / `ttm.js` · **closed**
+**Caught at 14:30 on the working tree (`ttm.js` saved 14:23, `app.js` saved 13:55) while the boot
+path was being rewritten by another agent, and fixed by that agent at 14:32 — `app.js` now calls
+`Q.uiUp()` and ttm.js added a 3 s self-release as a backstop. Verified green at 14:33: 28 cards,
+29,749 rows indexed. Written up because a half-landed refactor of the front door is worth a record,
+and because the backstop is the interesting part of the fix.**
+**Repro** open `/counter/`, type `390 duke`, wait: **no cards, ever**. Measured in-page:
+`Q.bikes().length` 29,746, `search.indexedCount()` **0**, `Q.findBikes("390 duke")` **[]** — and
+calling `search.buildIndex(Q.bikes())` by hand right then works fine (723 ms, 29,746 rows, 3 hits).
+So the roster is there, the index code is fine, and nothing ever builds it. No page error, no
+unhandled rejection.
+**Root cause** `ttm.js` now gates its heavy passes behind `afterUi()`, whose queue is drained by
+`export function uiUp()` — and its own comment says *"app.js calls uiUp() the moment it has routed
+to a screen"*. **Nothing calls it:** `grep -rn "uiUp" web/counter/js/` matches only ttm.js's own
+declaration and that comment. So `waiting` never drains, `indexSoon()` — which sets `indexing =
+true` synchronously before awaiting `afterUi` — never finishes, and `findBikes()`'s
+`if (!indexed && !indexing)` force never fires because `indexing` is stuck true for the life of the
+page. The image pass is gated on the same queue.
+**Fix** one line in whichever file the owner prefers: `Q.uiUp()` right after `firstGo()` in
+`app.js::boot()`, or have ttm.js drain the queue itself on the first `screen` event. Worth a guard
+too: `indexing` should be cleared on any path that abandons the build, and `findBikes()` could
+force after a deadline rather than never while `indexing`.
 
 ### UI-H2 — the 3D model is fetched and then aborted · low · `viewer3d.js`
 **Repro** enter Pick on `ktm-390-duke-2024` and watch the network: exactly one request each for
@@ -285,3 +320,11 @@ Recorded so pass 3 does not re-chase them.
   render whose canvas has since been handed to another page.
 - **Theme persistence** — `localStorage` is read once before first paint and every read/write is in
   a `try`; a dark system still only votes on a genuinely first visit.
+- **The landing showing no cards on a starved box is `ttm.js::indexSoon()` working as designed,
+  not a fault in Identify.** While `indexing` is true `findBikes()` deliberately does not force the
+  27.4k-row build, so a CPU with nothing to spare (measured: the search index still at 0 rows 12 s
+  after the roster landed, while `/api` answered in 0.1–0.4 s) leaves the field answering nothing
+  until the slices get through. Identify's own `/catalog/suggest` top-up is the intended cover for
+  that window. Worth knowing before reading a `.id-card` timeout as a bug — and worth a thought by
+  the adapter owner as to whether the force should happen after some deadline rather than never
+  while `indexing`.

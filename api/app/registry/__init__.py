@@ -152,6 +152,34 @@ def merge_ua(entries: Iterable[RegistryEntry]) -> list[RegistryEntry]:
     return rows
 
 
+# A model name that is really a document title. The Harley SIP archive, Polaris and a few WordPress
+# sites file a row under the *document's* name - "Parts Listing", "Universal Motorcycle Quick Start
+# Guide", "Owners Handbook Warranty" - and deriving a vehicle from that mints things like
+# `harley-davidson-the-legend-begins-1903`, which head every gap list and read as garbage in search.
+# The row stays: it is a real document. It just never becomes a vehicle.
+#
+# Matched as phrases, never as single words, so a real model is safe: "Road Glide" and "Sport Glide"
+# survive because the phrase is "user guide", and "Spec" alone is not enough - it has to be "spec book".
+DOCUMENT_TITLE = re.compile(
+    r"owner'?s? manual|owners? handbook|quick ?start|parts listing|service bulletin|shop dope"
+    r"|spec\.? book|cross index|emergency response|compliance addendum|manual supplement"
+    r"|the legend begins|oper\.?/maint|user guide|instruction manual|service manual"
+    r"|workshop manual|maintenance guide|reference guide|handbook|operator'?s? guide",
+    re.I,
+)
+
+
+def is_document_title(model: str) -> bool:
+    """True when this 'model' names a document rather than a vehicle."""
+    return bool(DOCUMENT_TITLE.search(model or ""))
+
+
+def names_a_vehicle(model: str) -> bool:
+    """What a row must have before a catalog vehicle may be derived from it."""
+    name = (model or "").strip()
+    return bool(name) and name.lower() != "all models" and not is_document_title(name)
+
+
 ALIAS_MIN = 3
 NOT_ALNUM = re.compile(r"[^a-z0-9]+")
 
@@ -174,7 +202,7 @@ def alias_key(make: str, model: str, year: object) -> str:
 def _index(rows: Iterable[RegistryEntry], keyed: Callable[[RegistryEntry, int], str]) -> dict[str, list[RegistryEntry]]:
     found: dict[str, list[RegistryEntry]] = {}
     for e in rows:
-        if not e.model or e.model.strip().lower() == "all models":
+        if not names_a_vehicle(e.model):
             continue
         for year in e.years:
             key = keyed(e, year)
@@ -273,7 +301,7 @@ def bikes_from_registry() -> list[Bike]:
     known = {b.id: b for b in store.bikes()}  # re-read late: other passes write manualId concurrently
     out: dict[str, Bike] = {}
     for e in store.registry():
-        if e.type != "owner" or not e.years or not e.model or e.model.strip().lower() == "all models":
+        if e.type != "owner" or not e.years or not names_a_vehicle(e.model):
             continue
         for year in e.years:
             bid = slug(e.make, e.model, year)

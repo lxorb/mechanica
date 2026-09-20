@@ -10,3 +10,6 @@ dev-dist
 !.dev.vars.example
 .env*
 !.env.example
+
+# demo video masters (70-80 MB each): keep on disk, submit from disk; the webm + sheets are tracked
+docs/pitches/video/*.mp4

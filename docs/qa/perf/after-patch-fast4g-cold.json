@@ -1,0 +1,654 @@
+{
+  "origin": "http://127.0.0.1:56898/counter/",
+  "when": "2026-09-20T12:09:46.150Z",
+  "rows": [
+    {
+      "label": "local fast4g-cold.1",
+      "requests": 33,
+      "bytes": 247810,
+      "byType": {
+        "html": 2007,
+        "json": 119403,
+        "other": 70894,
+        "link": 30390,
+        "js": 9522,
+        "api": 13544,
+        "css": 2050
+      },
+      "cached": 0,
+      "sw": 0,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 31,
+        "bytes": 230319
+      },
+      "slow": [
+        {
+          "url": "/store/ttm-catalog.json",
+          "at": 537,
+          "ms": 8911,
+          "kb": 102
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 793,
+          "ms": 8372,
+          "kb": 2
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 792,
+          "ms": 8293,
+          "kb": 1
+        },
+        {
+          "url": "/api/catalog/suggest?q=390",
+          "at": 6872,
+          "ms": 7783,
+          "kb": 13
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 792,
+          "ms": 7663,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 792,
+          "ms": 7640,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/pick.css",
+          "at": 791,
+          "ms": 7456,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/confirm.css",
+          "at": 791,
+          "ms": 7422,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/viewer3d.css",
+          "at": 790,
+          "ms": 7220,
+          "kb": 3
+        },
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 786,
+          "ms": 7172,
+          "kb": 1
+        }
+      ],
+      "wall": 28090,
+      "fcp": 6858,
+      "lcp": 6584,
+      "field": 6671,
+      "card": 15099,
+      "ttfb": 276,
+      "dcl": 6558,
+      "load": 13118,
+      "cards": 60,
+      "store": "local",
+      "controlled": false,
+      "long": [
+        {
+          "start": 21727,
+          "dur": 6204,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 17621,
+          "dur": 4031,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 15263,
+          "dur": 2335,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 10394,
+          "dur": 169,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9692,
+          "dur": 161,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 14955,
+          "dur": 157,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6237,
+          "dur": 142,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9568,
+          "dur": 120,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 10171,
+          "dur": 114,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6561,
+          "dur": 106,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6401,
+          "dur": 87,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 717,
+          "dur": 84,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 14165,
+      "longCount": 19,
+      "phases": [
+        {
+          "name": "health",
+          "start": 6544,
+          "dur": 2527
+        },
+        {
+          "name": "identify",
+          "start": 6555,
+          "dur": 11
+        },
+        {
+          "name": "index-force",
+          "start": 6755,
+          "dur": 1
+        },
+        {
+          "name": "index-lead-rows",
+          "start": 17622,
+          "dur": 48
+        },
+        {
+          "name": "index-lead",
+          "start": 17669,
+          "dur": 3339
+        },
+        {
+          "name": "index",
+          "start": 21771,
+          "dur": 5427
+        }
+      ]
+    },
+    {
+      "label": "local fast4g-cold.2",
+      "requests": 27,
+      "bytes": 105389,
+      "byType": {
+        "html": 2007,
+        "other": 47876,
+        "link": 30390,
+        "js": 9522,
+        "api": 13544,
+        "css": 2050
+      },
+      "cached": 0,
+      "sw": 0,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 26,
+        "bytes": 103339
+      },
+      "slow": [
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 551,
+          "ms": 4342,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 551,
+          "ms": 4269,
+          "kb": 2
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 550,
+          "ms": 3469,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 551,
+          "ms": 3468,
+          "kb": 1
+        },
+        {
+          "url": "/counter/css/screens/confirm.css",
+          "at": 550,
+          "ms": 3068,
+          "kb": 3
+        },
+        {
+          "url": "/counter/css/screens/pick.css",
+          "at": 550,
+          "ms": 3034,
+          "kb": 3
+        },
+        {
+          "url": "800&family=Big+Shoulders+Display:wght@700;800&display=swap",
+          "at": 546,
+          "ms": 2939,
+          "kb": 1
+        },
+        {
+          "url": "/counter/css/viewer3d.css",
+          "at": 549,
+          "ms": 2938,
+          "kb": 3
+        },
+        {
+          "url": "/counter/manifest.webmanifest",
+          "at": 580,
+          "ms": 2783,
+          "kb": 1
+        },
+        {
+          "url": "/api/catalog/suggest?q=390",
+          "at": 4312,
+          "ms": 2550,
+          "kb": 13
+        }
+      ],
+      "wall": 11614,
+      "fcp": 2906,
+      "lcp": 10280,
+      "field": 3911,
+      "card": 9655,
+      "ttfb": 317,
+      "dcl": 3766,
+      "load": 0,
+      "cards": 17,
+      "store": "",
+      "controlled": false,
+      "long": [
+        {
+          "start": 3909,
+          "dur": 226,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 7883,
+          "dur": 123,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2593,
+          "dur": 107,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 3769,
+          "dur": 97,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9172,
+          "dur": 92,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 3679,
+          "dur": 90,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 9591,
+          "dur": 83,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6758,
+          "dur": 80,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 898,
+      "longCount": 8,
+      "phases": [
+        {
+          "name": "health",
+          "start": 3747,
+          "dur": 2517
+        },
+        {
+          "name": "identify",
+          "start": 3763,
+          "dur": 120
+        },
+        {
+          "name": "index-force",
+          "start": 4143,
+          "dur": 1
+        }
+      ]
+    },
+    {
+      "label": "local fast4g-cold.3",
+      "requests": 28,
+      "bytes": 208067,
+      "byType": {
+        "html": 2007,
+        "json": 104341,
+        "other": 47876,
+        "link": 30390,
+        "js": 7548,
+        "css": 2050,
+        "api": 13855
+      },
+      "cached": 0,
+      "sw": 0,
+      "failed": [],
+      "errors": [],
+      "landing": {
+        "requests": 26,
+        "bytes": 103726
+      },
+      "slow": [
+        {
+          "url": "/store/ttm-catalog.json",
+          "at": 170,
+          "ms": 4733,
+          "kb": 102
+        },
+        {
+          "url": "/counter/css/climate.css",
+          "at": 196,
+          "ms": 2572,
+          "kb": 2
+        },
+        {
+          "url": "/store/ttm-catalog.json",
+          "at": 2391,
+          "ms": 2513,
+          "kb": 0
+        },
+        {
+          "url": "display/v24/fC1_PZJEZG-e9gHhdI4-NBbfd2ys3SjJCx1czNDu.woff2",
+          "at": 2077,
+          "ms": 2436,
+          "kb": 35
+        },
+        {
+          "url": "/counter/css/screens/invoice.css",
+          "at": 196,
+          "ms": 2358,
+          "kb": 3
+        },
+        {
+          "url": "/s/barlow/v13/7cHqv4kjgoGqM7E3q-0s51os.woff2",
+          "at": 2461,
+          "ms": 2216,
+          "kb": 22
+        },
+        {
+          "url": "/counter/css/screens/cost.css",
+          "at": 196,
+          "ms": 2213,
+          "kb": 1
+        },
+        {
+          "url": "/counter/css/screens/book.css",
+          "at": 195,
+          "ms": 2104,
+          "kb": 3
+        },
+        {
+          "url": "/counter/js/ttm.js",
+          "at": 173,
+          "ms": 2070,
+          "kb": 24
+        },
+        {
+          "url": "/counter/css/screens/pick.css",
+          "at": 195,
+          "ms": 1959,
+          "kb": 3
+        }
+      ],
+      "wall": 18616,
+      "fcp": 2100,
+      "lcp": 2072,
+      "field": 2460,
+      "card": 4507,
+      "ttfb": 41,
+      "dcl": 2411,
+      "load": 5107,
+      "cards": 60,
+      "store": "remote",
+      "controlled": false,
+      "long": [
+        {
+          "start": 11605,
+          "dur": 6797,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 7681,
+          "dur": 3799,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6401,
+          "dur": 1261,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 6023,
+          "dur": 378,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 2460,
+          "dur": 145,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 5167,
+          "dur": 136,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 5333,
+          "dur": 108,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 5582,
+          "dur": 94,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 1281,
+          "dur": 93,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 4942,
+          "dur": 90,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 4460,
+          "dur": 76,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        },
+        {
+          "start": 5766,
+          "dur": 68,
+          "name": "self",
+          "attr": [
+            "unknown"
+          ]
+        }
+      ],
+      "longTotal": 13382,
+      "longCount": 18,
+      "phases": [
+        {
+          "name": "health",
+          "start": 2399,
+          "dur": 1913
+        },
+        {
+          "name": "identify",
+          "start": 2409,
+          "dur": 13
+        },
+        {
+          "name": "index-force",
+          "start": 2614,
+          "dur": 1
+        },
+        {
+          "name": "bundle",
+          "start": 4313,
+          "dur": 1736
+        },
+        {
+          "name": "merge",
+          "start": 6049,
+          "dur": 352
+        },
+        {
+          "name": "index-ids",
+          "start": 6402,
+          "dur": 275
+        },
+        {
+          "name": "index-lead-rows",
+          "start": 7681,
+          "dur": 78
+        },
+        {
+          "name": "index-lead",
+          "start": 7760,
+          "dur": 2920
+        },
+        {
+          "name": "index",
+          "start": 11606,
+          "dur": 5604
+        }
+      ]
+    }
+  ]
+}

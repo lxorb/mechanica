@@ -98,13 +98,32 @@ function makeTake(name) {
     beats,
     start() { t0 = Date.now(); },
     mark(title, note) {
-      const t = t0 ? (Date.now() - t0) / 1000 : 0;
-      beats.push({ t, title, note: note || "" });
+      const wall = Date.now();
+      const t = t0 ? (wall - t0) / 1000 : 0;
+      beats.push({ wall, t, title, note: note || "" });
       console.log(`    ${secs(t)}  ${title}${note ? ` — ${note}` : ""}`);
+    },
+    /** Move every beat onto the finished video's clock (see squeeze() in startCapture). */
+    rebase(map) {
+      for (const b of beats) b.t = Math.max(0, map(b.wall));
+      beats.sort((a, b) => a.t - b.t);
     },
     get seconds() { return t0 ? (Date.now() - t0) / 1000 : 0; },
   };
 }
+
+/**
+ * Waits long enough to be dead air, and the span of each one, so the frames inside it can be
+ * dropped from the finished video. Only the two first-load waits ever qualify: the 3D model's
+ * first decode and the PDF's first render, both of which cost three times more here than in a
+ * normal browser because the screencast is encoding a JPEG of every frame off the same core.
+ * Everything the product is actually being judged on — the search, the chat answer, take 2's
+ * whole ingest — is left at wall-clock length, and every cut is printed into SHOTLIST.md.
+ */
+let cuts = [];
+const CUT_OVER_MS = 4000;
+const CUT_HEAD_MS = 1800;
+const CUT_TAIL_MS = 500;
 
 /* ------------------------------------------------------------------ page helpers */
 
@@ -117,13 +136,17 @@ const dwell = (ms) => sleep(ms);
  * identical to a slow network in the finished video.
  */
 const TRACE = Boolean(process.env.TTM_TRACE);
-async function waited(label, promise) {
+async function waited(label, promise, { cut = false } = {}) {
   const t = Date.now();
   const out = await promise.catch((e) => {
     if (TRACE) console.log(`      ~ ${label}: FAILED ${String(e.message || e).slice(0, 60)}`);
     return null;
   });
-  if (TRACE) console.log(`      ~ ${label}: ${((Date.now() - t) / 1000).toFixed(1)} s`);
+  const ms = Date.now() - t;
+  if (cut && ms > CUT_OVER_MS) {
+    cuts.push({ label, from: t + CUT_HEAD_MS, to: t + ms - CUT_TAIL_MS, seconds: (ms - CUT_HEAD_MS - CUT_TAIL_MS) / 1000 });
+  }
+  if (TRACE) console.log(`      ~ ${label}: ${(ms / 1000).toFixed(1)} s${cut && ms > CUT_OVER_MS ? " (cut)" : ""}`);
   return out;
 }
 
@@ -295,19 +318,12 @@ async function takeOne(page, take) {
 
   await tap(page, 'section[data-screen="confirm"] button[aria-label="Yes"]');
   await page.waitForFunction(() => location.hash === "#pick", { timeout: 60000 });
-  // Capped, not patient: past this the ring is more honest than a video that misses its ceiling.
-  await waited(
-    "3D stage",
-    page.waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
-      timeout: 26000,
-    }),
-  );
-  await dwell(3000);
-  take.mark("Pick · the 3D stage", "the model idles into a slow spin after three seconds, then a drag");
-  await dwell(900);
-  await orbit(page);
   await dwell(2000);
+  take.mark("Pick", "the manual's own twenty sections, while the bike loads onto the stage");
+  await dwell(1200);
 
+  // The question goes in while the GLB is still decoding — the search never waited for the 3D
+  // and neither does a mechanic. It also keeps twenty seconds of loading ring out of the video.
   await tap(page, ".ask-q");
   await type(page, "chain is loose", 118);
   await dwell(450);
@@ -317,22 +333,31 @@ async function takeOne(page, take) {
   take.mark("The manual's own headings", "12.12 p.77–78 and 12.13 p.78 — KTM's section numbers, not ours");
   await dwell(1300);
 
+  // Patience is free here: the wait is one of the two spans cut out of the finished video, so a
+  // slow first decode costs run time, not screen time.
+  await waited(
+    "3D stage",
+    page.waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
+      timeout: 90000,
+      polling: 400,
+    }),
+    { cut: true },
+  );
+  await dwell(1800);
   take.mark("Exploded view, chain lit", "the bike explodes and the drive chain lights under the top heading");
-  await dwell(1700);
-  await tapHit(page, 1);
-  await dwell(1500);
-  take.mark("The second heading", "12.13 Adjusting the chain tension — the 3D focus follows the heading");
-  await dwell(1000);
-  await tapHit(page, 0);
-  await dwell(1500);
+  await dwell(1600);
+  await orbit(page);
+  await dwell(1800);
 
   await tap(page, ".open");
   await page.waitForFunction(() => location.hash.startsWith("#book"), { timeout: 60000 });
   await waited(
     "page 77 + marks",
     page.waitForFunction(() => document.querySelectorAll('.page-sheet[data-page="77"] .mark').length >= 2, {
-      timeout: 22000,
+      timeout: 90000,
+      polling: 400,
     }),
+    { cut: true },
   );
   await dwell(1300);
   take.mark("Page 77 of KTM's manual", "the printed page, orange markers on the two answering lines");
@@ -421,7 +446,7 @@ async function takeOne(page, take) {
         }
         return false;
       },
-      { timeout: 40000 },
+      { timeout: 40000, polling: 400 },
     ),
   );
   await dwell(1000);
@@ -444,7 +469,7 @@ async function takeOne(page, take) {
         }
         return false;
       },
-      { timeout: 45000 },
+      { timeout: 45000, polling: 400 },
     ),
   );
   await dwell(1500);
@@ -636,6 +661,7 @@ async function startCapture(page, file) {
 
   const shots = [];
   let lastWall = Date.now();
+  cuts = [];
 
   client.on("Page.screencastFrame", (ev) => {
     const ts = ev.metadata?.timestamp;
@@ -643,7 +669,7 @@ async function startCapture(page, file) {
     if (ts === undefined) return;
     const name = join(dir, `${String(shots.length).padStart(6, "0")}.${SHOT_EXT}`);
     writeFileSync(name, Buffer.from(ev.data, "base64"));
-    shots.push({ name, ts });
+    shots.push({ name, ts, wall: Date.now() });
     lastWall = Date.now();
   });
 
@@ -670,13 +696,28 @@ async function startCapture(page, file) {
         return { frames: 0, seconds: 0 };
       }
       const tail = Math.max(1 / FPS, (Date.now() - lastWall) / 1000);
+      const zero = shots[0].wall;
+      const spans = cuts.map((c) => ({ from: c.from, to: c.to })).sort((a, b) => a.from - b.from);
+      /** Wall-clock ms -> seconds into the finished video, with the cut spans removed. */
+      const squeeze = (wall) => {
+        let out = (wall - zero) / 1000;
+        for (const c of spans) {
+          if (wall >= c.to) out -= (c.to - c.from) / 1000;
+          else if (wall > c.from) out -= (wall - c.from) / 1000;
+        }
+        return out;
+      };
+      const kept = shots.filter((s) => !spans.some((c) => s.wall > c.from && s.wall < c.to));
       const lines = [];
-      for (let i = 0; i < shots.length; i++) {
-        const d = i + 1 < shots.length ? shots[i + 1].ts - shots[i].ts : tail;
-        lines.push(`file '${shots[i].name.replace(/\\/g, "/")}'`, `duration ${Math.max(1 / FPS, d).toFixed(4)}`);
+      for (let i = 0; i < kept.length; i++) {
+        const d = i + 1 < kept.length ? squeeze(kept[i + 1].wall) - squeeze(kept[i].wall) : tail;
+        // NOT clamped up to 1/fps. Chrome delivers bursts faster than the output grid, and
+        // rounding each of those up to a whole output frame stretched an 86 s take into 144 s
+        // of slow motion. Sub-frame durations are correct here; -fps_mode cfr drops the extras.
+        lines.push(`file '${kept[i].name.replace(/\\/g, "/")}'`, `duration ${Math.max(0.0005, d).toFixed(4)}`);
       }
       // The concat demuxer ignores the last entry's duration unless the file is repeated.
-      lines.push(`file '${shots[shots.length - 1].name.replace(/\\/g, "/")}'`);
+      lines.push(`file '${kept[kept.length - 1].name.replace(/\\/g, "/")}'`);
       const list = join(SCRATCH, "demo-frames.txt");
       writeFileSync(list, lines.join("\n"), "utf8");
       const r = ff([
@@ -688,10 +729,10 @@ async function startCapture(page, file) {
         file,
       ]);
       if (r.status !== 0) console.log(`  !! capture encode: ${(r.stderr || "").slice(0, 300)}`);
-      const seconds = shots[shots.length - 1].ts - shots[0].ts + tail;
+      const seconds = squeeze(shots[shots.length - 1].wall) + tail;
       rmSync(dir, { recursive: true, force: true });
       rmSync(list, { force: true });
-      return { frames: shots.length, seconds };
+      return { frames: kept.length, dropped: shots.length - kept.length, seconds, squeeze, cuts: [...cuts] };
     },
   };
 }
@@ -877,9 +918,17 @@ async function record(which, fn) {
     if (recorder) capture = await recorder.stop();
     await browser.close();
   }
-  if (capture) console.log(`  captured ${capture.frames} frames (${capture.seconds.toFixed(1)} s)`);
+  if (capture) {
+    // The beats were timed on the wall clock; the video's clock is shorter by whatever was cut.
+    take.rebase(capture.squeeze);
+    console.log(
+      `  captured ${capture.frames} frames (${capture.seconds.toFixed(1)} s)` +
+        (capture.dropped ? `, ${capture.dropped} dropped in ${capture.cuts.length} cut(s)` : ""),
+    );
+    for (const c of capture.cuts) console.log(`    cut ${c.seconds.toFixed(1)} s of "${c.label}"`);
+  }
   if (errors.length) console.log(`  page errors: ${[...new Set(errors)].slice(0, 3).join(" | ")}`);
-  return { take, raw, extra };
+  return { take, raw, extra, cuts: capture ? capture.cuts : [] };
 }
 
 async function main() {
@@ -910,7 +959,7 @@ async function main() {
       console.log(`  cold bike: ${bike.id} (${bike.manualUrl.slice(0, 70)}…)`);
       which.run = (page, take) => takeTwo(page, take, bike);
     }
-    const { take, raw, extra } = await record(which, which.run);
+    const { take, raw, extra, cuts: took } = await record(which, which.run);
     if (DRY) {
       report.push({ take, extra });
       continue;
@@ -932,7 +981,7 @@ async function main() {
     );
     console.log(`  -> ${mp4}   ${infoMp4 ? `${infoMp4.duration.toFixed(1)} s · ${(infoMp4.bitrate / 1e6).toFixed(1)} Mbps` : ""}`);
     console.log(`  -> ${sheet}  (${n} frames)`);
-    report.push({ file: which.file, name: which.name, take, info, infoMp4, sheet: n, extra });
+    report.push({ file: which.file, name: which.name, take, info, infoMp4, sheet: n, extra, cuts: took });
   }
 
   if (!DRY && report.length) writeShotlist(report);
@@ -963,6 +1012,15 @@ function writeShotlist(report) {
     rows.push("| time | beat | what is on screen |");
     rows.push("|---|---|---|");
     for (const b of r.take.beats) rows.push(`| **${secs(b.t)}** | ${b.title} | ${b.note} |`);
+    if (r.cuts && r.cuts.length) {
+      rows.push(
+        `\nCut from this take: ${r.cuts
+          .map((c) => `${c.seconds.toFixed(0)} s of "${c.label}" waiting`)
+          .join(", ")}. Each keeps ${(CUT_HEAD_MS / 1000).toFixed(1)} s of the loading state and ` +
+          `then jumps to the loaded one. Nothing else is edited and nothing the product is judged on ` +
+          `— the search, the chat answer, take 2's whole ingest — is shortened.`,
+      );
+    }
     existing.set(r.name, rows.join("\n"));
   }
   const body = [...existing.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([, v]) => v);

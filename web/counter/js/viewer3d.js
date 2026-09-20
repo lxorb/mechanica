@@ -1588,7 +1588,8 @@ export function mount(host, model, opts = {}) {
       if (typeof opts.onProgress === "function") opts.onProgress(fraction);
     }).then((real) => {
       tintModel(three, real, tint);
-      if (dead || !scene.adopt(real)) { disposeModel(real); return; }
+      // a model that lands after dispose, or that the scene refuses, must not leave a ring at 100 %
+      if (dead || !scene.adopt(real)) { disposeModel(real); loader.remove(); return; }
       loader.remove();
       host.setAttribute("data-viewer3d", "ready");
       if (typeof opts.onUpgrade === "function") opts.onUpgrade(api);
@@ -1649,6 +1650,7 @@ export function mount(host, model, opts = {}) {
     resize() { if (live) live.resize(); return api; },
     dispose() {
       dead = true;
+      loader.remove();                 // a download still in flight would otherwise leave its ring behind
       host.removeAttribute("data-viewer3d");
       host.removeAttribute("data-model");
       host.classList.remove("viewer3d");

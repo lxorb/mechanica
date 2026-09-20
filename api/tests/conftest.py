@@ -6,6 +6,7 @@ api/data is therefore only ever read, never written.
 """
 
 import atexit
+import json
 import os
 import shutil
 import tempfile
@@ -58,6 +59,50 @@ def _seed(src: Path, dst: Path) -> None:
             shutil.copytree(entry, dst / entry.name, ignore=skip)
         else:
             shutil.copy2(entry, dst / entry.name)
+    _thin_catalog(dst / "bikes.json")
+    _thin_costs(dst / "costs.jsonl")
+    _thin_registry(dst / "registry.json")
+
+
+def _thin_catalog(path: Path) -> None:
+    """30578 vehicles, of which the suite names one.
+
+    GET /catalog re-validates and serialises every row through `response_model=list[Bike]`, and
+    /catalog/suggest scans them, so the seeded catalogue was several seconds per call across a
+    dozen calls - and the Dropbox fixture copies this file per test and parses it again.
+
+    What is kept is chosen so no assertion can tell: every vehicle a manual points at, and one
+    per (make, kind) - which is the only thing anything derives from the catalogue as a whole
+    (`dropbox_sync._makes`, which decides whether a shop's filename can be placed at all).
+    """
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    keep = {r["id"] for r in rows if r.get("manualId")}
+    one_per_kind: dict[tuple[str, str | None], str] = {}
+    for row in rows:
+        one_per_kind.setdefault((row["make"], row.get("kind")), row["id"])
+    keep |= set(one_per_kind.values())
+    path.write_text(json.dumps([r for r in rows if r["id"] in keep], ensure_ascii=False), encoding="utf-8")
+
+
+def _thin_costs(path: Path, keep: int = 2000) -> None:
+    """A real 44k-event spend log; /cost parses all of it per cold call. The tail carries the same
+    shape - several routes, several models, ask events among them - and the same claim the shape
+    test makes: the naive per-ask price of the largest manual still dwarfs what an ask really costs."""
+    lines = [l for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    path.write_text("\n".join(lines[-keep:]) + "\n", encoding="utf-8")
+
+
+def _thin_registry(path: Path, keep: int = 5000) -> None:
+    """99313 rows, 39 MB: ~13 s to parse and as long again for GET /registry to serialise them.
+
+    Two tests read the seeded registry at all. One asserts the route answers with a list; the other
+    reads `registry()[:50]` and the host set built from the whole file, and the head of the file is
+    kept verbatim, so both see exactly what they saw before. Everything else that touches a registry
+    writes its own rows into a tmp_path store, and app/registry's own fixtures are the fragments in
+    registry-fragments/, which are seeded whole.
+    """
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    path.write_text(json.dumps(rows[:keep], ensure_ascii=False), encoding="utf-8")
 
 
 _seed(SEED_DIR, DATA_DIR)

@@ -56,6 +56,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.parse
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass, field
@@ -69,7 +70,10 @@ from app.registry._http import Throttle, client, get_json, get_text, log, plausi
 
 ROOT = Path(__file__).resolve().parents[2]
 NODE_SCRIPT = Path(__file__).with_name("render_pdf.mjs")
-OUT_DIR = settings.data_dir / "rendered"
+# A local cache of what is already public in the blob, so a re-run skips work. Deliberately under
+# `uploads/`: the test harness copies api/data for every run and ignores that folder, and a
+# 50 MB-per-manual cache has no business in git either.
+OUT_DIR = settings.data_dir / "uploads" / "rendered"
 FRAGMENTS = settings.data_dir / "registry-fragments"
 BLOB_PREFIX = "rendered"
 MIN_PAGES = 8
@@ -356,9 +360,29 @@ def cmd_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def breadth_first(manuals: list[Manual]) -> list[Manual]:
+    """Round-robin across nameplates, newest year first.
+
+    Every render is one row and therefore one catalog vehicle, so the order that buys the most is
+    the one that reaches the most *models* soonest: all the newest years first, then the next year
+    of each, and so on. A cycle that runs out of time has still covered the range rather than ten
+    years of one Corolla."""
+    by_model: dict[str, list[Manual]] = {}
+    for m in manuals:
+        by_model.setdefault(slug(m.make, m.model), []).append(m)
+    for group in by_model.values():
+        group.sort(key=lambda m: -m.year)
+    out: list[Manual] = []
+    for depth in range(max((len(g) for g in by_model.values()), default=0)):
+        for key in sorted(by_model):
+            if depth < len(by_model[key]):
+                out.append(by_model[key][depth])
+    return out
+
+
 def cmd_render(args: argparse.Namespace) -> int:
     find, fetch = RECIPES[args.site]
-    manuals = find(args.lang)
+    manuals = breadth_first(find(args.lang))
     if not args.all:
         manuals = manuals[: args.limit]
     fetched = datetime.date.today().isoformat()
@@ -370,14 +394,24 @@ def cmd_render(args: argparse.Namespace) -> int:
         blob = blob_store()
     rows: list[RegistryEntry] = []
     failed = 0
+    started = time.monotonic()
     for n, manual in enumerate(manuals, 1):
+        if args.max_minutes and (time.monotonic() - started) / 60 >= args.max_minutes:
+            print(f"  stopping at the {args.max_minutes} minute budget with {n - 1} of {len(manuals)} done")
+            break
         label = f"[{n}/{len(manuals)}] {manual.make} {manual.model} {manual.year}"
         if manual.local.exists() and not args.force:
             ok, why = verify(manual.local)
             if ok:
+                # Re-upload: the file on disk may predate the container, and overwrite is idempotent.
+                if blob is not None and not _upload(blob, manual):
+                    failed += 1
+                    continue
                 print(f"  {label}: already rendered ({why})")
                 rows.append(row(manual, _url(blob, manual), fetched))
                 continue
+        if args.only_rendered:
+            continue
         manual.sections = fetch(manual)
         if len(manual.sections) < MIN_PAGES:
             print(f"  {label}: only {len(manual.sections)} section(s), skipped")
@@ -444,6 +478,8 @@ def main(argv: list[str] | None = None) -> int:
             c.add_argument("--upload", action="store_true", help="push each PDF to the public pdf container")
             c.add_argument("--force", action="store_true", help="re-render even when the file is already there")
             c.add_argument("--fragment", default="rendered-tweddle.json")
+            c.add_argument("--max-minutes", type=int, default=0, help="stop cleanly after this long")
+            c.add_argument("--only-rendered", action="store_true", help="upload and index what is already on disk, render nothing new")
     args = p.parse_args(argv)
     return args.fn(args)
 
