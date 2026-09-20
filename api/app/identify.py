@@ -44,11 +44,14 @@ MATCH_FLOOR = 0.80
 VIN_FLOOR = 0.88
 MAKE_FLOOR = 0.62  # below this the vision step named a make the catalog does not have
 MODEL_FLOOR = 0.30  # below this a catalog model is not worth offering as an alternative
-TOP_MODELS = 3  # distinct models in the answer: what the Confirm strip can correct to
-YEARS_PER_MODEL = 3
+TOP_MODELS = 4  # distinct models in the answer: what the Confirm strip can correct to
+YEARS_PER_MODEL = 2
 MAX_CANDIDATES = 8
 BONUS = 0.45  # how far the badge and the displacement may move a name-only score
 VPIC = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/{vin}?format=json"
+
+DIGITS = re.compile(r"\d+")
+SIZE = re.compile(r"\d{2,4}")
 
 
 class Generation(BaseModel):
@@ -63,17 +66,21 @@ class Alternative(BaseModel):
 
 
 class PhotoGuess(BaseModel):
-    make: str
-    model: str
-    generation: Generation
-    confidence: float
-    cues: list[str]
-    alternatives: list[Alternative]
+    """Field order is the answer order: structured output fills these top to bottom, so every
+    observation is written down before a name is committed to. Asking for `make`/`model` first
+    measured worse - the model named a bike and then invented a tank decal that agreed with it."""
+
     kind: Literal["motorcycle", "car"] = "motorcycle"
-    badge: str = ""  # copied off the machine, never inferred: "390 DUKE", "GSX-R750"
-    family: str = ""  # the model line without size or trim: Duke, YZF-R, Ninja, GS
-    displacementCc: int = 0  # 0 = could not tell
+    cues: list[str] = []
+    badge: str = ""  # transcribed off the machine, never inferred: "390 DUKE", "GSX-R750"
     cylinders: int = 0  # 0 = could not tell
+    displacementCc: int = 0  # 0 = could not tell
+    family: str = ""  # the model line without size or trim: Duke, YZF-R, Ninja, GS
+    make: str = ""
+    model: str = ""
+    generation: Generation = Generation(yearFrom=0, yearTo=0)
+    alternatives: list[Alternative] = []
+    confidence: float = 0.0
 
 
 def _norm(s: str) -> str:
@@ -123,12 +130,17 @@ def _make_ratio(a: str, b: str) -> float:
     return _ratio(a, b)
 
 
-def _score(make: str, model: str, mk: str, md: str) -> float:
+def _model_ratio(model: str, md: str) -> float:
+    """How close a written model name is to one normalised catalog model name."""
     m = max(_ratio(_norm(model), md), _ratio(_key(_norm(model)), _key(md)))
-    a, b = set(re.findall(r"\d+", model or "")), set(re.findall(r"\d+", md))
+    a, b = set(DIGITS.findall(model or "")), set(DIGITS.findall(md))
     if a and b and a.isdisjoint(b):
         m = min(m, 0.5)  # CB650R is not CBR600RR, MT-07 is not MT-09
-    return 0.35 * _make_ratio(_norm(make), mk) + 0.65 * m
+    return m
+
+
+def _score(make: str, model: str, mk: str, md: str) -> float:
+    return 0.35 * _make_ratio(_norm(make), mk) + 0.65 * _model_ratio(model, md)
 
 
 def _find(make: str, model: str, bikes: list[Bike], floor: float = MATCH_FLOOR) -> tuple[list[Bike], float]:
@@ -155,13 +167,6 @@ def _year_weight(year: int, gen: Generation | None) -> float:
     return 0.15
 
 
-def _add(out: dict[str, float], bikes: list[Bike], base: float, gen: Generation | None) -> None:
-    for b in bikes:
-        c = round(_clamp(base * _year_weight(b.year, gen)), 3)
-        if c > out.get(b.id, 0.0):
-            out[b.id] = c
-
-
 def _kind(b: Bike) -> str:
     return (b.kind or "motorcycle").lower()
 
@@ -169,28 +174,26 @@ def _kind(b: Bike) -> str:
 # --- what the photo itself says, scored against one catalog model name ----------------------
 
 SYSTEM = (
-    "You identify one vehicle from a photo, for a workshop counter. Report what is on the machine, "
-    "not what the brand is famous for - the mechanic is holding the wrong-sized sibling half the time.\n"
-    "badge: the model text printed on the machine itself - tank decal, side panel, fairing, tail unit, "
-    "boot lid, tailgate - copied exactly as printed, e.g. '390 DUKE', 'GSX-R750', 'R 1250 GS'. Empty "
-    "string when none is legible. Never write a badge you inferred from the shape.\n"
-    "displacementCc: engine size in cc. Take it from the badge when the badge states one, otherwise "
-    "read it off the engine: cylinder count, cylinder and radiator width against the frame, wheel and "
-    "disc diameter against the tyre, the size of the whole machine around the engine. 0 when unsure.\n"
-    "cylinders: 1, 2, 3, 4 or 6, else 0.\n"
-    "family: the model line without the size or the trim - Duke, YZF-R, Ninja, GS, Golf, Corvette.\n"
-    "make and model: the full name the maker writes, e.g. 'KTM' / '390 Duke'.\n"
-    "generation: the year range that body shape was sold, not the year of the photo.\n"
+    "You identify one vehicle from a photo, for a workshop counter. Fill the fields in order: look "
+    "first, name it after.\n"
     "kind: 'car' for any car, SUV, pickup or van; 'motorcycle' for any motorcycle, scooter or ATV.\n"
-    "cues: 2-6 short lowercase details you used, no sentences. Prefer the ones that separate this "
-    "machine from its bigger and its smaller sibling.\n"
+    "cues: 2-4 short lowercase fragments, no sentences. What is actually visible - headlight shape, "
+    "frame colour, exhaust routing, radiator width, single or twin or four cylinder.\n"
+    "badge: the model text printed on the machine itself - tank decal, side panel, fairing, tail unit, "
+    "boot lid, tailgate - transcribed character by character, e.g. '390 DUKE', 'GSX-R750', 'R 1250 GS'. "
+    "Only characters you can actually make out. Too small, blurred or turned away: empty string. An "
+    "invented badge is worse than none, so never write the name you think it is.\n"
+    "cylinders: 1, 2, 3, 4 or 6; 0 when the engine is hidden.\n"
+    "displacementCc: engine size in cc. The badge when the badge states one, otherwise the engine: "
+    "cylinder count and cylinder width against the frame, wheel and disc diameter against the tyre. "
+    "0 when you cannot tell - a wrong number is worse than none.\n"
+    "family: the model line without the size or the trim - Duke, YZF-R, Ninja, GS, Golf, Corvette.\n"
+    "make / model: the full name the maker writes, e.g. 'KTM' / '390 Duke'.\n"
+    "generation: the year range that body shape was sold, not the year of the photo.\n"
     "alternatives: up to 3 other vehicles this could be, most likely first, each with its own "
     "confidence. When two sizes of one model line look alike, the other size belongs here.\n"
     "confidence: 0..1 for the main answer."
 )
-
-DIGITS = re.compile(r"\d+")
-SIZE = re.compile(r"\d{2,4}")
 
 
 def _displacement(md: str) -> int | None:
@@ -261,15 +264,6 @@ def _evidence(guess: PhotoGuess, md: str) -> float:
     return sum(w * terms[key] for w, key in WEIGHTS if terms[key] is not None) / total
 
 
-def _model_ratio(model: str, md: str) -> float:
-    """How close the name the vision step wrote is to one normalised catalog model name."""
-    m = max(_ratio(_norm(model), md), _ratio(_key(_norm(model)), _key(md)))
-    a, b = set(DIGITS.findall(model or "")), set(DIGITS.findall(md))
-    if a and b and a.isdisjoint(b):
-        m = min(m, 0.5)  # CB650R is not CBR600RR, MT-07 is not MT-09
-    return m
-
-
 def _make_pool(make: str, pool: list[Bike]) -> list[Bike]:
     """Rows of the one make the vision step named. This is the catalog constraint that used to be
     400 names in the prompt: a KTM photo is ranked against KTM's 479 models and nothing else. A make
@@ -287,10 +281,18 @@ def _make_pool(make: str, pool: list[Bike]) -> list[Bike]:
     return [b for b in pool if _norm(b.make) == best] or pool
 
 
+def _same_bike(a: str, b: str) -> bool:
+    """"390 Duke", "390 Duke ABS" and "390 Duke R2R" are one bike to a mechanic. Offering all three
+    as alternatives is the model-year list QA complained about wearing a different hat."""
+    return a in b or b in a or _ratio(a, b) >= 0.85
+
+
 def _rank(guess: PhotoGuess, pool: list[Bike]) -> list[tuple[float, list[Bike]]]:
-    """The top TOP_MODELS distinct catalog models, best first. Every reading the vision step gave
-    us - its own answer and each of its alternatives - picks its own make pool and scores every
-    model in it; the photo's evidence then moves that name score by up to BONUS either way."""
+    """The top TOP_MODELS catalog models, best first, no two of them the same bike. Every reading
+    the vision step gave us - its own answer and each of its alternatives - picks its own make pool
+    and scores every model in it; the photo's evidence then moves that name score by up to BONUS
+    either way. Scores stay unclamped here: clamping ties every strong match at 1.0 and the winner
+    then falls out of dict order."""
     readings = [(guess.make, guess.model, _clamp(guess.confidence), 1.0)]
     readings += [(a.make, a.model, _clamp(a.confidence), 0.85) for a in guess.alternatives[:3]]
     best: dict[tuple[str, str], tuple[float, list[Bike]]] = {}
@@ -299,10 +301,19 @@ def _rank(guess: PhotoGuess, pool: list[Bike]) -> list[tuple[float, list[Bike]]]
             continue
         for (mk, md), group in _groups(_make_pool(mk_name, pool)).items():
             named = _model_ratio(md_name, md) * max(conf, 0.35) * weight
-            score = _clamp(named * (1.0 + BONUS * _evidence(guess, md)))
+            score = named * (1.0 + BONUS * _evidence(guess, md))
             if score >= MODEL_FLOOR and score > best.get((mk, md), (0.0,))[0]:
                 best[(mk, md)] = (score, group)
-    return sorted(best.values(), key=lambda row: -row[0])[:TOP_MODELS]
+    out: list[tuple[float, list[Bike]]] = []
+    taken: list[str] = []
+    for key, (score, group) in sorted(best.items(), key=lambda row: -row[1][0]):
+        if any(_same_bike(key[1], seen) for seen in taken):
+            continue
+        taken.append(key[1])
+        out.append((score, group))
+        if len(out) == TOP_MODELS:
+            break
+    return out
 
 
 def _spread(ranked: list[tuple[float, list[Bike]]], gen: Generation | None) -> list[Candidate]:
@@ -323,41 +334,29 @@ def _spread(ranked: list[tuple[float, list[Bike]]], gen: Generation | None) -> l
     return out[:MAX_CANDIDATES]
 
 
-def photo(image: bytes, mime: str) -> IdentifyResponse:
+def read(image: bytes, mime: str) -> PhotoGuess:
+    """The one paid step: what the vision model can see on the machine. Split out so the ranking
+    below can be replayed and tuned against saved readings without paying for the photo again."""
     data, m = downscale(image, mime)
-    bikes = get_store().bikes()
-    system = (
-        "You identify vehicles (motorcycles and cars) from a photo. Name the make, the model and the "
-        "model generation (the year range that body shape was sold, not the year of the photo).\n"
-        "These models are in our manual catalog:\n"
-        f"{_catalog_prompt(bikes)}\n"
-        "Prefer one of these, spelled exactly as listed, when it plausibly matches the vehicle in the photo. "
-        "Otherwise name the real vehicle, whatever it is.\n"
-        "kind: 'car' for any car, SUV, pickup or van; 'motorcycle' for any motorcycle, scooter or ATV. "
-        "cues: 2-6 short visual details you used, lowercase, no sentences. "
-        "alternatives: up to 3 other plausible vehicles, most likely first, empty if you are sure. "
-        "confidence: 0..1 for the main answer."
-    )
-    guess = llm.structured(
+    return llm.structured(
         "identify.photo",
         settings.model_vision,
         PhotoGuess,
-        system,
+        SYSTEM,
         [llm.text_part("Which vehicle is this?"), llm.image_part(data, m, "auto")],
+        reasoning="low",
     )
+
+
+def match(guess: PhotoGuess, bikes: list[Bike]) -> IdentifyResponse:
     # A car photo must not come back as a motorcycle: match inside the kind the model named, and only
     # fall back to the whole catalog when that kind is not represented at all.
     pool = [b for b in bikes if _kind(b) == guess.kind] or bikes
-    scores: dict[str, float] = {}
-    group, score = _find(guess.make, guess.model, pool)
-    if group:
-        _add(scores, group, _clamp(guess.confidence) * score, guess.generation)
-    for alt in guess.alternatives[:3]:
-        alt_group, alt_score = _find(alt.make, alt.model, pool)
-        if alt_group:
-            _add(scores, alt_group, _clamp(alt.confidence) * alt_score * 0.8, None)
-    candidates = [Candidate(bikeId=i, confidence=c) for i, c in sorted(scores.items(), key=lambda kv: -kv[1])]
-    return IdentifyResponse(candidates=candidates[:8], bike=None)
+    return IdentifyResponse(candidates=_spread(_rank(guess, pool), guess.generation), bike=None)
+
+
+def photo(image: bytes, mime: str) -> IdentifyResponse:
+    return match(read(image, mime), get_store().bikes())
 
 
 def normalize_vin(vin: str) -> str:

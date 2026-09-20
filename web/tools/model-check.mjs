@@ -351,6 +351,12 @@ function report(info) {
   console.log("");
   console.log(`${info.modelKey}  ${relative(ROOT, info.file).replace(/\\/g, "/")}`);
   console.log(`  ${bytes(info.size)}${info.glb ? " glb" : " gltf + bin + textures"} · nodes ${info.nodes} · meshes ${info.meshes} · materials ${info.materials} · images ${info.images} · ${count(info.tris)} tris`);
+  if (info.whole[0] !== Infinity) {
+    const span = [0, 1, 2].map((i) => info.whole[i + 3] - info.whole[i]);
+    const longest = "xyz"[span.indexOf(Math.max(...span))];
+    console.log(`  viewer-frame span  x ${span[0].toFixed(2)} · y ${span[1].toFixed(2)} · z ${span[2].toFixed(2)}`
+      + `  -> longest axis ${longest}${longest === "x" ? " (correct: +x is the nose)" : "  ** the model is not lying along x; check rotate/orient in generic/parts.json **"}`);
+  }
   if (info.extensions.length) console.log(`  extensions: ${info.extensions.join(", ")}`);
   if (info.generator) console.log(`  generator: ${info.generator}`);
   console.log("");

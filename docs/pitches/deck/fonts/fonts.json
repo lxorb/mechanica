@@ -1,0 +1,32 @@
+[
+ {
+  "family": "Barlow",
+  "weight": 400,
+  "file": "Barlow-400.woff2",
+  "bytes": 22196
+ },
+ {
+  "family": "Barlow",
+  "weight": 600,
+  "file": "Barlow-600.woff2",
+  "bytes": 22772
+ },
+ {
+  "family": "Barlow",
+  "weight": 800,
+  "file": "Barlow-800.woff2",
+  "bytes": 22976
+ },
+ {
+  "family": "Big Shoulders Display",
+  "weight": 700,
+  "file": "BigShouldersDisplay-700.woff2",
+  "bytes": 35436
+ },
+ {
+  "family": "Big Shoulders Display",
+  "weight": 800,
+  "file": "BigShouldersDisplay-800.woff2",
+  "bytes": 35436
+ }
+]

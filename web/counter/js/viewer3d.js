@@ -102,6 +102,9 @@ export const PART_KEYS = [
   "swingarm", "chain", "sprocket", "engine", "exhaust", "radiator", "fuel-tank", "seat",
   "handlebar", "mirrors", "headlight", "taillight", "battery", "air-filter", "frame",
   "fairing", "footpeg", "clutch", "oil", "spark-plug", "fuse", "tire",
+  // car-only groups. A car whose doors, bonnet and glass all fold into "Bodywork" explodes into
+  // one painted lump, which is not an exploded view of anything.
+  "glass", "door", "hood",
 ];
 
 export const PART_LABELS = {
@@ -112,7 +115,7 @@ export const PART_LABELS = {
   handlebar: "Handlebar", mirrors: "Mirrors", headlight: "Headlight", taillight: "Tail light",
   battery: "Battery", "air-filter": "Air filter", frame: "Frame", fairing: "Bodywork",
   footpeg: "Footpeg", clutch: "Clutch", oil: "Oil / filter", "spark-plug": "Spark plug",
-  fuse: "Fuse", tire: "Tyre",
+  fuse: "Fuse", tire: "Tyre", glass: "Glass", door: "Doors", hood: "Bonnet / boot",
 };
 
 /** Keys callers may pass that are really another group. */
@@ -165,34 +168,46 @@ const isGeneric = (key) => typeof key === "string" && key.startsWith("generic/")
  * "<Object>_<Material>_0", so its regexes anchor on the object half.
  */
 
+/**
+ * A word boundary that also breaks on "_", "." and "-" — which `\b` does not, because those are
+ * either word characters or already boundaries. Sketchfab names are almost all of the form
+ * `SM_Fork_0000.001_9`, and `/\bfork/` never matched one of them: the Ducati Streetfighter that
+ * stands in for every naked bike — the demo bike — had no fork group, no frame group and no tank
+ * group for exactly that reason. `w("fork")` matches it; `ww("tank")` also refuses a longer word.
+ */
+const w = (body) => new RegExp(`(^|[^a-z])(?:${body})`, "i");
+const ww = (body) => new RegExp(`(^|[^a-z])(?:${body})($|[^a-z])`, "i");
+
 const BIKE_PARTS = [
   { key: "front-wheel", explode: [0.85, -0.10, 0], meshes: [/wheel_?lf/i, /(^|[^a-z])f(ront)?[_\- ]?(wheel|rim|tyre|tire)/i, /(wheel|rim|tyre|tire)[_\- ]?f(ront)?($|[^a-z])/i] },
   { key: "rear-wheel", explode: [-0.85, -0.10, 0], meshes: [/wheel_?lr/i, /(^|[^a-z])r(ear)?[_\- ]?(wheel|rim|tyre|tire)/i, /(wheel|rim|tyre|tire)[_\- ]?r(ear)?($|[^a-z])/i] },
-  { key: "front-brake", explode: [0.75, -0.05, 0.45], meshes: [/bikedisc_?f/i, /front.{0,8}(brake|disc|disk|rotor|caliper)/i, /(brake|disc|disk|rotor|caliper).{0,8}front/i] },
-  { key: "rear-brake", explode: [-0.75, -0.05, -0.45], meshes: [/bikedisc_?r/i, /rear.{0,8}(brake|disc|disk|rotor|caliper)/i, /(brake|disc|disk|rotor|caliper).{0,8}rear/i] },
-  { key: "front-fork", explode: [0.55, 0.45, 0], meshes: [/forks?_[ul]/i, /\bfork/i, /triple.?clamp/i, /front.{0,8}suspension/i, /steering.?head/i] },
+  // "Disk_F" / "BrakeDisc_R" are how half the authors spell it, and the front/rear half is the
+  // only thing that decides the side — so it is required, never inferred.
+  { key: "front-brake", explode: [0.75, -0.05, 0.45], meshes: [/bikedisc_?f/i, /front.{0,8}(brake|disc|disk|rotor|caliper)/i, /(brake|disc|disk|rotor|caliper).{0,8}front/i, /(brake|disc|disk|rotor|caliper)s?[_\- ]?f(ront)?($|[^a-z])/i] },
+  { key: "rear-brake", explode: [-0.75, -0.05, -0.45], meshes: [/bikedisc_?r/i, /rear.{0,8}(brake|disc|disk|rotor|caliper)/i, /(brake|disc|disk|rotor|caliper).{0,8}rear/i, /(brake|disc|disk|rotor|caliper)s?[_\- ]?r(ear)?($|[^a-z])/i] },
+  { key: "front-fork", explode: [0.55, 0.45, 0], meshes: [/forks?_[ul]/i, w("fork"), /triple.?clamp/i, /front.{0,8}suspension/i, /steering.?head/i] },
   { key: "rear-shock", explode: [-0.25, 0.55, 0.35], meshes: [/shock/i, /monosh/i, /rear.{0,8}(suspension|spring|damper)/i] },
   { key: "swingarm", explode: [-0.45, -0.30, 0], meshes: [/swing ?arm/i] },
-  { key: "chain", explode: [-0.35, -0.10, 0.55], meshes: [/\bchain/i, /drive ?belt/i] },
+  { key: "chain", explode: [-0.35, -0.10, 0.55], meshes: [w("chain"), /drive ?belt/i] },
   { key: "sprocket", explode: [-0.60, -0.15, 0.45], meshes: [/sprocket/i, /pinion/i] },
-  { key: "radiator", explode: [0.55, -0.15, 0.40], meshes: [/misc_b/i, /radiator/i, /coolant/i, /\bcooler/i, /\bfan\b/i] },
-  { key: "exhaust", explode: [-0.15, -0.35, -0.60], meshes: [/misc_c/i, /exhaust/i, /muffler/i, /silencer/i, /header/i, /\bpipe/i] },
+  { key: "radiator", explode: [0.55, -0.15, 0.40], meshes: [/misc_b/i, /radiator/i, /coolant/i, w("cooler"), ww("fan")] },
+  { key: "exhaust", explode: [-0.15, -0.35, -0.60], meshes: [/misc_c/i, /exhaust/i, /muffler/i, /silencer/i, /header/i, w("pipe")] },
   { key: "clutch", explode: [0.10, -0.35, 0.60], meshes: [/clutch/i] },
-  { key: "spark-plug", explode: [0.25, 0.45, -0.50], meshes: [/spark/i, /\bplug\b/i, /ignition.?coil/i] },
-  { key: "oil", explode: [0.20, -0.60, -0.45], meshes: [/oil/i, /\bsump\b/i] },
+  { key: "spark-plug", explode: [0.25, 0.45, -0.50], meshes: [/spark/i, ww("plug"), /ignition.?coil/i] },
+  { key: "oil", explode: [0.20, -0.60, -0.45], meshes: [/oil/i, ww("sump")] },
   { key: "air-filter", explode: [0.05, 0.60, 0.55], meshes: [/air ?(box|filter|intake|cleaner)/i, /airbox/i] },
-  { key: "engine", explode: [0, -0.65, 0], meshes: [/enginecbr/i, /misc_a/i, /engine/i, /\bmotor\b/i, /crankcase/i, /cylinder/i, /gearbox/i, /transmission/i] },
+  { key: "engine", explode: [0, -0.65, 0], meshes: [/enginecbr/i, /misc_a/i, /engine/i, ww("motor"), /crankcase/i, /cylinder/i, /gearbox/i, /transmission/i, /carburet/i, /(^|[^a-z])carb($|[^a-z])/i] },
   { key: "battery", explode: [-0.30, 0.45, -0.55], meshes: [/battery/i] },
   { key: "fuse", explode: [-0.45, 0.45, 0.55], meshes: [/fuse/i, /relay/i] },
-  { key: "fuel-tank", explode: [0.05, 0.80, 0], meshes: [/fuel/i, /petrol/i, /gas ?tank/i, /\btank\b/i] },
+  { key: "fuel-tank", explode: [0.05, 0.80, 0], meshes: [/fuel/i, /petrol/i, /gas ?tank/i, ww("tank")] },
   { key: "seat", explode: [-0.35, 0.70, 0], meshes: [/seat/i, /saddle/i, /pillion/i] },
   { key: "mirrors", explode: [0.35, 0.95, 0.45], meshes: [/mirror/i] },
-  { key: "headlight", explode: [0.90, 0.25, 0], meshes: [/head ?li/i, /head ?la/i] },
-  { key: "taillight", explode: [-0.90, 0.30, 0], meshes: [/tail ?li/i, /tail ?la/i, /rear ?li/i, /brake ?li/i, /indicator/i, /blinker/i, /turn ?signal/i] },
-  { key: "handlebar", explode: [0.45, 0.75, 0], meshes: [/handle ?bar/i, /\bbars?\b/i, /\blever\b/i, /\bgrip\b/i, /throttle/i, /\bdials?\b/i, /instrument/i, /speedo/i, /dash/i, /cluster/i, /switchgear/i] },
-  { key: "footpeg", explode: [-0.10, -0.45, 0.55], meshes: [/foot ?(peg|rest)/i, /\bpeg\b/i, /gear ?(lever|pedal)/i, /shift ?lever/i, /\bstand\b/i] },
-  { key: "fairing", explode: [0, 0.35, -0.85], meshes: [/bodyshell/i, /bodywork/i, /fairing/i, /cowl/i, /\bpanel/i, /windscreen/i, /windshield/i, /\bscreen\b/i, /fender/i, /mudguard/i, /plate/i, /\bbody\b/i] },
-  { key: "frame", explode: [0, 0, 0], meshes: [/chassis/i, /\bframe/i, /subframe/i, /\bspine\b/i] },
+  { key: "headlight", explode: [0.90, 0.25, 0], meshes: [/head ?li/i, /head ?la/i, /front ?(light|lamp)/i] },
+  { key: "taillight", explode: [-0.90, 0.30, 0], meshes: [/tail ?li/i, /tail ?la/i, /rear ?li/i, /rear ?la/i, /brake ?li/i, /indicator/i, /blinker/i, /turn ?signal/i] },
+  { key: "handlebar", explode: [0.45, 0.75, 0], meshes: [/handle ?bar/i, ww("bars?"), ww("lever"), ww("grip"), /throttle/i, ww("dials?"), /instrument/i, /speedo/i, /dash/i, /cluster/i, /switchgear/i] },
+  { key: "footpeg", explode: [-0.10, -0.45, 0.55], meshes: [/foot ?(peg|rest)/i, ww("peg"), /gear ?(lever|pedal)/i, /shift ?lever/i, ww("stand")] },
+  { key: "fairing", explode: [0, 0.35, -0.85], meshes: [/bodyshell/i, /bodywork/i, /fairing/i, /cowl/i, w("panel"), /windscreen/i, /windshield/i, ww("screen"), /fender/i, /mudguard/i, /mud ?guard/i, /plate/i, ww("body")] },
+  { key: "frame", explode: [0, 0, 0], meshes: [/chassis/i, w("frame"), /subframe/i, ww("spine")] },
 ];
 
 const CAR_PARTS = [
@@ -213,7 +228,12 @@ const CAR_PARTS = [
   { key: "air-filter", explode: [-0.25, 0.7, 0.6], meshes: [/^air ?(box|filter|intake|cleaner)/i] },
   { key: "oil", explode: [0.15, -0.7, -0.5], meshes: [/^oil/i, /^sump/i] },
   { key: "fuel-tank", explode: [-0.35, -0.6, -0.6], meshes: [/^fuel/i, /^petrol/i, /^tank/i] },
-  { key: "fairing", explode: [0, 0.95, 0], meshes: [/^main chassis/i, /^(left|right) door/i, /^roof/i, /^trunk/i, /^frunk/i, /^hood/i, /^grille?\s?\d*/i, /^glasses/i, /^windshield/i, /^(left|right) ?wiper/i, /^licen[sc]e plate/i, /^corvette badge/i, /^badges?/i, /^spoiler/i, /^splitter/i, /^bumper/i, /^vent/i, /^body/i] },
+  // glass before door, or "Left Door Glass" is a door; door and hood before fairing, or the whole
+  // body shell swallows them and a car explodes into one painted lump plus four wheels.
+  { key: "glass", explode: [0, 0.75, 0], meshes: [/glass/i, /^windshield/i, /^windscreen/i, /^windows?/i, /^(left|right) ?wiper/i, /^rear ?window/i] },
+  { key: "door", explode: [0, 0.15, 0.95], meshes: [/^(left|right) door/i, /(^|[^a-z])doors?($|[^a-z])/i, /^(left|right) fender/i] },
+  { key: "hood", explode: [0.35, 0.85, 0], meshes: [/^trunk/i, /^frunk/i, /^hood/i, /(^|[^a-z])(bonnet|tailgate|boot ?lid)/i] },
+  { key: "fairing", explode: [0, 0.95, 0], meshes: [/^main chassis/i, /^roof/i, /^grille?\s?\d*/i, /^licen[sc]e plate/i, /^corvette badge/i, /^badges?/i, /^spoiler/i, /^splitter/i, /^bumper/i, /^vent/i, /^body/i, /^sill/i, /^skirt/i] },
   { key: "frame", explode: [0, 0, 0], meshes: [/^chassis/i, /^frame/i, /^subframe/i, /bolt/i] },
 ];
 
