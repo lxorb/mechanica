@@ -356,6 +356,7 @@
       "title": "Why the bill is small",
       "caption": "The time he loses is the cost. The page is the product. The hours come back.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

@@ -151,6 +151,7 @@
       "title": "So we built the opposite of a chatbot",
       "caption": "It never answers. It finds the page in the manufacturer's own manual and puts your finger on the line.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

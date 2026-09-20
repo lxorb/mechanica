@@ -193,6 +193,7 @@
       "title": "The noisy half, and the curated half",
       "caption": "The manual's own printed rules on one side, public weather reduced in-stream on the other, and a verdict that costs zero tokens.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

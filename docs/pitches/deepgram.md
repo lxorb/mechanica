@@ -7,7 +7,7 @@ Live: **https://mechanica.emilvinu.ch** · API at `/api` · repo `C:\Users\me\tr
 Code for this sponsor: `api/app/voice.py` · `web/counter/js/voice-deepgram.js` · `web/counter/js/deepgram.js`
 · `worker/index.js` · docs `web/docs/VOICE.md`.
 Diagram: [`deepgram/architecture.png`](deepgram/architecture.png) · [`.svg`](deepgram/architecture.svg) ·
-[`.mmd`](deepgram/architecture.mmd) (rendered with `@mermaid-js/mermaid-cli@11`).
+[`.mmd`](deepgram/architecture.mmd) (rendered by `node docs/pitches/deck/mermaid.mjs`).
 Backlog with impact/build scores: [`deepgram/improvements.md`](deepgram/improvements.md).
 
 **The one line for this sponsor:** *the agent has no permission to speak a sentence the manual does not
@@ -128,7 +128,7 @@ you volunteer your own slowest path believes the rest of your numbers.
 ## 1:00 — Architecture, and where every millisecond goes
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
@@ -148,8 +148,8 @@ flowchart TB
   style R2 fill:none,stroke:none
 ```
 
-**The manual's text never passes through the browser.** The dotted lines are the only thing the tab
-learns: a sentence and a page number.
+**The manual's text never passes through the browser.** Deepgram calls our tools server to server; the
+only thing the tab ever learns is a sentence and a page number.
 
 **The key never passes through the browser either.** A browser WebSocket cannot set headers, and this
 account's key cannot mint a short-lived browser credential (`/v1/auth/grant` and `keys:write` are both

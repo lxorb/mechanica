@@ -2307,6 +2307,18 @@
     "score": 7.5,
     "hero": "store/img/bikes2/can-am-pulse.hero.webp"
   },
+  "can-am|spyder": {
+    "image": "store/img/bikes2/can-am-spyder.webp",
+    "thumb": "store/img/bikes2/can-am-spyder.thumb.webp",
+    "title": "Can-Am Spyder 02.jpg",
+    "author": "Jeangagnon",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Can-Am_Spyder_02.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/can-am-spyder.hero.webp"
+  },
   "can-am|spyder-f3-series,-2017": {
     "image": "store/img/bikes/can-am-spyder-f3.webp",
     "thumb": "store/img/bikes/can-am-spyder-f3-thumb.webp",
@@ -5104,6 +5116,18 @@
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-flstn-softail-deluxe.hero.webp"
   },
+  "harley-davidson|flt": {
+    "image": "store/img/bikes2/harley-davidson-flt.webp",
+    "thumb": "store/img/bikes2/harley-davidson-flt.thumb.webp",
+    "title": "Harley-Davidson motorcycle FLT green khaki at Skansen in Sanok (2015)a.jpg",
+    "author": "Lowdown",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_motorcycle_FLT_green_khaki_at_Skansen_in_Sanok_(2015)a.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-flt.hero.webp"
+  },
   "harley-davidson|freewheeler": {
     "image": "store/img/bikes2/harley-davidson-freewheeler.webp",
     "thumb": "store/img/bikes2/harley-davidson-freewheeler.thumb.webp",
@@ -5822,6 +5846,18 @@
     "score": 9.5,
     "hero": "store/img/bikes2/harley-davidson-vrsc.hero.webp"
   },
+  "harley-davidson|vrsca": {
+    "image": "store/img/bikes2/harley-davidson-vrsca.webp",
+    "thumb": "store/img/bikes2/harley-davidson-vrsca.thumb.webp",
+    "title": "Harley-davidson.JPG",
+    "author": "ChickenFalls",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley-davidson.JPG",
+    "via": "makecat",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/harley-davidson-vrsca.hero.webp"
+  },
   "harley-davidson|vrscf-v-rod-muscle": {
     "image": "store/img/bikes2/harley-davidson-vrscf-v-rod-muscle.webp",
     "thumb": "store/img/bikes2/harley-davidson-vrscf-v-rod-muscle.thumb.webp",
@@ -6382,6 +6418,18 @@
     "via": "alias",
     "aliasOf": "honda|benly-110"
   },
+  "honda|bite": {
+    "image": "store/img/bikes2/honda-bite.webp",
+    "thumb": "store/img/bikes2/honda-bite.thumb.webp",
+    "title": "Honda Bite.jpg",
+    "author": "Rikita",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Bite.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-bite.hero.webp"
+  },
   "honda|c125": {
     "image": "store/img/bikes2/honda-c125.webp",
     "thumb": "store/img/bikes2/honda-c125.thumb.webp",
@@ -6874,6 +6922,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_CB125R.jpg",
     "via": "alias",
     "aliasOf": "honda|cb125r"
+  },
+  "honda|cb125t": {
+    "image": "store/img/bikes2/honda-cb125t.webp",
+    "thumb": "store/img/bikes2/honda-cb125t.thumb.webp",
+    "title": "Honda cb125t.jpg",
+    "author": "User:Tokino",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_cb125t.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-cb125t.hero.webp"
   },
   "honda|cb1300": {
     "image": "store/img/bikes/honda-cb1300-super-bol-dor-abs.webp",
@@ -8028,6 +8088,18 @@
     "via": "alias",
     "aliasOf": "honda|cbr650r"
   },
+  "honda|cbr954rr": {
+    "image": "store/img/bikes2/honda-cbr954rr.webp",
+    "thumb": "store/img/bikes2/honda-cbr954rr.thumb.webp",
+    "title": "Honda CBR954RR 2003.jpg",
+    "author": "Rikita",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CBR954RR_2003.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-cbr954rr.hero.webp"
+  },
   "honda|cd70-dream": {
     "image": "store/img/bikes/honda-cd70.webp",
     "thumb": "store/img/bikes/honda-cd70-thumb.webp",
@@ -8646,6 +8718,18 @@
     "via": "alias",
     "aliasOf": "honda|crf250rx"
   },
+  "honda|crf300f": {
+    "image": "store/img/bikes2/honda-crf300f.webp",
+    "thumb": "store/img/bikes2/honda-crf300f.thumb.webp",
+    "title": "2024 Honda CRF300 RALLY.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Honda_CRF300_RALLY.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-crf300f.hero.webp"
+  },
   "honda|crf300l-abs": {
     "image": "store/img/bikes/honda-crf300l.webp",
     "thumb": "store/img/bikes/honda-crf300l-thumb.webp",
@@ -9012,6 +9096,18 @@
     "via": "alias",
     "aliasOf": "honda|ctx700n"
   },
+  "honda|cuv-e:": {
+    "image": "store/img/bikes2/honda-cuv-e.webp",
+    "thumb": "store/img/bikes2/honda-cuv-e.thumb.webp",
+    "title": "2025 Honda CUV e Connectivity.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_CUV_e_Connectivity.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-cuv-e.hero.webp"
+  },
   "honda|dio-cesta": {
     "image": "store/img/bikes/honda-dio.webp",
     "thumb": "store/img/bikes/honda-dio-thumb.webp",
@@ -9127,6 +9223,18 @@
     "view": "three_quarter",
     "score": 9.0,
     "hero": "store/img/bikes2/honda-elysion-prestige.hero.webp"
+  },
+  "honda|em1-e:": {
+    "image": "store/img/bikes2/honda-em1-e.webp",
+    "thumb": "store/img/bikes2/honda-em1-e.thumb.webp",
+    "title": "Honda EM1 e Electric Scooter 2025.jpg",
+    "author": "Captainmorlypogi1959",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_EM1_e_Electric_Scooter_2025.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-em1-e.hero.webp"
   },
   "honda|ev-neo-pro": {
     "image": "store/img/bikes/honda-ev-neo.webp",
@@ -9895,6 +10003,18 @@
     "score": 10.0,
     "hero": "store/img/bikes2/honda-logo.hero.webp"
   },
+  "honda|magna": {
+    "image": "store/img/bikes2/honda-magna.webp",
+    "thumb": "store/img/bikes2/honda-magna.thumb.webp",
+    "title": "Honda Magna Red 1995.jpg",
+    "author": "Eric Schmuttenmaer",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Magna_Red_1995.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-magna.hero.webp"
+  },
   "honda|metropolitan-ii": {
     "image": "store/img/bikes/honda-metropolitan.webp",
     "thumb": "store/img/bikes/honda-metropolitan-thumb.webp",
@@ -10135,6 +10255,17 @@
     "source": "https://commons.wikimedia.org/wiki/File:2017_Honda_NC750X.jpg",
     "via": "alias",
     "aliasOf": "honda|nc750x"
+  },
+  "honda|night-hawk": {
+    "image": "store/img/bikes2/honda-night-hawk.webp",
+    "thumb": "store/img/bikes2/honda-night-hawk.thumb.webp",
+    "title": "1983 Honda 650 Nighthawk.jpg",
+    "author": "AskJoanne",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1983_Honda_650_Nighthawk.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 9.5
   },
   "honda|nm4-vultus": {
     "image": "store/img/bikes/honda-nm4.webp",
@@ -10578,6 +10709,18 @@
     "score": 8.5,
     "hero": "store/img/bikes2/honda-rs125.hero.webp"
   },
+  "honda|rvf750": {
+    "image": "store/img/bikes2/honda-rvf750.webp",
+    "thumb": "store/img/bikes2/honda-rvf750.thumb.webp",
+    "title": "Suzuka Fan Thanksgiving Day 2022 (16) - Honda RVF750 in 1992 FIM Endurance World Championship.jpg",
+    "author": "Tokumeigakarinoaoshima",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuka_Fan_Thanksgiving_Day_2022_(16)_-_Honda_RVF750_in_1992_FIM_Endurance_World_Championship.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-rvf750.hero.webp"
+  },
   "honda|s-wing-125-c-abs": {
     "image": "store/img/bikes/honda-s-wing-125.webp",
     "thumb": "store/img/bikes/honda-s-wing-125-thumb.webp",
@@ -10890,6 +11033,18 @@
     "view": "side",
     "score": 8.5,
     "hero": "store/img/bikes2/honda-sonic-150r.hero.webp"
+  },
+  "honda|spacy100": {
+    "image": "store/img/bikes2/honda-spacy100.webp",
+    "thumb": "store/img/bikes2/honda-spacy100.thumb.webp",
+    "title": "SPACY100.jpg",
+    "author": "nattou",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:SPACY100.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/honda-spacy100.hero.webp"
   },
   "honda|spacy125": {
     "image": "store/img/bikes2/honda-spacy125.webp",
@@ -11423,6 +11578,30 @@
     "score": 9.5,
     "hero": "store/img/bikes2/honda-vt1300cx.hero.webp"
   },
+  "honda|vt250c": {
+    "image": "store/img/bikes2/honda-vt250c.webp",
+    "thumb": "store/img/bikes2/honda-vt250c.thumb.webp",
+    "title": "マグナ250.JPG",
+    "author": "Shohei ninomiya",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%82%B0%E3%83%8A250.JPG",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-vt250c.hero.webp"
+  },
+  "honda|vt250f": {
+    "image": "store/img/bikes2/honda-vt250f.webp",
+    "thumb": "store/img/bikes2/honda-vt250f.thumb.webp",
+    "title": "Honda VT250F FC MC08Model 1982.JPG",
+    "author": "hashi photo",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_VT250F_FC_MC08Model_1982.JPG",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 10.5,
+    "hero": "store/img/bikes2/honda-vt250f.hero.webp"
+  },
   "honda|vt400s": {
     "image": "store/img/bikes2/honda-vt400s.webp",
     "thumb": "store/img/bikes2/honda-vt400s.thumb.webp",
@@ -11693,6 +11872,29 @@
     "via": "alias",
     "aliasOf": "honda|wave-rsx"
   },
+  "honda|x4": {
+    "image": "store/img/bikes2/honda-x4.webp",
+    "thumb": "store/img/bikes2/honda-x4.thumb.webp",
+    "title": "Silver Honda X4.jpg",
+    "author": "bernd.janssen",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Silver_Honda_X4.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 10.5
+  },
+  "honda|xl250s": {
+    "image": "store/img/bikes2/honda-xl250s.webp",
+    "thumb": "store/img/bikes2/honda-xl250s.thumb.webp",
+    "title": "Honda XL250S in the Honda Collection Hall.JPG",
+    "author": "Rainmaker47",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_XL250S_in_the_Honda_Collection_Hall.JPG",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/honda-xl250s.hero.webp"
+  },
   "honda|xl700v-transalp-abs": {
     "image": "store/img/bikes/honda-xl700v-transalp.webp",
     "thumb": "store/img/bikes/honda-xl700v-transalp-thumb.webp",
@@ -11854,6 +12056,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_XRE300_ano2010.jpg",
     "via": "alias",
     "aliasOf": "honda|xre300"
+  },
+  "honda|スーハーカフ100": {
+    "image": "store/img/bikes2/honda-100.webp",
+    "thumb": "store/img/bikes2/honda-100.thumb.webp",
+    "title": "Honda Super Cub 110 100 Million Anniversary rear.jpg",
+    "author": "Ypy31",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Super_Cub_110_100_Million_Anniversary_rear.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/honda-100.hero.webp"
   },
   "honda|スーハーカフ110-フロ": {
     "image": "store/img/bikes2/honda-110.webp",
@@ -13208,6 +13422,18 @@
     "view": "three_quarter",
     "score": 7.5,
     "hero": "store/img/bikes2/kawasaki-eliminator.hero.webp"
+  },
+  "kawasaki|eliminator-250": {
+    "image": "store/img/bikes2/kawasaki-eliminator-250.webp",
+    "thumb": "store/img/bikes2/kawasaki-eliminator-250.thumb.webp",
+    "title": "Kawasaki el 250 photo Moma SM.jpg",
+    "author": "Momcilostokanovic",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_el_250_photo_Moma_SM.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/kawasaki-eliminator-250.hero.webp"
   },
   "kawasaki|er-5-twister": {
     "image": "store/img/bikes/kawasaki-er-5.webp",
@@ -16953,6 +17179,42 @@
     "via": "alias",
     "aliasOf": "ktm|690-duke-r"
   },
+  "ktm|690-rally": {
+    "image": "store/img/bikes2/ktm-690-rally.webp",
+    "thumb": "store/img/bikes2/ktm-690-rally.thumb.webp",
+    "title": "KTM 690 Rally.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_Rally.jpg",
+    "via": "search",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/ktm-690-rally.hero.webp"
+  },
+  "ktm|690-rally-factory-replica": {
+    "image": "store/img/bikes2/ktm-690-rally.webp",
+    "thumb": "store/img/bikes2/ktm-690-rally.thumb.webp",
+    "hero": "store/img/bikes2/ktm-690-rally.hero.webp",
+    "title": "KTM 690 Rally.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_Rally.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|690-rally"
+  },
+  "ktm|690-rally-replica": {
+    "image": "store/img/bikes2/ktm-690-rally.webp",
+    "thumb": "store/img/bikes2/ktm-690-rally.thumb.webp",
+    "hero": "store/img/bikes2/ktm-690-rally.hero.webp",
+    "title": "KTM 690 Rally.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_690_Rally.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "ktm|690-rally"
+  },
   "ktm|690-smc-r-abs": {
     "image": "store/img/bikes/ktm-690-smc-r.webp",
     "thumb": "store/img/bikes/ktm-690-smc-r-thumb.webp",
@@ -19837,6 +20099,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_DR-Z400.jpg",
     "via": "alias",
     "aliasOf": "suzuki|dr-z-400"
+  },
+  "suzuki|dr-z4s-&-dr-z4sm": {
+    "image": "store/img/bikes2/suzuki-dr-z4s-dr-z4sm.webp",
+    "thumb": "store/img/bikes2/suzuki-dr-z4s-dr-z4sm.thumb.webp",
+    "title": "2025 Suzuki DR-Z4S.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Suzuki_DR-Z4S.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/suzuki-dr-z4s-dr-z4sm.hero.webp"
   },
   "suzuki|dr650se": {
     "image": "store/img/bikes/suzuki-dr650s.webp",
@@ -24451,6 +24725,18 @@
     "score": 8.5,
     "hero": "store/img/bikes2/victory-judge.hero.webp"
   },
+  "victory|ness": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/victory-ness.hero.webp"
+  },
   "victory|ness-sig": {
     "image": "store/img/bikes2/victory-ness-sig.webp",
     "thumb": "store/img/bikes2/victory-ness-sig.thumb.webp",
@@ -24462,6 +24748,102 @@
     "view": "three_quarter",
     "score": 7.5,
     "hero": "store/img/bikes2/victory-ness-sig.hero.webp"
+  },
+  "victory|ness-signature": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness"
+  },
+  "victory|ness-signature-series": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness"
+  },
+  "victory|ness-signature-series-magnum": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness-signature-series"
+  },
+  "victory|ness-signature-series-vegas-jackpot": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness-signature-series"
+  },
+  "victory|ness-signature-series-victory-vision-tour": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness-signature-series"
+  },
+  "victory|ness-signature-tour": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness-signature"
+  },
+  "victory|ness-signature-vegas": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness-signature"
+  },
+  "victory|ness-sinature-series-vegas-jackpot": {
+    "image": "store/img/bikes2/victory-ness.webp",
+    "thumb": "store/img/bikes2/victory-ness.thumb.webp",
+    "hero": "store/img/bikes2/victory-ness.hero.webp",
+    "title": "Paris - Salon de la moto 2011 - Victory - Arlen Ness Vision Tour - 001.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Victory_-_Arlen_Ness_Vision_Tour_-_001.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "victory|ness"
   },
   "victory|tour": {
     "image": "store/img/bikes2/victory-tour.webp",
@@ -24897,6 +25279,30 @@
     "via": "alias",
     "aliasOf": "yamaha|crypton"
   },
+  "yamaha|cuxi": {
+    "image": "store/img/bikes2/yamaha-cuxi.webp",
+    "thumb": "store/img/bikes2/yamaha-cuxi.thumb.webp",
+    "title": "赤科山福德祠 (3)立面全景.jpg",
+    "author": "舟集 Toadboat",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:%E8%B5%A4%E7%A7%91%E5%B1%B1%E7%A6%8F%E5%BE%B7%E7%A5%A0_(3)%E7%AB%8B%E9%9D%A2%E5%85%A8%E6%99%AF.jpg",
+    "via": "makecat",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-cuxi.hero.webp"
+  },
+  "yamaha|cygnus": {
+    "image": "store/img/bikes2/yamaha-cygnus.webp",
+    "thumb": "store/img/bikes2/yamaha-cygnus.thumb.webp",
+    "title": "Taiwan Yamaha Cygnus-X in Ximending 20120714 2.jpg",
+    "author": "Solomon203",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Taiwan_Yamaha_Cygnus-X_in_Ximending_20120714_2.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-cygnus.hero.webp"
+  },
   "yamaha|cygnus-alpha": {
     "image": "store/img/bikes2/yamaha-cygnus-alpha.webp",
     "thumb": "store/img/bikes2/yamaha-cygnus-alpha.thumb.webp",
@@ -24932,6 +25338,18 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "yamaha|cygnus-ray"
+  },
+  "yamaha|cygnus-rayz": {
+    "image": "store/img/bikes2/yamaha-cygnus.webp",
+    "thumb": "store/img/bikes2/yamaha-cygnus.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-cygnus.hero.webp",
+    "title": "Taiwan Yamaha Cygnus-X in Ximending 20120714 2.jpg",
+    "author": "Solomon203",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Taiwan_Yamaha_Cygnus-X_in_Ximending_20120714_2.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|cygnus"
   },
   "yamaha|cygnus-rayzr": {
     "image": "store/img/bikes2/yamaha-cygnus-rayzr.webp",
@@ -25228,16 +25646,16 @@
     "hero": "store/img/bikes2/yamaha-fino-grande.hero.webp"
   },
   "yamaha|fino-limited": {
-    "image": "store/img/bikes2/yamaha-fino.webp",
-    "thumb": "store/img/bikes2/yamaha-fino.thumb.webp",
-    "hero": "store/img/bikes2/yamaha-fino.hero.webp",
-    "title": "Fino Yamaha 125 ultrawide.jpg",
-    "author": "Fadlullah Baso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg",
-    "view": "side",
-    "via": "alias",
-    "aliasOf": "yamaha|fino"
+    "image": "store/img/bikes2/yamaha-fino-limited.webp",
+    "thumb": "store/img/bikes2/yamaha-fino-limited.thumb.webp",
+    "title": "Yamaha Fino 01.jpg",
+    "author": "Thomas Wanhoff",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Fino_01.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-fino-limited.hero.webp"
   },
   "yamaha|fino-premium": {
     "image": "store/img/bikes2/yamaha-fino.webp",
@@ -27163,16 +27581,16 @@
     "score": 9.5
   },
   "yamaha|nouvo-gp": {
-    "image": "store/img/bikes2/yamaha-nouvo.webp",
-    "thumb": "store/img/bikes2/yamaha-nouvo.thumb.webp",
-    "hero": "store/img/bikes2/yamaha-nouvo.hero.webp",
-    "title": "Yamaha Nouvo 115cc Thailand Spokes.jpg",
+    "image": "store/img/bikes2/yamaha-nouvo-gp.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo-gp.thumb.webp",
+    "title": "Yamaha Nouvo 115cc Thailand Front.jpg",
     "author": "Khaosaming",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Spokes.jpg",
-    "view": "side",
-    "via": "alias",
-    "aliasOf": "yamaha|nouvo"
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Nouvo_115cc_Thailand_Front.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-nouvo-gp.hero.webp"
   },
   "yamaha|nouvo-lmt": {
     "image": "store/img/bikes2/yamaha-nouvo.webp",
@@ -29240,6 +29658,18 @@
     "via": "alias",
     "aliasOf": "yamaha|wr450f"
   },
+  "yamaha|x-1r": {
+    "image": "store/img/bikes2/yamaha-x-1r.webp",
+    "thumb": "store/img/bikes2/yamaha-x-1r.thumb.webp",
+    "title": "Yamaha X-1R 135.jpg",
+    "author": "M.rJirapat",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_X-1R_135.jpg",
+    "via": "family",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/yamaha-x-1r.hero.webp"
+  },
   "yamaha|x-ride-125": {
     "image": "store/img/bikes2/yamaha-x-ride-125.webp",
     "thumb": "store/img/bikes2/yamaha-x-ride-125.thumb.webp",
@@ -29612,6 +30042,30 @@
     "via": "alias",
     "aliasOf": "yamaha|xsr900"
   },
+  "yamaha|xt-660-x": {
+    "image": "store/img/bikes2/yamaha-xt-660-x.webp",
+    "thumb": "store/img/bikes2/yamaha-xt-660-x.thumb.webp",
+    "title": "Yamaha XT 660 R (?) in Athens on 11-1-2023.jpg",
+    "author": "George E. Koronaios",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660_R_(%3F)_in_Athens_on_11-1-2023.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-xt-660-x.hero.webp"
+  },
+  "yamaha|xt-660-x-supermotard": {
+    "image": "store/img/bikes2/yamaha-xt-660-x.webp",
+    "thumb": "store/img/bikes2/yamaha-xt-660-x.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-xt-660-x.hero.webp",
+    "title": "Yamaha XT 660 R (?) in Athens on 11-1-2023.jpg",
+    "author": "George E. Koronaios",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT_660_R_(%3F)_in_Athens_on_11-1-2023.jpg",
+    "view": "side",
+    "via": "alias",
+    "aliasOf": "yamaha|xt-660-x"
+  },
   "yamaha|xt1200z-super-tenere-abs": {
     "image": "store/img/bikes/yamaha-xt1200z-super-tenere.webp",
     "thumb": "store/img/bikes/yamaha-xt1200z-super-tenere-thumb.webp",
@@ -29672,6 +30126,17 @@
     "via": "alias",
     "aliasOf": "yamaha|xt1200ze-super-tenere"
   },
+  "yamaha|xt125": {
+    "image": "store/img/bikes2/yamaha-xt125.webp",
+    "thumb": "store/img/bikes2/yamaha-xt125.thumb.webp",
+    "title": "Yamaha-xt 125-1982.jpg",
+    "author": "XTaddict",
+    "license": "CC BY-SA 2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha-xt_125-1982.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5
+  },
   "yamaha|xt250r": {
     "image": "store/img/bikes/yamaha-xt250.webp",
     "thumb": "store/img/bikes/yamaha-xt250-thumb.webp",
@@ -29691,6 +30156,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT250_(Brunei_2024).jpg",
     "via": "alias",
     "aliasOf": "yamaha|xt250"
+  },
+  "yamaha|xt500e": {
+    "image": "store/img/bikes2/yamaha-xt500e.webp",
+    "thumb": "store/img/bikes2/yamaha-xt500e.thumb.webp",
+    "title": "Yamaha XT500 1U6 1986.jpg",
+    "author": "JokielGram",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XT500_1U6_1986.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 10.5,
+    "hero": "store/img/bikes2/yamaha-xt500e.hero.webp"
   },
   "yamaha|xt660r": {
     "image": "store/img/bikes2/yamaha-xt660r.webp",

@@ -86,6 +86,7 @@
       "title": "Everything orange is theirs. Every arrow into the model comes out of a PDF.",
       "caption": "Server tools are called by ElevenLabs, not by the tab. The one client tool turns the page.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

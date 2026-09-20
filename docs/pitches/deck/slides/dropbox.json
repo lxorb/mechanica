@@ -285,6 +285,7 @@
       "title": "One poller, one webhook, one ingest",
       "caption": "The manual he already bought takes the same path as a factory PDF. A file that does not parse comes back unmatched.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

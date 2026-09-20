@@ -230,15 +230,19 @@ function flowSvg(flow) {
     const top = y;
     let iy = y + (hasLabel ? 40 : 0) + (band.label || band.tone ? 14 : 0);
 
+    // Every box on a chart is the same width — the longest row sets the column, shorter rows are
+    // centred in it — so a two-item row does not blow up into two half-slide slabs.
+    const cols = Math.max(...(band.rows || []).map((r) => (r.items || []).length), 1);
+
     (band.rows || []).forEach((row, ri) => {
       const items = row.items || [];
       const n = items.length;
       const gap = row.gap ?? 42;
       const inner = W - padX * 2 - 24;
-      const iw = (inner - gap * (n - 1)) / n;
+      const iw = (inner - gap * (cols - 1)) / cols;
       const lays = items.map((it) => itemLayout(it, iw));
       const rh = Math.max(...lays.map((l) => l.h));
-      let x = padX + 12;
+      let x = padX + 12 + (inner - (n * iw + gap * (n - 1))) / 2;
       items.forEach((it, i) => {
         parts.push(drawItem(it, x, iy, iw, rh, lays[i]));
         if (i < n - 1 && row.link !== "none") parts.push(arrow(x + iw + 8, iy + rh / 2, gap - 16));
@@ -905,10 +909,11 @@ em.hl{font-style:normal;color:var(--orange);font-weight:700}
 <b>pitch_numbers.py</b> and read §11 before you present. The last slide of every deck is that pitch's
 <b>do not say</b> card — the audience sees the end card, the presenter view sees the list.</p>
 <p class="note">Open a row's <b>diagrams</b> line to see every flow diagram that pitch owns, rendered
-inline. The decks themselves carry a redrawn, full-width version of each one: a mermaid render is the
-right shape for this page and the wrong shape for a 16:9 projector. Rebuild everything with
-<b>node docs/pitches/deck/build.mjs</b>, and re-render the .md-only diagrams with
-<b>node docs/pitches/deck/mermaid.mjs</b>.</p>
+inline. One flow chart per pitch, at most ten nodes, one thing per node — the mechanic and the manual
+page at the two ends, the sponsor's own services in orange. The decks carry the same node list redrawn
+full width for a 16:9 projector. Re-render the charts with <b>node docs/pitches/deck/mermaid.mjs</b>
+(which also writes <b>DIAGRAMS.png</b> and <b>DIAGRAMS.md</b>), then rebuild with
+<b>node docs/pitches/deck/build.mjs</b>.</p>
 <div class="rows">${rows}</div>
 <p class="keys"><b>→ ← space</b> next / previous · <b>Home / End</b> · <b>digits then Enter</b> jump to a slide ·
 <b>S</b> presenter view (notes, next slide, the 5-minute countdown) · <b>F</b> fullscreen ·

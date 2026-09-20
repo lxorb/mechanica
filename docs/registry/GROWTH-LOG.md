@@ -1057,3 +1057,33 @@ topic** (21+ per manual, against one API call for a whole Tweddle manual) plus c
 before printing, for a range of roughly 12–20 manuals (Polestar 2/3/4/5 × a few years), and
 polestar-3/4/5 expose only one topic id to a plain fetch, so their structure is not even confirmed.
 **Low priority**: the same hour spent on Tweddle buys ~12 manuals with no new machinery.
+
+### Numbers
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 99,316 | **99,338** | +22 |
+| **free English owner PDFs** | 24,302 | **24,324** | **+22** |
+| distinct PDF files | 14,843 | **14,865** | +22 |
+| catalog vehicles | 30,389 | **30,409** | +20 |
+| …with a `manualUrl` | 18,544 | **18,564** | +20 |
+
+**24 Toyota/Lexus Europe manuals now rendered and public**, 21 of them this cycle, every one
+verified `%PDF-` from its blob URL. 878 tests pass in 45 s. Cache on disk: 1.0 GB for 24 manuals.
+
+**Throughput, measured:** with `--workers 2`, **~3 manuals per 6 minutes** — call it 2 minutes a
+manual, from 90-page ES 300h to 528-page LC 500. Two Chromes ran clean, no failures and no rejected
+renders, so parallel rendering is the default from here. At that rate the remaining 433 are about
+15 hours of wall clock, or ~35 manuals — and therefore ~35 English vehicles — per 75-minute cycle.
+
+**One operational trap, and it cost this cycle most of its budget.** A render launched as a
+*background* task does not survive: the first 75-minute batch was dead 20 minutes in with no Chrome
+and no Python left, having produced one manual, and the log simply stopped. `nohup … &` inside a
+tool call dies the moment that call returns, too. What works is **foreground rounds inside the
+600-second tool limit**: `--max-minutes 6` with a 560 s timeout finishes its in-flight renders,
+writes the fragment and exits cleanly, and each round is worth ~3 manuals. Run rounds, not a batch.
+
+**`--upload` no longer re-pushes what is already public.** Every cycle re-runs the whole list to
+pick up where it stopped, and the reuse path was re-uploading the entire cache each time — 1 GB and
+growing. `already_there()` lists the `rendered/` prefix once and skips a blob whose name and size
+already match, which is sound because a render is deterministic for a given publication.

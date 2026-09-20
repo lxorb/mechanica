@@ -99,6 +99,7 @@
       "title": "Every lane has the same shape",
       "caption": "Schema for shape, allowlist for truth: the API does the part only a model can do, our code decides whether it is allowed out.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

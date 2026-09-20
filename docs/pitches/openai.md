@@ -80,7 +80,7 @@ say which — and the answer is a PDF page instead of a paragraph.**
 ![architecture](openai/architecture.png)
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
@@ -102,14 +102,15 @@ flowchart TB
 
 ### Read it left to right, five times
 
-1. **White in, grey next, orange in the middle, green after it, black out.** Every lane has the same shape.
-   That shape *is* the pitch: the API does the part only a model can do, and our code decides whether the
+1. **Black in, orange for OpenAI, cream for us, black out.** Every lane has the same shape. That shape
+   *is* the pitch: the API does the part only a model can do, and our code decides whether the
    answer is allowed out.
-2. **The orange column is the heart.** Nine call sites, one file, one cost log.
-3. **Two grey boxes sit between the two orange boxes in the ask lane.** BM25 and the spec path. That is the
-   whole cost story: the router is $0.00013 and cached 99.5%; the expensive call only happens when our own
-   retrieval is genuinely ambiguous.
-4. **Green is never optional.** `ground.py` drops ungrounded quotes at ingest; the id allowlist drops
+2. **Orange is the heart.** Nine call sites, one file, one cost log.
+3. **A cream box sits between the two models.** BM25 over the manual's own printed headings, in process,
+   and the spec path beside it. That is the whole cost story: the router is $0.00013 and cached 99.5%;
+   the expensive call only happens when our own retrieval is genuinely ambiguous.
+4. **Schema for shape, allowlist for truth.** Structured Outputs fixes what comes back; the grounding
+   gate decides whether it ships. `ground.py` drops ungrounded quotes at ingest; the id allowlist drops
    invented section ids; the server — not the model — writes every citation quote; a structural pass rejects
    any digit that is not printed on a page the model was shown.
 5. **Ingest is a different clock.** $0.095 once per manual, then every question on that manual forever is

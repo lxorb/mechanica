@@ -81,6 +81,7 @@
       "title": "Four functions, one book",
       "caption": "One socket — listen, think, speak. The agent's whole vocabulary is our four grounded tools, and the manual's text never enters the tab.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [

@@ -161,11 +161,11 @@ production use" from a position of strength instead of having it extracted.
 
 Rendered: [`long-lake/second-deployment.png`](long-lake/second-deployment.png) ·
 [`.svg`](long-lake/second-deployment.svg) · source
-[`.mmd`](long-lake/second-deployment.mmd) (`npx @mermaid-js/mermaid-cli@11`). One slide, full bleed.
-The only thing you need them to read is the four zone labels.
+[`.mmd`](long-lake/second-deployment.mmd) (`node docs/pitches/deck/mermaid.mjs`). One slide, full
+bleed. Seven boxes: the only thing you need them to read is that the loop comes back to the registry.
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontSize":"21px","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":16,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontSize":"21px","fontFamily":"Barlow","lineColor":"#141414","primaryColor":"#ece7dc","primaryTextColor":"#141414","primaryBorderColor":"#141414","background":"#ffffff"},"flowchart":{"curve":"linear","htmlLabels":false,"nodeSpacing":40,"rankSpacing":48,"padding":28,"useMaxWidth":false}}}%%
 flowchart TB
   subgraph R1[" "]
     direction LR
@@ -185,10 +185,11 @@ flowchart TB
   style R2 fill:none,stroke:none
 ```
 
-**The one line to say over it:** *"Grey is what took us the whole hackathon and is never paid for
-again. Orange is what a new vehicle costs — nine cents and forty seconds, and no person is in it.
-Black is what a new shop costs, which is nothing. The second deployment is the only one that
-matters, and it is already cheaper than the first."*
+**The one line to say over it:** *"Orange is the machinery that took us the whole hackathon and is
+never paid for again. A vehicle nobody has asked for yet goes through it for nine cents and forty
+seconds, with no person in the loop — and then the next shop, and the one after that, opens the same
+page for nothing. The second deployment is the only one that matters, and it is already cheaper than
+the first."*
 
 ---
 

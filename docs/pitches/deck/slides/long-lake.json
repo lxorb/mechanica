@@ -123,6 +123,7 @@
       "title": "Built once. Deployed N times.",
       "caption": "A vehicle nobody has asked for yet becomes a searchable manual on its own — and the next shop inherits it.",
       "flow": {
+        "w": 1180,
         "bands": [
           {
             "rows": [
