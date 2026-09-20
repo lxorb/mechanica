@@ -808,3 +808,104 @@ in isolation, so it is an ordering interaction in the bug-hunt agent's own tests
    dozen other markets. Needs a browser or the app bundle read, not a plain GET.
 3. **The language fallback is where the coverage is**, and it is far from exhausted: 4,645 vehicles
    are served by it today, and every non-English portal found so far came from a make we already had.
+
+---
+
+## Cycle 7 — 2026-09-20
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 99,313 | 99,313 | 0 |
+| free English owner PDFs | 24,299 | 24,299 | 0 |
+| catalog vehicles | 30,578 | 30,578 | 0 |
+| …with a `manualUrl` | 18,569 | 18,569 | 0 |
+
+No rows added. The cycle's work is the suite fix and three sources investigated to the bottom —
+two of which are now closed for good, with the evidence written down.
+
+### The suite: `FileStore.registry()` is memoised on the file's (mtime_ns, size)
+
+`registry.json` is 40 MB / 99,313 rows: **0.06 s to read, 1.8 s to `json.loads`, 3.0 s to validate**,
+and the API and the tests call it many times per process. `FileStore` now caches the validated rows
+against the file's own `(st_mtime_ns, st_size)`, so any writer — `put_registry`, the merge tool's
+wholesale rewrite, another process — invalidates it without knowing the cache exists. A missing or
+unreadable file still returns `[]`. `BlobStore` is untouched.
+
+    first call 4.34s -> second 0.002s -> after `os.utime` re-read (correctly)
+    test_known_pdf_hosts_reads_the_registry_and_the_verified_list   61.3s -> 7.3s
+
+**The rows are now shared between callers, so nothing may mutate one in place.** Only two places
+ever did — `registry.merge_ua()` (stamps `docKind`/`needsUa`) and the merge tool's `--restamp` —
+and the merge tool now takes `[e.model_copy() for e in store.registry()]` before stamping. That
+contract is written into the method's docstring, because a future in-place edit would silently
+change what every later reader in the process sees.
+
+**The suite is green at the committed limit: 849 passed, 20 skipped, no `--timeout` override.**
+
+**Still slow, and none of it registry-bound** — `bikes()` is 0.73 s and `registry()` is now free, so
+what is left is each route's own work. Measured on a *loaded* box (headless Chrome was running for
+the Toyota investigation on the same machine), worst first:
+
+    116.7s  test_main.py::test_manuals_list                                  <- 3 s under the limit
+     97.7s  test_bughunt_ondemand.py::test_head_answers_wherever_get_does[/cost]
+     80.9s  test_bughunt_store.py::test_cost_route_reports_the_largest_manual
+     75.0s  test_dropbox_sync.py::test_pagination_follows_has_more
+     51.3s  test_bughunt_api.py::test_parts_catalog_route_still_answers
+
+These are `app/main.py`, `app/ondemand.py` and the Dropbox sync — other agents' surfaces, slow for
+their own reasons and slow before this cycle too. `test_manuals_list` finishing 3 s inside the limit
+is not a margin anybody should rely on. **Please route it**; the registry side of the problem is
+fixed and will not be what breaks the suite next.
+
+### Toyota / Lexus Europe: found, fully mapped, and **HTML only** — closed
+
+`toyota.co.uk/customer/manuals` embeds an iframe, `customerportal.tweddle-aws.eu` (Tweddle Group,
+Toyota Motor Europe's publisher). Driven through headless Chrome, the whole chain came out, and
+**every step answers plain httpx with no token, no cookie and no browser**:
+
+    GET https://diva-api.tweddle.app/pubhub/info/products?
+        -> 885 products {brand, model, modelType, year, ngtdModelId} - Toyota 495, Lexus 390,
+           48 models, 2006-2026. Verified from httpx directly.
+    GET /_next/data/<BUILD_ID>/modelTypes.json?brand=&model=            -> the model types
+    GET /_next/data/<BUILD_ID>/generations.json?...&ngtdModelId=136     -> {id, yearFrom, yearTo, count}
+    GET https://diva-api.tweddle.app/languages/model/<m>/modelType/<t>/from/<y>/to/<y>
+        -> 25 languages, English among them
+    GET /_next/data/<BUILD_ID>/publications.json?...&generationId=528&language=en
+        -> {_id, partNumber, publicationType: "UG", language, year, contents.ditaId}  (9 for one
+           Corolla generation in English alone)
+
+And then it stops: the document is **DITA, not a PDF**. "Browse" opens
+`/content?id=<ditaId>` and fetches `diva-api.tweddle.app/pubhub/publications/<ditaId>/content`,
+which returns the manual as JSON topics. There is no download link anywhere in the reader, no
+`.pdf` response on any call, and no print route.
+
+So this is the Tesla / JLR situation at European scale: real, free, official, English — and not a
+file. Indexing it would add tens of thousands of rows that `_is_pdf()` rejects, which means **zero
+vehicles gained** and a registry that is already slowing the suite. **Not indexed, deliberately.**
+Re-open it only if the product ever learns to ingest a DITA/HTML manual — in which case the recipe
+above is complete and needs no browser.
+
+### AU/NZ importers, motorcycles: empty
+
+Sitemaps declared, no manual tree in any of them: `cfmoto.com.au`, `zontes.com.au`, `qjmotor.com.au`,
+`vogemoto.com.au`, `kovemoto.com.au`, `symaustralia.com.au`, `kymco.com.au`, `benelli.com.au`,
+`motoguzzi.com.au`, `beta-australia.com.au`, `shercoaustralia.com.au`. Only `royalenfield.com.au`
+has document pages (WordPress `attachment/download-*`), and Royal Enfield is already indexed at 352
+rows in 9 languages, so there is nothing there either. The cycle-6 hope that the *importer* is
+looser than the *maker* held for MG Australia and holds for nobody else tried so far.
+
+### Next leads, best first
+
+1. **The product decision that unlocks the biggest English source left.** Toyota/Lexus Europe is
+   ~885 products × 25 languages of official manuals that exist only as HTML. Same for Tesla,
+   Mercedes MY2025+, JLR from MY2016, Mazda JP, Subaru JP, Polestar. If `/ingest` could take an
+   HTML manual, that single change is worth more than every remaining PDF hunt combined. Worth
+   putting to the founder as a product question, not a registry one.
+2. **Non-English portals remain the only growing seam.** Every source found since cycle 4 has been
+   non-English, and the language fallback now serves 4,645 vehicles. Korea (Hyundai/Kia/Genesis
+   home sites), China (FAW, Dongfeng, Changan, Geely), Brazil (VW, Fiat, GM do Brasil) and India
+   (Maruti, Tata) are all unexplored and all publish PDFs in their own language.
+3. **Watch the registry's size.** 40 MB and 99k rows is already the suite's biggest cost even with
+   the cache; a Chinese or Brazilian portal could double it again. Worth asking whether rows that
+   can never be fetched (`_is_pdf() == False`, 60k+ of them today) should live in a separate file
+   from the ones that can.
