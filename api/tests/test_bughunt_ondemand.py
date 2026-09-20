@@ -366,6 +366,47 @@ def test_touch_moves_the_heartbeat_and_nothing_else(blobbish):
     assert ondemand.touch("missing") is False
 
 
+def test_every_progress_write_is_a_heartbeat(fresh_store):
+    """The worker's own writes are the cheap half of the heartbeat: a job being worked on is
+    written about once a second, so a poll of a healthy ingest never has to read the lease."""
+    from app import ingest as ingest_mod
+
+    job = IngestJob(id="p1", manualId="m-om", status="running", updatedAt=1.0)
+    bar = ingest_mod.Progress(fresh_store, job)
+    bar.stage("download")
+    first = fresh_store.job("p1").updatedAt
+    assert first > 1.0
+    bar.saving(0.5)
+    assert fresh_store.job("p1").updatedAt >= first
+
+
+def test_an_uploaded_ingest_beats_through_a_silent_stage(client, store, monkeypatch, local_jobs):
+    """POST /ingest/upload does not go through ensure(), so it takes no lease of its own - but the
+    wait for one of the three ingest slots is silent for up to ten minutes and the browser is
+    polling. _start_job gives that path the same beat."""
+    monkeypatch.setattr(ondemand, "HEARTBEAT", 0.05)
+    checked: list[bool] = []
+
+    def fake_run(job_id, source, manual_id, *args, **kwargs):
+        get = store.job(job_id)
+        store.put_job(get.model_copy(update={"status": "running", "updatedAt": time.time() - 600}))
+        time.sleep(0.3)  # a stage that writes nothing
+        checked.append(ondemand.stalled(store.job(job_id)))
+        store.put_job(store.job(job_id).model_copy(update={"status": "done", "updatedAt": time.time()}))
+
+    monkeypatch.setattr(main_mod.ingest_mod, "run", fake_run)
+    res = client.post(
+        "/ingest/upload",
+        files={"file": ("x.pdf", b"%PDF-1.4 fake", "application/pdf")},
+        params={"make": "Fakemoto", "model": "Uno", "year": 2026},
+    )
+    assert res.status_code == 200
+    job_id = res.json()["id"]
+    assert store.job(job_id).updatedAt, "the job is stamped the moment it is queued"
+    assert checked == [False], "the beat must keep a silent upload alive"
+    assert ondemand.lease_holder("fakemoto-uno-2026-om") is None, "and release the manual after it"
+
+
 def test_the_job_route_reports_a_stalled_job_as_an_error(client, store, local_jobs):
     """What the Confirm screen polls. Reported as running, it polls a dead id for fifteen minutes."""
     store.put_job(

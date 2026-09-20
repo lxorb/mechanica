@@ -608,3 +608,103 @@ the on-demand year list, is now the biggest single field and would compress well
    owner's manuals and none is indexed.
 4. **`kawasaki.py`'s 12 Spanish rows are not fetchable**, which re-confirms that everything outside
    the US KTIVS catalogue is a flipbook. Do not re-open Kawasaki.
+
+---
+
+## Cycle 5 — 2026-09-20
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 89,141 | **99,295** | +10,154 |
+| free English owner PDFs | 24,281 | 24,281 | 0 |
+| distinct PDF files | 14,822 | **14,822** | 0 |
+| catalog vehicles | 29,638 | **30,560** | +922 |
+| …with a `manualUrl` | 17,464 | **18,551** | **+1,087** |
+| …offered in another language | 3,558 | **4,645** | +1,087 |
+
+Motorcycles 12,383 with a manual, cars 6,168 (was 5,081). **843 tests pass.**
+Roster **666 KB raw / 99 KB gzip**, against the new 1,000 KB / 150 KB limits.
+
+### The roster budget, raised and made real
+
+`web/tools/catalog.mjs`: `LIMIT` is now **1,000 KB raw** and a new `GZIP_LIMIT` of **150 KB** —
+gzip is what the phone downloads, so it is the one that matters and it is now enforced, not just
+printed. Both sizes fail the build and both are printed on every run.
+
+`extra.o` is **range-packed** the same way the `years` field already was: `{r:[from,to]}` when the
+on-demand years are a dense run, the list otherwise. That took the roster from 678 KB to 659 KB
+before this cycle's rows went in. `index-data.js` expands it with the `yearsOf()` it already had —
+one line, and strictly safer than the old `new Set(extra.o)`, because `yearsOf()` returns `[]` for a
+malformed value instead of throwing and taking the whole offline roster down.
+
+**Two reader fixes in `web/counter/js/index-data.js` (the counter agent's file, touched minimally
+and deliberately):** it now expands a ranged `o`, and it reads a bare-string `l`. Cycle 4 compacted
+`l` to a string when a model's on-demand years share a language — the same shorthand `market`
+already uses — but the reader only understood the per-year map, so those vehicles were silently
+showing as English. Both are one line; the alternative was shipping data the app mis-renders.
+
+### Source added: Toyota and Lexus Japan — `cars_toyota_jp.py`, 1,457 rows over 1,436 PDFs
+
+`toyota.jp/ownersmanual/<slug>/index.html` redirects to `manual.toyota.jp/<slug>/`, which is plain
+server-rendered HTML listing every handbook ever published for that model. **91 Toyota slugs come
+out of toyota.jp's own sitemaps**, so a new model appears on the next crawl; **Lexus lists its 22
+models on `manual.lexus.jp/` itself** and is the same portal in a different skin. Toyota 1,044 rows,
+Lexus 413, 1,060 of them the complete handbook, 2009–2027. 10/10 verified `%PDF-` across both.
+
+Rather than matching either site's class names, the parser walks the page as a sequence — heading,
+`生産年月：` production-month label, next link — which is the structure both skins share.
+**Years come from the production range, not the file name:** `2013年02月～2014年11月` covers model
+years 2013 *and* 2014, and an open-ended newest range runs to next model year. Toyota has moved to
+an HTML manual plus a printed *abridged* edition, so the newest PDFs say 抜粋版 and are filed
+`quickstart`; the older complete books are `owner`, navigation books `infotainment`. 13 tests in
+`api/tests/test_cars_toyota_jp.py` cover exactly the year parse and that classification.
+
+The slug splitter honda_jp.py grew in cycle 4 is now shared: `name_families()` and `pretty_slug()`
+live in `_http.py` and both Japanese adapters use them (`landcruiserprado` → `Land Cruiser Prado`).
+
+### Triumph, the last `keep_lang()` adapter
+
+`triumph.py` with `REGISTRY_LANGS='*'`: **11,658 rows in 16 languages** (en 1,985, es 1,028,
+pt 1,014, fr 937, it 928, de 928, nl 926, ja 921, sv 908, th 555 …) over 920 non-English files,
+5/5 verified. Triumph now holds **26,806 rows over 1,118 distinct PDFs**. That closes the
+`keep_lang()` list started in cycle 3 — every adapter has been measured.
+
+**Watch this when merging a Triumph fragment.** The auto-`--replace` heuristic fired ("9,673 of
+11,658 ids new but no new files") and retracted 16,124 rows, because the scope is
+`(triumphtechnicalinformation.com, motorcycle)` — which `triumph_pdf.py` shares. Nothing was lost:
+all 17,129 `triumph_pdf.json` rows are in the same merge and were written straight back, verified
+id by id afterwards. 165 vehicles did disappear, all of them derived from stale live-crawl rows the
+fragment supersedes and none of them carrying a PDF. **Two adapters writing one site into one scope
+is a trap**: if either is ever merged without the other in the same run, the missing one's rows are
+deleted. Keep `triumph_pdf.json` and `langs-triumph.json` merged together, or give them distinct
+sites.
+
+### Checked this cycle and empty — do not re-walk
+
+* **Honda Japan motorcycles do not exist as a portal.** honda.co.jp's sitemap declares exactly two
+  manual trees: `/ownersmanual/HondaMotor/auto/` (cars, indexed) and `/ownersmanual/HondaMotor/power/`
+  (power equipment — generators and mowers, not vehicles). `/ownersmanual/HondaMotor/motorcycle/`,
+  `honda.co.jp/motor-manual/` and `honda.co.jp/motorcycle/` all 404. Japanese Honda bike manuals are
+  reachable only through Motopub's `HMJ`-style distributor codes, which `honda.py` already walks.
+* **Mazda Japan** — `mazda.co.jp/owner_support/manual/<model>/` exists per model and serves an HTML
+  viewer only (`www2.mazda.co.jp/carlife/owner/manual/<model>/…/index.html`). No PDF.
+* **Subaru Japan** — `subaru.jp/dealerservice/ownersmanual/<model>/` renders its document list
+  client-side; 30 KB of markup with no document url in it.
+* **Nissan Japan** and **Suzuki Japan** — robots.txt declares one sitemap each and neither contains
+  a manual tree. `suzuki.co.jp/car/support/` 404s to its own error page.
+* **Daihatsu** — `manual.daihatsu.co.jp` does not resolve.
+
+### Next leads, best first
+
+1. **The `manual.<brand>.jp` shape is worth one more sweep.** Toyota and Lexus both use it; Daihatsu
+   (a Toyota subsidiary whose models are already in the Toyota portal as `pixis*`) does not, but
+   Toyota also runs regional manual portals — `manual.toyota.com.au`, `.co.nz`, `.com.tw` are
+   untested and would be **English** rather than Japanese, which is the metric that matters most.
+2. **Toyota/Lexus JP `infotainment` rows (275) and `supplement` (120)** are indexed but never win a
+   `_pick`. Fine as is — noted so nobody mistakes them for missing coverage.
+3. **English is where the ceiling is.** Free English owner PDFs have not moved in two cycles
+   (24,281): every source found since is non-English. The remaining English-shaped ideas are the
+   regional Toyota portals above, Lincoln (dead, cycle 2), and the car makes with no adapter at all
+   (MG, BYD, Polestar, Rivian, Lucid, Isuzu, Tata, Mahindra, KGM, Haval, Omoda, Chery, VinFast) —
+   none of which declares a support tree in its public sitemap, so each needs its real manual URL
+   found by hand before probing.
