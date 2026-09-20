@@ -1,4 +1,4 @@
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL = `handy-book-shell-${VERSION}`;
 const RUNTIME = `handy-book-runtime-${VERSION}`;
 const DATA = `handy-book-data-${VERSION}`;
@@ -14,8 +14,20 @@ const PRECACHE = [
   "js/app.js",
   "js/bus.js",
   "js/query.js",
+  "js/ttm.js",
+  "js/index-data.js",
+  "js/search.js",
+  "js/ask.js",
+  "js/pdf.js",
+  "js/speech.js",
+  "js/deepgram.js",
+  "js/voice.js",
   "js/vision.js",
   ...SCREENS.map((id) => `js/screens/${id}.js`),
+  "js/screens/cost.js",
+  "css/screens/cost.css",
+  "../store/ttm-catalog.json",
+  "../store/bike-images.json",
   "manifest.webmanifest",
   "icons/icon-192.png",
   "icons/icon-512.png",
@@ -27,7 +39,7 @@ function sameOrigin(url) {
 }
 
 function isPdfOrOnnx(url) {
-  return /\.(?:pdf|onnx)$/i.test(url.pathname);
+  return /\.(?:pdf|onnx)$/i.test(url.pathname) || /\/manuals\/[^/]+\/file$/.test(url.pathname);
 }
 
 function isCatalog(url) {
