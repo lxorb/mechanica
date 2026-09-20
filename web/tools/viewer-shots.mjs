@@ -27,6 +27,8 @@ const SHOTS = join(WEB, "docs-shots");
 const CHROME = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 // puppeteer-core is a dev-only dependency and web/ has no node_modules, so it is imported by
 // absolute path out of wherever it was installed. $PUPPETEER_DIR overrides.
+const SHARP = process.env.SHARP_DIR
+  || "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad/node_modules/sharp/dist/index.cjs";
 const PUPPETEER = process.env.PUPPETEER_DIR
   || "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js";
 
@@ -149,6 +151,67 @@ async function states() {
  * motorcycle have the same silhouette from above — so this renders all four and a human picks,
  * then the number goes into web/tools/model-shortlist.json as `orient`.
  */
+/**
+ * `--sheet`: every generic model on one contact sheet. Eleven separate screenshots are eleven
+ * things to look at one at a time; one sheet shows at a glance which models are lying on their
+ * side, facing backwards, black, or missing — which is the only way to check the things that
+ * cannot be asserted (orientation, shading, framing).
+ */
+async function sheet(names) {
+  const { server, port } = await serve();
+  const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
+  const sharp = (await import(`file:///${SHARP.replace(/\\/g, "/")}`)).default;
+  const browser = await puppeteer.launch({
+    executablePath: CHROME,
+    headless: "new",
+    args: ["--no-sandbox", "--enable-unsafe-swiftshader", "--use-gl=angle", "--hide-scrollbars"],
+  });
+  mkdirSync(SHOTS, { recursive: true });
+  const CELL = 300;
+  const tiles = [];
+  for (const [name, query] of names) {
+    const page = await browser.newPage();
+    await page.setViewport({ width: CELL, height: CELL, deviceScaleFactor: 1 });
+    try {
+      await page.goto(`http://127.0.0.1:${port}/counter/solo.html?${query}`, { waitUntil: "load", timeout: 40000 });
+      await page.waitForFunction(
+        () => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready",
+        { timeout: 70000 },
+      ).catch(() => {});
+      await new Promise((r) => setTimeout(r, 2200));
+      const shot = await page.screenshot({ encoding: "binary" });
+      tiles.push({ name, buffer: Buffer.from(shot) });
+      console.log(`  ${name}`);
+    } catch (error) {
+      console.log(`  !! ${name}: ${error.message.slice(0, 80)}`);
+    }
+    await page.close();
+  }
+  await browser.close();
+  server.close();
+  if (!tiles.length) return;
+  const cols = 4;
+  const rows = Math.ceil(tiles.length / cols);
+  const labelled = await Promise.all(tiles.map(async (tile, i) => ({
+    input: await sharp(tile.buffer)
+      .composite([{
+        input: Buffer.from(
+          `<svg width="${CELL}" height="26"><rect width="${CELL}" height="26" fill="#141414"/>` +
+          `<text x="8" y="18" font-family="monospace" font-size="15" fill="#fff">${tile.name}</text></svg>`,
+        ),
+        top: 0, left: 0,
+      }])
+      .png()
+      .toBuffer(),
+    left: (i % cols) * CELL,
+    top: Math.floor(i / cols) * CELL,
+  })));
+  const out = join(SHOTS, "generic-sheet.png");
+  await sharp({ create: { width: cols * CELL, height: rows * CELL, channels: 3, background: "#222" } })
+    .composite(labelled).png().toFile(out);
+  console.log(`\n${tiles.length} tiles -> ${out}`);
+}
+
 async function orient(names) {
   const { server, port } = await serve();
   const puppeteer = await import(`file:///${PUPPETEER.replace(/\\/g, "/")}`);
@@ -175,6 +238,25 @@ async function orient(names) {
 async function main() {
   const only = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   if (process.argv.includes("--states")) return states();
+  // --rotations <model>: the same model at every plausible upright rotation, on one sheet.
+  // Which way is up cannot be read reliably out of a bounding box (a scooter is nearly as wide
+  // as it is tall), so the answer is chosen by looking, once, per model.
+  if (process.argv.includes("--rotations")) {
+    const name = only[0];
+    const candidates = [
+      "none", "-90,0,0", "90,0,0", "0,0,90", "0,0,-90",
+      "0,90,90", "90,90,0", "-90,0,180", "0,90,0",
+    ];
+    return sheet(candidates.map((r) => [`${name} ${r}`, `model=generic/${name}&rotate=${encodeURIComponent(r)}`]));
+  }
+  if (process.argv.includes("--sheet")) {
+    const dir = join(WEB, "store", "models", "generic");
+    const generics = readdirSync(dir)
+      .filter((n) => existsSync(join(dir, n, "model.glb")))
+      .map((n) => [n, `model=generic/${n}`]);
+    const exact = [["yzf-2021", "model=yzf-2021"], ["cbr650r", "model=honda-cbr650r"], ["corvette", "model=corvette-c8"]];
+    return sheet(only.length ? generics.filter(([n]) => only.includes(n)) : [...generics, ...exact]);
+  }
   if (process.argv.includes("--orient")) {
     const dir = join(WEB, "store", "models", "generic");
     const names = only.length ? only : readdirSync(dir).filter((n) => existsSync(join(dir, n, "model.glb")));

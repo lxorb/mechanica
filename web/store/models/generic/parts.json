@@ -1,6 +1,11 @@
 {
  "scooter": {
   "kind": "bike",
+  "rotate": [
+   -90,
+   0,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -12,6 +17,11 @@
  },
  "sportbike": {
   "kind": "bike",
+  "rotate": [
+   90,
+   90,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -50,6 +60,11 @@
  },
  "cruiser": {
   "kind": "bike",
+  "rotate": [
+   -90,
+   0,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -61,6 +76,11 @@
  },
  "naked": {
   "kind": "bike",
+  "rotate": [
+   -90,
+   0,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -76,6 +96,7 @@
  },
  "classic": {
   "kind": "bike",
+  "rotate": null,
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -87,6 +108,11 @@
  },
  "motocross": {
   "kind": "bike",
+  "rotate": [
+   90,
+   90,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -118,6 +144,11 @@
  },
  "enduro": {
   "kind": "bike",
+  "rotate": [
+   90,
+   90,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -129,6 +160,7 @@
  },
  "supermoto": {
   "kind": "bike",
+  "rotate": null,
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -147,6 +179,7 @@
  },
  "touring": {
   "kind": "bike",
+  "rotate": null,
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -158,6 +191,11 @@
  },
  "adventure": {
   "kind": "bike",
+  "rotate": [
+   0,
+   90,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fuel-tank",
@@ -169,6 +207,11 @@
  },
  "car": {
   "kind": "car",
+  "rotate": [
+   0,
+   90,
+   0
+  ],
   "orient": 180,
   "paint": [
    "fairing"

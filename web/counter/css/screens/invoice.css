@@ -139,7 +139,12 @@
 
 /* ---------- grid ---------- */
 
+/* Sticky, because the catalogue runs to a hundred entries and the shelf you are in is
+   the one thing you must not lose while scrolling. */
 .pv-group {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
   font-size: 1rem;
@@ -147,12 +152,13 @@
   text-transform: uppercase;
   line-height: 1.1;
   margin: 16px 0 8px;
-  padding-bottom: 4px;
+  padding: 6px 0 4px;
+  background: var(--paper);
   border-bottom: 3px solid var(--ink);
 }
 
 .pv-group:first-child {
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .pv-tiles {
@@ -249,6 +255,13 @@
   padding-top: 2px;
 }
 
+/* Hollow stamp: a page that only mentions the part, not the page its spec is printed on. */
+.stamp.pv-ref {
+  background: none;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--orange);
+}
+
 .pv-oem {
   font-family: ui-monospace, monospace;
   font-size: 0.68rem;
@@ -319,6 +332,24 @@
   background: var(--yellow);
   box-shadow: inset 0 0 0 3px var(--ink);
   word-break: break-all;
+}
+
+/* Every page of the manual that names this part, each one a way into Book. */
+.pv-mentions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pv-mentions .pv-page {
+  min-height: 44px;
+  padding: 0 10px;
+  font-size: 0.72rem;
+}
+
+.pv-more {
+  background: var(--ink);
+  color: #fff;
 }
 
 /* ---------- offers ---------- */
@@ -450,16 +481,32 @@
   color: #fff;
 }
 
-.pv-o-price {
+.pv-o-cost {
   grid-column: 2;
   grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   align-self: center;
   justify-self: end;
+  gap: 1px;
+}
+
+.pv-o-price {
   font-family: Barlow, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1.05rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* What the shop actually charges, when that is not dollars. */
+.pv-o-orig {
+  font-family: ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0.75;
 }
 
 .pv-shop {
@@ -470,7 +517,27 @@
   text-decoration: none;
 }
 
-/* ---------- skeleton ---------- */
+/* ---------- waiting on the retailer search ---------- */
+
+.pv-wait {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pv-bar {
+  height: 6px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.pv-bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--orange);
+  transition: width 0.2s linear;
+}
 
 .pv-skel {
   display: flex;

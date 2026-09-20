@@ -134,6 +134,53 @@ export function index(made) {
   });
 }
 
+/** The nine shelves /parts/catalog sorts a vehicle into, in the order the grid stacks them. */
+export const GROUPS = [
+  ["engine", "Engine"],
+  ["drivetrain", "Drivetrain"],
+  ["brakes", "Brakes"],
+  ["suspension", "Suspension"],
+  ["wheels", "Wheels"],
+  ["electrics", "Electrics"],
+  ["controls", "Controls"],
+  ["body", "Body"],
+  ["consumables", "Consumables"],
+];
+
+const GROUP_LABEL = new Map(GROUPS);
+
+export function groupLabel(id) {
+  return GROUP_LABEL.get(String(id || "")) || "";
+}
+
+/**
+ * Rows for the /parts/catalog answer (ttm.js `partCatalog()` shape): the whole vehicle,
+ * not only what the manual prints. Searched over the name, the spec, the OEM number, the
+ * group, the backend's synonyms and the part id, so "pads" finds "Brake pad set" and
+ * "brakes" finds the shelf.
+ */
+export function indexCatalog(parts) {
+  const list = (Array.isArray(parts) ? parts : []).filter(Boolean);
+  return list.map((part, order) => {
+    const label = groupLabel(part.group);
+    const name = fold(part.name);
+    const extras = [part.spec, part.oem, part.group, label, part.id, ...(part.synonyms || [])];
+    const rest = extras.map(fold).filter(Boolean).join(" ");
+    const tokens = new Set(words(`${name} ${rest}`));
+    return {
+      part,
+      order,
+      group: label,
+      groupId: part.group || "",
+      titles: [],
+      name,
+      nameTokens: words(name),
+      text: `${name} ${rest}`.trim(),
+      tokens: [...tokens],
+    };
+  });
+}
+
 /** True when `token` starts a word of `text`, not just sits inside one ("oli" in "cooling"). */
 function wordAt(text, token) {
   let i = text.indexOf(token);

@@ -191,6 +191,23 @@ def parts_offers(req: OffersRequest):
     return offers_mod.offers(req.manualId, req.partId, bike)
 
 
+class WarmRequest(BaseModel):
+    manualId: str
+    bikeId: str | None = None
+    partIds: list[str] | None = None
+
+
+@app.post("/parts/offers/warm")
+def parts_offers_warm(req: WarmRequest):
+    """Fire-and-forget prefetch for the Parts view: a cold retailer search takes longer than the
+    counter waits, so the list warms the cache on open and a click lands on a finished answer."""
+    store = get_store()
+    if not store.manual(req.manualId):
+        raise HTTPException(404)
+    bike = store.bike(req.bikeId) if req.bikeId else None
+    return offers_mod.warm(req.manualId, bike, req.partIds)
+
+
 @app.post("/identify/photo", response_model=IdentifyResponse)
 async def identify_photo(file: UploadFile = File(...)):
     data = await file.read()

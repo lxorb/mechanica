@@ -9,96 +9,6 @@
     "via": "alias",
     "aliasOf": "aprilia|atlantic-250"
   },
-  "aprilia|caponord-1200-rally": {
-    "image": "store/img/bikes/aprilia-caponord-1200.webp",
-    "thumb": "store/img/bikes/aprilia-caponord-1200-thumb.webp",
-    "title": "Aprilia Caponord 1200 HMT 2015.jpeg",
-    "author": "San Andreas",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_HMT_2015.jpeg",
-    "via": "alias",
-    "aliasOf": "aprilia|caponord-1200"
-  },
-  "aprilia|caponord-1200-travel-pack": {
-    "image": "store/img/bikes/aprilia-caponord-1200.webp",
-    "thumb": "store/img/bikes/aprilia-caponord-1200-thumb.webp",
-    "title": "Aprilia Caponord 1200 HMT 2015.jpeg",
-    "author": "San Andreas",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_HMT_2015.jpeg",
-    "via": "alias",
-    "aliasOf": "aprilia|caponord-1200"
-  },
-  "aprilia|dorsoduro-1200-abs": {
-    "image": "store/img/bikes/aprilia-dorsoduro-1200.webp",
-    "thumb": "store/img/bikes/aprilia-dorsoduro-1200-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Aprilia - Dorsoduro 1200 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Dorsoduro_1200_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|dorsoduro-1200"
-  },
-  "aprilia|dorsoduro-1200-atc-abs": {
-    "image": "store/img/bikes/aprilia-dorsoduro-1200.webp",
-    "thumb": "store/img/bikes/aprilia-dorsoduro-1200-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Aprilia - Dorsoduro 1200 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Dorsoduro_1200_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|dorsoduro-1200"
-  },
-  "aprilia|dorsoduro-750-abs": {
-    "image": "store/img/bikes/aprilia-dorsoduro-750.webp",
-    "thumb": "store/img/bikes/aprilia-dorsoduro-750-thumb.webp",
-    "title": "Aprilia Dorsoduro 750 01.jpg",
-    "author": "m.caimary",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Dorsoduro_750_01.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|dorsoduro-750"
-  },
-  "aprilia|dorsoduro-750-factory": {
-    "image": "store/img/bikes/aprilia-dorsoduro-750.webp",
-    "thumb": "store/img/bikes/aprilia-dorsoduro-750-thumb.webp",
-    "title": "Aprilia Dorsoduro 750 01.jpg",
-    "author": "m.caimary",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Dorsoduro_750_01.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|dorsoduro-750"
-  },
-  "aprilia|dorsoduro-750-factory-abs": {
-    "image": "store/img/bikes/aprilia-dorsoduro-750.webp",
-    "thumb": "store/img/bikes/aprilia-dorsoduro-750-thumb.webp",
-    "title": "Aprilia Dorsoduro 750 01.jpg",
-    "author": "m.caimary",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Dorsoduro_750_01.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|dorsoduro-750-factory"
-  },
-  "aprilia|mana-850-abs": {
-    "image": "store/img/bikes/aprilia-mana-850.webp",
-    "thumb": "store/img/bikes/aprilia-mana-850-thumb.webp",
-    "title": "Aprilia Mana 850 in Athens on 10-25-2023.jpg",
-    "author": "George E. Koronaios",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Mana_850_in_Athens_on_10-25-2023.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|mana-850"
-  },
-  "aprilia|mana-850-gt-abs": {
-    "image": "store/img/bikes/aprilia-mana-850-gt.webp",
-    "thumb": "store/img/bikes/aprilia-mana-850-gt-thumb.webp",
-    "title": "Aprilia Mana 850 GT in Athens on 0-27-2023.jpg",
-    "author": "George E. Koronaios",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Mana_850_GT_in_Athens_on_0-27-2023.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|mana-850-gt"
-  },
   "aprilia|mojito-125-custom": {
     "image": "store/img/bikes/aprilia-mojito-125.webp",
     "thumb": "store/img/bikes/aprilia-mojito-125-thumb.webp",
@@ -269,66 +179,6 @@
     "via": "alias",
     "aliasOf": "aprilia|rs4-50"
   },
-  "aprilia|rsv-1000r-factory": {
-    "image": "store/img/bikes/aprilia-rsv-1000r.webp",
-    "thumb": "store/img/bikes/aprilia-rsv-1000r-thumb.webp",
-    "title": "Aprilia RSV 1000R red.jpg",
-    "author": "Brian Snelson",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_RSV_1000R_red.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|rsv-1000r"
-  },
-  "aprilia|rsv-mille-1000-r": {
-    "image": "store/img/bikes/aprilia-rsv-mille-1000.webp",
-    "thumb": "store/img/bikes/aprilia-rsv-mille-1000-thumb.webp",
-    "title": "2001 Aprilia RSV 1000 Mille 1.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille_1.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|rsv-mille-1000"
-  },
-  "aprilia|rsv-mille-1000-r-factory": {
-    "image": "store/img/bikes/aprilia-rsv-mille-1000.webp",
-    "thumb": "store/img/bikes/aprilia-rsv-mille-1000-thumb.webp",
-    "title": "2001 Aprilia RSV 1000 Mille 1.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille_1.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|rsv-mille-1000-r"
-  },
-  "aprilia|rsv-mille-1000-r-nera": {
-    "image": "store/img/bikes/aprilia-rsv-mille-1000.webp",
-    "thumb": "store/img/bikes/aprilia-rsv-mille-1000-thumb.webp",
-    "title": "2001 Aprilia RSV 1000 Mille 1.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille_1.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|rsv-mille-1000-r"
-  },
-  "aprilia|rsv-mille-sl-falco": {
-    "image": "store/img/bikes/aprilia-rsv-mille.webp",
-    "thumb": "store/img/bikes/aprilia-rsv-mille-thumb.webp",
-    "title": "2001 Aprilia RSV 1000 Mille.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|rsv-mille"
-  },
-  "aprilia|rsv-mille-sp": {
-    "image": "store/img/bikes/aprilia-rsv-mille.webp",
-    "thumb": "store/img/bikes/aprilia-rsv-mille-thumb.webp",
-    "title": "2001 Aprilia RSV 1000 Mille.jpg",
-    "author": "Calreyn88",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Aprilia_RSV_1000_Mille.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|rsv-mille"
-  },
   "aprilia|rsv4-1100-factory": {
     "image": "store/img/bikes/aprilia-rsv4.webp",
     "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
@@ -351,12 +201,13 @@
     "aliasOf": "aprilia|rsv4"
   },
   "aprilia|rsv4-factory-abs": {
-    "image": "store/img/bikes/aprilia-rsv4-factory.webp",
-    "thumb": "store/img/bikes/aprilia-rsv4-factory-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_002.jpg",
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rsv4-factory"
   },
@@ -372,22 +223,24 @@
     "aliasOf": "aprilia|rsv4-factory"
   },
   "aprilia|rsv4-factory-aprc-abs": {
-    "image": "store/img/bikes/aprilia-rsv4-factory-aprc.webp",
-    "thumb": "store/img/bikes/aprilia-rsv4-factory-aprc-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg",
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rsv4-factory-aprc"
   },
   "aprilia|rsv4-factory-aprc-se": {
-    "image": "store/img/bikes/aprilia-rsv4-factory-aprc.webp",
-    "thumb": "store/img/bikes/aprilia-rsv4-factory-aprc-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Aprilia - RSV4 Factory APRC - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_RSV4_Factory_APRC_-_001.jpg",
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rsv4-factory-aprc"
   },
@@ -474,12 +327,13 @@
     "aliasOf": "aprilia|rsv4"
   },
   "aprilia|rsv4-rr-1000": {
-    "image": "store/img/bikes/aprilia-rsv4-rr.webp",
-    "thumb": "store/img/bikes/aprilia-rsv4-rr-thumb.webp",
-    "title": "Aprilia RSV4 RR (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_RSV4_RR_(1).jpg",
+    "image": "store/img/bikes/aprilia-rsv4.webp",
+    "thumb": "store/img/bikes/aprilia-rsv4-thumb.webp",
+    "hero": "store/img/bikes/aprilia-rsv4-hero.webp",
+    "title": "Moscow, Aprilia RSV4, June 2025 01.jpg",
+    "author": "Retired electrician",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Aprilia_RSV4,_June_2025_01.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rsv4-rr"
   },
@@ -502,16 +356,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:2017-09-14_(134)_Aprilia_RX_50_at_Bahnhof_Loosdorf,_Austria.jpg",
     "via": "alias",
     "aliasOf": "aprilia|rx-50"
-  },
-  "aprilia|scarabeo-300-special": {
-    "image": "store/img/bikes/aprilia-scarabeo-300.webp",
-    "thumb": "store/img/bikes/aprilia-scarabeo-300-thumb.webp",
-    "title": "Aprilia Scarabeo 300.jpg",
-    "author": "Corvettec6r",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_300.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|scarabeo-300"
   },
   "aprilia|scarabeo-50-4s": {
     "image": "store/img/bikes/aprilia-scarabeo-50.webp",
@@ -673,16 +517,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Shiver_900.jpg",
     "via": "alias",
     "aliasOf": "aprilia|shiver-900"
-  },
-  "aprilia|sonic-50-gp": {
-    "image": "store/img/bikes/aprilia-sonic-50.webp",
-    "thumb": "store/img/bikes/aprilia-sonic-50-thumb.webp",
-    "title": "Aprilia Sonic 50.jpg",
-    "author": "Andreas Wieser",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Aprilia_Sonic_50.jpg",
-    "via": "alias",
-    "aliasOf": "aprilia|sonic-50"
   },
   "aprilia|sr-50-gp1-race-replica": {
     "image": "store/img/bikes/aprilia-sr-50.webp",
@@ -948,22 +782,24 @@
     "aliasOf": "bmw|f-800-gs"
   },
   "bmw|f-800-gs-adventure-te": {
-    "image": "store/img/bikes/bmw-f-800-gs-adventure.webp",
-    "thumb": "store/img/bikes/bmw-f-800-gs-adventure-thumb.webp",
-    "title": "BMW F 800 GS Adventure 2013.jpg",
-    "author": "San Andreas",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg",
+    "image": "store/img/bikes/bmw-f-800-gs.webp",
+    "thumb": "store/img/bikes/bmw-f-800-gs-thumb.webp",
+    "hero": "store/img/bikes/bmw-f-800-gs-hero.webp",
+    "title": "BMW F 800 GS 2013 (10546845423).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg",
     "via": "alias",
     "aliasOf": "bmw|f-800-gs-adventure"
   },
   "bmw|f-800-gs-adventure-travel": {
-    "image": "store/img/bikes/bmw-f-800-gs-adventure.webp",
-    "thumb": "store/img/bikes/bmw-f-800-gs-adventure-thumb.webp",
-    "title": "BMW F 800 GS Adventure 2013.jpg",
-    "author": "San Andreas",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_Adventure_2013.jpg",
+    "image": "store/img/bikes/bmw-f-800-gs.webp",
+    "thumb": "store/img/bikes/bmw-f-800-gs-thumb.webp",
+    "hero": "store/img/bikes/bmw-f-800-gs-hero.webp",
+    "title": "BMW F 800 GS 2013 (10546845423).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_F_800_GS_2013_(10546845423).jpg",
     "via": "alias",
     "aliasOf": "bmw|f-800-gs-adventure"
   },
@@ -1017,16 +853,6 @@
     "via": "alias",
     "aliasOf": "bmw|f-800-gs-trophy"
   },
-  "bmw|f-800-r-sport": {
-    "image": "store/img/bikes/bmw-f-800-r.webp",
-    "thumb": "store/img/bikes/bmw-f-800-r-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - BMW - F 800 R - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_R_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "bmw|f-800-r"
-  },
   "bmw|f-800-st-touring": {
     "image": "store/img/bikes/bmw-f-800-st.webp",
     "thumb": "store/img/bikes/bmw-f-800-st-thumb.webp",
@@ -1076,16 +902,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_F850GS_Adventure_Rallye_2020.jpg",
     "via": "alias",
     "aliasOf": "bmw|f-850-gs"
-  },
-  "bmw|f-900-gs-adventure": {
-    "image": "store/img/bikes/bmw-f-900-gs.webp",
-    "thumb": "store/img/bikes/bmw-f-900-gs-thumb.webp",
-    "title": "BMW F900 GS left 2024-06.jpg",
-    "author": "Wikisympathisant",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_F900_GS_left_2024-06.jpg",
-    "via": "alias",
-    "aliasOf": "bmw|f-900-gs"
   },
   "bmw|g-650-gs-sertao": {
     "image": "store/img/bikes/bmw-g-650-gs.webp",
@@ -1147,6 +963,17 @@
     "via": "alias",
     "aliasOf": "bmw|k-1300-r"
   },
+  "bmw|k-1300-s-hp": {
+    "image": "store/img/bikes/bmw-k-1300-s.webp",
+    "thumb": "store/img/bikes/bmw-k-1300-s-thumb.webp",
+    "hero": "store/img/bikes/bmw-k-1300-s-hero.webp",
+    "title": "BMW K 1300 S Lupinblau metallic Alpinweiss uni Saphirschwarz metallic.jpg",
+    "author": "BMW Group PressClub",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_K_1300_S_Lupinblau_metallic_Alpinweiss_uni_Saphirschwarz_metallic.jpg",
+    "via": "alias",
+    "aliasOf": "bmw|k-1300-s"
+  },
   "bmw|k-1300-s-special-model": {
     "image": "store/img/bikes/bmw-k-1300-s.webp",
     "thumb": "store/img/bikes/bmw-k-1300-s-thumb.webp",
@@ -1187,35 +1014,16 @@
     "via": "alias",
     "aliasOf": "bmw|k-1600-gt"
   },
-  "bmw|k-1600-gtl-e": {
-    "image": "store/img/bikes/bmw-k-1600-gtl.webp",
-    "thumb": "store/img/bikes/bmw-k-1600-gtl-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg",
+  "bmw|r-1100-s-boxercup-replica": {
+    "image": "store/img/bikes/bmw-r-1100-s.webp",
+    "thumb": "store/img/bikes/bmw-r-1100-s-thumb.webp",
+    "hero": "store/img/bikes/bmw-r-1100-s-hero.webp",
+    "title": "2023-08-02 Barcelona BMW R1100S rear-side.jpg",
+    "author": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2023-08-02_Barcelona_BMW_R1100S_rear-side.jpg",
     "via": "alias",
-    "aliasOf": "bmw|k-1600-gtl"
-  },
-  "bmw|k-1600-gtl-exclusive": {
-    "image": "store/img/bikes/bmw-k-1600-gtl.webp",
-    "thumb": "store/img/bikes/bmw-k-1600-gtl-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg",
-    "via": "alias",
-    "aliasOf": "bmw|k-1600-gtl"
-  },
-  "bmw|k-1600-gtl-le": {
-    "image": "store/img/bikes/bmw-k-1600-gtl.webp",
-    "thumb": "store/img/bikes/bmw-k-1600-gtl-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg",
-    "via": "alias",
-    "aliasOf": "bmw|k-1600-gtl"
+    "aliasOf": "bmw|r-1100-s"
   },
   "bmw|r-1150-r-rockster-edition-80": {
     "image": "store/img/bikes/bmw-r-1150-r-rockster.webp",
@@ -1226,26 +1034,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_R1150R_Rockster_Ed80.JPG",
     "via": "alias",
     "aliasOf": "bmw|r-1150-r-rockster"
-  },
-  "bmw|r-12-g/s": {
-    "image": "store/img/bikes/bmw-r-12.webp",
-    "thumb": "store/img/bikes/bmw-r-12-thumb.webp",
-    "title": "BMW R 1200 RT.jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_R_1200_RT.jpg",
-    "via": "alias",
-    "aliasOf": "bmw|r-12"
-  },
-  "bmw|r-12-ninet": {
-    "image": "store/img/bikes/bmw-r-12.webp",
-    "thumb": "store/img/bikes/bmw-r-12-thumb.webp",
-    "title": "BMW R 1200 RT.jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_R_1200_RT.jpg",
-    "via": "alias",
-    "aliasOf": "bmw|r-12"
   },
   "bmw|r-1200-c-classic": {
     "image": "store/img/bikes/bmw-r-1200-c.webp",
@@ -1464,6 +1252,17 @@
     "author": "Thesupermat",
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_R_1200_RT_-_001.jpg",
+    "via": "alias",
+    "aliasOf": "bmw|r-1200-rt"
+  },
+  "bmw|r-1200-rt-police": {
+    "image": "store/img/bikes/bmw-r-1200-rt.webp",
+    "thumb": "store/img/bikes/bmw-r-1200-rt-thumb.webp",
+    "hero": "store/img/bikes/bmw-r-1200-rt-hero.webp",
+    "title": "BMW R 1200 RT 2017.jpg",
+    "author": "Hezzu",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_R_1200_RT_2017.jpg",
     "via": "alias",
     "aliasOf": "bmw|r-1200-rt"
   },
@@ -1687,6 +1486,17 @@
     "via": "alias",
     "aliasOf": "bmw|r-ninet-scrambler"
   },
+  "bmw|r-ninet-urban-g/s": {
+    "image": "store/img/bikes/bmw-r-ninet.webp",
+    "thumb": "store/img/bikes/bmw-r-ninet-thumb.webp",
+    "hero": "store/img/bikes/bmw-r-ninet-hero.webp",
+    "title": "719-look BMW R NineT rear-side view.jpg",
+    "author": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:719-look_BMW_R_NineT_rear-side_view.jpg",
+    "via": "alias",
+    "aliasOf": "bmw|r-ninet"
+  },
   "bmw|r-ninet-urban-gs": {
     "image": "store/img/bikes/bmw-r-ninet.webp",
     "thumb": "store/img/bikes/bmw-r-ninet-thumb.webp",
@@ -1747,36 +1557,6 @@
     "via": "alias",
     "aliasOf": "bmw|s-1000-xr-sport"
   },
-  "can-am|2009-spyder-ce-homologated": {
-    "image": "store/img/bikes/can-am-2009-spyder.webp",
-    "thumb": "store/img/bikes/can-am-2009-spyder-thumb.webp",
-    "title": "Porsche 917-30 CanAm Spyder 1973 back 2009-03-14 A.JPG",
-    "author": "Detectandpreserve",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Porsche_917-30_CanAm_Spyder_1973_back_2009-03-14_A.JPG",
-    "via": "alias",
-    "aliasOf": "can-am|2009-spyder"
-  },
-  "can-am|2011-spyder-rs-ce-homologated-s": {
-    "image": "store/img/bikes/can-am-2011-spyder-rs.webp",
-    "thumb": "store/img/bikes/can-am-2011-spyder-rs-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Can-Am - Spyder RS S SE5 - 004.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Can-Am_-_Spyder_RS_S_SE5_-_004.jpg",
-    "via": "alias",
-    "aliasOf": "can-am|2011-spyder-rs"
-  },
-  "can-am|2011-spyder-rt-ce-homologated": {
-    "image": "store/img/bikes/can-am-2011-spyder-rt.webp",
-    "thumb": "store/img/bikes/can-am-2011-spyder-rt-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Can-Am - spyder RT - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Can-Am_-_spyder_RT_-_002.jpg",
-    "via": "alias",
-    "aliasOf": "can-am|2011-spyder-rt"
-  },
   "can-am|2014-spyder-rt-ce-homologated": {
     "image": "store/img/bikes/can-am-2014-spyder-rt.webp",
     "thumb": "store/img/bikes/can-am-2014-spyder-rt-thumb.webp",
@@ -1786,16 +1566,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:2014_Can-Am_Spyder_RT.jpg",
     "via": "alias",
     "aliasOf": "can-am|2014-spyder-rt"
-  },
-  "can-am|2015-spyder-rt-(ce)-homologated-s": {
-    "image": "store/img/bikes/can-am-2015-spyder-rt.webp",
-    "thumb": "store/img/bikes/can-am-2015-spyder-rt-thumb.webp",
-    "title": "2015 bpr can-am spyder rt.JPG",
-    "author": "Rainmaker47",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_bpr_can-am_spyder_rt.JPG",
-    "via": "alias",
-    "aliasOf": "can-am|2015-spyder-rt"
   },
   "can-am|spyder-f3-series,-2017": {
     "image": "store/img/bikes/can-am-spyder-f3.webp",
@@ -1887,16 +1657,6 @@
     "via": "alias",
     "aliasOf": "ducati|1198"
   },
-  "ducati|1198-s-corse-special-edition": {
-    "image": "store/img/bikes/ducati-1198-s.webp",
-    "thumb": "store/img/bikes/ducati-1198-s-thumb.webp",
-    "title": "Ducati Superbike 1198-S (9660056796).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Superbike_1198-S_(9660056796).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|1198-s"
-  },
   "ducati|1199-panigale-r": {
     "image": "store/img/bikes/ducati-1199-panigale.webp",
     "thumb": "store/img/bikes/ducati-1199-panigale-thumb.webp",
@@ -1907,25 +1667,16 @@
     "via": "alias",
     "aliasOf": "ducati|1199-panigale"
   },
-  "ducati|1299-panigale-r-final-edition": {
-    "image": "store/img/bikes/ducati-1299-panigale.webp",
-    "thumb": "store/img/bikes/ducati-1299-panigale-thumb.webp",
-    "title": "Ducati 1299 Panigale S Anniversario - Mondial de l'Automobile de Paris 2016 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_1299_Panigale_S_Anniversario_-_Mondial_de_l'Automobile_de_Paris_2016_-_001.jpg",
+  "ducati|1199-panigale-s": {
+    "image": "store/img/bikes/ducati-1199-panigale.webp",
+    "thumb": "store/img/bikes/ducati-1199-panigale-thumb.webp",
+    "hero": "store/img/bikes/ducati-1199-panigale-hero.webp",
+    "title": "Ducati 1199 Panigale S (14946645880).jpg",
+    "author": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_1199_Panigale_S_(14946645880).jpg",
     "via": "alias",
-    "aliasOf": "ducati|1299-panigale"
-  },
-  "ducati|1299-panigale-s-anniversario": {
-    "image": "store/img/bikes/ducati-1299-panigale-s.webp",
-    "thumb": "store/img/bikes/ducati-1299-panigale-s-thumb.webp",
-    "title": "Ducati 1299 Panigale S Anniversario - Mondial de l'Automobile de Paris 2016 - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_1299_Panigale_S_Anniversario_-_Mondial_de_l'Automobile_de_Paris_2016_-_002.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|1299-panigale-s"
+    "aliasOf": "ducati|1199-panigale"
   },
   "ducati|748-748-s": {
     "image": "store/img/bikes/ducati-748.webp",
@@ -1977,16 +1728,6 @@
     "via": "alias",
     "aliasOf": "ducati|848-evo"
   },
-  "ducati|848-nicky-hayden": {
-    "image": "store/img/bikes/ducati-848.webp",
-    "thumb": "store/img/bikes/ducati-848-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Ducati - 848 EVO Corse Special Edition - 002.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Ducati_-_848_EVO_Corse_Special_Edition_-_002.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|848"
-  },
   "ducati|959-panigale-corse": {
     "image": "store/img/bikes/ducati-959-panigale.webp",
     "thumb": "store/img/bikes/ducati-959-panigale-thumb.webp",
@@ -2006,16 +1747,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:2003_Ducati_S4R_998_testaretta_engined_monster.jpg",
     "via": "alias",
     "aliasOf": "ducati|998"
-  },
-  "ducati|999-r-superbike": {
-    "image": "store/img/bikes/ducati-999-r.webp",
-    "thumb": "store/img/bikes/ducati-999-r-thumb.webp",
-    "title": "A Ducati 999R sponsored by Fila (47857632811).jpg",
-    "author": "Guillaume Vachey from Chalon sur Saone, France",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:A_Ducati_999R_sponsored_by_Fila_(47857632811).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|999-r"
   },
   "ducati|999-s": {
     "image": "store/img/bikes/ducati-999.webp",
@@ -2157,36 +1888,6 @@
     "via": "alias",
     "aliasOf": "ducati|monster-1100-evo"
   },
-  "ducati|monster-1200-25°-anniversario": {
-    "image": "store/img/bikes/ducati-monster-1200.webp",
-    "thumb": "store/img/bikes/ducati-monster-1200-thumb.webp",
-    "title": "2014 Ducati Monster 1200.JPG",
-    "author": "Dennis Bratland",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
-    "via": "alias",
-    "aliasOf": "ducati|monster-1200"
-  },
-  "ducati|monster-1200-r": {
-    "image": "store/img/bikes/ducati-monster-1200.webp",
-    "thumb": "store/img/bikes/ducati-monster-1200-thumb.webp",
-    "title": "2014 Ducati Monster 1200.JPG",
-    "author": "Dennis Bratland",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG",
-    "via": "alias",
-    "aliasOf": "ducati|monster-1200"
-  },
-  "ducati|monster-1200-s-stripe": {
-    "image": "store/img/bikes/ducati-monster-1200-s.webp",
-    "thumb": "store/img/bikes/ducati-monster-1200-s-thumb.webp",
-    "title": "Ducati Monster 1200 S (10760266956).jpg",
-    "author": "Decio \"desmodex\"",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_1200_S_(10760266956).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster-1200-s"
-  },
   "ducati|monster-620-dark": {
     "image": "store/img/bikes/ducati-monster-620.webp",
     "thumb": "store/img/bikes/ducati-monster-620-thumb.webp",
@@ -2206,26 +1907,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_620_i.e._in_Athens_on_10-24-2023.jpg",
     "via": "alias",
     "aliasOf": "ducati|monster-620-dark"
-  },
-  "ducati|monster-620-i.e.-dark": {
-    "image": "store/img/bikes/ducati-monster-620-i-e.webp",
-    "thumb": "store/img/bikes/ducati-monster-620-i-e-thumb.webp",
-    "title": "Ducati M 620 Monster i.e. Capirex02.JPG",
-    "author": "Henk Elshout",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_M_620_Monster_i.e._Capirex02.JPG",
-    "via": "alias",
-    "aliasOf": "ducati|monster-620-i.e."
-  },
-  "ducati|monster-620-i.e.-dark-single-disc": {
-    "image": "store/img/bikes/ducati-monster-620-i-e.webp",
-    "thumb": "store/img/bikes/ducati-monster-620-i-e-thumb.webp",
-    "title": "Ducati M 620 Monster i.e. Capirex02.JPG",
-    "author": "Henk Elshout",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_M_620_Monster_i.e._Capirex02.JPG",
-    "via": "alias",
-    "aliasOf": "ducati|monster-620-i.e.-dark"
   },
   "ducati|monster-620-s-i.e.": {
     "image": "store/img/bikes/ducati-monster-620.webp",
@@ -2277,46 +1958,6 @@
     "via": "alias",
     "aliasOf": "ducati|monster-796"
   },
-  "ducati|monster-797-plus": {
-    "image": "store/img/bikes/ducati-monster-797.webp",
-    "thumb": "store/img/bikes/ducati-monster-797-thumb.webp",
-    "title": "Ducati Monster 797.jpg",
-    "author": "Mr.Clean1977",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_797.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster-797"
-  },
-  "ducati|monster-821-dark": {
-    "image": "store/img/bikes/ducati-monster-821.webp",
-    "thumb": "store/img/bikes/ducati-monster-821-thumb.webp",
-    "title": "Ducati Monster 821 (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_821_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster-821"
-  },
-  "ducati|monster-821-stealth": {
-    "image": "store/img/bikes/ducati-monster-821.webp",
-    "thumb": "store/img/bikes/ducati-monster-821-thumb.webp",
-    "title": "Ducati Monster 821 (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_821_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster-821"
-  },
-  "ducati|monster-821-stripe": {
-    "image": "store/img/bikes/ducati-monster-821.webp",
-    "thumb": "store/img/bikes/ducati-monster-821-thumb.webp",
-    "title": "Ducati Monster 821 (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_821_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster-821"
-  },
   "ducati|monster-900-i.e.-dark": {
     "image": "store/img/bikes/ducati-monster-900-i-e.webp",
     "thumb": "store/img/bikes/ducati-monster-900-i-e-thumb.webp",
@@ -2326,26 +1967,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:MONSTER_900_S_i.e._prima_serie.jpg",
     "via": "alias",
     "aliasOf": "ducati|monster-900-i.e."
-  },
-  "ducati|monster-diesel": {
-    "image": "store/img/bikes/ducati-monster.webp",
-    "thumb": "store/img/bikes/ducati-monster-thumb.webp",
-    "title": "Ducati Monster 900 1994 at QGOMA, Brisbane, 01.jpg",
-    "author": "Chris Olszewski",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_900_1994_at_QGOMA,_Brisbane,_01.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster"
-  },
-  "ducati|monster-plus": {
-    "image": "store/img/bikes/ducati-monster.webp",
-    "thumb": "store/img/bikes/ducati-monster-thumb.webp",
-    "title": "Ducati Monster 900 1994 at QGOMA, Brisbane, 01.jpg",
-    "author": "Chris Olszewski",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_900_1994_at_QGOMA,_Brisbane,_01.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster"
   },
   "ducati|monster-s2r-dark": {
     "image": "store/img/bikes/ducati-monster-s2r.webp",
@@ -2377,26 +1998,6 @@
     "via": "alias",
     "aliasOf": "ducati|monster-s4r"
   },
-  "ducati|monster-senna": {
-    "image": "store/img/bikes/ducati-monster.webp",
-    "thumb": "store/img/bikes/ducati-monster-thumb.webp",
-    "title": "Ducati Monster 900 1994 at QGOMA, Brisbane, 01.jpg",
-    "author": "Chris Olszewski",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_900_1994_at_QGOMA,_Brisbane,_01.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster"
-  },
-  "ducati|monster-sp": {
-    "image": "store/img/bikes/ducati-monster.webp",
-    "thumb": "store/img/bikes/ducati-monster-thumb.webp",
-    "title": "Ducati Monster 900 1994 at QGOMA, Brisbane, 01.jpg",
-    "author": "Chris Olszewski",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Monster_900_1994_at_QGOMA,_Brisbane,_01.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|monster"
-  },
   "ducati|multistrada-1000-ds": {
     "image": "store/img/bikes/ducati-multistrada-1000.webp",
     "thumb": "store/img/bikes/ducati-multistrada-1000-thumb.webp",
@@ -2406,16 +2007,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:My_red_2006_Ducati_Multistrada_1000DS.jpg",
     "via": "alias",
     "aliasOf": "ducati|multistrada-1000"
-  },
-  "ducati|multistrada-1100-s": {
-    "image": "store/img/bikes/ducati-multistrada-1100.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1100-thumb.webp",
-    "title": "2008 Ducati Multistrada 1100s.jpg",
-    "author": "Ferdagio",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2008_Ducati_Multistrada_1100s.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1100"
   },
   "ducati|multistrada-1200-enduro": {
     "image": "store/img/bikes/ducati-multistrada-1200.webp",
@@ -2446,106 +2037,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Ducati_-_Multistrada_1200_-_001.jpg",
     "via": "alias",
     "aliasOf": "ducati|multistrada-1200"
-  },
-  "ducati|multistrada-1200-s-d-air": {
-    "image": "store/img/bikes/ducati-multistrada-1200-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1200-s-thumb.webp",
-    "title": "Ducati Multistrada 1200 S (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1200_S_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1200-s"
-  },
-  "ducati|multistrada-1200-s-granturismo": {
-    "image": "store/img/bikes/ducati-multistrada-1200-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1200-s-thumb.webp",
-    "title": "Ducati Multistrada 1200 S (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1200_S_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1200-s"
-  },
-  "ducati|multistrada-1200-s-pikes-peak": {
-    "image": "store/img/bikes/ducati-multistrada-1200-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1200-s-thumb.webp",
-    "title": "Ducati Multistrada 1200 S (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1200_S_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1200-s"
-  },
-  "ducati|multistrada-1200-s-sport": {
-    "image": "store/img/bikes/ducati-multistrada-1200-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1200-s-thumb.webp",
-    "title": "Ducati Multistrada 1200 S (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1200_S_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1200-s"
-  },
-  "ducati|multistrada-1200-s-touring": {
-    "image": "store/img/bikes/ducati-multistrada-1200-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1200-s-thumb.webp",
-    "title": "Ducati Multistrada 1200 S (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1200_S_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1200-s"
-  },
-  "ducati|multistrada-1260-d-air": {
-    "image": "store/img/bikes/ducati-multistrada-1260.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1260-thumb.webp",
-    "title": "Ducati Multistrada 1260 Pikes Peak, Paris Motor Show 2018, IMG 0445.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_Pikes_Peak,_Paris_Motor_Show_2018,_IMG_0445.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1260"
-  },
-  "ducati|multistrada-1260-s-d-air": {
-    "image": "store/img/bikes/ducati-multistrada-1260-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1260-s-thumb.webp",
-    "title": "Ducati Multistrada 1260 S.jpg",
-    "author": "Oleg Yunakov",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_S.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1260-s"
-  },
-  "ducati|multistrada-1260-s-grand-tour": {
-    "image": "store/img/bikes/ducati-multistrada-1260-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-1260-s-thumb.webp",
-    "title": "Ducati Multistrada 1260 S.jpg",
-    "author": "Oleg Yunakov",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1260_S.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-1260-s"
-  },
-  "ducati|multistrada-620-dark": {
-    "image": "store/img/bikes/ducati-multistrada-620.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-620-thumb.webp",
-    "title": "Ducati Multistrada 620 Dark.jpg",
-    "author": "StealthFX",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_620_Dark.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-620"
-  },
-  "ducati|multistrada-950-s-spoked-wheels": {
-    "image": "store/img/bikes/ducati-multistrada-950-s.webp",
-    "thumb": "store/img/bikes/ducati-multistrada-950-s-thumb.webp",
-    "title": "Ducati Multistrada 950 S, Scrambler Desert Sled, Multistrada 1260 Enduro, Peninsula Rybachiy, Russia.jpg",
-    "author": "Artem Lepesin",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_950_S,_Scrambler_Desert_Sled,_Multistrada_1260_Enduro,_Peninsula_Rybachiy,_Russia.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|multistrada-950-s"
   },
   "ducati|multistrada-950-spoked-wheels": {
     "image": "store/img/bikes/ducati-multistrada-950.webp",
@@ -2657,26 +2148,6 @@
     "via": "alias",
     "aliasOf": "ducati|multistrada-v4-s"
   },
-  "ducati|panigale-959-corse": {
-    "image": "store/img/bikes/ducati-panigale-959.webp",
-    "thumb": "store/img/bikes/ducati-panigale-959-thumb.webp",
-    "title": "Ducati 959 Panigale (MSP16).jpg",
-    "author": "Jakub \"Flyz1\" Maciejewski",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_959_Panigale_(MSP16).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-959"
-  },
-  "ducati|panigale-v2-bayliss-1st-championship-20th-anniversary": {
-    "image": "store/img/bikes/ducati-panigale-v2-bayliss.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v2-bayliss-thumb.webp",
-    "title": "Ducati Panigale V2 Bayliss 1st Championship 20th Anniversary (1).jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V2_Bayliss_1st_Championship_20th_Anniversary_(1).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v2-bayliss"
-  },
   "ducati|panigale-v2-fb63": {
     "image": "store/img/bikes/ducati-panigale-v2.webp",
     "thumb": "store/img/bikes/ducati-panigale-v2-thumb.webp",
@@ -2706,176 +2177,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_955_Panigale_V2_(IMG_9845).jpg",
     "via": "alias",
     "aliasOf": "ducati|panigale-v2"
-  },
-  "ducati|panigale-v4-lamborghini": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|panigale-v4-martin-2023-racing-replica": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|panigale-v4-s-carbon": {
-    "image": "store/img/bikes/ducati-panigale-v4-s.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-s-thumb.webp",
-    "title": "Ducati Panigale V4 S Corse.jpg",
-    "author": "TaurusEmerald",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_S_Corse.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4-s"
-  },
-  "ducati|panigale-v4-s-carbon-pro": {
-    "image": "store/img/bikes/ducati-panigale-v4-s.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-s-thumb.webp",
-    "title": "Ducati Panigale V4 S Corse.jpg",
-    "author": "TaurusEmerald",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_S_Corse.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4-s-carbon"
-  },
-  "ducati|panigale-v4-s-corse": {
-    "image": "store/img/bikes/ducati-panigale-v4-s.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-s-thumb.webp",
-    "title": "Ducati Panigale V4 S Corse.jpg",
-    "author": "TaurusEmerald",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_S_Corse.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4-s"
-  },
-  "ducati|panigale-v4-sp": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|panigale-v4-sp2": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|panigale-v4-sp2-30°-anniversario-916": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4-sp2"
-  },
-  "ducati|panigale-v4-speciale": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|panigale-v4-superleggera-v4": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|panigale-v4-tricolore-italia": {
-    "image": "store/img/bikes/ducati-panigale-v4.webp",
-    "thumb": "store/img/bikes/ducati-panigale-v4-thumb.webp",
-    "title": "Ducati Panigale V4 - Tuning World Bodensee 2018, Friedrichshafen (OW1A0484).jpg",
-    "author": "Matti Blume",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Panigale_V4_-_Tuning_World_Bodensee_2018,_Friedrichshafen_(OW1A0484).jpg",
-    "via": "alias",
-    "aliasOf": "ducati|panigale-v4"
-  },
-  "ducati|scrambler-1100-dark-pro": {
-    "image": "store/img/bikes/ducati-scrambler-1100.webp",
-    "thumb": "store/img/bikes/ducati-scrambler-1100-thumb.webp",
-    "title": "Scrambler 1100.jpg",
-    "author": "Aciccone",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Scrambler_1100.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|scrambler-1100"
-  },
-  "ducati|scrambler-1100-pro": {
-    "image": "store/img/bikes/ducati-scrambler-1100.webp",
-    "thumb": "store/img/bikes/ducati-scrambler-1100-thumb.webp",
-    "title": "Scrambler 1100.jpg",
-    "author": "Aciccone",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Scrambler_1100.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|scrambler-1100"
-  },
-  "ducati|scrambler-1100-special": {
-    "image": "store/img/bikes/ducati-scrambler-1100.webp",
-    "thumb": "store/img/bikes/ducati-scrambler-1100-thumb.webp",
-    "title": "Scrambler 1100.jpg",
-    "author": "Aciccone",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Scrambler_1100.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|scrambler-1100"
-  },
-  "ducati|scrambler-1100-sport": {
-    "image": "store/img/bikes/ducati-scrambler-1100.webp",
-    "thumb": "store/img/bikes/ducati-scrambler-1100-thumb.webp",
-    "title": "Scrambler 1100.jpg",
-    "author": "Aciccone",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Scrambler_1100.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|scrambler-1100"
-  },
-  "ducati|scrambler-1100-sport-pro": {
-    "image": "store/img/bikes/ducati-scrambler-1100.webp",
-    "thumb": "store/img/bikes/ducati-scrambler-1100-thumb.webp",
-    "title": "Scrambler 1100.jpg",
-    "author": "Aciccone",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Scrambler_1100.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|scrambler-1100-sport"
-  },
-  "ducati|scrambler-1100-tribute-pro": {
-    "image": "store/img/bikes/ducati-scrambler-1100.webp",
-    "thumb": "store/img/bikes/ducati-scrambler-1100-thumb.webp",
-    "title": "Scrambler 1100.jpg",
-    "author": "Aciccone",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Scrambler_1100.jpg",
-    "via": "alias",
-    "aliasOf": "ducati|scrambler-1100"
   },
   "ducati|scrambler-desert-sled-fasthouse": {
     "image": "store/img/bikes/ducati-scrambler-desert-sled.webp",
@@ -3357,56 +2658,6 @@
     "via": "alias",
     "aliasOf": "gasgas|txt-pro-250"
   },
-  "harley-davidson|1200-custom-110th-anniversary": {
-    "image": "store/img/bikes/harley-davidson-1200-custom.webp",
-    "thumb": "store/img/bikes/harley-davidson-1200-custom-thumb.webp",
-    "title": "Paris - Bonhams 2016 - Harley-Davidson 1200 cm3 Panafina Custom - 1956 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Harley-Davidson_1200_cm3_Panafina_Custom_-_1956_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|1200-custom"
-  },
-  "harley-davidson|1200-custom-limited-edition-a": {
-    "image": "store/img/bikes/harley-davidson-1200-custom.webp",
-    "thumb": "store/img/bikes/harley-davidson-1200-custom-thumb.webp",
-    "title": "Paris - Bonhams 2016 - Harley-Davidson 1200 cm3 Panafina Custom - 1956 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Harley-Davidson_1200_cm3_Panafina_Custom_-_1956_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|1200-custom"
-  },
-  "harley-davidson|1200-custom-limited-edition-b": {
-    "image": "store/img/bikes/harley-davidson-1200-custom.webp",
-    "thumb": "store/img/bikes/harley-davidson-1200-custom-thumb.webp",
-    "title": "Paris - Bonhams 2016 - Harley-Davidson 1200 cm3 Panafina Custom - 1956 - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Harley-Davidson_1200_cm3_Panafina_Custom_-_1956_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|1200-custom"
-  },
-  "harley-davidson|cvo-road-glide-custom": {
-    "image": "store/img/bikes/harley-davidson-cvo-road-glide.webp",
-    "thumb": "store/img/bikes/harley-davidson-cvo-road-glide-thumb.webp",
-    "title": "Harley-Davidson CVO™ Road Glide - Harley-Davidson Tri Glide Ultra (トライグライドウルトラFLHTCUTGSE) (Ent No.21502) (24021012411).jpg",
-    "author": "先従隗始",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_CVO%E2%84%A2_Road_Glide_-_Harley-Davidson_Tri_Glide_Ultra_(%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B0%E3%83%A9%E3%82%A4%E3%83%89%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9FLHTCUTGSE)_(Ent_No.21502)_(24021012411).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|cvo-road-glide"
-  },
-  "harley-davidson|cvo-road-glide-ultra": {
-    "image": "store/img/bikes/harley-davidson-cvo-road-glide.webp",
-    "thumb": "store/img/bikes/harley-davidson-cvo-road-glide-thumb.webp",
-    "title": "Harley-Davidson CVO™ Road Glide - Harley-Davidson Tri Glide Ultra (トライグライドウルトラFLHTCUTGSE) (Ent No.21502) (24021012411).jpg",
-    "author": "先従隗始",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_CVO%E2%84%A2_Road_Glide_-_Harley-Davidson_Tri_Glide_Ultra_(%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B0%E3%83%A9%E3%82%A4%E3%83%89%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9FLHTCUTGSE)_(Ent_No.21502)_(24021012411).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|cvo-road-glide"
-  },
   "harley-davidson|dyna-low-rider-s": {
     "image": "store/img/bikes/harley-davidson-dyna-low-rider.webp",
     "thumb": "store/img/bikes/harley-davidson-dyna-low-rider-thumb.webp",
@@ -3446,46 +2697,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_%22Dyna_Street_Bob%22.jpg",
     "via": "alias",
     "aliasOf": "harley-davidson|dyna-street-bob"
-  },
-  "harley-davidson|electra-glide-ultra-classic-low": {
-    "image": "store/img/bikes/harley-davidson-electra-glide-ultra-classic.webp",
-    "thumb": "store/img/bikes/harley-davidson-electra-glide-ultra-classic-thumb.webp",
-    "title": "Harley Davidson Electra Glide Ultra Classic.jpg",
-    "author": "LKM13",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Electra_Glide_Ultra_Classic.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|electra-glide-ultra-classic"
-  },
-  "harley-davidson|electra-glide-ultra-limited-low": {
-    "image": "store/img/bikes/harley-davidson-electra-glide-ultra-limited.webp",
-    "thumb": "store/img/bikes/harley-davidson-electra-glide-ultra-limited-thumb.webp",
-    "title": "Paris - Salon de la moto 2011 - Harley-Davidson - FLHTK Electra Glide Ultra Limited - 001.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_FLHTK_Electra_Glide_Ultra_Limited_-_001.jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|electra-glide-ultra-limited"
-  },
-  "harley-davidson|flstf-fat-boy-firefighter": {
-    "image": "store/img/bikes/harley-davidson-flstf-fat-boy.webp",
-    "thumb": "store/img/bikes/harley-davidson-flstf-fat-boy-thumb.webp",
-    "title": "Harley-Davidson Museum May 2024 17 (1990 FLSTF Fat Boy--OHV V-Twin).jpg",
-    "author": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_17_(1990_FLSTF_Fat_Boy--OHV_V-Twin).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|flstf-fat-boy"
-  },
-  "harley-davidson|flstf-fat-boy-peace-officer": {
-    "image": "store/img/bikes/harley-davidson-flstf-fat-boy.webp",
-    "thumb": "store/img/bikes/harley-davidson-flstf-fat-boy-thumb.webp",
-    "title": "Harley-Davidson Museum May 2024 17 (1990 FLSTF Fat Boy--OHV V-Twin).jpg",
-    "author": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_17_(1990_FLSTF_Fat_Boy--OHV_V-Twin).jpg",
-    "via": "alias",
-    "aliasOf": "harley-davidson|flstf-fat-boy"
   },
   "harley-davidson|heritage-softail-classic-injection": {
     "image": "store/img/bikes/harley-davidson-heritage-softail-classic.webp",
@@ -6096,6 +5307,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG",
     "via": "alias",
     "aliasOf": "honda|shadow-phantom"
+  },
+  "honda|shadow-rs": {
+    "image": "store/img/bikes2/honda-shadow-rs.webp",
+    "thumb": "store/img/bikes2/honda-shadow-rs.thumb.webp",
+    "title": "Honda Shadow (25668887127).jpg",
+    "author": "RL GNZLZ from Chile",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_Shadow_(25668887127).jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-shadow-rs.hero.webp"
   },
   "honda|st-1300-abs": {
     "image": "store/img/bikes/honda-st-1300.webp",
@@ -10214,36 +9437,6 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "ktm|350-xc-f"
-  },
-  "ktm|390-adventure-r": {
-    "image": "store/img/bikes/ktm-390-adventure.webp",
-    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
-    "title": "Ktm-390-adventure-2024.png",
-    "author": "KTM AG",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
-    "via": "alias",
-    "aliasOf": "ktm|390-adventure"
-  },
-  "ktm|390-adventure-spoked-wheels": {
-    "image": "store/img/bikes/ktm-390-adventure.webp",
-    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
-    "title": "Ktm-390-adventure-2024.png",
-    "author": "KTM AG",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
-    "via": "alias",
-    "aliasOf": "ktm|390-adventure"
-  },
-  "ktm|390-adventure-x": {
-    "image": "store/img/bikes/ktm-390-adventure.webp",
-    "thumb": "store/img/bikes/ktm-390-adventure-thumb.webp",
-    "title": "Ktm-390-adventure-2024.png",
-    "author": "KTM AG",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ktm-390-adventure-2024.png",
-    "via": "alias",
-    "aliasOf": "ktm|390-adventure"
   },
   "ktm|390-duke-abs": {
     "image": "store/img/bikes/ktm-390-duke.webp",

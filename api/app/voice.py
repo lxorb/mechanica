@@ -307,6 +307,11 @@ def _endpoint(name: str, manual_id: str) -> dict:
     """The manual id rides in the URL, not in the model's arguments: the agent cannot misname the
     book it is reading, and the manual's text never passes through the browser."""
     url = f"{settings.public_base}/voice/tools/{name}?manualId={quote(manual_id, safe='')}"
+    if not url.startswith("https://"):
+        # Deepgram calls these from its own servers and refuses anything but https/wss, so an
+        # http PUBLIC_BASE (the local default) would close the socket with "INVALID_SETTINGS"
+        # seconds after the rider pressed VOICE. Say it here instead, where it is readable.
+        raise HTTPException(503, f"voice needs an https PUBLIC_BASE; this API advertises {settings.public_base}")
     out: dict = {"url": url, "method": "post"}
     secret = os.getenv("VOICE_TOOL_SECRET")
     if secret:

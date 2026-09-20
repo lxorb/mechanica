@@ -55,7 +55,8 @@
  *     come from web/store/bike-images.json when that file exists, with `credit` alongside;
  *     they are relative paths, so wrap them in asset() like store/catalog.json's.
  *
- * Beyond query.js: ask, chat, identifyPhoto/Vin/Part, partPhrase, partOffers, ingest,
+ * Beyond query.js: ask, chat, identifyPhoto/Vin/Part, partPhrase, partCatalog, partOffers,
+ * warmOffers, ingest,
  * ensureManual, manualState, jobsFor, cost, voiceConfig, deepgramToken, voiceSettings,
  * apiBase, online, storeMode.
  */
@@ -73,7 +74,9 @@ const HEALTH_MS = 2500;
 const CATALOG_MS = 25000;
 const MANUAL_MS = 25000;
 const ASK_MS = 12000;
-const OFFERS_MS = 6000;
+const OFFERS_MS = 25000; // a cold retailer search is 10-20 s; the UI shows a bar meanwhile
+const WARM_MS = 8000;
+const PARTS_MS = 12000;
 const CHAT_MS = 120000;
 const INGEST_POLL_MS = 1000;
 const INGEST_MAX_MS = 15 * 60 * 1000;
@@ -139,6 +142,8 @@ const manualCache = new Map(); // manualId -> mapped manual
 const manualInflight = new Map();
 const partIndex = new Map(); // partId and manualId/partId -> part
 const offersCache = new Map(); // "manualId/partId/bikeId" -> OffersResult | null
+const partsCache = new Map(); // "manualId/bikeId" -> catalogue rows | null
+const warmed = new Set(); // "manualId/bikeId" already asked to pre-fetch offers
 
 // ---------------------------------------------------------------- plumbing
 
@@ -788,19 +793,102 @@ export async function jobById(id) {
   return jobsOfManual(made, bikeId).find((j) => j.sectionId === sectionId);
 }
 
+/** "fluids/consumables", "Fluids" and "consumable" all name the same shelf. */
+const PART_GROUPS = ["engine", "drivetrain", "brakes", "suspension", "wheels", "electrics", "controls", "body", "consumables"];
+
+function partGroup(value) {
+  const raw = String(value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z]+/g, " ")
+    .trim();
+  if (!raw) return "";
+  for (const id of PART_GROUPS) if (raw === id || raw.startsWith(id)) return id;
+  if (/fluid|consumable|lubricant|oil/.test(raw)) return "consumables";
+  if (/electric|electrical|light|ignition/.test(raw)) return "electrics";
+  if (/brake|braking/.test(raw)) return "brakes";
+  if (/chain|final drive|transmission|gearbox|clutch/.test(raw)) return "drivetrain";
+  if (/fork|shock|damper/.test(raw)) return "suspension";
+  if (/wheel|tyre|tire/.test(raw)) return "wheels";
+  if (/control|lever|handlebar|pedal/.test(raw)) return "controls";
+  if (/body|fairing|seat|panel/.test(raw)) return "body";
+  return "";
+}
+
+function mapCatalogPart(raw, manualId) {
+  if (!raw || raw.id == null || raw.id === "") return null;
+  const mentions = (Array.isArray(raw.mentions) ? raw.mentions : [])
+    .map((m) => (m && m.page != null ? { page: Number(m.page) || null, quote: m.quote == null ? "" : String(m.quote) } : null))
+    .filter((m) => m && m.page);
+  const synonyms = [raw.synonyms, raw.aliases, raw.keywords]
+    .flat()
+    .filter((s) => typeof s === "string" && s);
+  return {
+    id: String(raw.id),
+    name: raw.name == null ? String(raw.id) : String(raw.name),
+    spec: raw.spec == null || raw.spec === "" ? null : String(raw.spec),
+    page: raw.page == null || raw.page === "" ? null : Number(raw.page) || null,
+    oem: raw.oem == null || raw.oem === "" ? null : String(raw.oem),
+    links: Array.isArray(raw.links) ? raw.links.filter((l) => l && l.url) : [],
+    group: partGroup(raw.group),
+    icon: raw.icon == null ? "" : String(raw.icon),
+    standard: raw.standard === true,
+    mentions,
+    synonyms,
+    manualId,
+    systemId: null,
+  };
+}
+
+/**
+ * GET /parts/catalog — every part that fits THIS vehicle, not only the ones the manual
+ * prints: the taxonomy entry (`standard: true`) carries the group, the illustration id and
+ * the pages that mention it, and the printed ones carry spec / page / OEM on top.
+ * Owner of the endpoint: parts-backend agent.
+ *
+ * Resolves to null in LOCAL mode, while the route is still a 404, or on a timeout — the
+ * Parts view then falls back to `manual(id).parts`. Never rejects. Memoised per session.
+ */
+export async function partCatalog(manualId, bikeId) {
+  await loadCatalog();
+  if (mode !== "remote") return null;
+  const id = manualIdFor(manualId) || manualId;
+  if (!id && !bikeId) return null;
+
+  const key = `${id ?? ""}/${bikeId ?? ""}`;
+  if (partsCache.has(key)) return partsCache.get(key);
+
+  const query = new URLSearchParams();
+  if (id) query.set("manualId", String(id));
+  if (bikeId) query.set("bikeId", String(bikeId));
+  const body = await quiet(`/parts/catalog?${query}`, { ms: PARTS_MS }, null);
+
+  const list = Array.isArray(body) ? body : body && Array.isArray(body.parts) ? body.parts : null;
+  const made = list ? list.map((row) => mapCatalogPart(row, String(id ?? ""))).filter(Boolean) : null;
+  const out = made && made.length ? made : null;
+  partsCache.set(key, out);
+  return out;
+}
+
+/** What a row costs in dollars: `priceUsd` when the backend converted, else `price`. */
+function usdOf(offer) {
+  const n = Number(offer.priceUsd == null ? offer.price : offer.priceUsd);
+  return Number.isFinite(n) ? n : NaN;
+}
+
 /**
  * POST /parts/offers — live retailer offers for one part of one manual, fitment-filtered
  * by the bike when it is given. Owner of the endpoint: parts-backend agent.
  *
- *   { query, offers: [{ retailer, title, price, currency, url, variant, condition,
- *     shipping, inStock }], fetchedAt, usd }
+ *   { query, offers: [{ retailer, title, price, currency, priceUsd, url, variant,
+ *     condition, shipping, inStock }], fetchedAt, usd }
  *
- * Never rejects and never blocks longer than OFFERS_MS: resolves to null when the store is
- * LOCAL, when the endpoint is not deployed yet (404), or when the search times out, so the
- * sheet can drop back to the manual's own shop links. Answers are memoised per part for
- * the session — the backend caches too, this only saves the round trip.
+ * Never rejects and never blocks longer than OFFERS_MS (a cold search really does take
+ * 10-20 s): resolves to null in LOCAL mode, while the route is a 404, or on a timeout.
+ * Only a non-empty answer is memoised, so the screen's second look 10 s later still asks —
+ * the backend keeps fetching in the background and fills its own cache. `fresh` skips the
+ * memo outright.
  */
-export async function partOffers(manualId, partId, bikeId) {
+export async function partOffers(manualId, partId, bikeId, { fresh = false } = {}) {
   await loadCatalog();
   if (partId == null || partId === "") return null;
   const id = manualIdFor(manualId) || manualId;
@@ -808,7 +896,7 @@ export async function partOffers(manualId, partId, bikeId) {
   if (mode !== "remote") return null;
 
   const key = `${id}/${partId}/${bikeId ?? ""}`;
-  if (offersCache.has(key)) return offersCache.get(key);
+  if (!fresh && offersCache.has(key)) return offersCache.get(key);
 
   const body = await quiet(
     "/parts/offers",
@@ -820,11 +908,32 @@ export async function partOffers(manualId, partId, bikeId) {
     null
   );
   const offers = body && Array.isArray(body.offers)
-    ? body.offers.filter((o) => o && o.url && o.price != null && !Number.isNaN(Number(o.price)))
+    ? body.offers.filter((o) => o && o.url && Number.isFinite(usdOf(o)))
     : null;
   const made = offers ? { ...body, offers } : null;
-  offersCache.set(key, made);
+  if (made && made.offers.length) offersCache.set(key, made);
   return made;
+}
+
+/**
+ * POST /parts/offers/warm — tell the backend to start fetching this vehicle's common parts
+ * now, so the first tap has them cached. Fire and forget: the answer is not used, and a
+ * missing route is not an error.
+ */
+export async function warmOffers(manualId, bikeId) {
+  await loadCatalog();
+  if (mode !== "remote") return false;
+  const id = manualIdFor(manualId) || manualId;
+  if (!id && !bikeId) return false;
+  const key = `${id ?? ""}/${bikeId ?? ""}`;
+  if (warmed.has(key)) return true;
+  warmed.add(key);
+  const body = await quiet(
+    "/parts/offers/warm",
+    { method: "POST", ms: WARM_MS, json: { manualId: id ? String(id) : null, bikeId: bikeId ? String(bikeId) : null } },
+    null
+  );
+  return body != null;
 }
 
 /** Sync, like query.js: resolves against every manual loaded this session. */

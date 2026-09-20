@@ -11,16 +11,24 @@ in one pipe-delimited line per offer and Python parses the lines: a price that n
 model's own text can never reach the UI, which is a stronger promise than asking a model for JSON and
 hoping. A structured second pass runs only when the line format drifted.
 
-Every surviving offer is then fetched (HEAD, GET on a 405) with a 4 s timeout, in parallel; a 404/410/5xx
-or a dead host drops it. Offers are sorted by price - across currencies by a static rate, for ordering only.
+Every surviving offer is then fetched (HEAD, GET on a 405) with a 2.5 s timeout, in parallel; a 404/410/5xx
+or a dead host drops it. Offers carry `priceUsd` beside `price`/`currency` and arrive sorted by it, so a
+list of eight shops in five currencies still reads cheapest-first without the browser doing arithmetic.
+
+Deadline: the counter aborts this request at 6 s (OFFERS_MS in web/counter/js/ttm.js), and a cold web
+search takes 10-15 s, so a cold click used to show nothing at all. The lookup now runs on its own thread:
+the request leaves at DEADLINE with whatever is verified by then, the thread keeps going and writes the
+finished answer to the cache, and the next click - or the /parts/offers/warm prefetch the Parts view
+fires on open - serves it in a millisecond.
 
 Cache: store.put_offers(manual_id, part_id, result); a result under 24 h old is served as-is for $0.
 A result that found nothing expires after an hour instead, so one bad search does not sit there all day.
 """
 
 import re
+import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urlparse
 
 import httpx
@@ -34,10 +42,14 @@ from .store import get_store
 
 FRESH = 24 * 3600.0
 FRESH_EMPTY = 3600.0
-MAX_OFFERS = 12
-VERIFY_TIMEOUT = 4.0
-VERIFY_WORKERS = 12
+MAX_OFFERS = 15
+VERIFY_TIMEOUT = 2.5
+VERIFY_WORKERS = 16
 SEARCH_CALLS = 2
+# under the counter's own 6 s abort, so a cold click still paints whatever was verified in time
+DEADLINE = 5.5
+WARM_PARTS = 12
+WARM_WORKERS = 12
 
 # Named in the prompt, not enforced as a filter: a hard allowed_domains filter measured five searches for
 # one result, and the founder wants the local dealer shops the search surfaces too.
@@ -53,6 +65,8 @@ SYSTEM = (
     "Answer with one line per offer and nothing else - no prose, no headings, no bullet points:\n"
     "SHOP | product title | price with currency | full product URL | variant | new or used | shipping | in stock\n"
     f"Prefer {SHOPS}; any real dealer shop the search surfaces is fine. "
+    "List every variant separately, one line each - pack sizes, bottle sizes, lengths, brands, colours - "
+    "and keep several lines from the same shop when they are different products or different variants. "
     "Only lines for a product page whose price and URL you actually saw - never a category page, never a "
     "search page, never a price you reconstructed. Write 'unknown' for a field the page does not state."
 )
@@ -79,7 +93,8 @@ CURRENCY_CODES = {
     "USD", "EUR", "GBP", "CHF", "CAD", "AUD", "JPY", "SEK", "NOK", "DKK", "PLN", "CZK",
     "INR", "NZD", "BRL", "MXN", "ZAR", "HUF", "RON", "TRY", "SGD", "HKD",
 }
-# Ordering only. Never shown, never used to rewrite a price.
+# Fixed rates. `price` and `currency` stay exactly as the shop printed them; `priceUsd` is this
+# table's arithmetic, which is what a mixed-currency list can be sorted and compared on.
 TO_USD = {
     "USD": 1.0, "EUR": 1.08, "GBP": 1.27, "CHF": 1.12, "CAD": 0.73, "AUD": 0.66, "NZD": 0.61,
     "JPY": 0.0067, "SEK": 0.095, "NOK": 0.092, "DKK": 0.145, "PLN": 0.25, "CZK": 0.043,
@@ -123,6 +138,7 @@ class Offer(BaseModel):
     title: str
     price: float
     currency: str
+    priceUsd: float = 0.0  # always computed here from TO_USD, never taken from the model
     url: str
     variant: str | None = None
     condition: str | None = None
@@ -139,12 +155,31 @@ class OffersResult(BaseModel):
     usd: float = 0.0
     # the manual's own search links: what the UI shows when the web search found nothing buyable
     links: list[Link] = []
+    # false while the background thread is still verifying; the next call serves the finished answer
+    complete: bool = True
+
+
+class _Row(BaseModel):
+    """Only used when the pipe format drifted: re-read the same text, invent nothing. Deliberately
+    without priceUsd - a currency conversion is arithmetic, not something to ask a model for."""
+
+    retailer: str
+    title: str
+    price: float
+    currency: str
+    url: str
+    variant: str | None = None
+    condition: str | None = None
+    shipping: str | None = None
+    inStock: bool | None = None
 
 
 class _Rows(BaseModel):
-    """Only used when the pipe format drifted: re-read the same text, invent nothing."""
+    offers: list[_Row]
 
-    offers: list[Offer]
+
+def in_usd(price: float, currency: str) -> float:
+    return round(price * TO_USD.get(currency.upper(), 1.0), 2)
 
 
 # --- query ---------------------------------------------------------------
@@ -159,10 +194,11 @@ def _fragments(spec: str) -> list[str]:
     return out
 
 
-def build_query(part: Part, bike: Bike | None) -> str:
-    """OEM number when the manual printed one, else the spec the manual printed, plus the bike."""
+def build_query(part: Part, bike: Bike | None, hint: str | None = None) -> str:
+    """OEM number when the manual printed one, else the spec it printed, else the catalogue's own
+    searchHint for a part this manual never printed - plus the bike, always."""
     ride = f"{bike.make} {bike.model} {bike.year}" if bike else ""
-    head = part.oem or " ".join(_fragments(part.spec))[:90] or part.name
+    head = part.oem or " ".join(_fragments(part.spec))[:90] or (hint or "").strip() or part.name
     name = part.name if part.oem or part.name.lower() not in head.lower() else ""
     return re.sub(r"\s+", " ", f"{head} {name} {ride}").strip()
 
@@ -258,6 +294,7 @@ def parse_lines(text: str) -> list[Offer]:
                 title=title[:120],
                 price=price,
                 currency=currency,
+                priceUsd=in_usd(price, currency),
                 url=url,
                 variant=_clean(rest[0]) if rest else None,
                 condition=_condition(rest[1] if len(rest) > 1 else ""),
@@ -301,25 +338,37 @@ def alive(url: str, client: httpx.Client) -> bool:
     return False
 
 
-def verify(offers: list[Offer]) -> list[Offer]:
+def verify(offers: list[Offer], on_live=None) -> list[Offer]:
+    """Every URL at once. `on_live` is handed each offer the moment it checks out, so a caller that
+    has to answer on a deadline can paint what is already verified instead of waiting for the slowest
+    shop in the list."""
     if not offers:
         return []
+    live: list[Offer] = []
     with httpx.Client(
         timeout=VERIFY_TIMEOUT,
         follow_redirects=True,
         headers={"User-Agent": UA, "Accept": "text/html,*/*"},
     ) as client:
         with ThreadPoolExecutor(max_workers=min(VERIFY_WORKERS, len(offers))) as pool:
-            live = list(pool.map(lambda o: alive(o.url, client), offers))
-    return [offer for offer, ok in zip(offers, live) if ok]
+            checking = {pool.submit(alive, offer.url, client): offer for offer in offers}
+            for future in as_completed(checking):
+                offer = checking[future]
+                if future.result():
+                    live.append(offer)
+                    if on_live:
+                        on_live(offer)
+    return live
 
 
 # --- assembly ------------------------------------------------------------
 
 
 def _key(offer: Offer) -> str:
-    parsed = urlparse(offer.url)
-    return f"{_host(offer.url)}{parsed.path.rstrip('/')}"
+    """The whole URL, query string included: two brake fluids from one shop are two offers, and two
+    sizes of the same bottle differ only in ?sku= ."""
+    parsed = urlparse(offer.url.lower())
+    return f"{_host(offer.url)}{parsed.path.rstrip('/')}?{parsed.query}"
 
 
 def dedupe(offers: list[Offer]) -> list[Offer]:
@@ -327,24 +376,20 @@ def dedupe(offers: list[Offer]) -> list[Offer]:
     for offer in offers:
         key = _key(offer)
         current = best.get(key)
-        if current is None or _usd(offer) < _usd(current):
+        if current is None or offer.priceUsd < current.priceUsd:
             best[key] = offer
     return list(best.values())
 
 
-def _usd(offer: Offer) -> float:
-    return offer.price * TO_USD.get(offer.currency, 1.0)
-
-
-def search(route: str, query: str, part: Part, bike: Bike | None) -> tuple[list[Offer], float]:
+def search(route: str, query: str, part: Part, bike: Bike | None, hint: str | None = None) -> tuple[list[Offer], float]:
     ride = f"{bike.make} {bike.model} {bike.year}" if bike else "this motorcycle"
-    printed = part.oem or part.spec
+    printed = part.oem or part.spec or hint or part.name
     user = (
         f"Part: {part.name}\n"
         f"Printed in the manual: {printed}\n"
         f"Bike: {ride}\n"
         f"Search: {query}\n"
-        f"Up to {MAX_OFFERS} offers."
+        f"Up to {MAX_OFFERS} offers, variants on their own lines."
     )
     text, cost = llm.web_search(route, settings.model_offers, SYSTEM, user, max_calls=SEARCH_CALLS)
     offers = parse_lines(text)
@@ -358,15 +403,170 @@ def search(route: str, query: str, part: Part, bike: Bike | None) -> tuple[list[
             "an http URL. Copy the values exactly as written; never invent one.",
             text,
         )
-        offers = [o for o in rows.offers if _buyable(o.url) and 0 < o.price < 100_000]
+        offers = [
+            Offer(**row.model_dump(), priceUsd=in_usd(row.price, row.currency))
+            for row in rows.offers
+            if _buyable(row.url) and 0 < row.price < 100_000
+        ]
     return offers, cost
 
 
-def _part(manual: Manual, part_id: str) -> Part:
-    found = next((p for p in manual.parts if p.id == part_id), None)
+# --- resolving the part ---------------------------------------------------
+
+
+def _field(row, name: str):
+    value = row.get(name) if isinstance(row, dict) else getattr(row, name, None)
+    return value if value not in ("", None) else None
+
+
+def _catalogue_row(rows, part_id: str) -> tuple[Part, str | None] | None:
+    """A catalogue row - dict or model - as a Part plus its searchHint. A row the manual never
+    printed has no spec and no page; the hint is what it is bought by."""
+    row = next((r for r in (rows or []) if str(_field(r, "id") or "") == part_id), None)
+    if row is None:
+        return None
+    return (
+        Part(
+            id=part_id,
+            name=str(_field(row, "name") or part_id.replace("-", " ")),
+            spec=str(_field(row, "spec") or ""),
+            page=int(_field(row, "page") or 0),
+            oem=_field(row, "oem"),
+            links=[Link.model_validate(link) for link in (_field(row, "links") or [])],
+        ),
+        _field(row, "searchHint"),
+    )
+
+
+def _catalogue(manual_id: str, bike: Bike | None, part_id: str) -> tuple[Part, str | None] | None:
+    """`GET /parts/catalog` lists parts this bike takes that the manual never prints, so an id from
+    that list has to buy something here too. The catalogue module is another agent's; this reaches
+    for it by name and stays a no-op until it lands, rather than importing it as a hard dependency."""
+    try:
+        from .parts import catalog as catalogue  # type: ignore[attr-defined]
+    except Exception:
+        return None
+    for name in ("parts", "catalog", "rows"):
+        fn = getattr(catalogue, name, None)
+        if not callable(fn):
+            continue
+        for args in ((manual_id, bike.id if bike else None), (manual_id,)):
+            try:
+                rows = fn(*args)
+            except TypeError:
+                continue
+            except Exception:
+                return None
+            if rows:
+                return _catalogue_row(rows, part_id)
+    return None
+
+
+def resolve(manual: Manual, part_id: str, bike: Bike | None) -> tuple[Part, str | None]:
+    """The manual's printed parts first, then the catalogue - whose rows carry a searchHint instead
+    of a printed spec, because nothing about them was printed in this manual."""
+    printed = next((p for p in manual.parts if p.id == part_id), None)
+    if printed is not None:
+        return printed, None
+    found = _catalogue(manual.id, bike, part_id)
     if found is None:
         raise HTTPException(404, "part not found")
     return found
+
+
+# --- one lookup, on its own thread ---------------------------------------
+
+_POOL = ThreadPoolExecutor(max_workers=WARM_WORKERS + 4, thread_name_prefix="offers")
+_running: dict[tuple[str, str], "_Lookup"] = {}
+_running_lock = threading.Lock()
+
+
+class _Lookup:
+    """One cold lookup. `snapshot()` is readable from the request thread at any moment, so the
+    deadline can be answered with what is verified so far while this keeps running and caches the
+    finished answer. Two clicks on the same part share one lookup, and one search bill."""
+
+    def __init__(self, manual_id: str, part_id: str, part: Part, hint: str | None, bike: Bike | None):
+        self.manual_id = manual_id
+        self.part_id = part_id
+        self.part = part
+        self.hint = hint
+        self.bike = bike
+        self.query = build_query(part, bike, hint)
+        self.cost = 0.0
+        self.finished = False
+        self.live: list[Offer] = []
+        self.lock = threading.Lock()
+        self.done = threading.Event()  # for waiting on, never for deciding what is finished
+
+    def run(self) -> None:
+        try:
+            found, self.cost = search("offers", self.query, self.part, self.bike, self.hint)
+            verify(dedupe(found), on_live=self._keep)
+            self.finished = True
+            self._cache()
+        except Exception:  # an outage is never cached: the next click tries again
+            self.finished = False
+        finally:
+            self.done.set()
+            with _running_lock:
+                _running.pop((self.manual_id, self.part_id), None)
+
+    def _keep(self, offer: Offer) -> None:
+        with self.lock:
+            self.live.append(offer)
+
+    def snapshot(self) -> list[Offer]:
+        with self.lock:
+            return sorted(self.live, key=lambda o: o.priceUsd)[:MAX_OFFERS]
+
+    def result(self) -> OffersResult:
+        complete = self.finished
+        return OffersResult(
+            manualId=self.manual_id,
+            partId=self.part_id,
+            query=self.query,
+            offers=self.snapshot(),
+            fetchedAt=time.time(),
+            usd=round(self.cost, 6) if complete else 0.0,
+            links=self.part.links,
+            complete=complete,
+        )
+
+    def _cache(self) -> None:
+        write = getattr(get_store(), "put_offers", None)
+        if write:
+            write(self.manual_id, self.part_id, self.result().model_dump())
+
+
+def _start(manual_id: str, part_id: str, part: Part, hint: str | None, bike: Bike | None) -> _Lookup:
+    key = (manual_id, part_id)
+    with _running_lock:
+        current = _running.get(key)
+        if current is not None:
+            return current
+        lookup = _Lookup(manual_id, part_id, part, hint, bike)
+        _running[key] = lookup
+    _POOL.submit(lookup.run)
+    return lookup
+
+
+def cached(manual_id: str, part_id: str, part: Part) -> OffersResult | None:
+    read = getattr(get_store(), "offers", None)
+    raw = read(manual_id, part_id) if read else None
+    if not raw:
+        return None
+    result = OffersResult.model_validate(raw)
+    if not result.complete:
+        return None
+    age = time.time() - result.fetchedAt
+    if age >= (FRESH if result.offers else FRESH_EMPTY):
+        return None
+    # the search links come from the manual, which may have been re-ingested since
+    return result.model_copy(update={"usd": 0.0, "links": part.links})
+
+
+# --- the two calls --------------------------------------------------------
 
 
 def offers(manual_id: str, part_id: str, bike: Bike | None) -> OffersResult:
@@ -374,36 +574,37 @@ def offers(manual_id: str, part_id: str, bike: Bike | None) -> OffersResult:
     manual = store.manual(manual_id)
     if manual is None:
         raise HTTPException(404, "manual not found")
-    part = _part(manual, part_id)
-    read = getattr(store, "offers", None)
-    cached = read(manual_id, part_id) if read else None
-    if cached:
-        result = OffersResult.model_validate(cached)
-        age = time.time() - result.fetchedAt
-        if age < (FRESH if result.offers else FRESH_EMPTY):
-            # the search links come from the manual, which may have been re-ingested since
-            return result.model_copy(update={"usd": 0.0, "links": part.links})
-
+    part, hint = resolve(manual, part_id, bike)
+    warm_hit = cached(manual_id, part_id, part)
+    if warm_hit is not None:
+        return warm_hit
     if bike is None and manual.bikeIds:
         bike = store.bike(manual.bikeIds[0])
-    query = build_query(part, bike)
-    try:
-        found, cost = search("offers", query, part, bike)
-    except Exception:  # a shopping trip that fails still owes the rider the manual's own search links
-        return OffersResult(
-            manualId=manual_id, partId=part_id, query=query, offers=[], fetchedAt=time.time(), links=part.links
-        )
-    live = sorted(dedupe(verify(found)), key=_usd)[:MAX_OFFERS]
-    result = OffersResult(
-        manualId=manual_id,
-        partId=part_id,
-        query=query,
-        offers=live,
-        fetchedAt=time.time(),
-        usd=round(cost, 6),
-        links=part.links,
-    )
-    write = getattr(store, "put_offers", None)
-    if write:
-        write(manual_id, part_id, result.model_dump())
-    return result
+    lookup = _start(manual_id, part_id, part, hint, bike)
+    lookup.done.wait(timeout=DEADLINE)
+    return lookup.result()
+
+
+def warm(manual_id: str, bike: Bike | None, part_ids: list[str] | None = None) -> dict:
+    """Prefetch, so the Parts view can fill the cache while the rider is still reading the list and
+    a click lands on a warm answer. Returns at once; the lookups run on the pool."""
+    store = get_store()
+    manual = store.manual(manual_id)
+    if manual is None:
+        raise HTTPException(404, "manual not found")
+    if bike is None and manual.bikeIds:
+        bike = store.bike(manual.bikeIds[0])
+    wanted = [i for i in (part_ids or [p.id for p in manual.parts]) if i][:WARM_PARTS]
+    queued, ready, unknown = [], [], []
+    for part_id in wanted:
+        try:
+            part, hint = resolve(manual, part_id, bike)
+        except HTTPException:
+            unknown.append(part_id)
+            continue
+        if cached(manual_id, part_id, part) is not None:
+            ready.append(part_id)
+            continue
+        _start(manual_id, part_id, part, hint, bike)
+        queued.append(part_id)
+    return {"manualId": manual_id, "queued": queued, "cached": ready, "unknown": unknown}

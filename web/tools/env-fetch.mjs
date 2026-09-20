@@ -28,7 +28,7 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ENV = resolve(HERE, "..", "store", "models", "env");
 const SHARP = process.env.SHARP_DIR
-  || "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad/node_modules/sharp";
+  || "C:/Users/me/AppData/Local/Temp/claude/C--Users-me/4e7c3139-e6a7-4ae1-bdfb-e4a7aa2845be/scratchpad/node_modules/sharp/dist/index.cjs";
 
 const mb = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 

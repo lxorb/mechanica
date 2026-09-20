@@ -20,6 +20,17 @@ from conftest import BMW, KTM
 
 SETTINGS = "/voice/agent-settings"
 SERVER_TOOLS = ["find_procedure", "read_page", "get_spec", "list_parts"]
+BASE = "https://ttm.example.test/api"
+
+
+@pytest.fixture(autouse=True)
+def https_base(monkeypatch):
+    """Deepgram calls the tool endpoints from its own servers and accepts https only, so every
+    test here runs against a deployed-shaped base. conftest's http://testserver is the local
+    default, and what it does is asserted by itself below."""
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "public_base", BASE)
 
 
 @pytest.fixture
@@ -195,7 +206,19 @@ def test_every_tool_is_exposed_exactly_once(agent):
 def test_grounded_tools_are_server_side_and_carry_the_manual_in_the_url(agent, name):
     endpoint = by_name(agent)[name]["endpoint"]
     assert endpoint["method"] == "post"
-    assert endpoint["url"] == f"http://testserver/voice/tools/{name}?manualId={KTM}"
+    assert endpoint["url"] == f"{BASE}/voice/tools/{name}?manualId={KTM}"
+
+
+def test_a_plain_http_public_base_is_refused_with_the_reason(client, monkeypatch):
+    """Deepgram answers an http endpoint with INVALID_SETTINGS and closes the socket a second
+    after the rider pressed VOICE. Refuse it here, where the message can still be read."""
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "public_base", "http://localhost:8000")
+    r = client.get(SETTINGS, params={"manualId": KTM})
+    assert r.status_code == 503
+    assert "https" in r.json()["detail"]
+    assert "http://localhost:8000" in r.json()["detail"]
 
 
 def test_show_page_is_client_side_so_the_browser_moves_the_reader(agent):

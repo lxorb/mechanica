@@ -913,16 +913,27 @@ function loadEnvironment(THREE, renderer, name, big) {
     const pmrem = new THREE.PMREMGenerator(renderer);
     const environment = pmrem.fromEquirectangular(hdr);
     pmrem.dispose();
-    const background = await new THREE.TextureLoader()
-      .loadAsync(`${base}${name}-${big ? "4k" : "2k"}.jpg`)
-      .then((texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        texture.colorSpace = THREE.SRGBColorSpace;
-        return texture;
-      })
-      .catch(() => hdr);   // no tonemapped jpg on disk: the hdr itself still reads fine
+    /**
+     * The visible panorama, in two passes. The 4k (2.0 MB) is on screen in about a second and is
+     * already sharp at phone size; on desktop the 8k (4.8 MB) is fetched behind it and swapped in
+     * when it lands, which is `upgrade` below. Phones stop at 4k — an 8k equirect is a 32 megapixel
+     * texture and not worth the memory on a handset.
+     *
+     * Both are Poly Haven's tonemapped export, not the HDR: the viewer now renders the backdrop
+     * with backgroundBlurriness = 0, so what you see is the actual pixels, and a tonemapped JPEG
+     * carries far more of them per byte than an HDR does.
+     */
+    const panorama = async (size) => {
+      const texture = await new THREE.TextureLoader().loadAsync(`${base}${name}-${size}.jpg`);
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    };
+    const background = await panorama(big ? "4k" : "2k").catch(() => panorama("4k")).catch(() => hdr);
     if (background !== hdr) hdr.dispose();
-    return { environment, background };
+    // desktop only, and only once the 4k is already up
+    const upgrade = big ? panorama("8k").catch(() => null) : Promise.resolve(null);
+    return { environment, background, upgrade };
   })();
   envCache.set(id, job);
   job.catch(() => envCache.delete(id));
@@ -1379,6 +1390,15 @@ function createScene(THREE, host, initialModel, opts) {
       host.setAttribute("data-env", name);
       applyEnvironment();
       run();
+      // the 8k, when it arrives, replaces the 4k in place — same framing, more pixels
+      if (loaded.upgrade) {
+        loaded.upgrade.then((texture) => {
+          if (disposed || !texture) return;
+          setBackdrop(texture);
+          host.setAttribute("data-env-detail", "8k");
+          run();
+        });
+      }
     }).catch(() => { /* no HDRI: the procedural studio stays, which is the old transparent look */ });
   }
 
@@ -1520,9 +1540,22 @@ function createScene(THREE, host, initialModel, opts) {
    * both come out filled.
    */
   function fit(box, { instant = false, zoom = 1.08, duration = FOCUS_MS, direction = null } = {}) {
-    // nothing loaded yet, or a group with no geometry: there is nothing to frame, and an empty
-    // Box3 is (+Inf, -Inf), which would put the camera at NaN and blank the canvas for good
-    if (!box || box.isEmpty()) return;
+    /**
+     * Nothing has loaded yet, or the group has no geometry. An empty Box3 is (+Inf, -Inf), which
+     * would put the camera at NaN, so it gets a unit box at the origin instead of nothing at all.
+     *
+     * "Instead of nothing at all" is the important half. Returning early here left the camera at
+     * its constructor position (0,0,0) with the target also at (0,0,0), and OrbitControls derives
+     * its spherical angles from that difference when it is created — a zero vector gives phi = 0,
+     * which is straight overhead, and controls.update() then re-imposed that every frame. Every
+     * vehicle rendered as a plan view, including the ones whose geometry had not changed at all.
+     */
+    if (!box || box.isEmpty()) {
+      box = new THREE.Box3(
+        new THREE.Vector3(-model.radius, -model.radius, -model.radius),
+        new THREE.Vector3(model.radius, model.radius, model.radius),
+      );
+    }
     const center = box.getCenter(new THREE.Vector3());
     const forward = (direction ? direction.clone()
       : controls && camera.position.distanceToSquared(controls.target) > 1e-6

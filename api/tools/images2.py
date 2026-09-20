@@ -540,7 +540,9 @@ def to_cand(page: dict, m: Model, used: set, *, via: str, base: float, need_name
 
 def from_wikis(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: list) -> list:
     """Lead images of articles whose title names the model, across wikis."""
-    files, seen = [], set()
+    files: list = []
+    seen: set = set()
+    exact = True
     for lang in wikis:
         data = api_json(
             client,
@@ -563,10 +565,15 @@ def from_wikis(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis:
             title = str(page.get("title", ""))
             # The article title must name make AND model, exactly or as the
             # family the model belongs to ("Suzuki Van Van" for a Van Van 200).
-            # A family article's lead image is still a photo of that family; the
-            # vision pass is what decides whether it is close enough.
-            if not covers(title, m):
+            kind = covers(title, m)
+            if not kind:
                 continue
+            # A family article's lead image is whichever bike that family's
+            # editors liked: en:KTM Duke leads with a 790, which a vision model
+            # cannot tell from a 250 because they are the same motorcycle with a
+            # different engine in it. So a family article only counts when the
+            # FILE names the model too.
+            exact = exact and kind == "exact"
             src = (page.get("original") or {}).get("source") or ""
             if "/commons/" not in src:
                 continue  # local upload: no Commons licence to read, so fail closed
@@ -581,7 +588,16 @@ def from_wikis(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis:
     return [
         c
         for page in commons_pages(client, bucket, files)
-        if (c := to_cand(page, m, used, via="wikipedia", base=6.0, need_name=False))
+        if (
+            c := to_cand(
+                page,
+                m,
+                used,
+                via="wikipedia" if exact else "family",
+                base=6.0 if exact else 2.0,
+                need_name=not exact,
+            )
+        )
     ]
 
 
@@ -853,6 +869,24 @@ def boring(im: Image.Image) -> bool:
     return max(hist) / float(sum(hist) or 1) > 0.82
 
 
+def fit(im: Image.Image, box: int, path: Path, quality: int, ceiling: int) -> int:
+    """Save `im` at `box` px, stepping quality down until it fits `ceiling` bytes.
+
+    Detailed photographs -- gravel, foliage, a crowd behind the bike -- cost three
+    times what a studio shot does at the same quality, and the difference is all in
+    the background. Spending that on one tile buys two more models a photo, so the
+    tile gets a byte ceiling rather than a fixed quality.
+    """
+    out = im.copy()
+    out.thumbnail((box, box), Image.LANCZOS)
+    for q in (quality, quality - 12, quality - 22, quality - 30):
+        out.save(path, "WEBP", quality=max(30, q), method=6)
+        size = path.stat().st_size
+        if size <= ceiling:
+            break
+    return size
+
+
 def render(raw: bytes, dest: Path, q: tuple) -> tuple:
     """Write <name>.hero/.webp/.thumb webps. Returns (bytes written, has_hero)."""
     hero_q, full_q, thumb_q = q
@@ -862,21 +896,11 @@ def render(raw: bytes, dest: Path, q: tuple) -> tuple:
         if im.width < 500 or boring(im) or blurry(im):
             raise ValueError("blank, blurry or tiny after crop")
         written = 0
-        hero = False
-        if im.width >= 900:
-            big = im.copy()
-            big.thumbnail((1280, 1280), Image.LANCZOS)
-            big.save(hero_p, "WEBP", quality=hero_q, method=6)
-            written += hero_p.stat().st_size
-            hero = True
-        full = im.copy()
-        full.thumbnail((640, 640), Image.LANCZOS)
-        full.save(full_p, "WEBP", quality=full_q, method=6)
-        written += full_p.stat().st_size
-        small = im.copy()
-        small.thumbnail((160, 160), Image.LANCZOS)
-        small.save(thumb_p, "WEBP", quality=thumb_q, method=6)
-        written += thumb_p.stat().st_size
+        hero = im.width >= 900
+        if hero:
+            written += fit(im, 1280, hero_p, hero_q, 130_000)
+        written += fit(im, 640, full_p, full_q, 45_000)
+        written += fit(im, 160, thumb_p, thumb_q, 8_000)
     return written, hero
 
 
@@ -918,11 +942,16 @@ def write_outputs(entries: dict) -> None:
         "|---|---|---|---|---|---|---|",
     ]
     cell = lambda v: str(v or "").replace("|", "\\|")  # noqa: E731
+    credited: set = set()
     for key in sorted(ordered):
         e = ordered[key]
         for path in (e.get("hero"), e["image"], e["thumb"]):
-            if not path:
+            # Alias keys reuse a file that some other key already credits -- and
+            # when the file lives in bikes/ it belongs to the first pass, which
+            # credits it in CREDITS-bikes.md. Each file earns one row, here or there.
+            if not path or path in credited or not path.startswith("store/img/bikes2/"):
                 continue
+            credited.add(path)
             lines.append(
                 f"| `{path}` | {cell(e['title'])} | {cell(e['author'])} | {e['source']} | "
                 f"{cell(e['license'])} | {cell(e.get('via'))} | {cell(e.get('view'))} |"

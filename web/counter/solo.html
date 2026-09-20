@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Viewer 3D — one model</title>
+  <!--
+    Dev harness: one viewer filling the window, no chrome around it. `node web/tools/viewer-shots.mjs
+    --sheet` screenshots this once per model and tiles the results into one contact sheet, which is
+    how orientation, shading and framing get checked across the whole model set at a glance.
+
+      ?model=generic/scooter   a model key
+      ?bike=KTM 450 SX-F       a make+model, routed through modelFor() like the real app
+      ?explode=1               mount exploded (the technical grid backdrop)
+      ?focus=front-wheel       mount focused on a part
+      ?env=off                 no HDRI
+
+    Not linked from index.html and not part of the flow.
+  -->
+  <link rel="stylesheet" href="css/viewer3d.css">
+  <script type="importmap">
+  {"imports":{
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }}
+  </script>
+  <style>
+    html, body { margin: 0; height: 100%; background: #141414; overflow: hidden; }
+    #host { width: 100vw; height: 100vh; }
+    #host.viewer3d { aspect-ratio: auto; border: 0; }
+  </style>
+</head>
+<body>
+  <div id="host"></div>
+  <script type="module">
+    import { mount, modelFor, typesReady } from "./js/viewer3d.js";
+
+    const params = new URLSearchParams(location.search);
+    const host = document.getElementById("host");
+    window.viewerErrors = [];
+    window.addEventListener("error", (e) => window.viewerErrors.push(String(e.message)));
+    window.addEventListener("unhandledrejection", (e) => window.viewerErrors.push(String(e.reason)));
+
+    // the tables have to be in before modelFor() can route a bike to a generic
+    await typesReady;
+
+    // ?rotate=x,y,z overrides the model's upright rotation, for the sweep that decides it
+    if (params.get("rotate") && params.get("model")?.startsWith("generic/")) {
+      const { registerGenericParts } = await import("./js/viewer3d.js");
+      const name = params.get("model").slice("generic/".length);
+      const current = await fetch("../store/models/generic/parts.json").then((r) => r.json()).catch(() => ({}));
+      const row = current[name] || { kind: "bike", extra: {} };
+      const value = params.get("rotate");
+      row.rotate = value === "none" ? null : value.split(",").map(Number);
+      registerGenericParts({ [name]: row });
+    }
+
+    const bike = params.get("bike");
+    const target = bike
+      ? modelFor({ make: bike.split(" ")[0], model: bike.split(" ").slice(1).join(" ") })
+      : params.get("model") || "yzf-2021";
+
+    const viewer = mount(host, target, {
+      environment: params.get("env") === "off" ? false : undefined,
+      debug: true,
+      onUpgrade: () => {
+        if (params.get("explode")) viewer.explode(true, Number(params.get("explode")) || 1);
+        if (params.get("focus")) viewer.focus(params.get("focus"));
+      },
+    });
+    window.viewer = viewer;
+    window.lastDescriptor = typeof target === "string" ? null : target;
+  </script>
+</body>
+</html>

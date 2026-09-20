@@ -1,12 +1,13 @@
 """Offers: the web search and every HEAD/GET are mocked, so what is under test is the promise -
 no price without a URL, no dead link, cheapest first, and a day-old answer costs nothing."""
 
+import threading
 import time
 
 import pytest
 
 from app import offers as mod
-from app.models import Bike, Link, Part
+from app.models import Bike, Link, Manual, Part
 from conftest import KTM
 
 PART = Part(
@@ -28,7 +29,30 @@ NoPrice Moto | NGK LMAR8AI-10 | call us | https://noprice.example/product/plug |
 Reddit | someone paid $8 | $8.00 | https://www.reddit.com/r/motorcycles/comments/abc | unknown | unknown | unknown | unknown
 """
 
+# the same shop, three real products and two sizes of one of them
+SAME_SHOP = """\
+RevZilla | Motorex DOT 4 brake fluid | $12.99 | https://www.revzilla.com/motorcycle/motorex-dot-4?sku_id=1 | 250 ml | new | unknown | in stock
+RevZilla | Motorex DOT 4 brake fluid | $21.99 | https://www.revzilla.com/motorcycle/motorex-dot-4?sku_id=2 | 1 l | new | unknown | in stock
+RevZilla | Lucas synthetic DOT 4 | $6.49 | https://www.revzilla.com/motorcycle/lucas-dot-4 | 355 ml | new | unknown | in stock
+RevZilla | Motorex DOT 4 brake fluid | $12.99 | https://www.revzilla.com/motorcycle/motorex-dot-4?sku_id=1 | 250 ml | new | unknown | in stock
+"""
+
 DEAD = "https://shadyshop.example/gone"
+
+
+def fake_verify(offers, on_live=None):
+    live = [o for o in offers if o.url != DEAD]
+    for offer in live:
+        if on_live:
+            on_live(offer)
+    return live
+
+
+@pytest.fixture(autouse=True)
+def no_lookups_left_over():
+    mod._running.clear()
+    yield
+    mod._running.clear()
 
 
 @pytest.fixture
@@ -36,12 +60,23 @@ def wired(monkeypatch, fresh_store):
     """One fake store, one fake search, one fake link checker."""
     monkeypatch.setattr(mod, "get_store", lambda: fresh_store)
     monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (LINES, 0.021))
-    monkeypatch.setattr(mod, "verify", lambda offers: [o for o in offers if o.url != DEAD])
+    monkeypatch.setattr(mod, "verify", fake_verify)
     return fresh_store
 
 
 def result(store, manual_id="m1", part_id="spark-plug"):
     return mod.OffersResult.model_validate(store.offers(manual_id, part_id))
+
+
+def wait_for_cache(store, manual_id="m1", part_id="spark-plug", seconds=10.0):
+    """The finished answer lands from the background thread; never sleep a fixed amount for it."""
+    until = time.time() + seconds
+    while time.time() < until:
+        raw = store.offers(manual_id, part_id)
+        if raw:
+            return raw
+        time.sleep(0.01)
+    return None
 
 
 # --- parsing --------------------------------------------------------------
@@ -163,8 +198,7 @@ def test_alive_drops_a_dead_host():
 # --- the call itself ------------------------------------------------------
 
 
-def test_offers_drops_the_dead_url_and_sorts_by_price(wired, monkeypatch):
-    monkeypatch.setattr(mod, "get_store", lambda: wired)
+def test_offers_drops_the_dead_url_and_sorts_by_price(wired):
     wired.put_manual(_manual())
     out = mod.offers("m1", "spark-plug", BIKE)
     assert [o.url for o in out.offers] == [
@@ -174,7 +208,25 @@ def test_offers_drops_the_dead_url_and_sorts_by_price(wired, monkeypatch):
     ]
     assert DEAD not in [o.url for o in out.offers]
     assert all(o.price > 0 and o.url.startswith("http") for o in out.offers)
-    assert out.usd == 0.021
+    assert out.usd == 0.021 and out.complete is True
+
+
+def test_every_offer_carries_a_usd_price_beside_the_shop_price(wired):
+    wired.put_manual(_manual())
+    out = mod.offers("m1", "spark-plug", BIKE)
+    euro = next(o for o in out.offers if o.currency == "EUR")
+    assert (euro.price, euro.currency) == (14.5, "EUR")
+    assert euro.priceUsd == round(14.5 * mod.TO_USD["EUR"], 2)
+    assert [o.priceUsd for o in out.offers] == sorted(o.priceUsd for o in out.offers)
+    assert all(o.priceUsd > 0 for o in out.offers)
+
+
+def test_one_shop_may_hold_several_products_and_several_sizes(wired, monkeypatch):
+    monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (SAME_SHOP, 0.021))
+    wired.put_manual(_manual())
+    out = mod.offers("m1", "spark-plug", BIKE)
+    assert {o.retailer for o in out.offers} == {"RevZilla"}
+    assert [o.priceUsd for o in out.offers] == [6.49, 12.99, 21.99]  # the repeated line folded, nothing else
 
 
 def test_offers_echoes_the_manual_links(wired):
@@ -226,16 +278,10 @@ def test_a_failed_search_still_hands_back_the_search_links(wired, monkeypatch):
     assert wired.offers("m1", "spark-plug") is None  # an outage is never cached
 
 
-def test_unknown_part_is_404(wired):
-    wired.put_manual(_manual())
-    with pytest.raises(Exception) as caught:
-        mod.offers("m1", "nope", BIKE)
-    assert getattr(caught.value, "status_code", None) == 404
+SECOND = PART.model_copy(update={"id": "brake-fluid", "name": "Brake fluid", "spec": "DOT 4"})
 
 
-def _manual():
-    from app.models import Manual
-
+def _manual(parts=None):
     return Manual(
         id="m1",
         bikeIds=["bmw-r-1300-gs-2025"],
@@ -245,8 +291,121 @@ def _manual():
         source="test",
         outline=[],
         sections=[],
-        parts=[PART],
+        parts=parts or [PART],
     )
+
+
+# --- the deadline ---------------------------------------------------------
+
+
+def test_a_slow_search_answers_at_the_deadline_and_finishes_in_the_background(wired, monkeypatch):
+    """The counter gives up at 6 s. A cold search takes longer, so the request leaves with what it
+    has and the lookup keeps going - the next click is the one that pays off."""
+    wired.put_manual(_manual())
+    searching = threading.Event()
+
+    def slow(*a, **k):
+        searching.set()
+        time.sleep(0.4)
+        return LINES, 0.021
+
+    monkeypatch.setattr(mod.llm, "web_search", slow)
+    monkeypatch.setattr(mod, "DEADLINE", 0.05)
+
+    out = mod.offers("m1", "spark-plug", BIKE)
+    assert searching.is_set()
+    assert out.complete is False and out.offers == [] and out.usd == 0.0
+    assert out.links == PART.links  # the rider still gets somewhere to click
+
+    assert wait_for_cache(wired) is not None
+    assert len(mod.offers("m1", "spark-plug", BIKE).offers) == 3
+
+
+def test_a_half_finished_answer_is_never_served_from_the_cache(wired):
+    wired.put_manual(_manual())
+    wired.put_offers(
+        "m1",
+        "spark-plug",
+        mod.OffersResult(
+            manualId="m1", partId="spark-plug", query="q", offers=[], fetchedAt=time.time(), complete=False
+        ).model_dump(),
+    )
+    assert mod.offers("m1", "spark-plug", BIKE).complete is True  # it searched instead
+
+
+def test_two_clicks_on_one_part_share_a_single_search(wired, monkeypatch):
+    wired.put_manual(_manual())
+    calls = []
+
+    def counted(*a, **k):
+        calls.append(1)
+        time.sleep(0.2)
+        return LINES, 0.021
+
+    monkeypatch.setattr(mod.llm, "web_search", counted)
+    monkeypatch.setattr(mod, "DEADLINE", 0.01)
+    mod.offers("m1", "spark-plug", BIKE)
+    mod.offers("m1", "spark-plug", BIKE)
+    assert wait_for_cache(wired) is not None
+    assert len(calls) == 1
+
+
+# --- warming --------------------------------------------------------------
+
+
+def test_warm_queues_the_manuals_parts_and_skips_the_cached_ones(wired):
+    wired.put_manual(_manual([PART, SECOND]))
+    mod.offers("m1", "spark-plug", BIKE)  # this one is now cached
+
+    out = mod.warm("m1", BIKE)
+
+    assert out["cached"] == ["spark-plug"]
+    assert out["queued"] == ["brake-fluid"]
+    assert wait_for_cache(wired, part_id="brake-fluid") is not None
+    assert mod.offers("m1", "brake-fluid", BIKE).complete is True
+
+
+def test_warm_takes_the_ids_it_is_given_and_reports_unknown_ones(wired):
+    wired.put_manual(_manual([PART, SECOND]))
+    out = mod.warm("m1", BIKE, ["brake-fluid", "not-a-part"])
+    assert out["queued"] == ["brake-fluid"] and out["unknown"] == ["not-a-part"]
+    assert wait_for_cache(wired, part_id="brake-fluid") is not None
+
+
+def test_warm_never_starts_more_than_a_dozen(wired):
+    parts = [PART.model_copy(update={"id": f"p{n}"}) for n in range(20)]
+    wired.put_manual(_manual(parts))
+    out = mod.warm("m1", BIKE)
+    assert len(out["queued"]) == mod.WARM_PARTS
+    for part_id in out["queued"]:
+        assert wait_for_cache(wired, part_id=part_id) is not None
+
+
+def test_warm_404s_on_an_unknown_manual(wired):
+    with pytest.raises(Exception) as caught:
+        mod.warm("nope", BIKE)
+    assert getattr(caught.value, "status_code", None) == 404
+
+
+# --- catalogue ids --------------------------------------------------------
+
+
+def test_a_catalogue_id_resolves_through_the_catalogue_module(wired, monkeypatch):
+    """Parts the manual never prints come from GET /parts/catalog, with a searchHint instead of a
+    printed spec. The module is another agent's, so this only has to survive its shape."""
+    rows = [{"id": "chain-lube", "name": "Chain lube", "searchHint": "Motorex chain lube 500 ml"}]
+    monkeypatch.setattr(mod, "_catalogue", lambda m, b, pid: mod._catalogue_row(rows, pid))
+    wired.put_manual(_manual())
+    out = mod.offers("m1", "chain-lube", BIKE)
+    assert out.query == "Motorex chain lube 500 ml BMW R 1300 GS 2025"
+    assert out.offers
+
+
+def test_an_id_no_one_knows_is_still_a_404(wired):
+    wired.put_manual(_manual())
+    with pytest.raises(Exception) as caught:
+        mod.offers("m1", "invented", BIKE)
+    assert getattr(caught.value, "status_code", None) == 404
 
 
 # --- the store pair -------------------------------------------------------
@@ -272,7 +431,7 @@ def test_both_stores_answer_the_same_pair():
 
 def test_route_returns_offers(client, monkeypatch):
     monkeypatch.setattr(mod.llm, "web_search", lambda *a, **k: (LINES, 0.021))
-    monkeypatch.setattr(mod, "verify", lambda offers: [o for o in offers if o.url != DEAD])
+    monkeypatch.setattr(mod, "verify", fake_verify)
     from app.store import get_store
 
     manual = get_store().manual(KTM)

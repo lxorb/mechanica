@@ -548,7 +548,9 @@ async function main() {
         await convert(scene, glb, work);
       }
       const info = await inspect(glb, { bounds: true });
-      const upright = uprightRotation(info.span, row.kind);
+      // the shortlist wins when it says something: `rotate: null` there means "verified upright,
+      // do not guess". uprightRotation() only fills the gap for a model nobody has looked at yet.
+      const upright = "rotate" in row ? row.rotate : uprightRotation(info.span, row.kind);
       if (upright) console.log(`      upright: span ${info.span.join("x")} -> rotate ${upright.join(", ")}°`);
       parts[row.name] = {
         kind: row.kind || "bike",
