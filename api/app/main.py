@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 
 from . import ask as ask_mod
 from . import chat as chat_mod
+from . import offers as offers_mod
 from . import cost_ttc
 from . import identify as identify_mod
 from . import ingest as ingest_mod
@@ -173,6 +174,21 @@ def chat(req: ChatRequest):
     if not get_store().manual(req.manualId):
         raise HTTPException(404)
     return StreamingResponse(chat_mod.answer(req.manualId, req.messages), media_type="text/event-stream")
+
+
+class OffersRequest(BaseModel):
+    manualId: str
+    partId: str
+    bikeId: str | None = None
+
+
+@app.post("/parts/offers")
+def parts_offers(req: OffersRequest):
+    store = get_store()
+    if not store.manual(req.manualId):
+        raise HTTPException(404)
+    bike = store.bike(req.bikeId) if req.bikeId else None
+    return offers_mod.offers(req.manualId, req.partId, bike)
 
 
 @app.post("/identify/photo", response_model=IdentifyResponse)

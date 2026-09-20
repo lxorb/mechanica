@@ -42,6 +42,8 @@ class Settings:
     deepgram_api_key = _secret("DEEPGRAM_API_KEY", "deepgram.txt")
     ttc_api_key = _secret("TTC_API_KEY", "ttc.txt")
     model_chat = os.getenv("MODEL_CHAT", "gpt-5.6-terra")
+    model_offers = os.getenv("MODEL_OFFERS", "gpt-5.6-terra")
+    model_image = os.getenv("MODEL_IMAGE", "gpt-image-1")
     model_router = os.getenv("MODEL_ROUTER", "gpt-5.6-luna")
     model_picker = os.getenv("MODEL_PICKER", "gpt-5.6-terra")
     model_struct = os.getenv("MODEL_STRUCT", "gpt-5.6-luna")
