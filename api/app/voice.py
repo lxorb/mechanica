@@ -592,7 +592,9 @@ def agent_settings(manualId: str, bikeId: str | None = None):
             },
             "agent": {
                 "language": "en",
-                "listen": {"provider": dict(LISTEN, keyterms=keyterms)},
+                # A manual with nothing indexed yet sends no `keyterms` key at all rather than an
+                # empty array, which is one more shape to hope Deepgram accepts.
+                "listen": {"provider": dict(LISTEN, keyterms=keyterms) if keyterms else dict(LISTEN)},
                 "think": {
                     "provider": {"type": "open_ai", "model": THINK_MODEL},
                     "prompt": _prompt(manual, bike, digest),

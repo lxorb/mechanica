@@ -10230,6 +10230,17 @@
     "via": "alias",
     "aliasOf": "mitsubishi|outlander"
   },
+  "mitsubishi|outlander-phev": {
+    "image": "store/img/bikes/mitsubishi-outlander.webp",
+    "thumb": "store/img/bikes/mitsubishi-outlander-thumb.webp",
+    "hero": "store/img/bikes/mitsubishi-outlander-hero.webp",
+    "title": "2022 Mitsubishi Outlander.jpg",
+    "author": "MercurySable99",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Mitsubishi_Outlander.jpg",
+    "via": "alias",
+    "aliasOf": "mitsubishi|outlander"
+  },
   "moto-guzzi|1200-sport-abs": {
     "image": "store/img/bikes/moto-guzzi-1200-sport.webp",
     "thumb": "store/img/bikes/moto-guzzi-1200-sport-thumb.webp",
@@ -10891,6 +10902,17 @@
     "via": "alias",
     "aliasOf": "mv-agusta|superveloce-800"
   },
+  "nissan|juke-hybrid": {
+    "image": "store/img/bikes/nissan-juke.webp",
+    "thumb": "store/img/bikes/nissan-juke-thumb.webp",
+    "hero": "store/img/bikes/nissan-juke-hero.webp",
+    "title": "Nissan Juke 1.5 Upper 2017.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Juke_1.5_Upper_2017.jpg",
+    "via": "alias",
+    "aliasOf": "nissan|juke"
+  },
   "nissan|murano-hybrid": {
     "image": "store/img/bikes/nissan-murano.webp",
     "thumb": "store/img/bikes/nissan-murano-thumb.webp",
@@ -10911,6 +10933,17 @@
     "via": "alias",
     "aliasOf": "nissan|pathfinder"
   },
+  "nissan|rogue-hybrid": {
+    "image": "store/img/bikes/nissan-rogue.webp",
+    "thumb": "store/img/bikes/nissan-rogue-thumb.webp",
+    "hero": "store/img/bikes/nissan-rogue-hero.webp",
+    "title": "Nissan Rogue T32 2.5 S Gun Metallic diplomatic.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Rogue_T32_2.5_S_Gun_Metallic_diplomatic.jpg",
+    "via": "alias",
+    "aliasOf": "nissan|rogue"
+  },
   "nissan|rogue-select": {
     "image": "store/img/bikes/nissan-rogue.webp",
     "thumb": "store/img/bikes/nissan-rogue-thumb.webp",
@@ -10920,6 +10953,39 @@
     "source": "https://commons.wikimedia.org/wiki/File:2024_Nissan_Rogue_SV_rear_left,_Atlanta,_GA.jpg",
     "via": "alias",
     "aliasOf": "nissan|rogue"
+  },
+  "nissan|rogue-sport": {
+    "image": "store/img/bikes/nissan-rogue.webp",
+    "thumb": "store/img/bikes/nissan-rogue-thumb.webp",
+    "hero": "store/img/bikes/nissan-rogue-hero.webp",
+    "title": "Nissan Rogue T32 2.5 S Gun Metallic diplomatic.jpg",
+    "author": "Ethan Llamas",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nissan_Rogue_T32_2.5_S_Gun_Metallic_diplomatic.jpg",
+    "via": "alias",
+    "aliasOf": "nissan|rogue"
+  },
+  "opel|vivaro-b": {
+    "image": "store/img/bikes/opel-vivaro.webp",
+    "thumb": "store/img/bikes/opel-vivaro-thumb.webp",
+    "hero": "store/img/bikes/opel-vivaro-hero.webp",
+    "title": "Opel Vivaro C IMG 3455.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Opel_Vivaro_C_IMG_3455.jpg",
+    "via": "alias",
+    "aliasOf": "opel|vivaro"
+  },
+  "opel|vivaro-c": {
+    "image": "store/img/bikes/opel-vivaro.webp",
+    "thumb": "store/img/bikes/opel-vivaro-thumb.webp",
+    "hero": "store/img/bikes/opel-vivaro-hero.webp",
+    "title": "Opel Vivaro C IMG 3455.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Opel_Vivaro_C_IMG_3455.jpg",
+    "via": "alias",
+    "aliasOf": "opel|vivaro"
   },
   "ram|promaster-promaster-ev": {
     "image": "store/img/bikes/ram-promaster.webp",
