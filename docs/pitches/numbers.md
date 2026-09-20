@@ -55,11 +55,11 @@ formula in the source column · **assumed** = nobody measured it, and the row sa
 
 | number | value | source |
 |---|---|---|
-| everything ever spent building this | **$83.11** *(measured)* | `api/data/costs.jsonl` - `sum(usd)` over all 41,828 logged calls, development included |
-| model calls behind it | 41,828 *(measured)* | `api/data/costs.jsonl` - `len(log)`. Grows every time anything runs; quote the date |
+| everything ever spent building this | **$83.11** *(measured)* | `api/data/costs.jsonl` - `sum(usd)` over all 41,830 logged calls, development included |
+| model calls behind it | 41,830 *(measured)* | `api/data/costs.jsonl` - `len(log)`. Grows every time anything runs; quote the date |
 | …of which gpt-5.6-luna | $76.01 *(computed)* | same - `sum(usd) group by model`; 91% of the build ledger |
 | …of which reading manuals once | 86% *(computed)* | same - `(ingest.struct + ingest.keywords) / total` = $71.52 / $83.11. Paid per manual, never per question |
-| …of which grading catalog photos | 7,593 calls, $3.63 *(measured)* | same - `route=='images.score'`. Vision as a judge over the catalog photos; keeps growing, so quote it with the date |
+| …of which grading catalog photos | 7,595 calls, $3.63 *(measured)* | same - `route=='images.score'`. Vision as a judge over the catalog photos; keeps growing, so quote it with the date |
 | …of which generating part illustrations | 102 calls, $4.31 *(measured)* | same - `route=='illustrations'` (`gpt-image-1`) |
 | what the DEPLOYED app has spent | **$8.93** *(measured)* | live `GET /api/cost` -> `total`, over `count` = 1,633 calls. In-replica; moves every hour and resets on redeploy |
 | …over model calls | 1,633 *(measured)* | same -> `count` |
