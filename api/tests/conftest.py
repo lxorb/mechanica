@@ -22,7 +22,7 @@ _tmp_root = Path(tempfile.mkdtemp(prefix="ttm-tests-"))
 os.environ.setdefault("PYTEST_DEBUG_TEMPROOT", str(_tmp_root))
 
 DATA_DIR = _tmp_root / "data"
-shutil.copytree(SEED_DIR, DATA_DIR, ignore=shutil.ignore_patterns("seeds", "uploads"))
+shutil.copytree(SEED_DIR, DATA_DIR, ignore=shutil.ignore_patterns("seeds", "uploads", "*.part*"))
 
 for _var in (
     "MONGODB_URI",

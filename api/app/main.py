@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 
 from . import ask as ask_mod
 from . import chat as chat_mod
+from . import cost_ttc
 from . import identify as identify_mod
 from . import ingest as ingest_mod
 from . import ondemand
@@ -51,6 +52,7 @@ app.add_middleware(
     expose_headers=["Accept-Ranges", "Content-Range", "Content-Length", "Content-Encoding"],
 )
 app.include_router(voice.router)
+app.include_router(cost_ttc.router)
 
 
 def slug(*parts: str | int) -> str:

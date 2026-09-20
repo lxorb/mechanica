@@ -4,15 +4,13 @@ Never returns prose: the answer is always a list of the manual's own sections.
 Spec intents answer straight from the parsed Spec rows and never pay for a picker call.
 """
 
-import os
 import re
 import threading
 from collections import OrderedDict
 
-import httpx
 from pydantic import BaseModel
 
-from . import llm
+from . import llm, ttc
 from .config import settings
 from .models import AskResponse, Match, Section
 from .search import get_index
@@ -28,7 +26,6 @@ CANDIDATES = 6
 PICK_MARGIN = 0.85
 CACHE_MAX = 500
 EFFORT = "low"
-TTC_URL = "https://api.thetokencompany.com/v1/compress"
 
 
 class Route(BaseModel):
@@ -341,23 +338,8 @@ def _route(query: str) -> Route:
 
 
 def _compress(text: str) -> str:
-    """The Token Company, POST /v1/compress. Unverified API: any failure keeps the original text."""
-    key = os.getenv("TTC_API_KEY")
-    if not key:
-        return text
-    try:
-        response = httpx.post(
-            TTC_URL,
-            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-            json={"model": "bear-2", "input": text, "compression_settings": {"aggressiveness": 0.3}},
-            timeout=8.0,
-        )
-        response.raise_for_status()
-        data = response.json()
-        out = data.get("output") or data.get("compressed") or data.get("text")
-        return out if isinstance(out, str) and out.strip() else text
-    except Exception:
-        return text
+    """The Token Company sits between the printed page text and the picker (app/ttc.py)."""
+    return ttc.compress(text, aggressiveness=0.3, route="picker")[0]
 
 
 def _pick(manual_id: str, query: str, route: Route, order: list[str], sections: dict[str, Section]) -> list[str]:

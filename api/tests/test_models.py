@@ -129,6 +129,8 @@ def _ts_interfaces() -> dict[str, set[str]]:
 
 @pytest.mark.parametrize("name", ["Bike", "OutlineNode", "Highlight", "Section", "Part", "Manual", "Match", "Candidate"])
 def test_fields_match_types_ts(name: str):
+    if not TYPES_TS.exists():
+        pytest.skip("src/types.ts removed with the React app; the web adapter is the contract now")
     ts = _ts_interfaces()
     assert name in ts, f"{name} missing from src/types.ts"
     py = set(getattr(M, name).model_fields.keys())

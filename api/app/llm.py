@@ -2,6 +2,7 @@
 
 import base64
 import time
+from collections.abc import Iterator
 from typing import TypeVar
 
 from openai import OpenAI
@@ -117,3 +118,52 @@ def embed(route: str, texts: list[str], model: str = "text-embedding-3-small") -
     response = client().embeddings.create(model=model, input=texts)
     log(route, model, response.usage)
     return [d.embedding for d in response.data]
+
+
+def stream(
+    route: str,
+    model: str,
+    system: str,
+    user: str,
+    history: list[dict] | None = None,
+    cache_key: str | None = None,
+    reasoning: str | None = None,
+    max_output_tokens: int | None = None,
+) -> Iterator[tuple[str, object]]:
+    """Streamed text from the Responses API.
+
+    Yields ("delta", str) for every output chunk, then exactly one ("usage", dict) with the logged
+    cost: {"usd", "tokensIn", "cachedTokens", "tokensOut"}. The system prompt is sent as `instructions`
+    and `prompt_cache_key` is pinned per route+model so the long grounding prompt is served from
+    OpenAI's prompt cache on the second turn onwards instead of being billed at full input price.
+    """
+    kwargs: dict = {}
+    if reasoning:
+        kwargs["reasoning"] = {"effort": reasoning}
+    if max_output_tokens:
+        kwargs["max_output_tokens"] = max_output_tokens
+    messages = [*(history or []), {"role": "user", "content": [text_part(user)]}]
+    usage = None
+    with client().responses.stream(
+        model=model,
+        instructions=system,
+        input=messages,
+        prompt_cache_key=cache_key or f"{route}:{model}",
+        **kwargs,
+    ) as events:
+        for event in events:
+            kind = getattr(event, "type", "")
+            if kind == "response.output_text.delta":
+                delta = getattr(event, "delta", "")
+                if delta:
+                    yield "delta", delta
+            elif kind == "response.completed":
+                usage = getattr(getattr(event, "response", None), "usage", None)
+    cost = log(route, model, usage) if usage is not None else 0.0
+    details = getattr(usage, "input_tokens_details", None)
+    yield "usage", {
+        "usd": cost,
+        "tokensIn": int(getattr(usage, "input_tokens", 0) or 0),
+        "cachedTokens": int(getattr(details, "cached_tokens", 0) or 0) if details else 0,
+        "tokensOut": int(getattr(usage, "output_tokens", 0) or 0),
+    }

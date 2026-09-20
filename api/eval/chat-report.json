@@ -1,0 +1,596 @@
+{
+ "summary": {
+  "n": 20,
+  "answered": 16,
+  "notCovered": 4,
+  "errors": [],
+  "groundingRate": 0.9523809523809523,
+  "claims": 42,
+  "citationValidity": 1.0,
+  "citations": 22,
+  "uncitedAnswers": [],
+  "tokensBefore": 44702,
+  "tokensAfter": 34587,
+  "tokensSavedPct": 0.22627622925148763,
+  "usdPerAnswer": 0.0049058999999999995,
+  "usdTotal": 0.098118,
+  "tokensInPerAnswer": 1942.35,
+  "ttftP50": 2.595329199999469,
+  "ttftP95": 4.236634500000946,
+  "p50Seconds": 3.302532199999405,
+  "p95Seconds": 5.43431480000072,
+  "validCitations": 22
+ },
+ "compression": {
+  "model": "bear-2",
+  "enabled": true,
+  "byRoute": {
+   "ttc.chat": {
+    "calls": 18,
+    "cached": 1,
+    "errors": 0,
+    "tokensIn": 44702,
+    "tokensOut": 34587,
+    "tokensSaved": 10115,
+    "seconds": 7.062,
+    "savedPct": 22.6
+   }
+  },
+  "total": {
+   "calls": 18,
+   "cached": 1,
+   "errors": 0,
+   "tokensIn": 44702,
+   "tokensOut": 34587,
+   "tokensSaved": 10115,
+   "seconds": 7.062,
+   "savedPct": 22.6
+  }
+ },
+ "rows": [
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "how much oil does it take",
+   "answer": "It takes 1.5 l (1.6 qt.) of SAE 15W/50 engine oil [p. 115].",
+   "error": "",
+   "notCovered": false,
+   "claims": 1,
+   "groundedClaims": 1,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.006342,
+   "tokensIn": 2979,
+   "tokensSaved": 396,
+   "ttft": 2.9706397999998444,
+   "seconds": 3.302532199999405,
+   "sentences": [
+    {
+     "text": "It takes 1.5 l (1.6 qt.) of SAE 15W/50 engine oil",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "chain is loose, what do I do",
+   "answer": "1. Raise the rear of the motorcycle on the rear lifting gear and shift the transmission to neutral [p. 77].  \n2. Loosen the rear wheel spindle nut 1, then loosen nuts 2 on both chain adjusters [p. 78].  \n3. Turn both adjusting screws 3 evenly until chain tension is 7–10 mm, keeping the upper chain run taut while measuring [p. 78].  \n4. Keep the left and right chain-adjuster markings in the same position relative to the reference marks so the rear wheel stays aligned [p. 78].  \n5. Tighten nuts 2, make sure the adjusters are correctly seated against the adjusting screws, then tighten the rear wheel spindle nut to 100 Nm [p. 78].",
+   "error": "",
+   "notCovered": false,
+   "claims": 5,
+   "groundedClaims": 5,
+   "citations": 2,
+   "validCitations": 2,
+   "usd": 0.00777,
+   "tokensIn": 2223,
+   "tokensSaved": 870,
+   "ttft": 3.88562599999932,
+   "seconds": 5.293271399999867,
+   "sentences": [
+    {
+     "text": "Raise the rear of the motorcycle on the rear lifting gear and shift the transmission to neutral",
+     "cited": true
+    },
+    {
+     "text": "Loosen the rear wheel spindle nut 1, then loosen nuts 2 on both chain adjusters",
+     "cited": true
+    },
+    {
+     "text": "Turn both adjusting screws 3 evenly until chain tension is 7–10 mm, keeping the upper chain run taut while measuring",
+     "cited": true
+    },
+    {
+     "text": "Keep the left and right chain-adjuster markings in the same position relative to the reference marks so the rear wheel stays aligned",
+     "cited": true
+    },
+    {
+     "text": "Tighten nuts 2, make sure the adjusters are correctly seated against the adjusting screws, then tighten the rear wheel spindle nut to 100 Nm",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "what pressure should the tyres be",
+   "answer": "Set the front tyre to 2.0 bar (29 psi) and the rear tyre to 2.2 bar (32 psi), checked cold [p. 95]. These pressures apply both solo and with a passenger/full payload [p. 95].",
+   "error": "",
+   "notCovered": false,
+   "claims": 2,
+   "groundedClaims": 2,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.00502,
+   "tokensIn": 2168,
+   "tokensSaved": 883,
+   "ttft": 2.351691899999423,
+   "seconds": 3.017962100000659,
+   "sentences": [
+    {
+     "text": "Set the front tyre to 2.0 bar (29 psi) and the rear tyre to 2.2 bar (32 psi), checked cold",
+     "cited": true
+    },
+    {
+     "text": "These pressures apply both solo and with a passenger/full payload",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "how do I check the brake pads on the front",
+   "answer": "Check the front brake linings regularly for lining thickness, damage, cracking, and secure mounting [p. 86]. The lining thickness must be at least 1 mm (0.04 in); replace the front brake linings if it is less than this [p. 86]. Replace them if they are damaged or cracked, and secure or replace parts as needed if they are not correctly mounted [p. 86].",
+   "error": "",
+   "notCovered": false,
+   "claims": 3,
+   "groundedClaims": 3,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.00536,
+   "tokensIn": 2140,
+   "tokensSaved": 833,
+   "ttft": 4.748592399999325,
+   "seconds": 6.04042599999957,
+   "sentences": [
+    {
+     "text": "Check the front brake linings regularly for lining thickness, damage, cracking, and secure mounting",
+     "cited": true
+    },
+    {
+     "text": "The lining thickness must be at least 1 mm (0.04 in); replace the front brake linings if it is less than this",
+     "cited": true
+    },
+    {
+     "text": "Replace them if they are damaged or cracked, and secure or replace parts as needed if they are not correctly mounted",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "my battery is flat, can I charge it on the bike",
+   "answer": "Yes. Connect a battery charger to the 12-V battery, then connect the charger to the mains supply [p. 98]. After charging, switch off the charger and disconnect it from the 12-V battery [p. 98]. The charger may remain connected on the motorcycle for maintenance charging, and the manual recommends regular recharging if the motorcycle is not used for three months [p. 98].",
+   "error": "",
+   "notCovered": false,
+   "claims": 3,
+   "groundedClaims": 3,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.004974,
+   "tokensIn": 1965,
+   "tokensSaved": 568,
+   "ttft": 2.3772391000002244,
+   "seconds": 3.3096198000002914,
+   "sentences": [
+    {
+     "text": "Connect a battery charger to the 12-V battery, then connect the charger to the mains supply",
+     "cited": true
+    },
+    {
+     "text": "After charging, switch off the charger and disconnect it from the 12-V battery",
+     "cited": true
+    },
+    {
+     "text": "The charger may remain connected on the motorcycle for maintenance charging, and the manual recommends regular recharging if the motorcycle is not used for three months",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "torque for the rear axle nut",
+   "answer": "Tighten the rear wheel spindle nut to 100 Nm (73.8 lbf ft) [p. 78].",
+   "error": "",
+   "notCovered": false,
+   "claims": 1,
+   "groundedClaims": 1,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.006722,
+   "tokensIn": 3181,
+   "tokensSaved": 472,
+   "ttft": 2.5424560000010388,
+   "seconds": 2.865981800001464,
+   "sentences": [
+    {
+     "text": "Tighten the rear wheel spindle nut to 100 Nm (73.8 lbf ft)",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "which oil do I need",
+   "answer": "Use SAE 15W/50 engine oil [p. 116]. The engine oil capacity is 1.5 l (1.6 qt.) [p. 125].",
+   "error": "",
+   "notCovered": false,
+   "claims": 2,
+   "groundedClaims": 2,
+   "citations": 2,
+   "validCitations": 2,
+   "usd": 0.006448,
+   "tokensIn": 2978,
+   "tokensSaved": 396,
+   "ttft": 1.780829299999823,
+   "seconds": 2.51242160000038,
+   "sentences": [
+    {
+     "text": "Use SAE 15W/50 engine oil",
+     "cited": true
+    },
+    {
+     "text": "The engine oil capacity is 1.5 l (1.6 qt.)",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "a fuse blew, where is the fuse box",
+   "answer": "The fuse box is under the passenger seat. [p. 101] Remove the passenger seat and front rider’s seat, then remove the battery cover and open the fuse-box cover. [p. 101]",
+   "error": "",
+   "notCovered": false,
+   "claims": 2,
+   "groundedClaims": 1,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.005102,
+   "tokensIn": 2269,
+   "tokensSaved": 726,
+   "ttft": 3.0859899999995832,
+   "seconds": 3.7421685999997862,
+   "sentences": [
+    {
+     "text": "The fuse box is under the passenger seat",
+     "cited": false
+    },
+    {
+     "text": "Remove the passenger seat and front rider’s seat, then remove the battery cover and open the fuse-box cover",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "how do I get the rear wheel off",
+   "answer": "1. Raise the motorcycle on the rear lifting gear. [p. 92]  \n2. Remove the screw and pull the wheel-speed sensor out of its hole, then remove the axle nut, washer, and chain adjuster. [p. 92]  \n3. Support the rear wheel and pull out the wheel spindle, washer, and other chain adjuster. [p. 92]  \n4. Push the wheel forward, lift the chain off the rear sprocket, and carefully move the brake-caliper support to the side without damaging the brake line. [p. 92]  \n5. Pull the rear wheel rearward and out of the swingarm; do not press the rear brake pedal while the wheel is removed. [p. 92]",
+   "error": "",
+   "notCovered": false,
+   "claims": 5,
+   "groundedClaims": 5,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.006348,
+   "tokensIn": 1926,
+   "tokensSaved": 657,
+   "ttft": 2.7558909000017593,
+   "seconds": 4.283585800001674,
+   "sentences": [
+    {
+     "text": "Raise the motorcycle on the rear lifting gear",
+     "cited": true
+    },
+    {
+     "text": "Remove the screw and pull the wheel-speed sensor out of its hole, then remove the axle nut, washer, and chain adjuster",
+     "cited": true
+    },
+    {
+     "text": "Support the rear wheel and pull out the wheel spindle, washer, and other chain adjuster",
+     "cited": true
+    },
+    {
+     "text": "Push the wheel forward, lift the chain off the rear sprocket, and carefully move the brake-caliper support to the side without damaging the brake line",
+     "cited": true
+    },
+    {
+     "text": "Pull the rear wheel rearward and out of the swingarm; do not press the rear brake pedal while the wheel is removed",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "ktm-390-duke-2024-om-en",
+   "question": "when is my next service due",
+   "answer": "Service is due after the 1,000 km (620 mi) initial service, then every 10,000 km (6,200 mi) or 12 months, with additional work at 20,000 km (12,400 mi), 24 months, and 48 months [p. 68].  \nThe manual does not provide your current mileage, date of last service, or service history, so it cannot identify which service is next.",
+   "error": "",
+   "notCovered": false,
+   "claims": 2,
+   "groundedClaims": 1,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.005904,
+   "tokensIn": 2142,
+   "tokensSaved": 836,
+   "ttft": 3.4747567000013078,
+   "seconds": 4.407130600000528,
+   "sentences": [
+    {
+     "text": "Service is due after the 1,000 km (620 mi) initial service, then every 10,000 km (6,200 mi) or 12 months, with additional work at 20,000 km (12,400 mi), 24 months, and 48 months",
+     "cited": true
+    },
+    {
+     "text": "The manual does not provide your current mileage, date of last service, or service history, so it cannot identify which service is next",
+     "cited": false
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "how do I check the engine oil level",
+   "answer": "After a ride of at least 50 km, stop the engine and wait five minutes for the oil to drain into the oil pan [p. 164].  \nOn level, firm ground, hold the motorcycle upright and secure it so it cannot topple sideways [p. 165].  \nRead the oil level in sight glass 1; it must be between the MIN and MAX marks [p. 165].",
+   "error": "",
+   "notCovered": false,
+   "claims": 3,
+   "groundedClaims": 3,
+   "citations": 2,
+   "validCitations": 2,
+   "usd": 0.004204,
+   "tokensIn": 1574,
+   "tokensSaved": 392,
+   "ttft": 3.437351500000659,
+   "seconds": 4.274137399999745,
+   "sentences": [
+    {
+     "text": "After a ride of at least 50 km, stop the engine and wait five minutes for the oil to drain into the oil pan",
+     "cited": true
+    },
+    {
+     "text": "On level, firm ground, hold the motorcycle upright and secure it so it cannot topple sideways",
+     "cited": true
+    },
+    {
+     "text": "Read the oil level in sight glass 1; it must be between the MIN and MAX marks",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "what tyre pressure two up with luggage",
+   "answer": "Set the front tyre to 2.5 bar and the rear tyre to 2.7 bar for two-up riding with luggage, measured with the tyres cold [p. 216].",
+   "error": "",
+   "notCovered": false,
+   "claims": 1,
+   "groundedClaims": 1,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.004166,
+   "tokensIn": 1831,
+   "tokensSaved": 474,
+   "ttft": 1.9294926000002306,
+   "seconds": 2.454161600000589,
+   "sentences": [
+    {
+     "text": "Set the front tyre to 2.5 bar and the rear tyre to 2.7 bar for two-up riding with luggage, measured with the tyres cold",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "how do I adjust the headlight",
+   "answer": "Not in this manual.",
+   "error": "",
+   "notCovered": true,
+   "claims": 0,
+   "groundedClaims": 0,
+   "citations": 0,
+   "validCitations": 0,
+   "usd": 0.003428,
+   "tokensIn": 1660,
+   "tokensSaved": 384,
+   "ttft": 2.962588100001085,
+   "seconds": 3.1170443999999407,
+   "sentences": [
+    {
+     "text": "Not in this manual",
+     "cited": false
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "coolant is low, what do I top it up with",
+   "answer": "Not in this manual.",
+   "error": "",
+   "notCovered": true,
+   "claims": 0,
+   "groundedClaims": 0,
+   "citations": 0,
+   "validCitations": 0,
+   "usd": 0.003436,
+   "tokensIn": 1664,
+   "tokensSaved": 317,
+   "ttft": 2.164444199999707,
+   "seconds": 2.3526695000000473,
+   "sentences": [
+    {
+     "text": "Not in this manual",
+     "cited": false
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "how do I take the seat off",
+   "answer": "1. Disengage the cover from its holder and remove it, taking care around the diagnostic-connector wiring [p. 106].  \n2. Remove the cover using the Torx wrench and extension, then remove the rubber plug [p. 106][p. 107].  \n3. Insert the short end of the Torx wrench in the extension, remove the seat screw, then pull the seat rearward off its lugs [p. 107].",
+   "error": "",
+   "notCovered": false,
+   "claims": 3,
+   "groundedClaims": 3,
+   "citations": 2,
+   "validCitations": 2,
+   "usd": 0.003748,
+   "tokensIn": 1280,
+   "tokensSaved": 226,
+   "ttft": 1.9450295999995433,
+   "seconds": 2.9186969000002136,
+   "sentences": [
+    {
+     "text": "Disengage the cover from its holder and remove it, taking care around the diagnostic-connector wiring",
+     "cited": true
+    },
+    {
+     "text": "Remove the cover using the Torx wrench and extension, then remove the rubber plug",
+     "cited": true
+    },
+    {
+     "text": "Insert the short end of the Torx wrench in the extension, remove the seat screw, then pull the seat rearward off its lugs",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "brake fluid spec",
+   "answer": "Use DOT4 brake fluid for both the front and rear brakes [p. 169].",
+   "error": "",
+   "notCovered": false,
+   "claims": 1,
+   "groundedClaims": 1,
+   "citations": 1,
+   "validCitations": 1,
+   "usd": 0.003252,
+   "tokensIn": 1494,
+   "tokensSaved": 364,
+   "ttft": 2.496795300001395,
+   "seconds": 2.8138362000008783,
+   "sentences": [
+    {
+     "text": "Use DOT4 brake fluid for both the front and rear brakes",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "how do I set the spring preload",
+   "answer": "1. Park the motorcycle on firm, level ground and put it on its stand before adjusting either end. [p. 118]  \n2. For the rear, turn the spring-preload adjuster knob clockwise to increase preload or counter-clockwise to reduce it. [p. 118]  \n3. For the front, use the toolkit adapter on adjusting screw 3; turn it in direction A to increase preload and reduce compression, or direction B to reduce preload and increase compression. [p. 117]  \n4. Match the front-fork and spring-strut damping settings to the spring-preload setting after adjustment. [p. 117] [p. 118]",
+   "error": "",
+   "notCovered": false,
+   "claims": 4,
+   "groundedClaims": 4,
+   "citations": 2,
+   "validCitations": 2,
+   "usd": 0.006474,
+   "tokensIn": 1647,
+   "tokensSaved": 408,
+   "ttft": 4.236634500000946,
+   "seconds": 5.43431480000072,
+   "sentences": [
+    {
+     "text": "Park the motorcycle on firm, level ground and put it on its stand before adjusting either end",
+     "cited": true
+    },
+    {
+     "text": "For the rear, turn the spring-preload adjuster knob clockwise to increase preload or counter-clockwise to reduce it",
+     "cited": true
+    },
+    {
+     "text": "For the front, use the toolkit adapter on adjusting screw 3; turn it in direction A to increase preload and reduce compression, or direction B to reduce preload and increase compression",
+     "cited": true
+    },
+    {
+     "text": "Match the front-fork and spring-strut damping settings to the spring-preload setting after adjustment",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "jump start it from a car",
+   "answer": "Use fully insulated jump leads, keep the motorcycle on level, firm ground on its stand, and use a 12 V donor vehicle only [p. 181].  \nRemove the protective cap, connect the red lead to the motorcycle’s remote positive terminal and then to the car battery positive terminal; connect the black lead to the motorcycle’s remote ground terminal and then to the car battery negative terminal [p. 182].  \nRun the car’s engine, start the motorcycle normally, and wait a few minutes before trying again if it does not start [p. 182].  \nLet both engines idle for a few minutes, then remove the black lead from the motorcycle first and the red lead second; refit the protective cap [p. 182].",
+   "error": "",
+   "notCovered": false,
+   "claims": 4,
+   "groundedClaims": 4,
+   "citations": 2,
+   "validCitations": 2,
+   "usd": 0.005914,
+   "tokensIn": 2027,
+   "tokensSaved": 0,
+   "ttft": 2.595329199999469,
+   "seconds": 3.815048000000388,
+   "sentences": [
+    {
+     "text": "Use fully insulated jump leads, keep the motorcycle on level, firm ground on its stand, and use a 12 V donor vehicle only",
+     "cited": true
+    },
+    {
+     "text": "Remove the protective cap, connect the red lead to the motorcycle’s remote positive terminal and then to the car battery positive terminal; connect the black lead to the motorcycle’s remote ground terminal and then to the car battery negative terminal",
+     "cited": true
+    },
+    {
+     "text": "Run the car’s engine, start the motorcycle normally, and wait a few minutes before trying again if it does not start",
+     "cited": true
+    },
+    {
+     "text": "Let both engines idle for a few minutes, then remove the black lead from the motorcycle first and the red lead second; refit the protective cap",
+     "cited": true
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "what is the minimum tread depth",
+   "answer": "Not in this manual.",
+   "error": "",
+   "notCovered": true,
+   "claims": 0,
+   "groundedClaims": 0,
+   "citations": 0,
+   "validCitations": 0,
+   "usd": 0.003506,
+   "tokensIn": 1699,
+   "tokensSaved": 448,
+   "ttft": 2.4856015000004845,
+   "seconds": 2.693981399999757,
+   "sentences": [
+    {
+     "text": "Not in this manual",
+     "cited": false
+    }
+   ]
+  },
+  {
+   "manual": "bmw-r12gs-2025-rm-en",
+   "question": "best exhaust for it",
+   "answer": "Not in this manual.",
+   "error": "",
+   "notCovered": true,
+   "claims": 0,
+   "groundedClaims": 0,
+   "citations": 0,
+   "validCitations": 0,
+   "usd": 0.0,
+   "tokensIn": 0,
+   "tokensSaved": 0,
+   "ttft": 0.9808996000010666,
+   "seconds": 0.9809351000003517,
+   "sentences": [
+    {
+     "text": "Not in this manual",
+     "cited": false
+    }
+   ]
+  }
+ ]
+}
