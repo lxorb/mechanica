@@ -18,7 +18,10 @@ How the portal is keyed (all of this is read off the site, nothing guessed):
 `publicationLang` must be an exact language id — "" and "ALL" return nothing — so every base is
 asked for its own languages *and* for English (02), which is what makes a Greek or Finnish
 distributor useful to an English catalogue. Languages are filtered through `keep_lang` before the
-request, so the default REGISTRY_LANGS=en costs one pass per base.
+request, so the default REGISTRY_LANGS=en costs one pass per base; REGISTRY_LANGS='*' adds the
+distributor's own language and is how the shipped fragment was built (9,005 manuals, 19 markets,
+10 languages). Bases whose motorcycle manuals are English-only in `langData` — PL, DK, NO, HU, GR,
+BG, RO, CZ, IE, NZ, TR, IN — need no second pass, and AT/CH/BE reprint DE/FR/NL.
 
 Rows are deduplicated on (url, model, year): a publication shared by several distributors is one
 document, and the first market in BASES wins it.
