@@ -310,9 +310,13 @@ function slugPart(value) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
-    .replace(/[\s_/.]+/g, "-")
-    .replace(/-+/g, "-")
+    .replace(/[\s-]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/** Everything but letters and digits gone: the shape both files are compared on at the last rung. */
+function flatKey(value) {
+  return String(value).replace(/[^a-z0-9|]/g, "");
 }
 
 /**
@@ -378,7 +382,10 @@ function modelLadder(model) {
   return out;
 }
 
-/** Separator-blind index of the image map, so "YZF R1" and "YZFR1" both find "yzf-r1". */
+/**
+ * Separator-blind index of the image map, so "YZF R1", "YZF-R1" and "YZFR1" all find "yzf-r1" and
+ * "R nineT Urban GS" finds "r-ninet-urban-g/s". Built once per map, on first use.
+ */
 let flatMap = null;
 let flatFor = null;
 
@@ -386,7 +393,7 @@ function flatten(map) {
   if (flatFor === map && flatMap) return flatMap;
   const index = Object.create(null);
   for (const key of Object.keys(map)) {
-    const flat = key.replace(/-/g, "");
+    const flat = flatKey(key);
     if (!(flat in index)) index[flat] = map[key];
   }
   flatFor = map;
@@ -408,9 +415,9 @@ export function lookupImage(map, make, model) {
   if (!map) return null;
   const mk = slugPart(make);
   const flat = flatten(map);
-  const flatMake = mk.replace(/-/g, "");
+  const flatMake = flatKey(mk);
   for (const name of modelLadder(model)) {
-    const hit = map[`${mk}|${name}`] || flat[`${flatMake}|${name.replace(/-/g, "")}`];
+    const hit = map[`${mk}|${name}`] || flat[`${flatMake}|${flatKey(name)}`];
     if (hit) return hit;
   }
   return null;

@@ -415,10 +415,11 @@ class Checker:
         self.pool = ThreadPoolExecutor(max_workers=VERIFY_WORKERS, thread_name_prefix="verify")
         self.pending: list = []
         self.seen: set[str] = set()
+        self.closed = False
 
     def add(self, offer: Offer) -> None:
         key = _key(offer)
-        if key in self.seen or len(self.seen) >= MAX_OFFERS * 2:
+        if self.closed or key in self.seen or len(self.seen) >= MAX_OFFERS * 2:
             return
         self.seen.add(key)
         self.pending.append(self.pool.submit(self._check, offer))
@@ -428,11 +429,16 @@ class Checker:
             self.on_live(offer)
 
     def close(self) -> None:
+        """Idempotent: the lookup closes on the happy path and again in its finally."""
+        if self.closed:
+            return
+        self.closed = True
         for future in self.pending:
             try:
                 future.result(timeout=VERIFY_TIMEOUT * 2)
             except Exception:
                 pass
+        self.pending.clear()
         self.pool.shutdown(wait=False)
         self.client.close()
 

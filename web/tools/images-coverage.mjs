@@ -92,6 +92,37 @@ console.log(line("after ", after));
 
 const gaps = [...after.table.values()].filter((m) => !m.hit).sort((a, b) => b.rows - a.rows);
 const gapRows = gaps.reduce((n, m) => n + m.rows, 0);
+
+/**
+ * Gaps where the image set does have a photo filed under a LONGER name of the same make and the
+ * same displacement - "V-STAR 650" against "v-star-650-classic". The ladder only ever shortens a
+ * name, on purpose: lengthening one would also hand Land Rover Discovery the Discovery Sport's
+ * photo and Ford Explorer the Explorer Sport Trac's, which are different vehicles. Counted here so
+ * the size of that trade is known rather than guessed at.
+ */
+function longerNames() {
+  const flat = new Map();
+  for (const key of Object.keys(map)) {
+    const [mk, md] = key.split("|");
+    const f = `${mk.replace(/-/g, "")}|${md.replace(/-/g, "")}`;
+    if (!flat.has(f)) flat.set(f, key);
+  }
+  const bare = (v) => String(v ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").replace(/[^a-z0-9]+/g, "");
+  const digits = (v) => (String(v).match(/\d+/g) || []).join("-");
+  let n = 0;
+  for (const g of gaps) {
+    const mk = bare(g.make);
+    const md = bare(g.model);
+    for (const [f, key] of flat) {
+      const [fm, fd] = f.split("|");
+      if (fm !== mk || !fd.startsWith(md) || fd === md) continue;
+      if (digits(key.split("|")[1]) !== digits(g.model)) continue;
+      n += 1;
+      break;
+    }
+  }
+  return n;
+}
 console.log(`uncovered: ${gaps.length} models over ${gapRows} rows`);
 console.log(
   gaps
@@ -118,10 +149,21 @@ if (process.argv.includes("--write")) {
     "| ---: | --- | --- |",
     ...gaps.slice(0, TOP_GAPS).map((m) => `| ${m.rows} | ${m.make} | ${m.model} |`),
     "",
+    "## What this list is and is not",
+    "",
     "A model here has no key in web/store/bike-images.json or bike-images-2.json that the ladder can",
     "reach - not a spelling the ladder misses, but a photo nobody has taken yet. The ladder never",
-    "crosses a digit run, so a size that has no photo of its own stays on this list rather than",
-    "borrowing its sibling's.",
+    "crosses a digit run, so a size with no photo of its own stays on this list rather than borrowing",
+    "its sibling's: a YZF-R6 never gets the R1's picture and a CB500F never gets the CB650's.",
+    "",
+    `Of the ${gaps.length}, **${longerNames()}** do have a photo filed under a *longer* name of the same make and`,
+    "the same displacement - \"V-STAR 650\" against `yamaha|v-star-650-classic`. The ladder shortens a",
+    "name but never lengthens one, because the same rule would hand Land Rover Discovery the Discovery",
+    "Sport's photo and Ford Explorer the Explorer Sport Trac's. Renaming those keys in the image files",
+    "is the safe way to collect them.",
+    "",
+    "A few rows near the top are not vehicles at all (Harley-Davidson \"Parts Listing\", \"Shop Dope/Service",
+    "Bulletins\"): registry documents that came in as catalog rows. They want deleting, not photographing.",
     "",
   ].join("\n");
   mkdirSync(dirname(GAPS), { recursive: true });
