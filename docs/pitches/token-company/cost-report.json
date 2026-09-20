@@ -1,0 +1,453 @@
+{
+  "log": "C:\\Users\\me\\trustthemanual\\api\\data\\costs.jsonl",
+  "calls": 37524,
+  "catalog": {
+    "manuals": 508,
+    "mean": 177.6811023622047,
+    "median": 170.5,
+    "max": 381,
+    "min": 9
+  },
+  "ingest": {
+    "manuals": 648,
+    "meanUsd": 0.09507253086419754,
+    "medianUsd": 0.0972,
+    "maxUsd": 0.181,
+    "totalUsd": 61.607,
+    "meanPages": 176.79783950617283,
+    "medianPages": 170.0,
+    "usdPerPage": 0.0005377471304499629
+  },
+  "byRoute": [
+    {
+      "route": "ask.picker",
+      "model": "gpt-5.6-terra",
+      "calls": 286,
+      "meanIn": 1278.167832167832,
+      "cachedPct": 34.62424361794089,
+      "meanOut": 38.34615384615385,
+      "usdPerCall": 0.0022198888111888133,
+      "usd": 0.6348882000000006
+    },
+    {
+      "route": "ask.router",
+      "model": "gpt-5.6-luna",
+      "calls": 1113,
+      "meanIn": 3102.1428571428573,
+      "cachedPct": 99.52089460810934,
+      "meanOut": 56.20215633423181,
+      "usdPerCall": 0.00013216070080862528,
+      "usd": 0.14709485999999994
+    },
+    {
+      "route": "chat.answer",
+      "model": "gpt-5.6-terra",
+      "calls": 248,
+      "meanIn": 2314.3508064516127,
+      "cachedPct": 42.7424258527177,
+      "meanOut": 101.31854838709677,
+      "usdPerCall": 0.004063946774193551,
+      "usd": 1.0078588000000006
+    },
+    {
+      "route": "identify.part",
+      "model": "gpt-5.6-luna",
+      "calls": 8,
+      "meanIn": 1241.625,
+      "cachedPct": 38.65901540320145,
+      "meanOut": 64.5,
+      "usdPerCall": 0.000239325,
+      "usd": 0.0019146
+    },
+    {
+      "route": "identify.part",
+      "model": "gpt-6-astra",
+      "calls": 3,
+      "meanIn": 1283.0,
+      "cachedPct": 0.0,
+      "meanOut": 24.333333333333332,
+      "usdPerCall": 0.014046666666666666,
+      "usd": 0.04214
+    },
+    {
+      "route": "identify.photo",
+      "model": "gpt-5.6-luna",
+      "calls": 11,
+      "meanIn": 1717.7272727272727,
+      "cachedPct": 26.811325747552264,
+      "meanOut": 169.45454545454547,
+      "usdPerCall": 0.0004639927272727273,
+      "usd": 0.0051039200000000005
+    },
+    {
+      "route": "identify.photo",
+      "model": "gpt-6-astra",
+      "calls": 8,
+      "meanIn": 1254.25,
+      "cachedPct": 0.0,
+      "meanOut": 242.375,
+      "usdPerCall": 0.02466125,
+      "usd": 0.19729
+    },
+    {
+      "route": "illustrations",
+      "model": "gpt-image-1",
+      "calls": 102,
+      "meanIn": 139.5392156862745,
+      "cachedPct": 0.0,
+      "meanOut": 1056.0,
+      "usdPerCall": 0.042240000000000014,
+      "usd": 4.308480000000001
+    },
+    {
+      "route": "images.score",
+      "model": "gpt-5.6-luna",
+      "calls": 5040,
+      "meanIn": 774.4186507936508,
+      "cachedPct": 0.11711293930162667,
+      "meanOut": 274.56448412698415,
+      "usdPerCall": 0.00048419786111111103,
+      "usd": 2.4403572199999997
+    },
+    {
+      "route": "ingest.keywords",
+      "model": "gpt-5.6-luna",
+      "calls": 3335,
+      "meanIn": 536.3253373313344,
+      "cachedPct": 0.0,
+      "meanOut": 1563.8026986506748,
+      "usdPerCall": 0.0019838283058470738,
+      "usd": 6.616067399999991
+    },
+    {
+      "route": "ingest.struct",
+      "model": "gpt-5.6-luna",
+      "calls": 27364,
+      "meanIn": 2572.850314281538,
+      "cachedPct": 47.0321976716036,
+      "meanOut": 1729.3986624762463,
+      "usdPerCall": 0.0023720362096184694,
+      "usd": 64.90839883999979
+    },
+    {
+      "route": "probe.router",
+      "model": "gpt-5.6-luna",
+      "calls": 6,
+      "meanIn": 2081.0,
+      "cachedPct": 66.49046932564472,
+      "meanOut": 52.166666666666664,
+      "usdPerCall": 0.00022973999999999998,
+      "usd": 0.0013784399999999999
+    }
+  ],
+  "operations": {
+    "byOperation": [
+      {
+        "operation": "ask (router + picker)",
+        "n": 286,
+        "meanIn": 3762.076923076923,
+        "cachedPct": 77.38379150038013,
+        "meanOut": 107.52797202797203,
+        "meanUsd": 0.0023553260839160838,
+        "medianUsd": 0.0025783399999999997,
+        "usd": 0.67362326
+      },
+      {
+        "operation": "ask (router only)",
+        "n": 579,
+        "meanIn": 3241.86701208981,
+        "cachedPct": 99.61711012172883,
+        "meanOut": 51.37823834196891,
+        "meanUsd": 0.00012872552677029362,
+        "medianUsd": 0.00012804,
+        "usd": 0.07453208
+      },
+      {
+        "operation": "chat",
+        "n": 248,
+        "meanIn": 5803.245967741936,
+        "cachedPct": 76.81810443960381,
+        "meanOut": 153.81451612903226,
+        "meanUsd": 0.004200348870967742,
+        "medianUsd": 0.0043274,
+        "usd": 1.04168652
+      },
+      {
+        "operation": "identify.part:gpt-5.6-luna",
+        "n": 8,
+        "meanIn": 1241.625,
+        "cachedPct": 38.65901540320145,
+        "meanOut": 64.5,
+        "meanUsd": 0.000239325,
+        "medianUsd": 0.0002777,
+        "usd": 0.0019146
+      },
+      {
+        "operation": "identify.part:gpt-6-astra",
+        "n": 3,
+        "meanIn": 1283,
+        "cachedPct": 0.0,
+        "meanOut": 24.333333333333332,
+        "meanUsd": 0.014046666666666667,
+        "medianUsd": 0.01436,
+        "usd": 0.04214
+      },
+      {
+        "operation": "identify.photo:gpt-5.6-luna",
+        "n": 11,
+        "meanIn": 1717.7272727272727,
+        "cachedPct": 26.811325747552264,
+        "meanOut": 169.45454545454547,
+        "meanUsd": 0.00046399272727272727,
+        "medianUsd": 0.00043720000000000006,
+        "usd": 0.0051039200000000005
+      },
+      {
+        "operation": "identify.photo:gpt-6-astra",
+        "n": 8,
+        "meanIn": 1254.25,
+        "cachedPct": 0.0,
+        "meanOut": 242.375,
+        "meanUsd": 0.02466125,
+        "medianUsd": 0.024454999999999998,
+        "usd": 0.19729
+      }
+    ],
+    "asks": 865,
+    "asksWithPicker": 286,
+    "asksZeroPicker": 579,
+    "zeroPickerPct": 66.9364161849711,
+    "orphans": {
+      "picker": 0,
+      "chat": 0
+    },
+    "askMeanUsd": 0.0008649194682080924
+  },
+  "caching": [
+    {
+      "route": "ask.picker",
+      "model": "gpt-5.6-terra",
+      "calls": 286,
+      "hitPct": 34.62424361794089,
+      "usdPaid": 0.6348882000000006,
+      "usdSaved": 0.22782780000000002,
+      "usdWithout": 0.8627160000000006
+    },
+    {
+      "route": "ask.router",
+      "model": "gpt-5.6-luna",
+      "calls": 1113,
+      "hitPct": 99.52089460810934,
+      "usdPaid": 0.14709485999999994,
+      "usdSaved": 0.6185057400000001,
+      "usdWithout": 0.7656006000000001
+    },
+    {
+      "route": "chat.answer",
+      "model": "gpt-5.6-terra",
+      "calls": 248,
+      "hitPct": 42.7424258527177,
+      "usdPaid": 1.0078588000000006,
+      "usdSaved": 0.4415832,
+      "usdWithout": 1.4494420000000006
+    },
+    {
+      "route": "identify.part",
+      "model": "gpt-5.6-luna",
+      "calls": 8,
+      "hitPct": 38.65901540320145,
+      "usdPaid": 0.0019146,
+      "usdSaved": 0.0006912,
+      "usdWithout": 0.0026058
+    },
+    {
+      "route": "identify.part",
+      "model": "gpt-6-astra",
+      "calls": 3,
+      "hitPct": 0.0,
+      "usdPaid": 0.04214,
+      "usdSaved": 0.0,
+      "usdWithout": 0.04214
+    },
+    {
+      "route": "identify.photo",
+      "model": "gpt-5.6-luna",
+      "calls": 11,
+      "hitPct": 26.811325747552264,
+      "usdPaid": 0.0051039200000000005,
+      "usdSaved": 0.0009118800000000001,
+      "usdWithout": 0.006015800000000001
+    },
+    {
+      "route": "identify.photo",
+      "model": "gpt-6-astra",
+      "calls": 8,
+      "hitPct": 0.0,
+      "usdPaid": 0.19729,
+      "usdSaved": 0.0,
+      "usdWithout": 0.19729
+    },
+    {
+      "route": "illustrations",
+      "model": "gpt-image-1",
+      "calls": 102,
+      "hitPct": 0.0,
+      "usdPaid": 4.308480000000001,
+      "usdSaved": 0.0,
+      "usdWithout": 4.308480000000001
+    },
+    {
+      "route": "images.score",
+      "model": "gpt-5.6-luna",
+      "calls": 5040,
+      "hitPct": 0.11711293930162667,
+      "usdPaid": 2.4403572199999997,
+      "usdSaved": 0.0008227800000000001,
+      "usdWithout": 2.4411799999999997
+    },
+    {
+      "route": "ingest.keywords",
+      "model": "gpt-5.6-luna",
+      "calls": 3335,
+      "hitPct": 0.0,
+      "usdPaid": 6.616067399999991,
+      "usdSaved": 0.0,
+      "usdWithout": 6.616067399999991
+    },
+    {
+      "route": "ingest.struct",
+      "model": "gpt-5.6-luna",
+      "calls": 27364,
+      "hitPct": 47.0321976716036,
+      "usdPaid": 64.90839883999979,
+      "usdSaved": 5.96021436,
+      "usdWithout": 70.86861319999979
+    },
+    {
+      "route": "probe.router",
+      "model": "gpt-5.6-luna",
+      "calls": 6,
+      "hitPct": 66.49046932564472,
+      "usdPaid": 0.0013784399999999999,
+      "usdSaved": 0.0014943600000000001,
+      "usdWithout": 0.0028728
+    }
+  ],
+  "baselines": {
+    "KTM 390 Duke 2023 (demo)": 1.029,
+    "median manual in our catalog": 1.365,
+    "BMW R 12 G/S 2026 (demo)": 2.165,
+    "largest manual in our catalog": 6.101,
+    "the founder's 500-page workshop manual": 8.005
+  },
+  "askUsd": 0.0008649194682080924,
+  "askUsdEval": 0.00038,
+  "chatUsd": 0.004200348870967742,
+  "ladder": [
+    [
+      "0 \u00b7 naive: whole manual, flagship, every question",
+      "$1.3650",
+      "$1.3650",
+      "1x",
+      "170-page manual x 800 tok in gpt-6-astra"
+    ],
+    [
+      "1 \u00b7 + prompt-cache the manual (best case for that design)",
+      "$0.1410",
+      "$0.1410",
+      "10x",
+      "cached-input price, app/llm.py PRICES"
+    ],
+    [
+      "2 \u00b7 page retrieval instead of whole manual (still flagship)",
+      "$0.04839",
+      "$0.02821",
+      "48x (chat)",
+      "logged token counts re-priced at gpt-6-astra"
+    ],
+    [
+      "3 \u00b7 + model tiering (luna router / terra picker + chat)",
+      "$0.001882",
+      "$0.005845",
+      "4.8x vs rung 2",
+      "same tokens, our models, cache ignored"
+    ],
+    [
+      "4 \u00b7 + prompt caching + spec path + picker gating + compression",
+      "$0.000865",
+      "$0.004200",
+      "1.4x vs rung 3",
+      "what the log actually billed"
+    ],
+    [
+      "5 \u00b7 + answer cache on a repeated question",
+      "$0.000000",
+      "$0.000000",
+      "\u221e",
+      "ask._cache / ttc._cache, `usd` forced to 0"
+    ]
+  ],
+  "monthly": {
+    "naive, whole manual, flagship": {
+      "median": 1638.0,
+      "big": 9606.000000000002
+    },
+    "naive + prompt cache (best case for that design)": {
+      "median": 169.2,
+      "big": 966.0000000000001
+    },
+    "reasonable, whole manual in gpt-5.6-luna": {
+      "median": 32.784,
+      "big": 192.144
+    },
+    "ours, every question a chat answer (worst case)": {
+      "median": 5.0404186451612905,
+      "big": 5.0404186451612905
+    },
+    "ours, every question an ask, whole-log mix": {
+      "median": 1.0379033618497109,
+      "big": 1.0379033618497109
+    },
+    "ours, every question an ask, 150-query eval mix": {
+      "median": 0.456,
+      "big": 0.456
+    }
+  },
+  "live": {
+    "cost": {
+      "total": 6.03610592,
+      "count": 1492,
+      "byRoute": {
+        "ask.router": 0.008651939999999997,
+        "ask.picker": 0.04343479999999999,
+        "identify.photo": 0.011615720000000003,
+        "ingest.struct": 2.444979860000003,
+        "ingest.keywords": 0.3449611999999999,
+        "chat.answer": 0.0765168,
+        "offers": 3.1054553999999994,
+        "offers.extract": 0.0004902
+      },
+      "byModel": {
+        "gpt-5.6-luna": 2.8106989200000037,
+        "gpt-5.6-terra": 3.2254069999999992
+      },
+      "naivePerAsk": 12.4,
+      "asks": 83
+    },
+    "ttc": {
+      "model": "bear-2",
+      "enabled": true,
+      "byRoute": {},
+      "total": {
+        "calls": 0,
+        "cached": 0,
+        "errors": 0,
+        "tokensIn": 0,
+        "tokensOut": 0,
+        "tokensSaved": 0,
+        "seconds": 0.0,
+        "savedPct": 0.0
+      }
+    }
+  }
+}

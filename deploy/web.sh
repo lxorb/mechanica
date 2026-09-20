@@ -13,5 +13,8 @@ cd "$ROOT"
 # `vite build` leaves a redirect that makes wrangler deploy dist/ (the old React build)
 # instead of the wrangler.jsonc next to it, which serves web/. There is no build step here.
 rm -f .wrangler/deploy/config.json
+# Stamp the service worker so every deploy installs a fresh worker and drops the old caches.
+STAMP="$(git rev-parse --short HEAD 2>/dev/null || echo dev)-$(date -u +%Y%m%d%H%M)"
+sed -i -E "s/^const VERSION = \"[^\"]*\";/const VERSION = \"$STAMP\";/" web/counter/sw.js
 npx wrangler deploy --config wrangler.jsonc
 echo "https://mechanica.emilvinu.ch/counter/  (also https://trustthemanual.cloudflare-disjoin783.workers.dev/counter/)"

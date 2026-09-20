@@ -1,4 +1,6 @@
-const VERSION = "v8";
+// Stamped by deploy/web.sh on every deploy (git sha + time), so each release installs a fresh
+// worker, drops the previous caches and takes over every open tab.
+const VERSION = "2937b1b-202609200658";
 const SHELL = `mechanica-shell-${VERSION}`;
 const RUNTIME = `mechanica-runtime-${VERSION}`;
 const DATA = `mechanica-data-${VERSION}`;
@@ -96,10 +98,16 @@ function isCdn(url) {
   return url.hostname === "cdn.jsdelivr.net" || url.hostname === "cdnjs.cloudflare.com";
 }
 
-function isImmutableStore(url) {
+/**
+ * Big, rarely changing files: vehicle photos, part icons and illustrations, 3D models,
+ * environments, rendered manual pages. Served from the cache at once and refreshed in the
+ * background, because the image and 3D pipelines overwrite files in place under the same
+ * name, so "immutable" was never true.
+ */
+function isStoreAsset(url) {
   if (!sameOrigin(url)) return false;
   const path = url.pathname;
-  if (path.includes("/store/img/") || path.includes("/store/icons-parts/")) return true;
+  if (/\/store\/(img|icons-parts|icons-parts-3d|models|env)\//.test(path)) return true;
   return /\/store\/manuals\/.+\/pages\//.test(path);
 }
 
@@ -115,7 +123,7 @@ async function precache() {
   const cache = await caches.open(SHELL);
   await Promise.all(
     PRECACHE.map((url) =>
-      cache.add(url).catch((err) => {
+      cache.add(new Request(url, { cache: "reload" })).catch((err) => {
         console.warn("precache skip", url, err);
       })
     )
@@ -283,12 +291,12 @@ async function networkFirstData(request) {
   }
 }
 
-async function staleWhileRevalidateFonts(event, request) {
-  const cache = await caches.open(FONTS);
+async function staleWhileRevalidate(event, request, cacheName) {
+  const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
   const fetching = fetch(request)
     .then(async (response) => {
-      await putUncapped(FONTS, request, response);
+      await putUncapped(cacheName, request, response);
       return response;
     })
     .catch((err) => {
@@ -306,14 +314,20 @@ function shouldShellCache(request, response) {
   if (!response.ok) return false;
   if (response.type !== "basic" && response.type !== "cors") return false;
   const url = new URL(request.url);
-  if (!sameOrigin(url) || isPdf(url) || isOnnx(url) || isCatalog(url) || isImmutableStore(url)) return false;
-  return url.pathname === "/counter" || url.pathname.startsWith("/counter/");
+  if (!sameOrigin(url) || isPdf(url) || isOnnx(url) || isCatalog(url) || isStoreAsset(url)) return false;
+  const path = url.pathname;
+  return path === "/counter" || path.startsWith("/counter/") || path.startsWith("/store/") || path.startsWith("/vendor/");
 }
 
-async function shellFirst(request) {
+/**
+ * App shell (html, css, js, the bundled roster and image maps): network first, cache as
+ * the fallback. The edge answers every shell file with max-age=0 + ETag, so online this is
+ * one conditional request per file (a 304 when nothing changed) and a reload always shows
+ * the version that is deployed; offline the last good copy is served, and a navigation
+ * with nothing cached for its path falls back to the precached index.
+ */
+async function shellNetworkFirst(request) {
   const cache = await caches.open(SHELL);
-  const cached = await cache.match(request, { ignoreSearch: true });
-  if (cached) return cached;
   try {
     const response = await fetch(request);
     if (shouldShellCache(request, response)) {
@@ -321,6 +335,8 @@ async function shellFirst(request) {
     }
     return response;
   } catch (err) {
+    const cached = await cache.match(request, { ignoreSearch: true });
+    if (cached) return cached;
     if (request.mode === "navigate") {
       const fallback = (await cache.match("./")) || (await cache.match("index.html"));
       if (fallback) return fallback;
@@ -361,13 +377,13 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(cacheFirst(request, CDN));
     return;
   }
-  if (isImmutableStore(url)) {
-    event.respondWith(cacheFirst(request));
+  if (isStoreAsset(url)) {
+    event.respondWith(staleWhileRevalidate(event, request, RUNTIME));
     return;
   }
   if (isGoogleFont(url)) {
-    event.respondWith(staleWhileRevalidateFonts(event, request));
+    event.respondWith(staleWhileRevalidate(event, request, FONTS));
     return;
   }
-  event.respondWith(shellFirst(request));
+  event.respondWith(shellNetworkFirst(request));
 });

@@ -65,13 +65,18 @@ function firstGo() {
 function registerSw() {
   if (!("serviceWorker" in navigator)) return;
   const controlled = Boolean(navigator.serviceWorker.controller);
-  navigator.serviceWorker.register("sw.js").catch((err) => {
+  navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch((err) => {
     console.warn("sw register failed", err);
   });
-  if (controlled) return;
   navigator.serviceWorker.addEventListener(
     "controllerchange",
     () => {
+      // A page that was already controlled has just been claimed by a newly deployed worker:
+      // its old caches are gone, so load the new shell once. A first visit only re-probes.
+      if (controlled) {
+        location.reload();
+        return;
+      }
       fetch(`${Q.apiBase()}/health`, { headers: { Accept: "application/json" } }).catch(() => {});
     },
     { once: true }

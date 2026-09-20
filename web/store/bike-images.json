@@ -1306,41 +1306,25 @@
     "source": "https://commons.wikimedia.org/wiki/File:BrightDrop_Zevo_600.jpg",
     "hero": "store/img/bikes/brightdrop-zevo-600-hero.webp"
   },
-  "buick|century": {
-    "image": "store/img/bikes/buick-century.webp",
-    "thumb": "store/img/bikes/buick-century-thumb.webp",
-    "kind": "car",
-    "title": "Buick GL8 Century 003.jpg",
-    "author": "JustAnotherCarDesigner",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_GL8_Century_003.jpg"
-  },
-  "buick|enclave": {
-    "image": "store/img/bikes/buick-enclave.webp",
-    "thumb": "store/img/bikes/buick-enclave-thumb.webp",
-    "kind": "car",
-    "title": "Buick Enclave Sanming 01 2022-08-12.jpg",
-    "author": "JamesYoung8167",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_Enclave_Sanming_01_2022-08-12.jpg"
-  },
   "buick|encore": {
     "image": "store/img/bikes/buick-encore.webp",
     "thumb": "store/img/bikes/buick-encore-thumb.webp",
     "kind": "car",
-    "title": "Buick Encore GX 001.jpg",
+    "title": "Buick Encore II 006.jpg",
     "author": "Jengtingchen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_Encore_GX_001.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Buick_Encore_II_006.jpg",
+    "hero": "store/img/bikes/buick-encore-hero.webp"
   },
   "buick|encore-gx": {
     "image": "store/img/bikes/buick-encore-gx.webp",
     "thumb": "store/img/bikes/buick-encore-gx-thumb.webp",
     "kind": "car",
-    "title": "2024 Buick Encore GX Avenir AWD, rear left, 10-29-2023.jpg",
-    "author": "MercurySable99",
+    "title": "BUICK ENCORE GX China.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Buick_Encore_GX_Avenir_AWD,_rear_left,_10-29-2023.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:BUICK_ENCORE_GX_China.jpg",
+    "hero": "store/img/bikes/buick-encore-gx-hero.webp"
   },
   "buick|envision": {
     "image": "store/img/bikes/buick-envision.webp",
@@ -1352,41 +1336,25 @@
     "source": "https://commons.wikimedia.org/wiki/File:Buick_Envision_S_IMG003.jpg",
     "hero": "store/img/bikes/buick-envision-hero.webp"
   },
-  "buick|envista": {
-    "image": "store/img/bikes/buick-envista.webp",
-    "thumb": "store/img/bikes/buick-envista-thumb.webp",
-    "kind": "car",
-    "title": "2024 Buick Envista Preferred in White.jpg",
-    "author": "HJUdall",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Buick_Envista_Preferred_in_White.jpg"
-  },
   "buick|lacrosse": {
     "image": "store/img/bikes/buick-lacrosse.webp",
     "thumb": "store/img/bikes/buick-lacrosse-thumb.webp",
     "kind": "car",
-    "title": "BUICK LACROSSE SECOND GENERATION China.jpg",
+    "title": "BUICK LACROSSE FIRST GENERATION China (10).jpg",
     "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BUICK_LACROSSE_SECOND_GENERATION_China.jpg"
-  },
-  "buick|lesabre": {
-    "image": "store/img/bikes/buick-lesabre.webp",
-    "thumb": "store/img/bikes/buick-lesabre-thumb.webp",
-    "kind": "car",
-    "title": "Buick Lesabre (39341695872).jpg",
-    "author": "Guillaume Vachey",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_Lesabre_(39341695872).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:BUICK_LACROSSE_FIRST_GENERATION_China_(10).jpg",
+    "hero": "store/img/bikes/buick-lacrosse-hero.webp"
   },
   "buick|lucerne": {
     "image": "store/img/bikes/buick-lucerne.webp",
     "thumb": "store/img/bikes/buick-lucerne-thumb.webp",
     "kind": "car",
-    "title": "2009 Buick Lucerne Super, front right, 07-26-2022.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2009_Buick_Lucerne_Super,_front_right,_07-26-2022.jpg"
+    "title": "2011 Buick Lucerne CX -- NHTSA.jpg",
+    "author": "U.S. National Highway Traffic Safety Administration",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Buick_Lucerne_CX_--_NHTSA.jpg",
+    "hero": "store/img/bikes/buick-lucerne-hero.webp"
   },
   "buick|park-avenue": {
     "image": "store/img/bikes/buick-park-avenue.webp",
@@ -1395,43 +1363,38 @@
     "title": "2001 Buick Park Avenue.jpg",
     "author": "Unknown",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Buick_Park_Avenue.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2001_Buick_Park_Avenue.jpg",
+    "hero": "store/img/bikes/buick-park-avenue-hero.webp"
   },
   "buick|rainier": {
     "image": "store/img/bikes/buick-rainier.webp",
     "thumb": "store/img/bikes/buick-rainier-thumb.webp",
     "kind": "car",
-    "title": "2005 Buick Rainier 2.2.18.jpg",
-    "author": "Kevauto",
+    "title": "2007 Buick Rainier CXL V8, rear right, 05-24-2025.jpg",
+    "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2005_Buick_Rainier_2.2.18.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2007_Buick_Rainier_CXL_V8,_rear_right,_05-24-2025.jpg",
+    "hero": "store/img/bikes/buick-rainier-hero.webp"
   },
   "buick|regal": {
     "image": "store/img/bikes/buick-regal.webp",
     "thumb": "store/img/bikes/buick-regal-thumb.webp",
     "kind": "car",
-    "title": "Buick Regal P4250792.jpg",
-    "author": "Alexander Migl",
+    "title": "BUICK REGAL GS China (3).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Buick_Regal_P4250792.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:BUICK_REGAL_GS_China_(3).jpg",
+    "hero": "store/img/bikes/buick-regal-hero.webp"
   },
   "buick|rendezvous": {
     "image": "store/img/bikes/buick-rendezvous.webp",
     "thumb": "store/img/bikes/buick-rendezvous-thumb.webp",
     "kind": "car",
-    "title": "2004 Buick Rendezvous 3.4 Front.jpg",
-    "author": "Vauxford",
+    "title": "2005 Buick Rendezvous CX, front left, 10-29-2023.jpg",
+    "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Buick_Rendezvous_3.4_Front.jpg"
-  },
-  "buick|riviera": {
-    "image": "store/img/bikes/buick-riviera.webp",
-    "thumb": "store/img/bikes/buick-riviera-thumb.webp",
-    "kind": "car",
-    "title": "1971 Buick Riviera front, Chelsea 5.18.19.jpg",
-    "author": "Kevauto",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1971_Buick_Riviera_front,_Chelsea_5.18.19.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2005_Buick_Rendezvous_CX,_front_left,_10-29-2023.jpg",
+    "hero": "store/img/bikes/buick-rendezvous-hero.webp"
   },
   "buick|terraza": {
     "image": "store/img/bikes/buick-terraza.webp",
@@ -1440,7 +1403,8 @@
     "title": "2005 Buick Terraza CXL, front right, 06-16-2021.jpg",
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2005_Buick_Terraza_CXL,_front_right,_06-16-2021.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2005_Buick_Terraza_CXL,_front_right,_06-16-2021.jpg",
+    "hero": "store/img/bikes/buick-terraza-hero.webp"
   },
   "buick|verano": {
     "image": "store/img/bikes/buick-verano.webp",
@@ -1449,34 +1413,38 @@
     "title": "2012 Buick Verano -- 04-30-2012.JPG",
     "author": "IFCAR",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2012_Buick_Verano_--_04-30-2012.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Buick_Verano_--_04-30-2012.JPG",
+    "hero": "store/img/bikes/buick-verano-hero.webp"
   },
   "cadillac|ats": {
     "image": "store/img/bikes/cadillac-ats.webp",
     "thumb": "store/img/bikes/cadillac-ats-thumb.webp",
     "kind": "car",
-    "title": "2013 Cadillac ATS -- 2012 DC.JPG",
-    "author": "IFCAR",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2013_Cadillac_ATS_--_2012_DC.JPG"
+    "title": "CADILLAC ATS-L China (4).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_ATS-L_China_(4).jpg",
+    "hero": "store/img/bikes/cadillac-ats-hero.webp"
   },
   "cadillac|catera": {
     "image": "store/img/bikes/cadillac-catera.webp",
     "thumb": "store/img/bikes/cadillac-catera-thumb.webp",
     "kind": "car",
-    "title": "2000 Cadillac Catera (15264550197).jpg",
-    "author": "Greg Gjerdingen from Willmar, USA",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2000_Cadillac_Catera_(15264550197).jpg"
+    "title": "1997-1999 Cadillac Catera.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:1997-1999_Cadillac_Catera.jpg",
+    "hero": "store/img/bikes/cadillac-catera-hero.webp"
   },
   "cadillac|celestiq": {
     "image": "store/img/bikes/cadillac-celestiq.webp",
     "thumb": "store/img/bikes/cadillac-celestiq-thumb.webp",
     "kind": "car",
-    "title": "2025 Cadillac Celestiq, rear right (Greenwich 2025).jpg",
-    "author": "Mr.choppers",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Cadillac_Celestiq,_rear_right_(Greenwich_2025).jpg"
+    "title": "Cadilac Celestiq (54324895617).jpg",
+    "author": "John Bauld from Toronto, Canada",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cadilac_Celestiq_(54324895617).jpg",
+    "hero": "store/img/bikes/cadillac-celestiq-hero.webp"
   },
   "cadillac|ct4": {
     "image": "store/img/bikes/cadillac-ct4.webp",
@@ -1485,16 +1453,8 @@
     "title": "2023 Cadillac CT4 Luxury+ in Summit White, front left.jpg",
     "author": "Mr.choppers",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Cadillac_CT4_Luxury%2B_in_Summit_White,_front_left.jpg"
-  },
-  "cadillac|ct5": {
-    "image": "store/img/bikes/cadillac-ct5.webp",
-    "thumb": "store/img/bikes/cadillac-ct5-thumb.webp",
-    "kind": "car",
-    "title": "2021 Cadillac CT5-V, Front Right 2, 11-21-2021.jpg",
-    "author": "Elise240SX",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Cadillac_CT5-V,_Front_Right_2,_11-21-2021.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Cadillac_CT4_Luxury%2B_in_Summit_White,_front_left.jpg",
+    "hero": "store/img/bikes/cadillac-ct4-hero.webp"
   },
   "cadillac|ct6": {
     "image": "store/img/bikes/cadillac-ct6.webp",
@@ -1503,7 +1463,8 @@
     "title": "CADILLAC CT6 China(3).jpg",
     "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_CT6_China(3).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_CT6_China(3).jpg",
+    "hero": "store/img/bikes/cadillac-ct6-hero.webp"
   },
   "cadillac|cts": {
     "image": "store/img/bikes/cadillac-cts.webp",
@@ -1512,25 +1473,18 @@
     "title": "2012 Cadillac CTS coupe with Premium Collection, front left, 08-27-2023.jpg",
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2012_Cadillac_CTS_coupe_with_Premium_Collection,_front_left,_08-27-2023.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Cadillac_CTS_coupe_with_Premium_Collection,_front_left,_08-27-2023.jpg",
+    "hero": "store/img/bikes/cadillac-cts-hero.webp"
   },
   "cadillac|cts-v": {
     "image": "store/img/bikes/cadillac-cts-v.webp",
     "thumb": "store/img/bikes/cadillac-cts-v-thumb.webp",
     "kind": "car",
-    "title": "Cadillac CTS-V - Mondial de l'Automobile de Paris 2012 - 005.jpg",
-    "author": "Thesupermat",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_CTS-V_-_Mondial_de_l'Automobile_de_Paris_2012_-_005.jpg"
-  },
-  "cadillac|deville": {
-    "image": "store/img/bikes/cadillac-deville.webp",
-    "thumb": "store/img/bikes/cadillac-deville-thumb.webp",
-    "kind": "car",
-    "title": "2022 Downtown West Allis Classic Car Show 070 (1960 Cadillac DeVille).jpg",
-    "author": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Downtown_West_Allis_Classic_Car_Show_070_(1960_Cadillac_DeVille).jpg"
+    "title": "2019 Cadillac CTS-V Base, front left.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Cadillac_CTS-V_Base,_front_left.jpg",
+    "hero": "store/img/bikes/cadillac-cts-v-hero.webp"
   },
   "cadillac|dts": {
     "image": "store/img/bikes/cadillac-dts.webp",
@@ -1539,97 +1493,58 @@
     "title": "Silver 2006 Cadillac DTS.jpg",
     "author": "ToyChest",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Silver_2006_Cadillac_DTS.jpg"
-  },
-  "cadillac|eldorado": {
-    "image": "store/img/bikes/cadillac-eldorado.webp",
-    "thumb": "store/img/bikes/cadillac-eldorado-thumb.webp",
-    "kind": "car",
-    "title": "Cadillac Eldorado, Cabriolet, Bj. 1975 (2017-07-02 Sp).JPG",
-    "author": "Lothar Spurzem",
-    "license": "CC BY-SA 2.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Eldorado,_Cabriolet,_Bj._1975_(2017-07-02_Sp).JPG"
-  },
-  "cadillac|elr": {
-    "image": "store/img/bikes/cadillac-elr.webp",
-    "thumb": "store/img/bikes/cadillac-elr-thumb.webp",
-    "kind": "car",
-    "title": "2016 Cadillac ELR Getting Charged.jpg",
-    "author": "crudmucosa",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Cadillac_ELR_Getting_Charged.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Silver_2006_Cadillac_DTS.jpg",
+    "hero": "store/img/bikes/cadillac-dts-hero.webp"
   },
   "cadillac|escalade": {
     "image": "store/img/bikes/cadillac-escalade.webp",
     "thumb": "store/img/bikes/cadillac-escalade-thumb.webp",
     "kind": "car",
-    "title": "2009 Cadillac Escalade.jpg",
-    "author": "Calreyn88",
+    "title": "CADILLAC ESCALADE China (5).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2009_Cadillac_Escalade.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_ESCALADE_China_(5).jpg",
+    "hero": "store/img/bikes/cadillac-escalade-hero.webp"
   },
   "cadillac|escalade-iq": {
     "image": "store/img/bikes/cadillac-escalade-iq.webp",
     "thumb": "store/img/bikes/cadillac-escalade-iq-thumb.webp",
     "kind": "car",
-    "title": "2025 Cadillac Escalade IQ (cropped).jpg",
-    "author": "Wlb5V",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Cadillac_Escalade_IQ_(cropped).jpg"
-  },
-  "cadillac|escalade-iql": {
-    "image": "store/img/bikes/cadillac-escalade-iql.webp",
-    "thumb": "store/img/bikes/cadillac-escalade-iql-thumb.webp",
-    "kind": "car",
-    "title": "2026 Cadillac Escalade IQL 1000E4.jpg",
-    "author": "2000chevymontecarlo",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Cadillac_Escalade_IQL_1000E4.jpg"
+    "title": "25 Cadillac Escalade IQ Luxury 1.jpg",
+    "author": "HJUdall",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:25_Cadillac_Escalade_IQ_Luxury_1.jpg",
+    "hero": "store/img/bikes/cadillac-escalade-iq-hero.webp"
   },
   "cadillac|lyriq": {
     "image": "store/img/bikes/cadillac-lyriq.webp",
     "thumb": "store/img/bikes/cadillac-lyriq-thumb.webp",
     "kind": "car",
-    "title": "Cadillac Lyriq, Motortreff Bella Italia 2024, Munich (P1190457).jpg",
-    "author": "Matti Blume",
+    "title": "Cadillac Lyriq Auto Zuerich 2024 DSC 6630.jpg",
+    "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Lyriq,_Motortreff_Bella_Italia_2024,_Munich_(P1190457).jpg"
-  },
-  "cadillac|lyriq-v": {
-    "image": "store/img/bikes/cadillac-lyriq-v.webp",
-    "thumb": "store/img/bikes/cadillac-lyriq-v-thumb.webp",
-    "kind": "car",
-    "title": "Cadillac Lyriq-V 002.jpg",
-    "author": "JustAnotherCarDesigner",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Lyriq-V_002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Lyriq_Auto_Zuerich_2024_DSC_6630.jpg",
+    "hero": "store/img/bikes/cadillac-lyriq-hero.webp"
   },
   "cadillac|optiq": {
     "image": "store/img/bikes/cadillac-optiq.webp",
     "thumb": "store/img/bikes/cadillac-optiq-thumb.webp",
     "kind": "car",
-    "title": "Cadillac Optiq Auto Zuerich 2025 DSC 3328.jpg",
-    "author": "Alexander Migl",
+    "title": "2025 Cadillac Optiq, front 5.3.25.jpg",
+    "author": "Kevauto",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Optiq_Auto_Zuerich_2025_DSC_3328.jpg"
-  },
-  "cadillac|seville": {
-    "image": "store/img/bikes/cadillac-seville.webp",
-    "thumb": "store/img/bikes/cadillac-seville-thumb.webp",
-    "kind": "car",
-    "title": "Cadillac Seville (34613545933).jpg",
-    "author": "FotoSleuth",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_Seville_(34613545933).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Cadillac_Optiq,_front_5.3.25.jpg",
+    "hero": "store/img/bikes/cadillac-optiq-hero.webp"
   },
   "cadillac|srx": {
     "image": "store/img/bikes/cadillac-srx.webp",
     "thumb": "store/img/bikes/cadillac-srx-thumb.webp",
     "kind": "car",
-    "title": "Cadillac SRX II Facelift Shishi 02 2022-03-10.jpg",
-    "author": "JamesYoung8167",
+    "title": "CADILLAC SRX SECOND GENERATION China (3).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_SRX_II_Facelift_Shishi_02_2022-03-10.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_SRX_SECOND_GENERATION_China_(3).jpg",
+    "hero": "store/img/bikes/cadillac-srx-hero.webp"
   },
   "cadillac|sts": {
     "image": "store/img/bikes/cadillac-sts.webp",
@@ -1638,7 +1553,8 @@
     "title": "2006 Cadillac STS 3.6.jpg",
     "author": "Dogs.barking.duster.rolling",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2006_Cadillac_STS_3.6.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2006_Cadillac_STS_3.6.jpg",
+    "hero": "store/img/bikes/cadillac-sts-hero.webp"
   },
   "cadillac|vistiq": {
     "image": "store/img/bikes/cadillac-vistiq.webp",
@@ -1647,16 +1563,18 @@
     "title": "2026 Cadillac Vistiq Sport 900e4 in Stellar Black, front left.jpg",
     "author": "Mr.choppers",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Cadillac_Vistiq_Sport_900e4_in_Stellar_Black,_front_left.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2026_Cadillac_Vistiq_Sport_900e4_in_Stellar_Black,_front_left.jpg",
+    "hero": "store/img/bikes/cadillac-vistiq-hero.webp"
   },
   "cadillac|xlr": {
     "image": "store/img/bikes/cadillac-xlr.webp",
     "thumb": "store/img/bikes/cadillac-xlr-thumb.webp",
     "kind": "car",
-    "title": "2004 Cadillac XLR XLR004 @ Cottesloe Civic Centre.jpg",
-    "author": "ZidaneHartono",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Cadillac_XLR_XLR004_%40_Cottesloe_Civic_Centre.jpg"
+    "title": "Black Cadillac XLR; Hastings, MN (41324714390) (cropped).jpg",
+    "author": "Greg Gjerdingen from Willmar, USA",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Black_Cadillac_XLR%3B_Hastings,_MN_(41324714390)_(cropped).jpg",
+    "hero": "store/img/bikes/cadillac-xlr-hero.webp"
   },
   "cadillac|xt4": {
     "image": "store/img/bikes/cadillac-xt4.webp",
@@ -1665,25 +1583,28 @@
     "title": "Cadillac XT4 0001 China 2019-03-13.jpg",
     "author": "Navigator84",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT4_0001_China_2019-03-13.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT4_0001_China_2019-03-13.jpg",
+    "hero": "store/img/bikes/cadillac-xt4-hero.webp"
   },
   "cadillac|xt5": {
     "image": "store/img/bikes/cadillac-xt5.webp",
     "thumb": "store/img/bikes/cadillac-xt5-thumb.webp",
     "kind": "car",
-    "title": "Cadillac XT5 Classic-Days 2022 DSC 0065.jpg",
-    "author": "Alexander Migl",
+    "title": "CADILLAC XT5 China (3).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT5_Classic-Days_2022_DSC_0065.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_XT5_China_(3).jpg",
+    "hero": "store/img/bikes/cadillac-xt5-hero.webp"
   },
   "cadillac|xt6": {
     "image": "store/img/bikes/cadillac-xt6.webp",
     "thumb": "store/img/bikes/cadillac-xt6-thumb.webp",
     "kind": "car",
-    "title": "Cadillac XT6 IMG002.jpg",
-    "author": "Zotyefan",
+    "title": "CADILLAC XT6 China (9).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cadillac_XT6_IMG002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_XT6_China_(9).jpg",
+    "hero": "store/img/bikes/cadillac-xt6-hero.webp"
   },
   "cadillac|xts": {
     "image": "store/img/bikes/cadillac-xts.webp",
@@ -1692,7 +1613,8 @@
     "title": "CADILLAC XTS China.jpg",
     "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_XTS_China.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CADILLAC_XTS_China.jpg",
+    "hero": "store/img/bikes/cadillac-xts-hero.webp"
   },
   "can-am|2014-spyder-rt": {
     "image": "store/img/bikes/can-am-2014-spyder-rt.webp",
@@ -1739,24 +1661,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:CanAm_Spyder_RT_(51826170573).jpg",
     "hero": "store/img/bikes/can-am-spyder-rt-hero.webp"
   },
-  "chevrolet|astro": {
-    "image": "store/img/bikes/chevrolet-astro.webp",
-    "thumb": "store/img/bikes/chevrolet-astro-thumb.webp",
-    "kind": "car",
-    "title": "2001 Chevrolet Astro LS, rear left, 06-07-2024.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Chevrolet_Astro_LS,_rear_left,_06-07-2024.jpg"
-  },
-  "chevrolet|avalanche": {
-    "image": "store/img/bikes/chevrolet-avalanche.webp",
-    "thumb": "store/img/bikes/chevrolet-avalanche-thumb.webp",
-    "kind": "car",
-    "title": "2013 Chevrolet Avalanche Black Diamond Edition.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2013_Chevrolet_Avalanche_Black_Diamond_Edition.jpg"
-  },
   "chevrolet|aveo": {
     "image": "store/img/bikes/chevrolet-aveo.webp",
     "thumb": "store/img/bikes/chevrolet-aveo-thumb.webp",
@@ -1764,7 +1668,8 @@
     "title": "Chevrolet Aveo 1.4 LS 2004.jpg",
     "author": "order_242 from Chile",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Aveo_1.4_LS_2004.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Aveo_1.4_LS_2004.jpg",
+    "hero": "store/img/bikes/chevrolet-aveo-hero.webp"
   },
   "chevrolet|blazer": {
     "image": "store/img/bikes/chevrolet-blazer.webp",
@@ -1773,25 +1678,28 @@
     "title": "98-05 Chevrolet S-10 Blazer 2door.jpg",
     "author": "IFCAR",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:98-05_Chevrolet_S-10_Blazer_2door.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:98-05_Chevrolet_S-10_Blazer_2door.jpg",
+    "hero": "store/img/bikes/chevrolet-blazer-hero.webp"
   },
   "chevrolet|blazer-ev": {
     "image": "store/img/bikes/chevrolet-blazer-ev.webp",
     "thumb": "store/img/bikes/chevrolet-blazer-ev-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Blazer EV RS eAWD (2024) (53619432081).jpg",
-    "author": "Charles from Port Chester, New York",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Blazer_EV_RS_eAWD_(2024)_(53619432081).jpg"
+    "title": "2024 Chevrolet Blazer EV RS in Summit White, rear left.jpg",
+    "author": "Mr.choppers",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_Blazer_EV_RS_in_Summit_White,_rear_left.jpg",
+    "hero": "store/img/bikes/chevrolet-blazer-ev-hero.webp"
   },
   "chevrolet|bolt": {
     "image": "store/img/bikes/chevrolet-bolt.webp",
     "thumb": "store/img/bikes/chevrolet-bolt-thumb.webp",
     "kind": "car",
-    "title": "2017 Chevrolet Bolt EV Premier front 6.20.18.jpg",
-    "author": "Kevauto",
+    "title": "2019 Chevrolet Bolt EV - April 2019 (2777).jpg",
+    "author": "Gregory Varnum",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Bolt_EV_Premier_front_6.20.18.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Bolt_EV_-_April_2019_(2777).jpg",
+    "hero": "store/img/bikes/chevrolet-bolt-hero.webp"
   },
   "chevrolet|bolt-euv": {
     "image": "store/img/bikes/chevrolet-bolt-euv.webp",
@@ -1800,7 +1708,8 @@
     "title": "23 Chevrolet Bolt EUV Premier.jpg",
     "author": "HJUdall",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:23_Chevrolet_Bolt_EUV_Premier.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:23_Chevrolet_Bolt_EUV_Premier.jpg",
+    "hero": "store/img/bikes/chevrolet-bolt-euv-hero.webp"
   },
   "chevrolet|bolt-ev": {
     "image": "store/img/bikes/chevrolet-bolt-ev.webp",
@@ -1809,16 +1718,8 @@
     "title": "2019 Chevrolet Bolt EV - April 2019 (2736).jpg",
     "author": "Gregory Varnum",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Bolt_EV_-_April_2019_(2736).jpg"
-  },
-  "chevrolet|brightdrop-600": {
-    "image": "store/img/bikes/chevrolet-brightdrop-600.webp",
-    "thumb": "store/img/bikes/chevrolet-brightdrop-600-thumb.webp",
-    "kind": "car",
-    "title": "2024 Chevrolet BrightDrop Zevo 600.jpg",
-    "author": "This picture has been taken by Oleg Yunakov . Contact e-mail: yunakov gmail.com . Image can be used in accordance with the terms of the СС-BY-SA license. Other photos can be seen here .",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_BrightDrop_Zevo_600.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Bolt_EV_-_April_2019_(2736).jpg",
+    "hero": "store/img/bikes/chevrolet-bolt-ev-hero.webp"
   },
   "chevrolet|c-k": {
     "image": "store/img/bikes/chevrolet-c-k.webp",
@@ -1827,7 +1728,8 @@
     "title": "Dark Grey 1997 Chevrolet C-K 3500 turning onto Simmons St.jpg",
     "author": "Noah Wulf",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Dark_Grey_1997_Chevrolet_C-K_3500_turning_onto_Simmons_St.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Dark_Grey_1997_Chevrolet_C-K_3500_turning_onto_Simmons_St.jpg",
+    "hero": "store/img/bikes/chevrolet-c-k-hero.webp"
   },
   "chevrolet|camaro": {
     "image": "store/img/bikes/chevrolet-camaro.webp",
@@ -1836,43 +1738,28 @@
     "title": "Chevrolet Camaro Hudiksvall 2014.jpg",
     "author": "Arild Vågen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Camaro_Hudiksvall_2014.jpg"
-  },
-  "chevrolet|caprice": {
-    "image": "store/img/bikes/chevrolet-caprice.webp",
-    "thumb": "store/img/bikes/chevrolet-caprice-thumb.webp",
-    "kind": "car",
-    "title": "Chevrolet Caprice LTZ WH V8 rear 2.jpg",
-    "author": "Mohammed Hamad",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Caprice_LTZ_WH_V8_rear_2.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Camaro_Hudiksvall_2014.jpg",
+    "hero": "store/img/bikes/chevrolet-camaro-hero.webp"
   },
   "chevrolet|captiva": {
     "image": "store/img/bikes/chevrolet-captiva.webp",
     "thumb": "store/img/bikes/chevrolet-captiva-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Captiva facelift Shishi 01 2022-03-03.jpg",
-    "author": "JamesYoung8167",
+    "title": "CHEVROLET CAPTIVA China (4).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Captiva_facelift_Shishi_01_2022-03-03.jpg"
-  },
-  "chevrolet|cavalier": {
-    "image": "store/img/bikes/chevrolet-cavalier.webp",
-    "thumb": "store/img/bikes/chevrolet-cavalier-thumb.webp",
-    "kind": "car",
-    "title": "1992 Chevrolet Cavalier Station Wagon (Rear).jpg",
-    "author": "Alexreiter512",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1992_Chevrolet_Cavalier_Station_Wagon_(Rear).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CHEVROLET_CAPTIVA_China_(4).jpg",
+    "hero": "store/img/bikes/chevrolet-captiva-hero.webp"
   },
   "chevrolet|cobalt": {
     "image": "store/img/bikes/chevrolet-cobalt.webp",
     "thumb": "store/img/bikes/chevrolet-cobalt-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Cobalt, Toshkent.jpg",
-    "author": "Raf24~commonswiki",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Cobalt,_Toshkent.jpg"
+    "title": "Chevrolet Cobalt SS coupe black.jpg",
+    "author": "Derral Chen",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Cobalt_SS_coupe_black.jpg",
+    "hero": "store/img/bikes/chevrolet-cobalt-hero.webp"
   },
   "chevrolet|colorado": {
     "image": "store/img/bikes/chevrolet-colorado.webp",
@@ -1881,79 +1768,68 @@
     "title": "Chevrolet Colorado High Country 2018 (46414614972).jpg",
     "author": "RL GNZLZ from Chile",
     "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Colorado_High_Country_2018_(46414614972).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Colorado_High_Country_2018_(46414614972).jpg",
+    "hero": "store/img/bikes/chevrolet-colorado-hero.webp"
   },
   "chevrolet|corvette": {
     "image": "store/img/bikes/chevrolet-corvette.webp",
     "thumb": "store/img/bikes/chevrolet-corvette-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Corvette C8 IAA 2021 1X7A0156.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_C8_IAA_2021_1X7A0156.jpg"
+    "title": "Chevrolet Corvette, Bj. 1963 (2017-06-11 Sp).JPG",
+    "author": "Lothar Spurzem",
+    "license": "CC BY-SA 2.0 de",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette,_Bj._1963_(2017-06-11_Sp).JPG",
+    "hero": "store/img/bikes/chevrolet-corvette-hero.webp"
   },
   "chevrolet|cruze": {
     "image": "store/img/bikes/chevrolet-cruze.webp",
     "thumb": "store/img/bikes/chevrolet-cruze-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Cruze Back P4250805.jpg",
-    "author": "Alexander Migl",
+    "title": "CHEVROLET CRUZE (D2SC) China.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Cruze_Back_P4250805.jpg"
-  },
-  "chevrolet|engine": {
-    "image": "store/img/bikes/chevrolet-engine.webp",
-    "thumb": "store/img/bikes/chevrolet-engine-thumb.webp",
-    "kind": "car",
-    "title": "1985 Chevrolet Corvette L98 Engine.jpg",
-    "author": "Jared.annis",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1985_Chevrolet_Corvette_L98_Engine.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CHEVROLET_CRUZE_(D2SC)_China.jpg",
+    "hero": "store/img/bikes/chevrolet-cruze-hero.webp"
   },
   "chevrolet|epica": {
     "image": "store/img/bikes/chevrolet-epica.webp",
     "thumb": "store/img/bikes/chevrolet-epica-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Epica in South Korea Front.jpg",
+    "title": "Chevrolet Epica in South Korea Rear.jpg",
     "author": "Ox1997cow",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Epica_in_South_Korea_Front.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Epica_in_South_Korea_Rear.jpg",
+    "hero": "store/img/bikes/chevrolet-epica-hero.webp"
   },
   "chevrolet|equinox": {
     "image": "store/img/bikes/chevrolet-equinox.webp",
     "thumb": "store/img/bikes/chevrolet-equinox-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Equinox III facelift IMG002.jpg",
-    "author": "Zotyefan",
+    "title": "CHEVROLET EQUINOX THIRD GENERATION China.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Equinox_III_facelift_IMG002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CHEVROLET_EQUINOX_THIRD_GENERATION_China.jpg",
+    "hero": "store/img/bikes/chevrolet-equinox-hero.webp"
   },
   "chevrolet|equinox-ev": {
     "image": "store/img/bikes/chevrolet-equinox-ev.webp",
     "thumb": "store/img/bikes/chevrolet-equinox-ev-thumb.webp",
     "kind": "car",
-    "title": "2026 Chevrolet Equinox EV.jpg",
-    "author": "BuickCentury04",
+    "title": "Chevrolet Equinox EV in City of Windsor livery, Windsor, Ontario, 2026-05-09.jpg",
+    "author": "Chris Woodrich",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2026_Chevrolet_Equinox_EV.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Equinox_EV_in_City_of_Windsor_livery,_Windsor,_Ontario,_2026-05-09.jpg",
+    "hero": "store/img/bikes/chevrolet-equinox-ev-hero.webp"
   },
   "chevrolet|express": {
     "image": "store/img/bikes/chevrolet-express.webp",
     "thumb": "store/img/bikes/chevrolet-express-thumb.webp",
     "kind": "car",
-    "title": "2024 Chevrolet Express LT 3500 Extended, 12-29-2025.jpg",
-    "author": "2000chevymontecarlo",
+    "title": "Chevrolet Express GMT610 Summit White (2).jpg",
+    "author": "Damian B Oh",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_Express_LT_3500_Extended,_12-29-2025.jpg"
-  },
-  "chevrolet|gmc-suburban": {
-    "image": "store/img/bikes/chevrolet-gmc-suburban.webp",
-    "thumb": "store/img/bikes/chevrolet-gmc-suburban-thumb.webp",
-    "kind": "car",
-    "title": "GM Heritage Center - 025 - Cars - GMC Suburban Carrier.jpg",
-    "author": "Tino Rossini",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:GM_Heritage_Center_-_025_-_Cars_-_GMC_Suburban_Carrier.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Express_GMT610_Summit_White_(2).jpg",
+    "hero": "store/img/bikes/chevrolet-express-hero.webp"
   },
   "chevrolet|hhr": {
     "image": "store/img/bikes/chevrolet-hhr.webp",
@@ -1962,79 +1838,78 @@
     "title": "2010 Chevrolet HHR LS, front left, 09-09-2023.jpg",
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Chevrolet_HHR_LS,_front_left,_09-09-2023.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2010_Chevrolet_HHR_LS,_front_left,_09-09-2023.jpg",
+    "hero": "store/img/bikes/chevrolet-hhr-hero.webp"
   },
   "chevrolet|impala": {
     "image": "store/img/bikes/chevrolet-impala.webp",
     "thumb": "store/img/bikes/chevrolet-impala-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Impala (2014–2020) 1X7A7173.jpg",
-    "author": "Alexander-93",
+    "title": "Chevrolet Impala Kulmbach-20220626-RM-151856.jpg",
+    "author": "Ermell",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Impala_(2014%E2%80%932020)_1X7A7173.jpg"
-  },
-  "chevrolet|kodiak": {
-    "image": "store/img/bikes/chevrolet-kodiak.webp",
-    "thumb": "store/img/bikes/chevrolet-kodiak-thumb.webp",
-    "kind": "car",
-    "title": "2004 Chevrolet Kodiak C4500 in Olympic White, Front Left, 05-22-2022.jpg",
-    "author": "Elise240SX",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Chevrolet_Kodiak_C4500_in_Olympic_White,_Front_Left,_05-22-2022.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Impala_Kulmbach-20220626-RM-151856.jpg",
+    "hero": "store/img/bikes/chevrolet-impala-hero.webp"
   },
   "chevrolet|lumina": {
     "image": "store/img/bikes/chevrolet-lumina.webp",
     "thumb": "store/img/bikes/chevrolet-lumina-thumb.webp",
     "kind": "car",
-    "title": "2001 Chevrolet Lumina, front right, 06-13-2026.jpg",
-    "author": "MercurySable99",
+    "title": "Chevrolet Lumina VX.jpg",
+    "author": "Mohammed Hamad",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Chevrolet_Lumina,_front_right,_06-13-2026.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Lumina_VX.jpg",
+    "hero": "store/img/bikes/chevrolet-lumina-hero.webp"
   },
   "chevrolet|malibu": {
     "image": "store/img/bikes/chevrolet-malibu.webp",
     "thumb": "store/img/bikes/chevrolet-malibu-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Malibu VIII Shishi 02 2022-03-01.jpg",
-    "author": "JamesYoung8167",
+    "title": "Chevrolet Malibu (2008-2011) 1X7A7375.jpg",
+    "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Malibu_VIII_Shishi_02_2022-03-01.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Malibu_(2008-2011)_1X7A7375.jpg",
+    "hero": "store/img/bikes/chevrolet-malibu-hero.webp"
   },
   "chevrolet|monte-carlo": {
     "image": "store/img/bikes/chevrolet-monte-carlo.webp",
     "thumb": "store/img/bikes/chevrolet-monte-carlo-thumb.webp",
     "kind": "car",
-    "title": "2004 Chevrolet Monte Carlo Intimidator SS, front right, 09-09-2023.jpg",
-    "author": "MercurySable99",
+    "title": "Chevrolet Monte Carlo SS 2000 Galaxy Silver.jpg",
+    "author": "LunaSol6",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Chevrolet_Monte_Carlo_Intimidator_SS,_front_right,_09-09-2023.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Monte_Carlo_SS_2000_Galaxy_Silver.jpg",
+    "hero": "store/img/bikes/chevrolet-monte-carlo-hero.webp"
   },
   "chevrolet|optra": {
     "image": "store/img/bikes/chevrolet-optra.webp",
     "thumb": "store/img/bikes/chevrolet-optra-thumb.webp",
     "kind": "car",
-    "title": "2004 Chevrolet Optra 1.6 LS, front left, 06-21-2024.jpg",
-    "author": "Ethan Llamas",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Chevrolet_Optra_1.6_LS,_front_left,_06-21-2024.jpg"
+    "title": "Chevrolet Optra 2004-05.JPG",
+    "author": "Bull-Doser at English Wikipedia",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Optra_2004-05.JPG",
+    "hero": "store/img/bikes/chevrolet-optra-hero.webp"
   },
   "chevrolet|prizm": {
     "image": "store/img/bikes/chevrolet-prizm.webp",
     "thumb": "store/img/bikes/chevrolet-prizm-thumb.webp",
     "kind": "car",
-    "title": "2001 Chevrolet Prizm (rear).jpg",
-    "author": "BlueCrabRedCrab",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Chevrolet_Prizm_(rear).jpg"
+    "title": "Chevrolet Prizm LSi -- 12-14-2011.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Prizm_LSi_--_12-14-2011.jpg",
+    "hero": "store/img/bikes/chevrolet-prizm-hero.webp"
   },
   "chevrolet|s10": {
     "image": "store/img/bikes/chevrolet-s10.webp",
     "thumb": "store/img/bikes/chevrolet-s10-thumb.webp",
     "kind": "car",
-    "title": "2001 Chevrolet S10.jpg",
-    "author": "Zachasaurus1423",
+    "title": "2002 Chevrolet S10 Xtreme.jpg",
+    "author": "S10extremity",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2001_Chevrolet_S10.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2002_Chevrolet_S10_Xtreme.jpg",
+    "hero": "store/img/bikes/chevrolet-s10-hero.webp"
   },
   "chevrolet|silverado": {
     "image": "store/img/bikes/chevrolet-silverado.webp",
@@ -2043,7 +1918,8 @@
     "title": "Chevrolet C-K Silverado Hirschaid 2022-20220709-RM-110037.jpg",
     "author": "Ermell",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_C-K_Silverado_Hirschaid_2022-20220709-RM-110037.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_C-K_Silverado_Hirschaid_2022-20220709-RM-110037.jpg",
+    "hero": "store/img/bikes/chevrolet-silverado-hero.webp"
   },
   "chevrolet|silverado-ev": {
     "image": "store/img/bikes/chevrolet-silverado-ev.webp",
@@ -2052,16 +1928,18 @@
     "title": "2025 Chevrolet Silverado EV au salon auto Lanaudière 2025.JPG",
     "author": "Bull-Doser",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Chevrolet_Silverado_EV_au_salon_auto_Lanaudi%C3%A8re_2025.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Chevrolet_Silverado_EV_au_salon_auto_Lanaudi%C3%A8re_2025.JPG",
+    "hero": "store/img/bikes/chevrolet-silverado-ev-hero.webp"
   },
   "chevrolet|silverado-hd": {
     "image": "store/img/bikes/chevrolet-silverado-hd.webp",
     "thumb": "store/img/bikes/chevrolet-silverado-hd-thumb.webp",
     "kind": "car",
-    "title": "2025 Chevrolet Silverado HD Crew Cab.jpg",
-    "author": "Bull-Doser",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Chevrolet_Silverado_HD_Crew_Cab.jpg"
+    "title": "Chevrolet Silverado HD (UDSM) – Rear.png",
+    "author": "Raszbeary",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Silverado_HD_(UDSM)_%E2%80%93_Rear.png",
+    "hero": "store/img/bikes/chevrolet-silverado-hd-hero.webp"
   },
   "chevrolet|sonic": {
     "image": "store/img/bikes/chevrolet-sonic.webp",
@@ -2070,61 +1948,38 @@
     "title": "2012 Chevrolet Sonic LT sedan, front right, 09-07-2024.jpg",
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Sonic_LT_sedan,_front_right,_09-07-2024.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Sonic_LT_sedan,_front_right,_09-07-2024.jpg",
+    "hero": "store/img/bikes/chevrolet-sonic-hero.webp"
   },
   "chevrolet|spark": {
     "image": "store/img/bikes/chevrolet-spark.webp",
     "thumb": "store/img/bikes/chevrolet-spark-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Spark M150 Shishi 01 2022-10-03.jpg",
-    "author": "JamesYoung8167",
+    "title": "2019 Chevrolet Spark 1LT, rear left.jpg",
+    "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Spark_M150_Shishi_01_2022-10-03.jpg"
-  },
-  "chevrolet|ss": {
-    "image": "store/img/bikes/chevrolet-ss.webp",
-    "thumb": "store/img/bikes/chevrolet-ss-thumb.webp",
-    "kind": "car",
-    "title": "2017 Chevrolet Camaro SS Convertible.jpg",
-    "author": "Calreyn88",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Camaro_SS_Convertible.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Chevrolet_Spark_1LT,_rear_left.jpg",
+    "hero": "store/img/bikes/chevrolet-spark-hero.webp"
   },
   "chevrolet|ssr": {
     "image": "store/img/bikes/chevrolet-ssr.webp",
     "thumb": "store/img/bikes/chevrolet-ssr-thumb.webp",
     "kind": "car",
-    "title": "2004 Chevrolet SSR, front right (2023 ARMCO Park Wheels of Steel Car Cruise).jpg",
+    "title": "2005 Chevrolet SSR, front left, 08-24-2024.jpg",
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2004_Chevrolet_SSR,_front_right_(2023_ARMCO_Park_Wheels_of_Steel_Car_Cruise).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2005_Chevrolet_SSR,_front_left,_08-24-2024.jpg",
+    "hero": "store/img/bikes/chevrolet-ssr-hero.webp"
   },
   "chevrolet|suburban": {
     "image": "store/img/bikes/chevrolet-suburban.webp",
     "thumb": "store/img/bikes/chevrolet-suburban-thumb.webp",
     "kind": "car",
-    "title": "2024 Chevrolet Suburban 5.3 Z71 V8, rear left, 06-21-2024.jpg",
-    "author": "Ethan Llamas",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Chevrolet_Suburban_5.3_Z71_V8,_rear_left,_06-21-2024.jpg"
-  },
-  "chevrolet|t10": {
-    "image": "store/img/bikes/chevrolet-t10.webp",
-    "thumb": "store/img/bikes/chevrolet-t10-thumb.webp",
-    "kind": "car",
-    "title": "1993 Chevrolet T10 Extended Cab Pick-Up (16710712249).jpg",
-    "author": "Niels de Wit from Lunteren, The Netherlands",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1993_Chevrolet_T10_Extended_Cab_Pick-Up_(16710712249).jpg"
-  },
-  "chevrolet|tahoe": {
-    "image": "store/img/bikes/chevrolet-tahoe.webp",
-    "thumb": "store/img/bikes/chevrolet-tahoe-thumb.webp",
-    "kind": "car",
-    "title": "2015 Chevrolet Tahoe LT 5.3L front 3.24.19.jpg",
-    "author": "Kevauto",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Chevrolet_Tahoe_LT_5.3L_front_3.24.19.jpg"
+    "title": "Chevrolet Suburban (GMTT1XX) Washington DC Metro Area, USA (5).jpg",
+    "author": "OWS Photography",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Suburban_(GMTT1XX)_Washington_DC_Metro_Area,_USA_(5).jpg",
+    "hero": "store/img/bikes/chevrolet-suburban-hero.webp"
   },
   "chevrolet|towing": {
     "image": "store/img/bikes/chevrolet-towing.webp",
@@ -2133,16 +1988,8 @@
     "title": "Chevrolet Golden State Towing Truck Roseville 2024.jpg",
     "author": "TaurusEmerald",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Golden_State_Towing_Truck_Roseville_2024.jpg"
-  },
-  "chevrolet|tracker": {
-    "image": "store/img/bikes/chevrolet-tracker.webp",
-    "thumb": "store/img/bikes/chevrolet-tracker-thumb.webp",
-    "kind": "car",
-    "title": "Chevrolet Tracker 002.jpg",
-    "author": "Jengtingchen",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Tracker_002.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Golden_State_Towing_Truck_Roseville_2024.jpg",
+    "hero": "store/img/bikes/chevrolet-towing-hero.webp"
   },
   "chevrolet|trailblazer": {
     "image": "store/img/bikes/chevrolet-trailblazer.webp",
@@ -2151,88 +1998,78 @@
     "title": "Moscow, Chevrolet Trailblazer, Aug 2025 15.jpg",
     "author": "Retired electrician",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Chevrolet_Trailblazer,_Aug_2025_15.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Chevrolet_Trailblazer,_Aug_2025_15.jpg",
+    "hero": "store/img/bikes/chevrolet-trailblazer-hero.webp"
   },
   "chevrolet|traverse": {
     "image": "store/img/bikes/chevrolet-traverse.webp",
     "thumb": "store/img/bikes/chevrolet-traverse-thumb.webp",
     "kind": "car",
-    "title": "2017 Chevrolet Traverse LS AWD, 08-14-2022.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_Chevrolet_Traverse_LS_AWD,_08-14-2022.jpg"
+    "title": "Chevrolet Traverse LS 1 -- 11-13-2009.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Traverse_LS_1_--_11-13-2009.jpg",
+    "hero": "store/img/bikes/chevrolet-traverse-hero.webp"
   },
   "chevrolet|trax": {
     "image": "store/img/bikes/chevrolet-trax.webp",
     "thumb": "store/img/bikes/chevrolet-trax-thumb.webp",
     "kind": "car",
-    "title": "Chevrolet Trax 1.2 RS 2024 (2).jpg",
-    "author": "Ethan Llamas",
+    "title": "CHEVROLET TRAX China (3).jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chevrolet_Trax_1.2_RS_2024_(2).jpg"
-  },
-  "chevrolet|uplander": {
-    "image": "store/img/bikes/chevrolet-uplander.webp",
-    "thumb": "store/img/bikes/chevrolet-uplander-thumb.webp",
-    "kind": "car",
-    "title": "2007 Chevrolet Uplander LT Extended Wheelbase, front right, 09-24-2022.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2007_Chevrolet_Uplander_LT_Extended_Wheelbase,_front_right,_09-24-2022.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CHEVROLET_TRAX_China_(3).jpg",
+    "hero": "store/img/bikes/chevrolet-trax-hero.webp"
   },
   "chevrolet|venture": {
     "image": "store/img/bikes/chevrolet-venture.webp",
     "thumb": "store/img/bikes/chevrolet-venture-thumb.webp",
     "kind": "car",
-    "title": "2001-04 Chevrolet Venture SWB.JPG",
+    "title": "1997-2000 Chevrolet Venture SWB 3-Door.jpg",
     "author": "Bull-Doser",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:2001-04_Chevrolet_Venture_SWB.JPG"
+    "source": "https://commons.wikimedia.org/wiki/File:1997-2000_Chevrolet_Venture_SWB_3-Door.jpg",
+    "hero": "store/img/bikes/chevrolet-venture-hero.webp"
   },
   "chevrolet|volt": {
     "image": "store/img/bikes/chevrolet-volt.webp",
     "thumb": "store/img/bikes/chevrolet-volt-thumb.webp",
     "kind": "car",
-    "title": "2012 Chevrolet Volt qJake.jpg",
-    "author": "qJake",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2012_Chevrolet_Volt_qJake.jpg"
+    "title": "2011 Chevrolet Volt -- 05-03-2011.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2011_Chevrolet_Volt_--_05-03-2011.jpg",
+    "hero": "store/img/bikes/chevrolet-volt-hero.webp"
   },
   "chrysler|300": {
     "image": "store/img/bikes/chrysler-300.webp",
     "thumb": "store/img/bikes/chrysler-300-thumb.webp",
     "kind": "car",
-    "title": "Chrysler 300C Sanming 01 2023-02-08.jpg",
-    "author": "JamesYoung8167",
+    "title": "Tianjin Chrysler 300 (2004)-20150521-RM-162116.jpg",
+    "author": "Reinhold Möller Ermell",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chrysler_300C_Sanming_01_2023-02-08.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Tianjin_Chrysler_300_(2004)-20150521-RM-162116.jpg",
+    "hero": "store/img/bikes/chrysler-300-hero.webp"
   },
   "chrysler|pacifica": {
     "image": "store/img/bikes/chrysler-pacifica.webp",
     "thumb": "store/img/bikes/chrysler-pacifica-thumb.webp",
     "kind": "car",
-    "title": "Chrysler Pacifica RU 003 China 2019-03-28.jpg",
-    "author": "Navigator84",
+    "title": "CHRYSLER PACIFICA (RU) SELF-DRVING TEST CAR IN CHINA.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Chrysler_Pacifica_RU_003_China_2019-03-28.jpg"
-  },
-  "chrysler|pacifica-hybrid": {
-    "image": "store/img/bikes/chrysler-pacifica-hybrid.webp",
-    "thumb": "store/img/bikes/chrysler-pacifica-hybrid-thumb.webp",
-    "kind": "car",
-    "title": "2023 Chrysler Pacifica Hybrid minivan in Velvet Red Pearl Coat charging 1of2.jpg",
-    "author": "CZmarlin — Christopher Ziemnowicz, a photo credit would be appreciated if this image is used anywhere other than Wikipedia.",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Chrysler_Pacifica_Hybrid_minivan_in_Velvet_Red_Pearl_Coat_charging_1of2.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:CHRYSLER_PACIFICA_(RU)_SELF-DRVING_TEST_CAR_IN_CHINA.jpg",
+    "hero": "store/img/bikes/chrysler-pacifica-hero.webp"
   },
   "chrysler|town-country": {
     "image": "store/img/bikes/chrysler-town-country.webp",
     "thumb": "store/img/bikes/chrysler-town-country-thumb.webp",
     "kind": "car",
-    "title": "1975 Chrysler Town Country wagon.jpg",
-    "author": "That Hartford Guy",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1975_Chrysler_Town_Country_wagon.jpg"
+    "title": "CHRYSLER TOWN & COUNTRY (RS) China (2).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CHRYSLER_TOWN_%26_COUNTRY_(RS)_China_(2).jpg",
+    "hero": "store/img/bikes/chrysler-town-country-hero.webp"
   },
   "chrysler|voyager": {
     "image": "store/img/bikes/chrysler-voyager.webp",
@@ -2241,25 +2078,28 @@
     "title": "2000 Chrysler Voyager, front left, 09-06-2025.jpg",
     "author": "MercurySable99",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2000_Chrysler_Voyager,_front_left,_09-06-2025.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2000_Chrysler_Voyager,_front_left,_09-06-2025.jpg",
+    "hero": "store/img/bikes/chrysler-voyager-hero.webp"
   },
   "citroen|berlingo": {
     "image": "store/img/bikes/citroen-berlingo.webp",
     "thumb": "store/img/bikes/citroen-berlingo-thumb.webp",
     "kind": "car",
-    "title": "Citroen Berlingo, Paris Motor Show 2018, IMG 0700.jpg",
-    "author": "Alexander Migl",
+    "title": "Citroën Berlingo III IMG 9227.jpg",
+    "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citroen_Berlingo,_Paris_Motor_Show_2018,_IMG_0700.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Berlingo_III_IMG_9227.jpg",
+    "hero": "store/img/bikes/citroen-berlingo-hero.webp"
   },
   "citroen|c3": {
     "image": "store/img/bikes/citroen-c3.webp",
     "thumb": "store/img/bikes/citroen-c3-thumb.webp",
     "kind": "car",
-    "title": "Citroën C3 Aircross, IAA 2017, Frankfurt (1Y7A3195).jpg",
-    "author": "Matti Blume",
+    "title": "2020 Citroën C3 (3rd generation) DSC 7374.jpg",
+    "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C3_Aircross,_IAA_2017,_Frankfurt_(1Y7A3195).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Citro%C3%ABn_C3_(3rd_generation)_DSC_7374.jpg",
+    "hero": "store/img/bikes/citroen-c3-hero.webp"
   },
   "citroen|c3aircross": {
     "image": "store/img/bikes/citroen-c3aircross.webp",
@@ -2268,16 +2108,18 @@
     "title": "Citroen C3 Aircross (2017) Facelift 1X7A7060.jpg",
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citroen_C3_Aircross_(2017)_Facelift_1X7A7060.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Citroen_C3_Aircross_(2017)_Facelift_1X7A7060.jpg",
+    "hero": "store/img/bikes/citroen-c3aircross-hero.webp"
   },
   "citroen|c4": {
     "image": "store/img/bikes/citroen-c4.webp",
     "thumb": "store/img/bikes/citroen-c4-thumb.webp",
     "kind": "car",
-    "title": "Citroen C4 1930 4150281.jpg",
-    "author": "Ermell",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citroen_C4_1930_4150281.jpg"
+    "title": "Citroën C4 Police Municipale Nice.jpg",
+    "author": "Paul Townley",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C4_Police_Municipale_Nice.jpg",
+    "hero": "store/img/bikes/citroen-c4-hero.webp"
   },
   "citroen|c4-c41": {
     "image": "store/img/bikes/citroen-c4-c41.webp",
@@ -2286,34 +2128,28 @@
     "title": "Citroën C4 C41 Caramel Brown (3).jpg",
     "author": "Damian B Oh",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C4_C41_Caramel_Brown_(3).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C4_C41_Caramel_Brown_(3).jpg",
+    "hero": "store/img/bikes/citroen-c4-c41-hero.webp"
   },
   "citroen|c5": {
     "image": "store/img/bikes/citroen-c5.webp",
     "thumb": "store/img/bikes/citroen-c5-thumb.webp",
     "kind": "car",
-    "title": "Citroën C5 II facelift 002.jpg",
-    "author": "TuRbO_J",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_C5_II_facelift_002.jpg"
+    "title": "CITROEN C5 (RD,TD) China.jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:CITROEN_C5_(RD,TD)_China.jpg",
+    "hero": "store/img/bikes/citroen-c5-hero.webp"
   },
   "citroen|ds4": {
     "image": "store/img/bikes/citroen-ds4.webp",
     "thumb": "store/img/bikes/citroen-ds4-thumb.webp",
     "kind": "car",
-    "title": "Citroën DS4 (MSP15).JPG",
-    "author": "Jakub \"Flyz1\" Maciejewski",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_DS4_(MSP15).JPG"
-  },
-  "citroen|ds7": {
-    "image": "store/img/bikes/citroen-ds7.webp",
-    "thumb": "store/img/bikes/citroen-ds7-thumb.webp",
-    "kind": "car",
-    "title": "Osaka Motor Show 2017 (40) - DS 7 CROSSBACK CONCEPT.jpg",
-    "author": "Tokumeigakarinoaoshima",
+    "title": "2014 Citroen DS4 DStyle Airdream E-HDI 1.6 Front.jpg",
+    "author": "Vauxford",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2017_(40)_-_DS_7_CROSSBACK_CONCEPT.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Citroen_DS4_DStyle_Airdream_E-HDI_1.6_Front.jpg",
+    "hero": "store/img/bikes/citroen-ds4-hero.webp"
   },
   "citroen|jumper": {
     "image": "store/img/bikes/citroen-jumper.webp",
@@ -2322,43 +2158,48 @@
     "title": "Citroën Jumper (2014) IMG 0456.jpg",
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Jumper_(2014)_IMG_0456.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Citro%C3%ABn_Jumper_(2014)_IMG_0456.jpg",
+    "hero": "store/img/bikes/citroen-jumper-hero.webp"
   },
   "cupra|ateca": {
     "image": "store/img/bikes/cupra-ateca.webp",
     "thumb": "store/img/bikes/cupra-ateca-thumb.webp",
     "kind": "car",
-    "title": "Cupra Ateca 3 Genf 2018.jpg",
+    "title": "Cupra Ateca IMG 6626.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Ateca_3_Genf_2018.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Ateca_IMG_6626.jpg",
+    "hero": "store/img/bikes/cupra-ateca-hero.webp"
   },
   "cupra|born": {
     "image": "store/img/bikes/cupra-born.webp",
     "thumb": "store/img/bikes/cupra-born-thumb.webp",
     "kind": "car",
-    "title": "Cupra Born IAA 2021 1X7A0250.jpg",
+    "title": "Cupra Born IAA 2021 1X7A0212.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Born_IAA_2021_1X7A0250.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Born_IAA_2021_1X7A0212.jpg",
+    "hero": "store/img/bikes/cupra-born-hero.webp"
   },
   "cupra|formentor": {
     "image": "store/img/bikes/cupra-formentor.webp",
     "thumb": "store/img/bikes/cupra-formentor-thumb.webp",
     "kind": "car",
-    "title": "2022 Cupra Formentor V1 TSi (56008).jpg",
-    "author": "Calreyn88",
+    "title": "Cupra Formentor 1X7A0311.jpg",
+    "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Cupra_Formentor_V1_TSi_(56008).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Cupra_Formentor_1X7A0311.jpg",
+    "hero": "store/img/bikes/cupra-formentor-hero.webp"
   },
   "dacia|bigster": {
     "image": "store/img/bikes/dacia-bigster.webp",
     "thumb": "store/img/bikes/dacia-bigster-thumb.webp",
     "kind": "car",
-    "title": "Dacia Bigster BIG854 Berlin 2025.jpg",
-    "author": "Pedant01",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Bigster_BIG854_Berlin_2025.jpg"
+    "title": "Dacia Bigster DSC 8454.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Bigster_DSC_8454.jpg",
+    "hero": "store/img/bikes/dacia-bigster-hero.webp"
   },
   "dacia|duster": {
     "image": "store/img/bikes/dacia-duster.webp",
@@ -2367,16 +2208,8 @@
     "title": "Dacia Duster II Facelift IAA 2021 1X7A0132.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Duster_II_Facelift_IAA_2021_1X7A0132.jpg"
-  },
-  "dacia|jogger": {
-    "image": "store/img/bikes/dacia-jogger.webp",
-    "thumb": "store/img/bikes/dacia-jogger-thumb.webp",
-    "kind": "car",
-    "title": "2024 Dacia Jogger Hybrid GIMS 2024 1X7A2409.jpg",
-    "author": "Alexander-93",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2024_Dacia_Jogger_Hybrid_GIMS_2024_1X7A2409.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Duster_II_Facelift_IAA_2021_1X7A0132.jpg",
+    "hero": "store/img/bikes/dacia-duster-hero.webp"
   },
   "dacia|logan": {
     "image": "store/img/bikes/dacia-logan.webp",
@@ -2385,25 +2218,18 @@
     "title": "2023 Dacia Logan III IMG 9671.jpg",
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Dacia_Logan_III_IMG_9671.jpg"
-  },
-  "dacia|sandero": {
-    "image": "store/img/bikes/dacia-sandero.webp",
-    "thumb": "store/img/bikes/dacia-sandero-thumb.webp",
-    "kind": "car",
-    "title": "2023 Dacia Sandero III 1X7A6192.jpg",
-    "author": "Alexander Migl",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Dacia_Sandero_III_1X7A6192.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Dacia_Logan_III_IMG_9671.jpg",
+    "hero": "store/img/bikes/dacia-logan-hero.webp"
   },
   "dacia|spring": {
     "image": "store/img/bikes/dacia-spring.webp",
     "thumb": "store/img/bikes/dacia-spring-thumb.webp",
     "kind": "car",
-    "title": "Dacia Spring IAA 2021 1X7A0215.jpg",
+    "title": "2023 Dacia Spring 1X7A6280.jpg",
     "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Dacia_Spring_IAA_2021_1X7A0215.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Dacia_Spring_1X7A6280.jpg",
+    "hero": "store/img/bikes/dacia-spring-hero.webp"
   },
   "dodge|challenger": {
     "image": "store/img/bikes/dodge-challenger.webp",
@@ -2412,43 +2238,18 @@
     "title": "Dodge Challenger (LC) Hemi Leimershof -20190907-RM-171215.jpg",
     "author": "Ermell",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Dodge_Challenger_(LC)_Hemi_Leimershof_-20190907-RM-171215.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Dodge_Challenger_(LC)_Hemi_Leimershof_-20190907-RM-171215.jpg",
+    "hero": "store/img/bikes/dodge-challenger-hero.webp"
   },
   "dodge|charger": {
     "image": "store/img/bikes/dodge-charger.webp",
     "thumb": "store/img/bikes/dodge-charger-thumb.webp",
     "kind": "car",
-    "title": "2023 Dodge Charger Hellcat.jpg",
-    "author": "Calreyn88",
+    "title": "Dodge Charger Hirschaid-20220709-RM-113717.jpg",
+    "author": "Ermell",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2023_Dodge_Charger_Hellcat.jpg"
-  },
-  "dodge|charger-srt": {
-    "image": "store/img/bikes/dodge-charger-srt.webp",
-    "thumb": "store/img/bikes/dodge-charger-srt-thumb.webp",
-    "kind": "car",
-    "title": "2015 Dodge Charger SRT Hellcat (21607570552).jpg",
-    "author": "Sicnag",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2015_Dodge_Charger_SRT_Hellcat_(21607570552).jpg"
-  },
-  "dodge|dart": {
-    "image": "store/img/bikes/dodge-dart.webp",
-    "thumb": "store/img/bikes/dodge-dart-thumb.webp",
-    "kind": "car",
-    "title": "Dodge Dart 2.0 Rallye 2014 (14217526095).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Dodge_Dart_2.0_Rallye_2014_(14217526095).jpg"
-  },
-  "dodge|durango": {
-    "image": "store/img/bikes/dodge-durango.webp",
-    "thumb": "store/img/bikes/dodge-durango-thumb.webp",
-    "kind": "car",
-    "title": "2014 Dodge Durango RT.jpg",
-    "author": "DestinationFearFan",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2014_Dodge_Durango_RT.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Dodge_Charger_Hirschaid-20220709-RM-113717.jpg",
+    "hero": "store/img/bikes/dodge-charger-hero.webp"
   },
   "dodge|grand-caravan": {
     "image": "store/img/bikes/dodge-grand-caravan.webp",
@@ -2457,16 +2258,18 @@
     "title": "2016 Dodge Grand Caravan Appalachian State University 1of2.jpg",
     "author": "CZmarlin — Christopher Ziemnowicz, a photo credit would be appreciated if this image is used anywhere other than Wikipedia.",
     "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2016_Dodge_Grand_Caravan_Appalachian_State_University_1of2.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2016_Dodge_Grand_Caravan_Appalachian_State_University_1of2.jpg",
+    "hero": "store/img/bikes/dodge-grand-caravan-hero.webp"
   },
   "ds-automobiles|ds7": {
     "image": "store/img/bikes/ds-automobiles-ds7.webp",
     "thumb": "store/img/bikes/ds-automobiles-ds7-thumb.webp",
     "kind": "car",
-    "title": "DS 7 Crossback Shishi 01 2022-11-04.jpg",
-    "author": "JamesYoung8167",
+    "title": "DS 7 CROSSBACK China.jpg",
+    "author": "Dinkun Chen",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:DS_7_Crossback_Shishi_01_2022-11-04.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:DS_7_CROSSBACK_China.jpg",
+    "hero": "store/img/bikes/ds-automobiles-ds7-hero.webp"
   },
   "ducati|1198": {
     "image": "store/img/bikes/ducati-1198.webp",
@@ -3057,19 +2860,21 @@
     "image": "store/img/bikes/fiat-124-spider.webp",
     "thumb": "store/img/bikes/fiat-124-spider-thumb.webp",
     "kind": "car",
-    "title": "Fiat 124 Spider, 1,4 l, Bj. 1970 (2016-07-02 Sp).JPG",
-    "author": "Lothar Spurzem",
-    "license": "CC BY-SA 2.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_124_Spider,_1,4_l,_Bj._1970_(2016-07-02_Sp).JPG"
+    "title": "Fiat 124 Spider (50392415533).jpg",
+    "author": "crash71100",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_124_Spider_(50392415533).jpg",
+    "hero": "store/img/bikes/fiat-124-spider-hero.webp"
   },
   "fiat|500": {
     "image": "store/img/bikes/fiat-500.webp",
     "thumb": "store/img/bikes/fiat-500-thumb.webp",
     "kind": "car",
-    "title": "Fiat 500 Luxus BW 2016-07-17 14-02-29.jpg",
-    "author": "Berthold Werner",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500_Luxus_BW_2016-07-17_14-02-29.jpg"
+    "title": "Fiat 500 in Emilia-Romagna.jpg",
+    "author": "Petar Milošević",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500_in_Emilia-Romagna.jpg",
+    "hero": "store/img/bikes/fiat-500-hero.webp"
   },
   "fiat|500e": {
     "image": "store/img/bikes/fiat-500e.webp",
@@ -3078,25 +2883,8 @@
     "title": "Fiat 500e Trepiuno Rasant Automobilmesse Metzingen 2024 IMG 2198.jpg",
     "author": "Alexander-93",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500e_Trepiuno_Rasant_Automobilmesse_Metzingen_2024_IMG_2198.jpg"
-  },
-  "fiat|500l": {
-    "image": "store/img/bikes/fiat-500l.webp",
-    "thumb": "store/img/bikes/fiat-500l-thumb.webp",
-    "kind": "car",
-    "title": "Fiat 500L diesel 1248cc registered March 2013.JPG",
-    "author": "Charles01",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500L_diesel_1248cc_registered_March_2013.JPG"
-  },
-  "fiat|500x": {
-    "image": "store/img/bikes/fiat-500x.webp",
-    "thumb": "store/img/bikes/fiat-500x-thumb.webp",
-    "kind": "car",
-    "title": "2017 Fiat 500X POP Star Multiair 1.4 Rear.jpg",
-    "author": "Vauxford",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_Fiat_500X_POP_Star_Multiair_1.4_Rear.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_500e_Trepiuno_Rasant_Automobilmesse_Metzingen_2024_IMG_2198.jpg",
+    "hero": "store/img/bikes/fiat-500e-hero.webp"
   },
   "fiat|600": {
     "image": "store/img/bikes/fiat-600.webp",
@@ -3105,133 +2893,88 @@
     "title": "Paris - RM Auctions - 5 février 2014 - Fiat 600 - 1956 - 003.jpg",
     "author": "Thesupermat",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_RM_Auctions_-_5_f%C3%A9vrier_2014_-_Fiat_600_-_1956_-_003.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_RM_Auctions_-_5_f%C3%A9vrier_2014_-_Fiat_600_-_1956_-_003.jpg",
+    "hero": "store/img/bikes/fiat-600-hero.webp"
   },
   "fiat|bravo": {
     "image": "store/img/bikes/fiat-bravo.webp",
     "thumb": "store/img/bikes/fiat-bravo-thumb.webp",
     "kind": "car",
-    "title": "Fiat Bravo 2009.JPG",
+    "title": "2009 Fiat Bravo Sport.JPG",
     "author": "Corvettec6r",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Bravo_2009.JPG"
-  },
-  "fiat|doblo": {
-    "image": "store/img/bikes/fiat-doblo.webp",
-    "thumb": "store/img/bikes/fiat-doblo-thumb.webp",
-    "kind": "car",
-    "title": "Fiat Doblo WAW.jpg",
-    "author": "Raf24",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Doblo_WAW.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2009_Fiat_Bravo_Sport.JPG",
+    "hero": "store/img/bikes/fiat-bravo-hero.webp"
   },
   "fiat|ducato": {
     "image": "store/img/bikes/fiat-ducato.webp",
     "thumb": "store/img/bikes/fiat-ducato-thumb.webp",
     "kind": "car",
-    "title": "Moscow, Fiat Ducato (2014) Sept 2025 01.jpg",
-    "author": "Retired electrician",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Fiat_Ducato_(2014)_Sept_2025_01.jpg"
-  },
-  "fiat|educato": {
-    "image": "store/img/bikes/fiat-educato.webp",
-    "thumb": "store/img/bikes/fiat-educato-thumb.webp",
-    "kind": "car",
-    "title": "2022 Fiat eDucato.jpg",
-    "author": "Calreyn88",
+    "title": "Fiat Ducato dumper, Nufam 2023, Rheinstetten (P1130526).jpg",
+    "author": "Matti Blume",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Fiat_eDucato.jpg"
-  },
-  "fiat|fiat600": {
-    "image": "store/img/bikes/fiat-fiat600.webp",
-    "thumb": "store/img/bikes/fiat-fiat600-thumb.webp",
-    "kind": "car",
-    "title": "FIAT600.jpg",
-    "author": "Jananisivanesan",
-    "license": "CC BY 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:FIAT600.jpg"
-  },
-  "fiat|freemont": {
-    "image": "store/img/bikes/fiat-freemont.webp",
-    "thumb": "store/img/bikes/fiat-freemont-thumb.webp",
-    "kind": "car",
-    "title": "Fiat Freemont 01 France 2011-06-17.jpg",
-    "author": "Navigator84",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Freemont_01_France_2011-06-17.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Ducato_dumper,_Nufam_2023,_Rheinstetten_(P1130526).jpg",
+    "hero": "store/img/bikes/fiat-ducato-hero.webp"
   },
   "fiat|fullback": {
     "image": "store/img/bikes/fiat-fullback.webp",
     "thumb": "store/img/bikes/fiat-fullback-thumb.webp",
     "kind": "car",
-    "title": "2017 Fiat Fullback LX 4X4 Automatic 2.4 Front.jpg",
-    "author": "Vauxford",
+    "title": "Fiat Fullback, PD.jpg",
+    "author": "Raf24~commonswiki",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2017_Fiat_Fullback_LX_4X4_Automatic_2.4_Front.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Fullback,_PD.jpg",
+    "hero": "store/img/bikes/fiat-fullback-hero.webp"
   },
   "fiat|idea": {
     "image": "store/img/bikes/fiat-idea.webp",
     "thumb": "store/img/bikes/fiat-idea-thumb.webp",
     "kind": "car",
-    "title": "Fiat idea 2007 facelift 1.3L Multijet.jpg",
+    "title": "2006 Fiat Idea front.JPG",
     "author": "Corvettec6r",
     "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_idea_2007_facelift_1.3L_Multijet.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:2006_Fiat_Idea_front.JPG",
+    "hero": "store/img/bikes/fiat-idea-hero.webp"
   },
   "fiat|linea": {
     "image": "store/img/bikes/fiat-linea.webp",
     "thumb": "store/img/bikes/fiat-linea-thumb.webp",
     "kind": "car",
-    "title": "Fiat Linea 1.4 TJet Dynamic 2010 (16452173783).jpg",
-    "author": "order_242 from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Linea_1.4_TJet_Dynamic_2010_(16452173783).jpg"
+    "title": "Fiat Linea (50512849697).jpg",
+    "author": "crash71100",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Linea_(50512849697).jpg",
+    "hero": "store/img/bikes/fiat-linea-hero.webp"
   },
   "fiat|multipla": {
     "image": "store/img/bikes/fiat-multipla.webp",
     "thumb": "store/img/bikes/fiat-multipla-thumb.webp",
     "kind": "car",
-    "title": "Fiat Multipla \"Sporting\" (48011623086).jpg",
-    "author": "Guillaume Vachey from Chalon sur Saone, France",
-    "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Multipla_%22Sporting%22_(48011623086).jpg"
-  },
-  "fiat|nuova500": {
-    "image": "store/img/bikes/fiat-nuova500.webp",
-    "thumb": "store/img/bikes/fiat-nuova500-thumb.webp",
-    "kind": "car",
-    "title": "Fiat Nuova 500 shell.jpg",
-    "author": "andreboeni",
-    "license": "CC BY 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Nuova_500_shell.jpg"
-  },
-  "fiat|panda": {
-    "image": "store/img/bikes/fiat-panda.webp",
-    "thumb": "store/img/bikes/fiat-panda-thumb.webp",
-    "kind": "car",
-    "title": "2010 Fiat Panda Cross Multi-Jet 4x4.jpg",
-    "author": "Calreyn88",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2010_Fiat_Panda_Cross_Multi-Jet_4x4.jpg"
+    "title": "Fiat Multipla silver front.JPG",
+    "author": "Corvettec6r",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Multipla_silver_front.JPG",
+    "hero": "store/img/bikes/fiat-multipla-hero.webp"
   },
   "fiat|puntoevo": {
     "image": "store/img/bikes/fiat-puntoevo.webp",
     "thumb": "store/img/bikes/fiat-puntoevo-thumb.webp",
     "kind": "car",
-    "title": "2012 Fiat Punto Evo 1.2 Autoradio.JPG",
+    "title": "Fiat Punto Evo 1.4 Multiair 105CV 2009.jpg",
     "author": "Corvettec6r",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2012_Fiat_Punto_Evo_1.2_Autoradio.JPG"
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Punto_Evo_1.4_Multiair_105CV_2009.jpg",
+    "hero": "store/img/bikes/fiat-puntoevo-hero.webp"
   },
   "fiat|qubo": {
     "image": "store/img/bikes/fiat-qubo.webp",
     "thumb": "store/img/bikes/fiat-qubo-thumb.webp",
     "kind": "car",
-    "title": "Fiat Qubo 2018 (37158712554).jpg",
-    "author": "RL GNZLZ from Chile",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Qubo_2018_(37158712554).jpg"
+    "title": "Fiat Qubo 1.4 Natural Power.JPG",
+    "author": "Corvettec6r",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Qubo_1.4_Natural_Power.JPG",
+    "hero": "store/img/bikes/fiat-qubo-hero.webp"
   },
   "fiat|scudo": {
     "image": "store/img/bikes/fiat-scudo.webp",
@@ -3240,16 +2983,8 @@
     "title": "FIat Scudo Ambulanza.JPG",
     "author": "Giuseppe Bollanti",
     "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:FIat_Scudo_Ambulanza.JPG"
-  },
-  "fiat|sedici": {
-    "image": "store/img/bikes/fiat-sedici.webp",
-    "thumb": "store/img/bikes/fiat-sedici-thumb.webp",
-    "kind": "car",
-    "title": "2008 Fiat Sedici Eleganza 16V 1.6.jpg",
-    "author": "Vauxford",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2008_Fiat_Sedici_Eleganza_16V_1.6.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:FIat_Scudo_Ambulanza.JPG",
+    "hero": "store/img/bikes/fiat-scudo-hero.webp"
   },
   "fiat|spider": {
     "image": "store/img/bikes/fiat-spider.webp",
@@ -3267,16 +3002,18 @@
     "title": "Fiat Stilo blue 2001.jpg",
     "author": "Thokar421",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Stilo_blue_2001.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Stilo_blue_2001.jpg",
+    "hero": "store/img/bikes/fiat-stilo-hero.webp"
   },
   "fiat|talento": {
     "image": "store/img/bikes/fiat-talento.webp",
     "thumb": "store/img/bikes/fiat-talento-thumb.webp",
     "kind": "car",
-    "title": "Fiat Talento Kombi 1.6 Ecojet 125 Twin Turbo Family – Frontansicht, 27. Juli 2016, Düsseldorf.jpg",
-    "author": "© M 93",
-    "license": "CC BY-SA 3.0 de",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Talento_Kombi_1.6_Ecojet_125_Twin_Turbo_Family_%E2%80%93_Frontansicht,_27._Juli_2016,_D%C3%BCsseldorf.jpg"
+    "title": "2019 Fiat Talento SX Multijet II 1.6 Rear.jpg",
+    "author": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2019_Fiat_Talento_SX_Multijet_II_1.6_Rear.jpg",
+    "hero": "store/img/bikes/fiat-talento-hero.webp"
   },
   "fiat|tipo": {
     "image": "store/img/bikes/fiat-tipo.webp",
@@ -3294,7 +3031,8 @@
     "title": "Fiat Ulysse I (40890249724).jpg",
     "author": "Guillaume Vachey from Chalon sur Saone, France",
     "license": "CC0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Ulysse_I_(40890249724).jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Fiat_Ulysse_I_(40890249724).jpg",
+    "hero": "store/img/bikes/fiat-ulysse-hero.webp"
   },
   "ford|aerostar": {
     "image": "store/img/bikes/ford-aerostar.webp",
@@ -3309,19 +3047,21 @@
     "image": "store/img/bikes/ford-aspire.webp",
     "thumb": "store/img/bikes/ford-aspire-thumb.webp",
     "kind": "car",
-    "title": "1997 Ford Aspire 5-Door, front left, 07-10-2023.jpg",
-    "author": "MercurySable99",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1997_Ford_Aspire_5-Door,_front_left,_07-10-2023.jpg"
+    "title": "Ford Aspire front -- 07-22-2010.jpg",
+    "author": "IFCAR",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Aspire_front_--_07-22-2010.jpg",
+    "hero": "store/img/bikes/ford-aspire-hero.webp"
   },
   "ford|bronco-sport": {
     "image": "store/img/bikes/ford-bronco-sport.webp",
     "thumb": "store/img/bikes/ford-bronco-sport-thumb.webp",
     "kind": "car",
-    "title": "2022 Ford Bronco Sport Big Bend, front left, 09-03-2022.jpg",
-    "author": "MercurySable99",
+    "title": "Ford Bronco Sport Badlands 1X7A0385.jpg",
+    "author": "Alexander Migl",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2022_Ford_Bronco_Sport_Big_Bend,_front_left,_09-03-2022.jpg"
+    "source": "https://commons.wikimedia.org/wiki/File:Ford_Bronco_Sport_Badlands_1X7A0385.jpg",
+    "hero": "store/img/bikes/ford-bronco-sport-hero.webp"
   },
   "ford|c-max-hybrid": {
     "image": "store/img/bikes/ford-c-max-hybrid.webp",

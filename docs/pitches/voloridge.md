@@ -1,0 +1,309 @@
+# Voloridge — "Signal in the Noise" · 5-minute pitch
+
+**Mechanica** · <https://mechanica.emilvinu.ch> · repo `C:\Users\me\trustthemanual`
+Feature for this sponsor: **Climate Fit** — the manual's own rules, resolved against 600 GB of NOAA
+hourly weather and global air quality. Spec: `docs/pitches/voloridge/spec.md`. Scored alternatives:
+`docs/pitches/voloridge/ideas.md`. Working reducer: `docs/pitches/voloridge/isd_probe.py`.
+
+Every number below is measured on 2026-09-20 and traceable to a file or an endpoint. Numbers marked
+† are only claimable **after** the build; everything else is already true.
+
+---
+
+## 0:00 – 1:30 · The product
+
+> **Feel:** this is a real tool for a real person, not a hackathon demo.
+
+A friend of mine opened a motorcycle workshop in Germany. He spends about **20% of his working time
+looking for the right page in a manual** — roughly 400 hours a year, EUR 36–48k of billable time.
+He does not use AI. Two reasons, both fair: at 95% right he is still liable for the 5%, and when he
+tried it, one question cost about **$4** because the model had to read a 500-page manual.
+
+Mechanica makes the manual the answer. Pick the bike — search, photo, or VIN. The official PDF opens
+**on the exact page** with the exact lines marked, a 3D model explodes to the part, and exact-fit
+parts come up with live prices. Chat and voice are grounded: the model may emit a page number, and
+the **server** slices the quote out of the original page. It cannot invent a torque figure, because
+it is never allowed to type one.
+
+Measured: **$0.0003–0.005 per question** against a **$6.10** naive baseline — about 1,500× cheaper —
+first token in ~2.5 s, 100% valid citations, 0 invented numbers across the eval.
+
+*(Live: type "KTM 1390 Super Adventure R 2026", one tap, the page is on screen.)*
+
+---
+
+## 1:30 – 5:00 · The data
+
+### 1:30 – 2:15 · The noise is the problem, and it is upstream of us
+
+> **Feel:** these people actually did the ugly part.
+
+Nobody publishes a dataset of manuals. There are dozens of OEM portals, each with its own idea of the
+truth. We built one adapter per portal — **34 adapter modules plus 26 crawl fragments, covering 84
+publisher hosts** — and the registry that came out is a dataset-quality problem in miniature:
+
+| | |
+|---|---|
+| registry rows | **53,557** across **84 hosts, 80 makes, 59 markets, 43 languages** |
+| distinct URLs behind them | **28,200** — 47% of rows point at a file another row already points at |
+| vehicles derived | **27,751** (23,140 motorcycles, 4,611 cars); **13,537** with a free manual |
+| makes documented as **unreachable** | **17** — CFMOTO, LiveWire, Beta, Norton, Ural, Energica, Sur-Ron… |
+
+The hardest parts, in order of how much time they cost:
+
+- **The row lies about what it is.** Honda files the Gold Wing *brochure* in the same listing as the
+  owner's manual. Ford files owner guides under `/catalog/`. Piaggio calls the owner's manual a "use
+  and maintenance booklet", so any classifier that greps `maintenance` drags every Piaggio handbook
+  into the service bucket. `api/app/registry/doctype.py` classifies **8 document kinds from the URL
+  and title alone** — never by downloading — and it is ordered, with the reasons written in the file.
+  Result: 49,408 owner, 2,793 infotainment, 578 supplement, 479 quickstart, 159 spec, 70 service,
+  64 warranty, 6 brochure.
+- **The file lies about being a manual.** Of 773 ingest attempts, **38 URLs were 3-page flyers** and
+  **23 were not PDFs at all**. The pipeline rejects them on page count and on magic bytes, and writes
+  the reason down: 648 done, 80 error, 24 duplicate, 21 suspicious (`api/data/mass_report.jsonl`).
+- **The same PDF arrives under many names.** One file covers eight model years on four portals.
+  Dedupe is by **SHA-256 of the fetched bytes** — 498 hashes, 24 duplicate ingests caught.
+- **Retraction.** A portal that drops a model must be able to un-say it. `registry merge-fragments
+  --replace` gives a fragment ownership of its site scope: rows it no longer lists are **deleted**,
+  and `manualUrl` is a pure function of the registry, so a retracted row stops being advertised
+  instead of lingering as a dead link.
+- **Some hosts simply say no.** Ducati's Contentful PDFs are public but the page naming them is
+  Akamai-fingerprinted: 403 to httpx *and* to headless Chrome, 200 to a headful browser — so that
+  adapter drives a real browser over CDP. Kawasaki 401s if you send `Accept: application/json`.
+  Honda needs a Googlebot UA and a CSRF token, and four of its 41 distributor codes were found only
+  by trying 479 candidates. **All of it is written down in `docs/MANUALS.md`, including the 17 makes
+  we could not reach**, so nobody re-walks them.
+
+We copy no manuals at crawl time. `RegistryEntry` has no field that could hold one.
+
+### 2:15 – 3:00 · The dataset we made out of PDFs
+
+> **Feel:** they turned unstructured documents into something you could actually query.
+
+From **532 live manuals · 95,365 pages** we extracted, grounded, and stored:
+
+- **90,955 sections** with per-block page coordinates,
+- **431,292 highlights** — normalised rectangles over the real page,
+- **137,379 typed specs** — `torque | capacity | clearance | pressure | grade | size | electrical`,
+  each with a page number and a **character-for-character quote**.
+
+Cost for the whole corpus: **$61.61**, $0.095 per manual, ~50 s to searchable. The grounding gate is
+the load-bearing part: a quote that cannot be found in the PDF text layer is dropped, and the log
+says how many. On this corpus, **290 of 110,094 sections dropped (0.3%) and 0 of 431,292 highlights
+discarded.**
+
+Then we asked one question of that corpus, and it turned into this whole feature:
+
+> **How many of these manuals print a rule that depends on where the vehicle actually is?**
+
+**522 of 529. 98.7%.**
+
+| clause family | manuals | occurrences |
+|---|---|---|
+| road salt / coastal / corrosion | 518 | 3,817 |
+| dusty / sandy | 487 | 1,168 |
+| antifreeze | 394 | 2,349 |
+| wet / muddy | 371 | 1,060 |
+| ambient temperature | 340 | 1,123 |
+
+The manual knows the rule. It has no idea whether it applies to you. **NOAA does.**
+
+### 3:00 – 3:45 · The pipeline
+
+> **Feel:** this is a real data system, not a notebook.
+
+```mermaid
+flowchart TB
+  subgraph noisy["the noisy half — 84 OEM publisher hosts"]
+    P["34 adapters · 84 hosts"] --> R["registry: 53,557 rows<br/>28,200 distinct URLs"]
+    R -->|"docKind from url+title<br/>8 kinds, no download"| C{"is it a handbook?"}
+    C -->|brochure / warranty / flyer| X["rejected, reason logged"]
+    C -->|handbook| H["SHA-256 dedupe<br/>498 hashes · 24 dupes caught"]
+  end
+
+  H --> ING["ingest: PyMuPDF text layer<br/>+ per-block coords"]
+  ING --> GR["grounding gate<br/>quote must exist in the page"]
+  GR --> CORP["532 manuals · 95,365 pages<br/>137,379 specs · 431,292 highlights"]
+
+  subgraph rb["rule extraction — the new dataset"]
+    CORP --> A["Pass A: deterministic regex<br/>8 rule types, zero cost"]
+    A --> B["Pass B: one cheap structured call<br/>per candidate window (~$0.90 total)"]
+    B --> G2["Pass C: same grounding gate<br/>drop any ungrounded threshold"]
+    G2 --> RULES["ClimateRule[]<br/>per manual, per page"]
+  end
+
+  subgraph ext["curated public datasets"]
+    ISD["NOAA ISD · s3://noaa-isd-pds<br/>~600 GB · 29,661 stations"] -->|"stream .gz,<br/>chars 88–92, drop quality 2/3/6/7/9"| RED["reduce in-stream"]
+    RED --> CLIM["climatology.json<br/>12,776 active stations · ~4 MB"]
+    AQ["OpenAQ · s3://openaq-data-archive<br/>hive: locationid/year/month"] --> AIR["air.json<br/>pm10 p90 · dusty days"]
+    CLIM -->|"haversine ≤ 25 km"| AIR
+  end
+
+  RULES --> FIT{"/climate/fit<br/>0 tokens · ~30 ms"}
+  CLIM --> FIT
+  AIR --> FIT
+  LOC["user lat/lon → nearest station<br/>haversine over 12,776"] --> FIT
+  FIT --> UI["Conditions strip →<br/>the manual's own page, highlighted"]
+  RULES --> AN["anomalies.json<br/>cross-OEM · model-year drift"]
+```
+
+Three things worth a sentence each:
+
+- **600 GB in, 4 MB out.** We never store the archive. Each station-year `.gz` is reduced **in the
+  stream** to one row: hours below −35/−30/−25/−20/−10/0, hours above 35/40, freeze–thaw cycles,
+  min, max, mean. 12,776 stations × 6 years ≈ 76,000 objects ≈ 45 GB streamed → a 4 MB table that
+  ships inside the container.
+- **The cleaning step is not decoration.** ISD puts a quality code at character 93. Leave codes
+  2/3/6/7/9 in and Minneapolis's 2024 minimum comes back as **−46.9 °C** instead of **−22.2 °C**.
+  That is our own first-pass bug, and it is the clearest demonstration in the whole project that the
+  hard part is not obtaining data.
+- **Every join is auditable.** lat/lon → station is haversine over 12,776 rows and we **print the
+  distance**. Anything beyond 50 km renders `unknown`, never `ok`. Model-family clustering for the
+  drift analysis writes its clusters **with their members** to `families.json` so a human can see a
+  bad merge. No silent fuzzy matching anywhere.
+
+### 3:45 – 4:30 · What we found
+
+> **Feel:** oh. That is genuinely surprising, and it matters.
+
+**One number, nine markets.** Of our 508 stored spec files, **206 manuals print an antifreeze floor.
+Every single one prints −25 °C.** EU 100, US 69, worldwide 26, plus Argentina, Japan, China, Brazil,
+the Philippines. Four makes, three model years, **zero variance**. Somebody in Austria typed −25 °C
+once, and it shipped to every market on earth.
+
+**How often is that wrong?** Random sample, seed 11, of the 12,776 stations still reporting:
+250 had a 2024 file, 210 had ≥ 2,000 quality-passed observations, **48 of them — 22.9% — went below
+−25 °C during 2024.** 82.4 MB streamed, 2,384,890 observations parsed, in about three minutes on a
+laptop. A second independent sample gave 22.6%: the estimate is stable.
+
+And the unexpected part: the breaching countries are Russia, the US, Canada, Norway, Finland,
+Kazakhstan — **and Fiji and Bolivia.** Those are *altitude* stations, not latitude ones. The manual's
+single number fails on the vertical axis too, which is why `altitude` became its own rule type.
+
+**The rule that is already personalised, and nobody notices.** KTM does print a temperature-banded
+oil grade — *"Engine oil grade at ambient temperature ≥ 0 °C: SAE 10W/50; < 0 °C: SAE 5W/40"*,
+**KTM 1390 Super Adventure R 2026 US, p. 215.** Nearest-station join, 2024, measured:
+
+| city | station | km | share of 2024 readings below 0 °C | what p. 215 means for you |
+|---|---|---|---|---|
+| Phoenix | PHOENIX SKY HARBOR INTL | 6.6 | **0.0%** | 10W/50, all year |
+| Zurich | ZUERICH-FLUNTERN | 2.1 | 6.1% | 5W/40 for about three weeks |
+| Minneapolis | MINNEAPOLIS–ST PAUL INTL | 10.8 | **20.7%** | 5W/40 for a fifth of the year |
+| International Falls, MN | FALLS INTERNATIONAL | 4.6 | **34.6%** | 5W/40 for a third of the year |
+| Bangkok | BANGKOK METROPOLIS | 7.5 | 0.0% | the rule never fires |
+
+**And "more often" finally gets a number.** 487 of 529 manuals say service the air filter more often
+in dusty conditions — *"Service more frequently when operating in severe conditions: dusty, wet…"*,
+Kawasaki Versys 1100 2026 US, p. 174. Not one says how much more often. OpenAQ's PM10 distribution
+does: your location's percentile decides whether the manual's own severe-conditions column applies.
+
+**How we know it is not made up.** The extractor never generates a threshold — Pass C drops any rule
+whose quote is not a character-for-character substring of the PDF text layer, the same gate that
+discarded 0 of 431,292 highlights. Twenty randomly chosen manuals get hand-labelled and we publish
+precision and recall as measured†. Bangkok, Dubai, Miami and Delhi are **negative controls in CI**:
+if a cold rule ever fires there, the join is broken. And the whole thing is one seeded script in the
+repo — `docs/pitches/voloridge/isd_probe.py`, run it yourself.
+
+### 4:30 – 5:00 · Live demo, and the close
+
+> **Feel:** I could hand this to a mechanic today.
+
+1. **KTM 1390 Super Adventure R 2026** → the manual opens.
+2. Tap **Conditions**, type **Minneapolis** →
+   `MINNEAPOLIS–ST PAUL INTERNATIONAL · 10.8 km · 13,760 observations in 2024`
+   - `OIL — action needed · 20.7% of 2024's readings below 0 °C · your manual, p. 215: SAE 5W/40`
+   - `COOLANT — ok · coldest 2024 reading −22.2 °C · floor −25 °C, p. 158`
+3. Change one field to **International Falls, MN** →
+   `COOLANT — breached · 108 readings below −25 °C in 2024, low −30.6 °C · p. 158`
+4. **Tap the coolant row.** The PDF opens on p. 158 with *"Antifreeze protection to at least −25 °C"*
+   highlighted. **KTM said it. We only worked out that it applies to you.**
+5. Change to **Bangkok** — every cold rule goes grey and the dust rule lights up. The negative
+   control is part of the demo on purpose.
+6. Last screen: *206 manuals. 9 markets. One number.* And next to it: **22.9%**.
+
+The close: the manual is still the only thing we show you. What the manufacturer could never print is
+**whether the rule is about you** — and that took 600 GB of somebody else's data to answer, reduced
+to 4 MB, for zero tokens and thirty milliseconds a look.
+
+---
+
+## Q&A — the hard ones
+
+**Is your station sample biased?**
+Yes, and in a knowable direction. ISD station density is heavy in the US, Russia and Canada and thin
+across Africa and South Asia, so a station-weighted 22.9% is **not** "22.9% of riders". It is
+"22.9% of the world's actively reporting weather stations". To make a rider-weighted claim we would
+need to weight by registrations — we do not have that data, so we do not make that claim. What the
+per-user product does is not statistical at all: it is one station, named, with its distance printed.
+
+**Your nearest-station join — how wrong does it get?**
+The failure mode is real and we hit it. Our first pass matched stations by *name*: "Boston" landed on
+a **buoy** 1 km offshore, "Moscow" on Moscow, **Idaho**, and "Chicago" on a Canadian station with a
+−46.9 °C minimum. That is why the shipped join is geodesic and prints the distance, why stations with
+`END < 20250101` are filtered out (29,661 → 12,776), and why anything past 50 km renders `unknown`
+rather than `ok`. A station 10 km away in flat terrain is fine; 40 km across a mountain range is not,
+and elevation delta is on the list to gate on.
+
+**How do you know the extracted rules are right and not hallucinated?**
+The model is never allowed to produce the number as free text. Pass A finds candidates with regex at
+zero cost; Pass B structures the window; Pass C drops any rule whose quote is not a
+character-for-character substring of the PDF text layer. That is the same gate already running in
+production, where it discarded 0 of 431,292 highlights and 290 of 110,094 sections. Plus a
+hand-labelled 20-manual held-out set with published precision and recall†. If a rule cannot be
+grounded, it does not exist.
+
+**600 GB — did you actually process it, or a toy slice?**
+The reducer is real and the arithmetic is honest: 12,776 stations × 6 years ≈ 76,000 objects ≈ 45 GB
+gzipped, streamed and reduced in-stream to ~4 MB, never stored. On this laptop we measured 82.4 MB /
+250 objects / 2.38 M observations in about three minutes over public HTTPS; from Switzerland the full
+sweep is ~7 hours, and in us-east-1 on the instances you offered at the booth it is well under an
+hour. We will tell you exactly which slice shipped rather than implying we swept it all.
+
+**Why not just call a weather API?**
+Because the question is not "what is the temperature". It is "how many hours per year is this
+location below the threshold this manufacturer printed, and how bad was the worst year" — a
+multi-year distribution, not a reading. That needs the archive. It also needs to be free and offline
+at request time: the verdict costs 0 tokens and ~30 ms because the whole climatology is 4 MB in
+memory.
+
+**Is this reproducible?**
+`docs/pitches/voloridge/isd_probe.py`, seed 11, anonymous HTTPS, no AWS account, no key. Both figures
+in the pitch come out of it. Data artefacts are committed; the LLM pass is cached by
+`sha256(window)`; every threshold is a named constant.
+
+**What is the actual failure rate from running the wrong coolant?**
+We do not know, and we will not guess. We have no failure data — only exposure. Every number we show
+is "the manufacturer printed X; your location measured Y". Joining NHTSA complaints and recalls to
+this would give the outcome side, and it is the obvious next dataset — it is just not on your curated
+list, and we would rather ship one honest join than two hand-wavy ones.
+
+**Scale: what happens at 27,751 vehicles instead of 659?**
+The climatology does not grow — it is per station, not per vehicle. The rulebook is per *manual*, and
+one manual covers many model years, so it grows with ingests, not with the catalog: 532 manuals
+already cover 659 vehicles, and the registry has 28,200 distinct PDFs behind 53,557 rows. At
+$0.095/manual and ~$0.0017 of rule extraction per manual, the full free-and-fetchable set is a
+three-figure spend, not an architectural problem.
+
+**What did you get wrong?**
+Three things, all in the repo: the name-based station join (fixed with geodesics), the missing ISD
+quality-code filter (−46.9 °C instead of −22.2 °C), and one spec file that is still corrupt on disk —
+`yamaha-tracer-9-gt-2025-eu-om-90739a.json`, trailing bytes after the JSON document. We found it
+because the analysis pass crashed on it, which is the argument for running the analysis over the whole
+corpus rather than a sample.
+
+---
+
+## Sources for every number
+
+| claim | source |
+|---|---|
+| 53,557 rows · 28,200 URLs · 84 hosts · 27,751 vehicles · 13,537 with a manual | `api/data/registry.json`, `api/data/bikes.json` |
+| 532 manuals · 95,365 pages · 90,955 sections · 659 vehicles | `GET https://mechanica.emilvinu.ch/api/manuals` |
+| 137,379 specs · 431,292 highlights · 648 done / 80 error / 24 duplicate / 21 suspicious · $61.61 | `api/data/mass_report.jsonl` |
+| 107,452 specs locally · 206 manuals × −25 °C × 9 markets | `api/data/specs/*.json` |
+| 522/529 manuals with an environment clause; the clause-family table | full scan of `api/data/pages/*.json`, 93,932 pages |
+| 29,661 stations · 12,776 active · 22.9% below −25 °C · 82.4 MB · 2,384,890 obs | `docs/pitches/voloridge/isd_probe.py` (seed 11) |
+| per-city share of readings below 0 °C | `isd_probe.py cities` |
+| 8 docKinds and why | `api/app/registry/doctype.py` |
+| 17 unreachable makes, per-portal war stories | `docs/MANUALS.md` |
+| $0.0003–0.005 per ask · $6.096 naive · 100% valid citations | `docs/ARCHITECTURE.md`, `api/eval/report.md`, `GET /api/cost` |
