@@ -140,7 +140,7 @@ def run_batches(prompts: list[str], on_done=None, model: str | None = None, work
     return results
 
 
-def keywords(titles: list[str], chunk: int = 40, model: str | None = None) -> list[list[str]]:
+def keywords(titles: list[str], chunk: int = 40, model: str | None = None, on_done=None) -> list[list[str]]:
     chosen = model or settings.model_struct
     out: list[list[str]] = [[] for _ in titles]
     chunks = [(i, titles[i : i + chunk]) for i in range(0, len(titles), chunk)]
@@ -162,8 +162,12 @@ def keywords(titles: list[str], chunk: int = 40, model: str | None = None) -> li
                     return offset, None
         return offset, None
 
+    finished = 0
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
         for offset, result in pool.map(one, chunks):
+            finished += 1
+            if on_done:
+                on_done(finished, len(chunks))
             if not result:
                 continue
             for item in result.items:

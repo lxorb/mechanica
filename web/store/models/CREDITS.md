@@ -32,7 +32,25 @@ catalogues: the source groups say "bodyshell" and "misc_a", not verified service
 ## Generic models, one per vehicle type
 
 <!-- GENERIC-TABLE-START — written by web/tools/credits-generic.mjs, do not hand-edit -->
-_None shipped yet — run `node web/tools/models-fetch.mjs`._
+
+| type | model | author | licence | size | tris |
+| --- | --- | --- | --- | --- | --- |
+| `generic/classic` | [Triumph Bonneville](https://sketchfab.com/3d-models/3d-model-triumph-bonneville-5a530a5b91fc49df9f879544b88c5401) | [zizian](https://sketchfab.com/zizian) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 4.77 MB | 264'668 |
+| `generic/cruiser` | [Harley Davidson Breakout](https://sketchfab.com/3d-models/harley-davidson-breakout-7d446ec9135c4e35892714d117b37268) | [FWSean](https://sketchfab.com/FWSean) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 0.95 MB | 79'417 |
+| `generic/naked` | [2024 Ducati Streetfighter V4 S](https://sketchfab.com/3d-models/2024-ducati-streetfighter-v4-s-c501252f8af64c559bf91dc306c3a550) | [OUTPISTON](https://sketchfab.com/OUTPISTON) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) | 1.45 MB | 101'989 |
+| `generic/scooter` | [Vespa](https://sketchfab.com/3d-models/vespa-hp-5431bb42de5743088c849ba080e7ac33) | [fox_amelie](https://sketchfab.com/fox_amelie) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 1.18 MB | 130'883 |
+| `generic/sportbike` | [Kawasaki Ninja ZX-6R](https://sketchfab.com/3d-models/kawasaki-ninja-zx-6r-4af2b6840b8045a5af5e8df8a85f04fa) | [valvetin](https://sketchfab.com/valvetin) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | 2.33 MB | 335'509 |
+
+Credit lines to reproduce wherever these are shown:
+
+> This work is based on "Triumph Bonneville" by zizian, licensed under CC BY 4.0.
+> This work is based on "Harley Davidson Breakout" by FWSean, licensed under CC BY 4.0.
+> This work is based on "2024 Ducati Streetfighter V4 S" by OUTPISTON, licensed under CC BY-NC-SA 4.0.
+> This work is based on "Vespa" by fox_amelie, licensed under CC BY 4.0.
+> This work is based on "Kawasaki Ninja ZX-6R" by valvetin, licensed under CC BY 4.0.
+
+**1 of these are NC (non-commercial):** naked. Fine for the demo, swap before anything is sold.
+
 <!-- GENERIC-TABLE-END -->
 
 Every generic carries its author's own `license.txt` and a `source.json` with the Sketchfab uid,

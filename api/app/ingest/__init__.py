@@ -1,6 +1,8 @@
 """PDF in, Manual out. Sections with grounded highlights, specs and parts - never a word the manual does not print."""
 
 import logging
+import threading
+import time
 from pathlib import Path
 
 import pymupdf
@@ -26,6 +28,67 @@ def _job(job_id: str, manual_id: str) -> IngestJob:
     store = get_store()
     job = store.job(job_id) or IngestJob(id=job_id, manualId=manual_id, status="queued")
     return job
+
+
+class Progress:
+    """`done` out of `pages`, for a rider watching a bar. It only ever moves forward.
+
+    The page count is unknown while the PDF is still downloading, so that stage is worth a fixed DOWNLOAD
+    units - never more than the smallest manual we accept, so `done` can never overtake `pages`.
+    """
+
+    WRITE_EVERY = 1.0
+    PROVISIONAL = 80.0
+    DOWNLOAD_END = 0.10
+    EXTRACT_END = 0.45
+    STRUCT_END = 0.90
+
+    def __init__(self, store, job: IngestJob):
+        self.store = store
+        self.job = job
+        self.total = self.PROVISIONAL
+        self.value = 0.0
+        self.written = 0.0
+        self.lock = threading.Lock()
+
+    def _write(self, force: bool) -> None:
+        now = time.monotonic()
+        if not force and now - self.written < self.WRITE_EVERY:
+            return
+        self.written = now
+        self.job.done = int(self.value)
+        self.job.pages = int(self.total)
+        self.store.put_job(self.job)
+
+    def stage(self, name: str) -> None:
+        self.job.stage = name
+        self._write(True)
+
+    def total_pages(self, pages: int) -> None:
+        with self.lock:
+            self.total = float(max(pages, 1))
+        self._write(True)
+
+    def at(self, value: float, force: bool = False) -> None:
+        with self.lock:
+            if value > self.value:
+                self.value = min(value, self.total)
+        self._write(force)
+
+    def _span(self, start: float, end: float, fraction: float) -> float:
+        return self.total * (start + (end - start) * min(max(fraction, 0.0), 1.0))
+
+    def downloading(self, got: int, expected: int) -> None:
+        self.at(self._span(0.0, self.DOWNLOAD_END, got / expected if expected > 0 else 0.5))
+
+    def extracting(self, done_pages: int) -> None:
+        self.at(self._span(self.DOWNLOAD_END, self.EXTRACT_END, done_pages / self.total))
+
+    def structuring(self, done_batches: int, batches: int) -> None:
+        self.at(self._span(self.EXTRACT_END, self.STRUCT_END, done_batches / max(1, batches)))
+
+    def saving(self, fraction: float) -> None:
+        self.at(self._span(self.STRUCT_END, 1.0, fraction), force=True)
 
 
 def run(
@@ -54,22 +117,20 @@ def run(
     job.error = None
     store.put_job(job)
 
-    def progress(done: int, total: int | None = None) -> None:
-        job.done = done
-        if total is not None:
-            job.pages = total
-        store.put_job(job)
-
+    bar = Progress(store, job)
     try:
-        path = fetch(source, pdf_path(manual_id), needs_ua)
+        bar.stage("download")
+        path = fetch(source, pdf_path(manual_id), needs_ua, on_bytes=bar.downloading)
+        bar.at(bar.total * bar.DOWNLOAD_END)
         doc = pymupdf.open(path)
         if doc.page_count < MIN_PAGES:
             pages = doc.page_count
             doc.close()
             raise ValueError(f"not a manual: {pages} page{'' if pages == 1 else 's'}")
-        progress(0, doc.page_count)
+        bar.total_pages(doc.page_count)
+        bar.stage("pages")
 
-        page_models = pagelib.extract_pages(doc, manual_id, progress=lambda n: progress(n))
+        page_models = pagelib.extract_pages(doc, manual_id, progress=bar.extracting)
         readable = sum(1 for p in page_models if len(p.text.strip()) >= structure.MIN_CHARS)
         if readable < MIN_READABLE_PAGES:
             pages = doc.page_count
@@ -113,12 +174,29 @@ def run(
             )
             for window in windows
         ]
-        progress(0, len(prompts) or doc.page_count)
-        results = structure.run_batches(prompts, on_done=lambda n: progress(n), model=struct_model, workers=workers)
+        bar.stage("structure")
+        results = structure.run_batches(
+            prompts,
+            on_done=lambda n: bar.structuring(n, len(prompts)),
+            model=struct_model,
+            workers=workers,
+        )
         units = [unit for group in results for unit in group]
         log.info("%s: %d batches -> %d units", manual_id, len(prompts), len(units))
 
-        built = assemble.build(doc, units, chaps, lambda titles: structure.keywords(titles, model=struct_model))
+        bar.stage("save")
+        built = assemble.build(
+            doc,
+            units,
+            chaps,
+            lambda titles: structure.keywords(
+                titles,
+                model=struct_model,
+                on_done=lambda n, total: bar.saving(0.45 + 0.45 * n / max(1, total)),
+            ),
+            progress=lambda n, total: bar.saving(0.45 * n / max(1, total)),
+        )
+        bar.saving(0.92)
         if not built.sections:
             # every structure call came back empty (rate limits, a scanned PDF): store nothing, let the caller retry
             (settings.data_dir / "manuals" / f"{manual_id}.json").unlink(missing_ok=True)
@@ -148,6 +226,7 @@ def run(
         job.pages = doc.page_count
         job.done = doc.page_count
         job.error = None
+        job.stage = "done"
         store.put_job(job)
         doc.close()
         return manual

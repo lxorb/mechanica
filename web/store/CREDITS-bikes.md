@@ -13,6 +13,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/aprilia-caponord-1200-thumb.webp` | Aprilia Caponord 1200 HMT 2015.jpeg | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_HMT_2015.jpeg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-caponord-1200-abs.webp` | Aprilia Caponord 1200 ABS (2014).png | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_ABS_(2014).png | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-caponord-1200-abs-thumb.webp` | Aprilia Caponord 1200 ABS (2014).png | San Andreas | https://commons.wikimedia.org/wiki/File:Aprilia_Caponord_1200_ABS_(2014).png | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-caponord-etv-1000.webp` | Aprilia ETV 1000 Caponord 2009 (9104353972).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_ETV_1000_Caponord_2009_(9104353972).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/aprilia-caponord-etv-1000-thumb.webp` | Aprilia ETV 1000 Caponord 2009 (9104353972).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_ETV_1000_Caponord_2009_(9104353972).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-dorsoduro-1200.webp` | Paris - Salon de la moto 2011 - Aprilia - Dorsoduro 1200 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Dorsoduro_1200_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-dorsoduro-1200-thumb.webp` | Paris - Salon de la moto 2011 - Aprilia - Dorsoduro 1200 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Dorsoduro_1200_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-dorsoduro-750.webp` | Aprilia Dorsoduro 750 01.jpg | m.caimary | https://commons.wikimedia.org/wiki/File:Aprilia_Dorsoduro_750_01.jpg | CC BY 2.0 |  |
@@ -29,6 +31,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/aprilia-pegaso-650-thumb.webp` | Aprilia Pegaso 650 Trail 2008 (14595674397).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Trail_2008_(14595674397).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-pegaso-650-factory.webp` | Aprilia Pegaso 650 Factory.jpg | Daragath at de.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Factory.jpg | Public domain |  |
 | `store/img/bikes/aprilia-pegaso-650-factory-thumb.webp` | Aprilia Pegaso 650 Factory.jpg | Daragath at de.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_Pegaso_650_Factory.jpg | Public domain |  |
+| `store/img/bikes/aprilia-pegaso-650-i-e.webp` | APRILIA PEGASO I.E. 650 2003 rok.jpg | Kajet897 | https://commons.wikimedia.org/wiki/File:APRILIA_PEGASO_I.E._650_2003_rok.jpg | CC0 |  |
+| `store/img/bikes/aprilia-pegaso-650-i-e-thumb.webp` | APRILIA PEGASO I.E. 650 2003 rok.jpg | Kajet897 | https://commons.wikimedia.org/wiki/File:APRILIA_PEGASO_I.E._650_2003_rok.jpg | CC0 |  |
 | `store/img/bikes/aprilia-rs-125.webp` | Aprilia RS 125 2001.jpg | Spieltrieb2 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_125_2001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs-125-thumb.webp` | Aprilia RS 125 2001.jpg | Spieltrieb2 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_125_2001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-rs-50.webp` | Aprilia RS 50 Tetsuya.jpg | Momko2610 | https://commons.wikimedia.org/wiki/File:Aprilia_RS_50_Tetsuya.jpg | Public domain |  |
@@ -69,6 +73,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/aprilia-scarabeo-50-thumb.webp` | Aprilia Scarabeo 50 Beige.jpg | Ryan Dickey | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_Beige.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-2t.webp` | Scarabeo 50 2T.jpg | Franco Vannini | https://commons.wikimedia.org/wiki/File:Scarabeo_50_2T.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-50-2t-thumb.webp` | Scarabeo 50 2T.jpg | Franco Vannini | https://commons.wikimedia.org/wiki/File:Scarabeo_50_2T.jpg | CC BY 2.0 |  |
+| `store/img/bikes/aprilia-scarabeo-50-ditech.webp` | Aprilia Scarabeo 50 I.E Ditech.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_I.E_Ditech.jpg | CC BY 4.0 |  |
+| `store/img/bikes/aprilia-scarabeo-50-ditech-thumb.webp` | Aprilia Scarabeo 50 I.E Ditech.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_50_I.E_Ditech.jpg | CC BY 4.0 |  |
 | `store/img/bikes/aprilia-scarabeo-500.webp` | Aprilia Scarabeo 500 cc.jpg | Stephan Ridgway | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500_cc.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-scarabeo-500-thumb.webp` | Aprilia Scarabeo 500 cc.jpg | Stephan Ridgway | https://commons.wikimedia.org/wiki/File:Aprilia_Scarabeo_500_cc.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-shiver-750.webp` | Paris - Salon de la moto 2011 - Aprilia - Shiver 750 ABS - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Aprilia_-_Shiver_750_ABS_-_001.jpg | CC BY-SA 3.0 |  |
@@ -83,6 +89,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/aprilia-sonic-50-thumb.webp` | Aprilia Sonic 50.jpg | Andreas Wieser | https://commons.wikimedia.org/wiki/File:Aprilia_Sonic_50.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-sportcity-50.webp` | Aprilia sportcity 50 in Croatia 2014-02-09 21-31.jpg | User:Ladrun | https://commons.wikimedia.org/wiki/File:Aprilia_sportcity_50_in_Croatia_2014-02-09_21-31.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sportcity-50-thumb.webp` | Aprilia sportcity 50 in Croatia 2014-02-09 21-31.jpg | User:Ladrun | https://commons.wikimedia.org/wiki/File:Aprilia_sportcity_50_in_Croatia_2014-02-09_21-31.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-sr-50.webp` | 2017-09-21 (100) Aprilia SR 50 at Bahnhof Waidhofen an der Ybbs, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(100)_Aprilia_SR_50_at_Bahnhof_Waidhofen_an_der_Ybbs,_Austria.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-sr-50-thumb.webp` | 2017-09-21 (100) Aprilia SR 50 at Bahnhof Waidhofen an der Ybbs, Austria.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(100)_Aprilia_SR_50_at_Bahnhof_Waidhofen_an_der_Ybbs,_Austria.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-sr-50-ditech.webp` | 2003 Aprilia SR50 Ditech DRL.JPG | Chalkocat | https://commons.wikimedia.org/wiki/File:2003_Aprilia_SR50_Ditech_DRL.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/aprilia-sr-50-ditech-thumb.webp` | 2003 Aprilia SR50 Ditech DRL.JPG | Chalkocat | https://commons.wikimedia.org/wiki/File:2003_Aprilia_SR50_Ditech_DRL.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-50-factory.webp` | Aprilia SR50 Factory.jpg | Nprefontaine at en.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_SR50_Factory.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-50-factory-thumb.webp` | Aprilia SR50 Factory.jpg | Nprefontaine at en.wikipedia | https://commons.wikimedia.org/wiki/File:Aprilia_SR50_Factory.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/aprilia-sr-gt-125.webp` | Aprilia SR GT 125.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Aprilia_SR_GT_125.jpg | CC BY 4.0 |  |
@@ -113,6 +123,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/aprilia-tuono-1000r-factory-thumb.webp` | Aprilia Tuono 1000R Factory.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_1000R_Factory.jpg | CC BY 2.0 |  |
 | `store/img/bikes/aprilia-tuono-125.webp` | Aprilia-tuono-125-motorrad-euro5-2024er.JPG | Wiki-observer | https://commons.wikimedia.org/wiki/File:Aprilia-tuono-125-motorrad-euro5-2024er.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-125-thumb.webp` | Aprilia-tuono-125-motorrad-euro5-2024er.JPG | Wiki-observer | https://commons.wikimedia.org/wiki/File:Aprilia-tuono-125-motorrad-euro5-2024er.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-50.webp` | Aprilia Tuono 50.jpg | Banan van Dyk | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_50.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/aprilia-tuono-50-thumb.webp` | Aprilia Tuono 50.jpg | Banan van Dyk | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_50.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-660.webp` | Aprilia Tuono 660 2019.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-660-thumb.webp` | Aprilia Tuono 660 2019.jpg | AlbertoSossella | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/aprilia-tuono-660-factory.webp` | Aprilia Tuono 660 Factory.jpg | BRNO1991 | https://commons.wikimedia.org/wiki/File:Aprilia_Tuono_660_Factory.jpg | CC BY 4.0 |  |
@@ -157,6 +169,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/bmw-f-450-gs-thumb.webp` | BMW F 450 GS (1b).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:BMW_F_450_GS_(1b).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-650-cs.webp` | Tandriem BMW F 650 CS02.JPG | Piero | https://commons.wikimedia.org/wiki/File:Tandriem_BMW_F_650_CS02.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-f-650-cs-thumb.webp` | Tandriem BMW F 650 CS02.JPG | Piero | https://commons.wikimedia.org/wiki/File:Tandriem_BMW_F_650_CS02.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-f-650-cs-scarver.webp` | BMW F650CS scarver.jpg | John Wright | https://commons.wikimedia.org/wiki/File:BMW_F650CS_scarver.jpg | CC BY 2.0 |  |
+| `store/img/bikes/bmw-f-650-cs-scarver-thumb.webp` | BMW F650CS scarver.jpg | John Wright | https://commons.wikimedia.org/wiki/File:BMW_F650CS_scarver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-f-650-gs.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-650-gs-thumb.webp` | BMW motorbike F 650 GS in Gdansk.jpg | Łukasz Katlewicz | https://commons.wikimedia.org/wiki/File:BMW_motorbike_F_650_GS_in_Gdansk.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/bmw-f-650-gs-dakar.webp` | BMW F 650 GS Dakar 2004 (14558100221).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:BMW_F_650_GS_Dakar_2004_(14558100221).jpg | CC BY-SA 2.0 |  |
@@ -237,6 +251,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/bmw-k-1600-gt-thumb.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GT - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GT_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-k-1600-gtl.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-k-1600-gtl-thumb.webp` | Paris - Salon de la moto 2011 - BMW - K 1600 GTL - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_K_1600_GTL_-_002.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-k1200-gt.webp` | BMW K1200GT 2006.JPG | User:Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_2006.JPG | CC BY-SA 2.5 |  |
+| `store/img/bikes/bmw-k1200-gt-thumb.webp` | BMW K1200GT 2006.JPG | User:Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_2006.JPG | CC BY-SA 2.5 |  |
 | `store/img/bikes/bmw-k1200gt.webp` | BMW K1200GT silver.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_silver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-k1200gt-thumb.webp` | BMW K1200GT silver.jpg | Kilbegan | https://commons.wikimedia.org/wiki/File:BMW_K1200GT_silver.jpg | CC BY 2.0 |  |
 | `store/img/bikes/bmw-k1200lt.webp` | BMW K1200LT - 14048874193.jpg | stevelyon | https://commons.wikimedia.org/wiki/File:BMW_K1200LT_-_14048874193.jpg | CC BY-SA 2.0 |  |
@@ -249,6 +265,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/bmw-m-1000-rr-thumb.webp` | BMW S 1000 RR - BMW M 1000 RR 50 Years M (22121615413).jpg | 先従隗始 | https://commons.wikimedia.org/wiki/File:BMW_S_1000_RR_-_BMW_M_1000_RR_50_Years_M_(22121615413).jpg | CC0 |  |
 | `store/img/bikes/bmw-r-1100-s.webp` | 2001 BMW R1100S.JPG | Malber | https://commons.wikimedia.org/wiki/File:2001_BMW_R1100S.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/bmw-r-1100-s-thumb.webp` | 2001 BMW R1100S.JPG | Malber | https://commons.wikimedia.org/wiki/File:2001_BMW_R1100S.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/bmw-r-1100-s-boxercup-replica.webp` | BMW R 1100 S Boxer Cup Replica.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_R_1100_S_Boxer_Cup_Replica.JPG | Public domain |  |
+| `store/img/bikes/bmw-r-1100-s-boxercup-replica-thumb.webp` | BMW R 1100 S Boxer Cup Replica.JPG | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:BMW_R_1100_S_Boxer_Cup_Replica.JPG | Public domain |  |
 | `store/img/bikes/bmw-r-1150-gs.webp` | BMW R1150GS Charley Boorman Long Way Round.jpg | Phil Guest | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Charley_Boorman_Long_Way_Round.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/bmw-r-1150-gs-thumb.webp` | BMW R1150GS Charley Boorman Long Way Round.jpg | Phil Guest | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Charley_Boorman_Long_Way_Round.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/bmw-r-1150-gs-adventure.webp` | BMW R1150GS Adventure.JPG | Dédélembrouille | https://commons.wikimedia.org/wiki/File:BMW_R1150GS_Adventure.JPG | CC BY 2.5 |  |
@@ -373,6 +391,14 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ducati-1299-panigale-thumb.webp` | Ducati 1299 Panigale S Anniversario - Mondial de l'Automobile de Paris 2016 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Ducati_1299_Panigale_S_Anniversario_-_Mondial_de_l'Automobile_de_Paris_2016_-_001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-1299-panigale-s.webp` | Ducati 1299 Panigale S Anniversario - Mondial de l'Automobile de Paris 2016 - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Ducati_1299_Panigale_S_Anniversario_-_Mondial_de_l'Automobile_de_Paris_2016_-_002.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-1299-panigale-s-thumb.webp` | Ducati 1299 Panigale S Anniversario - Mondial de l'Automobile de Paris 2016 - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Ducati_1299_Panigale_S_Anniversario_-_Mondial_de_l'Automobile_de_Paris_2016_-_002.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ducati-749.webp` | Ducati 749s - Flickr - exfordy.jpg | Brian Snelson from Hockley, Essex, England | https://commons.wikimedia.org/wiki/File:Ducati_749s_-_Flickr_-_exfordy.jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-749-thumb.webp` | Ducati 749s - Flickr - exfordy.jpg | Brian Snelson from Hockley, Essex, England | https://commons.wikimedia.org/wiki/File:Ducati_749s_-_Flickr_-_exfordy.jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-749-dark.webp` | Ducati 749 Dark.jpg | Oliver Lindner from Gmund am Tegernsee, Deutschland | https://commons.wikimedia.org/wiki/File:Ducati_749_Dark.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/ducati-749-dark-thumb.webp` | Ducati 749 Dark.jpg | Oliver Lindner from Gmund am Tegernsee, Deutschland | https://commons.wikimedia.org/wiki/File:Ducati_749_Dark.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/ducati-749-r.webp` | 749R (19785890006).jpg | Daniel Hartwig from San Mateo, CA, USA | https://commons.wikimedia.org/wiki/File:749R_(19785890006).jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-749-r-thumb.webp` | 749R (19785890006).jpg | Daniel Hartwig from San Mateo, CA, USA | https://commons.wikimedia.org/wiki/File:749R_(19785890006).jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-749s.webp` | Ducati 749S.jpg | Rich Moffitt from Boston, USA | https://commons.wikimedia.org/wiki/File:Ducati_749S.jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-749s-thumb.webp` | Ducati 749S.jpg | Rich Moffitt from Boston, USA | https://commons.wikimedia.org/wiki/File:Ducati_749S.jpg | CC BY 2.0 |  |
 | `store/img/bikes/ducati-848.webp` | Paris - Salon de la moto 2011 - Ducati - 848 EVO Corse Special Edition - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Ducati_-_848_EVO_Corse_Special_Edition_-_002.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ducati-848-thumb.webp` | Paris - Salon de la moto 2011 - Ducati - 848 EVO Corse Special Edition - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Ducati_-_848_EVO_Corse_Special_Edition_-_002.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ducati-848-evo.webp` | Paris - Salon de la moto 2011 - Ducati - 848 EVO Corse Special Edition - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Ducati_-_848_EVO_Corse_Special_Edition_-_003.jpg | CC BY-SA 3.0 |  |
@@ -383,6 +409,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ducati-899-panigale-thumb.webp` | Ducati 899 Panigale (10760616843).jpg | Decio "desmodex" | https://commons.wikimedia.org/wiki/File:Ducati_899_Panigale_(10760616843).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/ducati-959-panigale.webp` | Ducati 959 Panigale (27768163304).jpg | hoge asdf | https://commons.wikimedia.org/wiki/File:Ducati_959_Panigale_(27768163304).jpg | CC BY 2.0 |  |
 | `store/img/bikes/ducati-959-panigale-thumb.webp` | Ducati 959 Panigale (27768163304).jpg | hoge asdf | https://commons.wikimedia.org/wiki/File:Ducati_959_Panigale_(27768163304).jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-999.webp` | Ducati 999 2005.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Ducati_999_2005.jpg | Public domain |  |
+| `store/img/bikes/ducati-999-thumb.webp` | Ducati 999 2005.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Ducati_999_2005.jpg | Public domain |  |
+| `store/img/bikes/ducati-999-r.webp` | A Ducati 999R sponsored by Fila (47857632811).jpg | Guillaume Vachey from Chalon sur Saone, France | https://commons.wikimedia.org/wiki/File:A_Ducati_999R_sponsored_by_Fila_(47857632811).jpg | CC0 |  |
+| `store/img/bikes/ducati-999-r-thumb.webp` | A Ducati 999R sponsored by Fila (47857632811).jpg | Guillaume Vachey from Chalon sur Saone, France | https://commons.wikimedia.org/wiki/File:A_Ducati_999R_sponsored_by_Fila_(47857632811).jpg | CC0 |  |
 | `store/img/bikes/ducati-desertx.webp` | Ducati DesertX in Barcelona.jpg | Artem Lepesin | https://commons.wikimedia.org/wiki/File:Ducati_DesertX_in_Barcelona.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-desertx-thumb.webp` | Ducati DesertX in Barcelona.jpg | Artem Lepesin | https://commons.wikimedia.org/wiki/File:Ducati_DesertX_in_Barcelona.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-desmosedici-rr.webp` | Paris - RM auctions - 20150204 - Ducati Desmosedici RR G8 - 2009 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_RM_auctions_-_20150204_-_Ducati_Desmosedici_RR_G8_-_2009_-_001.jpg | CC BY-SA 4.0 |  |
@@ -413,6 +443,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ducati-hypermotard-sp-thumb.webp` | Hypermotard-SP-MY2021-01-gallery-1920x1080.jpg | Ducati | https://commons.wikimedia.org/wiki/File:Hypermotard-SP-MY2021-01-gallery-1920x1080.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster.webp` | Ducati Monster 900 1994 at QGOMA, Brisbane, 01.jpg | Chris Olszewski | https://commons.wikimedia.org/wiki/File:Ducati_Monster_900_1994_at_QGOMA,_Brisbane,_01.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-thumb.webp` | Ducati Monster 900 1994 at QGOMA, Brisbane, 01.jpg | Chris Olszewski | https://commons.wikimedia.org/wiki/File:Ducati_Monster_900_1994_at_QGOMA,_Brisbane,_01.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ducati-monster-1000.webp` | Ducati Monster 1000S.jpg | Michael Baier, < mailto:MichaelBaier@gmx.net > | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1000S.jpg | Public domain |  |
+| `store/img/bikes/ducati-monster-1000-thumb.webp` | Ducati Monster 1000S.jpg | Michael Baier, < mailto:MichaelBaier@gmx.net > | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1000S.jpg | Public domain |  |
 | `store/img/bikes/ducati-monster-1100.webp` | Ducati Monster 1100 Evo front.jpg | Sergeantpepper | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1100_Evo_front.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-1100-thumb.webp` | Ducati Monster 1100 Evo front.jpg | Sergeantpepper | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1100_Evo_front.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-1100-evo.webp` | Ducati Monster 1100 Evo sideview in Düsseldorf Media Harbour.jpg | Sergeantpepper | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1100_Evo_sideview_in_D%C3%BCsseldorf_Media_Harbour.jpg | CC BY-SA 4.0 |  |
@@ -425,6 +457,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ducati-monster-1200-thumb.webp` | 2014 Ducati Monster 1200.JPG | Dennis Bratland | https://commons.wikimedia.org/wiki/File:2014_Ducati_Monster_1200.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/ducati-monster-1200-s.webp` | Ducati Monster 1200 S (10760266956).jpg | Decio "desmodex" | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1200_S_(10760266956).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/ducati-monster-1200-s-thumb.webp` | Ducati Monster 1200 S (10760266956).jpg | Decio "desmodex" | https://commons.wikimedia.org/wiki/File:Ducati_Monster_1200_S_(10760266956).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/ducati-monster-620.webp` | Ducati Monster 620 i.e. in Athens on 10-24-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Ducati_Monster_620_i.e._in_Athens_on_10-24-2023.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ducati-monster-620-thumb.webp` | Ducati Monster 620 i.e. in Athens on 10-24-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Ducati_Monster_620_i.e._in_Athens_on_10-24-2023.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ducati-monster-620-i-e.webp` | Ducati M 620 Monster i.e. Capirex02.JPG | Henk Elshout | https://commons.wikimedia.org/wiki/File:Ducati_M_620_Monster_i.e._Capirex02.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/ducati-monster-620-i-e-thumb.webp` | Ducati M 620 Monster i.e. Capirex02.JPG | Henk Elshout | https://commons.wikimedia.org/wiki/File:Ducati_M_620_Monster_i.e._Capirex02.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/ducati-monster-695.webp` | Ducati Monster 695.png | TheBoh at Italian Wikipedia | https://commons.wikimedia.org/wiki/File:Ducati_Monster_695.png | Public domain |  |
 | `store/img/bikes/ducati-monster-695-thumb.webp` | Ducati Monster 695.png | TheBoh at Italian Wikipedia | https://commons.wikimedia.org/wiki/File:Ducati_Monster_695.png | Public domain |  |
 | `store/img/bikes/ducati-monster-696.webp` | Ducati Monster 696 2012 RightSide noBG.jpg | Quelle: Thomas Skowron / Freisteller, Bildbearbeitung & Retusche von Auge=mit | https://commons.wikimedia.org/wiki/File:Ducati_Monster_696_2012_RightSide_noBG.jpg | CC BY-SA 4.0 |  |
@@ -433,6 +469,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ducati-monster-796-thumb.webp` | Ducati monster 796 - 2012.jpg | 4dimensionalUSB | https://commons.wikimedia.org/wiki/File:Ducati_monster_796_-_2012.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-797.webp` | Ducati Monster 797.jpg | Mr.Clean1977 | https://commons.wikimedia.org/wiki/File:Ducati_Monster_797.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-797-thumb.webp` | Ducati Monster 797.jpg | Mr.Clean1977 | https://commons.wikimedia.org/wiki/File:Ducati_Monster_797.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ducati-monster-800-i-e.webp` | Ducati Monster 800 i.e. 2004 (55003549597).jpg | kishjar? from Moscow, Russia | https://commons.wikimedia.org/wiki/File:Ducati_Monster_800_i.e._2004_(55003549597).jpg | CC BY 4.0 |  |
+| `store/img/bikes/ducati-monster-800-i-e-thumb.webp` | Ducati Monster 800 i.e. 2004 (55003549597).jpg | kishjar? from Moscow, Russia | https://commons.wikimedia.org/wiki/File:Ducati_Monster_800_i.e._2004_(55003549597).jpg | CC BY 4.0 |  |
 | `store/img/bikes/ducati-monster-821.webp` | Ducati Monster 821 (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Ducati_Monster_821_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-821-thumb.webp` | Ducati Monster 821 (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Ducati_Monster_821_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-s2r.webp` | Ducati Monster S2R 2006.jpg | HORURUN@MS2R | https://commons.wikimedia.org/wiki/File:Ducati_Monster_S2R_2006.jpg | CC BY-SA 3.0 |  |
@@ -441,10 +479,14 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ducati-monster-s2r-1000-thumb.webp` | 2007 Ducati Monster S2R1000.jpg | Raoufhakam | https://commons.wikimedia.org/wiki/File:2007_Ducati_Monster_S2R1000.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-s2r-800.webp` | Ducati Monster 800 S2R Dark.jpg | Davide from Catania, Italy | https://commons.wikimedia.org/wiki/File:Ducati_Monster_800_S2R_Dark.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/ducati-monster-s2r-800-thumb.webp` | Ducati Monster 800 S2R Dark.jpg | Davide from Catania, Italy | https://commons.wikimedia.org/wiki/File:Ducati_Monster_800_S2R_Dark.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/ducati-monster-s4r.webp` | 2003 Ducati Monster S4R.jpg | Monaroman68 | https://commons.wikimedia.org/wiki/File:2003_Ducati_Monster_S4R.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ducati-monster-s4r-thumb.webp` | 2003 Ducati Monster S4R.jpg | Monaroman68 | https://commons.wikimedia.org/wiki/File:2003_Ducati_Monster_S4R.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-monster-s4r-s-tricolore.webp` | Ducati Monster S4R S Tricolore 2008.jpg | HORURUN@SRV250 | https://commons.wikimedia.org/wiki/File:Ducati_Monster_S4R_S_Tricolore_2008.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ducati-monster-s4r-s-tricolore-thumb.webp` | Ducati Monster S4R S Tricolore 2008.jpg | HORURUN@SRV250 | https://commons.wikimedia.org/wiki/File:Ducati_Monster_S4R_S_Tricolore_2008.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ducati-monster-s4r-testastretta.webp` | Ducati Monster S4R Testastretta.jpg | Brian Snelson from Hockley, Essex, England | https://commons.wikimedia.org/wiki/File:Ducati_Monster_S4R_Testastretta.jpg | CC BY 2.0 |  |
 | `store/img/bikes/ducati-monster-s4r-testastretta-thumb.webp` | Ducati Monster S4R Testastretta.jpg | Brian Snelson from Hockley, Essex, England | https://commons.wikimedia.org/wiki/File:Ducati_Monster_S4R_Testastretta.jpg | CC BY 2.0 |  |
+| `store/img/bikes/ducati-multistrada-1000s-ds.webp` | Ducati Multistrada 1000s DS.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1000s_DS.jpg | Public domain |  |
+| `store/img/bikes/ducati-multistrada-1000s-ds-thumb.webp` | Ducati Multistrada 1000s DS.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1000s_DS.jpg | Public domain |  |
 | `store/img/bikes/ducati-multistrada-1100.webp` | 2008 Ducati Multistrada 1100s.jpg | Ferdagio | https://commons.wikimedia.org/wiki/File:2008_Ducati_Multistrada_1100s.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-multistrada-1100-thumb.webp` | 2008 Ducati Multistrada 1100s.jpg | Ferdagio | https://commons.wikimedia.org/wiki/File:2008_Ducati_Multistrada_1100s.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ducati-multistrada-1100s.webp` | Ducati Multistrada 1100S (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_1100S_(1).jpg | CC BY-SA 4.0 |  |
@@ -595,10 +637,14 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/harley-davidson-flhx-street-glide-thumb.webp` | Paris - Salon de la moto 2011 - Harley-Davidson - FLHX Street Glide - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_FLHX_Street_Glide_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/harley-davidson-flhxxx-street-glide-trike.webp` | Paris - RM Sotheby’s 2018 - Harley-Davidson FLHXXX street glide trike - 2010 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_RM_Sotheby%E2%80%99s_2018_-_Harley-Davidson_FLHXXX_street_glide_trike_-_2010_-_001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-flhxxx-street-glide-trike-thumb.webp` | Paris - RM Sotheby’s 2018 - Harley-Davidson FLHXXX street glide trike - 2010 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_RM_Sotheby%E2%80%99s_2018_-_Harley-Davidson_FLHXXX_street_glide_trike_-_2010_-_001.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/harley-davidson-flst-heritage-softail.webp` | Harley-Davidson FLST Heritage Softail 1987.jpg | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:Harley-Davidson_FLST_Heritage_Softail_1987.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/harley-davidson-flst-heritage-softail-thumb.webp` | Harley-Davidson FLST Heritage Softail 1987.jpg | Piero at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:Harley-Davidson_FLST_Heritage_Softail_1987.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/harley-davidson-flstf-fat-boy.webp` | Harley-Davidson Museum May 2024 17 (1990 FLSTF Fat Boy--OHV V-Twin).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_17_(1990_FLSTF_Fat_Boy--OHV_V-Twin).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-flstf-fat-boy-thumb.webp` | Harley-Davidson Museum May 2024 17 (1990 FLSTF Fat Boy--OHV V-Twin).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_17_(1990_FLSTF_Fat_Boy--OHV_V-Twin).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-flstn-softail-deluxe.webp` | Harley-Davidson FLSTN Softail Deluxe (L123 RAT) - 25 May 2026.jpg | Aethonatic | https://commons.wikimedia.org/wiki/File:Harley-Davidson_FLSTN_Softail_Deluxe_(L123_RAT)_-_25_May_2026.jpg | CC0 |  |
 | `store/img/bikes/harley-davidson-flstn-softail-deluxe-thumb.webp` | Harley-Davidson FLSTN Softail Deluxe (L123 RAT) - 25 May 2026.jpg | Aethonatic | https://commons.wikimedia.org/wiki/File:Harley-Davidson_FLSTN_Softail_Deluxe_(L123_RAT)_-_25_May_2026.jpg | CC0 |  |
+| `store/img/bikes/harley-davidson-fltri-road-glide.webp` | Harley-Davidson Museum May 2024 20 (1998 FLTRI Road Glide--OHV V-Twin).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_20_(1998_FLTRI_Road_Glide--OHV_V-Twin).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/harley-davidson-fltri-road-glide-thumb.webp` | Harley-Davidson Museum May 2024 20 (1998 FLTRI Road Glide--OHV V-Twin).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_20_(1998_FLTRI_Road_Glide--OHV_V-Twin).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-forty-eight.webp` | Harley Davidson 1200 Forty Eight (16529970242).jpg | Bob Adams from Amanzimtoti, South Africa | https://commons.wikimedia.org/wiki/File:Harley_Davidson_1200_Forty_Eight_(16529970242).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/harley-davidson-forty-eight-thumb.webp` | Harley Davidson 1200 Forty Eight (16529970242).jpg | Bob Adams from Amanzimtoti, South Africa | https://commons.wikimedia.org/wiki/File:Harley_Davidson_1200_Forty_Eight_(16529970242).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/harley-davidson-freewheeler.webp` | Harley-Davidson Museum May 2024 27 (2024 Freewheeler).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_27_(2024_Freewheeler).jpg | CC BY-SA 4.0 |  |
@@ -671,12 +717,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/harley-davidson-ultra-limited-thumb.webp` | Woman Returning on Harley-Davidson Ultra Limited - Las Vegas Ride for Kids 2019.jpg | Noah Wulf | https://commons.wikimedia.org/wiki/File:Woman_Returning_on_Harley-Davidson_Ultra_Limited_-_Las_Vegas_Ride_for_Kids_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-v-rod-muscle.webp` | Paris - Salon de la moto 2011 - Harley-Davidson - VRSCF V-Rod Muscle - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_VRSCF_V-Rod_Muscle_-_003.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/harley-davidson-v-rod-muscle-thumb.webp` | Paris - Salon de la moto 2011 - Harley-Davidson - VRSCF V-Rod Muscle - 003.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_VRSCF_V-Rod_Muscle_-_003.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/harley-davidson-vrsca-v-rod.webp` | Harley-Davidson VRSCA V-Rod.JPG | Unknown | https://commons.wikimedia.org/wiki/File:Harley-Davidson_VRSCA_V-Rod.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/harley-davidson-vrsca-v-rod-thumb.webp` | Harley-Davidson VRSCA V-Rod.JPG | Unknown | https://commons.wikimedia.org/wiki/File:Harley-Davidson_VRSCA_V-Rod.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/harley-davidson-vrscf-v-rod-muscle.webp` | Paris - Salon de la moto 2011 - Harley-Davidson - VRSCF V-Rod Muscle - 004.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_VRSCF_V-Rod_Muscle_-_004.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/harley-davidson-vrscf-v-rod-muscle-thumb.webp` | Paris - Salon de la moto 2011 - Harley-Davidson - VRSCF V-Rod Muscle - 004.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Harley-Davidson_-_VRSCF_V-Rod_Muscle_-_004.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/harley-davidson-xl-1200n-nightster.webp` | Harley-Davidson Museum May 2024 26 (2007 XL 1200N Nightster--OHV V-Twin).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_26_(2007_XL_1200N_Nightster--OHV_V-Twin).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-xl-1200n-nightster-thumb.webp` | Harley-Davidson Museum May 2024 26 (2007 XL 1200N Nightster--OHV V-Twin).jpg | Michael Barera | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_26_(2007_XL_1200N_Nightster--OHV_V-Twin).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-xl-1200n-sportster-1200-nightster.webp` | HarleyDavidson XL 1200N Sportster 1200 Nightster 2008.jpg | Alek Kirstein | https://commons.wikimedia.org/wiki/File:HarleyDavidson_XL_1200N_Sportster_1200_Nightster_2008.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/harley-davidson-xl-1200n-sportster-1200-nightster-thumb.webp` | HarleyDavidson XL 1200N Sportster 1200 Nightster 2008.jpg | Alek Kirstein | https://commons.wikimedia.org/wiki/File:HarleyDavidson_XL_1200N_Sportster_1200_Nightster_2008.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/harley-davidson-xl-883-sportster.webp` | Harley Davidson XL 883 N Sportster 2011 (15762289430).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Harley_Davidson_XL_883_N_Sportster_2011_(15762289430).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/harley-davidson-xl-883-sportster-thumb.webp` | Harley Davidson XL 883 N Sportster 2011 (15762289430).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Harley_Davidson_XL_883_N_Sportster_2011_(15762289430).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/harley-davidson-xl883-sportster.webp` | Harley-Davidson Sportster XL883 2007.JPG | Abhijit.thakur | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Sportster_XL883_2007.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-xl883-sportster-thumb.webp` | Harley-Davidson Sportster XL883 2007.JPG | Abhijit.thakur | https://commons.wikimedia.org/wiki/File:Harley-Davidson_Sportster_XL883_2007.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/harley-davidson-xr1200.webp` | Flickr - ronsaunders47 - HARLEY-DAVIDSON XR1200 SPORTSTER. 2010..jpg | Ronald Saunders from Warrington, UK | https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_HARLEY-DAVIDSON_XR1200_SPORTSTER._2010..jpg | CC BY-SA 2.0 |  |
@@ -729,6 +779,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-400x-thumb.webp` | Osaka Motor Show 2015 (209) - Honda 400X (EBL-NC47).JPG | Tokumeigakarinoaoshima | https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(209)_-_Honda_400X_(EBL-NC47).JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-599.webp` | An American 2004 Honda 599 Hornet.jpg | Yitzachmmeyer | https://commons.wikimedia.org/wiki/File:An_American_2004_Honda_599_Hornet.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-599-thumb.webp` | An American 2004 Honda 599 Hornet.jpg | Yitzachmmeyer | https://commons.wikimedia.org/wiki/File:An_American_2004_Honda_599_Hornet.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-919.webp` | Honda CBR 919 RR SC33 Left Side.jpg | Galant | https://commons.wikimedia.org/wiki/File:Honda_CBR_919_RR_SC33_Left_Side.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-919-thumb.webp` | Honda CBR 919 RR SC33 Left Side.jpg | Galant | https://commons.wikimedia.org/wiki/File:Honda_CBR_919_RR_SC33_Left_Side.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-125.webp` | Honda NSR 125.JPG | David87hercules | https://commons.wikimedia.org/wiki/File:Honda_NSR_125.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-125-thumb.webp` | Honda NSR 125.JPG | David87hercules | https://commons.wikimedia.org/wiki/File:Honda_NSR_125.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-150.webp` | Honda NSR 150 SP 01.jpg | Jirapat Chroenkeskij | https://commons.wikimedia.org/wiki/File:Honda_NSR_150_SP_01.jpg | CC0 |  |
+| `store/img/bikes/honda-150-thumb.webp` | Honda NSR 150 SP 01.jpg | Jirapat Chroenkeskij | https://commons.wikimedia.org/wiki/File:Honda_NSR_150_SP_01.jpg | CC0 |  |
 | `store/img/bikes/honda-activa.webp` | Honda Activa Scooter at Bakkannapalem.JPG | Adityamadhav83 | https://commons.wikimedia.org/wiki/File:Honda_Activa_Scooter_at_Bakkannapalem.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-activa-thumb.webp` | Honda Activa Scooter at Bakkannapalem.JPG | Adityamadhav83 | https://commons.wikimedia.org/wiki/File:Honda_Activa_Scooter_at_Bakkannapalem.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-activa-3g.webp` | Honda Activa 3G Model 2015.jpg | Rajesh13045 | https://commons.wikimedia.org/wiki/File:Honda_Activa_3G_Model_2015.jpg | CC BY-SA 4.0 |  |
@@ -771,6 +827,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-benly-pro-thumb.webp` | Honda Benly Pro.jpg | 円周率３パーセント | https://commons.wikimedia.org/wiki/File:Honda_Benly_Pro.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-big-red.webp` | Honda Big Red 4x4 (4302086910).jpg | Prayitno / Thank you for (12 millions +) view from Los Angeles, USA | https://commons.wikimedia.org/wiki/File:Honda_Big_Red_4x4_(4302086910).jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-big-red-thumb.webp` | Honda Big Red 4x4 (4302086910).jpg | Prayitno / Thank you for (12 millions +) view from Los Angeles, USA | https://commons.wikimedia.org/wiki/File:Honda_Big_Red_4x4_(4302086910).jpg | CC BY 2.0 |  |
+| `store/img/bikes/honda-big-ruckus.webp` | Bigruckus.jpg | Wheresdib | https://commons.wikimedia.org/wiki/File:Bigruckus.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-big-ruckus-thumb.webp` | Bigruckus.jpg | Wheresdib | https://commons.wikimedia.org/wiki/File:Bigruckus.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-bulldog.webp` | 2026 Honda Super-One Bulldog.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2026_Honda_Super-One_Bulldog.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-bulldog-thumb.webp` | 2026 Honda Super-One Bulldog.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2026_Honda_Super-One_Bulldog.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cb-1000-r.webp` | Honda CB 1000 R (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Honda_CB_1000_R_(1).jpg | CC BY-SA 4.0 |  |
@@ -779,6 +837,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-cb-1100-thumb.webp` | Honda CB1100, left view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Honda_CB1100,_left_view.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cb-1300.webp` | HONDA CB1300 2007 BLEU.JPG | Brezh | https://commons.wikimedia.org/wiki/File:HONDA_CB1300_2007_BLEU.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cb-1300-thumb.webp` | HONDA CB1300 2007 BLEU.JPG | Brezh | https://commons.wikimedia.org/wiki/File:HONDA_CB1300_2007_BLEU.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-cb-250-nighthawk.webp` | Honda CB 250 Nighthawk red r.jpg | Unknown | https://commons.wikimedia.org/wiki/File:Honda_CB_250_Nighthawk_red_r.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-cb-250-nighthawk-thumb.webp` | Honda CB 250 Nighthawk red r.jpg | Unknown | https://commons.wikimedia.org/wiki/File:Honda_CB_250_Nighthawk_red_r.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-cb-400-super-four.webp` | Honda CB400 Super Four.jpg | Sunblock at English Wikipedia | https://commons.wikimedia.org/wiki/File:Honda_CB400_Super_Four.jpg | Public domain |  |
+| `store/img/bikes/honda-cb-400-super-four-thumb.webp` | Honda CB400 Super Four.jpg | Sunblock at English Wikipedia | https://commons.wikimedia.org/wiki/File:Honda_CB400_Super_Four.jpg | Public domain |  |
 | `store/img/bikes/honda-cb-600-f-hornet.webp` | Year2000.honda.cb600f.hornet.arp.jpg | Arpingstone | https://commons.wikimedia.org/wiki/File:Year2000.honda.cb600f.hornet.arp.jpg | Public domain |  |
 | `store/img/bikes/honda-cb-600-f-hornet-thumb.webp` | Year2000.honda.cb600f.hornet.arp.jpg | Arpingstone | https://commons.wikimedia.org/wiki/File:Year2000.honda.cb600f.hornet.arp.jpg | Public domain |  |
 | `store/img/bikes/honda-cb-hornet-160r.webp` | 2017 Honda CB Hornet 160R - Howrah 20170610103542.jpg | Biswarup Ganguly | https://commons.wikimedia.org/wiki/File:2017_Honda_CB_Hornet_160R_-_Howrah_20170610103542.jpg | CC BY 3.0 |  |
@@ -875,10 +937,14 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-cbf-500-thumb.webp` | Honda 500 CBF 2007.jpg | Ray Mee | https://commons.wikimedia.org/wiki/File:Honda_500_CBF_2007.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cbf-600.webp` | Honda CBF 600 Rettungsdienst.jpg | Wleiter | https://commons.wikimedia.org/wiki/File:Honda_CBF_600_Rettungsdienst.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cbf-600-thumb.webp` | Honda CBF 600 Rettungsdienst.jpg | Wleiter | https://commons.wikimedia.org/wiki/File:Honda_CBF_600_Rettungsdienst.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-cbf-600-n.webp` | Cbf 600 n for wiki.JPG | Orsonband ( talk ) ( Uploads ) | https://commons.wikimedia.org/wiki/File:Cbf_600_n_for_wiki.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-cbf-600-n-thumb.webp` | Cbf 600 n for wiki.JPG | Orsonband ( talk ) ( Uploads ) | https://commons.wikimedia.org/wiki/File:Cbf_600_n_for_wiki.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cbf1000.webp` | Honda CBF1000 motorcycle ambulance.jpg | Matthew Smith | https://commons.wikimedia.org/wiki/File:Honda_CBF1000_motorcycle_ambulance.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-cbf1000-thumb.webp` | Honda CBF1000 motorcycle ambulance.jpg | Matthew Smith | https://commons.wikimedia.org/wiki/File:Honda_CBF1000_motorcycle_ambulance.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-cbf125.webp` | Honda CBF125 2009.jpg | Unknown | https://commons.wikimedia.org/wiki/File:Honda_CBF125_2009.jpg | Public domain |  |
 | `store/img/bikes/honda-cbf125-thumb.webp` | Honda CBF125 2009.jpg | Unknown | https://commons.wikimedia.org/wiki/File:Honda_CBF125_2009.jpg | Public domain |  |
+| `store/img/bikes/honda-cbf250.webp` | CBF 250.jpg | No machine-readable author provided. Mfrutos assumed (based on copyright claims). | https://commons.wikimedia.org/wiki/File:CBF_250.jpg | CC BY 2.5 |  |
+| `store/img/bikes/honda-cbf250-thumb.webp` | CBF 250.jpg | No machine-readable author provided. Mfrutos assumed (based on copyright claims). | https://commons.wikimedia.org/wiki/File:CBF_250.jpg | CC BY 2.5 |  |
 | `store/img/bikes/honda-cbf600.webp` | Honda CBF600, red.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Honda_CBF600,_red.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cbf600-thumb.webp` | Honda CBF600, red.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Honda_CBF600,_red.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cbr-1000-rr.webp` | Honda CBR 1000 RR Fireblade, ca. 2005 model.jpg | Pittigrilli | https://commons.wikimedia.org/wiki/File:Honda_CBR_1000_RR_Fireblade,_ca._2005_model.jpg | CC BY-SA 4.0 |  |
@@ -887,12 +953,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-cbr-1000-rr-fireblade-thumb.webp` | Honda CBR1000RR Fireblade.jpg | Rama . | https://commons.wikimedia.org/wiki/File:Honda_CBR1000RR_Fireblade.jpg | CC BY-SA 2.0 fr |  |
 | `store/img/bikes/honda-cbr-1100-xx-super-blackbird.webp` | Honda CBR 1100XX SuperBlackbird2.jpg | Leonhartsberger | https://commons.wikimedia.org/wiki/File:Honda_CBR_1100XX_SuperBlackbird2.jpg | Public domain |  |
 | `store/img/bikes/honda-cbr-1100-xx-super-blackbird-thumb.webp` | Honda CBR 1100XX SuperBlackbird2.jpg | Leonhartsberger | https://commons.wikimedia.org/wiki/File:Honda_CBR_1100XX_SuperBlackbird2.jpg | Public domain |  |
+| `store/img/bikes/honda-cbr-125-r.webp` | 2006 Honda CBR125R.JPG | Eddiehimself at English Wikipedia | https://commons.wikimedia.org/wiki/File:2006_Honda_CBR125R.JPG | CC BY 3.0 |  |
+| `store/img/bikes/honda-cbr-125-r-thumb.webp` | 2006 Honda CBR125R.JPG | Eddiehimself at English Wikipedia | https://commons.wikimedia.org/wiki/File:2006_Honda_CBR125R.JPG | CC BY 3.0 |  |
 | `store/img/bikes/honda-cbr-125r.webp` | Honda cbr125r 2008.jpg | Maxquijano ( talk ) | https://commons.wikimedia.org/wiki/File:Honda_cbr125r_2008.jpg | Public domain |  |
 | `store/img/bikes/honda-cbr-125r-thumb.webp` | Honda cbr125r 2008.jpg | Maxquijano ( talk ) | https://commons.wikimedia.org/wiki/File:Honda_cbr125r_2008.jpg | Public domain |  |
 | `store/img/bikes/honda-cbr-150r.webp` | Honda CBR 150R - Two-wheeler - Kolkata 2015-09-14 3490.JPG | Biswarup Ganguly | https://commons.wikimedia.org/wiki/File:Honda_CBR_150R_-_Two-wheeler_-_Kolkata_2015-09-14_3490.JPG | CC BY 3.0 |  |
 | `store/img/bikes/honda-cbr-150r-thumb.webp` | Honda CBR 150R - Two-wheeler - Kolkata 2015-09-14 3490.JPG | Biswarup Ganguly | https://commons.wikimedia.org/wiki/File:Honda_CBR_150R_-_Two-wheeler_-_Kolkata_2015-09-14_3490.JPG | CC BY 3.0 |  |
 | `store/img/bikes/honda-cbr-250r.webp` | Honda CBR 250R from Kerala 02.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Honda_CBR_250R_from_Kerala_02.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cbr-250r-thumb.webp` | Honda CBR 250R from Kerala 02.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Honda_CBR_250R_from_Kerala_02.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-cbr-600-f4i.webp` | Honda CBR 600 F4i 2005.jpg | Silver Kalve | https://commons.wikimedia.org/wiki/File:Honda_CBR_600_F4i_2005.jpg | CC BY-SA 2.5 |  |
+| `store/img/bikes/honda-cbr-600-f4i-thumb.webp` | Honda CBR 600 F4i 2005.jpg | Silver Kalve | https://commons.wikimedia.org/wiki/File:Honda_CBR_600_F4i_2005.jpg | CC BY-SA 2.5 |  |
 | `store/img/bikes/honda-cbr-600-rr.webp` | 2006 Honda CBR 600RR Racing Bike (13337367265).jpg | Brett Levin from Parkland, USA | https://commons.wikimedia.org/wiki/File:2006_Honda_CBR_600RR_Racing_Bike_(13337367265).jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-cbr-600-rr-thumb.webp` | 2006 Honda CBR 600RR Racing Bike (13337367265).jpg | Brett Levin from Parkland, USA | https://commons.wikimedia.org/wiki/File:2006_Honda_CBR_600RR_Racing_Bike_(13337367265).jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-cbr1000rr.webp` | Man Exiting on Honda CBR1000RR - Las Vegas Ride for Kids 2019.jpg | Noah Wulf | https://commons.wikimedia.org/wiki/File:Man_Exiting_on_Honda_CBR1000RR_-_Las_Vegas_Ride_for_Kids_2019.jpg | CC BY-SA 4.0 |  |
@@ -933,6 +1003,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-cbr650r-thumb.webp` | 2023 Honda CBR650R Standard.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2023_Honda_CBR650R_Standard.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cbr650r-e-clutch.webp` | 2023 Honda CBR650R E-Clutch.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2023_Honda_CBR650R_E-Clutch.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cbr650r-e-clutch-thumb.webp` | 2023 Honda CBR650R E-Clutch.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2023_Honda_CBR650R_E-Clutch.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-cbx-250-twister.webp` | HONDA CBX 250 TWISTER.jpg | Al1997 | https://commons.wikimedia.org/wiki/File:HONDA_CBX_250_TWISTER.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-cbx-250-twister-thumb.webp` | HONDA CBX 250 TWISTER.jpg | Al1997 | https://commons.wikimedia.org/wiki/File:HONDA_CBX_250_TWISTER.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cd70.webp` | Honda cd 70.jpg | Danish47 | https://commons.wikimedia.org/wiki/File:Honda_cd_70.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cd70-thumb.webp` | Honda cd 70.jpg | Danish47 | https://commons.wikimedia.org/wiki/File:Honda_cd_70.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cg-125.webp` | Honda CG125 ES4.jpg | Urbancowboy89 | https://commons.wikimedia.org/wiki/File:Honda_CG125_ES4.jpg | CC BY-SA 3.0 |  |
@@ -949,6 +1021,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-cmx500-thumb.webp` | Honda CMX500 Rebel parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Honda_CMX500_Rebel_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cmx500-rebel.webp` | Honda CMX500 Rebel Portray.jpg | Luchs Later | https://commons.wikimedia.org/wiki/File:Honda_CMX500_Rebel_Portray.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-cmx500-rebel-thumb.webp` | Honda CMX500 Rebel Portray.jpg | Luchs Later | https://commons.wikimedia.org/wiki/File:Honda_CMX500_Rebel_Portray.jpg | CC BY 2.0 |  |
+| `store/img/bikes/honda-concept-1.webp` | KLIMS 2024 Honda Prelude Concept 1.jpg | Liauzh | https://commons.wikimedia.org/wiki/File:KLIMS_2024_Honda_Prelude_Concept_1.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-concept-1-thumb.webp` | KLIMS 2024 Honda Prelude Concept 1.jpg | Liauzh | https://commons.wikimedia.org/wiki/File:KLIMS_2024_Honda_Prelude_Concept_1.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-cr-250-r.webp` | Honda 1997 CR250R in the Honda Collection Hall.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Honda_1997_CR250R_in_the_Honda_Collection_Hall.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-cr-250-r-thumb.webp` | Honda 1997 CR250R in the Honda Collection Hall.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Honda_1997_CR250R_in_the_Honda_Collection_Hall.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-crf-450-r.webp` | Honda 2000 CRF450R in the Honda Collection Hall.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Honda_2000_CRF450R_in_the_Honda_Collection_Hall.JPG | CC BY-SA 3.0 |  |
@@ -1013,6 +1087,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-dax-125-thumb.webp` | HondaDax125.jpg | Liauzh | https://commons.wikimedia.org/wiki/File:HondaDax125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-dazzler.webp` | Modif dazzler pic 2.jpg | Sajidkalamm | https://commons.wikimedia.org/wiki/File:Modif_dazzler_pic_2.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-dazzler-thumb.webp` | Modif dazzler pic 2.jpg | Sajidkalamm | https://commons.wikimedia.org/wiki/File:Modif_dazzler_pic_2.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-deauville.webp` | Honda NT700V Deauville RC52 2006 0043.jpg | Galant | https://commons.wikimedia.org/wiki/File:Honda_NT700V_Deauville_RC52_2006_0043.jpg | CC BY 4.0 |  |
+| `store/img/bikes/honda-deauville-thumb.webp` | Honda NT700V Deauville RC52 2006 0043.jpg | Galant | https://commons.wikimedia.org/wiki/File:Honda_NT700V_Deauville_RC52_2006_0043.jpg | CC BY 4.0 |  |
 | `store/img/bikes/honda-dio.webp` | Honda Dio Oct 2018.jpg | Chacmool | https://commons.wikimedia.org/wiki/File:Honda_Dio_Oct_2018.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-dio-thumb.webp` | Honda Dio Oct 2018.jpg | Chacmool | https://commons.wikimedia.org/wiki/File:Honda_Dio_Oct_2018.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-dn-01.webp` | Honda DN-01 img 3224-b.jpg | Rama | https://commons.wikimedia.org/wiki/File:Honda_DN-01_img_3224-b.jpg | CC BY-SA 2.0 fr |  |
@@ -1035,6 +1111,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-fireblade-sp-thumb.webp` | Honda CBR1000RR Fireblade SP - Jakarta Fair 2016 - June 21 2016.jpg | Wilzz99 | https://commons.wikimedia.org/wiki/File:Honda_CBR1000RR_Fireblade_SP_-_Jakarta_Fair_2016_-_June_21_2016.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-fmx-650.webp` | Honda FMX650.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_FMX650.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-fmx-650-thumb.webp` | Honda FMX650.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_FMX650.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-foresight.webp` | Honda Foresight 250 in La Spezia.jpg | https://www.flickr.com/photos/photobeppus/ | https://commons.wikimedia.org/wiki/File:Honda_Foresight_250_in_La_Spezia.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-foresight-thumb.webp` | Honda Foresight 250 in La Spezia.jpg | https://www.flickr.com/photos/photobeppus/ | https://commons.wikimedia.org/wiki/File:Honda_Foresight_250_in_La_Spezia.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-forza.webp` | 2025 Honda Forza 750.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_Forza_750.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-forza-thumb.webp` | 2025 Honda Forza 750.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2025_Honda_Forza_750.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-forza-300.webp` | BEL — Vlaams Gewest — provincie Antwerpen — Antwerpen — Centrum (Hatzoloh Joodse Ambulancedienst · Honda Forza 300) 2025-05-19 Mattes.jpg | User:Mattes | https://commons.wikimedia.org/wiki/File:BEL_%E2%80%94_Vlaams_Gewest_%E2%80%94_provincie_Antwerpen_%E2%80%94_Antwerpen_%E2%80%94_Centrum_(Hatzoloh_Joodse_Ambulancedienst_%C2%B7_Honda_Forza_300)_2025-05-19_Mattes.jpg | CC BY 3.0 de |  |
@@ -1061,6 +1139,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-genio-thumb.webp` | 2020 Honda Genio CBS 110 (20220215).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2020_Honda_Genio_CBS_110_(20220215).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-giorno.webp` | Honda Giorno.jpg | Kandukuru Nagarjun | https://commons.wikimedia.org/wiki/File:Honda_Giorno.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-giorno-thumb.webp` | Honda Giorno.jpg | Kandukuru Nagarjun | https://commons.wikimedia.org/wiki/File:Honda_Giorno.jpg | CC BY 2.0 |  |
+| `store/img/bikes/honda-gl-1800-gold-wing.webp` | Honda GL 1800 Gold Wing DSCF0719.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_GL_1800_Gold_Wing_DSCF0719.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-gl-1800-gold-wing-thumb.webp` | Honda GL 1800 Gold Wing DSCF0719.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_GL_1800_Gold_Wing_DSCF0719.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-gl1800.webp` | Honda Gold Wing GL1800 - Indonesia International Motor Show 2018 - April 26 2018.jpg | Wilzz99 | https://commons.wikimedia.org/wiki/File:Honda_Gold_Wing_GL1800_-_Indonesia_International_Motor_Show_2018_-_April_26_2018.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-gl1800-thumb.webp` | Honda Gold Wing GL1800 - Indonesia International Motor Show 2018 - April 26 2018.jpg | Wilzz99 | https://commons.wikimedia.org/wiki/File:Honda_Gold_Wing_GL1800_-_Indonesia_International_Motor_Show_2018_-_April_26_2018.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-gl1800-goldwing.webp` | Hond GL1800 Goldwing in Paris.jpg | "S de Santi" from Madrid, SPAIN | https://commons.wikimedia.org/wiki/File:Hond_GL1800_Goldwing_in_Paris.jpg | CC BY 2.0 |  |
@@ -1071,12 +1151,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-gold-wing-thumb.webp` | Honda Goldwing, GIMS 2019, Le Grand-Saconnex (GIMS0707).jpg | Matti Blume | https://commons.wikimedia.org/wiki/File:Honda_Goldwing,_GIMS_2019,_Le_Grand-Saconnex_(GIMS0707).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-gold-wing-f6b.webp` | 2013 Honda Goldwing F6B.jpg | MickOhrberg | https://commons.wikimedia.org/wiki/File:2013_Honda_Goldwing_F6B.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-gold-wing-f6b-thumb.webp` | 2013 Honda Goldwing F6B.jpg | MickOhrberg | https://commons.wikimedia.org/wiki/File:2013_Honda_Goldwing_F6B.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-gorilla.webp` | Honda Gorilla Z50J 1985 01.JPG | Huhu Uet | https://commons.wikimedia.org/wiki/File:Honda_Gorilla_Z50J_1985_01.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-gorilla-thumb.webp` | Honda Gorilla Z50J 1985 01.JPG | Huhu Uet | https://commons.wikimedia.org/wiki/File:Honda_Gorilla_Z50J_1985_01.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-grom.webp` | Honda Grom 125 at Birmingham 2014.jpg | big-ashb | https://commons.wikimedia.org/wiki/File:Honda_Grom_125_at_Birmingham_2014.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-grom-thumb.webp` | Honda Grom 125 at Birmingham 2014.jpg | big-ashb | https://commons.wikimedia.org/wiki/File:Honda_Grom_125_at_Birmingham_2014.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-grom-125.webp` | 2020 Honda MSX Grom 125 Standard.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2020_Honda_MSX_Grom_125_Standard.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-grom-125-thumb.webp` | 2020 Honda MSX Grom 125 Standard.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2020_Honda_MSX_Grom_125_Standard.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-grom-abs.webp` | 2022 Honda MSX Grom 125 SP ABS.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2022_Honda_MSX_Grom_125_SP_ABS.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-grom-abs-thumb.webp` | 2022 Honda MSX Grom 125 SP ABS.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2022_Honda_MSX_Grom_125_SP_ABS.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-gyro-canopy.webp` | Pizza Hut Honda Gyro Canopy 2017 (34435836620).jpg | Vasconium | https://commons.wikimedia.org/wiki/File:Pizza_Hut_Honda_Gyro_Canopy_2017_(34435836620).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/honda-gyro-canopy-thumb.webp` | Pizza Hut Honda Gyro Canopy 2017 (34435836620).jpg | Vasconium | https://commons.wikimedia.org/wiki/File:Pizza_Hut_Honda_Gyro_Canopy_2017_(34435836620).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-gyro-x.webp` | Mail delivery - HONDA "GYRO-X".jpg | MIKI Yoshihito | https://commons.wikimedia.org/wiki/File:Mail_delivery_-_HONDA_%22GYRO-X%22.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-gyro-x-thumb.webp` | Mail delivery - HONDA "GYRO-X".jpg | MIKI Yoshihito | https://commons.wikimedia.org/wiki/File:Mail_delivery_-_HONDA_%22GYRO-X%22.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-helix.webp` | Honda Helix.jpg | Michael Erdmann | https://commons.wikimedia.org/wiki/File:Honda_Helix.jpg | CC BY-SA 2.0 de |  |
@@ -1085,6 +1169,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-honda-wn7-thumb.webp` | 2026 Hakone Ekiden Honda WN7 Keishicho Police Motorcycles.jpg | Comyu | https://commons.wikimedia.org/wiki/File:2026_Hakone_Ekiden_Honda_WN7_Keishicho_Police_Motorcycles.jpg | CC0 |  |
 | `store/img/bikes/honda-hornet-2-0.webp` | Honda CB600F Hornet 2011.JPG | Sedimin | https://commons.wikimedia.org/wiki/File:Honda_CB600F_Hornet_2011.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-hornet-2-0-thumb.webp` | Honda CB600F Hornet 2011.JPG | Sedimin | https://commons.wikimedia.org/wiki/File:Honda_CB600F_Hornet_2011.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-hornet-250.webp` | Honda hornet250.jpg | Aprilia rs125r | https://commons.wikimedia.org/wiki/File:Honda_hornet250.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-hornet-250-thumb.webp` | Honda hornet250.jpg | Aprilia rs125r | https://commons.wikimedia.org/wiki/File:Honda_hornet250.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-hornet-600.webp` | Honda Hornet 600 2005.jpg | uploader was Nogard13 at de.wikipedia | https://commons.wikimedia.org/wiki/File:Honda_Hornet_600_2005.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-hornet-600-thumb.webp` | Honda Hornet 600 2005.jpg | uploader was Nogard13 at de.wikipedia | https://commons.wikimedia.org/wiki/File:Honda_Hornet_600_2005.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-hornet-900.webp` | Honda Hornet 900 Gulf Edition.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Honda_Hornet_900_Gulf_Edition.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-hornet-900-thumb.webp` | Honda Hornet 900 Gulf Edition.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Honda_Hornet_900_Gulf_Edition.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-integra.webp` | 1996 Honda Integra sedan.jpg | User 3204 | https://commons.wikimedia.org/wiki/File:1996_Honda_Integra_sedan.jpg | CC BY 4.0 |  |
 | `store/img/bikes/honda-integra-thumb.webp` | 1996 Honda Integra sedan.jpg | User 3204 | https://commons.wikimedia.org/wiki/File:1996_Honda_Integra_sedan.jpg | CC BY 4.0 |  |
 | `store/img/bikes/honda-interceptor.webp` | 2014 Honda Interceptor.jpg | Brianhe | https://commons.wikimedia.org/wiki/File:2014_Honda_Interceptor.jpg | CC BY-SA 4.0 |  |
@@ -1129,6 +1219,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-nc750x-thumb.webp` | 2017 Honda NC750X.jpg | Carsamar | https://commons.wikimedia.org/wiki/File:2017_Honda_NC750X.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-nc750x-dct.webp` | 2021 Honda NC750X (DCT).jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2021_Honda_NC750X_(DCT).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-nc750x-dct-thumb.webp` | 2021 Honda NC750X (DCT).jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2021_Honda_NC750X_(DCT).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-nighthawk-250.webp` | 1991 Honda Nighthawk 250 (30887998956).jpg | dave_7 from Canada | https://commons.wikimedia.org/wiki/File:1991_Honda_Nighthawk_250_(30887998956).jpg | CC BY 2.0 |  |
+| `store/img/bikes/honda-nighthawk-250-thumb.webp` | 1991 Honda Nighthawk 250 (30887998956).jpg | dave_7 from Canada | https://commons.wikimedia.org/wiki/File:1991_Honda_Nighthawk_250_(30887998956).jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-nm4.webp` | GHOST IN THE SHELL Honda NM4.jpg | Rainmaker47 | https://commons.wikimedia.org/wiki/File:GHOST_IN_THE_SHELL_Honda_NM4.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-nm4-thumb.webp` | GHOST IN THE SHELL Honda NM4.jpg | Rainmaker47 | https://commons.wikimedia.org/wiki/File:GHOST_IN_THE_SHELL_Honda_NM4.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-nsc110.webp` | NSC110.jpg | Wilhelm1123 | https://commons.wikimedia.org/wiki/File:NSC110.jpg | CC BY-SA 4.0 |  |
@@ -1149,6 +1241,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-nx500-thumb.webp` | 2023 Honda NX500.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2023_Honda_NX500.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-nxr-bros.webp` | Honda NXR 150 Bros 01.jpg | mahalie | https://commons.wikimedia.org/wiki/File:Honda_NXR_150_Bros_01.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-nxr-bros-thumb.webp` | Honda NXR 150 Bros 01.jpg | mahalie | https://commons.wikimedia.org/wiki/File:Honda_NXR_150_Bros_01.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/honda-paneuropean.webp` | Honda ST1100 Pan-European.jpg | www.mgaylard.co.uk and thanks for looking | https://commons.wikimedia.org/wiki/File:Honda_ST1100_Pan-European.jpg | CC BY 2.0 |  |
+| `store/img/bikes/honda-paneuropean-thumb.webp` | Honda ST1100 Pan-European.jpg | www.mgaylard.co.uk and thanks for looking | https://commons.wikimedia.org/wiki/File:Honda_ST1100_Pan-European.jpg | CC BY 2.0 |  |
+| `store/img/bikes/honda-pantheon.webp` | Honda Pantheon 150.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_Pantheon_150.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-pantheon-thumb.webp` | Honda Pantheon 150.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_Pantheon_150.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-pantheon-150.webp` | 1999 Honda Pantheon 150 ABS.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:1999_Honda_Pantheon_150_ABS.jpg | CC BY 4.0 |  |
+| `store/img/bikes/honda-pantheon-150-thumb.webp` | 1999 Honda Pantheon 150 ABS.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:1999_Honda_Pantheon_150_ABS.jpg | CC BY 4.0 |  |
 | `store/img/bikes/honda-pcx.webp` | Honda PCX 150 2012 01.jpg | M.rJirapat | https://commons.wikimedia.org/wiki/File:Honda_PCX_150_2012_01.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-pcx-thumb.webp` | Honda PCX 150 2012 01.jpg | M.rJirapat | https://commons.wikimedia.org/wiki/File:Honda_PCX_150_2012_01.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-pcx-125-2.webp` | Honda PCX125 2011 Tail Light.JPG | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PCX125_2011_Tail_Light.JPG | CC BY-SA 3.0 |  |
@@ -1163,12 +1261,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-pcx125-thumb.webp` | 2014 Honda PCX125.jpg | Fatklind Maraj | https://commons.wikimedia.org/wiki/File:2014_Honda_PCX125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-pcx150.webp` | Honda PCX150 2013 Console.JPG | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PCX150_2013_Console.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-pcx150-thumb.webp` | Honda PCX150 2013 Console.JPG | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PCX150_2013_Console.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-ps-125i.webp` | Honda PS125i 2009 Speedo.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PS125i_2009_Speedo.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-ps-125i-thumb.webp` | Honda PS125i 2009 Speedo.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PS125i_2009_Speedo.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-ps125i.webp` | Honda PS125i 2009.JPG | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PS125i_2009.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-ps125i-thumb.webp` | Honda PS125i 2009.JPG | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_PS125i_2009.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-rc213v-repsol.webp` | MotoGP 2024 Malaysian Grand Prix - Repsol Honda - RC213V show bike.jpg | Liauzh | https://commons.wikimedia.org/wiki/File:MotoGP_2024_Malaysian_Grand_Prix_-_Repsol_Honda_-_RC213V_show_bike.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-rc213v-repsol-thumb.webp` | MotoGP 2024 Malaysian Grand Prix - Repsol Honda - RC213V show bike.jpg | Liauzh | https://commons.wikimedia.org/wiki/File:MotoGP_2024_Malaysian_Grand_Prix_-_Repsol_Honda_-_RC213V_show_bike.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-rc213v-s.webp` | Honda RC213V-S HRC IAA 2015.jpg | Alexander Migl | https://commons.wikimedia.org/wiki/File:Honda_RC213V-S_HRC_IAA_2015.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-rc213v-s-thumb.webp` | Honda RC213V-S HRC IAA 2015.jpg | Alexander Migl | https://commons.wikimedia.org/wiki/File:Honda_RC213V-S_HRC_IAA_2015.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-rc51.webp` | 2001 Honda RC51 SP1.jpg | Aaron Brownlee( Ixab ) | https://commons.wikimedia.org/wiki/File:2001_Honda_RC51_SP1.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-rc51-thumb.webp` | 2001 Honda RC51 SP1.jpg | Aaron Brownlee( Ixab ) | https://commons.wikimedia.org/wiki/File:2001_Honda_RC51_SP1.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-rebel.webp` | 2017 Honda CMX500 Rebel (20170430).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2017_Honda_CMX500_Rebel_(20170430).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-rebel-thumb.webp` | 2017 Honda CMX500 Rebel (20170430).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2017_Honda_CMX500_Rebel_(20170430).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-rebel-1100.webp` | Moscow, Honda CMX 1100 Rebel black, Aug 2026 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Honda_CMX_1100_Rebel_black,_Aug_2026_01.jpg | CC0 |  |
@@ -1193,6 +1295,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-rs125-thumb.webp` | Honda RS125 - Ian Hammond (7521491512).jpg | Jake Archibald from London, England | https://commons.wikimedia.org/wiki/File:Honda_RS125_-_Ian_Hammond_(7521491512).jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-ruckus.webp` | Wdog Honda Ruckus.jpg | wallerdog | https://commons.wikimedia.org/wiki/File:Wdog_Honda_Ruckus.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-ruckus-thumb.webp` | Wdog Honda Ruckus.jpg | wallerdog | https://commons.wikimedia.org/wiki/File:Wdog_Honda_Ruckus.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-rune.webp` | Honda Rune 2004 Barber.jpg | Silosarg | https://commons.wikimedia.org/wiki/File:Honda_Rune_2004_Barber.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-rune-thumb.webp` | Honda Rune 2004 Barber.jpg | Silosarg | https://commons.wikimedia.org/wiki/File:Honda_Rune_2004_Barber.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-s-wing-125.webp` | Honda S-Wing 125-2.JPG | Audiozar | https://commons.wikimedia.org/wiki/File:Honda_S-Wing_125-2.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-s-wing-125-thumb.webp` | Honda S-Wing 125-2.JPG | Audiozar | https://commons.wikimedia.org/wiki/File:Honda_S-Wing_125-2.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-sabre.webp` | 1984 Honda V65 Sabre.jpg | Tspooncl65 | https://commons.wikimedia.org/wiki/File:1984_Honda_V65_Sabre.jpg | CC BY-SA 4.0 |  |
@@ -1203,6 +1307,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-scoopy-110-thumb.webp` | 2022 Honda Scoopy 110.jpg | MoCars | https://commons.wikimedia.org/wiki/File:2022_Honda_Scoopy_110.jpg | CC0 |  |
 | `store/img/bikes/honda-scv-100-lead.webp` | Honda SCV 100 Lead 2007 Left.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_SCV_100_Lead_2007_Left.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-scv-100-lead-thumb.webp` | Honda SCV 100 Lead 2007 Left.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_SCV_100_Lead_2007_Left.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-sh-125i.webp` | Honda SH 125i in Avellino.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_SH_125i_in_Avellino.jpg | CC BY 4.0 |  |
+| `store/img/bikes/honda-sh-125i-thumb.webp` | Honda SH 125i in Avellino.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Honda_SH_125i_in_Avellino.jpg | CC BY 4.0 |  |
+| `store/img/bikes/honda-sh-150i.webp` | Honda SH 150i 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_SH_150i_2026.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-sh-150i-thumb.webp` | Honda SH 150i 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_SH_150i_2026.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-sh-mode.webp` | Shmode.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Shmode.jpg | CC BY 3.0 |  |
 | `store/img/bikes/honda-sh-mode-thumb.webp` | Shmode.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Shmode.jpg | CC BY 3.0 |  |
 | `store/img/bikes/honda-sh-mode-125.webp` | Honda SH Mode 125 (Modelljahr 2018).jpg | Alex.bjelica1 | https://commons.wikimedia.org/wiki/File:Honda_SH_Mode_125_(Modelljahr_2018).jpg | CC BY-SA 4.0 |  |
@@ -1219,8 +1327,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-sh300i-thumb.webp` | Honda SH300i Motorscooter 2011.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_SH300i_Motorscooter_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-sh350i.webp` | Honda SH 350i 2025.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Honda_SH_350i_2025.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-sh350i-thumb.webp` | Honda SH 350i 2025.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Honda_SH_350i_2025.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-shadow-125.webp` | Honda Shadow VT 125 C1 with original Honda Accessoires 2.jpg | Galant | https://commons.wikimedia.org/wiki/File:Honda_Shadow_VT_125_C1_with_original_Honda_Accessoires_2.jpg | CC BY 3.0 |  |
+| `store/img/bikes/honda-shadow-125-thumb.webp` | Honda Shadow VT 125 C1 with original Honda Accessoires 2.jpg | Galant | https://commons.wikimedia.org/wiki/File:Honda_Shadow_VT_125_C1_with_original_Honda_Accessoires_2.jpg | CC BY 3.0 |  |
 | `store/img/bikes/honda-shadow-400.webp` | Shadow400.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Shadow400.jpg | CC BY 3.0 |  |
 | `store/img/bikes/honda-shadow-400-thumb.webp` | Shadow400.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Shadow400.jpg | CC BY 3.0 |  |
+| `store/img/bikes/honda-shadow-750.webp` | Honda VT 750 Shadow DSCF0772.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_VT_750_Shadow_DSCF0772.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-shadow-750-thumb.webp` | Honda VT 750 Shadow DSCF0772.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_VT_750_Shadow_DSCF0772.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-shadow-aero.webp` | My Best Buddy Honda VT1100 Shadow Aero.jpg | The USA Trailer Store | https://commons.wikimedia.org/wiki/File:My_Best_Buddy_Honda_VT1100_Shadow_Aero.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-shadow-aero-thumb.webp` | My Best Buddy Honda VT1100 Shadow Aero.jpg | The USA Trailer Store | https://commons.wikimedia.org/wiki/File:My_Best_Buddy_Honda_VT1100_Shadow_Aero.jpg | CC BY 2.0 |  |
 | `store/img/bikes/honda-shadow-phantom.webp` | Honda SHADOW Phantom 750 at the TMS 2009.JPG | PekePON | https://commons.wikimedia.org/wiki/File:Honda_SHADOW_Phantom_750_at_the_TMS_2009.JPG | CC BY-SA 4.0 |  |
@@ -1263,10 +1375,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-transalp-e-clutch-thumb.webp` | Honda XL750 Transalp E-Clutch.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Honda_XL750_Transalp_E-Clutch.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-unicorn.webp` | Honda Unicorn (Space Grey).jpg | Jonathan Cumini | https://commons.wikimedia.org/wiki/File:Honda_Unicorn_(Space_Grey).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-unicorn-thumb.webp` | Honda Unicorn (Space Grey).jpg | Jonathan Cumini | https://commons.wikimedia.org/wiki/File:Honda_Unicorn_(Space_Grey).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-v-twin-magna.webp` | Honda VTwinMagna FinalEdition.jpg | 久高拓磨 | https://commons.wikimedia.org/wiki/File:Honda_VTwinMagna_FinalEdition.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-v-twin-magna-thumb.webp` | Honda VTwinMagna FinalEdition.jpg | 久高拓磨 | https://commons.wikimedia.org/wiki/File:Honda_VTwinMagna_FinalEdition.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-valkyrie.webp` | Rider on Blue Honda Valkyrie on E Sands Av.jpg | Noah Wulf | https://commons.wikimedia.org/wiki/File:Rider_on_Blue_Honda_Valkyrie_on_E_Sands_Av.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-valkyrie-thumb.webp` | Rider on Blue Honda Valkyrie on E Sands Av.jpg | Noah Wulf | https://commons.wikimedia.org/wiki/File:Rider_on_Blue_Honda_Valkyrie_on_E_Sands_Av.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-varadero-125.webp` | Honda XL 125 V Varadero 125 red.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_XL_125_V_Varadero_125_red.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-varadero-125-thumb.webp` | Honda XL 125 V Varadero 125 red.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_XL_125_V_Varadero_125_red.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-vf-750-magna.webp` | Honda VF 750 C Magna DSCF3948.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_VF_750_C_Magna_DSCF3948.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-vf-750-magna-thumb.webp` | Honda VF 750 C Magna DSCF3948.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_VF_750_C_Magna_DSCF3948.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-vfr.webp` | 2006 Honda VFR 800A5.jpg | No machine-readable author provided. Sirimiri~commonswiki assumed (based on copyright claims). | https://commons.wikimedia.org/wiki/File:2006_Honda_VFR_800A5.jpg | Public domain |  |
+| `store/img/bikes/honda-vfr-thumb.webp` | 2006 Honda VFR 800A5.jpg | No machine-readable author provided. Sirimiri~commonswiki assumed (based on copyright claims). | https://commons.wikimedia.org/wiki/File:2006_Honda_VFR_800A5.jpg | Public domain |  |
 | `store/img/bikes/honda-vfr-800.webp` | 2003 Honda VFR 800 A-3.jpg | Makizox | https://commons.wikimedia.org/wiki/File:2003_Honda_VFR_800_A-3.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-vfr-800-thumb.webp` | 2003 Honda VFR 800 A-3.jpg | Makizox | https://commons.wikimedia.org/wiki/File:2003_Honda_VFR_800_A-3.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-vfr-800-interceptor.webp` | Honda VFR 800 Interceptor modelo 1998.JPG | RaulMatto | https://commons.wikimedia.org/wiki/File:Honda_VFR_800_Interceptor_modelo_1998.JPG | CC BY-SA 3.0 |  |
@@ -1291,6 +1409,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-vision-50-thumb.webp` | 2024031304 Kleinroller Honda Vision 50.jpg | VSchagow | https://commons.wikimedia.org/wiki/File:2024031304_Kleinroller_Honda_Vision_50.jpg | CC BY 4.0 |  |
 | `store/img/bikes/honda-vt-750-c-shadow.webp` | Honda VT 750 C Shadow 01.jpg | Rado Bahna | https://commons.wikimedia.org/wiki/File:Honda_VT_750_C_Shadow_01.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-vt-750-c-shadow-thumb.webp` | Honda VT 750 C Shadow 01.jpg | Rado Bahna | https://commons.wikimedia.org/wiki/File:Honda_VT_750_C_Shadow_01.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-vt125c-shadow.webp` | Honda VT125C Shadow JC29 2.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_VT125C_Shadow_JC29_2.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-vt125c-shadow-thumb.webp` | Honda VT125C Shadow JC29 2.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_VT125C_Shadow_JC29_2.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-vt1300cx.webp` | Honda VT1300CX (12404800023).jpg | Bob Adams from George, South Africa | https://commons.wikimedia.org/wiki/File:Honda_VT1300CX_(12404800023).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-vt1300cx-thumb.webp` | Honda VT1300CX (12404800023).jpg | Bob Adams from George, South Africa | https://commons.wikimedia.org/wiki/File:Honda_VT1300CX_(12404800023).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-vt400s.webp` | Vt400s.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Vt400s.jpg | CC BY 3.0 |  |
@@ -1303,8 +1423,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-vt750s-thumb.webp` | Honda VT750S Shadow 2011.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_VT750S_Shadow_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-vtr.webp` | 2001 Suzuka 8 Hours' Honda VTR1000SPW.jpg | bluXgraphics(motorcycle design Japan)=Midorikawa from shirakawa ,fukushima, japan | https://commons.wikimedia.org/wiki/File:2001_Suzuka_8_Hours'_Honda_VTR1000SPW.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/honda-vtr-thumb.webp` | 2001 Suzuka 8 Hours' Honda VTR1000SPW.jpg | bluXgraphics(motorcycle design Japan)=Midorikawa from shirakawa ,fukushima, japan | https://commons.wikimedia.org/wiki/File:2001_Suzuka_8_Hours'_Honda_VTR1000SPW.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/honda-vtr-1000-f-firestorm.webp` | Honda Firestorm VTR 1000 F.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_Firestorm_VTR_1000_F.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-vtr-1000-f-firestorm-thumb.webp` | Honda Firestorm VTR 1000 F.jpg | Khaosaming | https://commons.wikimedia.org/wiki/File:Honda_Firestorm_VTR_1000_F.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-vtr-1000-sp-2.webp` | VTR1000SP-2 2006.jpg | zounds | https://commons.wikimedia.org/wiki/File:VTR1000SP-2_2006.jpg | CC BY 3.0 |  |
+| `store/img/bikes/honda-vtr-1000-sp-2-thumb.webp` | VTR1000SP-2 2006.jpg | zounds | https://commons.wikimedia.org/wiki/File:VTR1000SP-2_2006.jpg | CC BY 3.0 |  |
 | `store/img/bikes/honda-vtr-250.webp` | Honda VTR 250cc año 1999.JPG | Joderconlacuenta | https://commons.wikimedia.org/wiki/File:Honda_VTR_250cc_a%C3%B1o_1999.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-vtr-250-thumb.webp` | Honda VTR 250cc año 1999.JPG | Joderconlacuenta | https://commons.wikimedia.org/wiki/File:Honda_VTR_250cc_a%C3%B1o_1999.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/honda-vtx-1300.webp` | Honda VTX 1300 parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Honda_VTX_1300_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-vtx-1300-thumb.webp` | Honda VTX 1300 parked at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Honda_VTX_1300_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-vtx-1800.webp` | Honda VTX 1800 C 2007 - closeup brakes.jpg | W.carter | https://commons.wikimedia.org/wiki/File:Honda_VTX_1800_C_2007_-_closeup_brakes.jpg | CC0 |  |
+| `store/img/bikes/honda-vtx-1800-thumb.webp` | Honda VTX 1800 C 2007 - closeup brakes.jpg | W.carter | https://commons.wikimedia.org/wiki/File:Honda_VTX_1800_C_2007_-_closeup_brakes.jpg | CC0 |  |
 | `store/img/bikes/honda-vtx-1800-c.webp` | Honda VTX 1800 C 2007 - 1.jpg | W.carter | https://commons.wikimedia.org/wiki/File:Honda_VTX_1800_C_2007_-_1.jpg | CC0 |  |
 | `store/img/bikes/honda-vtx-1800-c-thumb.webp` | Honda VTX 1800 C 2007 - 1.jpg | W.carter | https://commons.wikimedia.org/wiki/File:Honda_VTX_1800_C_2007_-_1.jpg | CC0 |  |
 | `store/img/bikes/honda-vtx1300r.webp` | 2007 Honda VTX1300R.jpg | Mrswampy | https://commons.wikimedia.org/wiki/File:2007_Honda_VTX1300R.jpg | CC BY-SA 4.0 |  |
@@ -1321,6 +1449,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-winner-x-thumb.webp` | Winner x.jpg | Phan long hậu | https://commons.wikimedia.org/wiki/File:Winner_x.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-x-adv.webp` | Honda X-ADV - Barcelona.jpg | Herodotptlomeu | https://commons.wikimedia.org/wiki/File:Honda_X-ADV_-_Barcelona.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-x-adv-thumb.webp` | Honda X-ADV - Barcelona.jpg | Herodotptlomeu | https://commons.wikimedia.org/wiki/File:Honda_X-ADV_-_Barcelona.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-xl-1000-v-varadero.webp` | Honda XL 1000V Varadero DSCF5430.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_XL_1000V_Varadero_DSCF5430.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-xl-1000-v-varadero-thumb.webp` | Honda XL 1000V Varadero DSCF5430.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_XL_1000V_Varadero_DSCF5430.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xl-125-varadero.webp` | Honda XL 125 Varadero.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_XL_125_Varadero.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xl-125-varadero-thumb.webp` | Honda XL 125 Varadero.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Honda_XL_125_Varadero.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xl-700-v-transalp.webp` | Honda XL700V Transalp 2008.jpg | Maju603 | https://commons.wikimedia.org/wiki/File:Honda_XL700V_Transalp_2008.jpg | CC BY-SA 4.0 |  |
@@ -1329,10 +1459,14 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/honda-xl1000v-varadero-thumb.webp` | Polis Honda XL1000V Varadero, Turkey.jpg | Kevin.B | https://commons.wikimedia.org/wiki/File:Polis_Honda_XL1000V_Varadero,_Turkey.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xl125v-varadero.webp` | 2004 Honda XL125V Varadero.JPG | Martin Deakins | https://commons.wikimedia.org/wiki/File:2004_Honda_XL125V_Varadero.JPG | CC0 |  |
 | `store/img/bikes/honda-xl125v-varadero-thumb.webp` | 2004 Honda XL125V Varadero.JPG | Martin Deakins | https://commons.wikimedia.org/wiki/File:2004_Honda_XL125V_Varadero.JPG | CC0 |  |
+| `store/img/bikes/honda-xl650v-transalp.webp` | Honda XL650V Transalp 2000 02.jpg | Maju603 | https://commons.wikimedia.org/wiki/File:Honda_XL650V_Transalp_2000_02.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-xl650v-transalp-thumb.webp` | Honda XL650V Transalp 2000 02.jpg | Maju603 | https://commons.wikimedia.org/wiki/File:Honda_XL650V_Transalp_2000_02.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xl700v-transalp.webp` | Honda XL700V Transalp 2012.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:Honda_XL700V_Transalp_2012.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-xl700v-transalp-thumb.webp` | Honda XL700V Transalp 2012.jpg | San Andreas | https://commons.wikimedia.org/wiki/File:Honda_XL700V_Transalp_2012.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/honda-xl750.webp` | 2023 Honda XL750 Transalp.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2023_Honda_XL750_Transalp.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xl750-thumb.webp` | 2023 Honda XL750 Transalp.jpg | Chanokchon | https://commons.wikimedia.org/wiki/File:2023_Honda_XL750_Transalp.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/honda-xr-650.webp` | XR650R ED-Type in Snow Wikipedia.jpg | KuddelmuddelBlubb | https://commons.wikimedia.org/wiki/File:XR650R_ED-Type_in_Snow_Wikipedia.jpg | Public domain |  |
+| `store/img/bikes/honda-xr-650-thumb.webp` | XR650R ED-Type in Snow Wikipedia.jpg | KuddelmuddelBlubb | https://commons.wikimedia.org/wiki/File:XR650R_ED-Type_in_Snow_Wikipedia.jpg | Public domain |  |
 | `store/img/bikes/honda-xr-650-r.webp` | XR650R.jpg | Dulliman | https://commons.wikimedia.org/wiki/File:XR650R.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xr-650-r-thumb.webp` | XR650R.jpg | Dulliman | https://commons.wikimedia.org/wiki/File:XR650R.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/honda-xr230.webp` | Xr230.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Xr230.jpg | CC BY-SA 3.0 |  |
@@ -1443,22 +1577,32 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-eliminator-thumb.webp` | Kawasaki Eliminator SE EICMA 2024.jpg | AVMOTO | https://commons.wikimedia.org/wiki/File:Kawasaki_Eliminator_SE_EICMA_2024.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-eliminator-125.webp` | Kawasaki Eliminator 125 DSC00126.JPG | Museo8bits | https://commons.wikimedia.org/wiki/File:Kawasaki_Eliminator_125_DSC00126.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-eliminator-125-thumb.webp` | Kawasaki Eliminator 125 DSC00126.JPG | Museo8bits | https://commons.wikimedia.org/wiki/File:Kawasaki_Eliminator_125_DSC00126.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-er-5.webp` | Kawasaki ER-5 blue.jpg | lorenzo bolla | https://commons.wikimedia.org/wiki/File:Kawasaki_ER-5_blue.jpg | CC BY 2.0 |  |
+| `store/img/bikes/kawasaki-er-5-thumb.webp` | Kawasaki ER-5 blue.jpg | lorenzo bolla | https://commons.wikimedia.org/wiki/File:Kawasaki_ER-5_blue.jpg | CC BY 2.0 |  |
 | `store/img/bikes/kawasaki-er-6f.webp` | Kawasaki ER6f.jpg | Matthewh73 | https://commons.wikimedia.org/wiki/File:Kawasaki_ER6f.jpg | CC BY 4.0 |  |
 | `store/img/bikes/kawasaki-er-6f-thumb.webp` | Kawasaki ER6f.jpg | Matthewh73 | https://commons.wikimedia.org/wiki/File:Kawasaki_ER6f.jpg | CC BY 4.0 |  |
 | `store/img/bikes/kawasaki-er-6n.webp` | Paris - Salon de la moto 2011 - Kawasaki - ER-6N - 008.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_ER-6N_-_008.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-er-6n-thumb.webp` | Paris - Salon de la moto 2011 - Kawasaki - ER-6N - 008.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_ER-6N_-_008.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-er-6n-abs.webp` | 2002 Kawasaki ER-6n ABS.JPG | Jonatan Svensson Glad | https://commons.wikimedia.org/wiki/File:2002_Kawasaki_ER-6n_ABS.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-er-6n-abs-thumb.webp` | 2002 Kawasaki ER-6n ABS.JPG | Jonatan Svensson Glad | https://commons.wikimedia.org/wiki/File:2002_Kawasaki_ER-6n_ABS.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-estrella.webp` | Kawasaki Estrella BJ250, Seoul, Korea, April 2011.jpg | Slakjaw | https://commons.wikimedia.org/wiki/File:Kawasaki_Estrella_BJ250,_Seoul,_Korea,_April_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-estrella-thumb.webp` | Kawasaki Estrella BJ250, Seoul, Korea, April 2011.jpg | Slakjaw | https://commons.wikimedia.org/wiki/File:Kawasaki_Estrella_BJ250,_Seoul,_Korea,_April_2011.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ex500.webp` | 2009 Kawasaki Ninja 500r EX500.jpg | Eyekanspele | https://commons.wikimedia.org/wiki/File:2009_Kawasaki_Ninja_500r_EX500.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ex500-thumb.webp` | 2009 Kawasaki Ninja 500r EX500.jpg | Eyekanspele | https://commons.wikimedia.org/wiki/File:2009_Kawasaki_Ninja_500r_EX500.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-gpz-500-s.webp` | Kawasaki GPZ 500 S 1994 red.jpg | No machine-readable author provided. Amux assumed (based on copyright claims). | https://commons.wikimedia.org/wiki/File:Kawasaki_GPZ_500_S_1994_red.jpg | Public domain |  |
+| `store/img/bikes/kawasaki-gpz-500-s-thumb.webp` | Kawasaki GPZ 500 S 1994 red.jpg | No machine-readable author provided. Amux assumed (based on copyright claims). | https://commons.wikimedia.org/wiki/File:Kawasaki_GPZ_500_S_1994_red.jpg | Public domain |  |
 | `store/img/bikes/kawasaki-gpz1100.webp` | Kawasaki GPZ1100 Garbage Hill Winnipeg (26287739706).jpg | NESR | https://commons.wikimedia.org/wiki/File:Kawasaki_GPZ1100_Garbage_Hill_Winnipeg_(26287739706).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/kawasaki-gpz1100-thumb.webp` | Kawasaki GPZ1100 Garbage Hill Winnipeg (26287739706).jpg | NESR | https://commons.wikimedia.org/wiki/File:Kawasaki_GPZ1100_Garbage_Hill_Winnipeg_(26287739706).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/kawasaki-kdx200.webp` | Kawasaki 1992 KDX200.jpg | Prognation | https://commons.wikimedia.org/wiki/File:Kawasaki_1992_KDX200.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-kdx200-thumb.webp` | Kawasaki 1992 KDX200.jpg | Prognation | https://commons.wikimedia.org/wiki/File:Kawasaki_1992_KDX200.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ke100.webp` | Ke100.jpg | Tommy Denham | https://commons.wikimedia.org/wiki/File:Ke100.jpg | Public domain |  |
 | `store/img/bikes/kawasaki-ke100-thumb.webp` | Ke100.jpg | Tommy Denham | https://commons.wikimedia.org/wiki/File:Ke100.jpg | Public domain |  |
+| `store/img/bikes/kawasaki-kle-500.webp` | Kawasaki KLE 500.jpg | Livioandronico2013 | https://commons.wikimedia.org/wiki/File:Kawasaki_KLE_500.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-kle-500-thumb.webp` | Kawasaki KLE 500.jpg | Livioandronico2013 | https://commons.wikimedia.org/wiki/File:Kawasaki_KLE_500.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-kle500.webp` | Kawasaki KLE500 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Kawasaki_KLE500_2026.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-kle500-thumb.webp` | Kawasaki KLE500 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Kawasaki_KLE500_2026.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-klr-250.webp` | Kawasaki klr 250.jpg | Jorgelavander | https://commons.wikimedia.org/wiki/File:Kawasaki_klr_250.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-klr-250-thumb.webp` | Kawasaki klr 250.jpg | Jorgelavander | https://commons.wikimedia.org/wiki/File:Kawasaki_klr_250.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-klr-650.webp` | Man Returning on Kawasaki KLR 650 - Las Vegas Ride for Kids 2019.jpg | Noah Wulf | https://commons.wikimedia.org/wiki/File:Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-klr-650-thumb.webp` | Man Returning on Kawasaki KLR 650 - Las Vegas Ride for Kids 2019.jpg | Noah Wulf | https://commons.wikimedia.org/wiki/File:Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-klr250.webp` | Kawasaki KLR250.JPG | Alf van Beem | https://commons.wikimedia.org/wiki/File:Kawasaki_KLR250.JPG | CC0 |  |
@@ -1477,6 +1621,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-ksr-pro-thumb.webp` | Ksrpro.jpg | ウェルワィ | https://commons.wikimedia.org/wiki/File:Ksrpro.jpg | CC BY 3.0 |  |
 | `store/img/bikes/kawasaki-kvf650-4x4.webp` | Kawasaki KVF650 4x4 in Malans.jpg | Jay.Jarosz | https://commons.wikimedia.org/wiki/File:Kawasaki_KVF650_4x4_in_Malans.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-kvf650-4x4-thumb.webp` | Kawasaki KVF650 4x4 in Malans.jpg | Jay.Jarosz | https://commons.wikimedia.org/wiki/File:Kawasaki_KVF650_4x4_in_Malans.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-kx-250.webp` | Kawasaki KX 250.jpg | halseike | https://commons.wikimedia.org/wiki/File:Kawasaki_KX_250.jpg | CC BY 2.0 |  |
+| `store/img/bikes/kawasaki-kx-250-thumb.webp` | Kawasaki KX 250.jpg | halseike | https://commons.wikimedia.org/wiki/File:Kawasaki_KX_250.jpg | CC BY 2.0 |  |
+| `store/img/bikes/kawasaki-kx-450-f.webp` | Kawasaki KX450F Tokyo Motor Show 2013.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Kawasaki_KX450F_Tokyo_Motor_Show_2013.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-kx-450-f-thumb.webp` | Kawasaki KX450F Tokyo Motor Show 2013.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Kawasaki_KX450F_Tokyo_Motor_Show_2013.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-kx125.webp` | 1975 Kawasaki KX125 @ National Motor Museum, Birdwood 20250109-121512.jpg | RegionVisitor90 | https://commons.wikimedia.org/wiki/File:1975_Kawasaki_KX125_%40_National_Motor_Museum,_Birdwood_20250109-121512.jpg | CC0 |  |
 | `store/img/bikes/kawasaki-kx125-thumb.webp` | 1975 Kawasaki KX125 @ National Motor Museum, Birdwood 20250109-121512.jpg | RegionVisitor90 | https://commons.wikimedia.org/wiki/File:1975_Kawasaki_KX125_%40_National_Motor_Museum,_Birdwood_20250109-121512.jpg | CC0 |  |
 | `store/img/bikes/kawasaki-kx450.webp` | Kawasaki KX450 used by Kassie Boone at Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Kawasaki_KX450_used_by_Kassie_Boone_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 |  |
@@ -1495,6 +1643,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-ninja-125-thumb.webp` | Kawasaki ninja 125.png | Moto Argento | https://commons.wikimedia.org/wiki/File:Kawasaki_ninja_125.png | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ninja-250.webp` | Kawasaki Ninja 250 2018.jpg | Rikita | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_250_2018.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-250-thumb.webp` | Kawasaki Ninja 250 2018.jpg | Rikita | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_250_2018.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-ninja-250-r.webp` | Paris - Salon de la moto 2011 - Kawasaki - Ninja 250 R - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_Ninja_250_R_-_001.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-ninja-250-r-thumb.webp` | Paris - Salon de la moto 2011 - Kawasaki - Ninja 250 R - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_Ninja_250_R_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ninja-250r.webp` | 2009 Kawasaki Ninja 250R Black.jpg | HKFumi | https://commons.wikimedia.org/wiki/File:2009_Kawasaki_Ninja_250R_Black.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ninja-250r-thumb.webp` | 2009 Kawasaki Ninja 250R Black.jpg | HKFumi | https://commons.wikimedia.org/wiki/File:2009_Kawasaki_Ninja_250R_Black.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ninja-250sl.webp` | Ninja250SL 2015 JPN 02.jpg | 辰砂 | https://commons.wikimedia.org/wiki/File:Ninja250SL_2015_JPN_02.jpg | CC BY-SA 4.0 |  |
@@ -1513,6 +1663,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-ninja-400r-thumb.webp` | NINJA 400R.JPG | shirikodama | https://commons.wikimedia.org/wiki/File:NINJA_400R.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ninja-500.webp` | 2009 Kawasaki Ninja EX-500 Black.jpg | Kunszabo | https://commons.wikimedia.org/wiki/File:2009_Kawasaki_Ninja_EX-500_Black.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-500-thumb.webp` | 2009 Kawasaki Ninja EX-500 Black.jpg | Kunszabo | https://commons.wikimedia.org/wiki/File:2009_Kawasaki_Ninja_EX-500_Black.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-ninja-500-r.webp` | 2000 Kawasaki Ninja 500R front-right.jpg | Nathan Bittinger from Rochester, NY, USA | https://commons.wikimedia.org/wiki/File:2000_Kawasaki_Ninja_500R_front-right.jpg | CC BY 2.0 |  |
+| `store/img/bikes/kawasaki-ninja-500-r-thumb.webp` | 2000 Kawasaki Ninja 500R front-right.jpg | Nathan Bittinger from Rochester, NY, USA | https://commons.wikimedia.org/wiki/File:2000_Kawasaki_Ninja_500R_front-right.jpg | CC BY 2.0 |  |
 | `store/img/bikes/kawasaki-ninja-500r.webp` | Kawasaki Ninja 500R.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_500R.jpg | CC BY 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-500r-thumb.webp` | Kawasaki Ninja 500R.jpg | Calreyn88 | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_500R.jpg | CC BY 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-600r.webp` | Ninja 600r.jpg | Gearhead291 | https://commons.wikimedia.org/wiki/File:Ninja_600r.jpg | CC BY-SA 3.0 |  |
@@ -1531,12 +1683,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-ninja-h2r-thumb.webp` | Kawasaki Ninja H2R (19786257286).jpg | Daniel Hartwig from San Mateo, CA, USA | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_H2R_(19786257286).jpg | CC BY 2.0 |  |
 | `store/img/bikes/kawasaki-ninja-rr-mono.webp` | Kawasaki Ninja RR Mono.JPG | 69PAULWALKER69 | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_RR_Mono.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-rr-mono-thumb.webp` | Kawasaki Ninja RR Mono.JPG | 69PAULWALKER69 | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_RR_Mono.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-ninja-zx-10-r.webp` | Kawasaki Ninja ZX10R (16883898642).jpg | Bob Adams from Amanzimtoti, South Africa | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX10R_(16883898642).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/kawasaki-ninja-zx-10-r-thumb.webp` | Kawasaki Ninja ZX10R (16883898642).jpg | Bob Adams from Amanzimtoti, South Africa | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX10R_(16883898642).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-10r.webp` | Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg | Morio | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-10r-thumb.webp` | Kawasaki Ninja ZX-10R strip model front-right 2015 Tokyo Motor Show.jpg | Morio | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10R_strip_model_front-right_2015_Tokyo_Motor_Show.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-10rr.webp` | Kawasaki ZX-10RR Ninja.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Kawasaki_ZX-10RR_Ninja.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-10rr-thumb.webp` | Kawasaki ZX-10RR Ninja.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Kawasaki_ZX-10RR_Ninja.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-11.webp` | Kawasaki Ninja ZX-11 1990 2007KGTW.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-11_1990_2007KGTW.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-11-thumb.webp` | Kawasaki Ninja ZX-11 1990 2007KGTW.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-11_1990_2007KGTW.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-ninja-zx-12-r.webp` | Kawasaki Ninja ZX-12R.jpg | Del Breingan at English Wikipedia Later versions were uploaded by Marc Lacoste at en.wikipedia . | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-12R.jpg | Public domain |  |
+| `store/img/bikes/kawasaki-ninja-zx-12-r-thumb.webp` | Kawasaki Ninja ZX-12R.jpg | Del Breingan at English Wikipedia Later versions were uploaded by Marc Lacoste at en.wikipedia . | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-12R.jpg | Public domain |  |
 | `store/img/bikes/kawasaki-ninja-zx-12r.webp` | Kawasaki Ninja ZX-12R, 2001.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-12R,_2001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-12r-thumb.webp` | Kawasaki Ninja ZX-12R, 2001.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-12R,_2001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-ninja-zx-14.webp` | Kawasaki Ninja ZX-14 Special Edition 2010 (10077283993).jpg | order_242 from Chile | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-14_Special_Edition_2010_(10077283993).jpg | CC BY-SA 2.0 |  |
@@ -1583,6 +1739,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-vn-1700-classic-thumb.webp` | Paris - Salon de la moto 2011 - Kawasaki - VN 1700 Classic Tourer - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_VN_1700_Classic_Tourer_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-vn-1700-classic-tourer.webp` | Paris - Salon de la moto 2011 - Kawasaki - VN 1700 Classic Tourer - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_VN_1700_Classic_Tourer_-_002.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-vn-1700-classic-tourer-thumb.webp` | Paris - Salon de la moto 2011 - Kawasaki - VN 1700 Classic Tourer - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_VN_1700_Classic_Tourer_-_002.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-vn-800-classic.webp` | 2011060406 Kawasaki VN 800 Classic Rückansicht Nikon-P500.jpg | VSchagow | https://commons.wikimedia.org/wiki/File:2011060406_Kawasaki_VN_800_Classic_R%C3%BCckansicht_Nikon-P500.jpg | CC BY 4.0 |  |
+| `store/img/bikes/kawasaki-vn-800-classic-thumb.webp` | 2011060406 Kawasaki VN 800 Classic Rückansicht Nikon-P500.jpg | VSchagow | https://commons.wikimedia.org/wiki/File:2011060406_Kawasaki_VN_800_Classic_R%C3%BCckansicht_Nikon-P500.jpg | CC BY 4.0 |  |
 | `store/img/bikes/kawasaki-vn-900.webp` | Kawasaki VN 900 in Madrid (Spain) 01.jpg | Luis García ( Zaqarbal ) | https://commons.wikimedia.org/wiki/File:Kawasaki_VN_900_in_Madrid_(Spain)_01.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-vn-900-thumb.webp` | Kawasaki VN 900 in Madrid (Spain) 01.jpg | Luis García ( Zaqarbal ) | https://commons.wikimedia.org/wiki/File:Kawasaki_VN_900_in_Madrid_(Spain)_01.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-vn-900-custom.webp` | Paris - Salon de la moto 2011 - Kawasaki - VN 900 Custom - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_VN_900_Custom_-_001.jpg | CC BY-SA 3.0 |  |
@@ -1607,6 +1765,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-vulcan-900-custom-thumb.webp` | Kawasaki Vulcan 900 Custom on Seacliff Drive during Hogs for Hospice, Leamington, Ontario, 2025-08-02.jpg | Chris Woodrich | https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_900_Custom_on_Seacliff_Drive_during_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-vulcan-s.webp` | Kawasaki Vulcan S - MRS Oficina - Mondial de l'Automobile de Paris 2018 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_S_-_MRS_Oficina_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-vulcan-s-thumb.webp` | Kawasaki Vulcan S - MRS Oficina - Mondial de l'Automobile de Paris 2018 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_S_-_MRS_Oficina_-_Mondial_de_l'Automobile_de_Paris_2018_-_001.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-w-650.webp` | Kawasaki W650 2000 Retro High Bar.jpg | Khaosaming ( Khaosaming ) | https://commons.wikimedia.org/wiki/File:Kawasaki_W650_2000_Retro_High_Bar.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-w-650-thumb.webp` | Kawasaki W650 2000 Retro High Bar.jpg | Khaosaming ( Khaosaming ) | https://commons.wikimedia.org/wiki/File:Kawasaki_W650_2000_Retro_High_Bar.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-w175.webp` | Kawasaki W175 SE.jpg | Ilhamajipratomo | https://commons.wikimedia.org/wiki/File:Kawasaki_W175_SE.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-w175-thumb.webp` | Kawasaki W175 SE.jpg | Ilhamajipratomo | https://commons.wikimedia.org/wiki/File:Kawasaki_W175_SE.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-w175-se.webp` | Kawasaki W175 SE (cropped).jpg | Ilhamajipratomo | https://commons.wikimedia.org/wiki/File:Kawasaki_W175_SE_(cropped).jpg | CC BY-SA 4.0 |  |
@@ -1619,12 +1779,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-w800-thumb.webp` | Kawasaki W800 Special Edition 2011 Tokyo Motor Show.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Kawasaki_W800_Special_Edition_2011_Tokyo_Motor_Show.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-w800-street.webp` | The frontview of Kawasaki W800 STREET mid-year 2019.jpg | Tokumeigakarinoaoshima | https://commons.wikimedia.org/wiki/File:The_frontview_of_Kawasaki_W800_STREET_mid-year_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-w800-street-thumb.webp` | The frontview of Kawasaki W800 STREET mid-year 2019.jpg | Tokumeigakarinoaoshima | https://commons.wikimedia.org/wiki/File:The_frontview_of_Kawasaki_W800_STREET_mid-year_2019.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-z-1000.webp` | Kawasaki Z 1000 SX (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_1000_SX_(2).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-z-1000-thumb.webp` | Kawasaki Z 1000 SX (2).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_1000_SX_(2).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-z-1000-sx.webp` | Kawasaki Z 1000 SX (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_1000_SX_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-z-1000-sx-thumb.webp` | Kawasaki Z 1000 SX (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_1000_SX_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-z-750.webp` | Kawasaki z750.JPG | Andrew333 | https://commons.wikimedia.org/wiki/File:Kawasaki_z750.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-z-750-thumb.webp` | Kawasaki z750.JPG | Andrew333 | https://commons.wikimedia.org/wiki/File:Kawasaki_z750.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-z-750-r.webp` | Kawasaki Z750R ABS right-side 2011 Tokyo Motor Show.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Kawasaki_Z750R_ABS_right-side_2011_Tokyo_Motor_Show.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-z-750-r-thumb.webp` | Kawasaki Z750R ABS right-side 2011 Tokyo Motor Show.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Kawasaki_Z750R_ABS_right-side_2011_Tokyo_Motor_Show.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-z-750-s.webp` | Kawasaki Z750S LF 15dec2006.jpg | EGS | https://commons.wikimedia.org/wiki/File:Kawasaki_Z750S_LF_15dec2006.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-z-750-s-thumb.webp` | Kawasaki Z750S LF 15dec2006.jpg | EGS | https://commons.wikimedia.org/wiki/File:Kawasaki_Z750S_LF_15dec2006.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-z-h2.webp` | Kawasaki Z H2 SideView.jpg | サフィル | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_H2_SideView.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-z-h2-thumb.webp` | Kawasaki Z H2 SideView.jpg | サフィル | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_H2_SideView.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-z-h2-se.webp` | Kawasaki Z H2 SE '25.jpg | Oq10pass | https://commons.wikimedia.org/wiki/File:Kawasaki_Z_H2_SE_'25.jpg | CC0 |  |
@@ -1675,6 +1839,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-zr-7s-thumb.webp` | Kawasaki zr-7 zr-7s.jpg | S-N1965 | https://commons.wikimedia.org/wiki/File:Kawasaki_zr-7_zr-7s.jpg | Public domain |  |
 | `store/img/bikes/kawasaki-zr1100.webp` | ZR1100-A6FA（2006年）パールソーラーイエロー×エボニー.jpg | 百鬼丸 | https://commons.wikimedia.org/wiki/File:ZR1100-A6FA%EF%BC%882006%E5%B9%B4%EF%BC%89%E3%83%91%E3%83%BC%E3%83%AB%E3%82%BD%E3%83%BC%E3%83%A9%E3%83%BC%E3%82%A4%E3%82%A8%E3%83%AD%E3%83%BC%C3%97%E3%82%A8%E3%83%9C%E3%83%8B%E3%83%BC.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/kawasaki-zr1100-thumb.webp` | ZR1100-A6FA（2006年）パールソーラーイエロー×エボニー.jpg | 百鬼丸 | https://commons.wikimedia.org/wiki/File:ZR1100-A6FA%EF%BC%882006%E5%B9%B4%EF%BC%89%E3%83%91%E3%83%BC%E3%83%AB%E3%82%BD%E3%83%BC%E3%83%A9%E3%83%BC%E3%82%A4%E3%82%A8%E3%83%AD%E3%83%BC%C3%97%E3%82%A8%E3%83%9C%E3%83%8B%E3%83%BC.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-zrx-1200.webp` | Kawasaki ZRX 1200S - right view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX_1200S_-_right_view.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-zrx-1200-thumb.webp` | Kawasaki ZRX 1200S - right view.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX_1200S_-_right_view.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/kawasaki-zrx-1200-r.webp` | Kawasaki ZRX 1200 R.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX_1200_R.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-zrx-1200-r-thumb.webp` | Kawasaki ZRX 1200 R.jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX_1200_R.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-zrx1100.webp` | Kawasaki ZRX1100 01.jpg | Markus Perdrizat | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX1100_01.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/kawasaki-zrx1100-thumb.webp` | Kawasaki ZRX1100 01.jpg | Markus Perdrizat | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX1100_01.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/kawasaki-zrx1200-daeg.webp` | Kawasaki ZRX1200 DAEG Z 2011 Tokyo Motor Show-1.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Kawasaki_ZRX1200_DAEG_Z_2011_Tokyo_Motor_Show-1.jpg | CC BY-SA 3.0 |  |
@@ -1683,6 +1851,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/kawasaki-zrx1200r-thumb.webp` | 2002 Kawasaki ZRX1200R red.jpg | Gr8Scot ( talk ) | https://commons.wikimedia.org/wiki/File:2002_Kawasaki_ZRX1200R_red.jpg | Public domain |  |
 | `store/img/bikes/kawasaki-zx-10.webp` | Kawasaki Ninja ZX-10 R Modelljahr 2024.jpg | Heselnut | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10_R_Modelljahr_2024.jpg | CC0 |  |
 | `store/img/bikes/kawasaki-zx-10-thumb.webp` | Kawasaki Ninja ZX-10 R Modelljahr 2024.jpg | Heselnut | https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-10_R_Modelljahr_2024.jpg | CC0 |  |
+| `store/img/bikes/kawasaki-zzr-1200.webp` | ZZR1200 2004.jpg | Atsushi Ueda | https://commons.wikimedia.org/wiki/File:ZZR1200_2004.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/kawasaki-zzr-1200-thumb.webp` | ZZR1200 2004.jpg | Atsushi Ueda | https://commons.wikimedia.org/wiki/File:ZZR1200_2004.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-zzr-1400.webp` | Paris - Salon de la moto 2011 - Kawasaki - ZZR 1400 - 004.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_ZZR_1400_-_004.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-zzr-1400-thumb.webp` | Paris - Salon de la moto 2011 - Kawasaki - ZZR 1400 - 004.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Kawasaki_-_ZZR_1400_-_004.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/kawasaki-zzr-600.webp` | Kawasaki ZZ-R 600.jpg | Superlangzaam at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:Kawasaki_ZZ-R_600.jpg | CC BY-SA 3.0 |  |
@@ -1771,6 +1941,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ktm-640-lc4-enduro-thumb.webp` | KTM 640 LC4 Enduro Lippujuhlan päivä 2013.JPG | MKFI | https://commons.wikimedia.org/wiki/File:KTM_640_LC4_Enduro_Lippujuhlan_p%C3%A4iv%C3%A4_2013.JPG | Public domain |  |
 | `store/img/bikes/ktm-640-lc4-supermoto.webp` | KTM 640 LC4 SuperMoto.jpg | Stahlkocher | https://commons.wikimedia.org/wiki/File:KTM_640_LC4_SuperMoto.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ktm-640-lc4-supermoto-thumb.webp` | KTM 640 LC4 SuperMoto.jpg | Stahlkocher | https://commons.wikimedia.org/wiki/File:KTM_640_LC4_SuperMoto.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/ktm-640-lc4-supermoto-black.webp` | KTM LC4 640 Supermoto Prestige black.jpg | Maurizio Zanetti | https://commons.wikimedia.org/wiki/File:KTM_LC4_640_Supermoto_Prestige_black.jpg | CC BY 2.0 |  |
+| `store/img/bikes/ktm-640-lc4-supermoto-black-thumb.webp` | KTM LC4 640 Supermoto Prestige black.jpg | Maurizio Zanetti | https://commons.wikimedia.org/wiki/File:KTM_LC4_640_Supermoto_Prestige_black.jpg | CC BY 2.0 |  |
 | `store/img/bikes/ktm-65-sx.webp` | KTM 65 SX – Hamburger Motorrad Tage 2015 01.jpg | Frank Schwichtenberg | https://commons.wikimedia.org/wiki/File:KTM_65_SX_%E2%80%93_Hamburger_Motorrad_Tage_2015_01.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ktm-65-sx-thumb.webp` | KTM 65 SX – Hamburger Motorrad Tage 2015 01.jpg | Frank Schwichtenberg | https://commons.wikimedia.org/wiki/File:KTM_65_SX_%E2%80%93_Hamburger_Motorrad_Tage_2015_01.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/ktm-660-smc.webp` | KTM 660 SMC.jpg | Sudopeople | https://commons.wikimedia.org/wiki/File:KTM_660_SMC.jpg | CC BY-SA 3.0 |  |
@@ -1805,6 +1977,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/ktm-950-super-enduro-r-thumb.webp` | KTM 950 SuperEnduro R.jpg | StealthFX | https://commons.wikimedia.org/wiki/File:KTM_950_SuperEnduro_R.jpg | Public domain |  |
 | `store/img/bikes/ktm-990-adventure.webp` | KTM 990 Adventure R 2011(6000 x 4000).jpg | F Dekkers | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(6000_x_4000).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-990-adventure-thumb.webp` | KTM 990 Adventure R 2011(6000 x 4000).jpg | F Dekkers | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(6000_x_4000).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ktm-990-adventure-black.webp` | KTM 990 Adventure black.jpg | Olinone | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_black.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/ktm-990-adventure-black-thumb.webp` | KTM 990 Adventure black.jpg | Olinone | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_black.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-990-adventure-r.webp` | KTM 990 Adventure R 2011(3872 x 2592).jpg | F Dekkers | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(3872_x_2592).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-990-adventure-r-thumb.webp` | KTM 990 Adventure R 2011(3872 x 2592).jpg | F Dekkers | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_R_2011(3872_x_2592).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/ktm-990-adventure-s.webp` | KTM 990 Adventure S.jpg | ecphaff | https://commons.wikimedia.org/wiki/File:KTM_990_Adventure_S.jpg | CC BY 2.0 |  |
@@ -1855,6 +2029,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/moto-guzzi-breva-850-thumb.webp` | Moto Guzzi Breva 850.JPG | Vladimiro Galastri Sethi 79 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_850.JPG | CC BY 3.0 |  |
 | `store/img/bikes/moto-guzzi-breva-v-1100.webp` | Moto Guzzi Breva V 1100 pannier mounts.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_V_1100_pannier_mounts.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-breva-v-1100-thumb.webp` | Moto Guzzi Breva V 1100 pannier mounts.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Breva_V_1100_pannier_mounts.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-california-ev.webp` | Moto Guzzi California EV 80 2002.jpg | Franken-Guzzista | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_EV_80_2002.jpg | CC0 |  |
+| `store/img/bikes/moto-guzzi-california-ev-thumb.webp` | Moto Guzzi California EV 80 2002.jpg | Franken-Guzzista | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_EV_80_2002.jpg | CC0 |  |
+| `store/img/bikes/moto-guzzi-california-stone.webp` | Moto Guzzi California Stone sidecar, V85 TT and Breva V750ie (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Stone_sidecar,_V85_TT_and_Breva_V750ie_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-california-stone-thumb.webp` | Moto Guzzi California Stone sidecar, V85 TT and Breva V750ie (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Stone_sidecar,_V85_TT_and_Breva_V750ie_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-california-touring.webp` | Moto Guzzi California Customized for Touring.jpg | Lankyrider | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Customized_for_Touring.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-california-touring-thumb.webp` | Moto Guzzi California Customized for Touring.jpg | Lankyrider | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Customized_for_Touring.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-california-touring-1400.webp` | Moto Guzzi California Touring 1400 white.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Touring_1400_white.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-california-touring-1400-thumb.webp` | Moto Guzzi California Touring 1400 white.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_California_Touring_1400_white.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-california-vintage.webp` | Paris - Salon de la moto 2011 - Moto Guzzi - California Vintage - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Moto_Guzzi_-_California_Vintage_-_002.jpg | CC BY-SA 3.0 |  |
@@ -1863,6 +2043,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/moto-guzzi-eldorado-thumb.webp` | Moto Guzzi V7 Eldorado.jpg | El Caganer | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Eldorado.jpg | CC BY 2.0 |  |
 | `store/img/bikes/moto-guzzi-eldorado-1400.webp` | IMG-20230504-WA0002 Moto Guzzi Eldorado 1400.jpg | MartWrN1163 | https://commons.wikimedia.org/wiki/File:IMG-20230504-WA0002_Moto_Guzzi_Eldorado_1400.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-eldorado-1400-thumb.webp` | IMG-20230504-WA0002 Moto Guzzi Eldorado 1400.jpg | MartWrN1163 | https://commons.wikimedia.org/wiki/File:IMG-20230504-WA0002_Moto_Guzzi_Eldorado_1400.jpg | CC0 |  |
+| `store/img/bikes/moto-guzzi-griso.webp` | 2006 Moto Guzzi Griso 1100(1).JPG | Stefanobiondo | https://commons.wikimedia.org/wiki/File:2006_Moto_Guzzi_Griso_1100(1).JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-griso-thumb.webp` | 2006 Moto Guzzi Griso 1100(1).JPG | Stefanobiondo | https://commons.wikimedia.org/wiki/File:2006_Moto_Guzzi_Griso_1100(1).JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-griso-1100.webp` | Moto Guzzi Griso 1100 72dpi 03.jpg | Fabian Sandner | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_1100_72dpi_03.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-griso-1100-thumb.webp` | Moto Guzzi Griso 1100 72dpi 03.jpg | Fabian Sandner | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_1100_72dpi_03.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-griso-1200-8v.webp` | Moto Guzzi Griso 1200 8v.jpg | Guzzista76 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Griso_1200_8v.jpg | CC BY-SA 4.0 |  |
@@ -1877,8 +2059,12 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/moto-guzzi-mgx-21-thumb.webp` | Moto Guzzi MGX-21 in museum 3.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_MGX-21_in_museum_3.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-nevada.webp` | Paris - Bonhams 2016 - Millenovecento 36 custom Moto Guzzi 750 cm3 Nevada - 2003 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Millenovecento_36_custom_Moto_Guzzi_750_cm3_Nevada_-_2003_-_001.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-nevada-thumb.webp` | Paris - Bonhams 2016 - Millenovecento 36 custom Moto Guzzi 750 cm3 Nevada - 2003 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Millenovecento_36_custom_Moto_Guzzi_750_cm3_Nevada_-_2003_-_001.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-nevada-750.webp` | Paris - Bonhams 2016 - Millenovecento 36 custom Moto Guzzi 750 cm3 Nevada - 2003 - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Millenovecento_36_custom_Moto_Guzzi_750_cm3_Nevada_-_2003_-_002.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-nevada-750-thumb.webp` | Paris - Bonhams 2016 - Millenovecento 36 custom Moto Guzzi 750 cm3 Nevada - 2003 - 002.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Bonhams_2016_-_Millenovecento_36_custom_Moto_Guzzi_750_cm3_Nevada_-_2003_-_002.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-nevada-750-classic.webp` | Moto Guzzi Nevada 750 Classic in Mandello.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_750_Classic_in_Mandello.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-nevada-750-classic-thumb.webp` | Moto Guzzi Nevada 750 Classic in Mandello.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_750_Classic_in_Mandello.jpg | CC0 |  |
+| `store/img/bikes/moto-guzzi-nevada-750-club.webp` | Moto Guzzi Nevada 750 Club 1998-1999.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_750_Club_1998-1999.jpg | CC0 |  |
+| `store/img/bikes/moto-guzzi-nevada-750-club-thumb.webp` | Moto Guzzi Nevada 750 Club 1998-1999.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Nevada_750_Club_1998-1999.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-nevada-classic-750.webp` | Moto Guzzi 750 Nevada Classic.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_750_Nevada_Classic.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/moto-guzzi-nevada-classic-750-thumb.webp` | Moto Guzzi 750 Nevada Classic.JPG | Addvisor | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_750_Nevada_Classic.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/moto-guzzi-norge-1200.webp` | Moto Guzzi Norge 1200 GT 8V (3).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Norge_1200_GT_8V_(3).jpg | CC BY-SA 4.0 |  |
@@ -1897,6 +2083,14 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/moto-guzzi-stelvio-1200-ntx-thumb.webp` | Moto Guzzi Stelvio 1200 NTX.jpg | CheminduCret | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_Stelvio_1200_NTX.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-v100-mandello.webp` | Rosso Magma's Moto guzzi v100 mandello museum 2022 front.jpg | Zigdax | https://commons.wikimedia.org/wiki/File:Rosso_Magma's_Moto_guzzi_v100_mandello_museum_2022_front.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-v100-mandello-thumb.webp` | Rosso Magma's Moto guzzi v100 mandello museum 2022 front.jpg | Zigdax | https://commons.wikimedia.org/wiki/File:Rosso_Magma's_Moto_guzzi_v100_mandello_museum_2022_front.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-v11-ballabio.webp` | V11Ballabio03 06.jpg | Serge PIOTIN aka Sergio | https://commons.wikimedia.org/wiki/File:V11Ballabio03_06.jpg | CC BY-SA 2.5 |  |
+| `store/img/bikes/moto-guzzi-v11-ballabio-thumb.webp` | V11Ballabio03 06.jpg | Serge PIOTIN aka Sergio | https://commons.wikimedia.org/wiki/File:V11Ballabio03_06.jpg | CC BY-SA 2.5 |  |
+| `store/img/bikes/moto-guzzi-v11-cafe-sport.webp` | V11CafeSport03 05.jpg | Serge PIOTIN aka Sergio | https://commons.wikimedia.org/wiki/File:V11CafeSport03_05.jpg | CC BY-SA 2.5 |  |
+| `store/img/bikes/moto-guzzi-v11-cafe-sport-thumb.webp` | V11CafeSport03 05.jpg | Serge PIOTIN aka Sergio | https://commons.wikimedia.org/wiki/File:V11CafeSport03_05.jpg | CC BY-SA 2.5 |  |
+| `store/img/bikes/moto-guzzi-v11-le-mans.webp` | Moto Guzzi V11 Le Mans (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-v11-le-mans-thumb.webp` | Moto Guzzi V11 Le Mans (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-v11-le-mans-rosso-corsa.webp` | Moto Guzzi V11 Le Mans Rosso Corsa (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_Rosso_Corsa_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/moto-guzzi-v11-le-mans-rosso-corsa-thumb.webp` | Moto Guzzi V11 Le Mans Rosso Corsa (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V11_Le_Mans_Rosso_Corsa_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/moto-guzzi-v7-classic.webp` | Moto Guzzi V7 Classic Parked in Front of Wei Yi Dental Clinic 20141119.jpg | 玄史生 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Classic_Parked_in_Front_of_Wei_Yi_Dental_Clinic_20141119.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-v7-classic-thumb.webp` | Moto Guzzi V7 Classic Parked in Front of Wei Yi Dental Clinic 20141119.jpg | 玄史生 | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_Classic_Parked_in_Front_of_Wei_Yi_Dental_Clinic_20141119.jpg | CC0 |  |
 | `store/img/bikes/moto-guzzi-v7-ii-stornello.webp` | Moto Guzzi V7 II Stornello.jpg | Darcest | https://commons.wikimedia.org/wiki/File:Moto_Guzzi_V7_II_Stornello.jpg | CC BY-SA 4.0 |  |
@@ -2003,6 +2197,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/royal-enfield-continental-gt-thumb.webp` | Royal Enfield Continental GT (10759997314).jpg | Decio "desmodex" | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_(10759997314).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/royal-enfield-continental-gt-650.webp` | Royal Enfield Continental GT 650.jpg | Kiranpawar3210 | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_650.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/royal-enfield-continental-gt-650-thumb.webp` | Royal Enfield Continental GT 650.jpg | Kiranpawar3210 | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_650.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/royal-enfield-electra-350.webp` | Royal Enfield Bullet Electra 350, pure black model 02.jpg | Pinakpani | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_02.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/royal-enfield-electra-350-thumb.webp` | Royal Enfield Bullet Electra 350, pure black model 02.jpg | Pinakpani | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_Electra_350,_pure_black_model_02.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/royal-enfield-guerrilla-450.webp` | Moscow, Royal Enfield Guerrilla 450, July 2026 02-1.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Royal_Enfield_Guerrilla_450,_July_2026_02-1.jpg | CC0 |  |
 | `store/img/bikes/royal-enfield-guerrilla-450-thumb.webp` | Moscow, Royal Enfield Guerrilla 450, July 2026 02-1.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Royal_Enfield_Guerrilla_450,_July_2026_02-1.jpg | CC0 |  |
 | `store/img/bikes/royal-enfield-himalayan.webp` | 2022 Royal Enfield Himalayan, rear left (NY).jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2022_Royal_Enfield_Himalayan,_rear_left_(NY).jpg | CC BY-SA 3.0 |  |
@@ -2025,12 +2221,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/royal-enfield-shotgun-650-thumb.webp` | Moscow, Royal Enfield 650 Shotgun, Mar 2026 01.jpg | Retired electrician | https://commons.wikimedia.org/wiki/File:Moscow,_Royal_Enfield_650_Shotgun,_Mar_2026_01.jpg | CC0 |  |
 | `store/img/bikes/royal-enfield-super-meteor-650.webp` | Royal Enfield Super Meteor 650 (02).jpg | iMahesh | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/royal-enfield-super-meteor-650-thumb.webp` | Royal Enfield Super Meteor 650 (02).jpg | iMahesh | https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/royal-enfield-thunderbird.webp` | Royal enfield Thunderbird.jpg | Pavankalyan5239 | https://commons.wikimedia.org/wiki/File:Royal_enfield_Thunderbird.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/royal-enfield-thunderbird-thumb.webp` | Royal enfield Thunderbird.jpg | Pavankalyan5239 | https://commons.wikimedia.org/wiki/File:Royal_enfield_Thunderbird.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-access-125.webp` | Suzuki access 125.jpg | Pooja0709 | https://commons.wikimedia.org/wiki/File:Suzuki_access_125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-access-125-thumb.webp` | Suzuki access 125.jpg | Pooja0709 | https://commons.wikimedia.org/wiki/File:Suzuki_access_125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-address.webp` | Suzuki Address V125S 2.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_2.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-address-thumb.webp` | Suzuki Address V125S 2.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_2.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-address-110.webp` | Suzuki Address 110 20160704.jpg | Aprilia rs125r | https://commons.wikimedia.org/wiki/File:Suzuki_Address_110_20160704.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-address-110-thumb.webp` | Suzuki Address 110 20160704.jpg | Aprilia rs125r | https://commons.wikimedia.org/wiki/File:Suzuki_Address_110_20160704.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-address-v100.webp` | Suzuki Address V100 20161202.jpg | Aprilia rs125r | https://commons.wikimedia.org/wiki/File:Suzuki_Address_V100_20161202.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-address-v100-thumb.webp` | Suzuki Address V100 20161202.jpg | Aprilia rs125r | https://commons.wikimedia.org/wiki/File:Suzuki_Address_V100_20161202.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-address-v125.webp` | Japanese SUZUKI Address V125 police scooter.jpg | PRiMENON | https://commons.wikimedia.org/wiki/File:Japanese_SUZUKI_Address_V125_police_scooter.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-address-v125-thumb.webp` | Japanese SUZUKI Address V125 police scooter.jpg | PRiMENON | https://commons.wikimedia.org/wiki/File:Japanese_SUZUKI_Address_V125_police_scooter.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-address-v125s.webp` | Suzuki Address V125S 3.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Suzuki_Address_V125S_3.JPG | CC BY-SA 3.0 |  |
@@ -2047,6 +2247,10 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/suzuki-ax4-thumb.webp` | Suzuki AX4 (GD115).jpg | DíazAX4 | https://commons.wikimedia.org/wiki/File:Suzuki_AX4_(GD115).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-b-king.webp` | 2008 Suzuki B-King at the 2009 Seattle International Motorcycle Show 2.jpg | Dbratland | https://commons.wikimedia.org/wiki/File:2008_Suzuki_B-King_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg | CC BY 3.0 |  |
 | `store/img/bikes/suzuki-b-king-thumb.webp` | 2008 Suzuki B-King at the 2009 Seattle International Motorcycle Show 2.jpg | Dbratland | https://commons.wikimedia.org/wiki/File:2008_Suzuki_B-King_at_the_2009_Seattle_International_Motorcycle_Show_2.jpg | CC BY 3.0 |  |
+| `store/img/bikes/suzuki-bandit-1200-s.webp` | Suzuki Bandit-S 1200 1996.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Suzuki_Bandit-S_1200_1996.jpg | CC BY 2.0 |  |
+| `store/img/bikes/suzuki-bandit-1200-s-thumb.webp` | Suzuki Bandit-S 1200 1996.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Suzuki_Bandit-S_1200_1996.jpg | CC BY 2.0 |  |
+| `store/img/bikes/suzuki-bandit-1200s.webp` | Suzuki Bandit 1200S side.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_1200S_side.jpg | CC BY 2.0 |  |
+| `store/img/bikes/suzuki-bandit-1200s-thumb.webp` | Suzuki Bandit 1200S side.jpg | Reg Mckenna | https://commons.wikimedia.org/wiki/File:Suzuki_Bandit_1200S_side.jpg | CC BY 2.0 |  |
 | `store/img/bikes/suzuki-bandit-1250.webp` | 2008 Suzuki 1250 Bandit.jpg | wallerdog | https://commons.wikimedia.org/wiki/File:2008_Suzuki_1250_Bandit.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-bandit-1250-thumb.webp` | 2008 Suzuki 1250 Bandit.jpg | wallerdog | https://commons.wikimedia.org/wiki/File:2008_Suzuki_1250_Bandit.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-bandit-1250f-abs.webp` | Suzuki Bandit1250F ABS-2 2011 Tokyo Motor Show.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Suzuki_Bandit1250F_ABS-2_2011_Tokyo_Motor_Show.jpg | CC BY-SA 3.0 |  |
@@ -2159,6 +2363,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/suzuki-gsx-1400-thumb.webp` | Suzuki GSX1400 Galaxy Silver Metallic (YM6) left side.jpg | Arno-nl | https://commons.wikimedia.org/wiki/File:Suzuki_GSX1400_Galaxy_Silver_Metallic_(YM6)_left_side.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-gsx-1400-special-edition.webp` | 2007TMS SUZUKI GSX1400 Special Edition.jpg | PekePON | https://commons.wikimedia.org/wiki/File:2007TMS_SUZUKI_GSX1400_Special_Edition.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-gsx-1400-special-edition-thumb.webp` | 2007TMS SUZUKI GSX1400 Special Edition.jpg | PekePON | https://commons.wikimedia.org/wiki/File:2007TMS_SUZUKI_GSX1400_Special_Edition.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/suzuki-gsx-750-f.webp` | Suzuki GSX750F 02.jpg | Tim Dobbelaere | https://commons.wikimedia.org/wiki/File:Suzuki_GSX750F_02.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/suzuki-gsx-750-f-thumb.webp` | Suzuki GSX750F 02.jpg | Tim Dobbelaere | https://commons.wikimedia.org/wiki/File:Suzuki_GSX750F_02.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/suzuki-gsx-8r.webp` | Suzuki GSX-8R mit Heckumbau.jpg | PauleMeister | https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8R_mit_Heckumbau.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-gsx-8r-thumb.webp` | Suzuki GSX-8R mit Heckumbau.jpg | PauleMeister | https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8R_mit_Heckumbau.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-gsx-8s.webp` | Suzuki GSX-8S, Auto 2024, Zurich (PANA0820).jpg | Matti Blume | https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8S,_Auto_2024,_Zurich_(PANA0820).jpg | CC BY-SA 4.0 |  |
@@ -2235,14 +2441,22 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/suzuki-intruder-thumb.webp` | Suzuki VS 800 Intruder 02.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Suzuki_VS_800_Intruder_02.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-intruder-c800.webp` | Suzuki Intruder C800 trike (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_C800_trike_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-intruder-c800-thumb.webp` | Suzuki Intruder C800 trike (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_C800_trike_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-intruder-lc-250.webp` | Intruder LC 250.JPG | 翠藍硝子の大驟雨 | https://commons.wikimedia.org/wiki/File:Intruder_LC_250.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-intruder-lc-250-thumb.webp` | Intruder LC 250.JPG | 翠藍硝子の大驟雨 | https://commons.wikimedia.org/wiki/File:Intruder_LC_250.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-intruder-m1800.webp` | Suzuki Intruder M1800 DSC00079.JPG | Museo8bits | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800_DSC00079.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-intruder-m1800-thumb.webp` | Suzuki Intruder M1800 DSC00079.JPG | Museo8bits | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800_DSC00079.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-intruder-m1800r.webp` | Suzuki Intruder M1800R 1.jpg | Selmoval | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800R_1.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-intruder-m1800r-thumb.webp` | Suzuki Intruder M1800R 1.jpg | Selmoval | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M1800R_1.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-intruder-m800.webp` | Suzuki Intruder M800 (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M800_(1).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-intruder-m800-thumb.webp` | Suzuki Intruder M800 (1).jpg | Cjp24 | https://commons.wikimedia.org/wiki/File:Suzuki_Intruder_M800_(1).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-jr-50.webp` | JR50 1978 2.JPG | Lukeb1961 | https://commons.wikimedia.org/wiki/File:JR50_1978_2.JPG | CC0 |  |
+| `store/img/bikes/suzuki-jr-50-thumb.webp` | JR50 1978 2.JPG | Lukeb1961 | https://commons.wikimedia.org/wiki/File:JR50_1978_2.JPG | CC0 |  |
 | `store/img/bikes/suzuki-katana.webp` | 1997 Suzuki Katana GX (rear view), Malang.jpg | Alex Neman | https://commons.wikimedia.org/wiki/File:1997_Suzuki_Katana_GX_(rear_view),_Malang.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-katana-thumb.webp` | 1997 Suzuki Katana GX (rear view), Malang.jpg | Alex Neman | https://commons.wikimedia.org/wiki/File:1997_Suzuki_Katana_GX_(rear_view),_Malang.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-katana-600.webp` | Black Suzuki Katana 600 side.JPG | BrokenSphere | https://commons.wikimedia.org/wiki/File:Black_Suzuki_Katana_600_side.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-katana-600-thumb.webp` | Black Suzuki Katana 600 side.JPG | BrokenSphere | https://commons.wikimedia.org/wiki/File:Black_Suzuki_Katana_600_side.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-katana-750.webp` | Suzuki Katana 750.jpg | Lee Carson from Edinburgh, Scotland | https://commons.wikimedia.org/wiki/File:Suzuki_Katana_750.jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/suzuki-katana-750-thumb.webp` | Suzuki Katana 750.jpg | Lee Carson from Edinburgh, Scotland | https://commons.wikimedia.org/wiki/File:Suzuki_Katana_750.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/suzuki-let.webp` | Suzuki Let's 5 in tokyo motorcycle show 2008.jpg | Dave Brown | https://commons.wikimedia.org/wiki/File:Suzuki_Let's_5_in_tokyo_motorcycle_show_2008.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/suzuki-let-thumb.webp` | Suzuki Let's 5 in tokyo motorcycle show 2008.jpg | Dave Brown | https://commons.wikimedia.org/wiki/File:Suzuki_Let's_5_in_tokyo_motorcycle_show_2008.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/suzuki-lets.webp` | Suzuki lets2 black.JPG | JR East E231 | https://commons.wikimedia.org/wiki/File:Suzuki_lets2_black.JPG | CC BY-SA 4.0 |  |
@@ -2273,6 +2487,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/suzuki-sixteen-thumb.webp` | Suzuki SIXteen.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Suzuki_SIXteen.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-smash-115.webp` | 2012 Suzuki Smash Titan 115 R (20210914).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2012_Suzuki_Smash_Titan_115_R_(20210914).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-smash-115-thumb.webp` | 2012 Suzuki Smash Titan 115 R (20210914).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2012_Suzuki_Smash_Titan_115_R_(20210914).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/suzuki-st-250.webp` | Suzuki ST250 2007-01.jpg | S-8500 | https://commons.wikimedia.org/wiki/File:Suzuki_ST250_2007-01.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/suzuki-st-250-thumb.webp` | Suzuki ST250 2007-01.jpg | S-8500 | https://commons.wikimedia.org/wiki/File:Suzuki_ST250_2007-01.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/suzuki-st250-e.webp` | 2008–2017 Suzuki ST250 E-type in Candy Sonoma Red, rear right side.jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2008%E2%80%932017_Suzuki_ST250_E-type_in_Candy_Sonoma_Red,_rear_right_side.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-st250-e-thumb.webp` | 2008–2017 Suzuki ST250 E-type in Candy Sonoma Red, rear right side.jpg | Mr.choppers | https://commons.wikimedia.org/wiki/File:2008%E2%80%932017_Suzuki_ST250_E-type_in_Candy_Sonoma_Red,_rear_right_side.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/suzuki-sv-650.webp` | 2002 Suzuki SV 650 (II).JPG | Wilmukasp | https://commons.wikimedia.org/wiki/File:2002_Suzuki_SV_650_(II).JPG | CC BY-SA 4.0 |  |
@@ -2337,6 +2553,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/triumph-bonneville-se-thumb.webp` | Flickr - ronsaunders47 - THE NEW BREED OF TRIUMPH. BONNEVILLE SE.865 cc TWIN. 2010..jpg | Ronald Saunders from Warrington, UK | https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_THE_NEW_BREED_OF_TRIUMPH._BONNEVILLE_SE.865_cc_TWIN._2010..jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/triumph-bonneville-speedmaster.webp` | Lauterach-Motorcycle Triumph Bonneville T120 Speedmaster-01ASD.jpg | Asurnipal | https://commons.wikimedia.org/wiki/File:Lauterach-Motorcycle_Triumph_Bonneville_T120_Speedmaster-01ASD.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-bonneville-speedmaster-thumb.webp` | Lauterach-Motorcycle Triumph Bonneville T120 Speedmaster-01ASD.jpg | Asurnipal | https://commons.wikimedia.org/wiki/File:Lauterach-Motorcycle_Triumph_Bonneville_T120_Speedmaster-01ASD.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/triumph-bonneville-t-100.webp` | Flickr - ronsaunders47 - TRIUMPH BONNEVILLE . T 100. (1).jpg | Ronald Saunders from Warrington, UK | https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_TRIUMPH_BONNEVILLE_._T_100._(1).jpg | CC BY-SA 2.0 |  |
+| `store/img/bikes/triumph-bonneville-t-100-thumb.webp` | Flickr - ronsaunders47 - TRIUMPH BONNEVILLE . T 100. (1).jpg | Ronald Saunders from Warrington, UK | https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_TRIUMPH_BONNEVILLE_._T_100._(1).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/triumph-bonneville-t100.webp` | Triumph Bonneville T100 Black in Athens on 10-24-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Triumph_Bonneville_T100_Black_in_Athens_on_10-24-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-bonneville-t100-thumb.webp` | Triumph Bonneville T100 Black in Athens on 10-24-2023.jpg | George E. Koronaios | https://commons.wikimedia.org/wiki/File:Triumph_Bonneville_T100_Black_in_Athens_on_10-24-2023.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-bonneville-t100-black.webp` | Triumph Bonneville T100 Black 2017.jpg | ジョンドウ | https://commons.wikimedia.org/wiki/File:Triumph_Bonneville_T100_Black_2017.jpg | CC BY-SA 4.0 |  |
@@ -2397,6 +2615,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/triumph-scrambler-900-thumb.webp` | Triumph Scrambler 900 2026.jpg | MotorideSA | https://commons.wikimedia.org/wiki/File:Triumph_Scrambler_900_2026.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-speed-400.webp` | Triumph Speed 400.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Triumph_Speed_400.jpg | CC BY 4.0 |  |
 | `store/img/bikes/triumph-speed-400-thumb.webp` | Triumph Speed 400.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Triumph_Speed_400.jpg | CC BY 4.0 |  |
+| `store/img/bikes/triumph-speed-four.webp` | 2006 Triumph Speed Four (2).JPG | Phill Stotan1193 | https://commons.wikimedia.org/wiki/File:2006_Triumph_Speed_Four_(2).JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/triumph-speed-four-thumb.webp` | 2006 Triumph Speed Four (2).JPG | Phill Stotan1193 | https://commons.wikimedia.org/wiki/File:2006_Triumph_Speed_Four_(2).JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/triumph-speed-triple.webp` | Triumph Speed Triple 1050 2011.jpg | DeFacto | https://commons.wikimedia.org/wiki/File:Triumph_Speed_Triple_1050_2011.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-speed-triple-thumb.webp` | Triumph Speed Triple 1050 2011.jpg | DeFacto | https://commons.wikimedia.org/wiki/File:Triumph_Speed_Triple_1050_2011.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-speed-triple-1200-rr.webp` | 2022 Triumph Speed Triple 1200 RR Bond Edition and 2021 Triumph Tiger 1200 Rally Pro.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2022_Triumph_Speed_Triple_1200_RR_Bond_Edition_and_2021_Triumph_Tiger_1200_Rally_Pro.jpg | CC BY-SA 4.0 |  |
@@ -2443,6 +2663,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/triumph-thruxton-1200-thumb.webp` | Triumph Thruxton 1200 at Legendy 2018 in Prague.jpg | Jiří Sedláček | https://commons.wikimedia.org/wiki/File:Triumph_Thruxton_1200_at_Legendy_2018_in_Prague.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-thruxton-1200-r.webp` | 2018 Triumph Thruxton 1200 R (J5 TXN).jpg | Carfanatic2019 | https://commons.wikimedia.org/wiki/File:2018_Triumph_Thruxton_1200_R_(J5_TXN).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-thruxton-1200-r-thumb.webp` | 2018 Triumph Thruxton 1200 R (J5 TXN).jpg | Carfanatic2019 | https://commons.wikimedia.org/wiki/File:2018_Triumph_Thruxton_1200_R_(J5_TXN).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/triumph-thruxton-900.webp` | Triumph Thruxton 900.jpg | A1AA1A | https://commons.wikimedia.org/wiki/File:Triumph_Thruxton_900.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/triumph-thruxton-900-thumb.webp` | Triumph Thruxton 900.jpg | A1AA1A | https://commons.wikimedia.org/wiki/File:Triumph_Thruxton_900.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-thruxton-r.webp` | 2020 Triumph Thruxton R Custom 1.2.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2020_Triumph_Thruxton_R_Custom_1.2.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-thruxton-r-thumb.webp` | 2020 Triumph Thruxton R Custom 1.2.jpg | Vauxford | https://commons.wikimedia.org/wiki/File:2020_Triumph_Thruxton_R_Custom_1.2.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/triumph-thunderbird.webp` | Triumph Thunderbird at Legendy 2018 in Prague.jpg | Jiří Sedláček | https://commons.wikimedia.org/wiki/File:Triumph_Thunderbird_at_Legendy_2018_in_Prague.jpg | CC BY-SA 4.0 |  |
@@ -2569,12 +2791,16 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-aerox-thumb.webp` | Yamaha Aerox 2011 .jpg | Thomas Wiersma | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_2011_.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-aerox-155.webp` | Yamaha Aerox 155 ABS - Tacho.jpg | MGapp | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_155_ABS_-_Tacho.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-aerox-155-thumb.webp` | Yamaha Aerox 155 ABS - Tacho.jpg | MGapp | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_155_ABS_-_Tacho.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-aerox-50.webp` | Yamaha Aerox 50.jpg | Mmoru | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_50.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/yamaha-aerox-50-thumb.webp` | Yamaha Aerox 50.jpg | Mmoru | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_50.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-aerox-r.webp` | Yamaha Aerox R50.jpg | Mmoru | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_R50.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-aerox-r-thumb.webp` | Yamaha Aerox R50.jpg | Mmoru | https://commons.wikimedia.org/wiki/File:Yamaha_Aerox_R50.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-axis-treet.webp` | Yamaha Axis Treet EBJ-SE53J 20130804.jpg | Nyao148 | https://commons.wikimedia.org/wiki/File:Yamaha_Axis_Treet_EBJ-SE53J_20130804.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-axis-treet-thumb.webp` | Yamaha Axis Treet EBJ-SE53J 20130804.jpg | Nyao148 | https://commons.wikimedia.org/wiki/File:Yamaha_Axis_Treet_EBJ-SE53J_20130804.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-bolt.webp` | 2014 Yamaha XVS950CU Bolt.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:2014_Yamaha_XVS950CU_Bolt.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-bolt-thumb.webp` | 2014 Yamaha XVS950CU Bolt.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:2014_Yamaha_XVS950CU_Bolt.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-bt-1100-bulldog.webp` | Yamaha BT1100 Bulldog motorcycle.jpg | Jakkel at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:Yamaha_BT1100_Bulldog_motorcycle.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/yamaha-bt-1100-bulldog-thumb.webp` | Yamaha BT1100 Bulldog motorcycle.jpg | Jakkel at Dutch Wikipedia | https://commons.wikimedia.org/wiki/File:Yamaha_BT1100_Bulldog_motorcycle.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-bw-s-125.webp` | 2024 Yamaha BWS 125 motorcycle.jpg | Cosmic Console | https://commons.wikimedia.org/wiki/File:2024_Yamaha_BWS_125_motorcycle.jpg | CC0 |  |
 | `store/img/bikes/yamaha-bw-s-125-thumb.webp` | 2024 Yamaha BWS 125 motorcycle.jpg | Cosmic Console | https://commons.wikimedia.org/wiki/File:2024_Yamaha_BWS_125_motorcycle.jpg | CC0 |  |
 | `store/img/bikes/yamaha-bws.webp` | Yamaha-bws2012.jpg | Stealth3327 | https://commons.wikimedia.org/wiki/File:Yamaha-bws2012.jpg | CC0 |  |
@@ -2605,6 +2831,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-dragstar-1100-classic-thumb.webp` | DragStar 1100 Classic.png | Ярослав2017 | https://commons.wikimedia.org/wiki/File:DragStar_1100_Classic.png | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-dt-125-re.webp` | Dt 125 re.jpg | 9mary3 | https://commons.wikimedia.org/wiki/File:Dt_125_re.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-dt-125-re-thumb.webp` | Dt 125 re.jpg | 9mary3 | https://commons.wikimedia.org/wiki/File:Dt_125_re.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/yamaha-dt-50-x.webp` | 2017-09-21 (174) Yamaha DT 50 X at Bahnhof Waidhofen an der Ybbs.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(174)_Yamaha_DT_50_X_at_Bahnhof_Waidhofen_an_der_Ybbs.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-dt-50-x-thumb.webp` | 2017-09-21 (174) Yamaha DT 50 X at Bahnhof Waidhofen an der Ybbs.jpg | GT1976 | https://commons.wikimedia.org/wiki/File:2017-09-21_(174)_Yamaha_DT_50_X_at_Bahnhof_Waidhofen_an_der_Ybbs.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-dt50r.webp` | Yamaha DT 50 R 3MN (vor Restaurierung).jpg | 2dann | https://commons.wikimedia.org/wiki/File:Yamaha_DT_50_R_3MN_(vor_Restaurierung).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-dt50r-thumb.webp` | Yamaha DT 50 R 3MN (vor Restaurierung).jpg | 2dann | https://commons.wikimedia.org/wiki/File:Yamaha_DT_50_R_3MN_(vor_Restaurierung).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-e-vino.webp` | Yamaha Electric Scooter E-Vino.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:Yamaha_Electric_Scooter_E-Vino.JPG | CC BY-SA 4.0 |  |
@@ -2621,6 +2849,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-fazer-600-thumb.webp` | Yamaha Fazer 600 (50288389466).jpg | RL GNZLZ from Chile | https://commons.wikimedia.org/wiki/File:Yamaha_Fazer_600_(50288389466).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/yamaha-fj-09.webp` | Yamaha FJ-09.jpg | Daniel Vinals | https://commons.wikimedia.org/wiki/File:Yamaha_FJ-09.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-fj-09-thumb.webp` | Yamaha FJ-09.jpg | Daniel Vinals | https://commons.wikimedia.org/wiki/File:Yamaha_FJ-09.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-fjr-1300.webp` | Yamaha FJR 1300AE (MSP16).jpg | Jakub "Flyz1" Maciejewski | https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300AE_(MSP16).jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-fjr-1300-thumb.webp` | Yamaha FJR 1300AE (MSP16).jpg | Jakub "Flyz1" Maciejewski | https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300AE_(MSP16).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-fjr-1300-as.webp` | Yamaha FJR 1300AS at Tokyo Motor Show 2013.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300AS_at_Tokyo_Motor_Show_2013.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-fjr-1300-as-thumb.webp` | Yamaha FJR 1300AS at Tokyo Motor Show 2013.jpg | PekePON | https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300AS_at_Tokyo_Motor_Show_2013.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-fjr1300.webp` | Yamaha FJR1300, gendarmerie nationale.jpg | Kevin.B | https://commons.wikimedia.org/wiki/File:Yamaha_FJR1300,_gendarmerie_nationale.jpg | CC BY-SA 4.0 |  |
@@ -2659,12 +2889,18 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-fz8-thumb.webp` | Paris - Salon de la moto 2011 - Yamaha - FZ8 - 001.jpg | Thesupermat | https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_Yamaha_-_FZ8_-_001.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-fzs.webp` | Yamaha FZS.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Yamaha_FZS.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-fzs-thumb.webp` | Yamaha FZS.jpg | Ganesh Mohan T | https://commons.wikimedia.org/wiki/File:Yamaha_FZS.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-fzs-1000-fazer.webp` | Yamaha FZS1000 Fazer.jpg | Cagivamito125 | https://commons.wikimedia.org/wiki/File:Yamaha_FZS1000_Fazer.jpg | CC0 |  |
+| `store/img/bikes/yamaha-fzs-1000-fazer-thumb.webp` | Yamaha FZS1000 Fazer.jpg | Cagivamito125 | https://commons.wikimedia.org/wiki/File:Yamaha_FZS1000_Fazer.jpg | CC0 |  |
 | `store/img/bikes/yamaha-fzs1000.webp` | Yamaha FZS 1000S Fazer.jpg | Arkadiusz Zarzecki | https://commons.wikimedia.org/wiki/File:Yamaha_FZS_1000S_Fazer.jpg | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-fzs1000-thumb.webp` | Yamaha FZS 1000S Fazer.jpg | Arkadiusz Zarzecki | https://commons.wikimedia.org/wiki/File:Yamaha_FZS_1000S_Fazer.jpg | CC BY-SA 3.0 |  |
+| `store/img/bikes/yamaha-g5.webp` | Yamaha Libero G5 pic.JPG | Samihasib ( talk ) | https://commons.wikimedia.org/wiki/File:Yamaha_Libero_G5_pic.JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/yamaha-g5-thumb.webp` | Yamaha Libero G5 pic.JPG | Samihasib ( talk ) | https://commons.wikimedia.org/wiki/File:Yamaha_Libero_G5_pic.JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-gear-125-s.webp` | 2026 Yamaha Mio Gear Ultima Hybrid S 125 (20260208).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2026_Yamaha_Mio_Gear_Ultima_Hybrid_S_125_(20260208).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-gear-125-s-thumb.webp` | 2026 Yamaha Mio Gear Ultima Hybrid S 125 (20260208).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2026_Yamaha_Mio_Gear_Ultima_Hybrid_S_125_(20260208).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-giggle.webp` | Yamaha Giggle 50.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_Giggle_50.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-giggle-thumb.webp` | Yamaha Giggle 50.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_Giggle_50.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-gladiator.webp` | Yamaha gladiator JA Type 2007.JPG | Unknown | https://commons.wikimedia.org/wiki/File:Yamaha_gladiator_JA_Type_2007.JPG | Public domain |  |
+| `store/img/bikes/yamaha-gladiator-thumb.webp` | Yamaha gladiator JA Type 2007.JPG | Unknown | https://commons.wikimedia.org/wiki/File:Yamaha_gladiator_JA_Type_2007.JPG | Public domain |  |
 | `store/img/bikes/yamaha-grizzly-700.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-grizzly-700-thumb.webp` | Yamaha Grizzly 700.jpg | Максим Леньга | https://commons.wikimedia.org/wiki/File:Yamaha_Grizzly_700.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-jog.webp` | Yamaha Jog 50cc 1989 Barcelona Olimpic Games Volonteers.jpg | Peprovira | https://commons.wikimedia.org/wiki/File:Yamaha_Jog_50cc_1989_Barcelona_Olimpic_Games_Volonteers.jpg | CC BY-SA 4.0 |  |
@@ -2787,6 +3023,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-royal-star-thumb.webp` | Yamaha Royalstar 2000 (23966484288).jpg | RL GNZLZ from Chile | https://commons.wikimedia.org/wiki/File:Yamaha_Royalstar_2000_(23966484288).jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/yamaha-royal-star-venture.webp` | Yamaha XVZ1300TF Royal Star Venture 2005 (1).JPG | kolochkov | https://commons.wikimedia.org/wiki/File:Yamaha_XVZ1300TF_Royal_Star_Venture_2005_(1).JPG | CC BY-SA 3.0 |  |
 | `store/img/bikes/yamaha-royal-star-venture-thumb.webp` | Yamaha XVZ1300TF Royal Star Venture 2005 (1).JPG | kolochkov | https://commons.wikimedia.org/wiki/File:Yamaha_XVZ1300TF_Royal_Star_Venture_2005_(1).JPG | CC BY-SA 3.0 |  |
+| `store/img/bikes/yamaha-royal-star-venture-1300.webp` | Yamaha Royal Star Venture 1300.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Yamaha_Royal_Star_Venture_1300.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-royal-star-venture-1300-thumb.webp` | Yamaha Royal Star Venture 1300.jpg | Addvisor | https://commons.wikimedia.org/wiki/File:Yamaha_Royal_Star_Venture_1300.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-saluto.webp` | 2015 Yamaha YC125-4 Saluto.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:2015_Yamaha_YC125-4_Saluto.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-saluto-thumb.webp` | 2015 Yamaha YC125-4 Saluto.JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:2015_Yamaha_YC125-4_Saluto.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-serow-250.webp` | Yamaha serow 250.jpg | Navian | https://commons.wikimedia.org/wiki/File:Yamaha_serow_250.jpg | Public domain |  |
@@ -2873,6 +3111,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-tw-200-thumb.webp` | YAMAHA TW200 Special specification motorcycle reached the South Pole with Japanese adventurer Shinji Kazama.jpg | Neruru | https://commons.wikimedia.org/wiki/File:YAMAHA_TW200_Special_specification_motorcycle_reached_the_South_Pole_with_Japanese_adventurer_Shinji_Kazama.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-tw200.webp` | 2010 Yamaha TW200 at the 2009 Seattle International Motorcycle Show 1.jpg | Dbratland | https://commons.wikimedia.org/wiki/File:2010_Yamaha_TW200_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg | CC BY 3.0 |  |
 | `store/img/bikes/yamaha-tw200-thumb.webp` | 2010 Yamaha TW200 at the 2009 Seattle International Motorcycle Show 1.jpg | Dbratland | https://commons.wikimedia.org/wiki/File:2010_Yamaha_TW200_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg | CC BY 3.0 |  |
+| `store/img/bikes/yamaha-tzr.webp` | Yamaha TZR 250, National Museum of Scotland pic1.JPG | Alf van Beem | https://commons.wikimedia.org/wiki/File:Yamaha_TZR_250,_National_Museum_of_Scotland_pic1.JPG | CC0 |  |
+| `store/img/bikes/yamaha-tzr-thumb.webp` | Yamaha TZR 250, National Museum of Scotland pic1.JPG | Alf van Beem | https://commons.wikimedia.org/wiki/File:Yamaha_TZR_250,_National_Museum_of_Scotland_pic1.JPG | CC0 |  |
 | `store/img/bikes/yamaha-tzr-50.webp` | Yamaha TZR 50.jpg | James Willock | https://commons.wikimedia.org/wiki/File:Yamaha_TZR_50.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/yamaha-tzr-50-thumb.webp` | Yamaha TZR 50.jpg | James Willock | https://commons.wikimedia.org/wiki/File:Yamaha_TZR_50.jpg | CC BY-SA 2.0 |  |
 | `store/img/bikes/yamaha-tzr50.webp` | Yamaha-TZR50R.jpg | Marc-Lauren | https://commons.wikimedia.org/wiki/File:Yamaha-TZR50R.jpg | CC BY-SA 3.0 |  |
@@ -2893,6 +3133,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-vega-thumb.webp` | 2016 Yamaha Vega Force 115 (20200818).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2016_Yamaha_Vega_Force_115_(20200818).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-vega-force.webp` | Yamaha Vega Force - Jakarta Fair 2016 - June 21 2016.jpg | Wilzz99 | https://commons.wikimedia.org/wiki/File:Yamaha_Vega_Force_-_Jakarta_Fair_2016_-_June_21_2016.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-vega-force-thumb.webp` | Yamaha Vega Force - Jakarta Fair 2016 - June 21 2016.jpg | Wilzz99 | https://commons.wikimedia.org/wiki/File:Yamaha_Vega_Force_-_Jakarta_Fair_2016_-_June_21_2016.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-vino.webp` | Yamaha Vino bicolor.jpg | Luca Boldrini | https://commons.wikimedia.org/wiki/File:Yamaha_Vino_bicolor.jpg | CC BY 2.0 |  |
+| `store/img/bikes/yamaha-vino-thumb.webp` | Yamaha Vino bicolor.jpg | Luca Boldrini | https://commons.wikimedia.org/wiki/File:Yamaha_Vino_bicolor.jpg | CC BY 2.0 |  |
 | `store/img/bikes/yamaha-vino-125.webp` | Yamaha Vino 125 2006.jpg | Kb9vrg at English Wikipedia | https://commons.wikimedia.org/wiki/File:Yamaha_Vino_125_2006.jpg | CC BY 2.5 |  |
 | `store/img/bikes/yamaha-vino-125-thumb.webp` | Yamaha Vino 125 2006.jpg | Kb9vrg at English Wikipedia | https://commons.wikimedia.org/wiki/File:Yamaha_Vino_125_2006.jpg | CC BY 2.5 |  |
 | `store/img/bikes/yamaha-vino-50.webp` | YAMAHA Vino50 2008 Yamaha Communication Plaza.jpg | PekePON | https://commons.wikimedia.org/wiki/File:YAMAHA_Vino50_2008_Yamaha_Communication_Plaza.jpg | CC BY-SA 3.0 |  |
@@ -2933,6 +3175,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-wr250x-thumb.webp` | YAMAHA WR250X.jpg | Tr-909 | https://commons.wikimedia.org/wiki/File:YAMAHA_WR250X.jpg | Public domain |  |
 | `store/img/bikes/yamaha-wr450f.webp` | 2012 Yamaha WR450f, Feb 2019.jpg | Jamesm113 | https://commons.wikimedia.org/wiki/File:2012_Yamaha_WR450f,_Feb_2019.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-wr450f-thumb.webp` | 2012 Yamaha WR450f, Feb 2019.jpg | Jamesm113 | https://commons.wikimedia.org/wiki/File:2012_Yamaha_WR450f,_Feb_2019.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-x-city.webp` | Yamaha X-City in Avellino.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_X-City_in_Avellino.jpg | CC BY 4.0 |  |
+| `store/img/bikes/yamaha-x-city-thumb.webp` | Yamaha X-City in Avellino.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_X-City_in_Avellino.jpg | CC BY 4.0 |  |
 | `store/img/bikes/yamaha-x-city-125.webp` | Yamaha XCity125.jpg | Ma8473844 | https://commons.wikimedia.org/wiki/File:Yamaha_XCity125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-x-city-125-thumb.webp` | Yamaha XCity125.jpg | Ma8473844 | https://commons.wikimedia.org/wiki/File:Yamaha_XCity125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-x-city-250.webp` | X-city 250 CFR.jpg | C.F. Romberg smokeonit1 AT mac DOT com | https://commons.wikimedia.org/wiki/File:X-city_250_CFR.jpg | CC BY 3.0 |  |
@@ -2943,6 +3187,8 @@ Commons API (`extmetadata`); follow the source link for the full terms.
 | `store/img/bikes/yamaha-x-ride-125-thumb.webp` | 2020 Yamaha X-Ride 125 (20220111).jpg | オーバードライブ83 | https://commons.wikimedia.org/wiki/File:2020_Yamaha_X-Ride_125_(20220111).jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-xabre.webp` | Yamaha Xabre 150.JPG | 69PAULWALKER69 | https://commons.wikimedia.org/wiki/File:Yamaha_Xabre_150.JPG | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-xabre-thumb.webp` | Yamaha Xabre 150.JPG | 69PAULWALKER69 | https://commons.wikimedia.org/wiki/File:Yamaha_Xabre_150.JPG | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-xc-300-versity.webp` | Yamaha XC300 Versity.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_XC300_Versity.jpg | CC BY-SA 4.0 |  |
+| `store/img/bikes/yamaha-xc-300-versity-thumb.webp` | Yamaha XC300 Versity.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_XC300_Versity.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-xenter-125.webp` | Yamaha Xenter 125.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_Xenter_125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-xenter-125-thumb.webp` | Yamaha Xenter 125.jpg | Corvettec6r | https://commons.wikimedia.org/wiki/File:Yamaha_Xenter_125.jpg | CC BY-SA 4.0 |  |
 | `store/img/bikes/yamaha-xj6.webp` | 1992 Yamaha Diversion 600 (XJ600S).JPG | Rainmaker47 | https://commons.wikimedia.org/wiki/File:1992_Yamaha_Diversion_600_(XJ600S).JPG | CC BY-SA 4.0 |  |

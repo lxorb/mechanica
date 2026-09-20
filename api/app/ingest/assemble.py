@@ -243,7 +243,8 @@ def _shared(a: set[str], b: set[str], rare: set[str]) -> int:
     return len(a & b & rare)
 
 
-def build(doc: pymupdf.Document, units: list[UnitOut], chaps: list[tuple[int, int, str]], keyword_fn) -> Built:
+def build(doc: pymupdf.Document, units: list[UnitOut], chaps: list[tuple[int, int, str]], keyword_fn, progress=None) -> Built:
+    """progress(done, total) is called while quotes are grounded; it is the longest stretch after the LLM pass."""
     out = Built()
     cache: dict[int, PageText] = {}
     page_count = doc.page_count
@@ -251,7 +252,10 @@ def build(doc: pymupdf.Document, units: list[UnitOut], chaps: list[tuple[int, in
     rows: dict[str, _PartRow] = {}
     used_ids: dict[str, int] = {}
 
-    for draft in drafts(units, page_count, chaps):
+    todo = drafts(units, page_count, chaps)
+    for index, draft in enumerate(todo, start=1):
+        if progress:
+            progress(index, len(todo))
         start = max(1, draft.start)
         scope = range(start, min(page_count, max(draft.end, start + 1), start + MAX_SPAN) + 1)
         highlights: list[Highlight] = []

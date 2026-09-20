@@ -165,6 +165,7 @@ class IngestJob(BaseModel):
     pages: int = 0
     done: int = 0
     error: str | None = None
+    stage: str | None = None
 
 
 class CostEvent(BaseModel):

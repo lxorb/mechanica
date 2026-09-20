@@ -1,7 +1,7 @@
 {
  "scooter": {
   "kind": "bike",
-  "orient": 0,
+  "orient": 180,
   "paint": [
    "fuel-tank",
    "fairing",
@@ -12,7 +12,7 @@
  },
  "sportbike": {
   "kind": "bike",
-  "orient": 0,
+  "orient": 180,
   "paint": [
    "fuel-tank",
    "fairing",
@@ -50,7 +50,7 @@
  },
  "cruiser": {
   "kind": "bike",
-  "orient": 0,
+  "orient": 180,
   "paint": [
    "fuel-tank",
    "fairing",
@@ -61,7 +61,7 @@
  },
  "naked": {
   "kind": "bike",
-  "orient": 0,
+  "orient": 180,
   "paint": [
    "fuel-tank",
    "fairing",
@@ -76,7 +76,7 @@
  },
  "classic": {
   "kind": "bike",
-  "orient": 0,
+  "orient": 180,
   "paint": [
    "fuel-tank",
    "fairing",

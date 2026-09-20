@@ -22,7 +22,8 @@ def agents_for(needs_ua: str | None) -> tuple[str, ...]:
     return (first, BROWSER if first is GOOGLEBOT else GOOGLEBOT) if first else (BROWSER, GOOGLEBOT)
 
 
-def fetch(source: str, dest: Path, needs_ua: str | None = None) -> Path:
+def fetch(source: str, dest: Path, needs_ua: str | None = None, on_bytes=None) -> Path:
+    """on_bytes(received, expected) is called while the body streams so a waiting UI can show the download."""
     dest.parent.mkdir(parents=True, exist_ok=True)
     if source.lower().startswith(("http://", "https://")):
         last: Exception | None = None
@@ -31,9 +32,14 @@ def fetch(source: str, dest: Path, needs_ua: str | None = None) -> Path:
             try:
                 with httpx.stream("GET", source, follow_redirects=True, timeout=180.0, headers={**HEADERS, "User-Agent": agent}) as r:
                     r.raise_for_status()
+                    expected = int(r.headers.get("content-length") or 0)
+                    got = 0
                     with tmp.open("wb") as f:
                         for chunk in r.iter_bytes(1 << 16):
                             f.write(chunk)
+                            got += len(chunk)
+                            if on_bytes:
+                                on_bytes(got, expected)
                 if tmp.open("rb").read(5)[:4] != MAGIC:
                     raise ValueError(f"not a PDF: {source}")
                 tmp.replace(dest)

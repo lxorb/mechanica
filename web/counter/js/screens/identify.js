@@ -29,8 +29,13 @@ const MAKE_CHIPS = 12;
 const THIN_ROWS = 6;
 const SUGGEST_MS = 150;
 const VIN_MS = 120;
-const VIN_MIN = 6;
 const VIN_MAX = 17;
+/** Shortest run of VIN characters that a known WMI turns into a VIN rather than a model. */
+const VIN_PART_MIN = 9;
+/** A VIN never uses I, O or Q. */
+const VIN_CHARS = /^[A-HJ-NPR-Z0-9]+$/;
+/** World manufacturer identifiers; the catalog's own `vins` prefixes are added at runtime. */
+const WMI = ["VBK", "WB1", "JH2", "JYA", "JS1", "JKA", "ZDM", "1HD", "SMT", "ME1"];
 const JUMP_MS = 400;
 const ALT_MAX = 8;
 const MATCH_FLOOR = 0.5;
@@ -59,7 +64,7 @@ let searchEl;
 let queryEl;
 let shotEl;
 let shotImg;
-let vinBtn;
+let vinTag;
 let fileEl;
 let progressEl;
 let chipsEl;
@@ -74,6 +79,7 @@ let chooserYears;
 let live = false;
 let modelIndex = null;
 let makesCache = null;
+let wmiCache = null;
 let rosterIds = null;
 
 let rows = [];
@@ -158,7 +164,7 @@ function group(list) {
       row = { key, bike, years: [], at: new Map(), rank: RANK.none, span: "" };
       map.set(key, row);
     }
-    if (!row.bike.thumb && bike.thumb) row.bike = bike;
+    if (!(row.bike.hero || row.bike.image || row.bike.thumb) && (bike.hero || bike.image || bike.thumb)) row.bike = bike;
     const mState = Q.manualState(bike);
     const year = bike.year == null ? "" : String(bike.year);
     const seen = row.at.get(year);
@@ -207,6 +213,42 @@ function makeList() {
     .sort((a, z) => z[1].ready - a[1].ready || z[1].n - a[1].n || a[0].localeCompare(z[0]))
     .map(([make]) => make);
   return makesCache;
+}
+
+/* -------------------------------------------------------------------- VIN */
+
+/** WMI prefixes: the ten classic shapes plus every `vins` prefix the catalog carries. */
+function wmiSet() {
+  if (wmiCache) return wmiCache;
+  const set = new Set(WMI);
+  for (const bike of roster()) {
+    if (!bike || !Array.isArray(bike.vins)) continue;
+    for (const raw of bike.vins) {
+      const p = String(raw ?? "")
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "");
+      if (p.length >= 3) set.add(p.slice(0, 3));
+    }
+  }
+  wmiCache = set;
+  return wmiCache;
+}
+
+/**
+ * The one field tells a VIN from a model on its own. Spaces and dashes are stripped, so
+ * "vbk jsa40 xxxxxxxxx" is the same 17 characters as "VBKJSA40XXXXXXXXX". A shorter run
+ * counts only when it is one unbroken word behind a known WMI - "wb10n21 2025 gs" is three
+ * words about a bike, not a half-typed chassis number. Returns "" for everything else.
+ */
+function vinOf(text) {
+  const raw = String(text ?? "").trim();
+  if (!raw) return "";
+  const flat = raw.toUpperCase().replace(/[\s-]+/g, "");
+  if (flat.length < VIN_PART_MIN || flat.length > VIN_MAX) return "";
+  if (!VIN_CHARS.test(flat)) return "";
+  if (flat.length === VIN_MAX) return flat;
+  if (/\s/.test(raw)) return "";
+  return wmiSet().has(flat.slice(0, 3)) ? flat : "";
 }
 
 /* ----------------------------------------------------------- query -> rows */
@@ -398,9 +440,30 @@ function watchArt(img) {
   img.addEventListener("load", () => fitArt(img));
 }
 
-function setArt(img, box, bike) {
-  const path = bike && (bike.thumb || bike.image);
-  const src = path ? Q.asset(path) : "";
+/**
+ * Three sizes ship per bike: hero (1280), image (640), thumb (160). A card takes the hero
+ * on a desktop-width grid and the 640 on a phone; the year chooser's tile takes the thumb.
+ * Each order falls through to whatever sizes that bike actually has.
+ */
+const SIZES = {
+  card: ["image", "thumb", "hero"],
+  wide: ["hero", "image", "thumb"],
+  tile: ["thumb", "image", "hero"],
+};
+
+const WIDE_Q = typeof window !== "undefined" && window.matchMedia ? window.matchMedia("(min-width: 980px)") : null;
+
+function artSrc(bike, want) {
+  if (!bike) return "";
+  const order = SIZES[want === "card" && WIDE_Q && WIDE_Q.matches ? "wide" : want] || SIZES.card;
+  for (const key of order) {
+    if (bike[key]) return Q.asset(bike[key]);
+  }
+  return "";
+}
+
+function setArt(img, box, bike, want) {
+  const src = artSrc(bike, want || "card");
   box.classList.toggle("is-bare", !src);
   if (!src) {
     img.removeAttribute("src");
@@ -446,7 +509,7 @@ function makeCard() {
 function bindCard(rec, row, text) {
   rec.row = row;
   rec.box.hidden = false;
-  setArt(rec.img, rec.art, row.bike);
+  setArt(rec.img, rec.art, row.bike, "card");
   rec.flag.hidden = row.rank === RANK.none;
   rec.flag.className = row.rank === RANK.ready ? "id-flag is-ready" : "id-flag is-ondemand";
   paintName(rec.make, rec.model, row, text);
@@ -494,7 +557,7 @@ function renderChooser() {
   const row = chooserRow;
   chooserEl.hidden = !row;
   if (!row) return;
-  setArt(chooserImg, chooserArt, row.bike);
+  setArt(chooserImg, chooserArt, row.bike, "tile");
   chooserMake.textContent = row.bike.make ?? "";
   chooserModel.textContent = row.bike.model ?? "";
   const off = !Q.online();
@@ -623,7 +686,7 @@ async function runSuggest(text) {
 
 /** Nothing typed, no photo, no chooser: the page is only the field. */
 function syncLanding() {
-  const bare = !chooserRow && !photoUrl && !(vinMode ? vinQ : textQ.trim());
+  const bare = !chooserRow && !photoUrl && !textQ.trim();
   if (bare === landing) return;
   landing = bare;
   document.body.classList.toggle("id-landing", bare);
@@ -631,7 +694,7 @@ function syncLanding() {
 
 /** VIN, a photo, the chooser or a typed query are sub-states the header Back pops. */
 function signalSub() {
-  const on = vinMode || Boolean(photoUrl) || Boolean(chooserRow) || textQ.trim().length > 0;
+  const on = Boolean(photoUrl) || Boolean(chooserRow) || textQ.trim().length > 0;
   if (on === subOn) return;
   subOn = on;
   emit("substate", { screen: "identify", on });
@@ -681,7 +744,7 @@ function choose(entry, opts) {
   const bike = entry.bike;
   if (entry.state === "none" && !Q.online()) return;
   remember(bike);
-  const vin = vinMode && vinHit && vinHit.id === bike.id && vinQ.length >= VIN_MIN ? vinQ : null;
+  const vin = vinMode && vinHit && vinHit.id === bike.id ? vinQ : null;
   set({ bikeId: bike.id, vin, altIds: (opts && opts.alts) || [] });
   emit("bike", { bikeId: bike.id, vin });
   // Nothing left to confirm: the year was tapped by hand and the manual is already indexed.
@@ -700,40 +763,49 @@ function clearPhoto() {
   showProgress(false);
 }
 
-function cleanVin(value) {
-  return String(value ?? "")
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, "")
-    .slice(0, VIN_MAX);
-}
-
 function onQuery() {
-  if (vinMode) {
-    const clean = cleanVin(queryEl.value);
-    if (clean !== queryEl.value) queryEl.value = clean;
-    vinQ = clean;
-    scheduleVin(clean);
-    scheduleSearch();
-    return;
-  }
   textQ = queryEl.value;
   if (textQ.trim() && photoUrl) clearPhoto();
   chooserRow = null;
   renderChooser();
   jumpedFor = null;
+
+  const found = vinOf(textQ);
+  const wasVin = vinMode;
+  vinMode = Boolean(found);
+  if (vinMode !== wasVin) paintVin();
+  if (vinMode) {
+    if (found !== vinQ) {
+      vinQ = found;
+      scheduleVin(found);
+    }
+    paintChips();
+    scheduleSearch();
+    return;
+  }
+  if (wasVin) {
+    vinQ = "";
+    vinHit = null;
+    vinGen += 1;
+  }
   scheduleSuggest(textQ);
   paintChips();
   scheduleSearch();
+}
+
+/** The field itself says what it is reading: monospace, uppercase, a VIN tag inside it. */
+function paintVin() {
+  searchEl.classList.toggle("is-vin", vinMode);
+  vinTag.hidden = !vinMode;
+  queryEl.setAttribute("enterkeyhint", vinMode ? "done" : "go");
 }
 
 function scheduleVin(clean) {
   if (vinTimer) clearTimeout(vinTimer);
   vinTimer = 0;
   vinGen += 1;
-  if (clean.length < VIN_MIN) {
-    vinHit = null;
-    return;
-  }
+  vinHit = null;
+  if (!clean) return;
   const gen = vinGen;
   vinTimer = setTimeout(async () => {
     vinTimer = 0;
@@ -767,27 +839,14 @@ function bikeFromHit(res) {
   return null;
 }
 
-function setVinMode(on) {
-  if (vinMode === on) return;
-  vinMode = on;
-  searchEl.classList.toggle("is-vin", on);
-  vinBtn.setAttribute("aria-pressed", String(on));
-  queryEl.setAttribute("placeholder", on ? "VIN" : "Search");
-  queryEl.setAttribute("enterkeyhint", on ? "done" : "go");
-  queryEl.setAttribute("autocapitalize", on ? "characters" : "off");
-  queryEl.setAttribute("maxlength", on ? String(VIN_MAX) : "120");
-  chooserRow = null;
-  renderChooser();
-  if (on) {
-    clearPhoto();
-    queryEl.value = vinQ;
-    scheduleVin(vinQ);
-  } else {
-    queryEl.value = textQ;
-  }
-  paintChips();
-  queryEl.focus();
-  refresh();
+/** A photo replaces whatever was typed, so any VIN reading goes with it. */
+function clearVin() {
+  if (!vinMode && !vinQ) return;
+  vinMode = false;
+  vinQ = "";
+  vinHit = null;
+  vinGen += 1;
+  paintVin();
 }
 
 function candidates(res) {
@@ -822,7 +881,7 @@ async function onFile() {
   fileEl.value = "";
   if (!file) return;
 
-  setVinMode(false);
+  clearVin();
   const gen = ++photoGen;
   if (photoUrl) URL.revokeObjectURL(photoUrl);
   photoUrl = URL.createObjectURL(file);
@@ -954,10 +1013,6 @@ function onRootKey(event) {
 
 function backOut() {
   if (closeChooser()) return true;
-  if (vinMode) {
-    setVinMode(false);
-    return true;
-  }
   if (photoUrl) {
     clearPhoto();
     paintChips();
@@ -968,6 +1023,7 @@ function backOut() {
     textQ = "";
     jumpedFor = null;
     queryEl.value = "";
+    clearVin();
     paintChips();
     refresh();
     queryEl.focus();
@@ -1012,26 +1068,18 @@ registerScreen("identify", {
       tabindex: "-1",
     });
 
-    searchEl.append(shotEl, queryEl, cam, fileEl);
+    vinTag = el("span", { className: "id-vin-tag", text: "VIN", hidden: true });
+
+    searchEl.append(shotEl, queryEl, vinTag, cam, fileEl);
 
     progressEl = el("div", { className: "id-progress", hidden: true });
 
-    vinBtn = el("button", {
-      type: "button",
-      className: "id-vin",
-      "aria-label": "VIN",
-      "aria-pressed": "false",
-      text: "VIN",
-    });
-    const vinLine = el("div", { className: "id-vin-line" });
-    vinLine.append(vinBtn);
-
     dockEl = el("div", { className: "id-dock" });
-    dockEl.append(searchEl, progressEl, vinLine);
+    dockEl.append(searchEl, progressEl);
 
     chipsEl = el("div", { className: "id-chips", hidden: true });
 
-    chooserEl = el("div", { className: "id-chooser", hidden: true });
+    chooserEl = el("div", { className: "id-chooser card", hidden: true });
     chooserArt = el("div", { className: "id-chooser-art" });
     chooserImg = el("img", { loading: "lazy", decoding: "async", alt: "" });
     watchArt(chooserImg);
@@ -1043,7 +1091,9 @@ registerScreen("identify", {
     const head = el("div", { className: "id-chooser-head" });
     head.append(chooserMake, chooserModel);
     chooserYears = el("div", { className: "id-chooser-years" });
-    chooserEl.append(chooserArt, head, chooserYears);
+    const top = el("div", { className: "id-chooser-top" });
+    top.append(chooserArt, head);
+    chooserEl.append(top, chooserYears);
 
     gridEl = el("div", { className: "id-grid", hidden: true });
 
@@ -1051,7 +1101,6 @@ registerScreen("identify", {
 
     queryEl.addEventListener("input", onQuery);
     root.addEventListener("keydown", onRootKey);
-    vinBtn.addEventListener("click", () => setVinMode(!vinMode));
     cam.addEventListener("click", () => fileEl.click());
     shotEl.addEventListener("click", () => {
       clearPhoto();
@@ -1082,6 +1131,7 @@ registerScreen("identify", {
       rosterIds = null;
       modelIndex = null;
       makesCache = null;
+      wmiCache = null;
       paintChips();
       refresh(true);
     });
@@ -1108,8 +1158,15 @@ if (typeof window !== "undefined") {
     rosterIds = null;
     modelIndex = null;
     makesCache = null;
+    wmiCache = null;
     if (!live) return;
     paintChips();
     refresh(true);
   });
+  // Crossing into the desktop grid swaps the cards up to the 1280 hero.
+  if (WIDE_Q && typeof WIDE_Q.addEventListener === "function") {
+    WIDE_Q.addEventListener("change", () => {
+      if (live) renderGrid();
+    });
+  }
 }

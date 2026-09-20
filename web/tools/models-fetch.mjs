@@ -189,7 +189,7 @@ function compress(input, work, tag) {
  * costs more than the vertex data it saves and the file more than doubles: 21 MB in, 50 MB out.
  * So every stage above is kept only if it shrank the file.
  */
-function convert(source, out, work) {
+async function convert(source, out, work) {
   // step 0, and it has to be first: a Sketchfab .gltf keeps its geometry in a .bin and its
   // textures in a folder, so the FILE is a few KB while the model is 40 MB. Every size
   // comparison below would be meaningless against it. Pack it into a .glb once, then measure.
@@ -197,7 +197,11 @@ function convert(source, out, work) {
   if (!run(["copy", source, packed], "pack")) throw new Error("could not pack the source into a glb");
   console.log(`      packed ${mb(size(packed))}`);
 
-  let current = packed;
+  // before anything else: a ground plane under the vehicle would dominate the bounding sphere
+  // the viewer normalises to, and shrink the vehicle to a speck
+  const stripped = await stripScenery(packed, join(work, "stripped.glb"));
+
+  let current = stripped || packed;
   current = stage(["dedup"], "dedup", current, join(work, "a.glb"));
   current = stage(["instance"], "instance", current, join(work, "b.glb"));
 
@@ -250,18 +254,87 @@ async function lib(name) {
   return import(pathToFileURL(join(LIB, name, entry)).href);
 }
 
+/**
+ * Sketchfab authors very often park the vehicle on a ground plane, a turntable or a studio
+ * backdrop and publish the lot as one model. The viewer normalises whatever it loads to a unit
+ * bounding sphere, so a 300-unit floor under a 2-unit motorcycle makes the motorcycle a speck —
+ * the Harley came in with a `pPlane1_Floor_0` and rendered the size of a thumbnail.
+ *
+ * There is no gltf-transform CLI command for "delete that node", so this does it through the API:
+ * drop every mesh whose name or material says scenery, then anything left that is a huge flat
+ * slab (one axis under 2% of the longest, and covering most of the footprint).
+ */
+async function stripScenery(file, out) {
+  const io = await readerIO();
+  const document = await io.read(file);
+  const root = document.getRoot();
+  const SCENERY = /floor|ground|backdrop|\bplane\b|podium|pedestal|turntable|platform|shadow ?catcher|studio|cyclorama|shadowplane/i;
+  const dropped = [];
+
+  const span = (prim) => {
+    const pos = prim.getAttribute("POSITION");
+    if (!pos) return null;
+    const lo = pos.getMin([]);
+    const hi = pos.getMax([]);
+    return [hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]];
+  };
+
+  // how big the whole model is, so "flat and wide" can be judged relative to it
+  let longest = 0;
+  for (const mesh of root.listMeshes()) {
+    for (const prim of mesh.listPrimitives()) {
+      const s = span(prim);
+      if (s) longest = Math.max(longest, ...s);
+    }
+  }
+
+  for (const node of root.listNodes()) {
+    const mesh = node.getMesh();
+    if (!mesh) continue;
+    const names = [node.getName() || "", mesh.getName() || "",
+      ...mesh.listPrimitives().map((p) => (p.getMaterial() ? p.getMaterial().getName() || "" : ""))];
+    let scenery = names.some((n) => SCENERY.test(n));
+    if (!scenery) {
+      for (const prim of mesh.listPrimitives()) {
+        const s = span(prim);
+        if (!s || !longest) continue;
+        const flat = Math.min(...s) < longest * 0.02;
+        const wide = s.filter((v) => v > longest * 0.55).length >= 2;
+        if (flat && wide) { scenery = true; break; }
+      }
+    }
+    if (scenery) { dropped.push(names.find(Boolean) || "(unnamed)"); node.dispose(); }
+  }
+  if (!dropped.length) return null;
+  await io.write(out, document);
+  console.log(`      stripped scenery: ${dropped.slice(0, 5).join(", ")}${dropped.length > 5 ? ` +${dropped.length - 5}` : ""}`);
+  return out;
+}
+
+let readerIOPromise = null;
+function readerIO() {
+  if (!readerIOPromise) {
+    readerIOPromise = (async () => {
+      const { NodeIO } = await lib("@gltf-transform/core");
+      const { ALL_EXTENSIONS } = await lib("@gltf-transform/extensions");
+      const draco = await lib("draco3dgltf");
+      const meshopt = await lib("meshoptimizer");
+      return new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({
+        "draco3d.decoder": await draco.createDecoderModule(),
+        "draco3d.encoder": await draco.createEncoderModule(),
+        "meshopt.decoder": meshopt.MeshoptDecoder,
+        "meshopt.encoder": meshopt.MeshoptEncoder,
+      });
+    })();
+  }
+  return readerIOPromise;
+}
+
 /** The part each node name belongs to, read back out of the converted GLB. */
 async function inspect(file, { bounds = false } = {}) {
-  const { NodeIO } = await lib("@gltf-transform/core");
-  const { ALL_EXTENSIONS } = await lib("@gltf-transform/extensions");
-  const draco = await lib("draco3dgltf");
-  // both compressors have to be registered here, because compress() picks whichever won per
-  // model and this has to read back whatever it wrote
-  const meshopt = await lib("meshoptimizer");
-  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({
-    "draco3d.decoder": await draco.createDecoderModule(),
-    "meshopt.decoder": meshopt.MeshoptDecoder,
-  });
+  // the shared IO has both decoders registered, which matters because compress() picks whichever
+  // of draco/meshopt won per model and this has to read back whatever it wrote
+  const io = await readerIO();
   const document = await io.read(file);
   const names = new Set();
   for (const mesh of document.getRoot().listMeshes()) if (mesh.getName()) names.add(mesh.getName());
@@ -438,7 +511,7 @@ async function main() {
         const scene = findScene(join(work, "src"));
         const license = licenseIn(join(work, "src"));
         if (license) writeFileSync(join(dir, "license.txt"), readFileSync(license));
-        convert(scene, glb, work);
+        await convert(scene, glb, work);
       }
       const info = await inspect(glb, { bounds: true });
       parts[row.name] = {
