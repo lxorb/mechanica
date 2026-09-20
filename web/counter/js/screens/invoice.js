@@ -415,7 +415,8 @@ function tile(row) {
 
   node.append(h("span", { class: "pv-frame" }, artEl(part, "md")));
   node.append(h("span", { class: "pv-name", text: part.name || part.id }));
-  if (part.spec) node.append(h("span", { class: "pv-spec", text: part.spec }));
+  // always present, so every tile reserves the same spec line and the rows line up
+  node.append(h("span", { class: "pv-spec", text: part.spec || "" }));
 
   const foot = h("span", { class: "pv-foot" });
   const page = stampPage(pageOf(part));

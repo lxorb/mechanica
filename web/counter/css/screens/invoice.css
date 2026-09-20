@@ -178,7 +178,9 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  align-items: start;
+  /* every tile in a row is the same height: the name box is always two lines, the spec line
+     is always reserved (empty when the manual prints none), the page stamp sits at the bottom */
+  align-items: stretch;
 }
 
 .pv-tile {
@@ -242,6 +244,7 @@
   font-weight: 800;
   font-size: 0.92rem;
   line-height: 1.2;
+  min-height: 2.4em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -252,6 +255,7 @@
   font-family: ui-monospace, monospace;
   font-size: 0.68rem;
   line-height: 1.3;
+  min-height: 1.3em;
   font-variant-numeric: tabular-nums;
   opacity: 0.8;
   overflow: hidden;
