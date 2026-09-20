@@ -1,13 +1,19 @@
 import { state, set, go, registerScreen } from "../bus.js";
-import * as Q from "../query.js";
+import * as Q from "../ttm.js";
 
 const SVG = "http://www.w3.org/2000/svg";
 const PINCH_MAX = 4;
 const TAP = 10;
 const COVER_PAGE = 1;
+const CHOOSER = "https://www.dropbox.com/static/api/2/dropins.js";
 const els = {};
 
 let live = false;
+let gen = 0;
+let shownBike = null;
+let shownState = "none";
+let working = false;
+let chooserLoad = null;
 let ovScale = 1;
 let ovTx = 0;
 let ovTy = 0;
@@ -24,6 +30,63 @@ let ovPt0 = { x: 0, y: 0 };
 let ovDidPinch = false;
 let ovDidPan = false;
 let ovFocus = null;
+
+function bikeOf(id) {
+  const rec = Q.bike(id);
+  if (rec) return rec;
+  const bag = globalThis.HandyInjectBikes;
+  if (bag && typeof bag === "object" && bag[id]) return bag[id];
+  const one = globalThis.HandyInjectBike;
+  if (one && one.id === id) return one;
+  return null;
+}
+
+function manualIdOf(rec) {
+  const mid = rec && rec.manualId;
+  if (mid == null || mid === "") return null;
+  return mid;
+}
+
+async function manualOf(mid) {
+  if (!mid) return null;
+  try {
+    return await Q.manual(mid);
+  } catch {
+    return null;
+  }
+}
+
+function metaOf(rec) {
+  return {
+    make: rec.make,
+    model: rec.model,
+    year: Number(rec.year) || 0,
+    market: rec.market || "EU",
+  };
+}
+
+function chooser() {
+  const key = globalThis.TTM_DROPBOX_APP_KEY;
+  if (!key) return Promise.reject(new Error("no key"));
+  if (globalThis.Dropbox) return Promise.resolve();
+  if (!chooserLoad) {
+    chooserLoad = new Promise((ok, fail) => {
+      const node = document.createElement("script");
+      node.src = CHOOSER;
+      node.id = "dropboxjs";
+      node.dataset.appKey = key;
+      node.onload = () => ok();
+      node.onerror = () => {
+        chooserLoad = null;
+        fail(new Error("chooser"));
+      };
+      document.head.append(node);
+    });
+  }
+  return chooserLoad;
+}
+
+/* view */
 
 function glyph(...ds) {
   const svg = document.createElementNS(SVG, "svg");
@@ -69,39 +132,10 @@ function bounce() {
   queueMicrotask(() => go("identify", { replace: true }));
 }
 
-function bikeOf(id) {
-  const rec = Q.bike(id);
-  if (rec) return rec;
-  const bag = globalThis.HandyInjectBikes;
-  if (bag && typeof bag === "object" && bag[id]) return bag[id];
-  const one = globalThis.HandyInjectBike;
-  if (one && one.id === id) return one;
-  return null;
-}
-
-function manualIdOf(rec) {
-  const mid = rec && rec.manualId;
-  if (mid == null || mid === "") return null;
-  return mid;
-}
-
-function bikeHasManual(id, rec) {
-  if (typeof Q.hasManual === "function" && Q.bike(id)) return Boolean(Q.hasManual(id));
-  const mid = manualIdOf(rec);
-  if (!mid) return false;
-  return Boolean(Q.manual(mid));
-}
-
 function diagramIndex(man) {
   const n = Number(man && man.diagramPage);
   if (Number.isFinite(n) && n >= 1) return Math.trunc(n);
   return COVER_PAGE;
-}
-
-function diagramSrcOf(rec) {
-  const mid = manualIdOf(rec);
-  if (!mid) return "";
-  return Q.pageUrl(mid, diagramIndex(Q.manual(mid)));
 }
 
 function ovReset() {
@@ -324,56 +358,175 @@ function paintBike(rec) {
     els.catStamp.textContent = "";
   }
 
+  const shot = state.photoUrl ? Q.asset(state.photoUrl) : "";
+  const main = src || shot;
+
+  els.photo.hidden = !main;
   els.bikeImg.alt = label;
-  if (src) {
-    preload(src);
-    els.bikeImg.src = src;
+  if (main) {
+    preload(main);
+    els.bikeImg.src = main;
   } else {
     els.bikeImg.removeAttribute("src");
   }
 
-  const shot = state.photoUrl;
-  if (shot) {
+  if (shot && src) {
     els.shotImg.alt = label;
-    els.shotImg.src = Q.asset(shot);
+    els.shotImg.src = shot;
     els.shotImg.hidden = false;
   } else {
     els.shotImg.hidden = true;
     els.shotImg.removeAttribute("src");
     els.shotImg.alt = "";
   }
-
-  return { label, src };
 }
 
-function paintManual(id, rec) {
-  const has = bikeHasManual(id, rec);
-  els.yes.hidden = !has;
-  els.none.hidden = has;
-  if (els.body) els.body.classList.toggle("has-ref", has);
+function clearRef() {
+  els.ref.hidden = true;
+  els.ref.classList.remove("no-art");
+  els.refImg.removeAttribute("src");
+  els.refImg.alt = "";
+  els.refCap.textContent = "";
+  els.body.classList.remove("has-ref");
+  closeOverlay();
+}
 
-  if (!has) {
-    els.ref.hidden = true;
-    els.refImg.removeAttribute("src");
-    els.refImg.alt = "";
-    els.refCap.textContent = "";
-    closeOverlay();
+function showRef(title, src) {
+  if (!title && !src) {
+    clearRef();
     return;
   }
-
-  const man = Q.manual(manualIdOf(rec));
-  const title = man && man.title ? String(man.title) : "";
-  const diagramSrc = diagramSrcOf(rec);
-
-  els.refCap.textContent = title;
-  els.refImg.alt = title;
-  if (diagramSrc) {
-    preload(diagramSrc);
-    els.refImg.src = diagramSrc;
+  els.refCap.textContent = title || "";
+  els.refImg.alt = title || "";
+  els.ref.classList.toggle("no-art", !src);
+  els.ref.disabled = !src;
+  if (src) {
+    preload(src);
+    els.refImg.src = src;
   } else {
     els.refImg.removeAttribute("src");
   }
   els.ref.hidden = false;
+  els.body.classList.toggle("has-ref", Boolean(src));
+}
+
+function showActions(mState) {
+  const add = mState === "none" && Q.online();
+  els.yes.hidden = mState === "none";
+  els.add.hidden = !add;
+  els.none.hidden = mState !== "none" || add;
+  els.prompt.hidden = false;
+  els.actions.hidden = false;
+  els.source.hidden = true;
+  els.work.hidden = true;
+}
+
+function showSource() {
+  els.prompt.hidden = true;
+  els.actions.hidden = true;
+  els.source.hidden = false;
+  els.work.hidden = true;
+  els.dropbox.hidden = !globalThis.TTM_DROPBOX_APP_KEY;
+  els.pdf.focus();
+}
+
+function showWork() {
+  working = true;
+  els.prompt.hidden = true;
+  els.actions.hidden = true;
+  els.source.hidden = true;
+  els.work.hidden = false;
+  els.bar.classList.add("is-wait");
+  els.barFill.style.width = "100%";
+  els.workTitle.textContent = "";
+}
+
+function onProgress(mine) {
+  return (p) => {
+    if (mine !== gen || !p) return;
+    const ratio = p.pages > 0 ? Math.min(1, p.done / p.pages) : 0;
+    if (ratio > 0) {
+      els.bar.classList.remove("is-wait");
+      els.barFill.style.width = `${Math.round(ratio * 100)}%`;
+    }
+    if (p.title && els.workTitle.textContent !== p.title) els.workTitle.textContent = p.title;
+  };
+}
+
+async function runWork(task) {
+  const mine = gen;
+  showWork();
+  let man = null;
+  try {
+    man = await task(onProgress(mine));
+  } catch {
+    man = null;
+  }
+  if (mine !== gen) return;
+  working = false;
+  if (man) {
+    if (man.title) els.workTitle.textContent = man.title;
+    go("pick");
+    return;
+  }
+  if (Q.online()) showSource();
+  else showActions(shownState);
+}
+
+function onYes() {
+  if (working) return;
+  if (shownState === "ondemand" && shownBike) {
+    runWork((progress) => Q.ensureManual(shownBike.id, progress));
+    return;
+  }
+  go("pick");
+}
+
+function onPdf() {
+  els.file.click();
+}
+
+function onFile() {
+  const file = els.file.files && els.file.files[0];
+  els.file.value = "";
+  if (!file || !shownBike) return;
+  const rec = shownBike;
+  runWork((progress) => Q.ingest(file, metaOf(rec), progress));
+}
+
+function onDropbox() {
+  const rec = shownBike;
+  chooser()
+    .then(() => {
+      globalThis.Dropbox.choose({
+        linkType: "direct",
+        extensions: [".pdf"],
+        multiselect: false,
+        success: (files) => {
+          if (files && files[0] && rec) runWork((progress) => Q.ingest(files[0].link, metaOf(rec), progress));
+        },
+      });
+    })
+    .catch(() => {});
+}
+
+async function paintManual(rec) {
+  const mine = gen;
+  const mState = Q.manualState(rec);
+  shownState = mState;
+  showActions(mState);
+
+  if (mState !== "ready") {
+    clearRef();
+    return;
+  }
+
+  const mid = manualIdOf(rec);
+  const man = await manualOf(mid);
+  if (mine !== gen) return;
+  const title = man && man.title ? String(man.title) : "";
+  const src = mid ? Q.pageUrl(mid, diagramIndex(man)) : "";
+  showRef(title, src);
 }
 
 registerScreen("confirm", {
@@ -450,7 +603,7 @@ registerScreen("confirm", {
     yes.className = "btn btn-primary";
     yes.setAttribute("aria-label", "Yes");
     yes.append(glyph("M4 12.5 9.5 18 20 6"));
-    yes.addEventListener("click", () => go("pick"));
+    yes.addEventListener("click", onYes);
 
     const none = document.createElement("button");
     none.type = "button";
@@ -460,9 +613,17 @@ registerScreen("confirm", {
     none.hidden = true;
     none.append(bookGlyph());
 
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "btn confirm-add";
+    add.setAttribute("aria-label", "Manual");
+    add.hidden = true;
+    add.append(bookGlyph());
+    add.addEventListener("click", showSource);
+
     const yesSlot = document.createElement("div");
     yesSlot.className = "confirm-yes-slot";
-    yesSlot.append(yes, none);
+    yesSlot.append(yes, add, none);
 
     const no = document.createElement("button");
     no.type = "button";
@@ -475,7 +636,56 @@ registerScreen("confirm", {
     });
 
     actions.append(yesSlot, no);
-    body.append(sheet, ref, prompt, actions);
+
+    const source = document.createElement("div");
+    source.className = "confirm-actions confirm-source";
+    source.hidden = true;
+
+    const pdf = document.createElement("button");
+    pdf.type = "button";
+    pdf.className = "btn btn-primary confirm-pdf";
+    pdf.textContent = "PDF";
+    pdf.addEventListener("click", onPdf);
+
+    const dropbox = document.createElement("button");
+    dropbox.type = "button";
+    dropbox.className = "btn confirm-dropbox";
+    dropbox.textContent = "Dropbox";
+    dropbox.hidden = true;
+    dropbox.addEventListener("click", onDropbox);
+
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.className = "btn";
+    cancel.setAttribute("aria-label", "No");
+    cancel.append(glyph("M5 5l14 14M19 5L5 19"));
+    cancel.addEventListener("click", () => showActions(shownState));
+
+    source.append(pdf, dropbox, cancel);
+
+    const file = document.createElement("input");
+    file.type = "file";
+    file.accept = "application/pdf";
+    file.className = "confirm-file";
+    file.hidden = true;
+    file.tabIndex = -1;
+    file.addEventListener("change", onFile);
+
+    const work = document.createElement("div");
+    work.className = "confirm-work";
+    work.hidden = true;
+
+    const bar = document.createElement("div");
+    bar.className = "confirm-bar";
+    const barFill = document.createElement("i");
+    bar.append(barFill);
+
+    const workTitle = document.createElement("span");
+    workTitle.className = "confirm-work-title";
+
+    work.append(bar, workTitle);
+
+    body.append(sheet, ref, prompt, actions, source, work, file);
 
     const overlay = document.createElement("div");
     overlay.className = "confirm-overlay";
@@ -510,6 +720,7 @@ registerScreen("confirm", {
 
     Object.assign(els, {
       body,
+      photo,
       bikeImg,
       shotImg,
       name,
@@ -519,9 +730,20 @@ registerScreen("confirm", {
       ref,
       refImg,
       refCap,
+      prompt,
+      actions,
       yes,
+      add,
       none,
       no,
+      source,
+      pdf,
+      dropbox,
+      file,
+      work,
+      bar,
+      barFill,
+      workTitle,
       overlay,
       overFrame,
       overZoom,
@@ -537,14 +759,14 @@ registerScreen("confirm", {
     window.addEventListener("resize", onResize);
 
     const rec = bikeOf(state.bikeId);
-    if (rec?.image) preload(Q.asset(rec.image));
-    const diagramSrc = rec ? diagramSrcOf(rec) : "";
-    if (diagramSrc) preload(diagramSrc);
+    if (rec && rec.image) preload(Q.asset(rec.image));
   },
 
   enter() {
     if (!live) window.addEventListener("keydown", onKey);
     live = true;
+    gen += 1;
+    working = false;
     closeOverlay();
 
     const id = state.bikeId;
@@ -559,12 +781,15 @@ registerScreen("confirm", {
       return;
     }
 
+    shownBike = rec;
     paintBike(rec);
-    paintManual(id, rec);
+    paintManual(rec);
   },
 
   leave() {
     live = false;
+    gen += 1;
+    working = false;
     closeOverlay();
     window.removeEventListener("keydown", onKey);
   },

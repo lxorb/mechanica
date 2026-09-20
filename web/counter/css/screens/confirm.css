@@ -266,3 +266,110 @@
     grid-area: actions;
   }
 }
+
+[data-screen="confirm"] .confirm-add {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+[data-screen="confirm"] .confirm-source {
+  align-self: stretch;
+}
+
+[data-screen="confirm"] .confirm-source .btn {
+  flex: 1 1 0;
+  height: 64px;
+  min-height: 64px;
+  min-width: 44px;
+  padding: 0 8px;
+}
+
+[data-screen="confirm"] .confirm-source .btn + .btn {
+  margin-left: -3px;
+}
+
+[data-screen="confirm"] .confirm-source .btn svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  pointer-events: none;
+}
+
+[data-screen="confirm"] .confirm-work {
+  align-self: stretch;
+  width: 100%;
+  padding-top: 14px;
+}
+
+[data-screen="confirm"] .confirm-bar {
+  height: 12px;
+  border: 3px solid var(--ink);
+  background: var(--card);
+  overflow: hidden;
+}
+
+[data-screen="confirm"] .confirm-bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--orange);
+  transition: width 220ms ease-out;
+}
+
+[data-screen="confirm"] .confirm-bar.is-wait i {
+  width: 100%;
+  transform-origin: left center;
+  animation: cf-scan 0.8s linear infinite;
+}
+
+[data-screen="confirm"] .confirm-work-title {
+  display: block;
+  margin-top: 10px;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+[data-screen="confirm"] .confirm-work-title:empty {
+  display: none;
+}
+
+[data-screen="confirm"] .confirm-ref.no-art {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  margin: 12px 0 0;
+  cursor: default;
+}
+
+[data-screen="confirm"] .confirm-ref.no-art .confirm-diagram {
+  display: none;
+}
+
+[data-screen="confirm"] .confirm-ref.no-art .confirm-ref-cap {
+  position: static;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+@keyframes cf-scan {
+  0% {
+    transform: scaleX(0.12);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0.12);
+  }
+}
+
+@media (min-width: 640px) {
+  [data-screen="confirm"] .confirm-photo {
+    max-height: 42vh;
+  }
+}
