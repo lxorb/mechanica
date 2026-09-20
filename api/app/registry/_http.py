@@ -11,6 +11,7 @@ import unicodedata
 from collections.abc import Callable, Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
+from email.utils import parsedate_to_datetime
 from typing import Any, TypeVar
 
 import httpx
@@ -139,6 +140,18 @@ def pmap(fn: Callable[[T], R], items: Iterable[T]) -> Iterator[R]:
         for out in ex.map(guarded, items):
             if out is not None:
                 yield out
+
+
+def published_year(c: httpx.Client, url: str) -> int | None:
+    """The year a file was published, from Last-Modified. For portals that print no model year."""
+    r = request(c, "HEAD", url)
+    raw = r.headers.get("Last-Modified") if r is not None else None
+    if not raw:
+        return None
+    try:
+        return parsedate_to_datetime(raw).year
+    except Exception:
+        return None
 
 
 def slug(*parts: object) -> str:

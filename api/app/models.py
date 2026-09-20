@@ -122,6 +122,7 @@ class RegistryEntry(BaseModel):
     price: str | None = None
     site: str
     title: str | None = None
+    needsUa: str | None = None  # fetcher hint: "googlebot" or "browser" when the host rejects the default UA
 
 
 class AskRequest(BaseModel):

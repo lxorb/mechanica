@@ -12,13 +12,14 @@ import argparse
 import csv
 import io
 import logging
+import random
 import sys
 import uuid
 from pathlib import Path
 
 from app.config import settings
 from app.models import Bike, IngestJob
-from app.registry import ADAPTERS, bikes_from_registry, crawl, free_owner_manuals, select
+from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, free_owner_manuals, select, verify
 from app.registry._http import client, request, slug
 from app.store import get_store
 
@@ -111,6 +112,46 @@ def cmd_seed_catalog(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_stats(args: argparse.Namespace) -> int:
+    """Per-brand coverage: rows indexed, free English owner's-manual PDFs, bikes those PDFs cover."""
+    store = get_store()
+    entries = store.registry()
+    rows: dict[str, list[int]] = {}
+    sites: dict[str, list[int]] = {}
+    for e in entries:
+        ok = _ingestable(e)
+        rows.setdefault(e.make, [0, 0])[0] += 1
+        rows[e.make][1] += ok
+        sites.setdefault(e.site, [0, 0])[0] += 1
+        sites[e.site][1] += ok
+    bikes = store.bikes()
+    linked = sum(1 for b in bikes if b.manualId)
+    offered = sum(1 for b in bikes if b.manualUrl)
+    print(f"{'make':<16}{'rows':>8}{'free en pdf':>13}")
+    for make, (n, free) in sorted(rows.items(), key=lambda kv: -kv[1][1]):
+        print(f"{make:<16}{n:>8}{free:>13}")
+    print(f"{'TOTAL':<16}{len(entries):>8}{sum(v[1] for v in rows.values()):>13}")
+    if args.sites:
+        print()
+        for site, (n, free) in sorted(sites.items(), key=lambda kv: -kv[1][1]):
+            print(f"  {site:<34}{n:>8}{free:>13}")
+    print(f"\ncatalog: {len(bikes)} bikes, {offered} with a free PDF, {linked} already ingested")
+    if args.verify:
+        print(f"\nverifying {args.verify} per site ...")
+        by_site: dict[str, list] = {}
+        for e in entries:
+            if _ingestable(e):
+                by_site.setdefault(e.site, []).append(e)
+        bad = 0
+        for site, group in sorted(by_site.items()):
+            sample = random.sample(group, min(args.verify, len(group)))
+            for e, ok, note in verify(sample):
+                bad += not ok
+                print(f"  {'ok ' if ok else 'BAD'} {site:<34}{note:<34}{e.url[:70]}")
+        print(f"{'all sampled urls are PDFs' if not bad else str(bad) + ' urls are not PDFs'}")
+    return 0
+
+
 def cmd_list_free(args: argparse.Namespace) -> int:
     for e in free_owner_manuals(args.make, args.limit):
         years = "/".join(str(y) for y in e.years) or "-"
@@ -155,6 +196,11 @@ def main(argv: list[str] | None = None) -> int:
     c2 = sub.add_parser("seed-catalog")
     c2.add_argument("--refresh", action="store_true")
     c2.set_defaults(fn=cmd_seed_catalog)
+
+    c5 = sub.add_parser("stats", help="per-brand rows and free-PDF totals")
+    c5.add_argument("--sites", action="store_true", help="also break the totals down per site")
+    c5.add_argument("--verify", type=int, default=0, help="fetch N urls per site and check they are really PDFs")
+    c5.set_defaults(fn=cmd_stats)
 
     c3 = sub.add_parser("list-free")
     c3.add_argument("--make")
