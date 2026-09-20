@@ -1,0 +1,74 @@
+[
+  {
+    "key": "4a",
+    "file": "candidate-4a.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a bold hexagonal bolt head seen straight on, drawn as a very thick ink hexagon ring. Its top-right edge peels up as a folded page corner rendered as a solid flat orange triangle. Inside the hexagon sit two short stacked horizontal rules, the upper one solid orange and the lower one ink. At most three distinct shapes, every stroke at least one tenth of the icon width, so the whole mark still reads as a 16 pixel favicon.",
+    "usage": {
+      "input_tokens": 223,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 223
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4383,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "4b",
+    "file": "candidate-4b.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a solid filled ink hexagon, like a bolt head. A wedge is cut out of its top-right corner and that cut corner is a solid orange folded triangle sitting slightly proud of the hexagon. Across the middle of the ink hexagon lies one thick solid orange horizontal bar like a highlighter stroke, and below it one shorter white bar. Massive simple shapes, no thin lines at all, so it still reads as a 16 pixel favicon.",
+    "usage": {
+      "input_tokens": 221,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 221
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4381,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "1a",
+    "file": "candidate-1a.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a manual page drawn as a solid filled ink rectangle whose top-right corner is folded, the fold shown as a small white triangle. Across the page lie three short horizontal bars: the middle one solid orange and thick like a highlighter stroke, the others white. Overlapping the bottom-right of the page is a bold ink wheel, a very thick ring with a solid orange hub and no spokes. Only three distinct shapes, no thin lines, so it still reads as a 16 pixel favicon.",
+    "usage": {
+      "input_tokens": 230,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 230
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4390,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "1b",
+    "file": "candidate-1b.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a manual page in thick ink outline with a folded top-right corner, carrying one short ink rule and one thick solid orange highlighter bar. Below and overlapping it, a motorcycle wheel reduced to a very thick ink ring with four heavy straight spokes and a small solid ink hub. Chunky proportions, no fine detail, every stroke at least one tenth of the icon width, so it still reads as a 16 pixel favicon.",
+    "usage": {
+      "input_tokens": 216,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 216
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4376,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  }
+]

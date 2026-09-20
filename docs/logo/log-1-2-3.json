@@ -1,0 +1,56 @@
+[
+  {
+    "key": "1",
+    "file": "candidate-1.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: the corner of a manual page (a square sheet with one corner folded over) with two short horizontal ink rules of body text on it, one of which is covered by a thick flat orange highlighter bar; below the page sits a simple geometric motorcycle wheel, a bold ink ring with five straight spokes, overlapping the bottom of the page.",
+    "usage": {
+      "input_tokens": 199,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 199
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4359,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "2",
+    "file": "candidate-2.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a torque wrench bent into an arc that forms the letter M shape purely from tool geometry - two symmetric angled wrench arms meeting at a centre peak, the open jaw ends as flat hexagon sockets in ink, and the sweeping torque arc above drawn as a thick orange curved band with a small orange arrowhead.",
+    "usage": {
+      "input_tokens": 192,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 192
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4352,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "3",
+    "file": "candidate-3.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a rounded square sheet of paper in ink outline with two short orange rules at the top like highlighted text, and inside it the silhouette of a motorcycle reduced to pure geometry - two bold ink circles for wheels joined by a straight angled frame bar and a short handlebar stub.",
+    "usage": {
+      "input_tokens": 185,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 185
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4345,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  }
+]

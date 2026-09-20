@@ -1,0 +1,56 @@
+[
+  {
+    "key": "4",
+    "file": "candidate-4.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a hexagonal bolt head seen straight on, thick ink hexagon ring with a smaller hexagon socket inside; the top-right sixth of the hexagon peels away as a folded page corner in orange, revealing a flat orange triangle, and one short orange rule sits inside the socket.",
+    "usage": {
+      "input_tokens": 188,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 188
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4348,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "5",
+    "file": "candidate-5.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: the letter shape of an M constructed entirely from interlocking drive-chain links - four thick ink chain link plates with round pin holes, arranged as two rising strokes and two falling strokes forming an M silhouette, with the single centre link filled solid orange.",
+    "usage": {
+      "input_tokens": 180,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 180
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4340,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  },
+  {
+    "key": "6",
+    "file": "candidate-6.png",
+    "prompt": "Flat geometric vector logo mark, app icon, minimal and bold, designed to stay legible at 16 pixels. Only three colours: a single warm orange accent (#e85d04), near-black ink (#141414) and white. No gradients, no shading, no bevel, no glow, no photorealism, no 3D, no text, no letters, no numbers, no words anywhere in the image. Thick even strokes, large simple shapes, generous negative space, perfectly centred, small margin, transparent background. Crisp hard edges like an SVG. Automotive service-manual feel. A single mark: a spark plug drawn as a flat geometric object - a bold ink hexagon nut body, a straight ceramic insulator column above it, a small ink electrode hook below - where the insulator column doubles as a chisel-tip highlighter, its angled tip solid orange, laying down a short thick orange highlight bar across the bottom.",
+    "usage": {
+      "input_tokens": 197,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 197
+      },
+      "output_tokens": 4160,
+      "total_tokens": 4357,
+      "output_tokens_details": {
+        "image_tokens": 4160,
+        "text_tokens": 0
+      }
+    }
+  }
+]
