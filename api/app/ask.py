@@ -234,6 +234,12 @@ Ordering rules.
   torque table as a related id, never the other way round.
 
 Rejection rules.
+- The reader is a professional mechanic with the bike on the lift, not a customer. A candidate whose printed
+  text only says to have the job done by a dealer, a retailer, an authorised workshop, a specialist workshop or
+  a service centre, and prints no step and no value of its own, is boilerplate: rank it below every candidate
+  that prints an actual procedure, a tolerance or a torque for the same job. Take it only when nothing else
+  covers the job, and when the technical-data or tightening-torque table prints figures for that job, lead with
+  the table instead.
 - Drop a candidate that shares only a generic word with the question: fork oil for an engine-oil question, brake
   fluid for a brake-pad question, the service schedule for a job the rider is doing right now, a torque table for
   a question that names no fastener.

@@ -303,8 +303,9 @@ def licence_ok(short: str) -> bool:
     return bool(CC_OK.match(low))
 
 
-def pick(pages: list, m: Model, used: set):
-    best, best_score = None, 0.0
+def rank(pages: list, m: Model, used: set) -> list:
+    """Every acceptable candidate, best heuristic score first."""
+    out = []
     model_n = norm(m.model)
     for page in pages:
         info = (page.get("imageinfo") or [None])[0]
@@ -373,9 +374,15 @@ def pick(pages: list, m: Model, used: set):
             before = sq_t[at - 1 : at] if at else ""
             if after.isalpha() or before.isalpha():
                 score -= 1.5
-        if score > best_score:
-            best, best_score = (page, info, title, meta), score
-    return best
+        out.append((score, page, info, title, meta))
+    out.sort(key=lambda row: -row[0])
+    return out
+
+
+def pick(pages: list, m: Model, used: set):
+    """The single best candidate, or None."""
+    top = rank(pages, m, used)
+    return top[0][1:] if top else None
 
 
 def flatten(im: Image.Image) -> Image.Image:

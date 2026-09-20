@@ -1,0 +1,372 @@
+"""The Deepgram Voice Agent wiring: GET /voice/agent-settings, and the tool handlers seen from
+Deepgram's side rather than from ours.
+
+The settings endpoint is the whole contract with the browser — one wrong field and the socket
+closes with an error nobody can read out loud — so every field the Settings message must carry is
+asserted here, and every promise the prompt makes (one or two sentences, spoken, never a dealer,
+never a guessed figure) is asserted as text.
+
+The four grounded tools already have their own suite in test_voice.py, which calls them the way
+THIS api calls them: manualId in the body. Deepgram calls them differently — only the model's own
+arguments in the body, the manual id in the endpoint's query string — so they are exercised again
+from that side. No network: the one HTTP call in this module (key minting) is mocked.
+"""
+
+import json
+
+import pytest
+
+from conftest import BMW, KTM
+
+SETTINGS = "/voice/agent-settings"
+SERVER_TOOLS = ["find_procedure", "read_page", "get_spec", "list_parts"]
+
+
+@pytest.fixture
+def ktm(client):
+    r = client.get(SETTINGS, params={"manualId": KTM})
+    assert r.status_code == 200
+    return r.json()
+
+
+@pytest.fixture
+def agent(ktm):
+    return ktm["settings"]["agent"]
+
+
+# ---------------------------------------------------------------- the envelope
+
+
+def test_settings_carries_the_socket_and_the_rate_the_browser_must_capture_at(ktm):
+    assert ktm["url"] == "wss://agent.deepgram.com/v1/agent/converse"
+    assert ktm["sampleRate"] == 24000
+    assert ktm["manualId"] == KTM
+    assert ktm["settings"]["type"] == "Settings"
+
+
+def test_audio_is_linear16_at_the_advertised_rate_both_ways(ktm):
+    audio = ktm["settings"]["audio"]
+    assert audio["input"] == {"encoding": "linear16", "sample_rate": ktm["sampleRate"]}
+    assert audio["output"] == {"encoding": "linear16", "sample_rate": ktm["sampleRate"], "container": "none"}
+
+
+def test_unknown_manual_is_404_not_an_empty_agent(client):
+    assert client.get(SETTINGS, params={"manualId": "nope"}).status_code == 404
+
+
+# ---------------------------------------------------------------- providers
+
+
+def test_listen_speak_and_think_providers(agent):
+    assert agent["language"] == "en"
+    assert agent["listen"]["provider"] == {"type": "deepgram", "model": "nova-3"}
+    assert agent["speak"]["provider"] == {"type": "deepgram", "model": "aura-2-thalia-en"}
+    assert agent["think"]["provider"]["type"] == "open_ai"
+
+
+def test_think_model_is_one_deepgram_lists_for_open_ai(agent):
+    # https://developers.deepgram.com/docs/voice-agent-llm-models
+    supported = {
+        "gpt-5.6-terra", "gpt-5.6-luna", "gpt-5.5", "gpt-5.4-nano", "gpt-5.4-mini", "gpt-5.4",
+        "gpt-5.3-chat-latest", "gpt-5.2-chat-latest", "gpt-5.2", "gpt-5.1-chat-latest", "gpt-5.1",
+        "gpt-5-nano", "gpt-5-mini", "gpt-5", "gpt-4.1-nano", "gpt-4.1-mini", "gpt-4.1",
+        "gpt-4o-mini", "gpt-4o",
+    }
+    assert agent["think"]["provider"]["model"] in supported
+
+
+def test_the_think_model_is_overridable_without_a_deploy(client, monkeypatch):
+    monkeypatch.setattr("app.voice.THINK_MODEL", "gpt-4o-mini")
+    body = client.get(SETTINGS, params={"manualId": KTM}).json()
+    assert body["settings"]["agent"]["think"]["provider"]["model"] == "gpt-4o-mini"
+
+
+# ---------------------------------------------------------------- the greeting
+
+
+def test_greeting_names_the_make_model_and_year(client, ktm):
+    assert ktm["bike"] == "KTM 390 Duke 2024"
+    assert ktm["settings"]["agent"]["greeting"] == "I see you're looking at the KTM 390 Duke 2024."
+
+
+def test_an_explicit_bike_id_wins_over_the_manuals_first_bike(client):
+    body = client.get(SETTINGS, params={"manualId": KTM, "bikeId": "ktm-390-duke-2024"}).json()
+    assert body["bike"] == "KTM 390 Duke 2024"
+
+
+def test_an_unknown_bike_id_falls_back_to_the_manual_rather_than_greeting_nobody(client):
+    body = client.get(SETTINGS, params={"manualId": KTM, "bikeId": "no-such-bike"}).json()
+    assert body["bike"] == "KTM 390 Duke 2024"
+    assert body["settings"]["agent"]["greeting"].endswith("KTM 390 Duke 2024.")
+
+
+# ---------------------------------------------------------------- the digest
+
+
+def digest_of(prompt: str) -> str:
+    head, _, rest = prompt.partition("WHAT THIS MANUAL CONTAINS:\n")
+    assert head, "the context block moved"
+    return rest.split("\n\nHow you answer:")[0]
+
+
+def test_the_prompt_carries_the_bike_the_title_and_a_digest(agent):
+    prompt = agent["think"]["prompt"]
+    assert "THE BIKE: KTM 390 Duke 2024" in prompt
+    assert "OWNER'S MANUAL 2024 390 DUKE" in prompt
+    assert "143 printed pages" in prompt
+
+
+def test_the_digest_is_the_manuals_own_chapters_with_page_ranges(agent):
+    digest = digest_of(agent["think"]["prompt"])
+    assert "13 BRAKE SYSTEM (p. 82-89)" in digest
+    assert "14 WHEELS, TIRES (p. 90-95)" in digest
+    assert "18 SERVICE WORK ON THE ENGINE (p. 114-116)" in digest
+    # Every chapter the manual prints, not a truncated head of them.
+    assert len(digest.splitlines()) == 30
+    for line in digest.splitlines():
+        assert line.endswith(")") and "(p. " in line, line
+
+
+def test_the_digest_stays_under_1500_characters_on_every_seeded_manual(client):
+    from app.voice import DIGEST_CHARS
+
+    for manual_id in (KTM, BMW):
+        prompt = client.get(SETTINGS, params={"manualId": manual_id}).json()["settings"]["agent"]["think"]["prompt"]
+        assert 0 < len(digest_of(prompt)) <= DIGEST_CHARS
+
+
+def test_a_manual_with_no_outline_still_gets_a_digest_from_its_sections(client, monkeypatch):
+    from app.store import get_store
+
+    manual = get_store().manual(KTM).model_copy(deep=True)
+    manual.outline = []
+    monkeypatch.setattr("app.voice.get_store", lambda: type("S", (), {
+        "manual": staticmethod(lambda mid: manual if mid == KTM else None),
+        "bike": staticmethod(lambda bid: None),
+    })())
+    digest = digest_of(client.get(SETTINGS, params={"manualId": KTM}).json()["settings"]["agent"]["think"]["prompt"])
+    assert digest
+    assert "SERVICE WORK ON THE ENGINE (p. " in digest
+
+
+# ---------------------------------------------------------------- the prompt's promises
+
+
+@pytest.mark.parametrize(
+    "phrase",
+    [
+        "One or two sentences",
+        "No bullet points",
+        "no markdown",
+        "Answer ONLY from what a function gave you back",
+        "NEVER guess",
+        "Always say the page",
+    ],
+)
+def test_the_spoken_style_is_spelled_out(agent, phrase):
+    assert phrase in agent["think"]["prompt"]
+
+
+def test_the_prompt_bans_the_dealer_referral(agent):
+    prompt = agent["think"]["prompt"].lower()
+    assert "never tell anyone to visit, consult or contact a dealer" in prompt
+    for word in ("retailer", "authorised workshop", "specialist", "service centre"):
+        assert word in prompt
+
+
+def test_the_prompt_says_what_to_do_when_the_manual_does_not_cover_it(agent):
+    assert "offer to open the closest page" in agent["think"]["prompt"]
+
+
+# ---------------------------------------------------------------- the functions
+
+
+def by_name(agent) -> dict[str, dict]:
+    return {f["name"]: f for f in agent["think"]["functions"]}
+
+
+def test_every_tool_is_exposed_exactly_once(agent):
+    fns = by_name(agent)
+    assert sorted(fns) == sorted([*SERVER_TOOLS, "show_page"])
+    assert len(agent["think"]["functions"]) == len(fns)
+
+
+@pytest.mark.parametrize("name", SERVER_TOOLS)
+def test_grounded_tools_are_server_side_and_carry_the_manual_in_the_url(agent, name):
+    endpoint = by_name(agent)[name]["endpoint"]
+    assert endpoint["method"] == "post"
+    assert endpoint["url"] == f"http://testserver/voice/tools/{name}?manualId={KTM}"
+
+
+def test_show_page_is_client_side_so_the_browser_moves_the_reader(agent):
+    show = by_name(agent)["show_page"]
+    assert "endpoint" not in show
+    assert show["parameters"]["required"] == ["page"]
+    assert show["parameters"]["properties"]["page"]["type"] == "integer"
+
+
+@pytest.mark.parametrize("name", [*SERVER_TOOLS, "show_page"])
+def test_every_function_is_a_usable_json_schema(agent, name):
+    fn = by_name(agent)[name]
+    assert fn["description"].strip()
+    params = fn["parameters"]
+    assert params["type"] == "object"
+    assert isinstance(params["properties"], dict)
+    for key in params.get("required", []):
+        assert key in params["properties"]
+
+
+def test_the_manual_id_is_never_a_thing_the_model_has_to_say(agent):
+    """It rides in the URL. An agent that could name the book could name the wrong one."""
+    for fn in agent["think"]["functions"]:
+        assert "manualId" not in fn["parameters"]["properties"]
+
+
+def test_the_shared_secret_travels_as_a_header_when_one_is_configured(client, monkeypatch):
+    monkeypatch.setenv("VOICE_TOOL_SECRET", "s3cret")
+    agent = client.get(SETTINGS, params={"manualId": KTM}).json()["settings"]["agent"]
+    for name in SERVER_TOOLS:
+        assert by_name(agent)[name]["endpoint"]["headers"] == {"x-voice-secret": "s3cret"}
+
+
+def test_no_header_key_at_all_when_the_api_is_open(agent):
+    for name in SERVER_TOOLS:
+        assert "headers" not in by_name(agent)[name]["endpoint"]
+
+
+def test_the_key_is_never_in_the_settings_the_browser_receives(client, ktm, monkeypatch):
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "deepgram_api_key", "dg-super-secret")
+    body = json.dumps(client.get(SETTINGS, params={"manualId": KTM}).json())
+    assert "dg-super-secret" not in body
+
+
+# ---------------------------------------------------------------- the tools, as Deepgram calls them
+
+
+def test_read_page_with_the_manual_only_in_the_query_string(client):
+    r = client.post(f"/voice/tools/read_page?manualId={KTM}", json={"page": 114})
+    assert r.status_code == 200
+    assert r.json()["page"] == 114
+    assert r.json()["text"].strip()
+
+
+def test_get_spec_with_the_manual_only_in_the_query_string(client):
+    body = client.post(f"/voice/tools/get_spec?manualId={KTM}", json={"name": "tyre pressure"}).json()
+    assert body["specs"], "no spec came back for the Deepgram-shaped call"
+    assert all(s["page"] > 0 for s in body["specs"])
+
+
+def test_list_parts_with_no_arguments_at_all(client):
+    body = client.post(f"/voice/tools/list_parts?manualId={KTM}", json={}).json()
+    assert body["parts"]
+
+
+def test_arguments_nested_as_a_json_string_are_unwrapped(client):
+    """FunctionCallRequest carries `arguments` as a JSON string; an endpoint envelope could too."""
+    r = client.post(f"/voice/tools/read_page?manualId={KTM}", json={"arguments": json.dumps({"page": 114})})
+    assert r.status_code == 200
+    assert r.json()["page"] == 114
+
+
+def test_arguments_nested_as_an_object_are_unwrapped(client):
+    r = client.post(f"/voice/tools/get_spec?manualId={KTM}", json={"parameters": {"name": "tyre pressure"}})
+    assert r.status_code == 200
+    assert r.json()["specs"]
+
+
+def test_a_body_manual_id_still_wins_so_our_own_callers_are_untouched(client):
+    r = client.post(f"/voice/tools/read_page?manualId={KTM}", json={"manualId": BMW, "page": 164})
+    assert r.status_code == 200
+    printed = client.post("/voice/tools/read_page", json={"manualId": BMW, "page": 164}).json()
+    assert r.json() == printed
+
+
+def test_no_manual_anywhere_is_404_rather_than_a_silent_wrong_book(client):
+    assert client.post("/voice/tools/read_page", json={"page": 1}).status_code == 404
+
+
+def test_find_procedure_through_the_deepgram_shape(client, monkeypatch):
+    from app.models import AskResponse, Match
+    from app.store import get_store
+
+    wanted = [s for s in get_store().manual(KTM).sections if s.id == "engine-oil-level"]
+    assert wanted
+    seen: list[tuple[str, str]] = []
+
+    def fake_answer(manual_id: str, query: str) -> AskResponse:
+        seen.append((manual_id, query))
+        return AskResponse(matches=[Match(section=wanted[0], score=1.0)], intent="procedure")
+
+    monkeypatch.setattr("app.ask.answer", fake_answer)
+    body = client.post(f"/voice/tools/find_procedure?manualId={KTM}", json={"query": "how do I check the oil"}).json()
+    assert seen == [(KTM, "how do I check the oil")]
+    assert body["firstPage"] == wanted[0].pageStart
+
+
+# ---------------------------------------------------------------- the browser's key
+
+
+class FakeResponse:
+    def __init__(self, payload, status=200):
+        self._payload = payload
+        self.status_code = status
+
+    def json(self):
+        return self._payload
+
+
+class FakeClient:
+    """Stands in for httpx.Client so nothing leaves the machine; records what was asked of it."""
+
+    calls: list[tuple[str, str, dict | None]] = []
+    headers: dict = {}
+
+    def __init__(self, base_url, headers, timeout):
+        FakeClient.headers = dict(headers)
+        self.base_url = base_url
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def get(self, path):
+        FakeClient.calls.append(("GET", path, None))
+        return FakeResponse({"projects": [{"project_id": "proj-1"}]})
+
+    def post(self, path, json=None):
+        FakeClient.calls.append(("POST", path, json))
+        return FakeResponse({"key": "dg-temp-key"})
+
+
+@pytest.fixture
+def fake_deepgram(monkeypatch):
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "deepgram_api_key", "dg-master-key")
+    monkeypatch.setattr("app.voice._project", None)
+    FakeClient.calls = []
+    monkeypatch.setattr("app.voice.httpx.Client", FakeClient)
+    return FakeClient
+
+
+def test_the_browser_key_is_short_lived_scoped_and_carries_its_subprotocol(client, fake_deepgram):
+    body = client.post("/voice/deepgram-token").json()
+    assert body["key"] == "dg-temp-key"
+    assert body["scheme"] == "token"
+    assert 0 < body["expiresIn"] <= 3600
+
+    minted = [c for c in fake_deepgram.calls if c[0] == "POST"]
+    assert len(minted) == 1
+    _, path, payload = minted[0]
+    assert path == "/v1/projects/proj-1/keys"
+    assert payload["scopes"] == ["usage:write"]
+    assert payload["time_to_live_in_seconds"] == body["expiresIn"]
+    assert fake_deepgram.headers["Authorization"] == "Token dg-master-key"
+
+
+def test_the_master_key_never_reaches_the_browser(client, fake_deepgram):
+    assert "dg-master-key" not in json.dumps(client.post("/voice/deepgram-token").json())

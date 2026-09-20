@@ -447,12 +447,13 @@
   overflow: hidden;
 }
 
+/* Polls land about once a second, so the bar glides between them instead of ticking. */
 [data-screen="confirm"] .confirm-bar i {
   display: block;
   height: 100%;
   width: 0;
   background: var(--orange);
-  transition: width 220ms ease-out;
+  transition: width 900ms linear;
 }
 
 [data-screen="confirm"] .confirm-bar.is-wait i {

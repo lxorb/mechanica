@@ -1,0 +1,409 @@
+/**
+ * Deepgram Voice Agent in the browser. Owner: voice-mode agent.
+ * Pairs with api/app/voice.py (GET /voice/agent-settings, POST /voice/deepgram-token) and is
+ * driven by chat-ui.js, which owns the toggle, the meter and the transcript.
+ *
+ * ONE socket does everything: wss://agent.deepgram.com/v1/agent/converse carries the mic up as
+ * raw linear16 and the agent's voice back down as raw linear16, with JSON events interleaved as
+ * text frames. No SDK — 60 lines of AudioWorklet beat a 200 KB bundle in front of a chat drawer.
+ *
+ * AUTH. A browser WebSocket has no headers, so the key travels as the Sec-WebSocket-Protocol
+ * pair `[scheme, key]` — what Deepgram's own browser-agent component does. /voice/deepgram-token
+ * mints a 10-minute usage:write key and says which scheme to use; the account key stays on Azure.
+ *
+ * GROUNDING. The Settings message is built on the server, never here: the prompt, the model and
+ * the four tool endpoints are all in it, and Deepgram calls those endpoints itself, so the
+ * manual's text never round-trips through this tab. The only function this file runs is the
+ * client-side show_page(page), which jumps the reader.
+ *
+ * start({manualId, bikeId, on}) -> handle {stop(), speaking(), level()}
+ * `on` is called with:
+ *   {type:"status", value:"connecting|listening|thinking|speaking|closed"}
+ *   {type:"text", role:"user"|"assistant", text}   one finished turn, for the transcript
+ *   {type:"page", page}                            show_page — move the reader
+ *   {type:"error", message}
+ */
+
+import * as T from "./ttm.js";
+
+const FALLBACK_RATE = 24000;
+const FRAME = 2048; // samples per upstream chunk: ~85 ms at 24 kHz
+const LEVEL_DECAY = 0.82;
+// Enough to ride out a stalled frame without the answer arriving noticeably late.
+const JITTER_S = 0.12;
+const KEEPALIVE_MS = 8000;
+
+const WORKLET = `class Tap extends AudioWorkletProcessor {
+  process(inputs) {
+    const channel = inputs[0] && inputs[0][0]
+    if (channel && channel.length) {
+      const copy = new Float32Array(channel)
+      this.port.postMessage(copy, [copy.buffer])
+    }
+    return true
+  }
+}
+registerProcessor('ttm-agent-tap', Tap)`;
+
+export const supported =
+  typeof window !== "undefined" &&
+  typeof WebSocket !== "undefined" &&
+  typeof AudioContext !== "undefined" &&
+  Boolean(navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+/* ------------------------------------------------------------------ pcm */
+
+/** Float32 [-1,1] at `from` Hz -> Int16 little-endian at `to` Hz. Nearest-sample: the mic is
+ *  already 24 kHz in every browser that honours the AudioContext hint, so this rarely resamples. */
+function pcm16(input, from, to) {
+  const ratio = from / to;
+  const count = ratio === 1 ? input.length : Math.floor(input.length / ratio);
+  const out = new Int16Array(count);
+  for (let i = 0; i < count; i++) {
+    const s = Math.max(-1, Math.min(1, input[ratio === 1 ? i : Math.floor(i * ratio)]));
+    out[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+  }
+  return out.buffer;
+}
+
+function toFloat(buffer) {
+  const pcm = new Int16Array(buffer);
+  const out = new Float32Array(pcm.length);
+  for (let i = 0; i < pcm.length; i++) out[i] = pcm[i] / 0x8000;
+  return out;
+}
+
+/* ------------------------------------------------------------------ playback */
+
+/**
+ * The agent's voice arrives as a stream of raw PCM chunks with no timing of their own, so each
+ * one is scheduled to start where the last one ended — a cursor, not a queue of timers. A chunk
+ * that arrives late (cursor already in the past) restarts the cursor JITTER_S ahead of now, which
+ * is the whole jitter buffer: one number.
+ */
+function player(ctx, rate, onDone) {
+  let cursor = 0;
+  let live = [];
+  let gain = null;
+
+  function sink() {
+    if (!gain) {
+      gain = ctx.createGain();
+      gain.connect(ctx.destination);
+    }
+    return gain;
+  }
+
+  return {
+    push(buffer) {
+      const samples = toFloat(buffer);
+      if (!samples.length) return;
+      const frame = ctx.createBuffer(1, samples.length, rate);
+      frame.getChannelData(0).set(samples);
+      const src = ctx.createBufferSource();
+      src.buffer = frame;
+      src.connect(sink());
+      const now = ctx.currentTime;
+      if (cursor < now + 0.005) cursor = now + JITTER_S;
+      src.start(cursor);
+      cursor += frame.duration;
+      live.push(src);
+      src.onended = () => {
+        live = live.filter((s) => s !== src);
+        if (!live.length && typeof onDone === "function") onDone();
+      };
+    },
+    /** Barge-in: the rider started talking, so the agent stops mid-word. */
+    flush() {
+      for (const src of live) {
+        try {
+          src.stop();
+        } catch {
+          /* already finished */
+        }
+      }
+      live = [];
+      cursor = 0;
+    },
+    busy() {
+      return live.length > 0;
+    },
+  };
+}
+
+/* ------------------------------------------------------------------ session */
+
+let current = null;
+
+export function stop() {
+  const s = current;
+  current = null;
+  if (s) tear(s);
+}
+
+function tear(s) {
+  if (s.dead) return;
+  s.dead = true;
+  if (s.beat) {
+    clearInterval(s.beat);
+    s.beat = 0;
+  }
+  const ws = s.ws;
+  s.ws = null;
+  if (ws) {
+    ws.onmessage = null;
+    ws.onerror = null;
+    ws.onclose = null;
+    try {
+      ws.close();
+    } catch {
+      /* already closed */
+    }
+  }
+  if (s.play) s.play.flush();
+  try {
+    if (s.src) s.src.disconnect();
+    if (s.node) s.node.disconnect();
+  } catch {
+    /* detached */
+  }
+  for (const track of (s.stream && s.stream.getTracks()) || []) track.stop();
+  if (s.ctx) s.ctx.close().catch(() => {});
+  if (s.worklet) URL.revokeObjectURL(s.worklet);
+  s.worklet = null;
+}
+
+/**
+ * Opens a session. Resolves to a handle once the mic and the socket are up; rejects only when
+ * the session cannot start at all (no config, no key, mic refused).
+ */
+export async function start(opts = {}) {
+  stop();
+  const on = typeof opts.on === "function" ? opts.on : () => {};
+  const session = {
+    ws: null,
+    ctx: null,
+    stream: null,
+    node: null,
+    src: null,
+    play: null,
+    worklet: null,
+    beat: 0,
+    level: 0,
+    dead: false,
+  };
+  current = session;
+
+  const say = (event) => {
+    if (!session.dead) on(event);
+  };
+
+  try {
+    await run(session, opts, say);
+  } catch (err) {
+    if (current === session) current = null;
+    tear(session);
+    say({ type: "error", message: (err && err.message) || "voice failed" });
+    throw err;
+  }
+
+  return {
+    stop() {
+      if (current === session) current = null;
+      const was = session.dead;
+      tear(session);
+      if (!was) say({ type: "status", value: "closed" });
+    },
+    speaking: () => Boolean(session.play && session.play.busy()),
+    level: () => session.level,
+  };
+}
+
+async function run(session, opts, say) {
+  say({ type: "status", value: "connecting" });
+
+  const [config, token] = await Promise.all([
+    T.voiceSettings(opts.manualId, opts.bikeId),
+    T.deepgramToken(),
+  ]);
+  if (session.dead) return;
+  if (!config || !config.settings) throw new Error("no agent settings");
+  const key = typeof token === "string" ? token : token && (token.key || token.token);
+  if (!key) throw new Error("no deepgram key");
+  const scheme = (token && token.scheme) || "token";
+  const rate = Number(config.sampleRate) || FALLBACK_RATE;
+
+  session.stream = await navigator.mediaDevices.getUserMedia({
+    audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+  });
+  if (session.dead) return;
+
+  const ctx = new AudioContext({ sampleRate: rate });
+  session.ctx = ctx;
+  session.play = player(ctx, rate, () => say({ type: "status", value: "listening" }));
+  if (ctx.state === "suspended") await ctx.resume();
+  if (session.dead) return;
+
+  const ws = new WebSocket(config.url, [scheme, key]);
+  ws.binaryType = "arraybuffer";
+  session.ws = ws;
+
+  ws.onopen = () => {
+    ws.send(JSON.stringify(config.settings));
+    session.beat = window.setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: "KeepAlive" }));
+    }, KEEPALIVE_MS);
+  };
+
+  ws.onmessage = (event) => {
+    if (typeof event.data !== "string") {
+      session.play.push(event.data);
+      return;
+    }
+    let msg;
+    try {
+      msg = JSON.parse(event.data);
+    } catch {
+      return;
+    }
+    handle(session, ws, msg, say);
+  };
+
+  ws.onerror = () => say({ type: "error", message: "voice connection failed" });
+  ws.onclose = () => {
+    if (session.dead) return;
+    if (current === session) current = null;
+    tear(session);
+    say({ type: "status", value: "closed" });
+  };
+
+  await capture(session, ws, rate, say);
+}
+
+/** One server event. Everything the drawer shows comes through here. */
+function handle(session, ws, msg, say) {
+  switch (msg.type) {
+    case "Welcome":
+      break;
+    case "SettingsApplied":
+      say({ type: "status", value: "listening" });
+      break;
+    case "UserStartedSpeaking":
+      // Barge-in: kill the buffered answer so the rider is not talking over it.
+      session.play.flush();
+      say({ type: "status", value: "listening" });
+      break;
+    case "AgentThinking":
+      say({ type: "status", value: "thinking" });
+      break;
+    case "AgentStartedSpeaking":
+      say({ type: "status", value: "speaking" });
+      break;
+    case "ConversationText": {
+      const text = String(msg.content || "").trim();
+      if (text) say({ type: "text", role: msg.role === "user" ? "user" : "assistant", text });
+      break;
+    }
+    case "FunctionCallRequest":
+      for (const call of msg.functions || []) run_function(ws, call, say);
+      break;
+    case "AgentAudioDone":
+      // The last chunk is scheduled, not played: the player says "listening" when it drains.
+      if (!session.play.busy()) say({ type: "status", value: "listening" });
+      break;
+    case "Error":
+      say({ type: "error", message: String(msg.description || msg.message || "voice error") });
+      break;
+    default:
+      break;
+  }
+}
+
+/**
+ * The only function this browser runs. Everything grounded is server-side — Deepgram calls the
+ * API's own /voice/tools/* endpoints — so `client_side` should only ever be show_page.
+ */
+function run_function(ws, call, say) {
+  if (!call || call.client_side === false) return;
+  let args = {};
+  try {
+    args = typeof call.arguments === "string" ? JSON.parse(call.arguments || "{}") : call.arguments || {};
+  } catch {
+    args = {};
+  }
+  let content = "unknown function";
+  if (call.name === "show_page") {
+    const page = Math.floor(Number(args.page));
+    if (Number.isFinite(page) && page > 0) {
+      say({ type: "page", page });
+      content = `Page ${page} is on the rider's screen.`;
+    } else {
+      content = "No such page.";
+    }
+  }
+  if (ws.readyState !== WebSocket.OPEN) return;
+  ws.send(JSON.stringify({ type: "FunctionCallResponse", id: call.id, name: call.name, content }));
+}
+
+/** Mic -> fixed-size linear16 frames -> socket, with a decaying level for the meter. */
+async function capture(session, ws, rate, say) {
+  const ctx = session.ctx;
+  let queue = new Float32Array(0);
+
+  const push = (chunk) => {
+    let peak = 0;
+    for (let i = 0; i < chunk.length; i++) {
+      const v = chunk[i] < 0 ? -chunk[i] : chunk[i];
+      if (v > peak) peak = v;
+    }
+    session.level = Math.max(peak, session.level * LEVEL_DECAY);
+
+    const merged = new Float32Array(queue.length + chunk.length);
+    merged.set(queue);
+    merged.set(chunk, queue.length);
+    queue = merged;
+    while (queue.length >= FRAME) {
+      if (ws.readyState === WebSocket.OPEN) ws.send(pcm16(queue.subarray(0, FRAME), ctx.sampleRate, rate));
+      queue = queue.slice(FRAME);
+    }
+  };
+
+  let node;
+  try {
+    const url = URL.createObjectURL(new Blob([WORKLET], { type: "application/javascript" }));
+    session.worklet = url;
+    await ctx.audioWorklet.addModule(url);
+    if (session.dead) return;
+    const tap = new AudioWorkletNode(ctx, "ttm-agent-tap");
+    tap.port.onmessage = (e) => push(e.data);
+    node = tap;
+  } catch {
+    // Safari < 14.1 and any browser that refuses the blob module.
+    const proc = ctx.createScriptProcessor(4096, 1, 1);
+    proc.onaudioprocess = (e) => push(new Float32Array(e.inputBuffer.getChannelData(0)));
+    node = proc;
+  }
+  if (session.dead) return;
+
+  // A ScriptProcessor only fires while it is connected to the graph; muted so the rider
+  // never hears their own voice come back.
+  const mute = ctx.createGain();
+  mute.gain.value = 0;
+  node.connect(mute);
+  mute.connect(ctx.destination);
+
+  const src = ctx.createMediaStreamSource(session.stream);
+  src.connect(node);
+  session.src = src;
+  session.node = node;
+  say({ type: "status", value: "connecting" });
+}
+
+/** Type a turn into a live session — the same path a spoken turn takes. Used by the tests. */
+export function inject(text) {
+  const s = current;
+  const said = String(text || "").trim();
+  if (!s || !s.ws || s.ws.readyState !== WebSocket.OPEN || !said) return false;
+  s.ws.send(JSON.stringify({ type: "InjectUserMessage", content: said }));
+  return true;
+}

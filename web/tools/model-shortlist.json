@@ -109,5 +109,132 @@
     ],
     "note": "435k faces, round tank, spoked wheels, twin shocks — the retro roadster",
     "orient": 180
+  },
+  {
+    "name": "motocross",
+    "type": "motocross",
+    "kind": "bike",
+    "orient": 180,
+    "uid": "dfff1637219f44d6bfa3ed3c9708d523",
+    "title": "2022 Yamaha YZ450F",
+    "author": "Res1n",
+    "authorUrl": "https://sketchfab.com/Res1n",
+    "url": "https://sketchfab.com/3d-models/2022-yamaha-yz450f-dfff1637219f44d6bfa3ed3c9708d523",
+    "license": "by",
+    "makes": [
+      "yamaha",
+      "ktm",
+      "honda",
+      "kawasaki",
+      "suzuki",
+      "husqvarna",
+      "gasgas"
+    ],
+    "note": "180k faces, 5 textures — long-travel forks, knobbly tyres, number plates: the MX shape"
+  },
+  {
+    "name": "enduro",
+    "type": "enduro",
+    "kind": "bike",
+    "orient": 180,
+    "uid": "2e88ff65e98e4d0c802242bdeccaf28d",
+    "title": "Honda NXR Bros 2003",
+    "author": "andersonfo",
+    "authorUrl": "https://sketchfab.com/andersonfo",
+    "url": "https://sketchfab.com/3d-models/none-2e88ff65e98e4d0c802242bdeccaf28d",
+    "license": "by",
+    "makes": [
+      "honda",
+      "ktm",
+      "husqvarna",
+      "yamaha",
+      "beta",
+      "sherco",
+      "gasgas"
+    ],
+    "note": "dual-sport trail bike with a headlight and mirrors — the enduro, not the race MX"
+  },
+  {
+    "name": "supermoto",
+    "type": "supermoto",
+    "kind": "bike",
+    "orient": 180,
+    "uid": "15fb808dc81b4376bd201a4303253050",
+    "title": "2022 Husqvarna FS 450",
+    "author": "OUTPISTON",
+    "authorUrl": "https://sketchfab.com/OUTPISTON",
+    "url": "https://sketchfab.com/3d-models/2022-husqavarna-fs-450-15fb808dc81b4376bd201a4303253050",
+    "license": "by-nc-sa",
+    "makes": [
+      "husqvarna",
+      "ktm",
+      "yamaha",
+      "honda",
+      "suzuki",
+      "aprilia",
+      "ducati"
+    ],
+    "note": "an FS 450 IS a supermoto: MX chassis on 17in road wheels with a big front disc"
+  },
+  {
+    "name": "touring",
+    "type": "touring",
+    "kind": "bike",
+    "orient": 180,
+    "uid": "873fb02f1b2c40468882b41c5a2b2af4",
+    "title": "Polizei Motorbike High-poly 3D model",
+    "author": "solid3DDD",
+    "authorUrl": "https://sketchfab.com/solid3DDD",
+    "url": "https://sketchfab.com/3d-models/polizei-motorbike-high-poly-3d-model-873fb02f1b2c40468882b41c5a2b2af4",
+    "license": "by",
+    "makes": [
+      "bmw",
+      "honda",
+      "yamaha",
+      "kawasaki",
+      "harley-davidson",
+      "indian"
+    ],
+    "note": "a BMW RT-shaped police tourer: full fairing, screen, panniers — the touring silhouette"
+  },
+  {
+    "name": "adventure",
+    "type": "adventure",
+    "kind": "bike",
+    "orient": 180,
+    "uid": "c32f7b87090d4ce4b10c76e844dc86cd",
+    "title": "Akt Tt Ds 200 repainted",
+    "author": "e-restrepo1114",
+    "authorUrl": "https://sketchfab.com/e-restrepo1114",
+    "url": "https://sketchfab.com/3d-models/akt-tt-ds-200-repainted-c32f7b87090d4ce4b10c76e844dc86cd",
+    "license": "by",
+    "makes": [
+      "bmw",
+      "honda",
+      "yamaha",
+      "ktm",
+      "triumph",
+      "suzuki",
+      "royal-enfield",
+      "aprilia"
+    ],
+    "note": "dual-sport: tall stance, beak front mudguard, wire wheels — the adventure shape"
+  },
+  {
+    "name": "car",
+    "type": "car",
+    "kind": "car",
+    "orient": 180,
+    "uid": "8ac0df459f514950ab83ac37109a06ab",
+    "title": "Mazda RX-7 FC",
+    "author": "Lexyc16",
+    "authorUrl": "https://sketchfab.com/Lexyc16",
+    "url": "https://sketchfab.com/3d-models/mazda-rx-7-fc-8ac0df459f514950ab83ac37109a06ab",
+    "license": "by",
+    "makes": [],
+    "paint": [
+      "fairing"
+    ],
+    "note": "41k faces — the non-Corvette car, for any four-wheeler that is not a Stingray"
   }
 ]

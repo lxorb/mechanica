@@ -17,11 +17,12 @@
  * contract. `tint` is applied to the paint groups only — base colour, never roughness/metalness.
  *
  * While the GLB comes down the wire the panel shows the environment plus a progress ring
- * (.viewer3d-load in css/viewer3d.css, fed by the loader's onProgress), NOT a stand-in model —
- * a wrong-looking bike for two seconds reads as a bug, an honest loader does not. The procedural
- * schematic below is kept as the last-resort fallback: if the GLB 404s or the network dies it is
- * revealed instead of the ring, so explode/highlight/focus still work and there is no dead panel.
- * opts.placeholder: true goes straight to the schematic and skips the download entirely.
+ * (.viewer3d-load in css/viewer3d.css, fed by the loader's onProgress) and NOTHING standing in
+ * for the vehicle. There used to be a procedural schematic of grouped primitives here; it is
+ * gone, deliberately and entirely. A stack of grey cylinders pretending to be a motorcycle reads
+ * as a broken app, and it was on screen for every first paint. If the GLB never arrives the
+ * backdrop and the ring stay, the ring goes quiet, and tapping it retries — no prose, no
+ * primitives, nothing to explain away.
  *
  * Part keys (stable, used by the Pick screen to map manual sections -> 3D parts):
  *   front-wheel, rear-wheel, front-brake, rear-brake, front-fork, rear-shock, swingarm, chain,
@@ -464,160 +465,6 @@ const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) 
 const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 const clamp01 = (t) => (t < 0 ? 0 : t > 1 ? 1 : t);
 
-function strut(THREE, a, b, radius, seg = 12) {
-  const from = new THREE.Vector3(...a);
-  const to = new THREE.Vector3(...b);
-  const dir = to.clone().sub(from);
-  const len = Math.max(dir.length(), 1e-4);
-  const geometry = new THREE.CylinderGeometry(radius, radius, len, seg, 1);
-  const quaternion = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().divideScalar(len));
-  geometry.applyMatrix4(new THREE.Matrix4().compose(from.clone().add(to).multiplyScalar(0.5), quaternion, new THREE.Vector3(1, 1, 1)));
-  return geometry;
-}
-
-function placed(THREE, geometry, pos = [0, 0, 0], rot = [0, 0, 0]) {
-  const matrix = new THREE.Matrix4().compose(
-    new THREE.Vector3(...pos),
-    new THREE.Quaternion().setFromEuler(new THREE.Euler(...rot)),
-    new THREE.Vector3(1, 1, 1),
-  );
-  geometry.applyMatrix4(matrix);
-  return geometry;
-}
-
-/* ------------------------------------------------------------------ placeholder assembly
- * Same part keys as the real models, so the Pick screen can be built and demoed before the
- * Sketchfab GLBs land. x = forward (front of the bike is +x), y = up, z = lateral.
- */
-
-function buildPlaceholder(THREE, modelKey) {
-  const root = new THREE.Group();
-  root.name = `placeholder:${modelKey}`;
-  const groups = new Map();
-  const meshes = [];
-  const materials = new Set();
-
-  const mat = (color, metalness, roughness, extra) =>
-    new THREE.MeshStandardMaterial({ color, metalness, roughness, ...extra });
-  const steel = mat(0x9aa2ab, 0.9, 0.3);
-  const dark = mat(0x33383f, 0.55, 0.5);
-  const rubber = mat(0x16181c, 0.05, 0.95);
-  const paint = mat(0xe8e3d7, 0.15, 0.45);
-  const glass = mat(0xfff3d6, 0.1, 0.15, { emissive: 0x6b5a2a, emissiveIntensity: 0.4 });
-  const copper = mat(0xb87333, 0.85, 0.35);
-  [steel, dark, rubber, paint, glass, copper].forEach((m) => materials.add(m));
-
-  const add = (key, geometry, material) => {
-    let part = groups.get(key);
-    if (!part) {
-      const node = new THREE.Group();
-      node.name = key;
-      root.add(node);
-      part = { key, label: PART_LABELS[key] || key, node, meshes: [], explode: new THREE.Vector3() };
-      groups.set(key, part);
-    }
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.name = `${key}:${part.meshes.length}`;
-    mesh.userData.partKey = key;
-    part.node.add(mesh);
-    part.meshes.push(mesh);
-    meshes.push(mesh);
-    return mesh;
-  };
-
-  const AX_Z = [Math.PI / 2, 0, 0]; // cylinder default axis is +Y; this points it along +Z
-  const wheel = (key, x, r) => {
-    add(key, placed(THREE, new THREE.TorusGeometry(r, r * 0.24, 10, 28), [x, r, 0]), rubber);
-    add(key, placed(THREE, new THREE.CylinderGeometry(r * 0.66, r * 0.66, 0.1, 24), [x, r, 0], AX_Z), steel);
-    for (let i = 0; i < 5; i++) {
-      const a = (i / 5) * Math.PI * 2;
-      add(key, placed(THREE, new THREE.BoxGeometry(r * 1.35, 0.035, 0.05), [x, r, 0], [0, 0, a]), steel);
-    }
-  };
-  const brake = (key, x, r, side) => {
-    add(key, placed(THREE, new THREE.CylinderGeometry(r * 0.58, r * 0.58, 0.014, 26), [x, r, side * 0.1], AX_Z), steel);
-    add(key, placed(THREE, new THREE.BoxGeometry(0.09, 0.13, 0.07), [x - r * 0.5, r + r * 0.32, side * 0.1]), dark);
-  };
-
-  const FR = 0.7;
-  const RR = -0.72;
-  wheel("front-wheel", FR, 0.33);
-  wheel("rear-wheel", RR, 0.33);
-  brake("front-brake", FR, 0.33, 1);
-  brake("rear-brake", RR, 0.33, -1);
-
-  // forks + steering
-  add("front-fork", strut(THREE, [FR, 0.33, 0.12], [0.54, 1.0, 0.12], 0.032), steel);
-  add("front-fork", strut(THREE, [FR, 0.33, -0.12], [0.54, 1.0, -0.12], 0.032), steel);
-  add("front-fork", strut(THREE, [0.56, 0.92, -0.16], [0.56, 0.92, 0.16], 0.03), dark);
-  add("front-fork", placed(THREE, new THREE.BoxGeometry(0.1, 0.06, 0.34), [0.545, 1.02, 0]), dark);
-
-  add("handlebar", strut(THREE, [0.5, 1.06, -0.26], [0.5, 1.06, 0.26], 0.018), steel);
-  add("handlebar", placed(THREE, new THREE.CylinderGeometry(0.028, 0.028, 0.1, 14), [0.5, 1.06, 0.23], AX_Z), rubber);
-  add("handlebar", placed(THREE, new THREE.CylinderGeometry(0.028, 0.028, 0.1, 14), [0.5, 1.06, -0.23], AX_Z), rubber);
-  add("handlebar", placed(THREE, new THREE.BoxGeometry(0.13, 0.08, 0.16), [0.45, 1.11, 0], [-0.5, 0, 0]), dark);
-
-  add("mirrors", strut(THREE, [0.48, 1.09, 0.2], [0.44, 1.24, 0.3], 0.012), dark);
-  add("mirrors", placed(THREE, new THREE.BoxGeometry(0.03, 0.08, 0.13), [0.43, 1.26, 0.31]), steel);
-  add("mirrors", strut(THREE, [0.48, 1.09, -0.2], [0.44, 1.24, -0.3], 0.012), dark);
-  add("mirrors", placed(THREE, new THREE.BoxGeometry(0.03, 0.08, 0.13), [0.43, 1.26, -0.31]), steel);
-
-  // frame + body
-  add("frame", strut(THREE, [0.52, 0.95, 0.1], [-0.12, 0.72, 0.16], 0.036), steel);
-  add("frame", strut(THREE, [0.52, 0.95, -0.1], [-0.12, 0.72, -0.16], 0.036), steel);
-  add("frame", strut(THREE, [-0.12, 0.72, 0.16], [-0.12, 0.42, 0.14], 0.032), steel);
-  add("frame", strut(THREE, [-0.12, 0.72, -0.16], [-0.12, 0.42, -0.14], 0.032), steel);
-  add("frame", strut(THREE, [-0.12, 0.72, 0], [-0.55, 0.78, 0], 0.028), steel);
-
-  add("fuel-tank", placed(THREE, new THREE.CapsuleGeometry(0.19, 0.3, 6, 18), [0.14, 0.92, 0], [0, 0, Math.PI / 2]), paint);
-  add("seat", placed(THREE, new THREE.BoxGeometry(0.44, 0.09, 0.26), [-0.3, 0.87, 0], [0, 0, 0.06]), dark);
-  add("seat", placed(THREE, new THREE.BoxGeometry(0.2, 0.1, 0.2), [-0.58, 0.9, 0], [0, 0, 0.18]), dark);
-
-  add("fairing", placed(THREE, new THREE.BoxGeometry(0.3, 0.42, 0.04), [0.52, 0.74, 0.17], [0, 0.22, -0.2]), paint);
-  add("fairing", placed(THREE, new THREE.BoxGeometry(0.3, 0.42, 0.04), [0.52, 0.74, -0.17], [0, -0.22, -0.2]), paint);
-  add("fairing", placed(THREE, new THREE.BoxGeometry(0.26, 0.1, 0.3), [0.68, 0.62, 0]), paint);
-  add("fairing", placed(THREE, new THREE.BoxGeometry(0.3, 0.06, 0.24), [-0.66, 0.84, 0], [0, 0, 0.16]), paint);
-  add("fairing", placed(THREE, new THREE.CylinderGeometry(0.2, 0.26, 0.05, 18, 1, false, 0, Math.PI), [FR, 0.62, 0], [Math.PI / 2, 0, 0]), paint);
-
-  // powertrain
-  add("engine", placed(THREE, new THREE.BoxGeometry(0.34, 0.3, 0.3), [0.06, 0.52, 0]), dark);
-  add("engine", placed(THREE, new THREE.BoxGeometry(0.26, 0.22, 0.26), [0.16, 0.72, 0], [0, 0, -0.5]), dark);
-  for (let i = 0; i < 4; i++) {
-    add("engine", placed(THREE, new THREE.BoxGeometry(0.03, 0.2, 0.28), [0.08 + i * 0.05, 0.68, 0], [0, 0, -0.5]), steel);
-  }
-  add("clutch", placed(THREE, new THREE.CylinderGeometry(0.11, 0.11, 0.06, 20), [0.02, 0.5, 0.17], AX_Z), steel);
-  add("oil", placed(THREE, new THREE.CylinderGeometry(0.055, 0.055, 0.1, 16), [0.2, 0.42, 0.06], [0, 0, 0.4]), copper);
-  add("oil", placed(THREE, new THREE.BoxGeometry(0.28, 0.06, 0.24), [0.05, 0.36, 0]), steel);
-  add("spark-plug", placed(THREE, new THREE.CylinderGeometry(0.018, 0.018, 0.09, 10), [0.27, 0.8, 0.07], [0, 0, -0.5]), steel);
-  add("spark-plug", placed(THREE, new THREE.CylinderGeometry(0.018, 0.018, 0.09, 10), [0.27, 0.8, -0.07], [0, 0, -0.5]), steel);
-  add("radiator", placed(THREE, new THREE.BoxGeometry(0.05, 0.28, 0.28), [0.34, 0.6, 0]), steel);
-  add("air-filter", placed(THREE, new THREE.BoxGeometry(0.22, 0.12, 0.24), [0.02, 0.76, 0]), dark);
-  add("exhaust", strut(THREE, [0.22, 0.42, 0.06], [-0.2, 0.32, 0.12], 0.028), steel);
-  add("exhaust", strut(THREE, [-0.2, 0.32, 0.12], [-0.62, 0.5, 0.16], 0.03), steel);
-  add("exhaust", placed(THREE, new THREE.CylinderGeometry(0.075, 0.09, 0.3, 18), [-0.74, 0.55, 0.17], [0, 0, -1.2]), steel);
-
-  // running gear
-  add("swingarm", strut(THREE, [-0.18, 0.44, 0.13], [RR, 0.33, 0.13], 0.03), steel);
-  add("swingarm", strut(THREE, [-0.18, 0.44, -0.13], [RR, 0.33, -0.13], 0.03), steel);
-  add("rear-shock", strut(THREE, [-0.2, 0.46, 0], [-0.3, 0.78, 0], 0.026), dark);
-  add("rear-shock", placed(THREE, new THREE.CylinderGeometry(0.05, 0.05, 0.16, 14), [-0.25, 0.62, 0], [0, 0, 0.3]), steel);
-  add("sprocket", placed(THREE, new THREE.CylinderGeometry(0.13, 0.13, 0.02, 22), [RR, 0.33, 0.13], AX_Z), steel);
-  add("sprocket", placed(THREE, new THREE.CylinderGeometry(0.06, 0.06, 0.02, 16), [-0.14, 0.44, 0.13], AX_Z), steel);
-  add("chain", placed(THREE, new THREE.BoxGeometry(0.6, 0.02, 0.03), [-0.43, 0.45, 0.13]), dark);
-  add("chain", placed(THREE, new THREE.BoxGeometry(0.6, 0.02, 0.03), [-0.43, 0.22, 0.13]), dark);
-  add("chain", placed(THREE, new THREE.TorusGeometry(0.115, 0.014, 6, 20, Math.PI), [RR, 0.33, 0.13], [0, 0, -Math.PI / 2]), dark);
-  add("footpeg", placed(THREE, new THREE.CylinderGeometry(0.018, 0.018, 0.11, 10), [-0.16, 0.34, 0.2], AX_Z), steel);
-  add("footpeg", placed(THREE, new THREE.CylinderGeometry(0.018, 0.018, 0.11, 10), [-0.16, 0.34, -0.2], AX_Z), steel);
-
-  // electrics + lights
-  add("battery", placed(THREE, new THREE.BoxGeometry(0.14, 0.12, 0.1), [-0.22, 0.68, -0.05]), dark);
-  add("fuse", placed(THREE, new THREE.BoxGeometry(0.07, 0.05, 0.06), [-0.34, 0.7, 0.05]), copper);
-  add("headlight", placed(THREE, new THREE.SphereGeometry(0.11, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2), [0.76, 0.84, 0], [0, 0, -Math.PI / 2]), glass);
-  add("taillight", placed(THREE, new THREE.BoxGeometry(0.06, 0.05, 0.14), [-0.76, 0.82, 0]), glass);
-
-  return finishModel(THREE, { root, groups, meshes, materials, modelKey, placeholder: true });
-}
-
 /* ------------------------------------------------------------------ GLB loading */
 
 /**
@@ -729,7 +576,7 @@ async function loadGlb(THREE, modelKey, url, onProgress) {
   // orientFor(): the three exact vehicles face -x, the generics each carry their own value.
   const orient = new THREE.Matrix4().makeRotationY(orientFor(modelKey));
   meshes.forEach((mesh) => mesh.geometry.applyMatrix4(orient));
-  return finishModel(THREE, { root, groups, meshes, materials, modelKey, placeholder: false });
+  return finishModel(THREE, { root, groups, meshes, materials, modelKey });
 }
 
 /**
@@ -821,6 +668,27 @@ function finishModel(THREE, model) {
   model.floor = bounds.min.y;
   model.radius = Math.max(bounds.getBoundingSphere(new THREE.Sphere()).radius, 1e-3);
   return model;
+}
+
+/**
+ * The scene before any GLB has arrived. Same shape as a real model — an empty root, empty groups,
+ * empty meshes — so every caller below reads it without a null check, and `empty: true` is the
+ * one flag that says "there is nothing to frame yet", which is all fit() and the picker need.
+ */
+function emptyModel(THREE, modelKey) {
+  const root = new THREE.Group();
+  root.name = `empty:${modelKey}`;
+  return {
+    root,
+    groups: new Map(),
+    meshes: [],
+    materials: new Set(),
+    modelKey,
+    empty: true,
+    size: new THREE.Vector3(1, 1, 1),
+    floor: -0.5,
+    radius: 1,
+  };
 }
 
 function disposeModel(model) {
@@ -1034,7 +902,17 @@ function progressRing(host) {
   const arc = wrap.querySelector(".viewer3d-load-arc");
   const pct = wrap.querySelector(".viewer3d-load-pct");
   let known = false;
-  return {
+  let retry = null;
+
+  // the error state is a tap target, so it is the only time the ring takes pointer events
+  const onTap = () => {
+    const again = retry;
+    retry = null;
+    if (again) again();
+  };
+  wrap.addEventListener("click", onTap);
+
+  const api = {
     set(fraction) {
       if (fraction == null || !Number.isFinite(fraction)) return;
       if (!known) { known = true; wrap.classList.add("is-known"); }
@@ -1043,8 +921,36 @@ function progressRing(host) {
       pct.textContent = `${Math.round(value * 100)}%`;
       wrap.setAttribute("aria-valuenow", String(Math.round(value * 100)));
     },
-    remove() { wrap.remove(); },
+    /** Back to the indeterminate spin, for a retry. */
+    reset() {
+      known = false;
+      retry = null;
+      wrap.classList.remove("is-known", "is-failed");
+      wrap.removeAttribute("aria-valuenow");
+      wrap.removeAttribute("title");
+      arc.setAttribute("stroke-dashoffset", (RING_C * 0.75).toFixed(1));
+      pct.textContent = "";
+    },
+    /**
+     * Quiet failure: the ring stops, dims, and a tap tries again. No prose — the backdrop is
+     * still there and still looks like a garage, so an error message would be the loudest thing
+     * on the panel for something the user can fix by tapping it.
+     */
+    fail(again) {
+      known = true;                       // stop the spin
+      retry = typeof again === "function" ? again : null;
+      wrap.classList.remove("is-known");
+      wrap.classList.add("is-failed");
+      arc.setAttribute("stroke-dashoffset", "0");
+      pct.textContent = "";
+      wrap.setAttribute("title", "Tap to load the 3D model again");
+    },
+    remove() {
+      wrap.removeEventListener("click", onTap);
+      wrap.remove();
+    },
   };
+  return api;
 }
 
 /* ------------------------------------------------------------------ mount */
@@ -1059,7 +965,6 @@ function progressRing(host) {
  *           onProgress(0..1|null),// download fraction; null while the size is unknown
  *           onSelect(partKey),    // a tap landed on a part (null = background)
  *           onError(error),       // the GLB could not be loaded; the schematic is revealed
- *           placeholder: boolean, // go straight to the schematic, never fetch the GLB
  *           environment: false | "<polyhaven name>",  // false = transparent canvas, no HDRI
  *           url: string,          // override the GLB url (dev)
  *           tint: "#rrggbb"|null, // override the descriptor's tint
@@ -1082,62 +987,64 @@ export function mount(host, model, opts = {}) {
   const wish = { exploded: false, spacing: 1, part: null, focused: false, xray: !!opts.xray };
   let live = null;
   let dead = false;
+  let three = null;
 
   host.classList.add("viewer3d");
   host.setAttribute("data-viewer3d", "loading");
   host.setAttribute("data-model", key);
-  const loader = opts.placeholder ? null : progressRing(host);
+  const loader = progressRing(host);
 
   boot().then((scene) => {
     if (dead) { scene.dispose(); return; }
     live = scene;
-    host.setAttribute("data-viewer3d", opts.placeholder ? "placeholder" : "loading");
     if (wish.exploded) scene.explode(true, wish.spacing, true);
     if (wish.part) scene.highlight(wish.part);
     if (wish.focused && wish.part) scene.focus(wish.part);
     if (wish.xray) scene.xray(true);
     if (typeof opts.onReady === "function") opts.onReady(api);
   }).catch((error) => {
+    loader.fail(() => fetchModel());
     host.setAttribute("data-viewer3d", "error");
-    if (loader) loader.remove();
     if (typeof opts.onError === "function") opts.onError(error);
     else console.warn("viewer3d: could not start", error);
   });
 
   /**
-   * The environment comes up immediately — it is cached across mounts and reads as the garage the
-   * bike is standing in — and the GLB downloads in front of a progress ring. The schematic is
-   * built at the same time but starts hidden: it is the fallback, not the preview. Only if the
-   * model never arrives does it become visible, and then explode / highlight / focus all still
-   * work on it, so a dead network degrades to a working diagram rather than an empty panel.
+   * The environment comes up first — cached across mounts, and it reads as the garage the bike is
+   * standing in — and the GLB downloads in front of the progress ring. Nothing stands in for the
+   * vehicle in the meantime: a stack of grey primitives pretending to be a motorcycle looks like
+   * a bug, and an honest loader does not. If the model never arrives, the backdrop and the ring
+   * stay, the ring goes quiet, and tapping it tries again.
    */
   async function boot() {
-    const THREE = await loadThree();
-    const fallback = buildPlaceholder(THREE, key);
-    if (dead) { disposeModel(fallback); throw new Error("disposed"); }
-    const scene = createScene(THREE, host, fallback, opts);
-    if (opts.placeholder) return scene;
-    scene.showModel(false);
-    loadGlb(THREE, key, url, (event) => {
+    three = await loadThree();
+    if (dead) throw new Error("disposed");
+    const scene = createScene(three, host, null, opts);
+    fetchModel(scene);
+    return scene;
+  }
+
+  function fetchModel(scene = live) {
+    if (dead || !scene || !three) return;
+    host.setAttribute("data-viewer3d", "loading");
+    loader.reset();
+    loadGlb(three, key, url, (event) => {
       const fraction = event && event.lengthComputable && event.total ? event.loaded / event.total : null;
-      if (loader) loader.set(fraction);
+      loader.set(fraction);
       if (typeof opts.onProgress === "function") opts.onProgress(fraction);
     }).then((real) => {
-      tintModel(THREE, real, tint);
+      tintModel(three, real, tint);
       if (dead || !scene.adopt(real)) { disposeModel(real); return; }
-      if (loader) loader.remove();
+      loader.remove();
       host.setAttribute("data-viewer3d", "ready");
       if (typeof opts.onUpgrade === "function") opts.onUpgrade(api);
     }).catch((error) => {
-      // the model is gone; show the schematic we already built rather than nothing at all
       if (dead) return;
-      if (loader) loader.remove();
-      scene.showModel(true);
-      host.setAttribute("data-viewer3d", "placeholder");
+      loader.fail(() => fetchModel(scene));
+      host.setAttribute("data-viewer3d", "error");
+      console.warn(`viewer3d: ${key} did not load (${url})`, error && error.message ? error.message : error);
       if (typeof opts.onError === "function") opts.onError(error);
-      else console.warn(`viewer3d: ${key} did not load, showing the schematic`, error && error.message);
     });
-    return scene;
   }
 
   const api = {
@@ -1193,7 +1100,9 @@ export function mount(host, model, opts = {}) {
 /* ------------------------------------------------------------------ the scene itself */
 
 function createScene(THREE, host, initialModel, opts) {
-  let model = initialModel;
+  // null = nothing has loaded yet: the backdrop lights and renders, the panel is not empty, and
+  // adopt() drops the real model in when it lands
+  let model = initialModel || emptyModel(THREE, opts.modelKey || "");
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -1351,6 +1260,9 @@ function createScene(THREE, host, initialModel, opts) {
    * both come out filled.
    */
   function fit(box, { instant = false, zoom = 1.08, duration = FOCUS_MS, direction = null } = {}) {
+    // nothing loaded yet, or a group with no geometry: there is nothing to frame, and an empty
+    // Box3 is (+Inf, -Inf), which would put the camera at NaN and blank the canvas for good
+    if (!box || box.isEmpty()) return;
     const center = box.getCenter(new THREE.Vector3());
     const forward = (direction ? direction.clone()
       : controls && camera.position.distanceToSquared(controls.target) > 1e-6
@@ -1462,7 +1374,7 @@ function createScene(THREE, host, initialModel, opts) {
     capture() { renderer.render(scene, camera); return renderer.domElement.toDataURL("image/png"); },
     state() {
       return {
-        ready: true, model: model.modelKey, placeholder: !!model.placeholder,
+        ready: true, model: model.modelKey, empty: !!model.empty,
         part: selected ? selected.key : null, spacing, xray: xrayOn,
         parts: [...model.groups.keys()], meshes: model.meshes.length,
       };

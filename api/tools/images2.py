@@ -1,31 +1,37 @@
 """Second-pass photo hunt for the make|model families `images.py` could not fill.
 
 `api/tools/images.py` searches Commons *filenames*. That ceiling is real: a photo
-filed as `DSC_0431.jpg` inside `Category:Suzuki GSX-R 750` is unreachable to it,
-and so is every model whose only good picture is the lead image of a German or
-French Wikipedia article. This tool works those two seams and writes, and owns,
-only these paths:
+filed as `DSC_0431.jpg` inside `Category:Suzuki GSX-R 750` is invisible to it, and
+so is every model whose only good picture is the lead image of a German or French
+Wikipedia article. This tool works those two seams, and then makes a vision model
+pick the frame, because "a photo exists" and "a photo a rider wants to look at"
+are different bars.
 
-  web/store/img/bikes2/<make-model>.webp        640 px long side
-  web/store/img/bikes2/<make-model>.thumb.webp  160 px long side
-  web/store/bike-images-2.json                  {"<make>|<model>": {...}}
-  web/store/CREDITS-bikes-2.md                  attribution table
+Writes, and owns, only these paths:
 
-Source waterfall per model, first acceptable candidate wins:
+  web/store/img/bikes2/<make-model>.hero.webp   1280 px long side
+  web/store/img/bikes2/<make-model>.webp         640 px long side
+  web/store/img/bikes2/<make-model>.thumb.webp   160 px long side
+  web/store/bike-images-2.json                   {"<make>|<model>": {...}}
+  web/store/CREDITS-bikes-2.md                   attribution table
 
-  1. Wikipedia article lead image, over 13 language wikis. The article *title*
-     must name the model (search is loose: it.wikipedia answers "Suzuki GSX-R"
-     for a GSX-R 750). The file is then resolved on Commons for its licence, so
-     a local fair-use upload fails closed.
-  2. Commons category. `srnamespace=14` finds the exact category title, then
-     `generator=categorymembers` lists its files -- filename irrelevant.
-  3. Commons relaxed file search, for models with neither.
+Per model:
 
-Licences accepted: CC0, CC BY, CC BY-SA, Public Domain. Nothing NC or ND.
+  1. Gather up to --candidates free-licence Commons files from three sources --
+     Wikipedia article lead images over several language wikis, Commons model
+     categories, then relaxed Commons file search.
+  2. Download a 400-px preview of each and score them all in ONE gpt-5.6-luna
+     call (route "images.score"): single bike, whole bike in frame, clean
+     background, sharpness, camera angle, clutter, right model.
+  3. Keep only candidates that pass every hard gate, rank by view (side and
+     three-quarter first) plus background and sharpness, and store the winner.
+
+Licences accepted: CC0, CC BY, CC BY-SA, Public Domain. Nothing NC or ND, and a
+file that is not hosted on Commons is rejected rather than guessed at.
 
     api/.venv/Scripts/python api/tools/images2.py --budget-mb 150 --minutes 150
 
-See api/docs/IMAGES-RESEARCH.md for what was tried and rejected (Openverse is
+See api/docs/IMAGES-RESEARCH.md for what was tried and rejected (Openverse sits
 behind a Cloudflare challenge; Wikidata P18 has 394 motorcycles in total).
 """
 
@@ -44,10 +50,18 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Literal
 from urllib.parse import quote, unquote
 
 import httpx
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFilter, ImageStat
+from pydantic import BaseModel, Field
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "api"))
+
+from app import llm  # noqa: E402
+from app.llm import image_part, structured, text_part  # noqa: E402
 
 for _stream in (sys.stdout, sys.stderr):
     try:
@@ -55,15 +69,15 @@ for _stream in (sys.stdout, sys.stderr):
     except Exception:  # noqa: BLE001
         pass
 
-ROOT = Path(__file__).resolve().parents[2]
 BIKES = ROOT / "api" / "data" / "bikes.json"
 REGISTRY = ROOT / "api" / "data" / "registry.json"
-FIRST_JSON = ROOT / "web" / "store" / "bike-images.json"  # read-only, another agent owns it
+FIRST_JSON = ROOT / "web" / "store" / "bike-images.json"  # read-only; another agent owns it
 IMG_DIR = ROOT / "web" / "store" / "img" / "bikes2"
 OUT_JSON = ROOT / "web" / "store" / "bike-images-2.json"
 OUT_CREDITS = ROOT / "web" / "store" / "CREDITS-bikes-2.md"
 
 COMMONS = "https://commons.wikimedia.org/w/api.php"
+FILEPATH = "https://commons.wikimedia.org/wiki/Special:FilePath/"
 UA = (
     "TrustTheManualBikeImages/2.0 "
     "(https://trustthemanual.workers.dev; motorcycle manual search; "
@@ -71,7 +85,7 @@ UA = (
 )
 
 # Ordered by how many motorcycle-model articles each wiki actually carries.
-WIKIS = ["en", "de", "fr", "es", "it", "nl", "ja", "pl", "sv", "cs", "pt", "fi", "ru"]
+WIKIS = ["en", "de", "fr", "es", "it", "nl", "ja", "pl", "sv", "cs"]
 
 # Words that mean "this is not a photograph of a whole motorcycle".
 REJECT_WORDS = (
@@ -84,20 +98,19 @@ REJECT_WORDS = (
     "radiator fairing screenshot icon signature stamp coin postage grave "
     "memorial interior assembly cutaway render rendering cad wireframe "
     "wreck crash burnt burned rusted scrap junk dismantled disassembled "
-    "restoration parts spare toy model kit miniature lego diecast "
-    "plate registration licence license number vin sticker key remote "
-    "patent trademark scan document leaflet catalogue catalog poster"
+    "restoration parts spare toy miniature lego diecast plate registration "
+    "licence license vin key patent trademark scan document leaflet"
 ).split()
 
-# Category names that are about anything but the bike standing there.
+# Categories that are about anything but the bike standing there.
 REJECT_CAT_WORDS = (
     "competition racing race motorsport museum crash accident wreck "
-    "advertising literature manual documents patents logos engines "
-    "interiors details parts taxonomy people riders"
+    "advertising literature manuals documents patents logos engines "
+    "interiors details parts people riders taxonomy"
 ).split()
 
 CC_OK = re.compile(r"^cc[\s_-]*by(?:[\s_-]*sa)?[\s_-]*\d", re.I)
-CC_BAD = re.compile(r"\b(nc|nd|noncommercial|non-commercial|noderiv|no-deriv|fair use)\b", re.I)
+CC_BAD = re.compile(r"\b(nc|nd|noncommercial|non-commercial|noderiv|no-deriv|fair\s*use)\b", re.I)
 TAG = re.compile(r"<[^>]+>")
 WS = re.compile(r"\s+")
 EXT = re.compile(r"\.[a-z0-9]{2,5}$", re.I)
@@ -112,8 +125,7 @@ def fold(value: str) -> str:
     s = str(value or "").lower()
     s = unicodedata.normalize("NFD", s)
     s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    s = re.sub(r"[\s-]+", "-", s)
-    return s.strip("-")
+    return re.sub(r"[\s-]+", "-", s).strip("-")
 
 
 def image_key(make: str, model: str) -> str:
@@ -143,8 +155,8 @@ def has_token(text_n: str, token: str) -> bool:
 def glued(haystack: str, needle: str) -> bool:
     """`needle` sits in `haystack` with no letter running out of its tail.
 
-    "sv650" is found in "sv650al7" (digit then letter starts a new word) but
-    "r1150r" is not found in "r1150rs" -- an R 1150 RS is a different bike.
+    "sv650" is found in "sv650al7" (a digit then a letter starts a new word) but
+    "r1150r" is not found in "r1150rs": an R 1150 RS is a different motorcycle.
     """
     at = haystack.find(needle)
     while at >= 0:
@@ -178,10 +190,10 @@ def mentions(text: str, name: str) -> bool:
 
 
 def tight(text: str, name: str) -> bool:
-    """Strict form of mentions(): the model's tokens must run consecutively.
+    """Strict mentions(): the model's tokens must run consecutively.
 
-    Used on article and category titles, where a loose match is how
-    "Suzuki GSX-R" gets handed back for a GSX-R 750.
+    For article and category titles, where the loose form is how "Suzuki GSX-R"
+    gets handed back as the answer for a GSX-R 750.
     """
     tokens = norm(name).split()
     if not tokens:
@@ -194,6 +206,48 @@ def tight(text: str, name: str) -> bool:
 
 def strip_html(value: str) -> str:
     return WS.sub(" ", html.unescape(TAG.sub(" ", str(value or "")))).strip()
+
+
+CODE = re.compile(r"^([a-z]{1,4})[\s-]?(\d{2,4})([a-z]{0,4})$", re.I)
+
+
+def name_variants(model: str, cap: int = 4) -> list:
+    """The model name, then progressively shorter family names.
+
+    What images.py left behind is overwhelmingly *variants*: "RSV4 1100 Factory",
+    "VN900 Classic Special Edition", "CB650RAC". Commons photographs families, not
+    trim levels, so falling back to "RSV4 1100" and then "RSV4" is the difference
+    between a tile and a placeholder -- and it is what lookupImage() in ttm.js
+    already does at render time. Longest first: the caller stops at the first one
+    that answers.
+    """
+    out: list = []
+    seen: set = set()
+
+    def add(value: str) -> None:
+        v = " ".join(str(value or "").split())
+        k = squash(v)
+        if v and len(k) >= 2 and k not in seen:
+            seen.add(k)
+            out.append(v)
+
+    add(model)
+    tokens = model.split()
+    numbered = any(ch.isdigit() for ch in model)
+    for n in range(len(tokens) - 1, 0, -1):
+        prefix = tokens[:n]
+        # A displacement or model number is the bike's identity: never shorten
+        # past it, or "VN900 Classic" degrades to a search for "Classic".
+        if numbered and not any(any(c.isdigit() for c in t) for t in prefix):
+            break
+        add(" ".join(prefix))
+    # One glued code: peel the trailing trim letters, "CB650RAC" -> "CB650R" -> "CB650".
+    tail_variant = out[-1].split()
+    if len(tail_variant) == 1 and (mt := CODE.match(tail_variant[0])):
+        head, num, tail = mt.groups()
+        for i in range(len(tail) - 1, -1, -1):
+            add(f"{head}{num}{tail[:i]}")
+    return out[:cap]
 
 
 # ------------------------------------------------------------------- model roster
@@ -214,6 +268,13 @@ class Model:
     @property
     def tier(self) -> int:
         return 0 if self.manual_id else (1 if self.manual_url else 2)
+
+    @property
+    def label(self) -> str:
+        span = ""
+        if self.years:
+            span = f" ({min(self.years)}" + (f"-{max(self.years)})" if max(self.years) != min(self.years) else ")")
+        return f"{self.make} {self.model}{span}"
 
 
 def registry_models() -> set:
@@ -272,7 +333,7 @@ def build_models() -> list:
 
 
 class Bucket:
-    """Global token bucket; every outbound request passes through it."""
+    """Token bucket. One for the APIs, a looser one for the CDN."""
 
     def __init__(self, rps: float):
         self.interval = 1.0 / rps
@@ -287,6 +348,11 @@ class Bucket:
         if wait:
             time.sleep(wait)
 
+    def penalise(self, seconds: float) -> None:
+        """A 429 stalls every worker, not just the one that saw it."""
+        with self.lock:
+            self.next = max(self.next, time.monotonic()) + seconds
+
 
 def get(client: httpx.Client, url: str, bucket: Bucket, *, params=None, tries: int = 3):
     last = None
@@ -296,6 +362,8 @@ def get(client: httpx.Client, url: str, bucket: Bucket, *, params=None, tries: i
             r = client.get(url, params=params)
             if r.status_code in (429, 500, 502, 503, 504):
                 last = f"HTTP {r.status_code}"
+                if r.status_code == 429:
+                    bucket.penalise(5.0)
             else:
                 r.raise_for_status()
                 return r
@@ -312,6 +380,11 @@ def api_json(client: httpx.Client, url: str, bucket: Bucket, params: dict) -> di
         return {}
 
 
+def filepath_url(title: str, width: int) -> str:
+    """Special:FilePath renders any width without spending an API call."""
+    return f"{FILEPATH}{quote(title.replace(' ', '_'), safe='')}?width={width}"
+
+
 # ------------------------------------------------------------------------ licences
 
 
@@ -320,7 +393,7 @@ def licence_ok(short: str) -> bool:
     if not s or CC_BAD.search(s):
         return False
     low = s.lower()
-    if low.startswith("cc0") or "public domain" in low or low in ("pd", "pd-self", "pd-old"):
+    if low.startswith("cc0") or "public domain" in low or low.startswith("pd"):
         return True
     return bool(CC_OK.match(low))
 
@@ -334,7 +407,7 @@ def usable(info: dict, meta: dict) -> bool:
         return False
     ratio = width / height
     # Landscape or near-square only: a tall frame is a rider, a poster or a
-    # detail shot far more often than a bike in profile.
+    # detail shot far more often than it is a bike in profile.
     if not (0.85 <= ratio <= 3.0):
         return False
     return licence_ok((meta.get("LicenseShortName") or {}).get("value", ""))
@@ -346,8 +419,8 @@ def bad_title(stem: str, m: Model) -> bool:
     return any(w in words and w not in model_words for w in REJECT_WORDS)
 
 
-def score_file(stem: str, info: dict, m: Model, *, base: float) -> float:
-    """How much does this file look like the catalogue tile we want?"""
+def prescore(stem: str, info: dict, m: Model, *, base: float) -> float:
+    """Cheap ordering, so the vision model sees the most promising frames first."""
     title_n = norm(stem)
     width, height = info.get("width") or 1, info.get("height") or 1
     ratio = width / height
@@ -377,14 +450,24 @@ def score_file(stem: str, info: dict, m: Model, *, base: float) -> float:
     return score
 
 
-# ------------------------------------------------------------- Commons file lookup
+# ----------------------------------------------------------------------- gathering
 
 
-def commons_files(client: httpx.Client, bucket: Bucket, titles: list) -> list:
+@dataclass
+class Cand:
+    title: str
+    page_title: str
+    info: dict
+    meta: dict
+    via: str
+    pre: float
+    depth: int = 0
+
+
+def commons_pages(client: httpx.Client, bucket: Bucket, titles: list) -> list:
     """imageinfo for up to 50 `File:` titles at once."""
     out = []
     for i in range(0, len(titles), 50):
-        chunk = titles[i : i + 50]
         data = api_json(
             client,
             COMMONS,
@@ -393,25 +476,23 @@ def commons_files(client: httpx.Client, bucket: Bucket, titles: list) -> list:
                 "action": "query",
                 "format": "json",
                 "formatversion": "2",
-                "titles": "|".join(chunk),
+                "titles": "|".join(titles[i : i + 50]),
                 "prop": "imageinfo",
                 "iiprop": "url|extmetadata|size|mime",
-                "iiurlwidth": "900",
             },
         )
         for page in (data.get("query") or {}).get("pages") or []:
-            if page.get("missing") or not page.get("imageinfo"):
-                continue
-            out.append(page)
+            if not page.get("missing") and page.get("imageinfo"):
+                out.append(page)
     return out
 
 
-def candidate(page: dict, m: Model, used: set, *, base: float, need_name: bool):
-    """Turn one Commons page into a scored candidate, or None."""
+def to_cand(page: dict, m: Model, used: set, *, via: str, base: float, need_name: bool):
     info = (page.get("imageinfo") or [None])[0]
     if not info:
         return None
-    title = str(page.get("title", "")).removeprefix("File:")
+    page_title = str(page.get("title", ""))
+    title = page_title.removeprefix("File:")
     if title in used:
         return None
     meta = info.get("extmetadata") or {}
@@ -427,15 +508,12 @@ def candidate(page: dict, m: Model, used: set, *, base: float, need_name: bool):
         )
         if not (mentions(stem, m.model) and mentions(f"{title} {desc}", m.make)):
             return None
-    return score_file(stem, info, m, base=base), page, info, title, meta
+    return Cand(title, page_title, info, meta, via, prescore(stem, info, m, base=base))
 
 
-# ------------------------------------------------------------------- source: wikis
-
-
-def wiki_lead(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: list):
-    """Lead image of the first article on any wiki whose title names the model."""
-    query = f"{m.make} {m.model}"
+def from_wikis(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: list) -> list:
+    """Lead images of articles whose title names the model, across wikis."""
+    files, seen = [], set()
     for lang in wikis:
         data = api_json(
             client,
@@ -446,7 +524,7 @@ def wiki_lead(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: 
                 "format": "json",
                 "formatversion": "2",
                 "generator": "search",
-                "gsrsearch": query,
+                "gsrsearch": f"{m.make} {m.model}",
                 "gsrnamespace": "0",
                 "gsrlimit": "3",
                 "prop": "pageimages",
@@ -456,29 +534,29 @@ def wiki_lead(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: 
         )
         for page in (data.get("query") or {}).get("pages") or []:
             title = str(page.get("title", ""))
-            # The article title must name make AND model, tightly: search hands
-            # back "Suzuki GSX-R" for a GSX-R 750 otherwise.
+            # The article title must name make AND model, tightly.
             if not (tight(title, m.model) and mentions(title, m.make)):
                 continue
             src = (page.get("original") or {}).get("source") or ""
             if "/commons/" not in src:
-                continue  # local upload: no Commons licence to read, fail closed
+                continue  # local upload: no Commons licence to read, so fail closed
             fname = unquote(src.split("/")[-1].split("?")[0])
-            if not fname:
-                continue
-            got = commons_files(client, bucket, [f"File:{fname}"])
-            for cpage in got:
-                hit = candidate(cpage, m, used, base=6.0, need_name=False)
-                if hit:
-                    return hit, f"wikipedia:{lang}"
-    return None, None
+            if fname and fname not in seen:
+                seen.add(fname)
+                files.append(f"File:{fname}")
+        if len(files) >= 3:
+            break
+    if not files:
+        return []
+    return [
+        c
+        for page in commons_pages(client, bucket, files)
+        if (c := to_cand(page, m, used, via="wikipedia", base=6.0, need_name=False))
+    ]
 
 
-# -------------------------------------------------------------- source: categories
-
-
-def commons_category(client: httpx.Client, bucket: Bucket, m: Model, used: set):
-    """Best photo inside a Commons category whose title names the model."""
+def from_category(client: httpx.Client, bucket: Bucket, m: Model, used: set, want: int) -> list:
+    """Photos inside a Commons category whose title names the model."""
     data = api_json(
         client,
         COMMONS,
@@ -498,14 +576,12 @@ def commons_category(client: httpx.Client, bucket: Bucket, m: Model, used: set):
         name = str(s.get("title", "")).removeprefix("Category:")
         if not (tight(name, m.model) and mentions(name, m.make)):
             continue
-        words = set(norm(name).split()) - set(norm(m.model).split())
-        if any(w in words for w in REJECT_CAT_WORDS):
+        extra = set(norm(name).split()) - set(norm(m.model).split())
+        if any(w in extra for w in REJECT_CAT_WORDS):
             continue
         cats.append(s["title"])
-    if not cats:
-        return None, None
 
-    best = None
+    out = []
     for cat in cats[:2]:
         members = api_json(
             client,
@@ -518,33 +594,28 @@ def commons_category(client: httpx.Client, bucket: Bucket, m: Model, used: set):
                 "generator": "categorymembers",
                 "gcmtitle": cat,
                 "gcmtype": "file",
-                "gcmlimit": "40",
+                "gcmlimit": "50",
                 "prop": "imageinfo",
                 "iiprop": "url|extmetadata|size|mime",
-                "iiurlwidth": "900",
             },
         )
         for page in (members.get("query") or {}).get("pages") or []:
-            # Filename need not name the model: the category already did.
-            hit = candidate(page, m, used, base=3.0, need_name=False)
-            if hit and (best is None or hit[0] > best[0]):
-                best = hit
-        if best and best[0] >= 7.0:
+            # The filename need not name the model: the category already did.
+            c = to_cand(page, m, used, via="category", base=3.0, need_name=False)
+            if c:
+                out.append(c)
+        if len(out) >= want:
             break
-    return (best, "commons:category") if best else (None, None)
+    return out
 
 
-# ------------------------------------------------------------------ source: search
-
-
-def commons_search(client: httpx.Client, bucket: Bucket, m: Model, used: set):
+def from_search(client: httpx.Client, bucket: Bucket, m: Model, used: set, want: int) -> list:
     """Relaxed file search, for models with neither an article nor a category."""
-    plain = f"{m.make} {m.model}"
-    queries = [f'"{m.make}" "{m.model}" motorcycle', f"{plain} motorcycle"]
+    queries = [f'"{m.make}" "{m.model}" motorcycle', f"{m.make} {m.model} motorcycle"]
     nodash = m.model.replace("-", " ")
     if nodash != m.model:
         queries.append(f"{m.make} {nodash} motorcycle")
-    best = None
+    out = []
     for q in queries:
         data = api_json(
             client,
@@ -560,19 +631,120 @@ def commons_search(client: httpx.Client, bucket: Bucket, m: Model, used: set):
                 "gsrlimit": "25",
                 "prop": "imageinfo",
                 "iiprop": "url|extmetadata|size|mime",
-                "iiurlwidth": "900",
             },
         )
         for page in (data.get("query") or {}).get("pages") or []:
-            hit = candidate(page, m, used, base=1.0, need_name=True)
-            if hit and (best is None or hit[0] > best[0]):
-                best = hit
-        if best and best[0] >= 7.0:
+            c = to_cand(page, m, used, via="search", base=1.0, need_name=True)
+            if c:
+                out.append(c)
+        if len(out) >= want:
             break
-    return (best, "commons:search") if best else (None, None)
+    return out
+
+
+def gather(client: httpx.Client, bucket: Bucket, m: Model, used: set, wikis: list, want: int) -> list:
+    """Up to `want` licence-clean candidates, best-looking first.
+
+    Tries the exact model name, then shorter family names, and stops at the first
+    that produces anything: an exact "RSV4 1100 Factory" photo beats an "RSV4" one,
+    but an "RSV4" photo beats the placeholder tile.
+    """
+    found: dict = {}
+    for depth, name in enumerate(name_variants(m.model)):
+        probe = Model(m.make, name, m.years, m.manual_id, m.manual_url)
+        for source in (
+            lambda: from_wikis(client, bucket, probe, used, wikis),
+            lambda: from_category(client, bucket, probe, used, want),
+            lambda: from_search(client, bucket, probe, used, want),
+        ):
+            try:
+                for c in source():
+                    c.depth = depth
+                    c.pre -= 0.75 * depth  # prefer the most specific name that answered
+                    found.setdefault(c.title, c)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  ! {m.key} gather: {exc!r}"[:150], flush=True)
+            if len(found) >= want:
+                break
+        if found:
+            break
+    return sorted(found.values(), key=lambda c: -c.pre)[:want]
+
+
+# ------------------------------------------------------------------- vision rating
+
+
+class Shot(BaseModel):
+    index: int = Field(description="the image number given in the prompt")
+    is_photo: bool = Field(description="a real photograph, not a drawing, render, poster or scan")
+    is_the_model: bool = Field(description="the bike shown is plausibly the named make and model")
+    single_bike: bool = Field(description="exactly one motorcycle is the subject")
+    whole_bike_visible: bool = Field(description="the entire motorcycle is inside the frame, not cropped")
+    people_or_other_bikes: bool = Field(description="people, or other motorcycles, take up a noticeable part of the frame")
+    clean_background: Literal[0, 1, 2, 3] = Field(description="0 cluttered showroom or crowd, 3 plain road, wall or studio")
+    sharpness: Literal[0, 1, 2, 3] = Field(description="0 blurry or tiny, 3 crisp and well exposed")
+    view: Literal["side", "three_quarter", "front", "rear", "top", "other"]
+
+
+class Shots(BaseModel):
+    shots: list[Shot]
+
+
+RATER_SYSTEM = (
+    "You grade candidate photographs for a motorcycle catalogue. Each tile has to show "
+    "one whole motorcycle that a rider can recognise at a glance: side or three-quarter "
+    "view, the bike filling the frame, nothing cluttering it. Judge only what you can see. "
+    "Be strict about people_or_other_bikes: a crowded show stand, a parked row, or a rider "
+    "sitting on the bike all count as true. Return exactly one entry per image, in order, "
+    "using the index given in the prompt."
+)
+
+VIEW_BONUS = {"side": 3.0, "three_quarter": 3.0, "front": 0.5, "rear": 0.5, "top": -2.0, "other": 0.0}
+
+
+def passes(s: Shot) -> bool:
+    return (
+        s.is_photo
+        and s.is_the_model
+        and s.single_bike
+        and s.whole_bike_visible
+        and not s.people_or_other_bikes
+        and s.clean_background >= 1
+        and s.sharpness >= 2
+    )
+
+
+def shot_score(s: Shot) -> float:
+    return VIEW_BONUS.get(s.view, 0.0) + s.clean_background + 1.5 * s.sharpness
+
+
+def rate(m: Model, previews: list) -> list:
+    """One call, every candidate. `previews` is [(Cand, jpeg_bytes, mime)]."""
+    parts = [
+        text_part(
+            f"Motorcycle: {m.label}.\n"
+            f"{len(previews)} candidate photo(s) follow, numbered from 0. "
+            "Grade each one."
+        )
+    ]
+    for i, (_c, data, mime) in enumerate(previews):
+        parts.append(text_part(f"Image {i}:"))
+        parts.append(image_part(data, mime, "low"))
+    out = structured("images.score", "gpt-5.6-luna", Shots, RATER_SYSTEM, parts)
+    by_index = {s.index: s for s in out.shots}
+    return [by_index.get(i) for i in range(len(previews))]
 
 
 # ------------------------------------------------------------------------- imaging
+
+
+def outputs(dest: Path) -> tuple:
+    """The three renditions written for one model, largest first."""
+    return (
+        dest.parent / f"{dest.name}.hero.webp",
+        dest.parent / f"{dest.name}.webp",
+        dest.parent / f"{dest.name}.thumb.webp",
+    )
 
 
 def flatten(im: Image.Image) -> Image.Image:
@@ -596,7 +768,7 @@ def borders(im: Image.Image, tol: int = 12) -> tuple:
 
 
 def debordered(im: Image.Image, min_frac: float = 0.04) -> Image.Image:
-    """Crop the flat bands a scan or a press render floats the bike inside."""
+    """Crop the flat bands a scan or a catalogue tile floats the bike inside."""
     w, h = im.size
     left, top, right, bottom = borders(im)
     if max(left, right) < min_frac * w and max(top, bottom) < min_frac * h:
@@ -613,26 +785,50 @@ def debordered(im: Image.Image, min_frac: float = 0.04) -> Image.Image:
     return im.crop(box)
 
 
+def blurry(im: Image.Image) -> bool:
+    """Edge energy, as a second opinion on the rater's sharpness score.
+
+    A vision model looking at a 512-px downsample cannot see camera shake; the
+    variance of a Laplacian over the real pixels can.
+    """
+    grey = im.convert("L")
+    grey.thumbnail((512, 512), Image.BILINEAR)
+    edges = grey.filter(ImageFilter.FIND_EDGES)
+    return ImageStat.Stat(edges).stddev[0] < 9.0
+
+
 def boring(im: Image.Image) -> bool:
-    """Near-blank tiles: a scan that came out white, a logo on a flat field."""
+    """Near-blank tiles: a scan that came out white, a mark on a flat field."""
     small = im.convert("L").resize((64, 64), Image.BILINEAR)
     hist = small.histogram()
-    top = max(hist) / float(sum(hist) or 1)
-    return top > 0.82
+    return max(hist) / float(sum(hist) or 1) > 0.82
 
 
-def convert(raw: bytes, dest: Path, thumb: Path, quality: int) -> tuple:
+def render(raw: bytes, dest: Path, q: tuple) -> tuple:
+    """Write <name>.hero/.webp/.thumb webps. Returns (bytes written, has_hero)."""
+    hero_q, full_q, thumb_q = q
+    hero_p, full_p, thumb_p = outputs(dest)
     with Image.open(io.BytesIO(raw)) as src:
         im = debordered(flatten(src))
-        if im.width < 400 or boring(im):
-            raise ValueError("blank or tiny after crop")
+        if im.width < 500 or boring(im) or blurry(im):
+            raise ValueError("blank, blurry or tiny after crop")
+        written = 0
+        hero = False
+        if im.width >= 900:
+            big = im.copy()
+            big.thumbnail((1280, 1280), Image.LANCZOS)
+            big.save(hero_p, "WEBP", quality=hero_q, method=6)
+            written += hero_p.stat().st_size
+            hero = True
         full = im.copy()
         full.thumbnail((640, 640), Image.LANCZOS)
-        full.save(dest, "WEBP", quality=quality, method=6)
+        full.save(full_p, "WEBP", quality=full_q, method=6)
+        written += full_p.stat().st_size
         small = im.copy()
         small.thumbnail((160, 160), Image.LANCZOS)
-        small.save(thumb, "WEBP", quality=max(60, quality - 6), method=6)
-    return dest.stat().st_size, thumb.stat().st_size
+        small.save(thumb_p, "WEBP", quality=thumb_q, method=6)
+        written += thumb_p.stat().st_size
+    return written, hero
 
 
 # -------------------------------------------------------------------------- output
@@ -662,33 +858,66 @@ def write_outputs(entries: dict) -> None:
     lines = [
         "# Bike image credits (second pass)",
         "",
-        "Companion to `CREDITS-bikes.md`, for the make+model families the first pass",
-        "could not fill. Fetched by `api/tools/images2.py` from Wikipedia article lead",
-        "images and Wikimedia Commons categories; every file is hosted on Commons and is",
-        "CC0, CC BY, CC BY-SA or Public Domain. Author and licence as reported by the",
-        "Commons API (`extmetadata`); follow the source link for the full terms.",
+        "Companion to `CREDITS-bikes.md`, for the make+model families the first pass could",
+        "not fill. Fetched by `api/tools/images2.py` from Wikipedia article lead images and",
+        "Wikimedia Commons categories, then graded by a vision model so every tile shows one",
+        "whole bike. Each file is hosted on Commons under CC0, CC BY, CC BY-SA or Public",
+        "Domain; author and licence as reported by the Commons API (`extmetadata`). Follow",
+        "the source link for the full terms.",
         "",
-        "| file | title | author | source | licence | via |",
-        "|---|---|---|---|---|---|",
+        "| file | title | author | source | licence | via | view |",
+        "|---|---|---|---|---|---|---|",
     ]
     cell = lambda v: str(v or "").replace("|", "\\|")  # noqa: E731
     for key in sorted(ordered):
         e = ordered[key]
-        for path in (e["image"], e["thumb"]):
+        for path in (e.get("hero"), e["image"], e["thumb"]):
+            if not path:
+                continue
             lines.append(
-                f"| `{path}` | {cell(e['title'])} | {cell(e['author'])} | "
-                f"{e['source']} | {cell(e['license'])} | {cell(e.get('via'))} |"
+                f"| `{path}` | {cell(e['title'])} | {cell(e['author'])} | {e['source']} | "
+                f"{cell(e['license'])} | {cell(e.get('via'))} | {cell(e.get('view'))} |"
             )
     save(OUT_CREDITS, "\n".join(lines) + "\n")
 
 
-def first_pass_keys() -> tuple:
-    """(keys, titles) already claimed by images.py. Re-read every checkpoint."""
+ALIAS_FIELDS = ("image", "thumb", "hero", "title", "author", "license", "source", "view")
+
+
+def alias_pass(models: list, entries: dict, filled: dict) -> int:
+    """Point variant keys at the family photo that is already on disk.
+
+    "Aprilia RSV4 1100 Factory" has no Commons photo of its own and never will,
+    but "Aprilia RSV4 1100" does, and it is the same motorcycle to anyone looking
+    at a 160-px tile. Reusing the rendered file costs no bytes, no request and no
+    tokens, and the credit is unchanged because it is literally the same
+    photograph. Returns how many keys were filled.
+    """
+    added = 0
+    for m in models:
+        if m.key in entries or m.key in filled:
+            continue
+        for name in name_variants(m.model, cap=5)[1:]:
+            parent = image_key(m.make, name)
+            src = filled.get(parent) or entries.get(parent)
+            if not src or not src.get("image"):
+                continue
+            entry = {k: src[k] for k in ALIAS_FIELDS if src.get(k)}
+            entry["via"] = "alias"
+            entry["aliasOf"] = parent
+            entries[m.key] = entry
+            added += 1
+            break
+    return added
+
+
+def first_pass() -> tuple:
+    """(map, titles) already claimed by images.py. Re-read at every checkpoint."""
     try:
         data = json.loads(FIRST_JSON.read_text(encoding="utf-8"))
     except Exception:  # noqa: BLE001
-        return set(), set()
-    return set(data), {e.get("title") for e in data.values() if e.get("title")}
+        return {}, set()
+    return data, {e.get("title") for e in data.values() if e.get("title")}
 
 
 # ----------------------------------------------------------------------------- main
@@ -698,17 +927,23 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=0, help="0 = every missing model")
     ap.add_argument("--budget-mb", type=float, default=150.0)
-    ap.add_argument("--rps", type=float, default=6.0)
-    ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--llm-budget", type=float, default=8.0, help="USD cap for images.score")
+    ap.add_argument("--api-rps", type=float, default=8.0)
+    ap.add_argument("--cdn-rps", type=float, default=16.0)
+    ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--minutes", type=float, default=0.0)
     ap.add_argument("--checkpoint", type=int, default=25)
-    ap.add_argument("--quality", type=int, default=76)
+    ap.add_argument("--candidates", type=int, default=6)
+    ap.add_argument("--min-score", type=float, default=6.0)
+    ap.add_argument("--quality", default="70,76,72", help="hero,full,thumb webp quality")
     ap.add_argument("--tier", type=int, default=2, help="highest tier to attempt (0/1/2)")
     ap.add_argument("--wikis", default=",".join(WIKIS))
+    ap.add_argument("--no-alias", action="store_true", help="skip the variant-key alias pass")
     args = ap.parse_args()
 
     IMG_DIR.mkdir(parents=True, exist_ok=True)
     wikis = [w for w in args.wikis.split(",") if w]
+    quality = tuple(int(x) for x in args.quality.split(","))
 
     entries = {}
     if OUT_JSON.exists():
@@ -717,36 +952,63 @@ def main() -> int:
         except Exception:  # noqa: BLE001
             entries = {}
 
-    done_keys, done_titles = first_pass_keys()
-    skip = done_keys | set(entries)
+    filled, done_titles = first_pass()
     all_models = build_models()
-    models = [m for m in all_models if m.key not in skip and m.tier <= args.tier]
+
+    # Free coverage first: every variant key whose family photo is already on disk.
+    if not args.no_alias:
+        aliased = alias_pass(all_models, entries, filled)
+        if aliased:
+            write_outputs(entries)
+            print(f"alias pass: {aliased} variant keys pointed at an existing photo", flush=True)
+
+    models = [
+        m for m in all_models if m.key not in filled and m.key not in entries and m.tier <= args.tier
+    ]
     if args.limit:
         models = models[: args.limit]
 
     used = set(done_titles) | {e.get("title") for e in entries.values()}
-    used_slugs = {Path(e["image"]).stem for e in entries.values()}
+    used_slugs = {
+        Path(e["image"]).name.split(".")[0]
+        for e in entries.values()
+        if e.get("image", "").startswith("store/img/bikes2/")
+    }
     bytes_used = sum(p.stat().st_size for p in IMG_DIR.glob("*.webp"))
 
     budget = args.budget_mb * 1024 * 1024
     deadline = time.monotonic() + args.minutes * 60 if args.minutes else None
-    bucket = Bucket(args.rps)
+    api_bucket, cdn_bucket = Bucket(args.api_rps), Bucket(args.cdn_rps)
     lock = threading.Lock()
     stats: dict = defaultdict(int)
+    spend = {"usd": 0.0}
     stop = threading.Event()
 
-    def refresh_first_pass() -> None:
-        """The first agent is still running: never take a model or file it owns."""
-        keys, titles = first_pass_keys()
+    # llm.structured() logs through llm.log(); wrap it to keep a running total.
+    original_log = llm.log
+
+    def logging_log(route, model, usage, extra_usd: float = 0.0) -> float:
+        cost = original_log(route, model, usage, extra_usd)
         with lock:
-            used.update(titles)
-            stats["first_pass"] = len(keys)
-        return keys
+            spend["usd"] += cost
+        return cost
+
+    llm.log = logging_log
+
+    def preview(client: httpx.Client, c: Cand):
+        try:
+            r = get(client, filepath_url(c.title, 400), cdn_bucket, tries=2)
+        except Exception:  # noqa: BLE001
+            return None
+        mime = r.headers.get("content-type", "").split(";")[0]
+        if mime not in OK_MIME or len(r.content) < 2000:
+            return None
+        return (c, r.content, mime)
 
     def fetch(client: httpx.Client, m: Model) -> bool:
         nonlocal bytes_used
-        if stop.is_set() or m.key in entries:
-            return m.key in entries
+        if stop.is_set():
+            return False
         if deadline and time.monotonic() > deadline:
             stop.set()
             return False
@@ -755,128 +1017,185 @@ def main() -> int:
                 stats["budget"] += 1
                 stop.set()
                 return False
+            over_llm = spend["usd"] >= args.llm_budget
             stats["attempted"] += 1
 
-        chosen = via = None
-        for source in (wiki_lead, commons_category, commons_search):
+        cands = gather(client, api_bucket, m, used, wikis, args.candidates)
+        with lock:
+            stats["cands"] += len(cands)
+            for c in cands:
+                stats[f"cand:{c.via}"] += 1
+        if not cands:
+            with lock:
+                stats["no_candidate"] += 1
+            return False
+
+        previews = [p for p in (preview(client, c) for c in cands) if p]
+        if not previews:
+            with lock:
+                stats["no_preview"] += 1
+            return False
+
+        if over_llm:
+            # Cost cap reached: fall back to the heuristic pick, unrated.
+            ranked = [(previews[0][0], None, 0.0)]
+            with lock:
+                stats["unrated"] += 1
+        else:
             try:
-                if source is wiki_lead:
-                    hit, tag = source(client, bucket, m, used, wikis)
-                else:
-                    hit, tag = source(client, bucket, m, used)
+                shots = rate(m, previews)
             except Exception as exc:  # noqa: BLE001
-                stats["error"] += 1
-                print(f"  ! {m.key} {source.__name__}: {exc!r}"[:160], flush=True)
-                continue
-            if hit:
-                chosen, via = hit, tag
-                break
-
-        if not chosen:
-            with lock:
-                stats["no_match"] += 1
-            return False
-
-        _score, page, info, title, meta = chosen
-        with lock:
-            if title in used:
-                stats["dupe"] += 1
+                with lock:
+                    stats["rate_error"] += 1
+                print(f"  ! {m.key} rate: {exc!r}"[:150], flush=True)
                 return False
-            used.add(title)
-            name = slug(m.key.replace("|", "-")) or slug(f"{m.make}-{m.model}")
-            base, n = name, 2
-            while name in used_slugs:
-                name, n = f"{base}-{n}", n + 1
-            used_slugs.add(name)
-
-        dest = IMG_DIR / f"{name}.webp"
-        thumb = IMG_DIR / f"{name}.thumb.webp"
-        try:
-            src = info.get("thumburl") or info.get("url")
-            raw = get(client, src, bucket).content
-            size_full, size_thumb = convert(raw, dest, thumb, args.quality)
-        except Exception as exc:  # noqa: BLE001
-            for p in (dest, thumb):
-                p.unlink(missing_ok=True)
+            ranked = []
             with lock:
-                stats["error"] += 1
-                used_slugs.discard(name)
-            print(f"  ! {m.key} download: {exc}"[:160], flush=True)
+                stats["rated"] += len(previews)
+            for (c, _data, _mime), s in zip(previews, shots):
+                if s is None:
+                    continue
+                with lock:
+                    stats[f"scored:{c.via}"] += 1
+                if not passes(s):
+                    with lock:
+                        stats[f"failed:{c.via}"] += 1
+                    continue
+                score = shot_score(s)
+                with lock:
+                    stats[f"passed:{c.via}"] += 1
+                if score >= args.min_score:
+                    ranked.append((c, s, score))
+            ranked.sort(key=lambda t: (-t[2], -t[0].pre))
+
+        if not ranked:
+            with lock:
+                stats["rejected"] += 1
             return False
 
-        entry = {
-            "image": f"store/img/bikes2/{name}.webp",
-            "thumb": f"store/img/bikes2/{name}.thumb.webp",
-            "title": title,
-            "author": strip_html((meta.get("Artist") or {}).get("value", "")) or "Unknown",
-            "license": strip_html((meta.get("LicenseShortName") or {}).get("value", "")),
-            "source": "https://commons.wikimedia.org/wiki/"
-            + quote(str(page.get("title", "")).replace(" ", "_"), safe=":/_(),.!'-"),
-            "via": via,
-        }
+        for chosen, shot, score in ranked[:3]:
+            with lock:
+                if chosen.title in used:
+                    continue
+                used.add(chosen.title)
+                name = slug(m.key.replace("|", "-")) or slug(f"{m.make}-{m.model}")
+                stem, n = name, 2
+                while name in used_slugs:
+                    name, n = f"{stem}-{n}", n + 1
+                used_slugs.add(name)
+
+            dest = IMG_DIR / name
+            try:
+                raw = get(client, filepath_url(chosen.title, 1280), cdn_bucket).content
+                written, hero = render(raw, dest, quality)
+            except Exception as exc:  # noqa: BLE001
+                for path in outputs(dest):
+                    path.unlink(missing_ok=True)
+                with lock:
+                    stats["render_error"] += 1
+                    used_slugs.discard(name)
+                print(f"  ! {m.key} render {chosen.title}: {exc}"[:150], flush=True)
+                continue  # try the next-best frame rather than giving up on the model
+
+            entry = {
+                "image": f"store/img/bikes2/{name}.webp",
+                "thumb": f"store/img/bikes2/{name}.thumb.webp",
+                "title": chosen.title,
+                "author": strip_html((chosen.meta.get("Artist") or {}).get("value", "")) or "Unknown",
+                "license": strip_html((chosen.meta.get("LicenseShortName") or {}).get("value", "")),
+                "source": "https://commons.wikimedia.org/wiki/"
+                + quote(chosen.page_title.replace(" ", "_"), safe=":/_(),.!'-"),
+                "via": chosen.via,
+                "view": shot.view if shot else None,
+                "score": round(score, 1),
+            }
+            if hero:
+                entry["hero"] = f"store/img/bikes2/{name}.hero.webp"
+            with lock:
+                entries[m.key] = entry
+                stats["hit"] += 1
+                stats[f"hit:{chosen.via}"] += 1
+                stats[f"tier{m.tier}:hit"] += 1
+                bytes_used += written
+            print(
+                f"  + {m.key} <- {chosen.title} [{entry['license']}] "
+                f"{chosen.via}/{entry['view']} {score:.1f}",
+                flush=True,
+            )
+            return True
+
         with lock:
-            entries[m.key] = entry
-            stats["hit"] += 1
-            stats[f"src:{via}"] += 1
-            stats[f"tier{m.tier}:hit"] += 1
-            bytes_used += size_full + size_thumb
-        print(f"  + {m.key} <- {title} [{entry['license']}] via {via}", flush=True)
-        return True
+            stats["render_gave_up"] += 1
+        return False
 
     def work(client: httpx.Client, m: Model) -> None:
         try:
-            got = fetch(client, m)
+            fetch(client, m)
         except Exception as exc:  # noqa: BLE001
-            got = False
             with lock:
                 stats["error"] += 1
-            print(f"  ! {m.key}: {exc!r}"[:160], flush=True)
+            print(f"  ! {m.key}: {exc!r}"[:150], flush=True)
         with lock:
             stats["done"] += 1
             stats[f"tier{m.tier}:done"] += 1
             due = stats["done"] % args.checkpoint == 0
         if due:
             write_outputs(entries)
-            refresh_first_pass()
+            _, titles = first_pass()  # the other agent is still claiming files
+            with lock:
+                used.update(titles)
+                snapshot = (stats["done"], stats["hit"], stats["attempted"], spend["usd"])
             print(
-                f"  .. {stats['done']}/{len(models)} tried, {len(entries)} new images, "
-                f"{bytes_used / 1e6:.1f} MB, hit rate "
-                f"{100 * stats['hit'] / max(1, stats['attempted']):.0f}%",
+                f"  .. {snapshot[0]}/{len(models)} tried, {len(entries)} images, "
+                f"{bytes_used / 1e6:.1f} MB, hit {100 * snapshot[1] / max(1, snapshot[2]):.0f}%, "
+                f"${snapshot[3]:.2f}",
                 flush=True,
             )
 
-    tiers = defaultdict(int)
+    tiers: dict = defaultdict(int)
     for m in models:
         tiers[m.tier] += 1
     print(
-        f"{len(all_models)} model families, {len(done_keys)} already done by images.py, "
-        f"{len(entries)} done here; {len(models)} to try "
+        f"{len(all_models)} model families, {len(filled)} filled by images.py, "
+        f"{len(entries)} filled here; {len(models)} to try "
         f"(manualId {tiers[0]}, manualUrl {tiers[1]}, rest {tiers[2]}); "
-        f"budget {args.budget_mb} MB"
-        + (f", {args.minutes:.0f} min" if args.minutes else ""),
+        f"budget {args.budget_mb} MB / ${args.llm_budget} LLM"
+        + (f" / {args.minutes:.0f} min" if args.minutes else ""),
         flush=True,
     )
 
     with httpx.Client(
         headers={"User-Agent": UA, "Accept-Encoding": "gzip"},
-        timeout=httpx.Timeout(30.0, connect=15.0),
+        timeout=httpx.Timeout(40.0, connect=15.0),
         follow_redirects=True,
     ) as client:
         with ThreadPoolExecutor(max_workers=args.workers) as pool:
             list(pool.map(lambda m: work(client, m), models))
 
     write_outputs(entries)
+    by = lambda prefix: {  # noqa: E731
+        k.split(":", 1)[1]: v for k, v in sorted(stats.items()) if k.startswith(prefix)
+    }
+    pass_rate = {}
+    for src in ("wikipedia", "category", "search"):
+        seen = stats.get(f"scored:{src}", 0)
+        if seen:
+            pass_rate[src] = f"{stats.get(f'passed:{src}', 0)}/{seen}"
     print(
         json.dumps(
             {
                 "tried": stats["done"],
                 "new_images": stats["hit"],
                 "total_entries": len(entries),
-                "no_match": stats["no_match"],
-                "errors": stats["error"],
-                "dupes": stats["dupe"],
+                "alias_entries": sum(1 for e in entries.values() if e.get("via") == "alias"),
+                "no_candidate": stats["no_candidate"],
+                "rejected_by_rater": stats["rejected"],
+                "errors": stats["error"] + stats["rate_error"] + stats["render_error"],
                 "mb": round(bytes_used / 1e6, 2),
-                "by_source": {k[4:]: v for k, v in sorted(stats.items()) if k.startswith("src:")},
+                "llm_usd": round(spend["usd"], 3),
+                "candidates_rated": stats["rated"],
+                "pass_rate_by_source": pass_rate,
+                "hits_by_source": by("hit:"),
                 "by_tier": {k: v for k, v in sorted(stats.items()) if k.startswith("tier")},
                 "stopped_for_budget": bool(stats["budget"]),
                 "stopped_for_time": stop.is_set() and not stats["budget"],

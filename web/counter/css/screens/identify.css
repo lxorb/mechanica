@@ -74,9 +74,26 @@
   outline: none;
 }
 
+/* The field reads a VIN on its own: identify.js sets .is-vin and shows the tag. */
 [data-screen="identify"] .id-search.is-vin .id-q {
-  letter-spacing: 0.16em;
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   font-variant-numeric: tabular-nums;
+}
+
+[data-screen="identify"] .id-vin-tag {
+  align-self: center;
+  flex: none;
+  margin-right: 10px;
+  padding: 4px 7px;
+  background: var(--orange);
+  color: #fff;
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
 }
 
 [data-screen="identify"] .id-cam {
@@ -106,39 +123,6 @@
   background: var(--orange);
   transform-origin: left center;
   animation: id-scan 0.8s linear infinite;
-}
-
-/* The dock is full-bleed; the VIN link still lines up with the document column. */
-[data-screen="identify"] .id-vin-line {
-  display: flex;
-  align-items: center;
-  height: 34px;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 12px;
-}
-
-[data-screen="identify"] .id-vin {
-  min-height: 34px;
-  padding: 0 2px;
-  border: 0;
-  background: transparent;
-  color: #6c665a;
-  font-family: Barlow, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  cursor: pointer;
-  appearance: none;
-}
-
-[data-screen="identify"] .id-vin[aria-pressed="true"] {
-  color: var(--ink);
-  background: var(--yellow);
-  padding: 0 8px;
-  text-decoration: none;
 }
 
 /* --------------------------------------------------------------- landing */
@@ -183,13 +167,6 @@ body.id-landing [data-screen="identify"] .id-shot {
 body.id-landing [data-screen="identify"] .id-cam {
   width: 62px;
   min-width: 62px;
-}
-
-body.id-landing [data-screen="identify"] .id-vin-line {
-  justify-content: center;
-  height: auto;
-  margin-top: 16px;
-  padding: 0;
 }
 
 @media (min-width: 640px) {
@@ -374,31 +351,40 @@ body.id-landing [data-screen="identify"] .id-vin-line {
 
 /* ---------------------------------------------------------- year chooser */
 
+/* The chooser tile is served the 160 px thumb, so it stays a tile: sharp at 1x and 2x. */
 [data-screen="identify"] .id-chooser {
   margin-top: 12px;
+  padding: 10px;
+}
+
+[data-screen="identify"] .id-chooser-top {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  min-width: 0;
 }
 
 [data-screen="identify"] .id-chooser-art {
   position: relative;
+  flex: none;
+  width: 132px;
   aspect-ratio: 3 / 2;
-  max-height: 34vh;
   border: 3px solid var(--ink);
   background: var(--paper);
   overflow: hidden;
 }
 
 [data-screen="identify"] .id-chooser-art.is-bare {
-  background: repeating-linear-gradient(135deg, var(--card) 0 9px, var(--rule) 9px 18px);
+  background: repeating-linear-gradient(135deg, var(--card) 0 7px, var(--rule) 7px 14px);
 }
 
 [data-screen="identify"] .id-chooser-head {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 2px;
-  padding: 10px 12px 12px;
-  border: 3px solid var(--ink);
-  border-top: 0;
-  background: var(--card);
+  min-width: 0;
+  flex: 1;
 }
 
 [data-screen="identify"] .id-chooser-make {
@@ -413,11 +399,12 @@ body.id-landing [data-screen="identify"] .id-vin-line {
 [data-screen="identify"] .id-chooser-model {
   font-family: "Big Shoulders Display", sans-serif;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 0.95;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 [data-screen="identify"] .id-chooser-years {

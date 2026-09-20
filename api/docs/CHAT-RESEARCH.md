@@ -29,10 +29,14 @@ Measured on the six real retrieved chat contexts, one batched call each:
 
 bear-2 is extractive: it strips stopwords and punctuation, and at 0.5 it also eats printed values and
 sometimes a page fence. A lost fence silently reattributes one page's text to another page's number, and a
-lost torque figure is exactly the thing this app exists not to get wrong. 0.5 clears the 30 % target only by
-spending the product's one promise, so we take 0.3 and ~22 % instead. Two guards make that safe rather than
-hopeful: `chat._split` re-checks every fence and throws the whole compression away if one is missing, and no
-quote is ever copied out of compressed text (see §3).
+lost torque figure is exactly the thing this app exists not to get wrong. So we stayed at 0.3 and accepted
+~22 %, under the 30 % target — and then got the rest for free from the other end: `chat._strip_referrals`
+deletes the "consult an authorised workshop" boilerplate (2.8 % of the KTM text, 5.7 % of the BMW) before
+compression, which a mechanic must not be told anyway. Measured end to end that lands at **30.8 % saved with
+every printed figure intact** — 368/368 KTM and 256/256 BMW figures survive stripping. Cutting text that
+carries no information beats compressing text that does. Two guards keep it safe: `chat._split` re-checks
+every fence and throws the whole compression away if one is missing, and no quote is ever copied out of
+compressed text (see §3); stripping touches only the model's context, never the page a quote is sliced from.
 
 ## 3. Adopted reference: LlamaIndex `CitationQueryEngine`
 

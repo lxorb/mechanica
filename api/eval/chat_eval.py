@@ -53,7 +53,18 @@ QUESTIONS = [
     ("bmw", "jump start it from a car"),
     ("bmw", "what is the minimum tread depth"),
     ("bmw", "best exhaust for it"),  # out of scope: must come back uncited
+    # Jobs an owner manual answers with "see your dealer". A mechanic needs the figures it prints anyway,
+    # and must never be sent to a workshop they are standing in.
+    ("ktm", "valve clearance spec"),
+    ("ktm", "how do I sync the throttle bodies"),
+    ("bmw", "steering head bearing play check"),
+    ("bmw", "fork oil change"),
+    ("ktm", "when does the chain need replacing"),
 ]
+
+# Advice a mechanic must never be given back. Matched on the answer, not the sources: the manual says it
+# constantly, the answer may not. "retailer"/"specialist" are how BMW phrases the same referral.
+REFERRAL = re.compile(r"\b(?:dealer|retailer|workshop|specialist|service cent(?:re|er))\b", re.I)
 
 
 def percentile(values: list[float], pct: float) -> float:
@@ -65,6 +76,9 @@ def percentile(values: list[float], pct: float) -> float:
 
 def page_text(manual_id: str) -> dict[int, str]:
     return {p.page: p.text for p in get_store().pages(manual_id)}
+
+
+STATUS = (chat.NOT_COVERED, chat.NO_PROCEDURE)
 
 
 def claims(answer: str) -> list[tuple[str, bool]]:
@@ -85,6 +99,8 @@ def claims(answer: str) -> list[tuple[str, bool]]:
             if cited and out:
                 out[-1] = (out[-1][0], True)
             continue
+        if bare.rstrip(".") in [t.rstrip(".") for t in STATUS]:
+            continue  # a status line states no fact of its own, so it needs no citation
         if len(bare.split()) >= CLAIM_WORDS:
             out.append((bare, cited))
     return out
@@ -109,8 +125,9 @@ def run_one(manual_id: str, question: str, pages: dict[int, str]) -> dict:
 
     answer = done.get("answer", "")
     citations = done.get("citations", [])
-    covered = answer.strip() == chat.NOT_COVERED
+    covered = answer.strip() in (chat.NOT_COVERED, chat.NO_PROCEDURE)
 
+    referrals = sorted({m.group(0).lower() for m in REFERRAL.finditer(answer)})
     stated = claims(answer) if not covered else []
     grounded = [s for s, cited in stated if cited]
     valid = [c for c in citations if c.get("quote") and c["quote"] in pages.get(c.get("page", -1), "")]
@@ -121,6 +138,7 @@ def run_one(manual_id: str, question: str, pages: dict[int, str]) -> dict:
         "answer": answer,
         "error": error,
         "notCovered": covered,
+        "referrals": referrals,
         "claims": len(stated),
         "groundedClaims": len(grounded),
         "citations": len(citations),
@@ -147,12 +165,14 @@ def summarise(rows: list[dict], compression: dict) -> dict:
         "n": len(rows),
         "answered": len(answered),
         "notCovered": sum(r["notCovered"] for r in rows),
+        "noProcedure": sum(r["answer"].strip().startswith(chat.NO_PROCEDURE) for r in rows),
         "errors": [f"{r['question']}: {r['error']}" for r in rows if r["error"]],
         "groundingRate": grounded / claim_count if claim_count else 0.0,
         "claims": claim_count,
         "citationValidity": valid / cited if cited else 0.0,
         "citations": cited,
         "uncitedAnswers": [r["question"] for r in answered if not r["citations"]],
+        "referralAnswers": [f"{r['question']}: {', '.join(r['referrals'])}" for r in rows if r["referrals"]],
         "tokensBefore": before,
         "tokensAfter": after,
         "tokensSavedPct": (before - after) / before if before else 0.0,
@@ -172,6 +192,7 @@ def verdict(s: dict) -> dict:
         "claims carrying a citation >= 95 %": (s["groundingRate"] >= TARGETS["grounded"], f"{s['groundingRate']:.1%}"),
         "tokens saved by TTC >= 30 %": (s["tokensSavedPct"] >= TARGETS["saved"], f"{s['tokensSavedPct']:.1%}"),
         "p50 time to first token <= 4 s": (s["ttftP50"] <= TARGETS["ttft"], f"{s['ttftP50']:.2f} s"),
+        "no answer sends a mechanic to a dealer": (not s["referralAnswers"], f"{len(s['referralAnswers'])} of {s['n']}"),
     }
 
 
@@ -190,7 +211,8 @@ def report(rows: list[dict], s: dict, checks: dict, compression: dict) -> str:
     lines += [
         "",
         "## Totals",
-        f"- {s['n']} questions, {s['answered']} answered from the manual, {s['notCovered']} \"not in this manual\"",
+        f"- {s['n']} questions, {s['answered']} answered from the manual, {s['notCovered']} declined, "
+        f"{s['noProcedure']} \"manual does not include this procedure\"",
         f"- grounding: {s['groundingRate']:.1%} of {s['claims']} claim sentences carry a [p. N]",
         f"- citations: {s['citations']} returned, {s['citationValidity']:.1%} verbatim on the page they name",
         f"- TTC: {s['tokensBefore']} tokens in -> {s['tokensAfter']} out, {s['tokensSavedPct']:.1%} saved "
@@ -213,6 +235,8 @@ def report(rows: list[dict], s: dict, checks: dict, compression: dict) -> str:
         )
     if s["errors"]:
         lines += ["", "## Errors", *[f"- {e}" for e in s["errors"]]]
+    if s["referralAnswers"]:
+        lines += ["", "## Answers that referred the mechanic elsewhere", *[f"- {a}" for a in s["referralAnswers"]]]
     if s["uncitedAnswers"]:
         lines += ["", "## Answered without a citation", *[f"- {q}" for q in s["uncitedAnswers"]]]
     lines += ["", "## Answers", ""]
@@ -248,7 +272,7 @@ def main() -> int:
     for i, (manual_id, question) in enumerate(cases, 1):
         row = run_one(manual_id, question, pages[manual_id])
         rows.append(row)
-        mark = "x" if row["error"] else ("." if row["citations"] or row["notCovered"] else "o")
+        mark = "D" if row["referrals"] else ("x" if row["error"] else ("." if row["citations"] or row["notCovered"] else "o"))
         print(f"{mark} {i:2}/{len(cases)} {row['ttft']:5.2f}s {question}", flush=True)
 
     compression = ttc.stats()

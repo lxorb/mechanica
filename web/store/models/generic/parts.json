@@ -84,5 +84,96 @@
   ],
   "paintMaterials": [],
   "extra": {}
+ },
+ "motocross": {
+  "kind": "bike",
+  "orient": 180,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {
+   "engine": [
+    "^Cylinder\\.001_METAL_0$",
+    "^Cylinder\\.002_METAL_0$",
+    "^Cylinder\\.002_BLACK PLASTICS_0$",
+    "^Cylinder_BLACK PLASTICS_0$",
+    "^Cylinder\\.003_METAL_0$",
+    "^Cylinder\\.001$",
+    "^Cylinder\\.002$",
+    "^Cylinder$",
+    "^Cylinder\\.003$"
+   ],
+   "fairing": [
+    "^NUMBER PLATES\\.001_BLACK PLASTICS_0$",
+    "^AIRBOX_BLACK PLASTICS_0$",
+    "^MUD GUARD_BLACK PLASTICS_0$",
+    "^BASH GAURD_BLACK PLASTICS_0$",
+    "^Plane\\.002_BLACK PLASTICS_0$",
+    "^Plane_BLACK PLASTICS_0$"
+   ]
+  }
+ },
+ "enduro": {
+  "kind": "bike",
+  "orient": 180,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {}
+ },
+ "supermoto": {
+  "kind": "bike",
+  "orient": 180,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {
+   "handlebar": [
+    "^BONE_L_GRIP_66$",
+    "^BONE_R_GRIP_67$",
+    "^BONE_L_LEVER_68$",
+    "^BONE_R_LEVER_69$"
+   ]
+  }
+ },
+ "touring": {
+  "kind": "bike",
+  "orient": 180,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {}
+ },
+ "adventure": {
+  "kind": "bike",
+  "orient": 180,
+  "paint": [
+   "fuel-tank",
+   "fairing",
+   "frame"
+  ],
+  "paintMaterials": [],
+  "extra": {}
+ },
+ "car": {
+  "kind": "car",
+  "orient": 180,
+  "paint": [
+   "fairing"
+  ],
+  "paintMaterials": [],
+  "extra": {}
  }
 }

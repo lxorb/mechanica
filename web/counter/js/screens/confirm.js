@@ -16,6 +16,7 @@ let gen = 0;
 let shownBike = null;
 let shownState = "none";
 let working = false;
+let workRatio = -1;
 let chooserLoad = null;
 let ovScale = 1;
 let ovTx = 0;
@@ -350,9 +351,23 @@ function onResize() {
   ovLayout();
 }
 
+/**
+ * Three sizes ship per bike: hero (1280), image (640), thumb (160). The big frame here
+ * takes the hero, the alternative cards take the thumb; each falls through to whatever
+ * sizes that bike has.
+ */
+function artSrc(bike, want) {
+  if (!bike) return "";
+  const order = want === "tile" ? ["thumb", "image", "hero"] : ["hero", "image", "thumb"];
+  for (const key of order) {
+    if (bike[key]) return Q.asset(bike[key]);
+  }
+  return "";
+}
+
 function paintBike(rec) {
   const label = [rec.make, rec.model].filter(Boolean).join(" ");
-  const src = rec.image ? Q.asset(rec.image) : "";
+  const src = artSrc(rec, "hero");
 
   els.name.textContent = label;
 
@@ -441,13 +456,13 @@ function altCard(entry) {
 
   const art = document.createElement("span");
   art.className = "confirm-alt-art";
-  const path = rec.thumb || rec.image;
+  const path = artSrc(rec, "tile");
   if (path) {
     const img = watchArt(document.createElement("img"));
     img.loading = "lazy";
     img.decoding = "async";
     img.alt = "";
-    img.src = Q.asset(path);
+    img.src = path;
     art.append(img);
   } else {
     art.classList.add("is-bare");
@@ -543,24 +558,56 @@ function showSource() {
 
 function showWork() {
   working = true;
+  workRatio = -1;
   els.prompt.hidden = true;
   els.actions.hidden = true;
   els.source.hidden = true;
   els.work.hidden = false;
+  // The sweep only covers the wait for the first poll; CSS owns the width while it runs.
   els.bar.classList.add("is-wait");
-  els.barFill.style.width = "100%";
+  els.barFill.style.width = "";
   els.workTitle.textContent = "";
 }
 
+/**
+ * Determinate from the moment the job reports a page count, and monotonic: a poll that
+ * comes back with fewer pages done than the last one never drags the bar backwards. The
+ * hand-off out of the sweep is the one step that skips the transition, so the bar does not
+ * animate from a full sweep back down to 3%.
+ */
+function setBar(ratio) {
+  if (!(ratio >= 0)) return;
+  const next = Math.min(1, ratio);
+  if (workRatio >= 0 && next <= workRatio) return;
+  const first = workRatio < 0;
+  workRatio = next;
+  const width = `${(next * 100).toFixed(1)}%`;
+  if (!first) {
+    els.barFill.style.width = width;
+    return;
+  }
+  els.bar.classList.remove("is-wait");
+  els.barFill.style.transition = "none";
+  els.barFill.style.width = width;
+  void els.barFill.offsetWidth;
+  els.barFill.style.transition = "";
+}
+
+/**
+ * `done`/`pages` come from every poll of the job. `structuring` counts outline rows, not
+ * pages, so it holds the bar where indexing left it instead of reporting a second scale.
+ * `stage` is the backend's own word for what it is doing; it labels the bar when there is
+ * no manual title yet.
+ */
 function onProgress(mine) {
   return (p) => {
     if (mine !== gen || !p) return;
-    const ratio = p.pages > 0 ? Math.min(1, p.done / p.pages) : 0;
-    if (ratio > 0) {
-      els.bar.classList.remove("is-wait");
-      els.barFill.style.width = `${Math.round(ratio * 100)}%`;
-    }
-    if (p.title && els.workTitle.textContent !== p.title) els.workTitle.textContent = p.title;
+    const pages = Number(p.pages) || 0;
+    const done = Number(p.done) || 0;
+    if (pages > 0 && p.status !== "structuring") setBar(done / pages);
+    else if (pages > 0) setBar(workRatio < 0 ? 0 : workRatio);
+    const label = p.title || p.stage || "";
+    if (label && els.workTitle.textContent !== label) els.workTitle.textContent = label;
   };
 }
 
@@ -893,7 +940,7 @@ registerScreen("confirm", {
     window.addEventListener("resize", onResize);
 
     const rec = bikeOf(state.bikeId);
-    if (rec && rec.image) preload(Q.asset(rec.image));
+    if (rec) preload(artSrc(rec, "hero"));
   },
 
   enter() {

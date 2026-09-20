@@ -56,8 +56,8 @@
  *     they are relative paths, so wrap them in asset() like store/catalog.json's.
  *
  * Beyond query.js: ask, chat, identifyPhoto/Vin/Part, partPhrase, partOffers, ingest,
- * ensureManual, manualState, jobsFor, cost, voiceConfig, deepgramToken, apiBase, online,
- * storeMode.
+ * ensureManual, manualState, jobsFor, cost, voiceConfig, deepgramToken, voiceSettings,
+ * apiBase, online, storeMode.
  */
 
 import { highlight, search as searchIndex, tokens, fold } from "./search.js";
@@ -1246,5 +1246,21 @@ export async function deepgramToken() {
   await loadCatalog();
   if (mode !== "remote") return null;
   return quiet("/voice/deepgram-token", { method: "POST", ms: 20000 }, null);
+}
+
+/**
+ * The whole Deepgram Voice Agent `Settings` message for one manual, built on the server:
+ * {url, sampleRate, manualId, bike, settings}. The prompt, the model and the tool endpoints
+ * are all decided there — the browser forwards `settings` down the socket unread and handles
+ * exactly one function itself (show_page). null when there is no API or no such manual.
+ */
+export async function voiceSettings(manualId, bikeId) {
+  await loadCatalog();
+  if (mode !== "remote") return null;
+  const id = String(manualId || "").trim();
+  if (!id) return null;
+  const params = new URLSearchParams({ manualId: id });
+  if (bikeId) params.set("bikeId", String(bikeId));
+  return quiet(`/voice/agent-settings?${params.toString()}`, { ms: 15000 }, null);
 }
 

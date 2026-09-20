@@ -42,7 +42,6 @@
       <select id="bike">
         <option value="">— pick a bike —</option>
       </select>
-      <button type="button" class="viewer3d-btn" id="mode" aria-pressed="false">Placeholder</button>
     </div>
     <div id="host"></div>
     <div class="viewer3d-bar">
@@ -69,7 +68,6 @@
     let started = 0;
     let readyAt = 0;
     let upgradedAt = 0;
-    let usePlaceholder = false;
     let loaded = 0;
     // ?src=gltf loads the uncompressed Sketchfab source instead of model.glb (dev only)
     const src = new URLSearchParams(location.search).get("src");
@@ -80,7 +78,7 @@
       const state = viewer ? viewer.state() : {};
       const d = window.lastDescriptor;
       out.textContent =
-        `model ${state.model || "-"} · ${state.placeholder ? "schematic" : "glb"} · scene ${readyAt ? readyAt + " ms" : "…"} · glb ${upgradedAt ? upgradedAt + " ms" : "…"} · dl ${loaded ? Math.round(loaded * 100) + "%" : "…"}\n` +
+        `model ${state.model || "-"} · ${state.empty ? "no model" : "glb"} · scene ${readyAt ? readyAt + " ms" : "…"} · glb ${upgradedAt ? upgradedAt + " ms" : "…"} · dl ${loaded ? Math.round(loaded * 100) + "%" : "…"}\n` +
         (d ? `${d.label} → ${d.key} · ${d.exact ? "exact" : "generic"} · type ${d.type} · tint ${d.tint || "none"}\n` : "") +
         `meshes ${state.meshes ?? "-"} · part ${state.part || "none"} · spacing ${(state.spacing ?? 0).toFixed(2)}\n` +
         `groups ${(state.parts || []).join(" ")}\n` +
@@ -96,7 +94,6 @@
       started = performance.now();
       const plainKey = typeof key === "string" ? key : key.key;
       viewer = mount(host, key, {
-        placeholder: usePlaceholder,
         debug: true,
         url: src ? (src === "gltf" ? `../store/models/${plainKey}/scene.gltf` : `../store/models/${plainKey}/_${src}.glb`) : undefined,
         environment: envParam === "off" ? false : envParam || undefined,
@@ -148,11 +145,6 @@
     bikeSelect.addEventListener("change", (e) => {
       if (!e.target.value) return;
       start(modelFor(BIKES[Number(e.target.value)]));
-    });
-    document.getElementById("mode").addEventListener("click", (e) => {
-      usePlaceholder = !usePlaceholder;
-      e.target.setAttribute("aria-pressed", String(usePlaceholder));
-      start(document.getElementById("model").value);
     });
     document.getElementById("explode").addEventListener("click", (e) => {
       const on = e.target.getAttribute("aria-pressed") !== "true";

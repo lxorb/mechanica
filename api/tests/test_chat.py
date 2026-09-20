@@ -12,7 +12,7 @@ from app.ask import Route
 from app.config import settings
 from app.store import get_store
 
-from conftest import KTM
+from conftest import BMW, KTM
 
 
 def frames(stream) -> list[dict]:
@@ -270,3 +270,82 @@ def test_chat_endpoint_streams_sse(client, monkeypatch):
 def test_chat_endpoint_404s_on_an_unknown_manual(client):
     response = client.post("/chat", json={"manualId": "nope", "messages": [{"role": "user", "content": "hi"}]})
     assert response.status_code == 404
+
+
+def test_referral_sentences_are_stripped_but_printed_values_survive():
+    """Owner manuals pad every job with "have it done by an authorised workshop". A mechanic gets the
+    figures, not the referral - and a sentence that prints a number is never dropped."""
+    cases = [
+        ("Have the fault rectified by a spe- cialist workshop, preferably an authorised BMW Motorrad "
+         "retailer. Check the oil level every 1000 km.", "Check the oil level every 1000 km."),
+        ("Valve clearance must be checked by an authorised workshop. Valve clearance intake 0.10 mm.",
+         "Valve clearance intake 0.10 mm."),
+        ("Remove the seat. Undo the bolt.", "Remove the seat. Undo the bolt."),
+    ]
+    for raw, expected in cases:
+        assert chat._strip_referrals(raw) == expected
+
+    # The value-bearing warning stays whole: BMW prints tightening torques inside exactly these sentences.
+    kept = chat._strip_referrals("Always have the security screws tightened to 21 Nm by a specialist workshop.")
+    assert "21 Nm" in kept
+
+
+def test_stripping_never_splits_a_decimal():
+    """Splitting on every full stop would turn 0.10 mm into "0. 10 mm" and corrupt a printed clearance."""
+    for value in ("0.10 mm", "1.7 l", "2.2 bar", "73.8 lbf ft"):
+        assert value in chat._strip_referrals(f"Consult a workshop. Printed value is {value} exactly.")
+
+
+def test_every_printed_figure_survives_stripping_on_both_real_manuals():
+    figure = re.compile(r"\d+(?:[.,]\d+)?\s*(?:Nm|l\b|mm|bar|psi|V|A|km|qt|lbf)", re.I)
+    for manual_id in (KTM, BMW):
+        for page in get_store().pages(manual_id):
+            flat = " ".join(page.text.split())
+            missing = set(figure.findall(flat)) - set(figure.findall(chat._strip_referrals(page.text)))
+            assert not missing, f"{manual_id} p.{page.page} lost {missing}"
+
+
+def test_context_sent_to_the_model_carries_no_dealer_referral(monkeypatch):
+    stream = fake_stream(lambda user: f"Yes [p. {offered_pages(user)[0]}].")
+    monkeypatch.setattr(chat.llm, "stream", stream)
+    for question in ("valve clearance spec", "steering head bearing play", "how do I check the brake pads on the front"):
+        frames(chat.answer(BMW, [{"role": "user", "content": question}]))
+        sent = stream.seen["user"]
+        bare = [s for s in re.split(r"(?<=[.!?])\s+", sent) if chat.DEALER.search(s) and not any(c.isdigit() for c in s)]
+        assert not bare, f"{question}: referral boilerplate reached the prompt: {bare[:2]}"
+
+
+def test_boilerplate_only_pages_lose_their_slot(monkeypatch):
+    """A page that only says "see your dealer" must rank behind a page that prints a procedure."""
+    stream = fake_stream(lambda user: f"Yes [p. {offered_pages(user)[0]}].")
+    monkeypatch.setattr(chat.llm, "stream", stream)
+    monkeypatch.setattr(chat, "MAX_PAGES", 2)
+
+    boiler, solid = 900, 901
+    pages = {boiler: "Contact an authorized KTM workshop.", solid: "Tightening torque rear wheel spindle 100 Nm. " * 12}
+
+    class FakePage:
+        def __init__(self, page, text):
+            self.page, self.text = page, text
+
+    monkeypatch.setattr(chat, "_pages_for", lambda m, q: [boiler, solid])
+    real_pages = get_store().pages
+
+    def patched(manual_id):
+        return [FakePage(p, t) for p, t in pages.items()] if manual_id == KTM else real_pages(manual_id)
+
+    monkeypatch.setattr(chat.get_store(), "pages", patched)
+    frames(chat.answer(KTM, [{"role": "user", "content": "rear axle torque"}]))
+    assert offered_pages(stream.seen["user"])[0] == solid
+
+
+def test_the_prompt_forbids_dealer_advice_and_safety_boilerplate(monkeypatch):
+    stream = fake_stream(lambda user: f"Yes [p. {offered_pages(user)[0]}].")
+    monkeypatch.setattr(chat.llm, "stream", stream)
+    frames(chat.answer(KTM, [{"role": "user", "content": "valve clearance"}]))
+
+    system = stream.seen["system"]
+    assert "professional" in system and "on the lift" in system
+    assert "authorised workshop" in system and "NEVER tell the reader" in system
+    assert "safety boilerplate" in system
+    assert chat.NO_PROCEDURE in system

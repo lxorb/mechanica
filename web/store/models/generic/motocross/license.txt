@@ -1,0 +1,11 @@
+Model Information:
+* title:	2022 Yamaha YZ450F
+* source:	https://sketchfab.com/3d-models/2022-yamaha-yz450f-dfff1637219f44d6bfa3ed3c9708d523
+* author:	Res1n (https://sketchfab.com/Res1n)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "2022 Yamaha YZ450F" (https://sketchfab.com/3d-models/2022-yamaha-yz450f-dfff1637219f44d6bfa3ed3c9708d523) by Res1n (https://sketchfab.com/Res1n) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

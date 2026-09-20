@@ -103,8 +103,11 @@ async function states() {
     ["viewer-loading-ring", "model=yzf-2021",
       () => document.querySelector(".viewer3d-load.is-known")
         && /[1-9]/.test(document.querySelector(".viewer3d-load-pct")?.textContent || "")],
-    ["viewer-fallback-404", "model=generic/does-not-exist",
-      () => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "placeholder"],
+    // a model URL that 404s: the backdrop and the ring stay, the ring goes quiet and becomes a
+    // tap target. Nothing stands in for the vehicle — there is no schematic any more.
+    ["viewer-error-retry", "model=generic/does-not-exist",
+      () => document.querySelector(".viewer3d-load.is-failed")
+        && document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "error"],
   ];
   let bad = 0;
   for (const [name, query, condition] of cases) {

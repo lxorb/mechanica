@@ -52,9 +52,21 @@ NOT_COVERED = "Not in this manual."
 CITE = re.compile(r"\[p\.\s*(\d+)\]")
 MARKER = re.compile(r"PAGE (\d+)")
 
-SYSTEM = f"""You answer one question from a rider standing next to their motorcycle, with dirty hands, using
-ONLY the printed pages of that motorcycle's own manual. The pages are given to you below as numbered sources;
-each source is one printed page and its number is the page number printed in that manual.
+# Owner manuals pad every job with "consult an authorised workshop". The reader here is a mechanic with
+# the bike already on the lift, so that sentence is noise that crowds out the printed values next to it.
+# PDF text layers hyphenate across line breaks ("spe- cialist", "autho- rized"), so de-hyphenate first.
+HYPHEN = re.compile(r"(\w)-\s+(\w)")
+DEALER = re.compile(r"\b(?:dealer|retailer|workshop|specialist|service cent(?:re|er))\b", re.I)
+# Split only where a full stop is followed by space + a new sentence: splitting on every "." would
+# cut "0.10 mm" into "0. 10 mm" and corrupt exactly the printed values this is meant to protect.
+SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z(])")
+# Below this a page is boilerplate with nothing printed on it, so it loses its slot to a page that prints something.
+MIN_SUBSTANTIVE = 200
+NO_PROCEDURE = "The owner's manual does not include this procedure."
+
+SYSTEM = f"""You answer one question from a professional motorcycle mechanic who has this bike on the lift,
+using ONLY the printed pages of that motorcycle's own manual. The pages are given to you below as numbered
+sources; each source is one printed page and its number is the page number printed in that manual.
 
 Please provide an answer based solely on the provided sources. When referencing information from a source, cite
 the appropriate page using its number, written exactly as [p. N]. EVERY sentence that states a fact, a step, a
@@ -72,18 +84,37 @@ Question: how much oil does it take?
 Answer: It takes 1.7 l with a filter change [p. 97]. Check the level with the bike upright on level ground [p. 12].
 
 Now it's your turn. Rules for your answer:
-- Short. Two to five sentences, or up to six numbered steps for a procedure. No preamble, no sign-off, no
-  "according to the manual", no offers to help further, no warnings the manual does not print.
-- Mechanic-plain. Say what to do and in what order. Plain words a rider knows.
+- You are writing for a professional mechanic who already has the bike on the lift and the tools in hand.
+  Terse and technical: values, steps, tools. No preamble, no sign-off, no "according to the manual", no
+  offers to help further. Two to five sentences, or up to six numbered steps.
+- NEVER tell the reader to visit, consult, contact or have the work done by a dealer, a retailer, an
+  authorised workshop, a specialist workshop or a service centre. They ARE the workshop. Owner manuals pad
+  most jobs with that referral; it is the one thing in the sources you must not pass on.
+- NEVER add safety boilerplate: no "for your safety", no "if you are unsure", no "improper work can cause
+  accidents", no warnings or disclaimers of your own. The reader knows the risks of the job.
+- Two different "no" answers, and picking the wrong one is a real error:
+  "{NOT_COVERED}" is ONLY for a question that is not about servicing this motorcycle at all - tuning,
+  aftermarket parts, riding technique, prices, other vehicles, small talk.
+  "{NO_PROCEDURE}" is for a genuine job on this motorcycle that this owner's manual does not detail -
+  valve clearance, throttle-body synchronisation, steering-head bearing play, fork oil, chain replacement
+  and the like. Owner manuals hand those to a workshop instead of printing them; you say the manual does
+  not include the procedure, and you NEVER answer such a question with "{NOT_COVERED}".
+- After "{NO_PROCEDURE}", STILL give every specification, value, interval, tolerance, fill quantity and
+  tool the sources print FOR THAT JOB, each with its [p. N] - the wear limit, the clearance, the service
+  interval, the tightening torque of the fasteners the job touches. That is the useful answer: the numbers,
+  without the referral. If the sources print nothing for the job, the one sentence on its own is the answer.
+  Still never reach for a figure belonging to a different job to pad it out.
+- If a torque, clearance, capacity, pressure or interval for the job is printed ANYWHERE in the sources,
+  including a technical-data or tightening-torque table on another page, surface it and cite that page.
 - Never invent a number. Torque figures, capacities, pressures, clearances, grades, fuse ratings, part
   designations and intervals may only be repeated if they are printed in a source, with that source cited. If
-  the rider asks for a figure that no source prints, say the manual does not print it and cite nothing for it.
+  the reader asks for a figure that no source prints, say the manual does not print it and cite nothing for it.
   A wrong torque figure breaks a motorcycle; guessing one is the single worst thing you can do here.
 - Never carry a figure over from another motorcycle, from another section, or from your own knowledge.
 - The sources have been machine-compressed, so their grammar and punctuation may be damaged. Read them for
   meaning; write your own clean sentences. Never copy a mangled fragment and never mention the compression.
-- Answer only about THIS motorcycle. Riding technique, tuning, aftermarket parts, prices, dealers, insurance,
-  routes and other vehicles are all "{NOT_COVERED}".
+- Answer only about THIS motorcycle. Riding technique, tuning, aftermarket parts, prices, insurance, routes
+  and other vehicles are all "{NOT_COVERED}".
 - Cite only page numbers that appear in the sources below. Never invent a page number."""
 
 
@@ -140,6 +171,22 @@ def _split(compressed: str, pages: list[int]) -> dict[int, str] | None:
     return out if all(out.values()) else None
 
 
+def _strip_referrals(text: str) -> str:
+    """Drop pure "have it done by an authorised workshop" sentences from what the model gets to read.
+
+    Only from the CONTEXT - `original` stays pristine, so every citation quote is still sliced out of the
+    real printed page. A sentence carrying a digit is never dropped even when it names a workshop: BMW
+    prints tightening torques inside exactly such warnings, and the number is the whole point of the answer.
+    """
+    flat = HYPHEN.sub(r"\1\2", " ".join(text.split()))
+    kept = [
+        s.strip()
+        for s in SENTENCE.split(flat)
+        if s.strip() and not (DEALER.search(s) and not any(c.isdigit() for c in s))
+    ]
+    return " ".join(kept)
+
+
 def _join(original: dict[int, str]) -> str:
     return "\n".join(f"PAGE {page}\n{text}" for page, text in original.items())
 
@@ -152,26 +199,37 @@ def _passages(manual_id: str, pages: list[int]) -> tuple[dict[int, str], dict[in
     with `PAGE N` markers, which bear-2 keeps at 0.3, and _split re-checks every marker afterwards.
     """
     by_page = {p.page: p.text for p in get_store().pages(manual_id) if p.page in set(pages)}
-    original = {page: by_page[page] for page in pages if by_page.get(page, "").strip()}
-    # Trim before paying for compression: a page dropped here costs nothing to compress.
-    while len(original) > 1 and sum(_tokens(t) for t in original.values()) > RAW_CEILING:
-        original.pop(next(page for page in reversed(pages) if page in original))
-    if not original:
-        return {}, {}, 0, 0
+    printed = {page: by_page[page] for page in pages if by_page.get(page, "").strip()}
+    clean = {page: _strip_referrals(text) for page, text in printed.items()}
 
-    raw_tokens = sum(_tokens(t) for t in original.values())
+    # A page whose text is nothing but "consult an authorised workshop" answers nothing, so it gives up its
+    # slot to a page that prints something. Kept last rather than deleted: sometimes it is all there is.
+    ranked = [page for page in pages if page in clean]
+    solid = [page for page in ranked if len(clean[page]) >= MIN_SUBSTANTIVE]
+    if solid and len(solid) < len(ranked):
+        ranked = solid + [page for page in ranked if page not in set(solid)]
+
+    # Trim before paying for compression: a page dropped here costs nothing to compress.
+    while len(ranked) > 1 and sum(_tokens(clean[page]) for page in ranked) > RAW_CEILING:
+        ranked.pop()
+    if not ranked:
+        return {}, {}, 0, 0
+    original = {page: printed[page] for page in ranked}
+    context = {page: clean[page] for page in ranked}
+
+    raw_tokens = sum(_tokens(t) for t in context.values())
     # Adaptive: a normal hit compresses at 0.3, an oversized one harder rather than losing whole pages.
     aggressiveness = HARD_AGGRESSIVENESS if raw_tokens > TOKEN_BUDGET else SOFT_AGGRESSIVENESS
-    out, before, after = ttc.compress(_join(original), aggressiveness, "chat")
-    compressed = _split(out, list(original)) if before else None
+    out, before, after = ttc.compress(_join(context), aggressiveness, "chat")
+    compressed = _split(out, ranked) if before else None
     if compressed is None:
         # Compression off, failed, or mangled the markers: the printed text is always the safe answer.
-        compressed, before, after = dict(original), 0, 0
+        compressed, before, after = dict(context), 0, 0
 
     # Last resort when even compressed pages overflow: drop the weakest page, never truncate mid-sentence.
-    # `pages` is best-section-first, so the last surviving entry is the weakest.
+    # `ranked` is best-section-first, boilerplate last, so the last surviving entry is the weakest.
     while len(compressed) > 1 and sum(_tokens(t) for t in compressed.values()) > TOKEN_BUDGET:
-        worst = next(page for page in reversed(pages) if page in compressed)
+        worst = next(page for page in reversed(ranked) if page in compressed)
         compressed.pop(worst)
         original.pop(worst)
     return original, compressed, before, after
