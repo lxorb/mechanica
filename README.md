@@ -1,10 +1,10 @@
 # Trust the manual
-Don't trust the AI. Trust the manual. PWA (React/Vite) + API (FastAPI, `api/`).
 
-    npm install && npm run dev                          # web, :5173
+Official motorcycle manual, right page. Frontend: Handy Book counter app in `web/` (no build). Backend: FastAPI in `api/`.
+
+    npx serve web -l 5000            # http://localhost:5000/counter/
     cd api && .venv/Scripts/python -m uvicorn app.main:app --port 8000
-    deploy/azure.sh              # API -> Azure Container Apps, prints the URL
-    deploy/web.sh <api-url>      # web -> Cloudflare Worker `trustthemanual`
-    deploy/redeploy.sh           # both, in order
 
-Env: `VITE_API_URL` (web); `OPENAI_API_KEY` `PUBLIC_BASE` `CORS_ORIGINS` `DATA_DIR` `MONGODB_URI` `ES_URL` (api, see `api/.env.example`).
+Deploy: `bash deploy/azure.sh` (API, Azure Container Apps + Blob), `bash deploy/web.sh` (Cloudflare Worker).
+Live: https://trustthemanual.cloudflare-disjoin783.workers.dev/counter/ · API https://ttm-api.victoriousground-5b684586.eastus.azurecontainerapps.io
+Docs: docs/PITCH.md, docs/DEMO.md, docs/SUBMISSION.md, docs/MANUALS.md, docs/UI.md. Env names: api/.env.example.
