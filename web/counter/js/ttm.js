@@ -61,7 +61,7 @@
  * apiBase, online, storeMode.
  */
 
-import { highlight, search as searchIndex, tokens, fold } from "./search.js";
+import { buildIndex, highlight, search as searchIndex, tokens, fold } from "./search.js";
 import { aliasesOf, bikeId as slugId, decorate, expandBundle, forceIndex } from "./index-data.js";
 
 export { highlight, aliasesOf };
@@ -202,8 +202,17 @@ export function apiBase() {
   return wanted.replace(/\/+$/, "") || "/api";
 }
 
+/**
+ * Has the API answered. While the /health probe is still in the air and there is no roster yet
+ * — the first two seconds of a cold load — this answers "assume so" if the device believes it
+ * has a network, because the one caller in that window is Identify's /catalog/suggest top-up:
+ * the API can name a bike in a few hundred milliseconds, and it is the only answer there is
+ * before the 27.4k-row search index has been built. A suggest that fails costs nothing and is
+ * swallowed. From the moment the store has a roster this is the probe's answer and nothing else.
+ */
 export function online() {
-  return healthy;
+  if (healthy) return true;
+  return mode === null && !roster.length && globalThis.navigator?.onLine !== false;
 }
 
 /** "remote" | "local" | null before loadCatalog(). Debug aid, not part of query.js. */
@@ -364,18 +373,53 @@ function announce() {
  * a keystroke that beat it has to wait for it.
  */
 let indexed = false;
+let indexing = false;
 
-function indexLater() {
+/**
+ * One row per model — the newest year of each make+model. 3.5k of the 27.4k rows, and for a
+ * typed query the same answer: Identify groups hits by make+model anyway and takes the card's
+ * year span from the roster, not from the index. So this is the whole search, eight times
+ * cheaper, and the full index behind it only sharpens ranking and year-word matching.
+ */
+function leadRows(bikes) {
+  const best = new Map();
+  for (const b of bikes) {
+    const key = `${b.make}|${b.model}`;
+    const seen = best.get(key);
+    if (!seen || (Number(b.year) || 0) > (Number(seen.year) || 0)) best.set(key, b);
+  }
+  return [...best.values()];
+}
+
+/**
+ * A task boundary after the roster is on the glass, then a model-deep index, then the full one,
+ * with a repaint after each.
+ *
+ * The boundary is not a delay for its own sake: Identify asks /catalog/suggest as soon as the
+ * local list looks thin, and that answer is on the wire while this runs. Letting it land first
+ * is the difference between a card in half a second and a card in five — and if it does not
+ * come, the index is four milliseconds behind where it would otherwise have been.
+ */
+function indexSoon() {
   const bikes = roster;
-  indexed = false; // a roster that was replaced is a roster that has to be indexed again
-  const run = () => {
-    if (roster !== bikes || indexed) return;
-    phase("index", () => forceIndex(bikes));
-    indexed = true;
-    announce();
-  };
-  if (typeof requestIdleCallback === "function") requestIdleCallback(run, { timeout: 2500 });
-  else setTimeout(run, 250);
+  indexed = false;
+  indexing = true;
+  sliceYield()
+    .then(() => {
+      if (roster !== bikes || bikes.length < 8000) return null;
+      const lead = phase("index-lead-rows", () => leadRows(bikes));
+      if (lead.length > bikes.length * 0.6) return null;
+      phase("index-lead", () => buildIndex(lead));
+      announce();
+      return sliceYield();
+    })
+    .then(() => {
+      if (roster !== bikes) return;
+      phase("index", () => forceIndex(bikes));
+      indexed = true;
+      indexing = false;
+      announce();
+    });
 }
 
 /**
@@ -652,7 +696,7 @@ async function bootRemote() {
     const bikes = (await quiet("/catalog", { ms: CATALOG_MS }, [])) ?? [];
     phase("index-ids", () => indexBikes(mergeDuplicates(decorate(bikes))));
   }
-  indexLater();
+  indexSoon();
   // Both of these repaint the screen when they land, and neither is allowed to hold the
   // roster — which is on the glass the moment this function returns.
   repaintArt();
@@ -705,7 +749,7 @@ export async function refreshRoster() {
     if (known?.ondemand && !b.manualUrl) b.ondemand = true;
   }
   indexBikes(next);
-  indexLater();
+  indexSoon();
   repaintArt();
   announce();
 }
@@ -728,7 +772,7 @@ async function bootLocal(url, collectionUrl) {
   }
   indexBikes(mergeDuplicates([...known, ...extra]));
   manualSummaries = local?.catalog?.()?.manuals ?? [];
-  indexLater();
+  indexSoon();
   repaintArt();
 }
 
@@ -821,7 +865,7 @@ export function findBikes(text, opts) {
   // milliseconds, where building the index here would freeze the page for five seconds and
   // then answer. The idle build is at most 2.5 s behind and repaints when it lands. Offline
   // there is nothing else to ask, so the keystroke pays for the index.
-  if (!indexed && !healthy) {
+  if (!indexed && !indexing) {
     phase("index-force", () => forceIndex(roster));
     indexed = true;
   }

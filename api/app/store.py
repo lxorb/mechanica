@@ -54,6 +54,7 @@ class FileStore:
     def __init__(self, root: Path):
         self.root = root
         self.lock = threading.RLock()
+        self._registry_cache: tuple[tuple[int, int], list[RegistryEntry]] | None = None
 
     def _bikes_path(self) -> Path:
         return self.root / "bikes.json"
@@ -102,9 +103,40 @@ class FileStore:
         with self.lock:
             _write(self.root / "specs" / f"{manual_id}.json", [s.model_dump(exclude_none=True) for s in specs])
 
+    def _registry_path(self) -> Path:
+        return self.root / "registry.json"
+
+    def _registry_rows(self) -> list[RegistryEntry]:
+        """Every row, validated once per version of the file.
+
+        registry.json is 40 MB and 99k rows: `json.loads` costs ~1.8 s and validating them ~3.0 s,
+        and the API and the test suite both call this many times per process. The cache key is the
+        file's own (mtime_ns, size), so any writer - put_registry here, the merge tool's wholesale
+        rewrite, another process - invalidates it without needing to know the cache exists. A file
+        that vanishes or is unreadable falls back to an empty list, exactly as before.
+
+        **The rows are shared, so a caller must not mutate one in place.** Nothing in the tree does:
+        the only two mutators (`registry.merge_ua`, which stamps docKind/needsUa, and the merge
+        tool's `--restamp`) copy first. Mutating a row here would change what every later reader in
+        the process sees, and would survive until the file changed.
+        """
+        path = self._registry_path()
+        try:
+            stat = path.stat()
+            key = (stat.st_mtime_ns, stat.st_size)
+        except OSError:
+            self._registry_cache = None
+            return []
+        cached = self._registry_cache
+        if cached is not None and cached[0] == key:
+            return cached[1]
+        rows = [RegistryEntry.model_validate(e) for e in _read(path, [])]
+        self._registry_cache = (key, rows)
+        return rows
+
     def registry(self, make: str | None = None, model: str | None = None, year: int | None = None) -> list[RegistryEntry]:
         with self.lock:
-            entries = [RegistryEntry.model_validate(e) for e in _read(self.root / "registry.json", [])]
+            entries = list(self._registry_rows())  # a fresh list; the rows themselves are shared
         if make:
             entries = [e for e in entries if e.make.lower() == make.lower()]
         if model:

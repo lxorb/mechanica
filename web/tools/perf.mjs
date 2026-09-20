@@ -67,12 +67,53 @@ const GZIP = /^(text\/|application\/(javascript|json|manifest\+json)|image\/svg)
 const PUBLIC_API = "https://ttm-api.victoriousground-5b684586.eastus.azurecontainerapps.io";
 
 /**
+ * docs/qa/perf/index-head.patch, applied to the served bytes instead of to the file — the head
+ * of index.html belongs to another agent this week, and a hint that is only worth having if it
+ * measures well has to be measurable before it is handed over. `--patch` turns it on.
+ *
+ * Hunk 1 (hints): the roster and the module graph start with the HTML instead of two round
+ * trips after it, and the two CDNs the reader and the 3D viewer load from are connected early.
+ * Hunk 2 (css): the five screens nobody can reach from the landing stop blocking the first
+ * paint. Both are exactly what the patch file writes.
+ */
+const HEAD_HINTS = `  <link rel="preload" href="../store/ttm-catalog.json" as="fetch">
+  <link rel="modulepreload" href="js/bus.js">
+  <link rel="modulepreload" href="js/ttm.js">
+  <link rel="modulepreload" href="js/search.js">
+  <link rel="modulepreload" href="js/index-data.js">
+  <link rel="modulepreload" href="js/vision.js">
+  <link rel="modulepreload" href="js/screens/identify.js">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+`;
+
+const LATE_CSS = ["confirm", "pick", "book", "invoice", "cost"];
+
+function patchHead(html, { css = true } = {}) {
+  let out = html.replace(
+    '  <link rel="stylesheet" href="css/counter.css">',
+    `${HEAD_HINTS}  <link rel="stylesheet" href="css/counter.css">`
+  );
+  if (!css) return out;
+  const late = (href) => {
+    out = out.replace(
+      `<link rel="stylesheet" href="${href}">`,
+      `<link rel="stylesheet" media="print" onload="this.media='all'" href="${href}">`
+    );
+  };
+  for (const id of LATE_CSS) late(`css/screens/${id}.css`);
+  late("css/climate.css");
+  late("css/viewer3d.css");
+  return out;
+}
+
+/**
  * web/ over http, gzipped and ETagged like the edge serves it, and /api proxied to the same
  * container the Worker puts behind /api, so a local run boots down the same REMOTE path the
  * phone on the conference wifi will. `--noapi` answers /api with 503 instead: that is the
  * offline / LOCAL store path.
  */
-function serve({ api = PUBLIC_API } = {}) {
+function serve({ api = PUBLIC_API, patch = false } = {}) {
   const etags = new Map();
   return new Promise((done) => {
     const server = createServer(async (req, res) => {
@@ -105,6 +146,16 @@ function serve({ api = PUBLIC_API } = {}) {
         return;
       }
       const type = TYPES[extname(file).toLowerCase()] || "application/octet-stream";
+      if (patch && file.endsWith("index.html")) {
+        const body = gzipSync(Buffer.from(patchHead(readFileSync(file, "utf8")), "utf8"), { level: 6 });
+        res.writeHead(200, {
+          "Content-Type": type,
+          "Cache-Control": "max-age=0, must-revalidate",
+          "Content-Encoding": "gzip",
+          "Content-Length": body.length,
+        }).end(body);
+        return;
+      }
       const stat = statSync(file);
       let tag = etags.get(file);
       if (!tag || tag.mtime !== stat.mtimeMs) {
@@ -272,6 +323,9 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
     };
   }).catch(() => ({ marks: {}, long: [] }));
 
+  const firstAt = Math.min(...[...wire.values()].map((r) => r.start ?? Infinity));
+  const cardAt = Math.round(perf.marks.card ?? 0);
+  out.landing = { requests: 0, bytes: 0 };
   for (const row of wire.values()) {
     out.requests += 1;
     const bytes = row.bytes || 0;
@@ -280,6 +334,12 @@ async function measure(browser, { url, net, cpu, autotype = true, offline = fals
     out.byType[k] = (out.byType[k] || 0) + bytes;
     if (row.cache) out.cached += 1;
     if (row.sw) out.sw += 1;
+    // What the landing actually cost: everything that had finished by the time the first card
+    // was on screen. The rest (photo index, manuals, the worker filling its cache) is after.
+    if (row.end && cardAt && (row.end - firstAt) * 1000 <= cardAt) {
+      out.landing.requests += 1;
+      out.landing.bytes += bytes;
+    }
   }
   const first = Math.min(...[...wire.values()].map((r) => r.start ?? Infinity));
   out.slow = [...wire.values()]
@@ -317,7 +377,7 @@ function line(row) {
   return [
     `  ${row.label.padEnd(26)} fcp ${String(row.fcp).padStart(5)} lcp ${String(row.lcp).padStart(5)} ` +
     `field ${String(row.field).padStart(6)} card ${String(row.card).padStart(6)} ` +
-    `| ${String(row.requests).padStart(3)} req ${kb(row.bytes).padStart(8)} | long ${row.longCount}/${row.longTotal}ms | cards ${row.cards} store ${row.store}${row.controlled ? " sw" : ""}`,
+    `| landing ${String(row.landing ? row.landing.requests : 0).padStart(3)} req ${kb(row.landing ? row.landing.bytes : 0).padStart(8)} of ${String(row.requests).padStart(3)}/${kb(row.bytes)} | long ${row.longCount}/${row.longTotal}ms | cards ${row.cards} store ${row.store}${row.controlled ? " sw" : ""}`,
     `      ${types}`,
     row.long.length ? `      long: ${row.long.slice(0, 4).map((t) => `${t.dur}ms@${t.start}`).join(" ")}` : "",
     row.phases && row.phases.length ? `      phases: ${row.phases.map((p) => `${p.name} ${p.start}+${p.dur}`).join(" · ")}` : "",
@@ -349,7 +409,7 @@ async function main() {
   if (live) {
     origin = LIVE;
   } else {
-    const started = await serve({ api: noapi ? null : PUBLIC_API });
+    const started = await serve({ api: noapi ? null : PUBLIC_API, patch: flag("patch") });
     server = started.server;
     origin = `http://127.0.0.1:${started.port}/counter/`;
   }

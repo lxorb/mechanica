@@ -18,8 +18,11 @@ cuts the API off at the proxy to drive the error states.
     node docs/qa/book/book-shots.mjs         -> unchanged, green
     node web/tools/theme-shots.mjs           -> unchanged, green
 
-Screenshots: `docs/qa/ui-bugs/` — before/after for the worst three. "Before" is produced by
-serving the single line that carried the bug as it was, so each pair differs only by the fix.
+Screenshots: `docs/qa/ui-bugs/` — before/after for the worst three (UI-01 the Conditions slab,
+UI-05 the reload that lost the reader, UI-02 the cold `#cost`). "Before" is produced by serving the
+single line that carried the bug as it was, so each pair differs only by that line. UI-06 has no
+pair worth keeping: the "before" is a page the renderer never painted at all (first paint 12.1 s),
+and a forced capture of it is a picture of something no user sees.
 
 ## Findings
 

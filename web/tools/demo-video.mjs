@@ -245,13 +245,13 @@ async function orbit(page, dx = 210, ms = 1700) {
 async function takeOne(page, take) {
   take.start();
   take.mark("Landing", "one search field, 29,890 vehicles behind it");
-  await dwell(2000);
+  await dwell(1700);
 
   await tap(page, ".id-q");
   await type(page, "2024 390");
-  await dwell(2200);
+  await dwell(1800);
   take.mark("Model cards", "photo cards while the query is still ambiguous");
-  await dwell(900);
+  await dwell(700);
 
   await type(page, " duke");
   // The landing jumps by itself once one bike has been the only candidate for 400 ms; Enter is
@@ -263,9 +263,9 @@ async function takeOne(page, take) {
     () => !!document.querySelector('section[data-screen="confirm"] button[aria-label="Yes"]'),
     { timeout: 30000 },
   );
-  await dwell(1800);
+  await dwell(1500);
   take.mark("Confirm", "KTM 390 DUKE 2024 — the hero photo and the manual it carries");
-  await dwell(2000);
+  await dwell(1700);
 
   await tap(page, 'section[data-screen="confirm"] button[aria-label="Yes"]');
   await page.waitForFunction(() => location.hash === "#pick", { timeout: 60000 });
@@ -276,29 +276,29 @@ async function takeOne(page, take) {
       timeout: 40000,
     }),
   );
-  await dwell(3600);
+  await dwell(3000);
   take.mark("Pick · the 3D stage", "the model idles into a slow spin after three seconds, then a drag");
   await dwell(900);
   await orbit(page);
-  await dwell(2400);
+  await dwell(2000);
 
   await tap(page, ".ask-q");
   await type(page, "chain is loose", 118);
   await dwell(450);
   await page.keyboard.press("Enter");
   await waited("headings", page.waitForFunction(() => document.querySelectorAll(".hit").length > 0, { timeout: 60000 }));
-  await dwell(1700);
-  take.mark("The manual's own headings", "12.12 p.77–78 and 12.13 p.78 — KTM's section numbers, not ours");
   await dwell(1500);
+  take.mark("The manual's own headings", "12.12 p.77–78 and 12.13 p.78 — KTM's section numbers, not ours");
+  await dwell(1300);
 
   take.mark("Exploded view, chain lit", "the bike explodes and the drive chain lights under the top heading");
-  await dwell(2100);
+  await dwell(1700);
   await tapHit(page, 1);
-  await dwell(1900);
+  await dwell(1500);
   take.mark("The second heading", "12.13 Adjusting the chain tension — the 3D focus follows the heading");
-  await dwell(1300);
+  await dwell(1000);
   await tapHit(page, 0);
-  await dwell(1900);
+  await dwell(1500);
 
   await tap(page, ".open");
   await page.waitForFunction(() => location.hash.startsWith("#book"), { timeout: 60000 });
@@ -310,7 +310,7 @@ async function takeOne(page, take) {
   );
   await dwell(1300);
   take.mark("Page 77 of KTM's manual", "the printed page, orange markers on the two answering lines");
-  await dwell(2400);
+  await dwell(2000);
 
   // one pinch step onto the two lines that answer, then centre them
   await pinch(page, -260);
@@ -327,7 +327,7 @@ async function takeOne(page, take) {
   });
   await dwell(1100);
   take.mark("The marked lines", "measure the chain tension · Chain tension 7 … 10 mm (0.28 … 0.39 in)");
-  await dwell(3000);
+  await dwell(2600);
 
   await pinch(page, 260);
   await dwell(1200);
@@ -337,22 +337,22 @@ async function takeOne(page, take) {
     "all pages",
     page.waitForFunction(() => document.querySelectorAll(".page-sheet").length > 20, { timeout: 20000 }),
   );
-  await dwell(1300);
+  await dwell(1100);
   take.mark("All pages", "143 sheets — the whole book, when he wants it");
   await glide(page, ".page-view", 1100, 1400);
-  await dwell(1400);
+  await dwell(1200);
 
   await tap(page, ".book-parts");
   await waited("parts", page.waitForFunction(() => document.querySelectorAll(".pv-tile").length > 10, { timeout: 60000 }));
-  await dwell(1600);
+  await dwell(1300);
   take.mark("Parts", "135 parts, each one on the list because the manual prints a spec for it");
   await glide(page, ".pv-tiles", 420, 1000);
-  await dwell(1000);
+  await dwell(800);
   await glide(page, ".pv-tiles", -420, 800);
 
   await tap(page, ".pv-q");
   await type(page, "chain", 130);
-  await dwell(1200);
+  await dwell(1000);
   const tile = await page.evaluate(() => {
     const tiles = [...document.querySelectorAll(".pv-tile")];
     const exact = tiles.find((n) => (n.querySelector(".pv-name")?.textContent || "").trim().toLowerCase() === "chain");
@@ -368,10 +368,10 @@ async function takeOne(page, take) {
     await page.mouse.click(tile.x, tile.y);
   }
   await waited("offers", page.waitForFunction(() => document.querySelectorAll(".pv-offer").length > 0, { timeout: 60000 }));
-  await dwell(1800);
+  await dwell(1500);
   take.mark("Drive chain", `${tile ? tile.name : "Chain"} · 5/8 x 1/4" (520) X-ring · p.126 · live USD offers`);
   await glide(page, ".pv-detail", 190, 900);
-  await dwell(2600);
+  await dwell(2000);
 
   // out of Parts, out of the book, back to the bike
   await page.evaluate(() => document.querySelector(".pv-x")?.click());
@@ -380,28 +380,33 @@ async function takeOne(page, take) {
   await dwell(1200);
 
   await tap(page, ".chat-pill");
-  await page.waitForFunction(
-    () => {
-      const stack = [document.documentElement];
-      while (stack.length) {
-        const n = stack.pop();
-        if (!n) continue;
-        if (n.id === "text-input") return true;
-        if (n.shadowRoot) stack.push(...n.shadowRoot.children);
-        if (n.children) stack.push(...n.children);
-      }
-      return false;
-    },
-    { timeout: 40000 },
+  // deep-chat renders into a shadow root, so every check here walks shadow roots too.
+  await waited(
+    "chat overlay",
+    page.waitForFunction(
+      () => {
+        const stack = [document.documentElement];
+        while (stack.length) {
+          const n = stack.pop();
+          if (!n) continue;
+          if (n.id === "text-input") return true;
+          if (n.shadowRoot) stack.push(...n.shadowRoot.children);
+          if (n.children) stack.push(...n.children);
+        }
+        return false;
+      },
+      { timeout: 40000 },
+    ),
   );
-  await dwell(1200);
+  await dwell(1000);
   take.mark("Chat", "the one place it may write a sentence — and only with page numbers in it");
   await tap(page, "#text-input", { deep: true });
-  await type(page, "what's the torque on the rear axle nut", 80);
+  await type(page, "what's the torque on the rear axle nut", 62);
   await dwell(600);
   await page.keyboard.press("Enter");
-  await page
-    .waitForFunction(
+  await waited(
+    "chat answer",
+    page.waitForFunction(
       () => {
         const stack = [document.documentElement];
         while (stack.length) {
@@ -413,22 +418,22 @@ async function takeOne(page, take) {
         }
         return false;
       },
-      { timeout: 90000 },
-    )
-    .catch(() => {});
+      { timeout: 45000 },
+    ),
+  );
   await dwell(1500);
   take.mark("The answer, with its page", "Rear wheel spindle nut: 100 Nm (73.8 lbf ft) [p. 130] + the p.130 chip");
-  await dwell(3000);
+  await dwell(2600);
 
   await page.evaluate(() => document.querySelector(".cv-x")?.click());
-  await dwell(1300);
+  await dwell(1000);
 
   for (let i = 0; i < 2; i++) {
     await tap(page, "[data-theme-button]");
-    await dwell(1700);
+    await dwell(1400);
     const id = await page.evaluate(() => document.documentElement.getAttribute("data-theme"));
     take.mark(`Theme · ${id}`, "a theme is colours and nothing else; every screen keeps working");
-    await dwell(900);
+    await dwell(700);
   }
 
   await backTo(page, "#identify");
@@ -440,34 +445,40 @@ async function takeOne(page, take) {
       q.dispatchEvent(new Event("input", { bubbles: true }));
     }
   });
-  await dwell(1200);
+  await dwell(1000);
   take.mark("Back to the search field", "one field, and the next bike");
-  await dwell(1800);
+  await dwell(1500);
 }
 
 /* ------------------------------------------------------------------ take 2: the cold manual */
 
-/** The first MT-07 year the live catalog still has no index for. */
+/**
+ * The first MT-07 year the live catalog still has no index for. 2018 is the pitch's bike and is
+ * used when it is still cold; `TTM_COLD=<bike id>` pins another one, which is how the take gets
+ * rehearsed without spending the bike it is going to be shot on.
+ */
 async function coldBike() {
   const rows = await fetch(`${LIVE}/api/catalog`, { headers: { Accept: "application/json" } }).then((r) => r.json());
   const family = rows.filter((r) => /^yamaha-mt07-(19|20)\d\d$/.test(r.id) && r.manualUrl && !r.manualId);
-  const preferred = family.find((r) => r.id === "yamaha-mt07-2018");
+  const wanted = process.env.TTM_COLD || "yamaha-mt07-2018";
+  const preferred = family.find((r) => r.id === wanted);
   const pick = preferred || family.sort((a, b) => b.year - a.year)[0];
   if (!pick) throw new Error("no cold MT-07 left in the catalog");
+  if (process.env.TTM_COLD && !preferred) console.log(`  !! ${wanted} is already indexed; using ${pick.id}`);
   return pick;
 }
 
 async function takeTwo(page, take, bike) {
   take.start();
   take.mark("Landing", "a bike the app has never fetched a manual for");
-  await dwell(2200);
+  await dwell(1600);
 
   await tap(page, ".id-q");
   await type(page, "mt-07");
   await page.waitForFunction(() => document.querySelectorAll(".id-card").length > 0, { timeout: 30000 });
-  await dwell(2400);
+  await dwell(1800);
   take.mark("Cards, cold and warm", "the flag on each card says whether a manual is already indexed");
-  await dwell(1600);
+  await dwell(1200);
 
   const card = await page.evaluate(() => {
     const cards = [...document.querySelectorAll(".id-card")];
@@ -480,9 +491,9 @@ async function takeTwo(page, take, bike) {
   await sleep(140);
   await page.mouse.click(card.x, card.y);
   await page.waitForFunction(() => document.querySelectorAll(".id-year").length > 0, { timeout: 30000 });
-  await dwell(2200);
+  await dwell(1700);
   take.mark("Every year Yamaha built it", "orange chips are indexed, outlined chips are not");
-  await dwell(1800);
+  await dwell(1300);
 
   const chip = await page.evaluate((year) => {
     const y = [...document.querySelectorAll(".id-year")].find((n) => n.textContent.trim() === String(year));
@@ -496,9 +507,9 @@ async function takeTwo(page, take, bike) {
   await sleep(140);
   await page.mouse.click(chip.x, chip.y);
   await page.waitForFunction(() => location.hash === "#confirm", { timeout: 30000 });
-  await dwell(2400);
+  await dwell(1800);
   take.mark(`Confirm · ${bike.make} ${bike.model} ${bike.year}`, "no manual on our servers, four minutes ago or ever");
-  await dwell(2000);
+  await dwell(1500);
 
   const t0 = Date.now();
   await tap(page, 'section[data-screen="confirm"] button[aria-label="Yes"]');
@@ -526,29 +537,31 @@ async function takeTwo(page, take, bike) {
       timeout: 90000,
     })
     .catch(() => {});
-  await dwell(2200);
+  await dwell(1700);
   take.mark("Searchable", `${ingest.toFixed(1)} s from tap to a manual with an index`);
-  await dwell(2600);
+  await dwell(2000);
 
   await tap(page, ".ask-q");
   await type(page, "oil", 140);
   await dwell(500);
   await page.keyboard.press("Enter");
   await page.waitForFunction(() => document.querySelectorAll(".hit").length > 0, { timeout: 60000 }).catch(() => {});
-  await dwell(2200);
+  await dwell(1700);
   take.mark("A question against a manual that was cold", "Yamaha's own headings, on a book nobody had indexed");
-  await dwell(2400);
+  await dwell(1800);
 
-  await tap(page, ".hit");
-  await dwell(2200);
-  await tap(page, ".open");
+  await tapHit(page, 0);
+  await dwell(2000);
+  // MANUAL is the button; on a row that is already lit a second tap opens it just the same.
+  const opened = await tap(page, ".open").catch(() => null);
+  if (!opened) await page.evaluate(() => document.querySelector(".hit")?.click());
   await page.waitForFunction(() => location.hash.startsWith("#book"), { timeout: 60000 });
   await page
     .waitForFunction(() => document.querySelectorAll(".page-sheet.is-ready").length > 0, { timeout: 120000 })
     .catch(() => {});
-  await dwell(2400);
+  await dwell(1900);
   take.mark("The page", "the same printed page, out of a PDF that was not on our servers a minute ago");
-  await dwell(3400);
+  await dwell(2600);
   return { ingest, bike };
 }
 

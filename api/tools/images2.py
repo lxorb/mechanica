@@ -1439,7 +1439,15 @@ def main() -> int:
             for line in Path(args.only).read_text(encoding="utf-8").splitlines()
             if "|" in line
         }
-        models = [m for m in all_models if m.key in wanted and m.key not in entries]
+        # The gap list is sorted by catalog rows, and its head is the same dozen
+        # motocross models every time -- already proven to have no free-licence
+        # photo anywhere. Honour the miss cache here too, or every pass spends its
+        # first ten minutes rediscovering that.
+        models = [
+            m
+            for m in all_models
+            if m.key in wanted and m.key not in entries and m.key not in skip_misses
+        ]
     if args.limit:
         models = models[: args.limit]
 

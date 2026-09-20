@@ -1,0 +1,67 @@
+From: performance agent
+Subject: [PATCH] counter/index.html — start the roster and the module graph with the HTML
+
+web/counter/index.html is owned by another agent this week, so the two head changes the
+first-load work needs are here instead of in the file. Both were measured through
+web/tools/perf.mjs --patch, which applies exactly these hunks to the served bytes:
+
+  hunk 1 (hints)  field 2.65 s -> 1.30 s, first card 9.8 s -> 6.9 s   (fast 4G + 4x CPU, cold)
+  hunk 2 (css)    first paint 1.4 s -> 1.1 s
+
+Apply with `git apply docs/qa/perf/index-head.patch`, or by hand — the two hunks are
+independent and hunk 2 is the more opinionated of the two (see the note under it).
+
+--- a/web/counter/index.html
++++ b/web/counter/index.html
+@@ -26,6 +26,20 @@
+   </noscript>
++  <!-- The roster is what the search field is waiting for, and it used to be requested two
++       round trips after this file: html -> app.js -> ttm.js -> fetch. Preloading it starts the
++       download with the HTML. No crossorigin and no type: ttm.js fetches it with no Accept
++       header of its own, so the preload and the fetch are the same request and it is
++       downloaded once. The photo index next to it is deliberately NOT preloaded — nothing on
++       the first screen needs it. -->
++  <link rel="preload" href="../store/ttm-catalog.json" as="fetch">
++  <!-- The module graph behind the search field, flattened from four serial round trips to one.
++       The other four screens are not here on purpose: app.js loads them once Identify is up. -->
++  <link rel="modulepreload" href="js/bus.js">
++  <link rel="modulepreload" href="js/ttm.js">
++  <link rel="modulepreload" href="js/search.js">
++  <link rel="modulepreload" href="js/index-data.js">
++  <link rel="modulepreload" href="js/vision.js">
++  <link rel="modulepreload" href="js/screens/identify.js">
++  <!-- pdf.js (the reader) and three.js (the 3D viewer) are imported from these two at the
++       moment a manual or a Pick screen opens. The TLS handshake can happen now instead. -->
++  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
++  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+   <link rel="stylesheet" href="css/counter.css">
+   <link rel="stylesheet" href="css/themes.css">
+   <link rel="stylesheet" href="css/particons.css">
+-  <link rel="stylesheet" href="css/viewer3d.css">
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/viewer3d.css">
+   <link rel="stylesheet" href="css/screens/identify.css">
+-  <link rel="stylesheet" href="css/screens/confirm.css">
+-  <link rel="stylesheet" href="css/screens/pick.css">
+-  <link rel="stylesheet" href="css/screens/book.css">
+-  <link rel="stylesheet" href="css/screens/invoice.css">
+-  <link rel="stylesheet" href="css/screens/cost.css">
+-  <link rel="stylesheet" href="css/climate.css">
++  <!-- Six sheets for five screens that cannot be reached from the landing, 60 KB of them, all
++       of it render-blocking in front of a search field that uses none of it. media="print"
++       makes the browser fetch them at a lower priority and apply them on load, which is one
++       frame after the first paint and several seconds before anything they style is on screen.
++       Identify's own sheet, counter.css, themes.css and particons.css stay blocking. -->
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/confirm.css">
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/pick.css">
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/book.css">
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/invoice.css">
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/screens/cost.css">
++  <link rel="stylesheet" media="print" onload="this.media='all'" href="css/climate.css">
+   <!-- The saved theme, before the first paint. js/theme.js is a module and therefore deferred,
+
+Note on hunk 2. A `media="print"` sheet is applied on its load event, so a screen can in
+principle paint one frame before its own sheet is in. None of these five screens can be
+reached in under two seconds — the roster has to arrive and a bike has to be chosen first —
+and every one of the sheets is on the wire from the first HTML parse, so the window does not
+exist in practice. If it is not worth the argument, take hunk 1 alone: it is where most of
+the number is.

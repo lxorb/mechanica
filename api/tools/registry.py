@@ -348,7 +348,9 @@ def cmd_merge_fragments(args: argparse.Namespace) -> int:
 
     if incoming:
         store.put_registry(merge_ua(incoming.values()))  # one write for every fragment, not one each
-    pending = store.registry()
+    # Copy before stamping: FileStore.registry() shares its rows between callers, so mutating one
+    # in place would change what every later reader in this process sees.
+    pending = [e.model_copy() for e in store.registry()]
     if args.restamp:  # the classifier improved: re-label every row from its url and title
         for e in pending:
             e.docKind = None
