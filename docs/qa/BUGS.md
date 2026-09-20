@@ -46,8 +46,8 @@ Tests: `api/tests/test_bughunt_store.py`, `test_bughunt_api.py`, `test_bughunt_i
 **Pass 2, 2026-09-20** (the same list, second agent) closed BUG-13, 14, 15, 16, 18, 19 and 20; the
 fixes are in [Pass 2](#pass-2) below. **BUG-17 stays open**: `ingest/curate.py` belongs to another
 agent in this round and nothing outside it can fix a function that mutates its argument in place.
-Tests: `api/tests/test_bughunt_ondemand.py` (41 cases), 14 more in `web/tools/bughunt-check.mjs`.
-`api/.venv/Scripts/python -m pytest api/tests -q` → **843 passed, 20 skipped**.
+Tests: `api/tests/test_bughunt_ondemand.py` (43 cases), 14 more in `web/tools/bughunt-check.mjs`.
+`api/.venv/Scripts/python -m pytest api/tests -q` → **845 passed, 20 skipped**.
 `node web/tools/bughunt-check.mjs` → **53 passed**. `node web/tools/adapter-test.mjs --offline` → **52 passed**.
 
 BUG-09's policy (admin token + registry hosts only) was set by the coordinator on 2026-09-20 and is
@@ -224,9 +224,12 @@ crash, a wedged thread): `GET /ingest/<id>` kept answering `running`, `ttm.js` p
 both paid for — the same ingest.
 **Fix**, in three parts:
 1. **A heartbeat.** `IngestJob.updatedAt` (additive, `None` on a job written by the old build) is the
-   wall clock of the last write by the replica that owns the job. `ondemand.Beat` renews it every
-   `HEARTBEAT` = 5 s from the worker thread, which also covers the two stages that are legitimately
-   silent for minutes: waiting for one of the three ingest slots, and a single slow LLM batch.
+   wall clock of the last write by the replica that owns the job. `ingest.run()` stamps it on every
+   write it already makes - the progress bar writes about once a second - so every ingest path beats
+   for free, and `ondemand.Beat` renews it every `HEARTBEAT` = 5 s from the worker thread to cover the
+   two stages that are legitimately silent for minutes: waiting for one of the three ingest slots, and
+   a single slow LLM batch. `POST /ingest` and `POST /ingest/upload` do not go through `ensure()`, so
+   `main._start_job` starts the same beat around their background task.
 2. **A staleness rule.** `ondemand.alive()` = a fresh `updatedAt` (no extra read on a healthy poll) *or*
    a live lease naming this job. `GET /ingest/{job_id}` reports anything else that still says
    `queued`/`running` as `status: "error", error: "stalled"` — the stored job is not rewritten, so the
@@ -246,7 +249,7 @@ both paid for — the same ingest.
 that answers nothing `INGEST_MISS_MAX` = 10 polls in a row, is retried once, silently. A real ingest
 failure (`no text layer`) is *not* retried, and `ensure()` answering `error` (the six-hour failure marker)
 now fails at once instead of waiting three minutes for sections that are never coming.
-**Test** 41 cases in `test_bughunt_ondemand.py` — the lease race driven through a fake ETag store with a
+**Test** 43 cases in `test_bughunt_ondemand.py` — the lease race driven through a fake ETag store with a
 deliberate interleave, the take-over of a lapsed lease, the two-replica join (one `ingest.run`, one job
 id, one bill), every branch of the staleness rule, the beat, `settle()`, and the route — plus four
 adapter cases in `bughunt-check.mjs`. Headless, against a local API whose first worker is given no
