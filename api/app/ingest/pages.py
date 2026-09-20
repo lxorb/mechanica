@@ -100,24 +100,112 @@ def skip_pages(items: list[tuple[int, str, int]], chaps: list[tuple[int, int, st
     return {p for p in dead if 1 <= p <= page_count}
 
 
+COVER_PAGES = 6
+MAX_TITLE = 90
+
+_BOILER = re.compile(
+    r"^(warning|caution|danger|notice|attention|important|hazard|foreword|preface|introduction|intro"
+    r"|welcome|congratulations|contents?|table of contents|index|imprint|disclaimer|copyright|notes?"
+    r"|safety|read this|before you ride|proposition 65|california)\b",
+    re.I,
+)
+_WEIRD = re.compile(r"[^0-9A-Za-zÀ-ɏ\s'‘’\-./,()&+:;®™°#]")
+_ARTNO = re.compile(r"\s*\b(art(icle)?\.?\s*no\.?|part\s*no\.?|item\s*no\.?|p/?n)\b\s*:?.*$", re.I)
+_TOKEN = re.compile(r"[A-Za-z0-9]+")
+
+
+def _tokens(text: str) -> list[str]:
+    return [t.lower() for t in _TOKEN.findall(text or "")]
+
+
+GENERIC = {
+    "a", "s", "the", "and", "for", "owner", "owners", "rider", "riders", "driver", "manual", "manuals",
+    "handbook", "instruction", "instructions", "book", "booklet", "motorcycle", "motorcycles", "motorbike",
+    "vehicle", "english", "en", "original", "operating", "operation", "user", "guide", "edition",
+}
+
+
+def garbled(text: str) -> bool:
+    """A cover set in a symbol font extracts as noise: 'HF4\"64?<9BEA<4'. Never show that to a rider."""
+    if not text:
+        return True
+    if len(_WEIRD.findall(text)) / len(text) > 0.10:
+        return True
+    words = [w.lower() for w in _TOKEN.findall(text) if len(w) >= 4 and w.isalpha()]
+    return bool(words) and not any(set(w) & set("aeiouy") for w in words)
+
+
+def generic(text: str, make: str) -> bool:
+    """'OWNER'S MANUAL' names no bike: five Honda manuals carried that same header."""
+    rest = {t for t in _tokens(text) if t not in GENERIC and not re.fullmatch(r"(19|20)\d{2}", t)}
+    return not (rest - set(_tokens(make)))
+
+
+def _candidates(page: pymupdf.Page) -> list[tuple[float, str]]:
+    spans = [
+        (round(s["size"], 1), s["text"], round(s["bbox"][1], 1), s["bbox"][0])
+        for b in page.get_text("dict")["blocks"]
+        if b.get("type") == 0
+        for line in b["lines"]
+        for s in line["spans"]
+        if s["text"].strip()
+    ]
+    if not spans:
+        return []
+    out: list[tuple[float, str]] = []
+    for size in sorted({s[0] for s in spans}, reverse=True)[:3]:
+        picked = sorted((s for s in spans if abs(s[0] - size) <= 0.6), key=lambda s: (s[2], s[3]))
+        text = _ARTNO.sub("", clean(" ".join(s[1] for s in picked))).strip(" .-|")
+        if text:
+            out.append((size, text))
+    return out
+
+
+def _usable(text: str) -> bool:
+    return 4 <= len(text) <= MAX_TITLE and bool(re.search(r"[A-Za-z]", text)) and not garbled(text) and not _BOILER.match(text)
+
+
 def cover_title(doc: pymupdf.Document, make: str, model: str, year: int) -> str:
-    for n in range(min(3, doc.page_count)):
-        spans = [
-            (round(s["size"], 1), s["text"], s["bbox"][1], s["bbox"][0])
-            for b in doc[n].get_text("dict")["blocks"]
-            if b.get("type") == 0
-            for line in b["lines"]
-            for s in line["spans"]
-            if s["text"].strip()
-        ]
-        if not spans:
-            continue
-        top = max(s[0] for s in spans)
-        picked = [s for s in spans if s[0] >= top - 0.6]
-        picked.sort(key=lambda s: (round(s[2], 1), s[3]))
-        title = clean(" ".join(s[1] for s in picked))
-        title = re.sub(r"\s*\b(art\.?\s*no\.?|part\s*no\.?)\b.*$", "", title, flags=re.I).strip(" .-|")
-        if len(title) >= 4 and len(title) <= 90 and re.search(r"[A-Za-z]", title):
-            return title
-    meta = clean(doc.metadata.get("title") or "")
-    return meta if 4 <= len(meta) <= 90 else f"{make} {model} {year}".strip()
+    """The title printed on the cover, never a warning block, never font noise, never the same for two bikes."""
+    want = [t for t in _tokens(model) if t not in {"the", "and"}]
+    maker = _tokens(make)[:1]
+
+    def scores(text: str) -> tuple[bool, int]:
+        got = set(_tokens(text))
+        has_model = bool(want) and sum(1 for t in want if t in got) >= max(1, (len(want) + 1) // 2)
+        score = (4 if has_model else 0) + (2 if "manual" in got else 0)
+        score += 1 if str(year) in got else 0
+        score += 1 if maker and maker[0] in got else 0
+        return has_model, score
+
+    best: tuple[int, float, str, bool] | None = None
+    for n in range(min(COVER_PAGES, doc.page_count)):
+        page = doc[n]
+        found = [(size, text) for size, text in _candidates(page) if _usable(text)]
+        for size, text in found:
+            has_model, score = scores(text)
+            joined, joined_model = text, has_model
+            if not has_model:
+                for other_size, other in found:
+                    if other is not text and other_size >= size * 0.3 and scores(other)[0]:
+                        joined = clean(f"{text} {other}")[:MAX_TITLE].strip()
+                        joined_model = True
+                        score += 4
+                        break
+            if not joined_model and n > 1:
+                continue  # past the cover, a big line is a chapter heading, not the title of the manual
+            if best is None or (score, size) > (best[0], best[1]):
+                best = (score, size, joined, joined_model)
+        if best is not None and best[0] >= 4:
+            break
+
+    fallback = clean(f"{make} {model} {year} Owner's Manual".replace(" 0 ", " "))[:MAX_TITLE].strip()
+    if best is None:
+        meta = clean(doc.metadata.get("title") or "")
+        if _usable(meta) and not generic(meta, make):
+            return meta[:MAX_TITLE]
+        return fallback if (make or model) else "Owner's Manual"
+    text = best[2]
+    if generic(text, make) and (make or model):
+        return fallback
+    return text

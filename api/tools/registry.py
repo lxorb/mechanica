@@ -4,6 +4,8 @@
     python -m tools.registry seed-catalog
     python -m tools.registry list-free --make ktm --limit 20
     python -m tools.registry ingest-free --make ktm --limit 3
+    python -m tools.registry merge-fragments
+    python -m tools.registry stats --sites --verify 2
 """
 
 from __future__ import annotations
@@ -11,20 +13,24 @@ from __future__ import annotations
 import argparse
 import csv
 import io
+import json
 import logging
 import random
 import sys
 import uuid
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from app.config import settings
-from app.models import Bike, IngestJob
-from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, free_owner_manuals, select, verify
+from app.models import Bike, IngestJob, RegistryEntry
+from app.registry import ADAPTERS, _ingestable, bikes_from_registry, crawl, discover, free_owner_manuals, select, verify
 from app.registry._http import client, request, slug
 from app.store import get_store
 
 BIKEZ = "https://raw.githubusercontent.com/AtharvBeDiff/AI-MECHANIC/main/all_bikez_curated.csv"
 SEEDS = settings.data_dir / "seeds"
+FRAGMENTS = settings.data_dir / "registry-fragments"
 SEED_FILE = SEEDS / "all_bikez_curated.csv"
 SEED_CAP = 15_000
 MIN_YEAR = 2000
@@ -112,6 +118,57 @@ def cmd_seed_catalog(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_merge_fragments(args: argparse.Namespace) -> int:
+    """Fold api/data/registry-fragments/*.json into the registry. Other agents own those files; this
+    is the only writer of registry.json and bikes.json, so nothing races over the merge."""
+    FRAGMENTS.mkdir(parents=True, exist_ok=True)
+    store = get_store()
+    before = {e.id for e in store.registry()}
+    merged: list[tuple[str, int, int, int]] = []
+    incoming: dict[str, RegistryEntry] = {}
+    for path in sorted(FRAGMENTS.glob("*.json")):
+        if path.name.startswith("."):
+            continue
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            print(f"  {path.name:<28} unreadable: {type(exc).__name__}: {exc}", file=sys.stderr)
+            continue
+        items = raw.get("entries") if isinstance(raw, dict) else raw
+        rows: dict[str, RegistryEntry] = {}
+        bad = 0
+        for item in items if isinstance(items, list) else []:
+            try:
+                entry = RegistryEntry.model_validate(item)
+            except ValidationError:
+                bad += 1
+                continue
+            if entry.url:
+                rows[entry.id] = entry
+        fresh = sum(1 for eid in rows if eid not in before and eid not in incoming)
+        incoming.update(rows)
+        merged.append((path.name, len(rows), fresh, bad))
+    if incoming:
+        store.put_registry(list(incoming.values()))  # one write for every fragment, not one each
+    for name, kept, fresh, bad in merged:
+        print(f"  {name:<28} {kept:>6} rows, {fresh:>6} new" + (f", {bad} invalid" if bad else ""))
+    if not merged:
+        print("  no fragments yet")
+    found = discover()
+    if found:
+        print(f"  adapters discovered: {', '.join(found)}")
+    bikes = bikes_from_registry()
+    entries = store.registry()
+    free = [e for e in entries if _ingestable(e)]
+    with_url = sum(1 for b in bikes if b.manualUrl)
+    print(f"registry {len(entries)} rows, {len(free)} free english owner pdfs; bikes {len(bikes)}, {with_url} with a free PDF")
+    by_make: dict[str, int] = {}
+    for e in free:
+        by_make[e.make] = by_make.get(e.make, 0) + 1
+    print("  " + "  ".join(f"{make} {n}" for make, n in sorted(by_make.items(), key=lambda kv: -kv[1])))
+    return 0
+
+
 def cmd_stats(args: argparse.Namespace) -> int:
     """Per-brand coverage: rows indexed, free English owner's-manual PDFs, bikes those PDFs cover."""
     store = get_store()
@@ -196,6 +253,9 @@ def main(argv: list[str] | None = None) -> int:
     c2 = sub.add_parser("seed-catalog")
     c2.add_argument("--refresh", action="store_true")
     c2.set_defaults(fn=cmd_seed_catalog)
+
+    c6 = sub.add_parser("merge-fragments", help="fold data/registry-fragments/*.json into the registry")
+    c6.set_defaults(fn=cmd_merge_fragments)
 
     c5 = sub.add_parser("stats", help="per-brand rows and free-PDF totals")
     c5.add_argument("--sites", action="store_true", help="also break the totals down per site")

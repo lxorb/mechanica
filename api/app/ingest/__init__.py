@@ -14,6 +14,8 @@ from .fetch import fetch
 
 log = logging.getLogger("ingest")
 
+MIN_PAGES = 8  # a rider's manual is never this short; anything shorter is a test file or a leaflet
+
 
 def pdf_path(manual_id: str) -> Path:
     return settings.data_dir / "pdf" / f"{manual_id}.pdf"
@@ -25,8 +27,26 @@ def _job(job_id: str, manual_id: str) -> IngestJob:
     return job
 
 
-def run(job_id: str, source: str, manual_id: str, bike_ids: list[str], make: str, model: str, year: int) -> Manual:
-    """source = local path or http(s) URL of the official PDF."""
+def run(
+    job_id: str,
+    source: str,
+    manual_id: str,
+    bike_ids: list[str],
+    make: str,
+    model: str,
+    year: int,
+    *,
+    struct_model: str | None = None,
+    batch: int | None = None,
+    workers: int | None = None,
+    early: bool = False,
+    needs_ua: str | None = None,
+) -> Manual:
+    """source = local path or http(s) URL of the official PDF.
+
+    struct_model / batch are throughput knobs for the bulk tools: which LLM runs the structure pass and how
+    many pages go into one call. Both default to app.config settings, so every other caller is unaffected.
+    """
     store = get_store()
     job = _job(job_id, manual_id)
     job.status = "running"
@@ -40,10 +60,12 @@ def run(job_id: str, source: str, manual_id: str, bike_ids: list[str], make: str
         store.put_job(job)
 
     try:
-        path = fetch(source, pdf_path(manual_id))
+        path = fetch(source, pdf_path(manual_id), needs_ua)
         doc = pymupdf.open(path)
-        if doc.page_count < 1:
-            raise ValueError("empty PDF")
+        if doc.page_count < MIN_PAGES:
+            pages = doc.page_count
+            doc.close()
+            raise ValueError(f"not a manual: {pages} page{'' if pages == 1 else 's'}")
         progress(0, doc.page_count)
 
         page_models = pagelib.extract_pages(doc, manual_id, progress=lambda n: progress(n))
@@ -55,8 +77,26 @@ def run(job_id: str, source: str, manual_id: str, bike_ids: list[str], make: str
         title = pagelib.cover_title(doc, make, model, year)
         bike = " ".join(str(p) for p in (make, model, year) if p).strip()
 
+        # early=True: somebody is waiting. Publish the PDF and its outline now, overwrite with sections later.
+        if early:
+            existing = store.manual(manual_id)
+            if existing is None or not existing.sections:
+                store.put_manual(
+                    Manual(
+                        id=manual_id,
+                        bikeIds=list(bike_ids),
+                        file=f"/manuals/{manual_id}.pdf",
+                        pages=doc.page_count,
+                        title=title,
+                        source=source,
+                        outline=outline,
+                        sections=[],
+                        parts=[],
+                    )
+                )
+
         skip = pagelib.skip_pages(toc, chaps, doc.page_count)
-        windows = structure.batches(page_models, skip)
+        windows = structure.batches(page_models, skip, batch)
         prompts = [
             structure.prompt(
                 window,
@@ -68,11 +108,15 @@ def run(job_id: str, source: str, manual_id: str, bike_ids: list[str], make: str
             for window in windows
         ]
         progress(0, len(prompts) or doc.page_count)
-        results = structure.run_batches(prompts, on_done=lambda n: progress(n))
+        results = structure.run_batches(prompts, on_done=lambda n: progress(n), model=struct_model, workers=workers)
         units = [unit for group in results for unit in group]
         log.info("%s: %d batches -> %d units", manual_id, len(prompts), len(units))
 
-        built = assemble.build(doc, units, chaps, structure.keywords)
+        built = assemble.build(doc, units, chaps, lambda titles: structure.keywords(titles, model=struct_model))
+        if not built.sections:
+            # every structure call came back empty (rate limits, a scanned PDF): store nothing, let the caller retry
+            (settings.data_dir / "manuals" / f"{manual_id}.json").unlink(missing_ok=True)
+            raise ValueError(f"no sections from {len(prompts)} batches")
         manual = Manual(
             id=manual_id,
             bikeIds=list(bike_ids),

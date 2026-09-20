@@ -7,3 +7,10 @@ data/pages
 data/costs.jsonl
 data/jobs.json
 data/*.tmp
+data/manuals/*
+!data/manuals/ktm-390-duke-2024-om-en.json
+!data/manuals/bmw-r12gs-2025-rm-en.json
+data/specs/*
+data/mass_*
+data/bulk_report.json
+data/registry-fragments/*.json

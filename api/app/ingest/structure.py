@@ -9,8 +9,8 @@ from .. import llm
 from ..config import settings
 from ..models import Page
 
-BATCH = 3
-WORKERS = 8
+BATCH = 5
+WORKERS = 32
 MIN_CHARS = 40
 
 SpecKind = Literal["torque", "capacity", "clearance", "pressure", "grade", "size", "electrical", "other"]
@@ -90,10 +90,11 @@ def _page_text(page: Page) -> str:
     return page.text.strip()
 
 
-def batches(pages: list[Page], skip: set[int]) -> list[list[Page]]:
+def batches(pages: list[Page], skip: set[int], size: int | None = None) -> list[list[Page]]:
+    size = max(1, size or BATCH)
     out: list[list[Page]] = []
-    for i in range(0, len(pages), BATCH):
-        window = [p for p in pages[i : i + BATCH] if p.page not in skip and len(_page_text(p)) >= MIN_CHARS]
+    for i in range(0, len(pages), size):
+        window = [p for p in pages[i : i + size] if p.page not in skip and len(_page_text(p)) >= MIN_CHARS]
         if window:
             out.append(window)
     return out
@@ -109,13 +110,15 @@ def prompt(window: list[Page], manual_title: str, bike: str, chapter: str, headi
     return "\n".join(head) + "\n\n" + body
 
 
-def run_batches(prompts: list[str], on_done=None) -> list[list[UnitOut]]:
+def run_batches(prompts: list[str], on_done=None, model: str | None = None, workers: int | None = None) -> list[list[UnitOut]]:
+    chosen = model or settings.model_struct
+
     def one(text: str) -> list[UnitOut]:
         for attempt in range(2):
             try:
                 return llm.structured(
                     route="ingest.struct",
-                    model=settings.model_struct,
+                    model=chosen,
                     schema=BatchOut,
                     system=SYSTEM,
                     user=text,
@@ -127,7 +130,7 @@ def run_batches(prompts: list[str], on_done=None) -> list[list[UnitOut]]:
 
     results: list[list[UnitOut]] = [[] for _ in prompts]
     done = 0
-    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+    with ThreadPoolExecutor(max_workers=max(1, workers or WORKERS)) as pool:
         futures = {pool.submit(one, text): i for i, text in enumerate(prompts)}
         for future in as_completed(futures):
             results[futures[future]] = future.result()
@@ -137,7 +140,8 @@ def run_batches(prompts: list[str], on_done=None) -> list[list[UnitOut]]:
     return results
 
 
-def keywords(titles: list[str], chunk: int = 40) -> list[list[str]]:
+def keywords(titles: list[str], chunk: int = 40, model: str | None = None) -> list[list[str]]:
+    chosen = model or settings.model_struct
     out: list[list[str]] = [[] for _ in titles]
     chunks = [(i, titles[i : i + chunk]) for i in range(0, len(titles), chunk)]
 
@@ -148,7 +152,7 @@ def keywords(titles: list[str], chunk: int = 40) -> list[list[str]]:
             try:
                 return offset, llm.structured(
                     route="ingest.keywords",
-                    model=settings.model_struct,
+                    model=chosen,
                     schema=KeywordsOut,
                     system=KEYWORDS_SYSTEM,
                     user=text,
