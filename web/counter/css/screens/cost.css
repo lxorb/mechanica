@@ -1,0 +1,67 @@
+.cost-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow-y: auto;
+  background: repeating-linear-gradient(0deg, var(--paper) 0 24px, var(--rule) 24px 25px), var(--paper);
+  padding: 0 12px calc(32px + env(safe-area-inset-bottom));
+}
+
+.cost-bar {
+  display: flex;
+  align-items: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 0;
+}
+
+.cost-back {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.cost-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.cost-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 120px;
+  padding: 12px;
+}
+
+.cost-n {
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cost-lab {
+  font-family: Barlow, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  padding: 6px 8px;
+}
+
+@media (min-width: 720px) {
+  .cost-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
