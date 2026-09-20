@@ -18,11 +18,20 @@
  * manual's text never round-trips through this tab. The only function this file runs is the
  * client-side show_page(page), which jumps the reader.
  *
+ * SAYING A PAGE IS SHOWING IT. The prompt makes the agent name the page every figure came off
+ * ("page 115 says ..."), and show_page is there to open it — but a language model calls a function
+ * it does not need for its own answer only when it feels like it, and measured against the live
+ * socket it mostly did not: four spoken turns on the 390 Duke, four pages named out loud, zero
+ * show_page calls. So the page a turn names is not left to the model. The assistant's own
+ * transcript arrives on the same millisecond as the first byte of its audio, and the page number
+ * in it moves the reader — the mechanic hears "page 115" and page 115 is already there. show_page
+ * still works and still wins when the agent does call it; this only covers the turns it doesn't.
+ *
  * start({manualId, bikeId, on}) -> handle {stop(), speaking(), level()}
  * `on` is called with:
  *   {type:"status", value:"connecting|listening|thinking|speaking|closed"}
  *   {type:"text", role:"user"|"assistant", text}   one finished turn, for the transcript
- *   {type:"page", page}                            show_page — move the reader
+ *   {type:"page", page}                            show_page, or the page the answer named
  *   {type:"error", message}
  */
 
@@ -37,6 +46,10 @@ const KEEPALIVE_MS = 8000;
 // How long after a barge-in to keep dropping the abandoned answer's chunks. Long enough to cover
 // what was already in flight, short enough that a missing AgentStartedSpeaking costs nothing.
 const BARGE_MUTE_MS = 500;
+
+// "page 115 says ...", "on page 115", "pages 85 and 86" — the first printed page an answer names.
+// Only ever "page N": a bare number in an answer is a torque or a capacity, never somewhere to go.
+const SPOKEN_PAGE = /\bpages?\s+(\d{1,4})\b/i;
 
 const WORKLET = `class Tap extends AudioWorkletProcessor {
   process(inputs) {
@@ -224,6 +237,8 @@ export async function start(opts = {}) {
     beat: 0,
     level: 0,
     dead: false,
+    pages: 0, // printed pages in this manual; 0 until the settings arrive
+    page: 0, // the page already on the rider's screen
   };
   current = session;
 
@@ -262,6 +277,7 @@ async function run(session, opts, say) {
   ]);
   if (session.dead) return;
   if (!config || !config.settings) throw new Error("no agent settings");
+  session.pages = Number(config.pages) || 0;
   let url = relay;
   let protocols;
   if (!relay) {
@@ -343,11 +359,18 @@ function handle(session, ws, msg, say) {
       break;
     case "ConversationText": {
       const text = String(msg.content || "").trim();
-      if (text) say({ type: "text", role: msg.role === "user" ? "user" : "assistant", text });
+      if (!text) break;
+      const assistant = msg.role !== "user";
+      say({ type: "text", role: assistant ? "assistant" : "user", text });
+      // The page the agent just said out loud, for the turns where it does not call show_page.
+      if (assistant) {
+        const named = SPOKEN_PAGE.exec(text);
+        if (named) turnTo(session, Number(named[1]), say);
+      }
       break;
     }
     case "FunctionCallRequest":
-      for (const call of msg.functions || []) run_function(ws, call, say);
+      for (const call of msg.functions || []) run_function(session, ws, call, say);
       break;
     case "AgentAudioDone":
       // The last chunk is scheduled, not played: the player says "listening" when it drains.
@@ -362,10 +385,24 @@ function handle(session, ws, msg, say) {
 }
 
 /**
+ * Move the reader to a printed page, once. Out-of-range pages are dropped rather than jumping the
+ * reader somewhere the manual does not have, and the page already on screen is not re-sent.
+ */
+function turnTo(session, page, say) {
+  const n = Math.floor(Number(page));
+  if (!Number.isFinite(n) || n < 1) return false;
+  if (session.pages && n > session.pages) return false;
+  if (session.page === n) return true;
+  session.page = n;
+  say({ type: "page", page: n });
+  return true;
+}
+
+/**
  * The only function this browser runs. Everything grounded is server-side — Deepgram calls the
  * API's own /voice/tools/* endpoints — so `client_side` should only ever be show_page.
  */
-function run_function(ws, call, say) {
+function run_function(session, ws, call, say) {
   if (!call || call.client_side === false) return;
   let args = {};
   try {
@@ -376,12 +413,7 @@ function run_function(ws, call, say) {
   let content = "unknown function";
   if (call.name === "show_page") {
     const page = Math.floor(Number(args.page));
-    if (Number.isFinite(page) && page > 0) {
-      say({ type: "page", page });
-      content = `Page ${page} is on the rider's screen.`;
-    } else {
-      content = "No such page.";
-    }
+    content = turnTo(session, page, say) ? `Page ${page} is on the rider's screen.` : "No such page.";
   }
   if (ws.readyState !== WebSocket.OPEN) return;
   ws.send(JSON.stringify({ type: "FunctionCallResponse", id: call.id, name: call.name, content }));

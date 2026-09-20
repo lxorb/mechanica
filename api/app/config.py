@@ -41,6 +41,7 @@ class Settings:
     elevenlabs_agent_id = os.getenv("ELEVENLABS_AGENT_ID") or None
     deepgram_api_key = _secret("DEEPGRAM_API_KEY", "deepgram.txt")
     ttc_api_key = _secret("TTC_API_KEY", "ttc.txt")
+    dropbox_token = _secret("DROPBOX_TOKEN", "dropbox.txt")
     model_chat = os.getenv("MODEL_CHAT", "gpt-5.6-terra")
     model_offers = os.getenv("MODEL_OFFERS", "gpt-5.6-terra")
     model_image = os.getenv("MODEL_IMAGE", "gpt-image-1")

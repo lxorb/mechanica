@@ -11,7 +11,7 @@ argument - and the order they are resolved in is the difference between an agent
 right manual and one that can be talked into reading a different one.
 """
 
-import inspect
+
 import json
 from types import SimpleNamespace
 
@@ -274,12 +274,24 @@ def prompt():
     return mod.prompt_template()
 
 
-def test_the_prompt_is_the_deepgram_grounding_policy_not_a_second_one(prompt):
-    """If these two ever diverge, one engine starts inventing torque figures and the other does
-    not. The template IS voice._prompt() with placeholders, so this holds by construction."""
-    from app import voice
+def test_the_prompt_is_the_deepgram_grounding_policy_not_a_second_one(prompt, client):
+    """Substitute this session's own dynamic variables into the ElevenLabs template and you get
+    the Deepgram agent's prompt back, character for character.
 
-    source = inspect.getsource(voice._prompt)
+    That is the whole claim of this integration: ONE grounding policy, two engines. If someone
+    edits the policy in voice.py, this keeps holding; if someone forks it, this fails.
+    """
+    live = client.get("/voice/agent-settings", params={"manualId": KTM}).json()
+    deepgram = live["settings"]["agent"]["think"]["prompt"]
+    variables = client.get(SESSION, params={"manualId": KTM}).json()["dynamicVariables"]
+
+    filled = prompt
+    for name, value in variables.items():
+        filled = filled.replace("{{" + name + "}}", value)
+    head, _, tail = filled.partition("Two more things about how you are wired here:")
+    assert head.strip() == deepgram.strip()
+    assert tail  # and the only addition is the ElevenLabs-specific wiring note
+
     for sentence in (
         "You do not know anything about this motorcycle",
         "NEVER guess, round, convert or recall a value",
@@ -287,7 +299,6 @@ def test_the_prompt_is_the_deepgram_grounding_policy_not_a_second_one(prompt):
         "Say the page whenever a figure came off one",
     ):
         assert sentence in prompt
-        assert sentence in source  # the one copy of the policy lives in voice.py
     assert "find_procedure" in prompt and "show_page" in prompt
 
 

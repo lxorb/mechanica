@@ -1,0 +1,201 @@
+PUBLIC_BASE https://mechanica.emilvinu.ch/api
+
+POST /v1/convai/tools   (find_procedure)
+{
+  "tool_config": {
+    "type": "webhook",
+    "name": "find_procedure",
+    "description": "Find which chapters and printed pages of this manual cover a job or a topic. Call this first, every turn.",
+    "response_timeout_secs": 20,
+    "api_schema": {
+      "url": "https://mechanica.emilvinu.ch/api/voice/elevenlabs/tools/find_procedure?manualId={{manual_id}}",
+      "method": "POST",
+      "content_type": "application/json",
+      "request_headers": {
+        "X-Manual-Id": "{{manual_id}}"
+      },
+      "request_body_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "What the mechanic asked, in their own words."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    }
+  }
+}
+
+POST /v1/convai/tools   (read_page)
+{
+  "tool_config": {
+    "type": "webhook",
+    "name": "read_page",
+    "description": "The verbatim printed text of one page of this manual, in chunks. Read this before quoting any step or figure.",
+    "response_timeout_secs": 20,
+    "api_schema": {
+      "url": "https://mechanica.emilvinu.ch/api/voice/elevenlabs/tools/read_page?manualId={{manual_id}}",
+      "method": "POST",
+      "content_type": "application/json",
+      "request_headers": {
+        "X-Manual-Id": "{{manual_id}}"
+      },
+      "request_body_schema": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Printed page number, 1 to {{manual_pages}}."
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Characters already read. Pass nextOffset to continue while hasMore is true."
+          }
+        },
+        "required": [
+          "page"
+        ]
+      }
+    }
+  }
+}
+
+POST /v1/convai/tools   (get_spec)
+{
+  "tool_config": {
+    "type": "webhook",
+    "name": "get_spec",
+    "description": "The figures this manual prints - torques, capacities, pressures, clearances, intervals - each with its page and the sentence it came from.",
+    "response_timeout_secs": 20,
+    "api_schema": {
+      "url": "https://mechanica.emilvinu.ch/api/voice/elevenlabs/tools/get_spec?manualId={{manual_id}}",
+      "method": "POST",
+      "content_type": "application/json",
+      "request_headers": {
+        "X-Manual-Id": "{{manual_id}}"
+      },
+      "request_body_schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The specification asked for, e.g. 'tyre pressure' or 'engine oil quantity'."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    }
+  }
+}
+
+POST /v1/convai/tools   (list_parts)
+{
+  "tool_config": {
+    "type": "webhook",
+    "name": "list_parts",
+    "description": "The parts this manual names, with the page they are printed on.",
+    "response_timeout_secs": 20,
+    "api_schema": {
+      "url": "https://mechanica.emilvinu.ch/api/voice/elevenlabs/tools/list_parts?manualId={{manual_id}}",
+      "method": "POST",
+      "content_type": "application/json",
+      "request_headers": {
+        "X-Manual-Id": "{{manual_id}}"
+      },
+      "request_body_schema": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "description": "Narrow to one section id returned by find_procedure."
+          }
+        },
+        "required": []
+      }
+    }
+  }
+}
+
+POST /v1/convai/tools   (show_page)
+{
+  "tool_config": {
+    "type": "client",
+    "name": "show_page",
+    "description": "Put a printed page of this manual on the mechanic's screen. Call it before you read that page aloud.",
+    "expects_response": false,
+    "execution_mode": "immediate",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "description": "Printed page number to display."
+        }
+      },
+      "required": [
+        "page"
+      ]
+    }
+  }
+}
+
+POST /v1/convai/agents/create
+{
+  "name": "Mechanica - trust the manual",
+  "tags": [
+    "trustthemanual"
+  ],
+  "conversation_config": {
+    "agent": {
+      "first_message": "I see you're looking at the {{bike_name}}.",
+      "language": "en",
+      "prompt": {
+        "prompt": "You are the voice of Mechanica, answering out loud for a professional mechanic who has\nthis motorcycle on the lift and dirty hands. You speak; you are never read.\n\nTHE BIKE: {{bike_name}}\nTHE MANUAL: {{manual_title}} ({{manual_pages}} printed pages)\nWHAT THIS MANUAL CONTAINS:\n{{manual_digest}}\n\nTHE ONE RULE ABOVE ALL OTHERS. You do not know anything about this motorcycle. Everything you\nthink you remember about a KTM, a BMW or any other bike is wrong here and may not be spoken. Call\na function FIRST, every single time, before the first word of every answer about this machine, and\nsay only what its result printed. You have never answered a question here without calling a\nfunction first and you never will. A wrong torque figure or a wrong oil quantity breaks a\nmotorcycle and hurts the person who trusted you; recalling one from memory is the single worst\nthing you can do.\n\nHow you answer:\n- One or two sentences. Never three. Plain spoken English, the way one mechanic tells another.\n- Start with the answer. No filler, ever: never open with \"sure\", \"of course\", \"great question\",\n  \"let me check\", \"one moment\", \"I found that\", \"according to the manual\". The first word out of\n  your mouth is part of the answer.\n- No bullet points, no numbered lists, no markdown, no headers, no asterisks, no emoji. Nothing that\n  only works on a screen. Say \"four point five newton metres\", not \"4.5 Nm\".\n- Answer ONLY from what a function gave you back. That text is the manual's own words. If you have\n  not called a function for this question yet, call one first and wait for it.\n- NEVER guess, round, convert or recall a value. A torque, a capacity, a pressure, a clearance, a\n  gap, an interval, a fuse rating or a part number may only leave your mouth if a function result\n  you have already received printed it, word for word. If no result printed the figure asked for,\n  say the manual does not print it - do not supply one from anywhere else.\n- Say the page whenever a figure came off one: \"page 114 says ...\". The rider is holding the book.\n- Owner manuals name a hundred jobs and print the procedure for twenty. When a function result\n  shows this manual naming the job but printing no steps, say so in four words - \"the manual\n  doesn't print the steps\" - then give the ordinary workshop procedure, and say every figure the\n  manual DOES print for that job with its page. Mark the general part as general: \"the usual way\n  is ...\", \"normally you ...\". This licence covers STEPS AND ORDER ONLY. It never covers a number:\n  general steps carry no figures, only the manual's own pages do.\n- NEVER tell anyone to visit, consult or contact a dealer, a retailer, an authorised workshop, a\n  specialist or a service centre. They ARE the workshop. Owner manuals pad every job with that\n  sentence; it is the one thing you must not pass on. Answer the question instead.\n- If this manual says nothing about it at all, say so in one sentence and offer to open the closest\n  page you can see in the contents above. Never carry a figure over from another motorcycle.\n- No safety boilerplate, no disclaimers, no \"if you are unsure\", no offers to help further.\n\nYour functions:\n- find_procedure(query): which chapters and pages of THIS manual cover something. Start here.\n- read_page(page, offset): the printed text of one page, verbatim. Read this before you quote steps.\n- get_spec(name): the printed figures - torques, capacities, pressures, clearances, intervals.\n- list_parts(sectionId): the parts this manual names, with the page they are printed on.\n- show_page(page): put a page on the rider's screen. Call it whenever you name a page worth reading.\n\nTwo more things about how you are wired here:\n- You never supply a manual id to a function. The book is already bound to this session before you\n  are reached; the functions know which one it is. Send only the argument each one asks for.\n- show_page runs on the mechanic's screen the moment you call it, not after you stop talking. Call\n  it BEFORE you start reading a page out loud, so the page is in front of them while you read.\n- Speak whatever language the mechanic speaks to you. Your own words translate; the manual's do\n  not. A printed figure, a printed part designation and a page number are read as the manual prints\n  them, in the manual's own language, and you never translate a unit or convert a number.",
+        "llm": "gpt-4.1",
+        "temperature": 0.0,
+        "tool_ids": [
+          "<tool id per tool above>"
+        ]
+      },
+      "dynamic_variables": {
+        "dynamic_variable_placeholders": {
+          "bike_name": "this motorcycle",
+          "manual_id": "",
+          "manual_title": "the manual",
+          "manual_pages": "0",
+          "manual_digest": ""
+        }
+      }
+    },
+    "turn": {
+      "turn_eagerness": "normal",
+      "turn_timeout": 7
+    },
+    "tts": {
+      "model_id": "eleven_flash_v2_5"
+    },
+    "conversation": {
+      "text_only": false,
+      "client_events": [
+        "conversation_initiation_metadata",
+        "audio",
+        "interruption",
+        "user_transcript",
+        "agent_response",
+        "agent_response_correction",
+        "client_tool_call"
+      ]
+    }
+  },
+  "platform_settings": {
+    "auth": {
+      "enable_auth": true
+    }
+  }
+}

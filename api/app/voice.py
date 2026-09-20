@@ -24,6 +24,7 @@ and the JSON this API already returns goes back to the model as the function res
 import json
 import os
 import re
+from itertools import zip_longest
 from urllib.parse import quote
 
 import httpx
@@ -310,7 +311,9 @@ def _digest(manual: Manual) -> str:
 KEYTERM_MAX = 100
 # Deepgram's ceiling is 500 tokens; an English term here runs about 1.4 tokens per word, so a
 # character budget well under that is the cheap way to stay inside it without a tokenizer.
-KEYTERM_CHARS = 1200
+KEYTERM_CHARS = 1500
+# Where the manual's own vocabulary stops and the standard catalogue starts.
+CATALOGUE_FROM = 900
 KEYTERM_WORDS = 5
 
 # Manual headings are instructions ("Checking the engine oil level"); the term is the noun phrase.
@@ -323,7 +326,12 @@ _VERB = re.compile(
     re.I,
 )
 _PAREN = re.compile(r"\s*\([^)]*\)")
-_TRIM = re.compile(r"^[\s\-–—:,.]+|[\s\-–—:,.]+$")
+_TRIM = re.compile(r"^(?:the\s+)?[\s\-–—:,.]*|[\s\-–—:,.]+$")
+# A spaced slash is a printed either/or ("DOT 4 / DOT 5.1"); a tight one is part of the word
+# ("R 12 G/S", "110/70", "USA/CA") and cutting there would rename the bike.
+_EITHER_OR = re.compile(r"\s+/\s+")
+# A heading fragment, not a term: "with enduro package", "for the front wheel".
+_LEADS = re.compile(r"^(?:with|without|for|from|and|or|per|at|on|in|to|of|when|as)\b", re.I)
 
 
 def _term(raw: str) -> str:
@@ -331,63 +339,101 @@ def _term(raw: str) -> str:
 
     "Engine oil (SAE 15W/50)" -> "Engine oil"; "Nut, rear wheel spindle" -> "rear wheel spindle Nut"
     (the manual's index inverts the head noun, a mechanic does not); "Checking the chain tension"
-    -> "chain tension". Case is kept: KTM, DOT and SAE are read back as printed.
+    -> "chain tension"; "Brake fluid DOT 4 / DOT 5.1" -> "Brake fluid DOT 4", because a slash is a
+    printed either/or and nobody says it out loud. Case is kept: KTM, DOT and SAE are read back as
+    printed. Anything still longer than a spoken term - a whole heading, a sentence of rider slang
+    - is dropped rather than truncated: half a phrase primes the transcriber for the wrong words.
     """
     text = " ".join(_PAREN.sub("", str(raw or "")).split())
-    if "," in text:
-        head, _, tail = text.partition(",")
-        if head.strip() and tail.strip():
-            text = f"{tail.strip()} {head.strip()}"
-    text = _TRIM.sub("", _VERB.sub("", text))
-    words = text.split()
-    if not words or len(words) > KEYTERM_WORDS or len(text) < 3:
+    text = _EITHER_OR.split(text)[0]
+    head, _, tail = text.partition(",")
+    # Index order ("Nut, rear wheel spindle"), not a second clause: a one- or two-word head only.
+    if tail.strip() and 1 <= len(head.split()) <= 2 and len(text.split()) <= KEYTERM_WORDS + 1:
+        text = f"{tail.strip()} {head.strip()}"
+    text = _TRIM.sub("", _VERB.sub("", text)).replace(",", " ")
+    words = " ".join(text.split()).split()
+    text = " ".join(words)
+    if not words or len(words) > KEYTERM_WORDS or len(text) < 3 or _LEADS.match(text):
         return ""
-    # A term is words and figures, not punctuation a transcriber would never hear.
+    # A term is words and figures, not punctuation a transcriber would never hear, and not the
+    # loose letters a PDF text layer leaves behind ("g p y g Specification").
     if not any(w[:1].isalpha() for w in words):
+        return ""
+    if sum(1 for w in words if len(w) == 1 and w.isalpha()) > 1:
         return ""
     return text
 
 
-def _keyterms(manual: Manual, bike, rec) -> list[str]:
-    """This bike's spoken vocabulary, best first, capped at what Deepgram accepts.
+def _fill(
+    sources: list[str], out: list[str], seen: set[str], used: int, budget: int, covered: set[str] | None = None
+) -> int:
+    """Append the terms of `sources` that are new, up to `budget` characters. Returns the total.
 
-    Order matters, because the cap truncates: the manual's own printed nouns come before the
-    rider phrasings, which come before the generic catalogue. The bike's own name leads — an
-    agent that mishears "390 Duke" has already lost the thread.
+    `covered` is the vocabulary already primed: a term made only of words that are all in it is
+    skipped, so the second tier spends its slots on words the manual never printed ("swingarm
+    pivot", "monoshock", "cvt") instead of a third way of saying "oil filter".
     """
-    sources: list[str] = [bike]
-    sources += [p.name for p in manual.parts]
-    try:
-        sources += [s.name for s in get_store().specs(manual.id)]
-    except Exception:  # noqa: BLE001 - a manual with no spec index still gets its other terms
-        pass
-    for section in manual.sections:
-        sources += list(section.keywords or [])
-    sources += [s.title for s in manual.sections]
-    try:
-        from . import parts_catalog
-
-        for entry in parts_catalog.parts_for(parts_catalog.profile_of(rec)):
-            sources.append(entry.name)
-            sources += list(entry.synonyms or [])
-    except Exception:  # noqa: BLE001 - the taxonomy is a bonus on top of the manual's own words
-        pass
-
-    out: list[str] = []
-    seen: set[str] = set()
-    used = 0
     for raw in sources:
+        if len(out) >= KEYTERM_MAX:
+            break
         term = _term(raw)
         low = term.lower()
         if not term or low in seen:
             continue
-        if used + len(term) + 1 > KEYTERM_CHARS:
+        if covered is not None and all(w in covered for w in low.split()):
+            continue
+        if used + len(term) + 1 > budget:
             break
         seen.add(low)
         out.append(term)
         used += len(term) + 1
-        if len(out) >= KEYTERM_MAX:
-            break
+    return used
+
+
+def _keyterms(manual: Manual, bike, rec) -> list[str]:
+    """This bike's spoken vocabulary, capped at what Deepgram accepts.
+
+    Two tiers, because a well-indexed manual would otherwise fill the list on its own. First the
+    book in front of the mechanic — its name, the parts it names, the specs it prints, the
+    headings, and the rider phrasings each section was indexed under — held to CATALOGUE_FROM so
+    there is always room for the second: the standard parts catalogue for this kind of vehicle,
+    which knows the words a manual's own index never prints, like "swingarm pivot" or "CVT".
+    The bike's own name leads — an agent that mishears "390 Duke" has already lost the thread.
+    """
+    out: list[str] = []
+    seen: set[str] = set()
+
+    own: list[str] = [bike] + [p.name for p in manual.parts]
+    try:
+        own += [s.name for s in get_store().specs(manual.id)]
+    except Exception:  # noqa: BLE001 - a manual with no spec index still gets its other terms
+        pass
+    for section in manual.sections:
+        own += list(section.keywords or [])
+    own += [s.title for s in manual.sections]
+    used = _fill(own, out, seen, 0, CATALOGUE_FROM)
+
+    # The catalogue is stored grouped - engine first, suspension and wheels last - and the budget
+    # runs out long before the end of it, so take one entry from each group in turn instead. A
+    # mechanic is as likely to ask about the swingarm as about the oil filter.
+    names: dict[str, list[str]] = {}
+    synonyms: dict[str, list[str]] = {}
+    try:
+        from . import parts_catalog
+
+        for part in parts_catalog.parts_for(parts_catalog.profile_of(rec)):
+            names.setdefault(part.group, []).append(part.name)
+            synonyms.setdefault(part.group, []).extend(part.synonyms or [])
+    except Exception:  # noqa: BLE001 - the taxonomy is a bonus on top of the manual's own words
+        pass
+
+    def spread(rows: dict[str, list[str]]) -> list[str]:
+        return [x for row in zip_longest(*rows.values()) for x in row if x]
+
+    # Every group's own name for a thing before any group's second way of saying it.
+    catalogue = spread(names) + spread(synonyms)
+    covered = {word for term in out for word in term.lower().split()}
+    _fill(catalogue, out, seen, used, KEYTERM_CHARS, covered)
     return out
 
 
@@ -535,6 +581,8 @@ def agent_settings(manualId: str, bikeId: str | None = None):
         "sampleRate": AGENT_RATE,
         "manualId": manual.id,
         "bike": bike,
+        # The browser bounds-checks a page against this before it moves the reader.
+        "pages": manual.pages,
         "keyterms": len(keyterms),
         "settings": {
             "type": "Settings",
@@ -586,15 +634,77 @@ def read_page(body: PageBody, manualId: str | None = Query(default=None)):
     return {"page": body.page, "text": text, "hasMore": has_more, "nextOffset": next_offset}
 
 
+# Which end of the motorcycle a name is about. "and the front one?" is not a hint on top of the
+# previous question, it IS the question: measured on the live socket, a word-level match for
+# "front axle nut torque" came back with "Nut, rear wheel spindle" - the right shape, the wrong
+# end, and 45 Nm of difference. Spoken, there is no page on screen to catch it.
+SIDES = (("front",), ("rear", "back"), ("left",), ("right",), ("intake", "inlet"), ("exhaust",))
+# What kind of figure the question is after, in the words a mechanic uses for it. The Spec rows
+# already carry a `kind`, so "front axle nut TORQUE" can outrank a tyre pressure that happens to
+# share the word "front" and nothing else.
+KINDS = {
+    "torque": ("torque", "torques", "tighten", "tightening", "newton", "nm", "lbf"),
+    "capacity": ("capacity", "quantity", "volume", "litre", "litres", "liter", "liters", "refill", "fill"),
+    "pressure": ("pressure", "bar", "psi", "inflate", "inflation"),
+    "clearance": ("clearance", "clearances", "gap", "play", "slack", "backlash"),
+    "size": ("size", "dimension", "thickness", "depth", "diameter", "length", "limit"),
+    "electrical": ("volt", "volts", "voltage", "amp", "amps", "ampere", "fuse", "watt", "battery"),
+    "grade": ("grade", "spec", "specification", "type", "viscosity"),
+}
+WORD = re.compile(r"[a-z0-9.]+")
+# Words a spoken question is full of and a spec name means nothing by. "the" alone put a handlebar
+# clamp above a brake-pad wear limit, because the clamp's name is long enough to contain it.
+SKIP = frozenset(
+    "the and for how can get much what which does did are was you your with from that this have "
+    "should when its it's out off too but not any".split()
+)
+
+
+def _sides(text: str) -> set[str]:
+    words = set(WORD.findall(text.lower()))
+    return {group[0] for group in SIDES if words.intersection(group)}
+
+
+def _kinds(text: str) -> set[str]:
+    words = set(WORD.findall(text.lower()))
+    return {kind for kind, cues in KINDS.items() if words.intersection(cues)}
+
+
+def _rank(needle: str, specs: list) -> list:
+    """The specs whose name shares words with `needle`, best first, the wrong end dropped."""
+    want = _sides(needle)
+    kinds = _kinds(needle)
+    words = [w for w in WORD.findall(needle) if len(w) > 2 and w not in SKIP]
+    scored = []
+    for i, spec in enumerate(specs):
+        name = spec.name.lower()
+        side = _sides(name)
+        if want and side and not want.intersection(side):
+            continue
+        score = sum(1 for w in words if w in name)
+        if not score:
+            continue
+        # A row that names the end asked for beats one that names no end at all, and a row that
+        # prints the KIND of figure asked for beats one that shares a word by accident.
+        if want.intersection(side):
+            score += 1
+        if kinds:
+            score += 2 if spec.kind in kinds else -2
+        scored.append((-score, i, spec))
+    scored.sort()
+    return [spec for _, _, spec in scored]
+
+
 @tools.post("/get_spec")
 def get_spec(body: SpecBody, manualId: str | None = Query(default=None)):
     manual_id = _pick(body, manualId)
     _manual(manual_id)
     needle = body.name.strip().lower()
-    hits = [s for s in get_store().specs(manual_id) if needle and (needle in s.name.lower() or s.name.lower() in needle)]
+    specs = get_store().specs(manual_id)
+    exact = [s for s in specs if needle and (needle in s.name.lower() or s.name.lower() in needle)]
+    hits = _rank(needle, exact) if exact else _rank(needle, specs)
     if not hits:
-        words = [w for w in needle.split() if len(w) > 2]
-        hits = [s for s in get_store().specs(manual_id) if any(w in s.name.lower() for w in words)]
+        hits = exact
     return {
         "specs": [
             {"name": s.name, "value": s.value, "unit": s.unit, "page": s.page, "quote": s.quote, "sectionId": s.sectionId}

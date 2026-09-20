@@ -86,14 +86,70 @@ def test_listening_is_flux_with_eager_end_of_turn(agent):
 
 
 def test_the_listen_config_is_copied_not_shared(client):
-    """The module-level dict must not be handed out by reference, or one response's edit would
-    follow every later one."""
+    """The module-level dict must not be handed out by reference, or one response's edit - the
+    per-manual keyterms, for one - would follow every later one."""
     from app import voice as voice_mod
 
     body = client.get(SETTINGS, params={"manualId": KTM}).json()
     listen = body["settings"]["agent"]["listen"]["provider"]
-    assert listen == voice_mod.LISTEN
     assert listen is not voice_mod.LISTEN
+    assert "keyterms" not in voice_mod.LISTEN
+    assert {k: v for k, v in listen.items() if k != "keyterms"} == voice_mod.LISTEN
+
+
+# ---------------------------------------------------------------- keyterm prompting
+
+
+@pytest.fixture
+def keyterms(agent):
+    return agent["listen"]["provider"]["keyterms"]
+
+
+def test_the_transcriber_is_primed_with_this_bikes_vocabulary(keyterms, ktm):
+    """Keyterm prompting, the Voice Agent's own spelling of it: a list of plain strings on the
+    listen provider. Deepgram accepts up to 100 of them, 500 tokens, for flux and nova-3."""
+    assert isinstance(keyterms, list) and keyterms
+    assert len(keyterms) <= 100
+    assert all(isinstance(t, str) and t.strip() == t and t for t in keyterms)
+    assert sum(len(t) + 1 for t in keyterms) <= 1500, "well inside Deepgram's 500-token ceiling"
+    assert ktm["keyterms"] == len(keyterms), "the count is reported so a screen can show it"
+
+
+def test_the_bike_leads_and_the_manuals_own_words_follow(keyterms):
+    assert keyterms[0] == "KTM 390 Duke 2024", "mishear the bike and the thread is lost"
+    low = [t.lower() for t in keyterms]
+    assert "engine oil" in low, "a part this manual names"
+    assert any("chain" in t for t in low), "a job this manual covers"
+
+
+def test_a_keyterm_is_a_term_not_a_heading(keyterms):
+    """Deepgram asks for a phrase per element. A whole instruction ("Checking that the brake
+    linings of the front brake are secured") primes the wrong words, so it is dropped, not cut."""
+    for term in keyterms:
+        assert 1 <= len(term.split()) <= 5, term
+        assert "(" not in term and ")" not in term and "," not in term, term
+        assert not term.lower().startswith(("checking", "changing", "adjusting", "the ")), term
+
+
+def test_two_manuals_are_primed_differently(client, keyterms):
+    other = client.get(SETTINGS, params={"manualId": BMW}).json()
+    theirs = other["settings"]["agent"]["listen"]["provider"]["keyterms"]
+    assert theirs[0].startswith("BMW")
+    assert set(theirs) != set(keyterms), "the priming follows the bike on the lift"
+
+
+def test_the_standard_catalogue_fills_what_the_manual_never_prints(keyterms):
+    """An owner manual's index is short. The parts taxonomy knows the words a mechanic says that
+    this book never prints, and it gets the tail of the budget - spread across every group, so the
+    suspension and the wheels are reached and not twelve more ways to say "oil filter"."""
+    low = {t.lower() for t in keyterms}
+    assert "fork springs" in low or "fork oil seals" in low, "suspension was reached"
+    assert any("wheel bearings" in t for t in low), "wheels were reached"
+
+
+def test_the_page_count_reaches_the_browser(ktm):
+    """The reader will not jump to a page this manual does not have, so it needs the count."""
+    assert ktm["pages"] > 0
 
 
 def test_think_model_is_one_deepgram_lists_for_open_ai(agent):

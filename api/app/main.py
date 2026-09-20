@@ -11,9 +11,11 @@ from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 
 from . import ask as ask_mod
 from . import chat as chat_mod
+from .climate.routes import router as climate_router
 from . import offers as offers_mod
 from . import parts_catalog as parts_catalog_mod
 from . import cost_ttc
+from . import dropbox_sync
 from . import identify as identify_mod
 from . import ingest as ingest_mod
 from . import ondemand
@@ -57,6 +59,8 @@ app.add_middleware(
 app.include_router(voice.router)
 app.include_router(voice_elevenlabs.router)
 app.include_router(cost_ttc.router)
+app.include_router(dropbox_sync.router)
+app.include_router(climate_router)
 
 
 def slug(*parts: str | int) -> str:

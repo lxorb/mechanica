@@ -1,0 +1,39 @@
+Switch the VOICE button from Deepgram to ElevenLabs.
+
+    git apply docs/pitches/elevenlabs/chat-ui.patch        # from the repo root
+
+NOT APPLIED. The live app runs the Deepgram Voice Agent, and that stays true until Emil decides
+otherwise; this file is the whole diff between the two engines, kept next to the pitch so the claim
+"drop-in" can be checked rather than believed.
+
+Two hunks, and only the first is about the engine:
+
+  1. the import specifier. web/counter/js/voice-elevenlabs.js exports the same four names with the
+     same signatures and emits the same {status,text,page,error} events as voice-deepgram.js, so
+     nothing else in chat-ui.js changes - not startVoice, not the meter, not the transcript, not
+     the show_page jump.
+  2. the button's visibility gate. GET /voice/config returns BOTH `deepgram` (a key is present) and
+     `elevenlabsAgentId` (an agent exists). The button should appear for whichever engine is
+     actually wired, so the predicate follows the import.
+
+To run both at once instead - Deepgram live, ElevenLabs on ?voice=elevenlabs for the judges -
+import both modules and pick at start(): `const agent = new URLSearchParams(location.search).get("voice") === "elevenlabs" ? eleven : deepgram`.
+That is three lines rather than two and is not what this patch does.
+
+--- a/web/counter/js/chat-ui.js
++++ b/web/counter/js/chat-ui.js
+@@
+-import * as agent from "./voice-deepgram.js";
++import * as agent from "./voice-elevenlabs.js";
+@@
+-  /** The toggle only exists when the backend has a Deepgram key and this browser can capture. */
++  /** The toggle only exists when the backend has an ElevenLabs agent and this browser can capture. */
+   function offerVoice() {
+     if (offered) return offered;
+     offered = (agent.supported ? T.voiceConfig() : Promise.resolve(null))
+       .then((cfg) => {
+-        const ok = Boolean(cfg && cfg.deepgram);
++        const ok = Boolean(cfg && cfg.elevenlabsAgentId);
+         voiceBtn.hidden = !ok;
+         return ok;
+       })

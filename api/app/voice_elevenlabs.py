@@ -117,7 +117,9 @@ def session(manualId: str, bikeId: str | None = None):
     if not agent_id:
         raise HTTPException(501, "no ELEVENLABS_AGENT_ID; run api/tools/elevenlabs_setup.py first")
     manual = voice._manual(manualId)
-    bike = voice._label(manual, bikeId)
+    # The same two steps /voice/agent-settings takes, so both engines name the bike identically —
+    # which is what test_the_prompt_is_the_deepgram_grounding_policy_not_a_second_one pins down.
+    bike = voice._label(manual, voice._bike(manual, bikeId))
     payload = {
         "agentId": agent_id,
         "manualId": manual.id,

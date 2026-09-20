@@ -41,6 +41,7 @@ import argparse
 import html
 import io
 import json
+import os
 import re
 import signal
 import sys
@@ -1031,7 +1032,24 @@ def write_outputs(entries: dict) -> None:
 ALIAS_FIELDS = ("image", "thumb", "hero", "title", "author", "license", "source", "view")
 
 
-def on_disk(entry: dict) -> bool:
+def stored_files() -> set:
+    """Every rendered image path that exists right now, as one directory listing each.
+
+    A checkpoint re-checks ~8,000 entries and ~40,000 alias candidates. Asking the
+    filesystem once per path is 40,000 stat calls; asking it once per directory is
+    two, and the answer is the same.
+    """
+    out: set = set()
+    for folder in ("bikes", "bikes2"):
+        base = ROOT / "web" / "store" / "img" / folder
+        try:
+            out.update(f"store/img/{folder}/{name}" for name in os.listdir(base))
+        except OSError:
+            pass
+    return out
+
+
+def on_disk(entry: dict, known: set | None = None) -> bool:
     """Does the file this entry points at actually exist?
 
     images.py rewrites its whole map at every checkpoint and does drop keys when
@@ -1039,10 +1057,14 @@ def on_disk(entry: dict) -> bool:
     directory is therefore a claim that has to be re-checked, not a fact.
     """
     image = entry.get("image")
-    return bool(image) and (ROOT / "web" / image).exists()
+    if not image:
+        return False
+    if known is not None:
+        return image in known
+    return (ROOT / "web" / image).exists()
 
 
-def alias_pass(models: list, entries: dict, filled: dict) -> int:
+def alias_pass(models: list, entries: dict, filled: dict, known: set | None = None) -> int:
     """Point variant keys at the family photo that is already on disk.
 
     "Aprilia RSV4 1100 Factory" has no Commons photo of its own and never will,
@@ -1058,7 +1080,7 @@ def alias_pass(models: list, entries: dict, filled: dict) -> int:
         for name in name_variants(m.model, cap=5)[1:]:
             parent = image_key(m.make, name)
             src = filled.get(parent) or entries.get(parent)
-            if not src or not on_disk(src):
+            if not src or not on_disk(src, known):
                 continue
             entry = {k: src[k] for k in ALIAS_FIELDS if src.get(k)}
             entry["via"] = "alias"
@@ -1069,9 +1091,11 @@ def alias_pass(models: list, entries: dict, filled: dict) -> int:
     return added
 
 
-def verify(entries: dict) -> int:
+def verify(entries: dict, known: set | None = None) -> int:
     """Drop every entry whose image has gone missing. Returns how many went."""
-    stale = [k for k, e in entries.items() if not on_disk(e)]
+    if known is None:
+        known = stored_files()
+    stale = [k for k, e in entries.items() if not on_disk(e, known)]
     for k in stale:
         entries.pop(k, None)
     return len(stale)
@@ -1343,26 +1367,40 @@ def main() -> int:
         if not saving.acquire(blocking=False):
             return
         try:
+            # Everything below touches the filesystem for thousands of paths. Doing
+            # any of it under `lock` stops all forty workers dead -- which is exactly
+            # what it did -- so the lock is held only to copy the map out and to
+            # merge the result back in.
             with lock:
-                gone = verify(entries)
+                working = dict(entries)
                 snapshot = (stats["done"], stats["hit"], stats["attempted"], spend["usd"])
+
+            known = stored_files()
+            gone = verify(working, known)
+            filled_now, titles = first_pass()  # the other agent is still working
+            # Its new photos are new family photos, and a family photo covers every
+            # variant key under it, so re-aliasing here turns the other agent's
+            # ongoing run into coverage for free: no request, no token, no byte.
+            fresh = 0 if args.no_alias else alias_pass(all_models, working, filled_now, known)
+
+            with lock:
+                for key in list(entries):
+                    if key not in working:
+                        entries.pop(key, None)
+                for key, entry in working.items():
+                    entries.setdefault(key, entry)
+                used.update(titles)
+                stats["alias_live"] += fresh
+                out = dict(entries)
+
             if gone:
                 print(f"  - {gone} entries dropped: their photo is gone", flush=True)
-            filled_now, titles = first_pass()  # the other agent is still working
-            with lock:
-                used.update(titles)
-                # Its new photos are new family photos, and a family photo covers
-                # every variant key under it. Re-aliasing here turns the other
-                # agent's ongoing run into coverage for free -- no request, no
-                # token, no byte -- and re-homes the keys whose parent it dropped.
-                fresh = alias_pass(all_models, entries, filled_now) if not args.no_alias else 0
             if fresh:
-                stats["alias_live"] += fresh
                 print(f"  ~ {fresh} variant keys aliased onto new first-pass photos", flush=True)
-            write_outputs(entries)
+            write_outputs(out)
             last_save[0] = time.monotonic()
             print(
-                f"  ..{tag} {snapshot[0]}/{len(models)} tried, {len(entries)} images, "
+                f"  ..{tag} {snapshot[0]}/{len(models)} tried, {len(out)} images, "
                 f"{bytes_used / 1e6:.1f} MB, hit {100 * snapshot[1] / max(1, snapshot[2]):.0f}%, "
                 f"${snapshot[3]:.2f}",
                 flush=True,

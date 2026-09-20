@@ -1,0 +1,1 @@
+[{"id": "1065e366d2f2", "manualId": "ktm-790-adventure-2025-eu-om", "ruleType": "antifreeze_floor", "name": "Antifreeze protection", "comparator": "at_or_below", "thresholdC": -25.0, "value": "-25 °C", "page": 166, "quote": "Antifreeze protection to at least −25 °C (−13 °F)", "source": "regex"}]

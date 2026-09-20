@@ -1,0 +1,1 @@
+[{"id": "87a6d044d500", "manualId": "bmw-ce-04-2025-eu-om", "ruleType": "antifreeze_floor", "name": "Antifreeze protection", "comparator": "at_or_below", "thresholdC": -25.0, "value": "-25 °C", "page": 166, "quote": "Coolant, frost protection min. -25 °C", "source": "regex"}]

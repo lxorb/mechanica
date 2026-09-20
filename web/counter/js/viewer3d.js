@@ -1148,6 +1148,34 @@ async function loadRoom(THREE, file, radius, height) {
   return job;
 }
 
+/**
+ * The unmasked GPU name, or "" when the browser hides it. Chrome reports a coarse string such as
+ * "ANGLE (Qualcomm, Adreno (TM) X1-85 GPU, Direct3D11 ...)", which is all this needs.
+ */
+function gpuName(renderer) {
+  try {
+    const gl = renderer.getContext();
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    return info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL) || "") : "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Whether the 8k panorama is worth asking for. It is a 32-megapixel texture with a full mip
+ * chain and 16x anisotropy: about 180 MB of GPU memory per environment, on top of the 4k it
+ * replaces. Discrete GPUs and Apple silicon take it in stride; integrated and mobile parts
+ * (Adreno, Mali, Intel UHD/Iris, software renderers) are where the tab dies with an
+ * "Aw, Snap" instead, so they stay on the 4k, which is sharp at any laptop size.
+ */
+function wantsEightK(renderer) {
+  const gpu = gpuName(renderer);
+  if (!gpu) return false;
+  if (/SwiftShader|Basic Render|llvmpipe|Adreno|Qualcomm|Mali|PowerVR|Intel/i.test(gpu)) return false;
+  return /NVIDIA|GeForce|Radeon|AMD|Apple/i.test(gpu);
+}
+
 function loadEnvironment(THREE, renderer, name, big) {
   const id = `${name}:${big ? "big" : "small"}`;
   if (envCache.has(id)) return envCache.get(id);
@@ -1179,8 +1207,8 @@ function loadEnvironment(THREE, renderer, name, big) {
     // backgroundBlurriness 0 a 2k equirect is visibly soft even on a handset
     const background = await panorama("4k").catch(() => hdr);
     if (background !== hdr) hdr.dispose();
-    // desktop only, and only once the 4k is already up
-    const upgrade = big ? panorama("8k").catch(() => null) : Promise.resolve(null);
+    // desktop only, only once the 4k is already up, and only on a GPU that can hold it
+    const upgrade = big && wantsEightK(renderer) ? panorama("8k").catch(() => null) : Promise.resolve(null);
     return { environment, background, upgrade };
   })();
   envCache.set(id, job);

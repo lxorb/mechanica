@@ -6604,6 +6604,39 @@
     "via": "alias",
     "aliasOf": "hyundai|elantra"
   },
+  "hyundai|santa-fe-hev": {
+    "image": "store/img/bikes/hyundai-santa-fe.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-thumb.webp",
+    "hero": "store/img/bikes/hyundai-santa-fe-hero.webp",
+    "title": "2024 Hyundai Santa Fe (MX5) IMG 5309.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Hyundai_Santa_Fe_(MX5)_IMG_5309.jpg",
+    "via": "alias",
+    "aliasOf": "hyundai|santa-fe"
+  },
+  "hyundai|santa-fe-xl": {
+    "image": "store/img/bikes/hyundai-santa-fe.webp",
+    "thumb": "store/img/bikes/hyundai-santa-fe-thumb.webp",
+    "hero": "store/img/bikes/hyundai-santa-fe-hero.webp",
+    "title": "2024 Hyundai Santa Fe (MX5) IMG 5309.jpg",
+    "author": "Alexander Migl",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2024_Hyundai_Santa_Fe_(MX5)_IMG_5309.jpg",
+    "via": "alias",
+    "aliasOf": "hyundai|santa-fe"
+  },
+  "hyundai|sonata-plug-in-hybrid": {
+    "image": "store/img/bikes/hyundai-sonata.webp",
+    "thumb": "store/img/bikes/hyundai-sonata-thumb.webp",
+    "hero": "store/img/bikes/hyundai-sonata-hero.webp",
+    "title": "HYUNDAI SONATA DN8 China (7).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_DN8_China_(7).jpg",
+    "via": "alias",
+    "aliasOf": "hyundai|sonata"
+  },
   "hyundai|sonata-plugin-hybrid": {
     "image": "store/img/bikes/hyundai-sonata.webp",
     "thumb": "store/img/bikes/hyundai-sonata-thumb.webp",
@@ -6613,6 +6646,28 @@
     "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_SONATA_EF_China.jpg",
     "via": "alias",
     "aliasOf": "hyundai|sonata"
+  },
+  "hyundai|tucson-hybrid": {
+    "image": "store/img/bikes/hyundai-tucson.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-thumb.webp",
+    "hero": "store/img/bikes/hyundai-tucson-hero.webp",
+    "title": "HYUNDAI TUCSON (JM) China (3).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_TUCSON_(JM)_China_(3).jpg",
+    "via": "alias",
+    "aliasOf": "hyundai|tucson"
+  },
+  "hyundai|tucson-plug-in-hybrid": {
+    "image": "store/img/bikes/hyundai-tucson.webp",
+    "thumb": "store/img/bikes/hyundai-tucson-thumb.webp",
+    "hero": "store/img/bikes/hyundai-tucson-hero.webp",
+    "title": "HYUNDAI TUCSON (JM) China (3).jpg",
+    "author": "Dinkun Chen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HYUNDAI_TUCSON_(JM)_China_(3).jpg",
+    "via": "alias",
+    "aliasOf": "hyundai|tucson"
   },
   "hyundai|tucson-plugin-hybrid": {
     "image": "store/img/bikes/hyundai-tucson.webp",
@@ -7145,6 +7200,28 @@
     "source": "https://commons.wikimedia.org/wiki/File:Person_Returning_on_Red_Indian_Springfield_-_Las_Vegas_Ride_for_Kids_2019.jpg",
     "via": "alias",
     "aliasOf": "indian|springfield"
+  },
+  "infiniti|q50-hybrid": {
+    "image": "store/img/bikes/infiniti-q50.webp",
+    "thumb": "store/img/bikes/infiniti-q50-thumb.webp",
+    "hero": "store/img/bikes/infiniti-q50-hero.webp",
+    "title": "2014 Infiniti Q50 2.jpg",
+    "author": "Tino Rossini",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2014_Infiniti_Q50_2.jpg",
+    "via": "alias",
+    "aliasOf": "infiniti|q50"
+  },
+  "infiniti|q70-hybrid": {
+    "image": "store/img/bikes/infiniti-q70.webp",
+    "thumb": "store/img/bikes/infiniti-q70-thumb.webp",
+    "hero": "store/img/bikes/infiniti-q70-hero.webp",
+    "title": "Infiniti Q70 - Mondial de l'Automobile de Paris 2014 - 012.jpg",
+    "author": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Infiniti_Q70_-_Mondial_de_l'Automobile_de_Paris_2014_-_012.jpg",
+    "via": "alias",
+    "aliasOf": "infiniti|q70"
   },
   "infiniti|qx60-hybrid": {
     "image": "store/img/bikes/infiniti-qx60.webp",
