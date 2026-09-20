@@ -434,7 +434,10 @@ function paintBar() {
   const manualTitle = String((manualRec && manualRec.title) || "");
   const jobTitle = String((jobRec && (jobRec.chapter || jobRec.title)) || "");
   const trail = current == null ? [] : trailFor(outlineNodes(manualRec || {}), current);
-  const here = trail.length ? trail[trail.length - 1] : jobTitle || manualTitle;
+  // On a page: its chapter. In the contents, or before the first page: the manual's own
+  // cover title, because that is the one thing the reader must never be in doubt about.
+  const fallback = pages.length === 0 ? manualTitle || jobTitle : jobTitle || manualTitle;
+  const here = trail.length ? trail[trail.length - 1] : fallback;
   titleEl.textContent = here;
   titleEl.setAttribute("title", trail.length ? trail.join(" · ") : manualTitle || here);
 
@@ -1131,6 +1134,12 @@ function makeRing() {
 function bootSkeleton() {
   releaseSheets();
   pages = [];
+  // Nothing of the previous manual survives into this one, not even for a frame.
+  jobRec = null;
+  manualRec = {};
+  outline = [];
+  current = null;
+  paintBar();
   outlineEl.hidden = true;
   viewEl.hidden = false;
   stripEl.hidden = true;
