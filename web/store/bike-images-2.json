@@ -2228,6 +2228,30 @@
     "via": "alias",
     "aliasOf": "ducati|diavel"
   },
+  "ducati|hypermotard-698-mono": {
+    "image": "store/img/bikes2/ducati-hypermotard-698-mono.webp",
+    "thumb": "store/img/bikes2/ducati-hypermotard-698-mono.thumb.webp",
+    "title": "Ducati Hypermotard 698 Mono RVE at EICMA 2023 - right view - 1.jpg",
+    "author": "Earthshaker13",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Hypermotard_698_Mono_RVE_at_EICMA_2023_-_right_view_-_1.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/ducati-hypermotard-698-mono.hero.webp"
+  },
+  "ducati|hypermotard-698-mono-rve": {
+    "image": "store/img/bikes2/ducati-hypermotard-698-mono-rve.webp",
+    "thumb": "store/img/bikes2/ducati-hypermotard-698-mono-rve.thumb.webp",
+    "title": "Ducati Hypermotard 698 Mono RVE at EICMA 2023 - left view.jpg",
+    "author": "Earthshaker13",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Hypermotard_698_Mono_RVE_at_EICMA_2023_-_left_view.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/ducati-hypermotard-698-mono-rve.hero.webp"
+  },
   "ducati|icon": {
     "image": "store/img/bikes2/ducati-icon.webp",
     "thumb": "store/img/bikes2/ducati-icon.thumb.webp",
@@ -5127,6 +5151,18 @@
     "view": "side",
     "via": "alias",
     "aliasOf": "honda|cb1100"
+  },
+  "honda|cb125-ace": {
+    "image": "store/img/bikes2/honda-cb125-ace.webp",
+    "thumb": "store/img/bikes2/honda-cb125-ace.thumb.webp",
+    "title": "Honda CB 125 Endurance.jpg",
+    "author": "Unknown",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_CB_125_Endurance.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5,
+    "hero": "store/img/bikes2/honda-cb125-ace.hero.webp"
   },
   "honda|cb125f": {
     "image": "store/img/bikes2/honda-cb125f.webp",
@@ -9400,6 +9436,18 @@
     "via": "alias",
     "aliasOf": "kawasaki|ninja-1000sx"
   },
+  "kawasaki|ninja-1100sx": {
+    "image": "store/img/bikes2/kawasaki-ninja-1100sx.webp",
+    "thumb": "store/img/bikes2/kawasaki-ninja-1100sx.thumb.webp",
+    "title": "Japan-Mobility-Show-2025-RuinDig 2755.jpg",
+    "author": "RuinDig/Yuki Uchida",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Japan-Mobility-Show-2025-RuinDig_2755.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/kawasaki-ninja-1100sx.hero.webp"
+  },
   "kawasaki|ninja-125-performance": {
     "image": "store/img/bikes/kawasaki-ninja-125.webp",
     "thumb": "store/img/bikes/kawasaki-ninja-125-thumb.webp",
@@ -13645,6 +13693,18 @@
     "via": "alias",
     "aliasOf": "renault|kangoo"
   },
+  "royal-enfield|bear-650": {
+    "image": "store/img/bikes2/royal-enfield-bear-650.webp",
+    "thumb": "store/img/bikes2/royal-enfield-bear-650.thumb.webp",
+    "title": "Royal Enfield Bear 650 2026.jpg",
+    "author": "XDVRACE",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bear_650_2026.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/royal-enfield-bear-650.hero.webp"
+  },
   "royal-enfield|bullet-350-classic": {
     "image": "store/img/bikes/royal-enfield-bullet-350.webp",
     "thumb": "store/img/bikes/royal-enfield-bullet-350-thumb.webp",
@@ -14449,6 +14509,18 @@
     "via": "alias",
     "aliasOf": "suzuki|gsx-750-f"
   },
+  "suzuki|gsx-8r": {
+    "image": "store/img/bikes2/suzuki-gsx-8r.webp",
+    "thumb": "store/img/bikes2/suzuki-gsx-8r.thumb.webp",
+    "title": "Suzuki GSX-8R mit Heckumbau.jpg",
+    "author": "PauleMeister",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8R_mit_Heckumbau.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 8.5,
+    "hero": "store/img/bikes2/suzuki-gsx-8r.hero.webp"
+  },
   "suzuki|gsx-r-1000-mladin-replica": {
     "image": "store/img/bikes/suzuki-gsx-r-1000.webp",
     "thumb": "store/img/bikes/suzuki-gsx-r-1000-thumb.webp",
@@ -15206,6 +15278,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SV_650_S_(1).jpg",
     "via": "alias",
     "aliasOf": "suzuki|sv-650-s"
+  },
+  "suzuki|sv-7gx": {
+    "image": "store/img/bikes2/suzuki-sv-7gx.webp",
+    "thumb": "store/img/bikes2/suzuki-sv-7gx.thumb.webp",
+    "title": "Suzuki SV-7 GX 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SV-7_GX_2026.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/suzuki-sv-7gx.hero.webp"
+  },
+  "suzuki|sv-7gx-plus": {
+    "image": "store/img/bikes2/suzuki-sv-7gx.webp",
+    "thumb": "store/img/bikes2/suzuki-sv-7gx.thumb.webp",
+    "hero": "store/img/bikes2/suzuki-sv-7gx.hero.webp",
+    "title": "Suzuki SV-7 GX 2026.jpg",
+    "author": "MotorideSA",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_SV-7_GX_2026.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "suzuki|sv-7gx"
   },
   "suzuki|sv650-&-sv650x": {
     "image": "store/img/bikes2/suzuki-sv650-sv650x.webp",
@@ -16189,6 +16285,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2002_Triumph_Daytona_955i_Caspian_Blue.jpg",
     "via": "alias",
     "aliasOf": "triumph|daytona-955"
+  },
+  "triumph|daytona-super-iii": {
+    "image": "store/img/bikes2/triumph-daytona-super-iii.webp",
+    "thumb": "store/img/bikes2/triumph-daytona-super-iii.thumb.webp",
+    "title": "Beaulieu Motor Museum, Triumph Daytona Super III (1994) motorbike - geograph.org.uk - 8064827.jpg",
+    "author": "Michael Garlick",
+    "license": "CC BY-SA 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Beaulieu_Motor_Museum,_Triumph_Daytona_Super_III_(1994)_motorbike_-_geograph.org.uk_-_8064827.jpg",
+    "via": "search",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/triumph-daytona-super-iii.hero.webp"
   },
   "triumph|daytona-triple-675": {
     "image": "store/img/bikes2/triumph-daytona-triple-675.webp",
@@ -18621,16 +18729,16 @@
     "aliasOf": "yamaha|lexi"
   },
   "yamaha|lexi-lx": {
-    "image": "store/img/bikes2/yamaha-lexi.webp",
-    "thumb": "store/img/bikes2/yamaha-lexi.thumb.webp",
-    "hero": "store/img/bikes2/yamaha-lexi.hero.webp",
-    "title": "2021 Yamaha Lexi 125 (20220216).jpg",
+    "image": "store/img/bikes2/yamaha-lexi-lx.webp",
+    "thumb": "store/img/bikes2/yamaha-lexi-lx.thumb.webp",
+    "title": "2020 Yamaha Lexi 125 (20220111).jpg",
     "author": "オーバードライブ83",
     "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2021_Yamaha_Lexi_125_(20220216).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:2020_Yamaha_Lexi_125_(20220111).jpg",
+    "via": "search",
     "view": "three_quarter",
-    "via": "alias",
-    "aliasOf": "yamaha|lexi"
+    "score": 7.0,
+    "hero": "store/img/bikes2/yamaha-lexi-lx.hero.webp"
   },
   "yamaha|lexi-lx-abs": {
     "image": "store/img/bikes2/yamaha-lexi.webp",
@@ -19540,6 +19648,17 @@
     "via": "alias",
     "aliasOf": "yamaha|nmax-neo"
   },
+  "yamaha|nouvo-elegance": {
+    "image": "store/img/bikes2/yamaha-nouvo-elegance.webp",
+    "thumb": "store/img/bikes2/yamaha-nouvo-elegance.thumb.webp",
+    "title": "Nouvo 135 2008.jpg",
+    "author": "Kevmille at English Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nouvo_135_2008.jpg",
+    "via": "category",
+    "view": "side",
+    "score": 9.5
+  },
   "yamaha|nozza": {
     "image": "store/img/bikes2/yamaha-nozza.webp",
     "thumb": "store/img/bikes2/yamaha-nozza.thumb.webp",
@@ -19575,6 +19694,42 @@
     "view": "three_quarter",
     "via": "alias",
     "aliasOf": "yamaha|nozza"
+  },
+  "yamaha|pg-1": {
+    "image": "store/img/bikes2/yamaha-pg-1.webp",
+    "thumb": "store/img/bikes2/yamaha-pg-1.thumb.webp",
+    "title": "2025 Yamaha PG-1 ABS.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_PG-1_ABS.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 7.5,
+    "hero": "store/img/bikes2/yamaha-pg-1.hero.webp"
+  },
+  "yamaha|pg-1-bkw": {
+    "image": "store/img/bikes2/yamaha-pg-1.webp",
+    "thumb": "store/img/bikes2/yamaha-pg-1.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-pg-1.hero.webp",
+    "title": "2025 Yamaha PG-1 ABS.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_PG-1_ABS.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|pg-1"
+  },
+  "yamaha|pg-1-d18": {
+    "image": "store/img/bikes2/yamaha-pg-1.webp",
+    "thumb": "store/img/bikes2/yamaha-pg-1.thumb.webp",
+    "hero": "store/img/bikes2/yamaha-pg-1.hero.webp",
+    "title": "2025 Yamaha PG-1 ABS.jpg",
+    "author": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Yamaha_PG-1_ABS.jpg",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "yamaha|pg-1"
   },
   "yamaha|r1-gytr": {
     "image": "store/img/bikes/yamaha-r1.webp",
@@ -22168,6 +22323,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF-R7_(55048319395).jpg",
     "via": "alias",
     "aliasOf": "yamaha|yzf-r7"
+  },
+  "yamaha|yzf-r9": {
+    "image": "store/img/bikes2/yamaha-yzf-r9.webp",
+    "thumb": "store/img/bikes2/yamaha-yzf-r9.thumb.webp",
+    "title": "Yamaha Proto BEV.jpg",
+    "author": "TTTNIS",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_Proto_BEV.jpg",
+    "via": "category",
+    "view": "three_quarter",
+    "score": 8.5,
+    "hero": "store/img/bikes2/yamaha-yzf-r9.hero.webp"
   },
   "yamaha|zuma-x": {
     "image": "store/img/bikes/yamaha-zuma.webp",
