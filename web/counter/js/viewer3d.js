@@ -263,7 +263,7 @@ const RULES = [
 
 export function partFor(title, keywords = []) {
   const list = Array.isArray(keywords) ? keywords : keywords ? [keywords] : [];
-  const text = ` ${String(title || "")} ${list.join(" ")} `.toLowerCase().replace(/[\s_/,.;:()\-]+/g, " ");
+  const text = ` ${String(title || "")} ${list.join(" ")} `.toLowerCase().replace(/[\s_/,.;:()-]+/g, " ");
   for (const [re, out] of RULES) {
     if (re.test(text)) return typeof out === "function" ? out(text) : out;
   }
@@ -643,7 +643,7 @@ function disposeModel(model) {
  * models re-uses them; opts.environment: false keeps the transparent studio look instead.
  */
 
-export const DEFAULT_ENV = "autoshop_01";
+export const DEFAULT_ENV = "auto_service";
 
 const envCache = new Map();
 
@@ -816,6 +816,7 @@ function miniOrbit(THREE, camera, dom) {
  *           onSelect(partKey),    // a tap landed on a part (null = background)
  *           onError(error),       // the GLB could not be loaded; the schematic stays
  *           placeholder: boolean, // keep the schematic, never fetch the GLB
+ *           environment: false | "<polyhaven name>",  // false = transparent canvas, no HDRI
  *           url: string,          // override the GLB url (dev)
  *           xray: boolean, debug: boolean }
  *   The viewer is returned synchronously and every call is safe immediately: anything asked for
@@ -1321,6 +1322,7 @@ function createScene(THREE, host, initialModel, opts) {
     renderer.domElement.remove();
     host.removeAttribute("data-part");
     host.removeAttribute("data-exploded");
+    host.removeAttribute("data-env");
   }
 
   /* ---- controls come from an addon; start rendering either way */

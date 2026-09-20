@@ -9,8 +9,10 @@
  *   node web/tools/model-check.mjs yzf-2021 --json      # machine readable
  *
  * No dependencies: the GLB container and the glTF JSON are parsed here, and skin joints are read
- * straight out of the buffer when it is not compressed. (@gltf-transform/cli is only needed to
- * *build* model.glb — see web/store/models/CREDITS.md for the exact command.)
+ * straight out of the buffer when it is not compressed. A shipped model.glb is Draco-compressed,
+ * so run the tool on the sibling scene.gltf when you need the group names — it says so when it
+ * hits compressed geometry. (@gltf-transform/cli is only needed to *build* model.glb — see
+ * web/store/models/CREDITS.md for the exact commands.)
  *
  * The point of the tool: after a new GLB is dropped in, run it and look at the UNMATCHED row.
  * Every name listed there needs a regex in the matching model's table in
@@ -49,7 +51,7 @@ function readGltf(file) {
       const length = buffer.readUInt32LE(offset);
       const type = buffer.readUInt32LE(offset + 4);
       chunks.push({ type, data: buffer.subarray(offset + 8, offset + 8 + length) });
-      offset += 8 + length + ((4 - (length % 4)) % 4) * 0;
+      offset += 8 + length;   // chunks are already 4-byte aligned by the writer
     }
     const json = chunks.find((chunk) => chunk.type === 0x4e4f534a);
     const bin = chunks.find((chunk) => chunk.type === 0x004e4942);
@@ -110,7 +112,7 @@ function readAccessor(gltf, bin, index) {
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
 function multiply(a, b) {
-  const out = new Array(16).fill(0);
+  const out = Array.from({ length: 16 }, () => 0);
   for (let c = 0; c < 4; c++) {
     for (let r = 0; r < 4; r++) {
       let sum = 0;
@@ -259,7 +261,7 @@ function inspect(file, modelKey) {
         if (name) joints.push(name);
       }
       const bind = dominant != null ? bindOf(node.skin) : null;
-      if (bind) matrix = multiply(worldOf(skin.joints[dominant]), [...bind.slice(dominant * 16, dominant * 16 + 16)]);
+      if (bind) matrix = multiply(worldOf(skin.joints[dominant]), Array.from(bind.slice(dominant * 16, dominant * 16 + 16)));
     }
     const sources = [...new Set([...joints, own, mesh.name || "", ...up].filter(Boolean))];
     const primitiveTris = (mesh.primitives || []).reduce((n, primitive) => n + triangles(gltf, primitive), 0);
@@ -322,7 +324,7 @@ function report(info) {
   console.log(`  ${covered}/${table.length} parts present · ${missed.meshes} unmatched meshes (${count(missed.tris)} tris) -> group "${CATCH_ALL_LABEL}"`);
   if (missed.names.has("<compressed skin>")) {
     const source = resolve(dirname(info.file), "scene.gltf");
-    console.log(`  NOTE  the skins are meshopt-compressed, so joint names cannot be read here.`);
+    console.log(`  NOTE  the geometry is Draco/meshopt-compressed, so joint names cannot be read here.`);
     console.log(`        the browser decodes them fine — inspect the uncompressed source instead:`);
     console.log(`        node web/tools/model-check.mjs ${relative(ROOT, source).replace(/\\/g, "/")} --model ${info.modelKey} --names --where`);
   } else if (missed.meshes) {

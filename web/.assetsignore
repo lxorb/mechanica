@@ -1,6 +1,7 @@
 docs-shots/
 tools/
-# store/models/*/scene.bin is 26.5 MiB; Workers static assets cap one file at 25 MiB.
-# Nothing imports js/viewer3d.js yet, so the whole directory stays off the deploy until
-# the models are compressed (Draco / meshopt). Owner: 3d agent.
-store/models/
+# Raw Sketchfab downloads only: scene.bin is 26.5 MiB and Workers caps one asset file at 25 MiB.
+# The shipped model.glb (1.5-4.2 MiB, Draco), license.txt, CREDITS.md and env/ HDRIs must stay in
+# the deploy — the Pick screen's 3D viewer loads them at runtime. Owner: 3d agent.
+store/models/*/scene.*
+store/models/*/textures/
