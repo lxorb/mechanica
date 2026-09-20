@@ -708,3 +708,102 @@ sites.
    (MG, BYD, Polestar, Rivian, Lucid, Isuzu, Tata, Mahindra, KGM, Haval, Omoda, Chery, VinFast) —
    none of which declares a support tree in its public sitemap, so each needs its real manual URL
    found by hand before probing.
+
+---
+
+## Cycle 6 — 2026-09-20
+
+| | before | after | Δ |
+|---|---|---|---|
+| registry rows | 99,295 | **99,313** | +18 |
+| **free English owner PDFs** | 24,281 | **24,299** | **+18** |
+| distinct PDF files | 14,822 | **14,840** | +18 |
+| catalog vehicles | 30,560 | **30,578** | +18 |
+| …with a `manualUrl` | 18,551 | **18,569** | +18 |
+
+A small cycle by row count and the first movement in the English number for three cycles. Roster
+**667 KB raw / 99 KB gzip**. `index-data.js` was **not** touched — the roster format is unchanged.
+
+### The Triumph trap is now impossible — the guard is in the tool
+
+`tools/registry.py` builds a `(site, kind) -> fragments that write it` map before any retraction:
+
+* **The auto-`--replace` heuristic stands down on a shared scope.** It is a guess, and a guess must
+  never be the thing that deletes a sibling adapter's rows. It now prints
+  `NOT replacing, it shares a scope (triumphtechnicalinformation.com with triumph_pdf)` and moves on.
+* **An explicit `--replace` on a shared scope keeps the union.** What survives is every id from
+  every fragment that writes that scope, so `--replace langs-triumph` now reports
+  `26,806 row(s) own 1 site/kind scope(s), 0 superseded (scope shared with triumph_pdf, all present)`
+  instead of retracting 16,124.
+* **A held-back co-owner refuses the scope outright.** `--skip` now still *reads* the skipped
+  fragment, purely to learn what it covers, so
+  `--replace langs-triumph --skip triumph_pdf` prints `refusing scope
+  triumphtechnicalinformation.com (motorcycle) - also written by triumph_pdf, which this merge
+  skipped` and retracts nothing.
+* A scope one fragment owns alone still replaces exactly as before.
+
+Four cases in `api/tests/test_merge_scopes.py` pin all four behaviours, including a reconstruction
+of the exact cycle-5 shape (ten files re-keyed, all ids new, a co-owner present).
+
+### Source added: MG Australia — `cars_mg.py`, 18 English handbooks
+
+`mgmotor.com.au/owners-manuals` links the whole current range as English PDFs on the site's own
+`/brochures/` path (the folder name is MG's; the files are `*_Owners_Handbook.pdf`). 18/18 verified
+`%PDF-`. 82nd make, and the first new **English** source since cycle 1.
+
+Six carry a model year in the file name. **The other twelve carry no date and MG's server sends no
+`Last-Modified` at all** — checked with HEAD and with a ranged GET, the header simply is not there —
+so those rows are dated to the year they were crawled and titled "(current edition)" rather than
+given a year they do not have. It is an approximation and it is labelled as one; re-crawling next
+year adds a row rather than moving one, which is right, because MG will have reissued by then.
+
+### Checked this cycle and empty — do not re-walk
+
+* **No `manual.toyota.<tld>` siblings exist.** `.com.au`, `.co.nz`, `.com.tw`, `.ca`, `.com`,
+  `.co.uk`, `.co.th` and `manual.lexus.com.au` all fail to resolve. The Japanese portal is the only
+  one of its kind.
+* **Toyota's national sites** — `toyota.com.au`, `.co.nz`, `.ca`, `.co.za` declare sitemaps with no
+  manual tree (all 1,800+ "owner"-ish urls are news and dealer pages). `toyota.co.uk/customer/manuals`
+  is the pan-European portal (`toyota-europe.com/customer/manuals`, and one host per market:
+  `de.toyota.ch`, `kk.toyotakz.com`, `toyota-bishkek.kg`, …) and it renders client-side: 246 KB of
+  markup with **no PDF, no JSON and no document path** in it. It is a model/VIN picker, not a file list.
+* **BYD Australia's `atto3manual`** is a Microsoft Power Virtual Agents chatbot
+  (`web.powerva.microsoft.com/.../bydAustraliaAtto3Owner`), not a document.
+* **No manual tree in the sitemap**: `mg.co.uk`, `mgmotor.co.uk`, `mghybridplus.com`,
+  `isuzu.co.uk`, `isuzuutes.com.au`, `kgm.co.uk`, `vinfastauto.us`, `cheryauto.com.au`,
+  `gwm.com.au`, `gwmhaval.com.au` (188 hits, every one a video thumbnail), `omodajaecoo.com.au`
+  (warranty and service terms only), `ldvautomotive.com.au`, `polestar.com` (re-confirmed).
+* **Motorcycle mirrors**: `hondamotorcycles.com.au` and `kawasaki.com.au` declare a sitemap with no
+  manual tree; `triumphmotorcycles.co.uk/owners` is battery and servicing advice;
+  `bikes.suzuki.co.uk/owners` is the VIN lookup `suzuki_intl.py` already documents.
+
+### A real problem this growth has caused: the test suite now times out
+
+`api/data/registry.json` is **46 MB**, and `conftest.py` copies the whole of `api/data` into a temp
+dir for every run while `FileStore.registry()` re-reads and re-validates all 99,313 rows on **every
+call**. Two tests are now at the edge of the 120 s per-test timeout in `pytest.ini`:
+
+    61.33s  test_bughunt_ingest_guard.py::test_known_pdf_hosts_reads_the_registry_and_the_verified_list
+    55.07s  test_bughunt_api.py::test_parts_catalog_route_still_answers
+
+`python -m pytest api/tests -q` **times out** at the default 120 s; with `--timeout=300` it passes.
+This is mine in the sense that my growth caused it, but the fix is not in anything I own: it is
+either a memoised `FileStore.registry()` (`app/store.py`) or a trimmed fixture in `api/tests/conftest.py`.
+**Please route it** — every future cycle makes it worse, and the next agent to run the suite with the
+committed `pytest.ini` will see a timeout rather than a failure and may misread it as a broken test.
+(One unrelated flake seen once under `-p no:randomly -x`:
+`test_bughunt_ondemand.py::test_a_replica_that_died_does_not_hold_the_manual`; that file passes 43/43
+in isolation, so it is an ordering interaction in the bug-hunt agent's own tests, not a registry change.)
+
+### Next leads, best first
+
+1. **English is genuinely close to its ceiling from national OEM sites.** Of 25 hosts probed this
+   cycle, one published files. The pattern that still works is *the importer, not the maker*: MG's
+   Australian importer publishes what MG's British one does not. Worth one cycle of exactly that —
+   Australian and New Zealand importers of brands whose home site is gated (Isuzu Ute, LDV, GWM,
+   Chery, Omoda, Mitsubishi, Ssangyong/KGM, Foton, Ram AU), probed at `<brand>.com.au/owners*`.
+2. **Toyota Europe's `/customer/manuals`** is one client-side call away from being a source. If a
+   later cycle can read its XHR (model list -> document list), it would be English for GB/IE and a
+   dozen other markets. Needs a browser or the app bundle read, not a plain GET.
+3. **The language fallback is where the coverage is**, and it is far from exhausted: 4,645 vehicles
+   are served by it today, and every non-English portal found so far came from a make we already had.

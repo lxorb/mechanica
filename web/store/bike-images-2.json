@@ -10134,6 +10134,39 @@
     "via": "alias",
     "aliasOf": "indian|chief-dark-horse"
   },
+  "indian|chieftain-limited": {
+    "image": "store/img/bikes2/indian-chieftain-limited.webp",
+    "thumb": "store/img/bikes2/indian-chieftain-limited.thumb.webp",
+    "title": "Copy of Untitled Design.webp",
+    "author": "Hannahmulligan49",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Copy_of_Untitled_Design.webp",
+    "via": "makecat",
+    "view": "three_quarter",
+    "score": 6.0
+  },
+  "indian|chieftain-limited-elite": {
+    "image": "store/img/bikes2/indian-chieftain-limited.webp",
+    "thumb": "store/img/bikes2/indian-chieftain-limited.thumb.webp",
+    "title": "Copy of Untitled Design.webp",
+    "author": "Hannahmulligan49",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Copy_of_Untitled_Design.webp",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|chieftain-limited"
+  },
+  "indian|chieftain-limited-with-powerband-audio-package": {
+    "image": "store/img/bikes2/indian-chieftain-limited.webp",
+    "thumb": "store/img/bikes2/indian-chieftain-limited.thumb.webp",
+    "title": "Copy of Untitled Design.webp",
+    "author": "Hannahmulligan49",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Copy_of_Untitled_Design.webp",
+    "view": "three_quarter",
+    "via": "alias",
+    "aliasOf": "indian|chieftain-limited"
+  },
   "indian|ftr": {
     "image": "store/img/bikes2/indian-ftr.webp",
     "thumb": "store/img/bikes2/indian-ftr.thumb.webp",

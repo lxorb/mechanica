@@ -85,6 +85,22 @@ function makeTake(name) {
 /** A human pause. Every state gets one so the presenter has somewhere to talk. */
 const dwell = (ms) => sleep(ms);
 
+/**
+ * `TTM_TRACE=1` prints how long each wait actually took. The takes have a hard 2:30 ceiling and
+ * the only thing that ever threatens it is a wait that quietly runs to its timeout, which looks
+ * identical to a slow network in the finished video.
+ */
+const TRACE = Boolean(process.env.TTM_TRACE);
+async function waited(label, promise) {
+  const t = Date.now();
+  const out = await promise.catch((e) => {
+    if (TRACE) console.log(`      ~ ${label}: FAILED ${String(e.message || e).slice(0, 60)}`);
+    return null;
+  });
+  if (TRACE) console.log(`      ~ ${label}: ${((Date.now() - t) / 1000).toFixed(1)} s`);
+  return out;
+}
+
 async function type(page, text, delay = 115) {
   await page.keyboard.type(text, { delay });
 }
@@ -253,11 +269,12 @@ async function takeOne(page, take) {
 
   await tap(page, 'section[data-screen="confirm"] button[aria-label="Yes"]');
   await page.waitForFunction(() => location.hash === "#pick", { timeout: 60000 });
-  await page
-    .waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
+  await waited(
+    "3D stage",
+    page.waitForFunction(() => document.querySelector(".viewer3d")?.getAttribute("data-viewer3d") === "ready", {
       timeout: 90000,
-    })
-    .catch(() => {});
+    }),
+  );
   await dwell(3600);
   take.mark("Pick · the 3D stage", "the model idles into a slow spin after three seconds, then a drag");
   await dwell(900);
@@ -268,7 +285,7 @@ async function takeOne(page, take) {
   await type(page, "chain is loose", 118);
   await dwell(450);
   await page.keyboard.press("Enter");
-  await page.waitForFunction(() => document.querySelectorAll(".hit").length > 0, { timeout: 60000 });
+  await waited("headings", page.waitForFunction(() => document.querySelectorAll(".hit").length > 0, { timeout: 60000 }));
   await dwell(1700);
   take.mark("The manual's own headings", "12.12 p.77–78 and 12.13 p.78 — KTM's section numbers, not ours");
   await dwell(1500);
@@ -284,11 +301,12 @@ async function takeOne(page, take) {
 
   await tap(page, ".open");
   await page.waitForFunction(() => location.hash.startsWith("#book"), { timeout: 60000 });
-  await page
-    .waitForFunction(() => document.querySelectorAll('.page-sheet[data-page="77"] .mark').length >= 2, {
+  await waited(
+    "page 77 + marks",
+    page.waitForFunction(() => document.querySelectorAll('.page-sheet[data-page="77"] .mark').length >= 2, {
       timeout: 120000,
-    })
-    .catch(() => {});
+    }),
+  );
   await dwell(1300);
   take.mark("Page 77 of KTM's manual", "the printed page, orange markers on the two answering lines");
   await dwell(2400);
@@ -314,14 +332,17 @@ async function takeOne(page, take) {
   await dwell(1200);
 
   await tap(page, ".book-all");
-  await page.waitForFunction(() => document.querySelectorAll(".page-sheet").length > 20, { timeout: 20000 }).catch(() => {});
+  await waited(
+    "all pages",
+    page.waitForFunction(() => document.querySelectorAll(".page-sheet").length > 20, { timeout: 20000 }),
+  );
   await dwell(1300);
   take.mark("All pages", "143 sheets — the whole book, when he wants it");
   await glide(page, ".page-view", 1100, 1400);
   await dwell(1400);
 
   await tap(page, ".book-parts");
-  await page.waitForFunction(() => document.querySelectorAll(".pv-tile").length > 10, { timeout: 60000 });
+  await waited("parts", page.waitForFunction(() => document.querySelectorAll(".pv-tile").length > 10, { timeout: 60000 }));
   await dwell(1600);
   take.mark("Parts", "135 parts, each one on the list because the manual prints a spec for it");
   await glide(page, ".pv-tiles", 420, 1000);
@@ -345,7 +366,7 @@ async function takeOne(page, take) {
     await sleep(160);
     await page.mouse.click(tile.x, tile.y);
   }
-  await page.waitForFunction(() => document.querySelectorAll(".pv-offer").length > 0, { timeout: 60000 }).catch(() => {});
+  await waited("offers", page.waitForFunction(() => document.querySelectorAll(".pv-offer").length > 0, { timeout: 60000 }));
   await dwell(1800);
   take.mark("Drive chain", `${tile ? tile.name : "Chain"} · 5/8 x 1/4" (520) X-ring · p.126 · live USD offers`);
   await glide(page, ".pv-detail", 190, 900);

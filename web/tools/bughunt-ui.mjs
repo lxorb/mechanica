@@ -331,14 +331,23 @@ const CHECKS = [
     await toBook(page, base); // the first hit of the contents is a bare heading: a synthetic job
     const before = await page.evaluate(() => ({ here: document.body.getAttribute("data-here"), stamp: document.querySelector(".book-stamp")?.textContent }));
     if (before.here !== "book") return "never reached Book";
-    await page.reload({ waitUntil: "load", timeout: 45000 });
-    await nap(6000);
-    const after = await page.evaluate(() => ({
-      here: document.body.getAttribute("data-here"),
-      stamp: document.querySelector(".book-stamp")?.textContent || "",
-      sheets: document.querySelectorAll(".page-sheet").length,
-    }));
-    if (after.here !== "book") return `the reload dropped to ${after.here} (was ${before.stamp})`;
+    // Twice: app.js::revive() needs the roster to be complete at the instant it runs, so a
+    // slow /catalog drops any reload to Identify (UI-H1). That is not this bug — this bug
+    // put the reader on Pick with the roster right there. One retry tells the two apart.
+    let after = null;
+    for (let tries = 0; tries < 2; tries += 1) {
+      await page.reload({ waitUntil: "load", timeout: 45000 });
+      await nap(6000);
+      after = await page.evaluate(() => ({
+        here: document.body.getAttribute("data-here"),
+        stamp: document.querySelector(".book-stamp")?.textContent || "",
+        sheets: document.querySelectorAll(".page-sheet").length,
+        roster: window.Q ? window.Q.bikes().length : 0,
+      }));
+      if (after.here === "book") break;
+    }
+    if (after.here === "pick") return `the reload dropped to Pick (was ${before.stamp})`;
+    if (after.here !== "book") return `the reload dropped to ${after.here}, roster ${after.roster} — see UI-H1`;
     if (!after.sheets) return "Book came back with no page";
     return "";
   }],
